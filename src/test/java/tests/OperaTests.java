@@ -30,6 +30,9 @@ public class OperaTests extends BaseTest {
 	//Login to Opera Cloud
 	@Test
 	public void Login_OperaCloud() throws Exception {
+		System.out.println("one testing Leverch from eclipse to branch TA-3");
+		System.out.println("two testing Leverch from eclipse to branch TA-3");
+		System.out.println("three testing Leverch from eclipse to branch TA-3");
 		dataTable2= new DataTable2();
 		dataMap2=dataTable2.getExcelData();
 		int numberOfSuits=dataMap2.size();
