@@ -1,0 +1,97 @@
+Enum olFldr
+    olFolderDeletedItems = 3
+    olFolderOutbox = 4
+    olFolderSentMail = 5
+    olFolderInbox = 6
+    olFolderCalendar = 9
+    olFolderContacts = 10
+    olFolderJournal = 11
+    olFolderNotes = 12
+    olFolderTasks = 13
+    olFolderDrafts = 16
+    olFolderJunk = 23
+End Enum
+ 
+ Sub SendEmail()
+ Call SendOutlookEmail
+ Call ClickOnSendRecieve
+ 
+ End Sub
+ 
+ 
+  Sub SendOutlookEmail()
+    On Error GoTo ErrHandler
+    
+    ' SET Outlook APPLICATION OBJECT.
+    Dim objOutlook As Object
+    Set objOutlook = CreateObject("Outlook.Application")
+    
+    ' CREATE EMAIL OBJECT.
+    Dim objEmail As Object
+    Set objEmail = objOutlook.CreateItem(0)
+
+    With objEmail
+        .to = "deepa.mathias@police.wa.gov.au"
+        .Subject = "This is a test message windows 10"
+        .Body = "Hi there"
+        .Display        ' DISPLAY MESSAGE.
+    End With
+     Application.Wait (Now + TimeValue("0:00:05"))
+    SendKeys "%{s}"
+    Application.Wait (Now + TimeValue("0:00:10"))
+    
+    ' CLEAR.
+    Set objEmail = Nothing:    Set objOutlook = Nothing
+        
+ErrHandler:
+    '
+End Sub
+
+ 
+ 
+Sub ClickOnSendRecieve()
+    Dim MyOutLookApp As Object
+    Dim MyNameSpace As Object
+    Dim MyFolder As Object
+     
+     '// Late Binding
+    Set MyOutLookApp = CreateObject("Outlook.Application")
+    
+    Set MyNameSpace = MyOutLookApp.GetNamespace("MAPI")
+    On Error GoTo ErrFlder
+     'Change the last "olFolderInbox" to be the folder you actually want to open
+     'Choose from the list above
+    Set MyFolder = MyNameSpace.GetDefaultFolder(olFldr.olFolderInbox)
+     
+    MyFolder.Display
+    
+    Application.Wait (Now + TimeValue("0:00:30"))
+    
+     SendKeys "{F9}"
+     
+       Application.Wait (Now + TimeValue("0:00:10"))
+       
+       Dim myItem As Object
+       
+       Set myItem = MyFolder.Items(1)
+       myItem.Display
+    
+       MyOutLookApp.Quit
+     
+CleanUp:
+     '// Clean-up
+    Set MyFolder = Nothing
+    Set MyNameSpace = Nothing
+    Set MyOutLookApp = Nothing
+     
+     
+    Exit Sub
+ErrFlder:
+    MsgBox Err.Number & ":" & Err.Description, _
+    vbMsgBoxHelpButton, "Folder Error", _
+    Err.HelpFile, Err.HelpContext
+    Resume CleanUp
+     
+End Sub
+
+
