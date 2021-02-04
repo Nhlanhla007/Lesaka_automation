@@ -1,9 +1,6 @@
 package tests;
 
-import java.io.EOFException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -13,10 +10,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
-import operaCloudPageObjects.*;
+import JDGroupPageObjects.*;
 import utils.*;
 
-public class OperaTests extends BaseTest {
+public class JDTests extends BaseTest {
 	ExtentReportJD reportJD;
 
 	public String currentSuite;
@@ -29,10 +26,7 @@ public class OperaTests extends BaseTest {
 	}
 	//Login to Opera Cloud
 	@Test
-	public void Login_OperaCloud() throws Exception {
-		System.out.println("one testing Leverch from eclipse to branch TA-3");
-		System.out.println("two testing Leverch from eclipse to branch TA-3");
-		System.out.println("three testing Leverch from eclipse to branch TA-3");
+	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		dataMap2=dataTable2.getExcelData();
 		int numberOfSuits=dataMap2.size();
@@ -57,7 +51,6 @@ public class OperaTests extends BaseTest {
 		for(int i=0;i<numberOfTestCases;i++){
 			System.out.println("TestCaseNumber:"+i);
 			occCount=new HashMap<String, Integer>();
-
 			String execute=singleSuiteData.get("Execute").get(i);
 			String testCaseDescription=singleSuiteData.get("testCaseDescription").get(i);
 			ExtentTest test=reportJD.createTest(testCaseDescription);

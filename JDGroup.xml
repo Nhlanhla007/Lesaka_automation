@@ -4,12 +4,15 @@
 	<listeners>
 		<listener class-name="listner.TestNGListener" />
 	</listeners>
-	<test name="OperaTests" preserve-order="true">
-		<parameter name="browserType" value="chrome"/>
+	<test name="JDTests" preserve-order="true">
 		<parameter name="browserType" value="chrome"/>
 		<parameter name="appURL" value="https://phptravels.com/demo"/>
+		<parameter name="ICURL" value="https://phptravels.com/demo"/>
+		<parameter name="ICURL" value="https://phptravels.com/demo"/>
+		<parameter name="ICURL" value="https://phptravels.com/demo"/>
+		<parameter name="ICURL" value="https://phptravels.com/demo"/>
 		<classes>
-			<class name="tests.OperaTests"/>
+			<class name="tests.JDTests"/>
 		</classes>
 	</test>
 </suite>

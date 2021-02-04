@@ -1,4 +1,4 @@
-package operaCloudPageObjects;
+package JDGroupPageObjects;
 
 import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.WebDriver;
