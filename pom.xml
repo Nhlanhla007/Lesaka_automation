@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>OperaTestFramework</groupId>
-	<artifactId>OperaTestFramework</artifactId>
+	<groupId>JDTestFramework</groupId>
+	<artifactId>JDTestFramework</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Opera Test Automation Project</name>
-	<description>Opera Test Automation Project</description>
+	<name>JD Automation Project</name>
+	<description>JD Test Automation Project</description>
 
 	<properties>
 		<selenium-version>3.141.59</selenium-version>
