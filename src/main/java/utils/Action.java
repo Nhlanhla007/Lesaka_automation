@@ -17,6 +17,7 @@ import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.Markup;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import org.apache.commons.io.FileUtils;
@@ -59,11 +60,12 @@ public class Action {
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		File source = ts.getScreenshotAs(OutputType.FILE);
-		String destination = System.getProperty("user.dir") + "/reports/Screenshots/" + screenshotName + dateName + ".png";
+		String destination = "/reports/screenshots/" + screenshotName + dateName + ".png";
 		File finalDestination = new File(destination);
 		FileUtils.copyFile(source, finalDestination);
 		return destination;
 	}
+
 	/**
 	 * Selenium click method
 	 * 
@@ -258,6 +260,7 @@ public class Action {
 
 	public <T> void writeText(T elementAttr, String text, String name, ExtentTest test) throws IOException {
 		ExtentTest node = test.createNode("Writing text: "+text+" to Element: "+ name);
+
 		try{
 //			waitFluent((WebElement) elementAttr);
 			if (elementAttr.getClass().getName().contains("By")) {
@@ -268,18 +271,23 @@ public class Action {
 			}
 			if(name != null){
 
-				String screenShotPath=getScreenShot(name);
+
 //				node.log(Status.PASS,"Writing text: "+text+" to Element: "+ name);
 				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-				node.pass("Writing text: "+text+" to Element: "+ name,MediaEntityBuilder.createScreenCaptureFromPath("C:\\Users\\thoko\\Documents\\OperaCloudSeleniumFramework-master\\reports\\extentreports\\screenshots\\20210204112026215.png").build());
-
+				String screenShotPath=getScreenShot(dateName);
+				String codeBlockOne = "<img src=\""+screenShotPath+"\" alt=\"Girl in a jacket\" width=\"500\" height=\"600\">";
+//				String codeBlockTwo = "/a>";
+				Markup m1 = MarkupHelper.createCodeBlock(codeBlockOne);
+				node.pass("Writing text: "+text+" to Element: "+ m1.getMarkup());
+				node.log(Status.INFO, "FAQs button clicked",MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 
 			}
 		}catch(Throwable e){
 			e.printStackTrace();
 //				node.log(Status.FAIL,"Writing text: "+text+" to Element: "+ name);
 			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-			node.fail("Unable to click element :"+name,MediaEntityBuilder.createScreenCaptureFromPath("C:\\Users\\thoko\\Documents\\OperaCloudSeleniumFramework-master\\reports\\extentreports\\screenshots\\20210204112026215.png").build());
+			String screenShotPath=getScreenShot(dateName);
+			node.fail("Unable to click element :"+name +node.addScreenCaptureFromPath(screenShotPath));
 
 
 		}

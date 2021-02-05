@@ -21,20 +21,20 @@ public class IConnection {
 
     }
 
-    @FindBy(name="username")
+    @FindBy(id="txtUsername")
     private WebElement testUserName;
 
-    @FindBy(name="password")
+    @FindBy(id="txtPassword")
     private WebElement testPassword;
 
-    @FindBy(name="FormsButton2")
+    @FindBy(id="btnLogin")
     private WebElement testLoginButton;
 
-    @FindBy(xpath="//input[contains(@id,'lovTrxCode:odec_lov_itLovetext::content')]")
-    private WebElement EnterCode;
+    @FindBy(id="welcome")
+    private WebElement userMenu;
 
-    @FindBy(xpath="//input[contains(@id,'fe2:itPrice:odec_in_it::content')]")
-    private WebElement EnterPrice;
+    @FindBy(linkText="Logout")
+    private WebElement logoutLink;
 
     @FindBy(xpath="//div[@class='xqu p_AFTextOnly']//span[text()='Post Payment']")
     private WebElement PostPayment;
@@ -48,14 +48,31 @@ public class IConnection {
     @FindBy(xpath="//a[contains(@id,'dc_pwPost::close')]")
     private WebElement ClosePopup;
 
-    public void login(HashMap<String, ArrayList<String>> input,ExtentTest test,int occCount) {
+    public void login(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) {
         try {
 
-
+//
             System.out.println("modelStart");
-            action.writeText(testUserName, input.get("username").get(occCount), "username", test);
-            action.writeText(testPassword, input.get("password").get(occCount), "password", test);
+            action.writeText(testUserName, input.get("username").get(rowNumber), "username", test);
+            action.writeText(testPassword, input.get("password").get(rowNumber), "password", test);
             action.click(testLoginButton, "loginButton", test);
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("modelend");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void logout(ExtentTest test) {
+        try {
+
+//
+            System.out.println("modelStart");
+            action.click(userMenu, "userMenu", test);
+            action.click(logoutLink, "logoutLink", test);
             try {
                 Thread.sleep(4000);
             } catch (InterruptedException e) {

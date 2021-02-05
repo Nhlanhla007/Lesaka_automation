@@ -307,47 +307,47 @@ public class ExcelFunctions {
 		}
 	public  HashMap<String, HashMap<String, ArrayList<String>>> getExcelData() {
 //		sheet = workbook.getSheetAt(sheetNumber);
-		HashMap<String, Integer> allKeys=new HashMap<String, Integer>();
-		int numSheets=workbook.getNumberOfSheets();
-		dataMap = new ConcurrentHashMap<String,String>();
-		ArrayList<String> columArray=null;
-		HashMap<String, ArrayList<String>> mySheetMap =null;
+		HashMap<String, Integer> allKeys = new HashMap<String, Integer>();
+		int numSheets = workbook.getNumberOfSheets();
+		dataMap = new ConcurrentHashMap<String, String>();
+		ArrayList<String> columArray = null;
+		HashMap<String, ArrayList<String>> mySheetMap = null;
 		String[] headers = null;
 		dataMap2 = new HashMap<String, HashMap<String, ArrayList<String>>>();
-		int numberOfSiuts=0;
+		int numberOfSiuts = 0;
 
-		for(int i=0;i<=numSheets;i++){
-			if(i==0){
-				System.out.println("i:"+i);
+		for (int i = 0; i <= numSheets; i++) {
+			if (i == 0) {
+				System.out.println("i:" + i);
 				sheet = workbook.getSheet("Suites");
-				int numRows=sheet.getLastRowNum()+1;
-				mySheetMap=new HashMap<String, ArrayList<String>>();
+				int numRows = sheet.getLastRowNum() + 1;
+				mySheetMap = new HashMap<String, ArrayList<String>>();
 				Row row = sheet.getRow(0);
 				int noOfColumns = row.getLastCellNum();
-				headers= new String [noOfColumns];
-				for(int j=0;j<numRows;j++){
+				headers = new String[noOfColumns];
+				for (int j = 0; j < numRows; j++) {
 					row = sheet.getRow(j);
-					for(int z=0;z<noOfColumns;z++){
+					for (int z = 0; z < noOfColumns; z++) {
 						Cell cell = row.getCell(z);
-						String value=getExcelDataBasedOnCellType(cell);
-						if(j==0){
+						String value = getExcelDataBasedOnCellType(cell);
+						if (j == 0) {
 
-							headers[z]=value;
-							mySheetMap.put(value,new ArrayList<>());
-						}else{
+							headers[z] = value;
+							mySheetMap.put(value, new ArrayList<>());
+						} else {
 							Object Key = mySheetMap.keySet().toArray()[z];
 							mySheetMap.get(headers[z]).add(value);
 						}
 					}
 				}
-				dataMap2.put("Suites",mySheetMap);
-				numSheets=dataMap2.get("Suites").get("Execute").size();
-			}else{
-				String execute=dataMap2.get("Suites").get("Execute").get(i-1);
-				String SheetName = dataMap2.get("Suites").get("testSuitName").get(i-1);
+				dataMap2.put("Suites", mySheetMap);
+				numSheets = dataMap2.get("Suites").get("Execute").size();
+			} else {
+				String execute = dataMap2.get("Suites").get("Execute").get(i - 1);
+				String SheetName = dataMap2.get("Suites").get("testSuitName").get(i - 1);
 				System.out.println("SheetName:" + SheetName);
 
-				if(execute.toLowerCase().equals("yes")) {
+				if (execute.toLowerCase().equals("yes")) {
 					sheet = workbook.getSheet(SheetName);
 					int numRows = sheet.getLastRowNum() + 1;
 					mySheetMap = new HashMap<String, ArrayList<String>>();
@@ -365,14 +365,14 @@ public class ExcelFunctions {
 							} else {
 								Object Key = mySheetMap.keySet().toArray()[z];
 								mySheetMap.get(headers[z]).add(value);
-								if(z>2&&!value.equals("")){
+								if (z > 2 && !value.equals("")) {
 
-									if(!allKeys.containsKey(value)){
-										allKeys.put(value,0);
-									}else{
-										int occKeyNum=allKeys.get(value);
+									if (!allKeys.containsKey(value)) {
+										allKeys.put(value, 0);
+									} else {
+										int occKeyNum = allKeys.get(value);
 										occKeyNum++;
-										allKeys.put(value,occKeyNum);
+										allKeys.put(value, occKeyNum);
 									}
 								}
 							}
@@ -385,55 +385,57 @@ public class ExcelFunctions {
 
 		//read all data sheets
 		Object[] keys = allKeys.keySet().toArray();
-		for(int i=0;i<keys.length;i++){
+		for (int i = 0; i < keys.length; i++) {
+			String SheetName = (String) keys[i] + "++";
+			if (workbook.getSheetIndex(SheetName) != -1) {
+				System.out.println(SheetName + ":" + workbook.getSheetIndex(SheetName));
+				sheet = workbook.getSheet(SheetName);
+				int numRows = sheet.getLastRowNum() + 1;
+				mySheetMap = new HashMap<String, ArrayList<String>>();
+				Row row = sheet.getRow(0);
+				int noOfColumns = row.getLastCellNum();
+				headers = new String[noOfColumns];
+				for (int j = 0; j < numRows; j++) {
+					row = sheet.getRow(j);
+					for (int z = 0; z < noOfColumns; z++) {
+						Cell cell = row.getCell(z);
+						String value = getExcelDataBasedOnCellType(cell);
+						if (j == 0) {
+							headers[z] = value;
+							mySheetMap.put(value, new ArrayList<>());
+						} else {
+							Object Key = mySheetMap.keySet().toArray()[z];
+							mySheetMap.get(headers[z]).add(value);
+							if (z > 2 && !value.equals("")) {
 
-			String SheetName =(String)keys[i]+"++";
-			sheet = workbook.getSheet(SheetName);
-			int numRows = sheet.getLastRowNum() + 1;
-			mySheetMap = new HashMap<String, ArrayList<String>>();
-			Row row = sheet.getRow(0);
-			int noOfColumns = row.getLastCellNum();
-			headers = new String[noOfColumns];
-			for (int j = 0; j < numRows; j++) {
-				row = sheet.getRow(j);
-				for (int z = 0; z < noOfColumns; z++) {
-					Cell cell = row.getCell(z);
-					String value = getExcelDataBasedOnCellType(cell);
-					if (j == 0) {
-						headers[z] = value;
-						mySheetMap.put(value, new ArrayList<>());
-					} else {
-						Object Key = mySheetMap.keySet().toArray()[z];
-						mySheetMap.get(headers[z]).add(value);
-						if(z>2&&!value.equals("")){
-
-							if(!allKeys.containsKey(value)){
-								allKeys.put(value,0);
-							}else{
-								int occKeyNum=allKeys.get(value);
-								occKeyNum++;
-								allKeys.put(value,occKeyNum);
+								if (!allKeys.containsKey(value)) {
+									allKeys.put(value, 0);
+								} else {
+									int occKeyNum = allKeys.get(value);
+									occKeyNum++;
+									allKeys.put(value, occKeyNum);
+								}
 							}
 						}
 					}
 				}
+
+				dataMap2.put(SheetName, mySheetMap);
+
 			}
-			dataMap2.put(SheetName, mySheetMap);
 		}
-
 		return dataMap2;
+	}
+	public   Map<Object, Object> getRowData(int keytRowNumber,
+			int valueRowNumber, int columnNumber,int sheetNumber) {
+		sheet = workbook.getSheetAt(sheetNumber);
+	 	Map<Object, Object> datamap = new HashMap<>();
+		String key  = sheet.getRow(keytRowNumber).getCell(columnNumber).getStringCellValue();
+		Row row = sheet.getRow(valueRowNumber);
+		Cell cell = row.getCell(columnNumber);
+		String value=getExcelDataBasedOnCellType(cell);
+		datamap.put(key, value);
+		return datamap;
 
 	}
-		public   Map<Object, Object> getRowData(int keytRowNumber,
-				int valueRowNumber, int columnNumber,int sheetNumber) {
-			sheet = workbook.getSheetAt(sheetNumber);
-		 	Map<Object, Object> datamap = new HashMap<>();
-			String key  = sheet.getRow(keytRowNumber).getCell(columnNumber).getStringCellValue();
-			Row row = sheet.getRow(valueRowNumber);
-			Cell cell = row.getCell(columnNumber);
-			String value=getExcelDataBasedOnCellType(cell);
-			datamap.put(key, value);
-			return datamap;
-
-		}
-	}
+}

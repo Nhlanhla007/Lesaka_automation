@@ -23,12 +23,7 @@ import extentReports.ExtentManager;
 import io.qameta.allure.Attachment;
 import pageddef.PageDef;
 import tests.BaseTest;
-import utils.ConfigFileReader;
-import utils.DataTable;
-
-import utils.GetScreenShot;
-import utils.JavaUtils;
-import utils.Values;
+import utils.*;
 
 public class TestNGListener implements IExecutionListener, ITestListener {
 
@@ -178,7 +173,7 @@ public class TestNGListener implements IExecutionListener, ITestListener {
 		}
 
 		logger.info("Initializing the test data sheet");
-		DataTable.initializeTestDataWorkbook();
+		DataTable2.initializeTestDataWorkbook();
 
 		logger.info("Initializing configuration properties");
 		ConfigFileReader.loadData();

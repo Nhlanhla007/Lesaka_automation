@@ -19,6 +19,7 @@ public class JDTests extends BaseTest {
 	public String currentSuite;
 	public String currentKeyWord;
 	HashMap<String, Integer> occCount=null;
+	int testcaseID;
 	
 	@BeforeClass(alwaysRun = true)
 	public void setUp() {
@@ -56,10 +57,12 @@ public class JDTests extends BaseTest {
 			ExtentTest test=reportJD.createTest(testCaseDescription);
 			if(execute.toLowerCase().equals("yes")){
 				startBrowserSession();
+				int testcaseID=Integer.parseInt(singleSuiteData.get("TestCaseID").get(i)) ;
 				for(int j=0;j<10;j++){
 					String actionToRunLable="Action"+(j+1);
 					String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
 					currentKeyWord=actionToRun;
+
 					System.out.println("currentKeyWord:"+currentKeyWord);
 					if(!currentKeyWord.equals("")){
 						if(!occCount.containsKey(currentKeyWord)){
@@ -82,13 +85,32 @@ public class JDTests extends BaseTest {
 		String moduleToRun=actionToRun;
 		IConnection ic=new IConnection(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
+		int rowNumber=-1;
+		if(dataMap2.containsKey(currentKeyWord+"++")) {
+			rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
+		}
 		switch (moduleToRun) {
 			case "Login":
-				ic.login(dataMap2.get(currentKeyWord+"++"),test1,occCount.get(currentKeyWord));
+				ic.login(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
+			case "Logout":
+				ic.logout(test1);
 				break;
 
 		}
 	}
+
+	public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
+		int numberRows=input.get("TCID").size();
+		int rowNumber=-1;
+		for(int i=0;i<numberRows;i++){
+			if(input.get("TCID").get(i).equals(Integer.toString(testcaseID+1))&&input.get("occurence").get(i).equals(Integer.toString(occCount+1))){
+				rowNumber=i;
+			}
+		}
+		return rowNumber;
+	}
+
 
 	public void startBrowserSession()
 	{

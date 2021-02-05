@@ -26,8 +26,9 @@ public class ExtentReportJD {
         extent.attachReporter(htmlReporter);
         extent.setSystemInfo("Browser", "Chrome");
         extent.setSystemInfo("Environment", "QA");
-        extent.setSystemInfo("User Name", "Thokozani");
         htmlReporter.config().setDocumentTitle(reportName);
+        htmlReporter.config().setCSS(".r-img { width:500px; height:600px}");
+//        htmlReporter.config().
         // Name of the report
         htmlReporter.config().setReportName(reportName);
         // Dark Theme
