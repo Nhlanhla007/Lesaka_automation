@@ -86,7 +86,9 @@ public class Action {
 
 	public <T> void click(T elementAttr, String name,ExtentTest test)  {
 		ExtentTest node=test.createNode("Clicked Element: "+ name);
+		
 		try{
+			//String screenShotPath=getScreenShot(name);
 			if (elementAttr.getClass().getName().contains("By")) {
 				driver.findElement((By) elementAttr).click();
 			} else {
@@ -95,13 +97,17 @@ public class Action {
 			}
 			if(name != null){
 				logger.info("Clicked Element: "+ name);
-				String screenShotPath=getScreenShot(name);
-				node.pass("Clicked Element: "+ name);
+				node.pass("Clicked Element: "+ name,MediaEntityBuilder.createScreenCaptureFromPath(getScreenShot(name)).build());
 
 			}
 		} catch(Throwable e){
 			logger.info("Unable to Click Element: "+ name);
-			node.fail("Clicked Element: "+ name);
+			try {
+				node.fail("Clicked Element: "+ name,MediaEntityBuilder.createScreenCaptureFromPath(getScreenShot(name)).build());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 
 		}
 	}
@@ -275,11 +281,11 @@ public class Action {
 //				node.log(Status.PASS,"Writing text: "+text+" to Element: "+ name);
 				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 				String screenShotPath=getScreenShot(dateName);
-				String codeBlockOne = "<img src=\""+screenShotPath+"\" alt=\"Girl in a jacket\" width=\"500\" height=\"600\">";
+				//String codeBlockOne = "<img src=\""+screenShotPath+"\" alt=\"Girl in a jacket\" width=\"500\" height=\"600\">";
 //				String codeBlockTwo = "/a>";
-				Markup m1 = MarkupHelper.createCodeBlock(codeBlockOne);
-				node.pass("Writing text: "+text+" to Element: "+ m1.getMarkup());
-				node.log(Status.INFO, "FAQs button clicked",MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				//Markup m1 = MarkupHelper.createCodeBlock(codeBlockOne);
+				node.pass("Writing text: "+text+" to Element: ",MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+//				node.log(Status.INFO, "FAQs button clicked);
 
 			}
 		}catch(Throwable e){
@@ -287,7 +293,7 @@ public class Action {
 //				node.log(Status.FAIL,"Writing text: "+text+" to Element: "+ name);
 			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 			String screenShotPath=getScreenShot(dateName);
-			node.fail("Unable to click element :"+name +node.addScreenCaptureFromPath(screenShotPath));
+			node.fail("Unable to click element :"+name ,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 
 
 		}

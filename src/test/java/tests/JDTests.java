@@ -57,22 +57,27 @@ public class JDTests extends BaseTest {
 			ExtentTest test=reportJD.createTest(testCaseDescription);
 			if(execute.toLowerCase().equals("yes")){
 				startBrowserSession();
-				int testcaseID=Integer.parseInt(singleSuiteData.get("TestCaseID").get(i)) ;
+				testcaseID=Integer.parseInt(singleSuiteData.get("TestCaseID").get(i)) ;
 				for(int j=0;j<10;j++){
 					String actionToRunLable="Action"+(j+1);
 					String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
 					currentKeyWord=actionToRun;
 
-					System.out.println("currentKeyWord:"+currentKeyWord);
-					if(!currentKeyWord.equals("")){
-						if(!occCount.containsKey(currentKeyWord)){
-							occCount.put(currentKeyWord,0);
-						}else{
-							int occNum=occCount.get(currentKeyWord);
-							occNum++;
-							occCount.put(currentKeyWord,occNum);
+					try {
+						System.out.println("currentKeyWord:"+currentKeyWord);
+						if(!currentKeyWord.equals("")){
+							if(!occCount.containsKey(currentKeyWord)){
+								occCount.put(currentKeyWord,0);
+							}else{
+								int occNum=occCount.get(currentKeyWord);
+								occNum++;
+								occCount.put(currentKeyWord,occNum);
+							}
+							runKeyWord(actionToRun,test);
 						}
-						runKeyWord(actionToRun,test);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 				endBrowserSession();
@@ -84,10 +89,11 @@ public class JDTests extends BaseTest {
 	public void runKeyWord(String actionToRun,ExtentTest test){
 		String moduleToRun=actionToRun;
 		IConnection ic=new IConnection(driver);
+		Ic_Products products = new Ic_Products(driver); //******************ADDED HERE
 		ExtentTest test1=test.createNode(moduleToRun);
-		int rowNumber=-1;
+		int rowNumber=0;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
-			rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
+			//rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
 		}
 		switch (moduleToRun) {
 			case "Login":
@@ -95,6 +101,9 @@ public class JDTests extends BaseTest {
 				break;
 			case "Logout":
 				ic.logout(test1);
+				break;
+			case "Product":
+				products.searchType(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 
 		}
@@ -142,6 +151,13 @@ public class JDTests extends BaseTest {
 
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
+			driver.navigate().refresh();
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			logger.info("Browser name is "+browserName);
 			Report.info("Browser name is "+browserName);
 			logger.info("App URL: "+ navigateURL);

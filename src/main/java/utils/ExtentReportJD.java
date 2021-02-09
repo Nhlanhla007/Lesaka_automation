@@ -27,7 +27,7 @@ public class ExtentReportJD {
         extent.setSystemInfo("Browser", "Chrome");
         extent.setSystemInfo("Environment", "QA");
         htmlReporter.config().setDocumentTitle(reportName);
-        htmlReporter.config().setCSS(".r-img { width:500px; height:600px}");
+        htmlReporter.config().setCSS(".r-img { width:300px; height:200px}");
 //        htmlReporter.config().
         // Name of the report
         htmlReporter.config().setReportName(reportName);
