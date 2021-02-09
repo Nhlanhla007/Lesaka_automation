@@ -36,7 +36,7 @@ public class JDTests extends BaseTest {
 			if(!Key.toString().contains("++")&&!Key.toString().contains("Suites")&&!Key.toString().contains("inputData")) {
 				currentSuite=Key.toString();
 				HashMap<String, ArrayList<String>> singleSuiteData = dataMap2.get(Key);
-				System.out.println("Key:"+Key);
+				System.out.println("currentSuite:"+currentSuite);
 				reportJD=new ExtentReportJD(currentSuite);
 				runSuite(singleSuiteData);
 				reportJD.endReport();
@@ -53,16 +53,15 @@ public class JDTests extends BaseTest {
 			System.out.println("TestCaseNumber:"+i);
 			occCount=new HashMap<String, Integer>();
 			String execute=singleSuiteData.get("Execute").get(i);
-			String testCaseDescription=singleSuiteData.get("testCaseDescription").get(i);
-			ExtentTest test=reportJD.createTest(testCaseDescription);
 			if(execute.toLowerCase().equals("yes")){
+				String testCaseDescription=singleSuiteData.get("testCaseDescription").get(i);
+				testcaseID=Integer.parseInt(singleSuiteData.get("TestCaseID").get(i)) ;
+				ExtentTest test=reportJD.createTest(testcaseID+" : "+testCaseDescription);
 				startBrowserSession();
-				int testcaseID=Integer.parseInt(singleSuiteData.get("TestCaseID").get(i)) ;
 				for(int j=0;j<10;j++){
 					String actionToRunLable="Action"+(j+1);
 					String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
 					currentKeyWord=actionToRun;
-
 					System.out.println("currentKeyWord:"+currentKeyWord);
 					if(!currentKeyWord.equals("")){
 						if(!occCount.containsKey(currentKeyWord)){
@@ -103,8 +102,9 @@ public class JDTests extends BaseTest {
 	public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
 		int numberRows=input.get("TCID").size();
 		int rowNumber=-1;
+		occCount=occCount+1;
 		for(int i=0;i<numberRows;i++){
-			if(input.get("TCID").get(i).equals(Integer.toString(testcaseID+1))&&input.get("occurence").get(i).equals(Integer.toString(occCount+1))){
+			if(input.get("TCID").get(i).equals(Integer.toString(testcaseID))&&input.get("occurence").get(i).equals(Integer.toString(occCount))){
 				rowNumber=i;
 			}
 		}
@@ -125,6 +125,7 @@ public class JDTests extends BaseTest {
 				logger.info("System property returned Null browser type. So getting data from Config file");
 				Report.info("System property returned Null browser type. So getting data from Config file");
 				browserName=ConfigFileReader.getPropertyVal("BrowserType");
+
 			}
 
 			driver = TestCaseBase.initializeTestBaseSetup(browserName);

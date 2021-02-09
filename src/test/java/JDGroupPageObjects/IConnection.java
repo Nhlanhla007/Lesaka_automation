@@ -53,14 +53,13 @@ public class IConnection {
 
 //
             System.out.println("modelStart");
+            System.out.println("rowNumber:"+rowNumber);
+            System.out.println("username:"+input.get("username").get(rowNumber));
+            System.out.println("password:"+input.get("password").get(rowNumber));
             action.writeText(testUserName, input.get("username").get(rowNumber), "username", test);
             action.writeText(testPassword, input.get("password").get(rowNumber), "password", test);
             action.click(testLoginButton, "loginButton", test);
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            action.isElementOnNextPage(userMenu, (long) 5,test);
             System.out.println("modelend");
         }catch (Exception e){
             e.printStackTrace();
@@ -68,16 +67,11 @@ public class IConnection {
     }
     public void logout(ExtentTest test) {
         try {
-
-//
+            //
             System.out.println("modelStart");
             action.click(userMenu, "userMenu", test);
             action.click(logoutLink, "logoutLink", test);
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            action.isElementOnNextPage(testUserName, (long) 5,test);
             System.out.println("modelend");
         }catch (Exception e){
             e.printStackTrace();

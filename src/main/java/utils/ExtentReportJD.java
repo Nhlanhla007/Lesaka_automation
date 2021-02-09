@@ -23,14 +23,19 @@ public class ExtentReportJD {
         htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "/reports/"+reportName+".html");
         // Create an object of Extent Reports
         extent = new ExtentReports();
+
+        htmlReporter.config().setDocumentTitle(reportName);
+//        htmlReporter.config().setAutoCreateRelativePathMedia(true);
+        htmlReporter.config().setReportName(reportName);
+
         extent.attachReporter(htmlReporter);
         extent.setSystemInfo("Browser", "Chrome");
         extent.setSystemInfo("Environment", "QA");
-        htmlReporter.config().setDocumentTitle(reportName);
-        htmlReporter.config().setCSS(".r-img { width:500px; height:600px}");
+
+//        htmlReporter.config().setCSS(".r-img { width:500px; height:600px}");
 //        htmlReporter.config().
         // Name of the report
-        htmlReporter.config().setReportName(reportName);
+//        htmlReporter.config().;
         // Dark Theme
         htmlReporter.config().setTheme(Theme.STANDARD);
 
