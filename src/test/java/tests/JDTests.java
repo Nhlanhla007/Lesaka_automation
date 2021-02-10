@@ -36,7 +36,7 @@ public class JDTests extends BaseTest {
 			if(!Key.toString().contains("++")&&!Key.toString().contains("Suites")&&!Key.toString().contains("inputData")) {
 				currentSuite=Key.toString();
 				HashMap<String, ArrayList<String>> singleSuiteData = dataMap2.get(Key);
-				System.out.println("Key:"+Key);
+				System.out.println("currentSuite:"+currentSuite);
 				reportJD=new ExtentReportJD(currentSuite);
 				runSuite(singleSuiteData);
 				reportJD.endReport();
@@ -53,18 +53,19 @@ public class JDTests extends BaseTest {
 			System.out.println("TestCaseNumber:"+i);
 			occCount=new HashMap<String, Integer>();
 			String execute=singleSuiteData.get("Execute").get(i);
-			String testCaseDescription=singleSuiteData.get("testCaseDescription").get(i);
-			ExtentTest test=reportJD.createTest(testCaseDescription);
 			if(execute.toLowerCase().equals("yes")){
-				startBrowserSession();
+				String testCaseDescription=singleSuiteData.get("testCaseDescription").get(i);
 				testcaseID=Integer.parseInt(singleSuiteData.get("TestCaseID").get(i)) ;
+				ExtentTest test=reportJD.createTest(testcaseID+" : "+testCaseDescription);
+				startBrowserSession();
+
 				for(int j=0;j<10;j++){
 					String actionToRunLable="Action"+(j+1);
 					String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
 					currentKeyWord=actionToRun;
-
+				
+					System.out.println("currentKeyWord:"+currentKeyWord);
 					try {
-						System.out.println("currentKeyWord:"+currentKeyWord);
 						if(!currentKeyWord.equals("")){
 							if(!occCount.containsKey(currentKeyWord)){
 								occCount.put(currentKeyWord,0);
@@ -78,7 +79,7 @@ public class JDTests extends BaseTest {
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
+					} 
 				}
 				endBrowserSession();
 			}
@@ -91,9 +92,9 @@ public class JDTests extends BaseTest {
 		IConnection ic=new IConnection(driver);
 		Ic_Products products = new Ic_Products(driver); //******************ADDED HERE
 		ExtentTest test1=test.createNode(moduleToRun);
-		int rowNumber=0;
+		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
-			//rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
+			rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
 		}
 		switch (moduleToRun) {
 			case "Login":
@@ -102,7 +103,7 @@ public class JDTests extends BaseTest {
 			case "Logout":
 				ic.logout(test1);
 				break;
-			case "Product":
+			case "ProductSearch":
 				products.searchType(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 
@@ -112,8 +113,9 @@ public class JDTests extends BaseTest {
 	public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
 		int numberRows=input.get("TCID").size();
 		int rowNumber=-1;
+		occCount=occCount+1;
 		for(int i=0;i<numberRows;i++){
-			if(input.get("TCID").get(i).equals(Integer.toString(testcaseID+1))&&input.get("occurence").get(i).equals(Integer.toString(occCount+1))){
+			if(input.get("TCID").get(i).equals(Integer.toString(testcaseID))&&input.get("occurence").get(i).equals(Integer.toString(occCount))){
 				rowNumber=i;
 			}
 		}
@@ -134,6 +136,7 @@ public class JDTests extends BaseTest {
 				logger.info("System property returned Null browser type. So getting data from Config file");
 				Report.info("System property returned Null browser type. So getting data from Config file");
 				browserName=ConfigFileReader.getPropertyVal("BrowserType");
+
 			}
 
 			driver = TestCaseBase.initializeTestBaseSetup(browserName);
@@ -166,7 +169,7 @@ public class JDTests extends BaseTest {
 		}
 	}
 	public void endBrowserSession(){
-		driver.close();
+		//driver.close();
 	}
 
 

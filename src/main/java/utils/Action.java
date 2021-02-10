@@ -1,9 +1,6 @@
 package utils;
 
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -57,13 +54,34 @@ public class Action {
 		this.driver = driver;
 	}
 	public String getScreenShot(String screenshotName) throws IOException {
+		File currentDirFile = new File(".");
+		String helper = currentDirFile.getAbsolutePath();
+		helper=helper.replace(".","").replaceAll("\"\"","/");
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		File source = ts.getScreenshotAs(OutputType.FILE);
-		String destination = "/reports/screenshots/" + screenshotName + dateName + ".png";
+		String destination = helper+"reports\\screenshots\\" + 1 + dateName + ".png";
 		File finalDestination = new File(destination);
-		FileUtils.copyFile(source, finalDestination);
+		copyFile(source,finalDestination);
 		return destination;
+	}
+	public void copyFile(File source,File dest){
+
+
+        try {
+//			File file1 = new File(source);
+//			File file2 = new File(dest);
+			FileInputStream fis = new FileInputStream(source);
+			FileOutputStream fos = new FileOutputStream(dest);
+			byte[] buffer = new byte[1024];
+			int length;
+			while ((length = fis.read(buffer)) > 0) {
+				fos.write(buffer, 0, length);
+			}
+		}catch (Exception e){
+
+		}
+
 	}
 
 	/**
@@ -102,6 +120,7 @@ public class Action {
 			}
 		} catch(Throwable e){
 			logger.info("Unable to Click Element: "+ name);
+			e.printStackTrace();
 			try {
 				node.fail("Clicked Element: "+ name,MediaEntityBuilder.createScreenCaptureFromPath(getScreenShot(name)).build());
 			} catch (IOException e1) {
@@ -281,11 +300,11 @@ public class Action {
 //				node.log(Status.PASS,"Writing text: "+text+" to Element: "+ name);
 				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 				String screenShotPath=getScreenShot(dateName);
-				//String codeBlockOne = "<img src=\""+screenShotPath+"\" alt=\"Girl in a jacket\" width=\"500\" height=\"600\">";
+				String codeBlockOne = "<img src=\""+screenShotPath+"\" alt=\"Girl in a jacket\" width=\"500\" height=\"600\"></img>";
 //				String codeBlockTwo = "/a>";
-				//Markup m1 = MarkupHelper.createCodeBlock(codeBlockOne);
-				node.pass("Writing text: "+text+" to Element: ",MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-//				node.log(Status.INFO, "FAQs button clicked);
+				Markup m1 = MarkupHelper.createCodeBlock(codeBlockOne);
+				node.pass("Writing text: "+text+" to Element: "+ m1);
+//				node.log(Status.INFO, "FAQs button clicked",MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 
 			}
 		}catch(Throwable e){
@@ -440,16 +459,35 @@ public class Action {
 
 	//@SuppressWarnings("unchecked")
 	public <T> boolean elementExists(T elementAttr, long time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
-		if (elementAttr.getClass().getName().contains("By")) {
-			By loc = (By) elementAttr;
-			wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
-			return driver.findElements((By) elementAttr).size() > 0;
-		} else {
-			wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
-			return true;
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, time);
+			if (elementAttr.getClass().getName().contains("By")) {
+				By loc = (By) elementAttr;
+				wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
+				return driver.findElements((By) elementAttr).size() > 0;
+			} else {
+				wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
+				return true;
+			}
+		} catch (Exception e) {			
+			e.printStackTrace();
+			return false;
 		}
 
+	}
+
+	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test) {
+		ExtentTest node = test.createNode("is element on next page ?");
+		try {
+			boolean flag = elementExists(elementAttr, time);
+			if (flag) {
+				node.pass("Element is on next page");
+			} else {
+				node.fail("Element is not on next page");
+			}
+		}catch(Exception e){
+			node.fail("issue with getting element"+e.getMessage());
+		}
 	}
 
 	/**
@@ -461,7 +499,7 @@ public class Action {
 	 * @return returns the Boolean value
 	 */
 
-	public <T> void isEnabled(T elementAttr) {
+	public <T> boolean isEnabled(T elementAttr) {
 		if (elementAttr.getClass().getName().contains("By")) {
 			if (!(driver.findElement((By) elementAttr).isEnabled()))
 				logger.info("Element not enabled");
@@ -472,8 +510,35 @@ public class Action {
 			Assert.fail("Element is not displayed");
 
 		}
+		return true;
 
 	}
+	
+	//************************************ADDED LEVERCH FOR NEXT BUTTON ON PRODUCT PAGE
+	public boolean attributeEnabled(WebElement webe) {
+		boolean decide =false;
+		  try { if(webe.isDisplayed()) { decide = true; } }catch(NoSuchElementException
+		  e) { return decide = false; }
+		 
+		if(decide) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, 5);
+			if (webe.getClass().getName().contains("By")) {
+				By loc = (By) webe;
+
+				wait.until(ExpectedConditions.visibilityOf(webe));
+				return true;
+			} else {
+				wait.until(ExpectedConditions.attributeToBe(webe, "aria-disabled", "false"));
+					return true;
+			}
+		} catch (Exception e) {
+			//e.printStackTrace();
+			return false;
+		}
+		}
+		return false;
+	}	
 
 	/**
 	 * isDisplayed() to Check Whether the Element is visible Or not visible

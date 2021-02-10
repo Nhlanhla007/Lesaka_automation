@@ -1,9 +1,11 @@
 package JDGroupPageObjects;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -99,7 +101,7 @@ public class Ic_Products {
 	  */
 	 
 	 //select category from drop down next to product list 
-	 public void ic_CategoryFind(String category) {
+	 public void ic_CategoryFind(String category,String productToFind,ExtentTest test) {
 		 action.mouseover(icProductLink, "MouseOverICProduct");
 		 listElements = new ArrayList<WebElement>();
 		 listElements.add(computersNoteBooks);
@@ -118,20 +120,27 @@ public class Ic_Products {
 		 listElements.add(gift);
 		 listElements.add(downloads);
 		 
-		 for(WebElement el : listElements) {
-			 if(el.getText().contains(category)) {
-				//action.click(el, "Click category link");
-			 }else {
-				 
+		 try {
+			for(WebElement el : listElements) {
+				System.out.println("ENTERS THE LOOP");
+				 if(el.getText().equalsIgnoreCase(category)) {
+					 System.out.println("ENTERS THE if FOR THE CATEGPRIES");
+					action.click(el, "Click product link",test);
+					//ic_SelectProduct(test);
+				 }
 			 }
-		 }
+			Thread.sleep(10000);
+			ic_SelectProduct(test,productToFind);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		 
 	 }
 	 
-	 public void clickNext() {
-		 //action.scrollToElement(ic_ClickNext, "Next");
-		 //ic_ElementVisable(elementToClick);
-		// action.click(ic_ClickNext, "Clicked Next");
+	 public void clickNext(ExtentTest test) {
+		 action.mouseover(ic_ClickNext, "scroll to element");;		 
+		 action.click(ic_ClickNext, "Clicked Next", test);
 	 }
 	 
 	 public List<WebElement> returnList(){
@@ -143,21 +152,36 @@ public class Ic_Products {
 	 }
 	 
 	 //Click product link from bar
-	 public void ic_ClickProductLink(ExtentTest test) {
-		 System.out.println("ENTERS CLICK ON PRODUCT LINK");
-		 if(ic_ElementVisable(icProductLink)) {
-		 action.click(icProductLink, "Click product link",test);
-		 }
+	 public void ic_ClickProductLink(String productToFind, ExtentTest test) {
+		 try {
+			System.out.println("ENTERS CLICK ON PRODUCT LINK");
+			 if(ic_ElementVisable(icProductLink)) {
+			 action.click(icProductLink, "Click product link",test);
+			 Thread.sleep(10000);
+			 ic_SelectProduct(test,productToFind);
+			 }
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		 //To validate page has been loaded
 		 //action.validateUrl("product", "Validate product URL");
 	 }
 	 
 	 //enters text into search bar
-		/*
-		 * public void ic_EnterTextToSearchBar(String text) {
-		 * ic_ElementVisable(icSearchBar); action.writeText(icSearchBar, text,
-		 * "Search for a product"); ic_ClickIcon(icSearchIcon); }
-		 */
+		
+		public void ic_EnterTextToSearchBar(String text,String productToFind,ExtentTest test) {
+			try {
+				ic_ElementVisable(icSearchBar);
+				action.writeText(icSearchBar, text,"SearchBar",test);
+				action.click(icSearchIcon, "Click on search", test);
+				Thread.sleep(10000);
+				ic_SelectProduct(test,productToFind);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		 
 	 
 	 //clicks on search(magnifying glass icon)
 		/*
@@ -170,23 +194,27 @@ public class Ic_Products {
 		 return action.elementExists(element, 10);
 	 }
 	 
-		/*
-		 * public boolean ic_ElementEnabled(WebElement elementAttr) { return
-		 * action.isEnabled(elementAttr); }
-		 */
+		
+		  public boolean ic_ElementEnabled(WebElement elementAttr) {
+			  return action.attributeEnabled(elementAttr);
+			  }
+		 
 	 
 	 //Which search should be run
 	 public void searchType(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) {
+		 String productToSearch = input.get("categorySearch").get(rowNumber);
 		 switch (input.get("typeSearch").get(rowNumber)) {
 		case "searchbar":
-			//ic_EnterTextToSearchBar("");
+			ic_EnterTextToSearchBar(input.get("productsToSearch").get(rowNumber),input.get("specificProduct").get(rowNumber),test);
 			break;
 		case"general":
 			System.out.println("ENTERS THE SWITCH");
-			ic_ClickProductLink(test);
+			ic_ClickProductLink(productToSearch,test);
 			break;
 		case "category":
-			ic_CategoryFind("");
+			System.out.println("ENTERS CATEGORY");
+			System.out.println(productToSearch);
+			ic_CategoryFind(input.get("categorySearch").get(rowNumber),productToSearch,test);
 		break;
 			
 		default:
@@ -194,7 +222,45 @@ public class Ic_Products {
 		}
 	 }
 	 
-		
+	
+	 public void ic_SelectProduct(ExtentTest test,String productToFind) {
+			boolean flagExecute = true;
+			outerloop:
+			while(flagExecute) {
+				List<WebElement> allProducts = returnList();
+				WebElement nextButton = returnNext();
+				System.out.println("While loop flagexecute: "+ flagExecute );
+			for(WebElement el: allProducts) {
+				System.out.println("THIS RUNS INSIDE OF THE FOR LOOP");
+				System.out.println(el.getText());
+				if(el.getText().equalsIgnoreCase(productToFind)) {
+					System.out.println("ENTERS HERE");
+					//DECISION MECHANISM HERE
+					WebElement clickAddToCart = el.findElement(By.xpath("//parent::*/following-sibling::div/div[3]/div/div[1]/form"));
+					clickAddToCart.click();
+					//ic_ClickIcon(el);
+				//ADD TO CART METHOD INSIDE HERE, ALSO IT SHOULD TO A LIST
+				//THE LIST WOULD BE USED TO COMPARE LATER WITH OBJECTS INSIDE OF THE "CART"
+				break outerloop;
+					//flagExecute =false;
+		}
+				
+				}
+			
+			if(ic_ElementEnabled(nextButton)) {
+				clickNext(test);
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				flagExecute =false;
+				System.out.println("Item has not been found anywhere");
+			}
+			}
+		}
 	 
 	 
 	 
