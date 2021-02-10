@@ -140,7 +140,12 @@ public class Ic_Products {
 	 
 	 public void clickNext(ExtentTest test) {
 		 action.mouseover(ic_ClickNext, "scroll to element");;		 
-		 action.click(ic_ClickNext, "Clicked Next", test);
+		 try {
+			action.click(ic_ClickNext, "Clicked Next", test);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	 }
 	 
 	 public List<WebElement> returnList(){
@@ -160,7 +165,7 @@ public class Ic_Products {
 			 Thread.sleep(10000);
 			 ic_SelectProduct(test,productToFind);
 			 }
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

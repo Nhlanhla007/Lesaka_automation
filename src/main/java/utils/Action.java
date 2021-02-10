@@ -102,31 +102,32 @@ public class Action {
 		}
 	}
 
-	public <T> void click(T elementAttr, String name,ExtentTest test)  {
+	public <T> void click(T elementAttr, String name,ExtentTest test) throws IOException {
 		ExtentTest node=test.createNode("Clicked Element: "+ name);
 		
 		try{
 			//String screenShotPath=getScreenShot(name);
 			if (elementAttr.getClass().getName().contains("By")) {
+				JavascriptExecutor jse = (JavascriptExecutor) driver;
+				jse.executeScript("arguments[0].style.border='2px solid red'", driver.findElement((By) elementAttr));
 				driver.findElement((By) elementAttr).click();
 			} else {
+				JavascriptExecutor jse = (JavascriptExecutor) driver;
+				jse.executeScript("arguments[0].style.border='2px solid red'", (WebElement) elementAttr);
 
 				((WebElement) elementAttr).click();
 			}
 			if(name != null){
 				logger.info("Clicked Element: "+ name);
-				node.pass("Clicked Element: "+ name,MediaEntityBuilder.createScreenCaptureFromPath(getScreenShot(name)).build());
+
+				String screenShotPath=getScreenShot(name);
+				node.pass("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShotPath));
 
 			}
 		} catch(Throwable e){
 			logger.info("Unable to Click Element: "+ name);
-			e.printStackTrace();
-			try {
-				node.fail("Clicked Element: "+ name,MediaEntityBuilder.createScreenCaptureFromPath(getScreenShot(name)).build());
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			String screenShotPath=getScreenShot(name);
+			node.fail("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShotPath));
 
 		}
 	}
@@ -287,29 +288,26 @@ public class Action {
 		ExtentTest node = test.createNode("Writing text: "+text+" to Element: "+ name);
 
 		try{
-//			waitFluent((WebElement) elementAttr);
 			if (elementAttr.getClass().getName().contains("By")) {
+				JavascriptExecutor jse = (JavascriptExecutor) driver;
+				jse.executeScript("arguments[0].style.border='2px solid red'", driver.findElement((By) elementAttr));
 				driver.findElement((By) elementAttr).sendKeys(text);
 			} else {
-
+				JavascriptExecutor jse = (JavascriptExecutor) driver;
+				jse.executeScript("arguments[0].style.border='2px solid red'", (WebElement) elementAttr);
 				((WebElement) elementAttr).sendKeys(text);
 			}
 			if(name != null){
-
-
-//				node.log(Status.PASS,"Writing text: "+text+" to Element: "+ name);
 				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 				String screenShotPath=getScreenShot(dateName);
-				String codeBlockOne = "<img src=\""+screenShotPath+"\" alt=\"Girl in a jacket\" width=\"500\" height=\"600\"></img>";
-//				String codeBlockTwo = "/a>";
-				Markup m1 = MarkupHelper.createCodeBlock(codeBlockOne);
-				node.pass("Writing text: "+text+" to Element: "+ m1);
-//				node.log(Status.INFO, "FAQs button clicked",MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				
+				node.pass("Writing text: "+text+" to Element: "+ node.addScreenCaptureFromPath(screenShotPath));
+
 
 			}
 		}catch(Throwable e){
 			e.printStackTrace();
-//				node.log(Status.FAIL,"Writing text: "+text+" to Element: "+ name);
+//
 			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 			String screenShotPath=getScreenShot(dateName);
 			node.fail("Unable to click element :"+name ,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
