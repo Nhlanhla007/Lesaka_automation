@@ -1,5 +1,6 @@
 package JDGroupPageObjects;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -40,7 +41,12 @@ public class IC_Cart {
 	    
 	    public void iCcartVerification(ExtentTest test){
 	    	
-	    	action.click(iCCartButton, "iCCartButton",test);
+	    	try {
+				action.click(iCCartButton, "iCCartButton",test);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 	    	//int numberOfProducts = action.getlistSize(icAllCartProducts);
 	    	List<WebElement> elementName = driver.findElements(By.xpath("//*[@id=\"mini-cart\"]/li"));
 	    	
@@ -68,7 +74,12 @@ public class IC_Cart {
 		    		node.fail("Cart Items not matching the Subtotal");
 		    
 		    	}	
-	    	action.click(icCCheckout, "ClickingOnCheckutButton", test);
+	    	try {
+				action.click(icCCheckout, "ClickingOnCheckutButton", test);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    }
 	       	
 	   
