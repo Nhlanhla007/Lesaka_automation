@@ -121,6 +121,7 @@ public class JDTests extends BaseTest {
 				break;
 			case "Login_magento":
 				icMagento.Login_magento(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
 
 		}
 	}
