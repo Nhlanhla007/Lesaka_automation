@@ -81,7 +81,7 @@ public class JDTests extends BaseTest {
 		}
 	}
 
-	public void runKeyWord(String actionToRun,ExtentTest test){
+	public void runKeyWord(String actionToRun,ExtentTest test) throws IOException{
 		String moduleToRun=actionToRun;
 		IConnection ic=new IConnection(driver);
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
@@ -97,10 +97,12 @@ public class JDTests extends BaseTest {
 			case "Logout":
 				ic.logout(test1);
 				break;
-			case "CreateNewCustomerAccount":
-				//newAcc
+			case "EnterNewUserDetails":
+				newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
-	
+			case "AccountCreationUserDetails":
+				newAcc.AccountCreationUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
 
 		}
 	}
