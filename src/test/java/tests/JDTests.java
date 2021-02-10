@@ -5,6 +5,8 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import base.TestCaseBase;
+import ic_MagentoPageObjects.ic_Magento_Login;
+
 import com.aventstack.extentreports.ExtentTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -93,6 +95,7 @@ public class JDTests extends BaseTest {
 		ic_PayUPayment  PayU = new ic_PayUPayment(driver);
 		Ic_Products products = new Ic_Products(driver);
 		IC_Cart icCart=new IC_Cart(driver);
+		ic_Magento_Login icMagento = new ic_Magento_Login(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -116,7 +119,8 @@ public class JDTests extends BaseTest {
 			case "iCcartVerification":
 				icCart.iCcartVerification(test1);
 				break;
-
+			case "Login_magento":
+				icMagento.Login_magento(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 
 		}
 	}
