@@ -289,6 +289,7 @@ public class Action {
 		ExtentTest node = test.createNode("Writing text: "+text+" to Element: "+ name);
 
 		try{
+//			waitFluent((WebElement) elementAttr);
 			if (elementAttr.getClass().getName().contains("By")) {
 				JavascriptExecutor jse = (JavascriptExecutor) driver;
 				jse.executeScript("arguments[0].style.border='2px solid red'", driver.findElement((By) elementAttr));
@@ -299,6 +300,9 @@ public class Action {
 				((WebElement) elementAttr).sendKeys(text);
 			}
 			if(name != null){
+
+
+//				node.log(Status.PASS,"Writing text: "+text+" to Element: "+ name);
 				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 				String screenShotPath=getScreenShot(dateName);
 				node.pass("Writing text: "+text+" to Element: "+ node.addScreenCaptureFromPath(screenShotPath));
@@ -1354,6 +1358,7 @@ public class Action {
 		});
 		return newElement;
 	}
+
 	//By sourav
 	public void CheckEnabilityofButton(WebElement elementAttr,String name ,boolean Expstatus,ExtentTest test) throws IOException{
 		String TestDescription = "Verify that "+name+" button Enabled ";
@@ -1473,4 +1478,9 @@ public class Action {
 	}
 
 	}
+
+	
+	
+	
+
 }

@@ -92,6 +92,7 @@ public class JDTests extends BaseTest {
 		ic_PaymentOption Payopt=new ic_PaymentOption(driver);
 		ic_PayUPayment  PayU = new ic_PayUPayment(driver);
 		Ic_Products products = new Ic_Products(driver);
+		IC_Cart icCart=new IC_Cart(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -112,6 +113,10 @@ public class JDTests extends BaseTest {
 			case "ProductSearch":
 				products.searchType(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
+			case "iCcartVerification":
+				icCart.iCcartVerification(test1);
+				break;
+
 
 		}
 	}
