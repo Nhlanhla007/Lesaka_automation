@@ -26,6 +26,7 @@ public class JDTests extends BaseTest {
 
 	}
 	//Login to Opera Cloud
+	//latest code
 	@Test
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
@@ -58,12 +59,10 @@ public class JDTests extends BaseTest {
 				testcaseID=Integer.parseInt(singleSuiteData.get("TestCaseID").get(i)) ;
 				ExtentTest test=reportJD.createTest(testcaseID+" : "+testCaseDescription);
 				startBrowserSession();
-
 				for(int j=0;j<10;j++){
 					String actionToRunLable="Action"+(j+1);
 					String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
 					currentKeyWord=actionToRun;
-				
 					System.out.println("currentKeyWord:"+currentKeyWord);
 					try {
 						if(!currentKeyWord.equals("")){
