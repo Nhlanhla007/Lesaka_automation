@@ -175,7 +175,7 @@ public class JDTests extends BaseTest {
 		}
 	}
 	public void endBrowserSession(){
-		//driver.close();
+		driver.close();
 	}
 
 

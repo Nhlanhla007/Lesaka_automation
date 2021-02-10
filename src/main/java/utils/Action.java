@@ -310,7 +310,7 @@ public class Action {
 //
 			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 			String screenShotPath=getScreenShot(dateName);
-			node.fail("Unable to click element :"+name ,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+			node.fail("Unable to click element :"+name +node.addScreenCaptureFromPath(screenShotPath));
 
 
 		}
