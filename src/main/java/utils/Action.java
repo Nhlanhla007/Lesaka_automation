@@ -106,21 +106,25 @@ public class Action {
 		ExtentTest node=test.createNode("Clicked Element: "+ name);
 		try{
 			if (elementAttr.getClass().getName().contains("By")) {
+				JavascriptExecutor jse = (JavascriptExecutor) driver;
+				jse.executeScript("arguments[0].style.border='2px solid red'", driver.findElement((By) elementAttr));
 				driver.findElement((By) elementAttr).click();
 			} else {
+				JavascriptExecutor jse = (JavascriptExecutor) driver;
+				jse.executeScript("arguments[0].style.border='2px solid red'", (WebElement) elementAttr);
 
 				((WebElement) elementAttr).click();
 			}
 			if(name != null){
 				logger.info("Clicked Element: "+ name);
 				String screenShotPath=getScreenShot(name);
-				node.pass("Clicked Element: "+ name+test.addScreenCaptureFromPath(screenShotPath));
+				node.pass("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShotPath));
 
 			}
 		} catch(Throwable e){
 			logger.info("Unable to Click Element: "+ name);
 			String screenShotPath=getScreenShot(name);
-			node.fail("Clicked Element: "+ name+test.addScreenCaptureFromPath(screenShotPath));
+			node.fail("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShotPath));
 
 		}
 	}
@@ -282,14 +286,15 @@ public class Action {
 
 		try{
 			if (elementAttr.getClass().getName().contains("By")) {
+				JavascriptExecutor jse = (JavascriptExecutor) driver;
+				jse.executeScript("arguments[0].style.border='2px solid red'", driver.findElement((By) elementAttr));
 				driver.findElement((By) elementAttr).sendKeys(text);
 			} else {
-
+				JavascriptExecutor jse = (JavascriptExecutor) driver;
+				jse.executeScript("arguments[0].style.border='2px solid red'", (WebElement) elementAttr);
 				((WebElement) elementAttr).sendKeys(text);
 			}
 			if(name != null){
-
-//				node.log(Status.PASS,"Writing text: "+text+" to Element: "+ name);
 				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 				String screenShotPath=getScreenShot(dateName);
 				node.pass("Writing text: "+text+" to Element: "+ node.addScreenCaptureFromPath(screenShotPath));
