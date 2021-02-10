@@ -26,7 +26,7 @@ public class JDTests extends BaseTest {
 
 	}
 	//Login to Opera Cloud
-	//latest code
+
 	@Test
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
@@ -64,15 +64,20 @@ public class JDTests extends BaseTest {
 					String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
 					currentKeyWord=actionToRun;
 					System.out.println("currentKeyWord:"+currentKeyWord);
-					if(!currentKeyWord.equals("")){
-						if(!occCount.containsKey(currentKeyWord)){
-							occCount.put(currentKeyWord,0);
-						}else{
-							int occNum=occCount.get(currentKeyWord);
-							occNum++;
-							occCount.put(currentKeyWord,occNum);
+					try {
+						if(!currentKeyWord.equals("")){
+							if(!occCount.containsKey(currentKeyWord)){
+								occCount.put(currentKeyWord,0);
+							}else{
+								int occNum=occCount.get(currentKeyWord);
+								occNum++;
+								occCount.put(currentKeyWord,occNum);
+							}
+							runKeyWord(actionToRun,test);
 						}
-						runKeyWord(actionToRun,test);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 				endBrowserSession();
@@ -86,6 +91,7 @@ public class JDTests extends BaseTest {
 		IConnection ic=new IConnection(driver);
 		ic_PaymentOption Payopt=new ic_PaymentOption(driver);
 		ic_PayUPayment  PayU = new ic_PayUPayment(driver);
+		Ic_Products products = new Ic_Products(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -103,6 +109,8 @@ public class JDTests extends BaseTest {
 				break;
 			case "PayUPagePayment":
 				PayU.PayUPagePayment(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+			case "ProductSearch":
+				products.searchType(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 
 		}
@@ -152,6 +160,13 @@ public class JDTests extends BaseTest {
 
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
+			driver.navigate().refresh();
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			logger.info("Browser name is "+browserName);
 			Report.info("Browser name is "+browserName);
 			logger.info("App URL: "+ navigateURL);
@@ -160,7 +175,7 @@ public class JDTests extends BaseTest {
 		}
 	}
 	public void endBrowserSession(){
-		driver.close();
+		//driver.close();
 	}
 
 

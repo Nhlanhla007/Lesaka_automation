@@ -104,7 +104,9 @@ public class Action {
 
 	public <T> void click(T elementAttr, String name,ExtentTest test) throws IOException {
 		ExtentTest node=test.createNode("Clicked Element: "+ name);
+		
 		try{
+			//String screenShotPath=getScreenShot(name);
 			if (elementAttr.getClass().getName().contains("By")) {
 				JavascriptExecutor jse = (JavascriptExecutor) driver;
 				jse.executeScript("arguments[0].style.border='2px solid red'", driver.findElement((By) elementAttr));
@@ -117,6 +119,7 @@ public class Action {
 			}
 			if(name != null){
 				logger.info("Clicked Element: "+ name);
+
 				String screenShotPath=getScreenShot(name);
 				node.pass("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShotPath));
 
@@ -307,7 +310,7 @@ public class Action {
 //
 			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 			String screenShotPath=getScreenShot(dateName);
-			node.fail("Unable to click element :"+name +node.addScreenCaptureFromPath(screenShotPath));
+			node.fail("Unable to click element :"+name ,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 
 
 		}
@@ -454,14 +457,19 @@ public class Action {
 
 	//@SuppressWarnings("unchecked")
 	public <T> boolean elementExists(T elementAttr, long time) {
-		WebDriverWait wait = new WebDriverWait(driver, time);
-		if (elementAttr.getClass().getName().contains("By")) {
-			By loc = (By) elementAttr;
-			wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
-			return driver.findElements((By) elementAttr).size() > 0;
-		} else {
-			wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
-			return true;
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, time);
+			if (elementAttr.getClass().getName().contains("By")) {
+				By loc = (By) elementAttr;
+				wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
+				return driver.findElements((By) elementAttr).size() > 0;
+			} else {
+				wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
+				return true;
+			}
+		} catch (Exception e) {			
+			e.printStackTrace();
+			return false;
 		}
 
 	}
@@ -521,6 +529,32 @@ public class Action {
 		return Finalresult;
 	}
 	
+
+	//************************************ADDED LEVERCH FOR NEXT BUTTON ON PRODUCT PAGE
+	public boolean attributeEnabled(WebElement webe) {
+		boolean decide =false;
+		  try { if(webe.isDisplayed()) { decide = true; } }catch(NoSuchElementException
+		  e) { return decide = false; }
+		 
+		if(decide) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, 5);
+			if (webe.getClass().getName().contains("By")) {
+				By loc = (By) webe;
+
+				wait.until(ExpectedConditions.visibilityOf(webe));
+				return true;
+			} else {
+				wait.until(ExpectedConditions.attributeToBe(webe, "aria-disabled", "false"));
+					return true;
+			}
+		} catch (Exception e) {
+			//e.printStackTrace();
+			return false;
+		}
+		}
+		return false;
+	}	
 
 	/**
 	 * isDisplayed() to Check Whether the Element is visible Or not visible
