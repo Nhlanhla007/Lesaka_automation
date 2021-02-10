@@ -1,0 +1,78 @@
+package JDGroupPageObjects;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
+
+import com.aventstack.extentreports.ExtentTest;
+
+import io.qameta.allure.Step;
+import utils.Action;
+
+public class ic_PayUPayment {
+		WebDriver driver;
+		Action action;
+		
+		public ic_PayUPayment(WebDriver driver) {
+			this.driver = driver;
+			PageFactory.initElements(driver, this);
+			action = new Action(driver);
+		}
+		
+		// PAYU site pay option
+		@FindBy(xpath = "//div[@class='toggle-group']//div[1][text()='Card']")
+		WebElement PayU_Card;
+		@FindBy(xpath = "//*[@id='0_cardNumber']")
+		WebElement cardNumber;
+		@FindBy(xpath = "//input[@id='0_nameOnCard']")
+		WebElement nameOnCard;
+		@FindBy(xpath = "//select[@id='0_expMonth']")
+		WebElement expMonth;
+		@FindBy(xpath = "//select[@id='0_expYear']")
+		WebElement expYear;
+		@FindBy(xpath = "//input[@id='0_cvv']")
+		WebElement cvvNumber;
+		@FindBy(xpath = "//button[@id='btnPay']")
+		WebElement PayBtn;
+		
+		@FindBy(xpath = "//p[contains(text(),'Your order # is')]")
+		WebElement OderID;
+		
+
+		public void PayUPagePayment(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+			String cardnumber = input.get("cardnumber").get(rowNumber);
+			String cardholdername = input.get("cardholdername").get(rowNumber);
+			String Expiremonth = input.get("Expiremonth").get(rowNumber);
+			String ExpireYear = input.get("ExpireYear").get(rowNumber);
+			String cvv = input.get("cvv").get(rowNumber);
+			// verify PayU page is opened
+			String PayUpagetittle = input.get("PayUpagetittle").get(rowNumber);
+			action.waitForPageLoaded(21);
+			String actvalue =  action.getCurrentURL();
+			action.CompareResult("Credit page tittle ", PayUpagetittle, actvalue,test);
+			action.clickEle(PayU_Card, " Card option in PayU",test);
+			//Enter card details
+			action.writeText(cardNumber,cardnumber, "card number",test);
+			action.writeText(nameOnCard, cardholdername, "name on card",test);
+			action.dropDownselectbyvisibletext(expMonth, Expiremonth, "Select Expirey Month on Card",test);
+			action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Month on Card",test);
+			action.writeText(cvvNumber, cvv, "cvv number",test);
+			action.clickEle(PayBtn, "Payment submission button",test);
+			action.waitExplicit(21);
+			//Retrieve order ID
+			String Oderid ="";
+			Oderid= action.getText(OderID, "Order ID");
+			if(Oderid.trim()!=""){
+				action.CompareResult("Order id  ", "Order ID ","Order ID "+ Oderid,test);
+			}else{
+				action.CompareResult("Order id ", "Order ID ","Not Found",test);
+			}
+			System.out.println("##############END Execution###############");
+		}
+}

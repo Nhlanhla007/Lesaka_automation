@@ -81,9 +81,11 @@ public class JDTests extends BaseTest {
 		}
 	}
 
-	public void runKeyWord(String actionToRun,ExtentTest test){
+	public void runKeyWord(String actionToRun,ExtentTest test) throws IOException{
 		String moduleToRun=actionToRun;
 		IConnection ic=new IConnection(driver);
+		ic_PaymentOption Payopt=new ic_PaymentOption(driver);
+		ic_PayUPayment  PayU = new ic_PayUPayment(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -95,6 +97,12 @@ public class JDTests extends BaseTest {
 				break;
 			case "Logout":
 				ic.logout(test1);
+				break;
+			case "CheckoutpaymentOption":
+				Payopt.CheckoutpaymentOption(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
+			case "PayUPagePayment":
+				PayU.PayUPagePayment(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 
 		}
