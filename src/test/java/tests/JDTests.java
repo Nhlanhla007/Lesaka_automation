@@ -84,6 +84,7 @@ public class JDTests extends BaseTest {
 	public void runKeyWord(String actionToRun,ExtentTest test){
 		String moduleToRun=actionToRun;
 		IConnection ic=new IConnection(driver);
+		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -96,6 +97,10 @@ public class JDTests extends BaseTest {
 			case "Logout":
 				ic.logout(test1);
 				break;
+			case "CreateNewCustomerAccount":
+				//newAcc
+				break;
+	
 
 		}
 	}
