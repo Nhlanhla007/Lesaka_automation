@@ -81,6 +81,25 @@ public class ic_NewAccountCreation {
 	@FindBy(xpath = "//header/div[3]/div[2]/div[1]/div[1]/div[1]")
 	WebElement existingAccountError;
 	
+	
+	//Sourav TA17
+    @FindBy(xpath = "//*[@id='account-nav']/ul[@class='nav items']/li/a[contains(text(),'Account Information')]")
+    WebElement Account_info_option;
+   
+   
+    @FindBy(xpath = "//input[@id='firstname']")
+    WebElement Firstname;
+    @FindBy(xpath = "//input[@id='lastname']")
+    WebElement Lastname;
+   
+    @FindBy(xpath = "//*[@class='field choice']/label[@for='change-email']")
+    WebElement Change_Emailcheckbox;
+    @FindBy(xpath = "//input[@id='email']")
+    WebElement Email;
+    @FindBy(xpath = "//input[@id='identity_number']")
+    WebElement SAID;
+	
+	
 	@Step("Click on create account")
 	public void ic_NavigateToCreateAccount(ExtentTest test) {
 		try {
@@ -137,6 +156,13 @@ public class ic_NewAccountCreation {
 		String saIDvalidateIncorrectID = input.get("validateIncorrectID").get(rowNumber);
 		String saIDvalidateIDWithLessDigits = input.get("validateIDWithLessDigits").get(rowNumber);
 		String saIDvalidateIDWithMoreDigits = input.get("validateIDWithMoreDigits").get(rowNumber);
+		
+		//SouravTA17
+		String verifyAccFlag = input.get("verifyAccount").get(rowNumber);
+		
+		
+		
+		
 		
 		String existingAccountValidation =input.get("validateExistingAccount").get(rowNumber);		
 		try {
@@ -206,6 +232,10 @@ public class ic_NewAccountCreation {
 				action.elementExistsPopUpMessage(existingAccountError, 4000, existingAccountError.getText(), test);
 			}
 			
+			if(verifyAccFlag.equalsIgnoreCase("yes")) {
+				Verify_Acount_Information(test, firstName, lastName, emailAddress, identityNumber);
+			}
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -269,4 +299,49 @@ public class ic_NewAccountCreation {
 	/*
 	 * public String alterId(String saId) { saId = saId. return; }
 	 */
+	
+	//Sourav TA17
+	@Step("To verify account information")
+    public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID) throws IOException{
+        String ExpPage ="edit";
+        Boolean accInfoOpt = action.elementExists(Account_info_option, 11);
+        if(accInfoOpt==true){
+            action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
+            action.clickEle(Account_info_option, "Account info link", test);
+            action.waitExplicit(11);
+            if(driver.getCurrentUrl().contains(ExpPage+"/")){
+                action.CompareResult("Verify Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
+               
+                String ActualFirstname = action.getAttribute(Firstname, "value");
+               
+                String ActualLastname = action.getAttribute(Lastname, "value");
+               
+                action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
+                action.waitExplicit(5);
+                String ActualEmail = action.getAttribute(Email, "value");
+                action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
+               
+                String ActualSAID = action.getAttribute(SAID, "value");
+            
+                System.out.println(ActualFirstname);
+                action.CompareResult("Verify First Name ", expFirstName,ActualFirstname, test);
+                System.out.println(ActualLastname);
+                action.CompareResult("Verify Last Name ", expLastName,ActualLastname, test);
+                System.out.println(ActualEmail);
+                action.CompareResult("Verify Email Address ", expEmailAddress,ActualEmail, test);
+                System.out.println(ActualSAID);
+                action.CompareResult("Verify SA ID ", expSAID,ActualSAID, test);
+            }else{
+                action.CompareResult("Verify Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
+               
+            }
+        }else{
+            action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
+        }
+       
+       
+        System.out.println("done");
+        //action.selectExactValueFromListUsingText(elementAttr, value);
+    }
+	
 }
