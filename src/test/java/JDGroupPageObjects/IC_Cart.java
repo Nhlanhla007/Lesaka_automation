@@ -39,6 +39,7 @@ public class IC_Cart {
 	    private WebElement icCCheckout;
 	    
 	    
+
 	    public void iCcartVerification(ExtentTest test) throws IOException, InterruptedException {
 	    	action.explicitWait(5000);
 	    	action.click(iCCartButton, "iCCartButton",test);
