@@ -14,6 +14,7 @@ import com.aventstack.extentreports.ExtentTest;
 
 import io.qameta.allure.Step;
 import utils.Action;
+import utils.ConfigFileReader;
 
 public class ic_Magento_Login {
 
@@ -40,10 +41,9 @@ public class ic_Magento_Login {
 		//vv
 		@Step("Login to magento")
 		public void Login_magento(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-			String Magento_url = input.get("URL").get(rowNumber);
 			String Username =input.get("Username").get(rowNumber);
 			String Password =input.get("Password").get(rowNumber);
-			driver.navigate().to(Magento_url);
+			action.navigateToURL(ConfigFileReader.getPropertyVal("MagentoURL"));
 			action.waitForPageLoaded(21);
 			String ResPage = driver.getTitle();
 			if(ResPage.equalsIgnoreCase("Magento Admin")){
