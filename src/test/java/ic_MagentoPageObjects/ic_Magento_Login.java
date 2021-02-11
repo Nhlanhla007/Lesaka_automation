@@ -37,7 +37,7 @@ public class ic_Magento_Login {
 		@FindBy(xpath = "//h1[contains(text(),'Dashboard')]")
 		WebElement Dashboard;
 		
-		
+		//vv
 		@Step("Login to magento")
 		public void Login_magento(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 			String Magento_url = input.get("URL").get(rowNumber);
