@@ -178,6 +178,11 @@ public class Action {
 	 * @return current page URL
 	 */
 
+	public void navigateToURL(String url){
+		driver.navigate().to(url);
+		driver.manage().window().maximize();
+	}
+
 	public String getCurrentURL() {
 		return driver.getCurrentUrl();
 	}
@@ -478,14 +483,18 @@ public class Action {
 
 	}
 
-	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test) {
+	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test){
 		ExtentTest node = test.createNode("is element on next page ?");
 		try {
 			boolean flag = elementExists(elementAttr, time);
 			if (flag) {
-				node.pass("Element is on next page");
+				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
+				String screenShotPath=getScreenShot(dateName);
+				node.pass("Element is on next page"+node.addScreenCaptureFromPath(screenShotPath));
 			} else {
-				node.fail("Element is not on next page");
+				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
+				String screenShotPath=getScreenShot(dateName);
+				node.fail("Element is not on next page"+node.addScreenCaptureFromPath(screenShotPath));
 			}
 		}catch(Exception e){
 			node.fail("issue with getting element"+e.getMessage());
@@ -582,12 +591,14 @@ public class Action {
 		return false;
 	}
 
-	/**
-	 * method is used for clearing the text field
-	 * 
-	 * @param elementAttr
-	 *            Can be web element or By Object
-	 */
+
+	public void explicitWait(int timeInMillsecs){
+		try {
+			Thread.sleep(timeInMillsecs);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 	public <T> void clear(T elementAttr, String name) {
 		try{
 			if (elementAttr.getClass().getName().contains("By")) {

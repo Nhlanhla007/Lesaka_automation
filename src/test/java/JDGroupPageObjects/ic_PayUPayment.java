@@ -52,10 +52,10 @@ public class ic_PayUPayment {
 			String ExpireYear = input.get("ExpireYear").get(rowNumber);
 			String cvv = input.get("cvv").get(rowNumber);
 			// verify PayU page is opened
-			String PayUpagetittle = input.get("PayUpagetittle").get(rowNumber);
-			action.waitForPageLoaded(21);
-			String actvalue =  action.getCurrentURL();
-			action.CompareResult("Credit page tittle ", PayUpagetittle, actvalue,test);
+//			String PayUpagetittle = input.get("PayUpagetittle").get(rowNumber);
+//			action.waitForPageLoaded(21);
+//			String actvalue =  action.getCurrentURL();
+//			action.CompareResult("Credit page tittle ", PayUpagetittle, actvalue,test);
 			action.clickEle(PayU_Card, " Card option in PayU",test);
 			//Enter card details
 			action.writeText(cardNumber,cardnumber, "card number",test);
@@ -64,15 +64,10 @@ public class ic_PayUPayment {
 			action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Month on Card",test);
 			action.writeText(cvvNumber, cvv, "cvv number",test);
 			action.clickEle(PayBtn, "Payment submission button",test);
-			action.waitExplicit(21);
+			action.explicitWait(10);
 			//Retrieve order ID
-			String Oderid ="";
-			Oderid= action.getText(OderID, "Order ID");
-			if(Oderid.trim()!=""){
-				action.CompareResult("Order id  ", "Order ID ","Order ID "+ Oderid,test);
-			}else{
-				action.CompareResult("Order id ", "Order ID ","Not Found",test);
-			}
+			action.isElementOnNextPage(OderID, (long) 5,test);
+			String Oderid= action.getText(OderID, "Order ID");
 			System.out.println("##############END Execution###############");
 		}
 }

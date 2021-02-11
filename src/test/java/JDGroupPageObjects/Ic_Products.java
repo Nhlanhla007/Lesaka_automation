@@ -178,6 +178,7 @@ public class Ic_Products {
 		public void ic_EnterTextToSearchBar(String text,String productToFind,ExtentTest test) {
 			try {
 				ic_ElementVisable(icSearchBar);
+				action.clear(icSearchBar,"SearchBar");
 				action.writeText(icSearchBar, text,"SearchBar",test);
 				action.click(icSearchIcon, "Click on search", test);
 				Thread.sleep(10000);

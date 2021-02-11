@@ -1,5 +1,6 @@
 package JDGroupPageObjects;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -38,8 +39,8 @@ public class IC_Cart {
 	    private WebElement icCCheckout;
 	    
 	    
-	    public void iCcartVerification(ExtentTest test){
-	    	
+	    public void iCcartVerification(ExtentTest test) throws IOException, InterruptedException {
+	    	action.explicitWait(5000);
 	    	action.click(iCCartButton, "iCCartButton",test);
 	    	//int numberOfProducts = action.getlistSize(icAllCartProducts);
 	    	List<WebElement> elementName = driver.findElements(By.xpath("//*[@id=\"mini-cart\"]/li"));

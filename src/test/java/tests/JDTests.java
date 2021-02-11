@@ -47,7 +47,7 @@ public class JDTests extends BaseTest {
 
 
 
-	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException {
+	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException, InterruptedException {
 
 		int numberOfTestCases =singleSuiteData.get("Execute").size();
 		for(int i=0;i<numberOfTestCases;i++){
@@ -63,6 +63,7 @@ public class JDTests extends BaseTest {
 					String actionToRunLable="Action"+(j+1);
 					String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
 					currentKeyWord=actionToRun;
+					System.out.println("actionToRunLable:"+actionToRunLable);
 					System.out.println("currentKeyWord:"+currentKeyWord);
 					try {
 						if(!currentKeyWord.equals("")){
@@ -86,13 +87,14 @@ public class JDTests extends BaseTest {
 		}
 	}
 
-	public void runKeyWord(String actionToRun,ExtentTest test) throws IOException{
+	public void runKeyWord(String actionToRun,ExtentTest test) throws IOException, InterruptedException {
 		String moduleToRun=actionToRun;
 		IConnection ic=new IConnection(driver);
 		ic_PaymentOption Payopt=new ic_PaymentOption(driver);
 		ic_PayUPayment  PayU = new ic_PayUPayment(driver);
 		Ic_Products products = new Ic_Products(driver);
 		IC_Cart icCart=new IC_Cart(driver);
+		ICDelivery icDelivery=new ICDelivery(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -110,11 +112,15 @@ public class JDTests extends BaseTest {
 				break;
 			case "PayUPagePayment":
 				PayU.PayUPagePayment(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
 			case "ProductSearch":
 				products.searchType(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "iCcartVerification":
 				icCart.iCcartVerification(test1);
+				break;
+			case "deliveryPopulation":
+				icDelivery.deliveryPopulation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 
 
@@ -180,6 +186,7 @@ public class JDTests extends BaseTest {
 		}
 	}
 	public void endBrowserSession(){
+
 		driver.close();
 	}
 

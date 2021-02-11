@@ -87,9 +87,9 @@ public class ic_PaymentOption {
      }
 
 	public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+		action.explicitWait(5000);
 		System.out.println("##############START Execution###############");
 		String Paytype = input.get("Paytype_Option").get(rowNumber);
-		
 		//check PlaceOrderbtn Status 
 		action.CheckEnabilityofButton(Btn_PlaceOrder,"Place Order", false,test);
 		WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
