@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import base.TestCaseBase;
 import ic_MagentoPageObjects.ic_Magento_Login;
-
+import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import com.aventstack.extentreports.ExtentTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -98,6 +98,7 @@ public class JDTests extends BaseTest {
 		IC_Cart icCart=new IC_Cart(driver);
 		ICDelivery icDelivery=new ICDelivery(driver);
 		ic_Magento_Login icMagento = new ic_Magento_Login(driver);
+		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -128,7 +129,9 @@ public class JDTests extends BaseTest {
 			case "Login_magento":
 				icMagento.Login_magento(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
-
+			case"OrderStatusSearch":
+				orderStatus.navigateToOrderPage(dataMap2.get(currentKeyWord+"++"),test,rowNumber);
+				break;
 		}
 	}
 
@@ -191,7 +194,6 @@ public class JDTests extends BaseTest {
 		}
 	}
 	public void endBrowserSession(){
-
 		driver.close();
 	}
 
