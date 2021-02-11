@@ -100,8 +100,8 @@ public class JDTests extends BaseTest {
 			case "EnterNewUserDetails":
 				newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
-			case "AccountCreationUserDetails":
-				newAcc.AccountCreationUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+			case "accountCreation":
+				newAcc.accountCreation(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 
 		}
@@ -151,6 +151,7 @@ public class JDTests extends BaseTest {
 
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
+			driver.navigate().refresh();
 			logger.info("Browser name is "+browserName);
 			Report.info("Browser name is "+browserName);
 			logger.info("App URL: "+ navigateURL);
@@ -159,7 +160,7 @@ public class JDTests extends BaseTest {
 		}
 	}
 	public void endBrowserSession(){
-		driver.close();
+		//driver.close();
 	}
 
 
