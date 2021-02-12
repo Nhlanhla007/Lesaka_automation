@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import base.TestCaseBase;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.ic_Magento_Login;
-
+import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 import com.aventstack.extentreports.ExtentTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -100,7 +100,7 @@ public class JDTests extends BaseTest {
 		ICDelivery icDelivery=new ICDelivery(driver);
 		ic_Magento_Login icMagento = new ic_Magento_Login(driver);
 		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver);
-
+		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -134,6 +134,9 @@ public class JDTests extends BaseTest {
 			case"OrderStatusSearch":
 				orderStatus.navigateToOrderPage(dataMap2.get(currentKeyWord+"++"),test,rowNumber);
 				break;
+			case "GenerateOrderSAPnumber":
+				icOrderSAPnumber.GenerateOrderSAPnumber(test1);
+				break;	
 
 		}
 	}

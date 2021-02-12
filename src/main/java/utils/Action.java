@@ -1477,7 +1477,7 @@ public class Action {
 				//CHANGED THE ABOVE FROM test.pass TO node.pass	AS IT WAS NOT DISPAYING IN REPORT
 			} else {
 				node.fail("Error found  : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-		
+				
 			}
 			
 		} catch(Throwable e){
