@@ -1,10 +1,6 @@
 package utils;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 public class ConfigFileReader {
@@ -35,6 +31,25 @@ public class ConfigFileReader {
 	{
 		return properties.getProperty(key);
 	}
+	public static String getPropertySavedVal(String key){
+		String basePath = System.getProperty("user.dir");
+		FileInputStream fip = null;
+		try {
+			fip = new FileInputStream(basePath+"\\src\\test\\resources\\data\\savedVar.properties");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Properties prop = new Properties();
+		try {
+			prop.load(fip);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String value = prop.getProperty(key);
+		return value;
+	}
 	
 	public static String getPropertyVal(String key){
 		String basePath = System.getProperty("user.dir");
@@ -54,6 +69,18 @@ public class ConfigFileReader {
 		}
 		String value = prop.getProperty(key);
 		return value;
+	}
+	public void setPropertyVal(String key,String value) throws IOException {
+		//Instantiating the properties file
+		String basePath = System.getProperty("user.dir");
+		Properties props = new Properties();
+		//Populating the properties file
+		props.put(key, value);
+		//Instantiating the FileInputStream for output file
+		String path = basePath+"\\src\\test\\resources\\data\\savedVar.properties";
+		FileOutputStream outputStrem = new FileOutputStream(path);
+		//Storing the properties file
+		props.store(outputStrem, "This is a sample properties file");
 	}
 	
 }

@@ -14,6 +14,7 @@ import com.aventstack.extentreports.ExtentTest;
 
 import io.qameta.allure.Step;
 import utils.Action;
+import utils.ConfigFileReader;
 
 public class ic_PayUPayment {
 		WebDriver driver;
@@ -68,6 +69,8 @@ public class ic_PayUPayment {
 			//Retrieve order ID
 			action.isElementOnNextPage(OderID, (long) 5,test);
 			String Oderid= action.getText(OderID, "Order ID");
+			ConfigFileReader configFileReader = new ConfigFileReader();
+			configFileReader.setPropertyVal("OrderID",Oderid.replace("Your order # is: ","").replace(".",""));
 			System.out.println("##############END Execution###############");
 		}
 }

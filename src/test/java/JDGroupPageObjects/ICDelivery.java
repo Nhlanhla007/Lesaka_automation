@@ -65,6 +65,7 @@ public class ICDelivery {
     public void deliveryPopulation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException {
         action.explicitWait(5000);
         action.click(deliveryLink,"deliveryLink",test);
+        action.explicitWait(5000);
         action.writeText(streetName,input.get("streetName").get(rowNumber),"streetName",test);
         action.writeText(firstName,input.get("firstName").get(rowNumber),"firstName",test);
         action.writeText(lastname,input.get("lastname").get(rowNumber),"lastname",test);
