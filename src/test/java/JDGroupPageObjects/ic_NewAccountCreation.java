@@ -98,7 +98,21 @@ public class ic_NewAccountCreation {
     WebElement Email;
     @FindBy(xpath = "//input[@id='identity_number']")
     WebElement SAID;
+  // Sourav TA19 customer info after click on Customer info 
 	
+	  @FindBy(xpath = "//span[contains(text(),'Account Information')]")
+	  WebElement Account_Info_link;
+	
+	  @FindBy(xpath = "//input[@name='customer[firstname]']")
+	  WebElement customerFirstname;
+	  @FindBy(xpath = "//input[@name='customer[lastname]']")
+	  WebElement customerLastname;
+	  @FindBy(xpath = "//input[@name='customer[email]']")
+	  WebElement customerEmail;
+	  @FindBy(xpath = "//input[@name='customer[partner_number]']")
+	  WebElement customerBPnnumber;
+	  @FindBy(xpath = "//input[@name='customer[identity_number]']")
+	  WebElement customerIdentityNumber;
 	
 	@Step("Click on create account")
 	public void ic_NavigateToCreateAccount(ExtentTest test) {
@@ -159,7 +173,8 @@ public class ic_NewAccountCreation {
 		
 		//SouravTA17
 		String verifyAccFlag = input.get("verifyAccount").get(rowNumber);
-		
+		//Sourav TA19 
+		String verifyMagentoDetails = input.get("VerifyAccountDetailsInMagentoBackend").get(rowNumber);
 		
 		
 		
@@ -235,7 +250,9 @@ public class ic_NewAccountCreation {
 			if(verifyAccFlag.equalsIgnoreCase("yes")) {
 				Verify_Acount_Information(test, firstName, lastName, emailAddress, identityNumber);
 			}
-			
+			if(verifyMagentoDetails.equalsIgnoreCase("Yes")) {
+				Magento_VerifyCustomerDetails(test ,firstName,lastName,emailAddress,identityNumber);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -343,5 +360,38 @@ public class ic_NewAccountCreation {
         System.out.println("done");
         //action.selectExactValueFromListUsingText(elementAttr, value);
     }
-	
+	public void Magento_VerifyCustomerDetails(ExtentTest test,String expFristname,String expLastname,String expEmail,String expSAID) throws IOException{
+		//replace by this Parameter while merge parameter (ExtentTest test,String expFristname,String expLastname,String expEmail,String expSAID)
+		
+		try {
+			int loadtime=20;
+			
+			String expBPnumber =null;
+			
+			//Starts from Account information tab
+			action.waitExplicit(loadtime);
+			String ActualFirstname = action.getAttribute(customerFirstname, "value");
+			String ActualLastname = action.getAttribute(customerLastname, "value");
+			String ActualEmail = action.getAttribute(customerEmail, "value");
+			String ActualBPnumber = action.getAttribute(customerBPnnumber, "value");
+			String ActualIdentityNumber= action.getAttribute(customerIdentityNumber, "value");
+			
+			action.CompareResult("Verify the First name of user in Magento", expFristname, ActualFirstname, test);
+			action.CompareResult("Verify the Last name of user in Magento", expLastname, ActualLastname, test);
+			action.CompareResult("Verify the Email of user in Magento", expEmail, ActualEmail, test);
+			
+			action.CompareResult("Verify the SA ID number of user in Magento", expEmail, ActualEmail, test);
+			boolean FlagGenerateBPnumber=false;
+			if(ActualBPnumber!=null){
+				FlagGenerateBPnumber=true;
+				action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
+				
+			}else{
+				action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			action.CompareResult("Magento_VerifyCustomerDetails method failed : "+"ERROR found as "+e.getMessage(), String.valueOf(true),String.valueOf(false), test);
+		}
+	}
 }
