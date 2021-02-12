@@ -368,7 +368,7 @@ public class ic_NewAccountCreation {
 			
 			String expBPnumber =null;
 			
-			//Starts from Account information tab
+			//Starts from Account information tab.
 			action.waitExplicit(loadtime);
 			String ActualFirstname = action.getAttribute(customerFirstname, "value");
 			String ActualLastname = action.getAttribute(customerLastname, "value");
