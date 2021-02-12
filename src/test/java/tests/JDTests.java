@@ -96,6 +96,7 @@ public class JDTests extends BaseTest {
 		ic_PayUPayment  PayU = new ic_PayUPayment(driver);
 		Ic_Products products = new Ic_Products(driver);
 		IC_Cart icCart=new IC_Cart(driver);
+		ic_AccountConfirmation icAccountConfirmation = new ic_AccountConfirmation(driver);
 		ICDelivery icDelivery=new ICDelivery(driver);
 		ic_Magento_Login icMagento = new ic_Magento_Login(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
@@ -128,6 +129,8 @@ public class JDTests extends BaseTest {
 			case "Login_magento":
 				icMagento.Login_magento(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
+			case "icAccountConfirmation":
+				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);	
 
 		}
 	}

@@ -1490,8 +1490,44 @@ public class Action {
 
 	}
 
+	public void checkIfPageIsLoadedByURL(String urlFragment,String name ,ExtentTest test) {
+		ExtentTest node = test.createNode("Clicked Element: " + name);
+		try {
+		String screenShotPath=getScreenShot(name);
+		if(driver.getCurrentUrl().contains(urlFragment)) {
+		node.pass("Page has been loaded: "+ name +node.addScreenCaptureFromPath(screenShotPath));
+		}else {
+		node.fail("Page has not been loaded: "+ name +node.addScreenCaptureFromPath(screenShotPath));
+		}
+		} catch (IOException e) {
+
+		e.printStackTrace();
+
+		}
+	}
 	
-	
-	
+	public <T> boolean elementExistWelcome(T elementAttr, long time, String name, ExtentTest test){
+		ExtentTest node = test.createNode(name);
+		try {
+			String ScreenShotPath = getScreenShot(name);
+			WebDriverWait wait = new WebDriverWait(driver, time);
+			if (elementAttr.getClass().getName().contains("By")){
+				By loc = (By) elementAttr;
+				wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
+				return driver.findElements((By) elementAttr).size() > 0;	
+			} else {
+				wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
+				node.pass("Pop up is display "+ name+node.addScreenCaptureFromPath(ScreenShotPath));
+				return true;
+			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				node.fail("Pop up is NOT displayed");
+				return false;
+				
+			}
+
+	}
+
 
 }
