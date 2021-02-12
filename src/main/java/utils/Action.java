@@ -1525,5 +1525,14 @@ public class Action {
 	}
 	
 	
+	public void noRecordsReturnedFromTable(ExtentTest test,String name) {
+		try {
+			ExtentTest node = test.createNode("Clicked Element: " + name);
+			String screenShotPath=getScreenShot(name);
+			node.fail(name +node.addScreenCaptureFromPath(screenShotPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

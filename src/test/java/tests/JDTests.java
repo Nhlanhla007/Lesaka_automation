@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 import base.TestCaseBase;
 import ic_MagentoPageObjects.ic_Magento_Login;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
+import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
+
 import com.aventstack.extentreports.ExtentTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -99,6 +101,7 @@ public class JDTests extends BaseTest {
 		ICDelivery icDelivery=new ICDelivery(driver);
 		ic_Magento_Login icMagento = new ic_Magento_Login(driver);
 		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver);
+		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -131,6 +134,9 @@ public class JDTests extends BaseTest {
 				break;
 			case"OrderStatusSearch":
 				orderStatus.navigateToOrderPage(dataMap2.get(currentKeyWord+"++"),test,rowNumber);
+				break;
+			case"RetrieveCustomerDetails":
+				custDetails.retrieveCustomerDetails(dataMap2.get(currentKeyWord+"++"),test,rowNumber);
 				break;
 		}
 	}
@@ -171,7 +177,7 @@ public class JDTests extends BaseTest {
 			if(navigateURL==null){
 				logger.info("System property returned Null URL. So getting data from Config file");
 				Report.info("System property returned Null URL. So getting data from Config file");
-				navigateURL = ConfigFileReader.getPropertyVal("URL");
+				navigateURL = ConfigFileReader.getPropertyVal("MagentoURL");
 			}
 
 			logger.info("Navigate to URL");
@@ -180,8 +186,9 @@ public class JDTests extends BaseTest {
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
+			
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(20000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -194,7 +201,7 @@ public class JDTests extends BaseTest {
 		}
 	}
 	public void endBrowserSession(){
-		driver.close();
+		//driver.close();
 	}
 
 
