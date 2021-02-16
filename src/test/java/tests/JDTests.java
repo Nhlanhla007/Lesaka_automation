@@ -62,6 +62,7 @@ public class JDTests extends BaseTest {
 				testcaseID=Integer.parseInt(singleSuiteData.get("TestCaseID").get(i)) ;
 				ExtentTest test=reportJD.createTest(testcaseID+" : "+testCaseDescription);
 				startBrowserSession();
+				configFileReader.setPropertyVal("sequence","true");
 				for(int j=0;j<10;j++){
 					String actionToRunLable="Action"+(j+1);
 					String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
@@ -77,7 +78,9 @@ public class JDTests extends BaseTest {
 								occNum++;
 								occCount.put(currentKeyWord,occNum);
 							}
-							runKeyWord(actionToRun,test);
+							if(configFileReader.getPropertySavedVal("sequence").equals("true")){
+								runKeyWord(actionToRun,test);
+							}
 						}
 					} catch (Exception e) {
 						// TODO Auto-generated catch block

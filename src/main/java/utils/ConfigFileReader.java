@@ -78,9 +78,10 @@ public class ConfigFileReader {
 		props.put(key, value);
 		//Instantiating the FileInputStream for output file
 		String path = basePath+"\\src\\test\\resources\\data\\savedVar.properties";
-		FileOutputStream outputStrem = new FileOutputStream(path);
+		FileOutputStream outputStrem = new FileOutputStream(path,true);
 		//Storing the properties file
-		props.store(outputStrem, "This is a sample properties file");
+		props.store(outputStrem, null);
+
 	}
 	
 }

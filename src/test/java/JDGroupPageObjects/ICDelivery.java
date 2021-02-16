@@ -60,12 +60,17 @@ public class ICDelivery {
     @FindBy(xpath = "//*[@id=\"opc-sidebar\"]/div[1]/div[1]/button")
     WebElement ContinueToPayment;
 
+    @FindBy(xpath = "//*[@id='opc-sidebar']/div[1]/div[1]/button")
+    WebElement Btn_PlaceOrder;
 
 
-    public void deliveryPopulation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException {
-        action.explicitWait(5000);
+
+    public void deliveryPopulation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException {
+
+//        action.isElementOnNextPage(deliveryLink,(long)10,test);
+        Thread.sleep(5000);
         action.click(deliveryLink,"deliveryLink",test);
-        action.explicitWait(5000);
+//        action.isElementOnNextPage(streetName,(long)10,test);
         action.writeText(streetName,input.get("streetName").get(rowNumber),"streetName",test);
         action.writeText(firstName,input.get("firstName").get(rowNumber),"firstName",test);
         action.writeText(lastname,input.get("lastname").get(rowNumber),"lastname",test);
@@ -77,7 +82,11 @@ public class ICDelivery {
         action.writeText(email,input.get("email").get(rowNumber),"email",test);
         action.writeText(idNumber,input.get("idNumber").get(rowNumber),"idNumber",test);
         action.dropDownselectbyvisibletext(province,input.get("province").get(rowNumber),"province",test);
-        action.explicitWait(10000);
+        Thread.sleep(10000);
+//        action.isElementOnNextPage(ContinueToPayment,(long)10,test);
         action.click(ContinueToPayment,"ContinueToPayment",test);
+
+
+
     }
 }

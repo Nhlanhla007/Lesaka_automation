@@ -33,9 +33,9 @@ public class ic_MagentoOrderSAPnumber {
     
     public void GenerateOrderSAPnumber( ExtentTest test ){
     	
-    	String navigateURL = ConfigFileReader.getPropertyVal("URL");
-    	action.navigateToURL("https://staging-jdgroup-m23.vaimo.net/T5sjY7drHkyB6Z4n/sales/order/view/order_id/2297/key/5a2950d9fb153d87004762841a476070b240ea9fac19aefa18835be91cc06bd3/");
-    	
+//    	String navigateURL = ConfigFileReader.getPropertyVal("URL");
+//    	action.navigateToURL("https://staging-jdgroup-m23.vaimo.net/T5sjY7drHkyB6Z4n/sales/order/view/order_id/2297/key/5a2950d9fb153d87004762841a476070b240ea9fac19aefa18835be91cc06bd3/");
+//
     	boolean flagres = false;
     	int timer= 10;
     	int totalConunter=1;
@@ -45,18 +45,17 @@ public class ic_MagentoOrderSAPnumber {
     	System.out.println(totalConunter);
     	OrderSAPnumber = action.getText(OrderDetailSAPNumber, "SAP Number");
     	System.out.println(OrderSAPnumber);
-    	
     	if(OrderSAPnumber.length() <= 29){
-    		
     		action.explicitWait(10);
     		action.refresh();
+			System.out.println("not found on count:" + totalConunter);
     	}else{
     		flagres = true;
     	}
-    	
-    	totalConunter++;
+
+    		totalConunter++;
     	}while(totalConunter<=10 && !flagres);
-    	
+    	//to update
     	System.out.println("OrderSAPnumber :" + OrderSAPnumber);
     		
     	

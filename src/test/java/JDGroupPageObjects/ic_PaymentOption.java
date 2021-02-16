@@ -90,18 +90,17 @@ public class ic_PaymentOption {
 		action.explicitWait(5000);
 		System.out.println("##############START Execution###############");
 		String Paytype = input.get("Paytype_Option").get(rowNumber);
-		//check PlaceOrderbtn Status 
-		action.CheckEnabilityofButton(Btn_PlaceOrder,"Place Order", false,test);
+		action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 		WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
-		action.clickEle(paymenttype, "Select Payment option "+Paytype,test);
+		action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
 		action.waitExplicit(11);
-		//MailBill Checkbox Present	
+		//MailBill Checkbox Present
 		boolean resActBillnShip = action.elementExists(Billingshipping, 11);
-		action.CompareResult("Verify the mailing and billing checkbox is present and clicked",  String.valueOf(true), String.valueOf(resActBillnShip),test);
+		action.CompareResult("Verify the mailing and billing checkbox is present and clicked", String.valueOf(true), String.valueOf(resActBillnShip), test);
 		//clicking on plcae order button
-		WebDriverWait wait = new WebDriverWait(driver,30);
+		WebDriverWait wait = new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.elementToBeClickable(Btn_PlaceOrder));
-        action.clickEle(Btn_PlaceOrder,"Click on Place order Button ",test);
+		action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
         
 	}
 	

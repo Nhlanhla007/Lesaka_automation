@@ -52,11 +52,6 @@ public class ic_PayUPayment {
 			String Expiremonth = input.get("Expiremonth").get(rowNumber);
 			String ExpireYear = input.get("ExpireYear").get(rowNumber);
 			String cvv = input.get("cvv").get(rowNumber);
-			// verify PayU page is opened
-//			String PayUpagetittle = input.get("PayUpagetittle").get(rowNumber);
-//			action.waitForPageLoaded(21);
-//			String actvalue =  action.getCurrentURL();
-//			action.CompareResult("Credit page tittle ", PayUpagetittle, actvalue,test);
 			action.clickEle(PayU_Card, " Card option in PayU",test);
 			//Enter card details
 			action.writeText(cardNumber,cardnumber, "card number",test);

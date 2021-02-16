@@ -92,7 +92,7 @@ public class MagentoOrderStatusPage {
 			action.writeText(magentoIdSearchField, idToSearch, "searchId", test);
 			action.click(magentoApplyFilterTab, "Apply to filters", test);
 			// verify if a row is returned
-			Thread.sleep(10000);
+			Thread.sleep(20000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -103,7 +103,7 @@ public class MagentoOrderStatusPage {
 			confirmRows(magentoTableRecords, test);
 			if (magentoTableRecords.size() == 1) {
 				action.click(viewOrderDetails, "Order Status", test);
-				Thread.sleep(5000);
+				Thread.sleep(10000);
 				action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
 			} else {
 				action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);

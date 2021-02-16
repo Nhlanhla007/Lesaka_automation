@@ -45,6 +45,7 @@ public class Action {
 	public final int WAIT_IN_SECONDS_MIN = 2;
 	public final int WAIT_IN_SECONDS_MED = 4;
 	public final int WAIT_IN_SECONDS_MAX = 6;
+	ConfigFileReader configFileReader = new ConfigFileReader();
 	
 	WebElement newElement = null;
 	
@@ -119,7 +120,6 @@ public class Action {
 			}
 			if(name != null){
 				logger.info("Clicked Element: "+ name);
-
 				String screenShotPath=getScreenShot(name);
 				node.pass("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShotPath));
 
@@ -128,7 +128,7 @@ public class Action {
 			logger.info("Unable to Click Element: "+ name);
 			String screenShotPath=getScreenShot(name);
 			node.fail("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShotPath));
-
+			configFileReader.setPropertyVal("sequence","false");
 		}
 	}
 
@@ -292,7 +292,6 @@ public class Action {
 
 	public <T> void writeText(T elementAttr, String text, String name, ExtentTest test) throws IOException {
 		ExtentTest node = test.createNode("Writing text: "+text+" to Element: "+ name);
-
 		try{
 //			waitFluent((WebElement) elementAttr);
 			if (elementAttr.getClass().getName().contains("By")) {
@@ -305,23 +304,16 @@ public class Action {
 				((WebElement) elementAttr).sendKeys(text);
 			}
 			if(name != null){
-
-
 //				node.log(Status.PASS,"Writing text: "+text+" to Element: "+ name);
 				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 				String screenShotPath=getScreenShot(dateName);
 				node.pass("Writing text: "+text+" to Element: "+ node.addScreenCaptureFromPath(screenShotPath));
-
-
 			}
 		}catch(Throwable e){
-			e.printStackTrace();
-//
 			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 			String screenShotPath=getScreenShot(dateName);
 			node.fail("Unable to click element :"+name +node.addScreenCaptureFromPath(screenShotPath));
-
-
+			configFileReader.setPropertyVal("sequence","false");
 		}
 	}
 
@@ -483,7 +475,7 @@ public class Action {
 
 	}
 
-	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test){
+	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test) throws IOException {
 		ExtentTest node = test.createNode("is element on next page ?");
 		try {
 			boolean flag = elementExists(elementAttr, time);
@@ -495,9 +487,11 @@ public class Action {
 				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 				String screenShotPath=getScreenShot(dateName);
 				node.fail("Element is not on next page"+node.addScreenCaptureFromPath(screenShotPath));
+				configFileReader.setPropertyVal("sequence","false");
 			}
 		}catch(Exception e){
 			node.fail("issue with getting element"+e.getMessage());
+			configFileReader.setPropertyVal("sequence","false");
 		}
 	}
 
@@ -600,7 +594,7 @@ public class Action {
 			e.printStackTrace();
 		}
 	}
-	public <T> void clear(T elementAttr, String name) {
+	public <T> void clear(T elementAttr, String name) throws IOException {
 		try{
 			if (elementAttr.getClass().getName().contains("By")) {
 				driver.findElement((By) elementAttr).clear();
@@ -614,7 +608,8 @@ public class Action {
 
 			}
 		}catch(Throwable e){
-			e.printStackTrace();
+//			e.printStackTrace();
+			configFileReader.setPropertyVal("sequence","false");
 
 		}
 	}
@@ -670,7 +665,6 @@ public class Action {
 			}
 		}catch(Throwable e){
 			e.printStackTrace();
-
 		}
 	}
 
@@ -1396,36 +1390,6 @@ public class Action {
 			}
 		}
 	}
-	public void checkIfPageIsLoadedByURL(String urlFragment,String name ,ExtentTest test) {
-		ExtentTest node = test.createNode("Clicked Element: " + name);
-		try {
-			String screenShotPath=getScreenShot(name);
-			if(driver.getCurrentUrl().contains(urlFragment)) {
-				node.pass("Page has been loaded: "+ name +node.addScreenCaptureFromPath(screenShotPath));
-			}else {
-				node.fail("Page has not been loaded: "+ name +node.addScreenCaptureFromPath(screenShotPath));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	public void expectSingleRow(List<WebElement> elements, String name, ExtentTest test) {
-		ExtentTest node = test.createNode("Clicked Element: " + name);
-		System.out.println(elements.size());
-		try {
-			String screenShotPath = getScreenShot(name);
-			if (elements.size() >= 2) {
-				node.fail("More than one element was returned" + name + node.addScreenCaptureFromPath(screenShotPath));
-			} else if (elements.size() == 1) {
-				node.pass(
-						"Exactly one element has been returned" + name + node.addScreenCaptureFromPath(screenShotPath));
-			} else {
-				node.fail("No results has been found" + name + node.addScreenCaptureFromPath(screenShotPath));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	public <T> void clickEle(T elementAttr, String name,ExtentTest test) throws IOException  {
 		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
 		ExtentTest node=test.createNode("Clicked Element: "+ name);
@@ -1491,7 +1455,7 @@ public class Action {
 			
 		}
 	}
-	public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
+	public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) throws IOException {
 		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
 		ExtentTest node=test.createNode("Select value from dropdown : "+ Testname);
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
@@ -1509,7 +1473,7 @@ public class Action {
 				node.pass("Successfully selected : " + Testname + " Expected : "+valueToselect+" Actual :"+res,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 			}
 		  }catch(Throwable e){
-			e.printStackTrace();
+			configFileReader.setPropertyVal("sequence","false");
 			try {
 				String screenShotPath=getScreenShot(dateName);
 				test.fail("Error to select  : " + valueToselect + " form the dropdown : "+Testname+" Error message :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
