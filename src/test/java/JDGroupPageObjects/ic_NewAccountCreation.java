@@ -124,36 +124,7 @@ public class ic_NewAccountCreation {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	@Step("Verify IC Home page is opened sucessfully")
-	public  void ic_verifyICHomepage(){
 
-	}	
-
-	@Step("verify create new  account  page")
-	public  void ic_VerifyICAccountcreatePage(){
-
-	}	
-	@Step("verify create new  account  page")
-	public void EnterNewUserDetails(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-		/*
-		 * System.out.println("HI"); try { String
-		 * userFirstname=input.get("User_Firstname").get(rowNumber); String userLastname
-		 * = input.get("User_Lastname").get(rowNumber); String emailid =
-		 * input.get("Email").get(rowNumber); action.writeText(User_Firstname,
-		 * userFirstname, "Enter Fistname feild value :"+userFirstname,test);
-		 * action.writeText(User_Lastname, userLastname,
-		 * "Enter Lastname feild value :"+userFirstname,test);
-		 * action.writeText(User_EmailId, emailid,
-		 * "emailId feild value :"+emailid,test); } catch (Exception e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 */
-			
-		
-	
-		
-	}
 	@Step("Create account")
 	public  void accountCreation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 		String firstName = input.get("firstName").get(rowNumber);
@@ -175,7 +146,6 @@ public class ic_NewAccountCreation {
 		String verifyAccFlag = input.get("verifyAccount").get(rowNumber);
 		//Sourav TA19 
 		String verifyMagentoDetails = input.get("VerifyAccountDetailsInMagentoBackend").get(rowNumber);
-		
 		
 		
 		
@@ -230,7 +200,7 @@ public class ic_NewAccountCreation {
 				ic_VerifySAIDLimit(identityWithMore, test);
 
 			}
-			
+
 			
 			
 			if(passwordValidation.equalsIgnoreCase("yes")) {

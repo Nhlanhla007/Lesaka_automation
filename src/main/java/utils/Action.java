@@ -684,7 +684,6 @@ public class Action {
 				wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
 			} catch (Exception e) {
 				logger.info("Element Not Found:");
-				e.printStackTrace();
 			}
 		}
 	}
@@ -1478,7 +1477,7 @@ public class Action {
 
 			} catch (IOException e) {
 
-				e.printStackTrace();
+				node.fail("Page has not been loaded: " + name + e.getMessage());
 
 			}
 
