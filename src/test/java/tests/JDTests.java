@@ -104,6 +104,7 @@ public class JDTests extends BaseTest {
 		ic_Magento_Login icMagento = new ic_Magento_Login(driver);
 		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver);
 		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver);
+		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -139,6 +140,11 @@ public class JDTests extends BaseTest {
 				break;
 			case "GenerateOrderSAPnumber":
 				icOrderSAPnumber.GenerateOrderSAPnumber(test1);
+			case "EnterNewUserDetails":
+				newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
+			case "accountCreation":
+				newAcc.accountCreation(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;	
 
 		}
@@ -189,12 +195,6 @@ public class JDTests extends BaseTest {
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			logger.info("Browser name is "+browserName);
 			Report.info("Browser name is "+browserName);
 			logger.info("App URL: "+ navigateURL);
@@ -203,7 +203,6 @@ public class JDTests extends BaseTest {
 		}
 	}
 	public void endBrowserSession(){
-
 		driver.close();
 	}
 
