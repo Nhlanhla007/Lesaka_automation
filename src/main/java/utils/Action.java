@@ -120,6 +120,7 @@ public class Action {
 			}
 			if(name != null){
 				logger.info("Clicked Element: "+ name);
+
 				String screenShotPath=getScreenShot(name);
 				node.pass("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShotPath));
 
@@ -305,6 +306,8 @@ public class Action {
 				((WebElement) elementAttr).sendKeys(text);
 			}
 			if(name != null){
+
+
 //				node.log(Status.PASS,"Writing text: "+text+" to Element: "+ name);
 				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 				String screenShotPath=getScreenShot(dateName);
@@ -498,7 +501,7 @@ public class Action {
 			node.pass("Pop up is NOT displayed ");
 			return false;
 		}
-		
+
 	}
 	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test) {
 		ExtentTest node = test.createNode("is element on next page ?");
@@ -1390,6 +1393,7 @@ public class Action {
 		});
 		return newElement;
 	}
+
 	//By sourav
 		public void CheckEnabilityofButton(WebElement elementAttr,String name ,boolean Expstatus,ExtentTest test) throws IOException{
 			String TestDescription = "Verify that "+name+" button Enabled ";
@@ -1419,7 +1423,7 @@ public class Action {
 			//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
 			ExtentTest node=test.createNode("Clicked Element: "+ name);
 			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-			
+		
 			try{
 				if (elementAttr.getClass().getName().contains("By")) {
 					driver.findElement((By) elementAttr).click();
@@ -1521,13 +1525,24 @@ public class Action {
 			} else{
 				result = elementAttr.isEnabled();
 			}
-			
-
+			//if(name != null){
+				//ADD THE VALIDATION METHODS- WILL BE USED WITH THE test INSTANCE THAT WILL PRINT OUT THE STEPS
+				
+				
 			
 			return Finalresult;
 		}
-		
-		
+	}
+	public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException{
+		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
+		ExtentTest node=test.createNode("Verify result for test "+TestDescription);
+		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
+		String screenShotPath=getScreenShot(dateName);
+		try{
+			if (Actual.contains(Exp)) {
+				
+				test.pass("Successfully Verified : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				
 		public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 			ExtentTest node = test.createNode("Has next Page louded? " + name);
 			try {
@@ -1547,6 +1562,33 @@ public class Action {
 				node.fail("Page has not been loaded: " + name + e.getMessage());
 
 			}
-
+			
 		}
 	}
+
+
+	public <T> boolean elementExistWelcome(T elementAttr, long time, String name, ExtentTest test){
+		ExtentTest node = test.createNode(name);
+		try {
+			String ScreenShotPath = getScreenShot(name);
+			WebDriverWait wait = new WebDriverWait(driver, time);
+			if (elementAttr.getClass().getName().contains("By")){
+				By loc = (By) elementAttr;
+				wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
+				return driver.findElements((By) elementAttr).size() > 0;	
+			} else {
+				wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
+				node.pass("Pop up is display "+ name+node.addScreenCaptureFromPath(ScreenShotPath));
+				return true;
+			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				node.fail("Pop up is NOT displayed");
+				return false;
+				
+			}
+
+	}
+
+
+}

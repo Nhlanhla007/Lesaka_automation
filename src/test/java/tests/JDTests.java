@@ -5,9 +5,13 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import base.TestCaseBase;
+
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.ic_Magento_Login;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
+
+import ic_MagentoPageObjects.ic_Magento_Login;
+
 import com.aventstack.extentreports.ExtentTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -100,11 +104,13 @@ public class JDTests extends BaseTest {
 		ic_PayUPayment  PayU = new ic_PayUPayment(driver);
 		Ic_Products products = new Ic_Products(driver);
 		IC_Cart icCart=new IC_Cart(driver);
+		ic_AccountConfirmation icAccountConfirmation = new ic_AccountConfirmation(driver);
 		ICDelivery icDelivery=new ICDelivery(driver);
 		ic_Magento_Login icMagento = new ic_Magento_Login(driver);
 		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver);
 		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver);
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
+
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -146,6 +152,9 @@ public class JDTests extends BaseTest {
 			case "accountCreation":
 				newAcc.accountCreation(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;	
+			case "icAccountConfirmation":
+				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);	
+
 
 		}
 	}
@@ -195,6 +204,12 @@ public class JDTests extends BaseTest {
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			logger.info("Browser name is "+browserName);
 			Report.info("Browser name is "+browserName);
 			logger.info("App URL: "+ navigateURL);
@@ -203,6 +218,7 @@ public class JDTests extends BaseTest {
 		}
 	}
 	public void endBrowserSession(){
+
 		driver.close();
 	}
 

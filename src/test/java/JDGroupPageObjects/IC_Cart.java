@@ -45,8 +45,7 @@ public class IC_Cart {
 	    	    action.explicitWait(5000);
 				action.click(iCCartButton, "iCCartButton",test);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				
 			}
 	    	//int numberOfProducts = action.getlistSize(icAllCartProducts);
 	    	List<WebElement> elementName = driver.findElements(By.xpath("//*[@id=\"mini-cart\"]/li"));
