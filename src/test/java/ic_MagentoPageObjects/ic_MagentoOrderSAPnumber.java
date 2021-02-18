@@ -1,5 +1,8 @@
 package ic_MagentoPageObjects;
 
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
@@ -31,33 +34,28 @@ public class ic_MagentoOrderSAPnumber {
     
     Timer t = new Timer();
     
-    public void GenerateOrderSAPnumber( ExtentTest test ){
-    	
-//    	String navigateURL = ConfigFileReader.getPropertyVal("URL");
-//    	action.navigateToURL("https://staging-jdgroup-m23.vaimo.net/T5sjY7drHkyB6Z4n/sales/order/view/order_id/2297/key/5a2950d9fb153d87004762841a476070b240ea9fac19aefa18835be91cc06bd3/");
-//
+    public void GenerateOrderSAPnumber(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException {
     	boolean flagres = false;
-    	int timer= 10;
     	int totalConunter=1;
     	String OrderSAPnumber = "";
-    	
     	do{
     	System.out.println(totalConunter);
     	OrderSAPnumber = action.getText(OrderDetailSAPNumber, "SAP Number");
+		action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
     	System.out.println(OrderSAPnumber);
     	if(OrderSAPnumber.length() <= 29){
-    		action.explicitWait(10);
+    		action.explicitWait(Integer.parseInt(input.get("totalConunter").get(rowNumber))*1000);
     		action.refresh();
 			System.out.println("not found on count:" + totalConunter);
     	}else{
     		flagres = true;
+			System.out.println("OrderSAPnumber :" + OrderSAPnumber);
+			input.get("OrderSAPnumber").set(rowNumber,OrderSAPnumber.replace("[RabbitMQ] Order SAP Number: ",""));
     	}
-
     		totalConunter++;
-    	}while(totalConunter<=10 && !flagres);
-    	//to update
-    	System.out.println("OrderSAPnumber :" + OrderSAPnumber);
-    		
-    	
+    	}while(totalConunter<=Integer.parseInt(input.get("totalCounter").get(rowNumber)) && !flagres);
+
+		action.explicitWait(1000,test);
+
     }
 }

@@ -1,5 +1,8 @@
 package tests;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -13,6 +16,10 @@ import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 import ic_MagentoPageObjects.ic_Magento_Login;
 
 import com.aventstack.extentreports.ExtentTest;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -32,12 +39,12 @@ public class JDTests extends BaseTest {
 	public void setUp() {
 
 	}
-	//Login to Opera Cloud
 
 	@Test
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		dataMap2=dataTable2.getExcelData();
+
 		int numberOfSuits=dataMap2.size();
 		for(int i=0;i<numberOfSuits;i++){
 			Object Key = dataMap2.keySet().toArray()[i];
@@ -51,8 +58,6 @@ public class JDTests extends BaseTest {
 			}
 		}
 	}
-
-
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException, InterruptedException {
 
@@ -143,10 +148,11 @@ public class JDTests extends BaseTest {
 				icMagento.Login_magento(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case"OrderStatusSearch":
-				orderStatus.navigateToOrderPage(dataMap2.get(currentKeyWord+"++"),test,rowNumber);
+				orderStatus.navigateToOrderPage(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 			case "GenerateOrderSAPnumber":
-				icOrderSAPnumber.GenerateOrderSAPnumber(test1);
+				icOrderSAPnumber.GenerateOrderSAPnumber(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
 			case "Verify_Acount_Information":
 				verifyAcc.Verify_Acount_Information(test1,testcaseID);
 				break;
@@ -218,9 +224,43 @@ public class JDTests extends BaseTest {
 			Values.browser=browserName;
 		}
 	}
-	public void endBrowserSession(){
-
+	public void endBrowserSession() throws IOException {
 		driver.close();
+		writeToExcel();
+	}
+	public void writeToExcel() throws IOException {
+		FileOutputStream outputStream = new FileOutputStream(createFile());
+		XSSFWorkbook workbook= new XSSFWorkbook();;
+		XSSFSheet sheet;
+		for(int i=0;i<dataMap2.size() ;i++){
+			Object[] keys = dataMap2.keySet().toArray();
+			sheet = workbook.createSheet(keys[i].toString());
+			int numCol=dataMap2.get(keys[i]).size();
+			Object[] colArray = dataMap2.get(keys[i]).keySet().toArray();
+			int rowNum = dataMap2.get(keys[i]).get(colArray[0]).size();
+			for(int j=0;j<=rowNum;j++){
+				Row row = sheet.createRow(j);
+				if (j==0){
+					for(int z=0;z<numCol;z++){
+						Cell cell = row.createCell(z);
+						cell.setCellValue(colArray[z].toString());
+					}
+				}else{
+
+					for(int z=0;z<numCol;z++){
+						Cell cell = row.createCell(z);
+						cell.setCellValue((String) dataMap2.get(keys[i]).get(colArray[z]).get(j-1));
+					}
+				}
+			}
+		}
+
+		workbook.write(outputStream);
+	}
+
+	public File createFile() throws IOException {
+		File myObj = new File(System.getProperty("user.dir")+"\\reports\\Datasheet.xlsx");
+		return myObj;
 	}
 
 

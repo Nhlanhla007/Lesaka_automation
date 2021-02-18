@@ -66,6 +66,7 @@ public class ic_PayUPayment {
 			String Oderid= action.getText(OderID, "Order ID");
 			ConfigFileReader configFileReader = new ConfigFileReader();
 			configFileReader.setPropertyVal("OrderID",Oderid.replace("Your order # is: ","").replace(".",""));
+			input.get("OrderID").set(rowNumber,Oderid.replace("Your order # is: ","").replace(".",""));
 			System.out.println("##############END Execution###############");
 		}
 }

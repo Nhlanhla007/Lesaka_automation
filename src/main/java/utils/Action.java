@@ -61,7 +61,7 @@ public class Action {
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		File source = ts.getScreenshotAs(OutputType.FILE);
-		String destination = helper+"reports\\screenshots\\" + 1 + dateName + ".png";
+		String destination = "\\reports\\screenshots\\" + 1 + dateName + ".png";
 		File finalDestination = new File(destination);
 		copyFile(source,finalDestination);
 		return destination;
@@ -620,6 +620,19 @@ public class Action {
 			Thread.sleep(timeInMillsecs);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+	}
+	public void explicitWait(int timeInMillsecs,ExtentTest test) throws IOException {
+		ExtentTest node =test.createNode("waiting for:"+timeInMillsecs);
+		try {
+			Thread.sleep(timeInMillsecs);
+			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
+			String screenShotPath=getScreenShot(dateName);
+			node.pass("waiting "+node.addScreenCaptureFromPath(screenShotPath));
+		} catch (InterruptedException e) {
+			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
+			String screenShotPath=getScreenShot(dateName);
+			node.fail("waiting"+node.addScreenCaptureFromPath(screenShotPath));
 		}
 	}
 	public <T> void clear(T elementAttr, String name) throws IOException {
@@ -1437,7 +1450,7 @@ public class Action {
 					String screenShotPath=getScreenShot(dateName);
 					node.pass("Successfully clicked on " +name,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 					logger.info("Clicked Element: "+ name);
-					Report.pass("Clicked Element: "+ name);
+
 					//((WebElement) elementAttr).click();			
 				}
 				//if(name != null){
