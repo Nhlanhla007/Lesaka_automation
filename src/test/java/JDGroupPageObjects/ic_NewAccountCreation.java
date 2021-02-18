@@ -1,20 +1,16 @@
 package JDGroupPageObjects;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import com.aventstack.extentreports.ExtentTest;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import com.aventstack.extentreports.ExtentTest;
-
-import io.qameta.allure.Step;
 import utils.Action;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ic_NewAccountCreation {
 	WebDriver driver;
@@ -37,7 +33,6 @@ public class ic_NewAccountCreation {
 	
 	@FindBy(id = "password-confirmation")
 	WebElement ic_passwordConfirmation;
-	
 	
 	// user details information for new user in IC
 	@FindBy(xpath = "//input[@id='firstname']")
@@ -80,40 +75,7 @@ public class ic_NewAccountCreation {
 	
 	@FindBy(xpath = "//header/div[3]/div[2]/div[1]/div[1]/div[1]")
 	WebElement existingAccountError;
-	
-	
-	//Sourav TA17
-    @FindBy(xpath = "//*[@id='account-nav']/ul[@class='nav items']/li/a[contains(text(),'Account Information')]")
-    WebElement Account_info_option;
-   
-   
-    @FindBy(xpath = "//input[@id='firstname']")
-    WebElement Firstname;
-    @FindBy(xpath = "//input[@id='lastname']")
-    WebElement Lastname;
-   
-    @FindBy(xpath = "//*[@class='field choice']/label[@for='change-email']")
-    WebElement Change_Emailcheckbox;
-    @FindBy(xpath = "//input[@id='email']")
-    WebElement Email;
-    @FindBy(xpath = "//input[@id='identity_number']")
-    WebElement SAID;
-  // Sourav TA19 customer info after click on Customer info 
-	
-	  @FindBy(xpath = "//span[contains(text(),'Account Information')]")
-	  WebElement Account_Info_link;
-	
-	  @FindBy(xpath = "//input[@name='customer[firstname]']")
-	  WebElement customerFirstname;
-	  @FindBy(xpath = "//input[@name='customer[lastname]']")
-	  WebElement customerLastname;
-	  @FindBy(xpath = "//input[@name='customer[email]']")
-	  WebElement customerEmail;
-	  @FindBy(xpath = "//input[@name='customer[partner_number]']")
-	  WebElement customerBPnnumber;
-	  @FindBy(xpath = "//input[@name='customer[identity_number]']")
-	  WebElement customerIdentityNumber;
-	
+
 	@Step("Click on create account")
 	public void ic_NavigateToCreateAccount(ExtentTest test) {
 		try {
@@ -121,7 +83,8 @@ public class ic_NewAccountCreation {
 			action.click(ic_createAccount, "Navigate to create Account",test);
 			action.checkIfPageIsLoadedByURL("/customer/account/create/", "validate account page is loaded",test);
 		} catch (IOException e) {
-			e.printStackTrace();
+			ExtentTest node =test.createNode("Click on create account");
+			node.fail(e.getMessage());
 		}
 	}
 
@@ -136,24 +99,15 @@ public class ic_NewAccountCreation {
 		String identityNumber = input.get("identityNumber/passport").get(rowNumber);
 		String selectNewsLetter = input.get("newsletter").get(rowNumber);
 		String taxVatNumbe = input.get("vatNumber").get(rowNumber);
-		
 		String passwordValidation = input.get("validatePassword").get(rowNumber);
 		String saIDvalidateIncorrectID = input.get("validateIncorrectID").get(rowNumber);
 		String saIDvalidateIDWithLessDigits = input.get("validateIDWithLessDigits").get(rowNumber);
 		String saIDvalidateIDWithMoreDigits = input.get("validateIDWithMoreDigits").get(rowNumber);
-		
-		//SouravTA17
-		String verifyAccFlag = input.get("verifyAccount").get(rowNumber);
-		//Sourav TA19 
-		String verifyMagentoDetails = input.get("VerifyAccountDetailsInMagentoBackend").get(rowNumber);
-		
-		
-		
-		String existingAccountValidation =input.get("validateExistingAccount").get(rowNumber);		
+		String existingAccountValidation =input.get("validateExistingAccount").get(rowNumber);
 		try {
 			ic_NavigateToCreateAccount(test);
 			
-			Thread.sleep(10000);
+			Thread.sleep(5000);
 			
 			action.writeText(User_Firstname, firstName, "First name", test);
 			action.writeText(User_Lastname, lastName, "Last Name", test);
@@ -201,8 +155,6 @@ public class ic_NewAccountCreation {
 
 			}
 
-			
-			
 			if(passwordValidation.equalsIgnoreCase("yes")) {
 				confirmPassword = ic_VerifyPasswordcanDiffer(confirmPassword);
 				action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
@@ -216,44 +168,10 @@ public class ic_NewAccountCreation {
 			if(existingAccountValidation.equalsIgnoreCase("yes")) {
 				action.elementExistsPopUpMessage(existingAccountError, 4000, existingAccountError.getText(), test);
 			}
-			
-			if(verifyAccFlag.equalsIgnoreCase("yes")) {
-				Verify_Acount_Information(test, firstName, lastName, emailAddress, identityNumber);
-			}
-			if(verifyMagentoDetails.equalsIgnoreCase("Yes")) {
-				Magento_VerifyCustomerDetails(test ,firstName,lastName,emailAddress,identityNumber);
-			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-		
-		
-		/*
-		 * boolean resFlag = false; String DecionTocreateNewAcc =
-		 * input.get("DecionTocreateNewAcc").get(rowNumber); String Password =
-		 * input.get("Password").get(rowNumber); String ConfirmPassword =
-		 * input.get("Confirm_password").get(rowNumber);
-		 * 
-		 * String IdentyType = input.get("IdentyType").get(rowNumber); String
-		 * IdentyNumber = input.get("SAID").get(rowNumber);
-		 * 
-		 * if (DecionTocreateNewAcc.toString().toUpperCase() == "YES") { switch
-		 * (IdentyType.toUpperCase()) { case "SAID": { action.clickEle(User_SAIDbtn,
-		 * "SAID radio button click", test); action.writeText(User_SAID, IdentyNumber,
-		 * "SAID feild value :" + IdentyNumber, test); } action.writeText(User_Password,
-		 * Password, "password feild value :" + Password, test);
-		 * action.writeText(User_ConfirmPassword, ConfirmPassword,
-		 * "ConfirmPassword feild value :" + ConfirmPassword, test);
-		 * 
-		 * action.clickEle(CreateAccountBtn, "CreateAccountBtn click", test);
-		 * 
-		 * } }
-		 */
-	}
-	@Step("Check duplicate usercreate is possible")
-	public  void ic_VerifyDuplicateUser_created(){
-     // call ic_EnternewUserDetails proceed and check the pop-up
 	}
 	@Step("Check SAID can be lesser than 13 digit")
 	public  void ic_VerifySAIDLimit(String saID,ExtentTest test){
@@ -282,86 +200,5 @@ public class ic_NewAccountCreation {
 	public  String ic_VerifyPasswordcanDiffer(String passwordToChange){
 		passwordToChange += "fail";
 		return passwordToChange;
-	}
-	/*
-	 * public String alterId(String saId) { saId = saId. return; }
-	 */
-	
-	//Sourav TA17
-	@Step("To verify account information")
-    public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID) throws IOException{
-        String ExpPage ="edit";
-        Boolean accInfoOpt = action.elementExists(Account_info_option, 11);
-        if(accInfoOpt==true){
-            action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
-            action.clickEle(Account_info_option, "Account info link", test);
-            action.waitExplicit(11);
-            if(driver.getCurrentUrl().contains(ExpPage+"/")){
-                action.CompareResult("Verify Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
-               
-                String ActualFirstname = action.getAttribute(Firstname, "value");
-               
-                String ActualLastname = action.getAttribute(Lastname, "value");
-               
-                action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
-                action.waitExplicit(5);
-                String ActualEmail = action.getAttribute(Email, "value");
-                action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
-               
-                String ActualSAID = action.getAttribute(SAID, "value");
-            
-                System.out.println(ActualFirstname);
-                action.CompareResult("Verify First Name ", expFirstName,ActualFirstname, test);
-                System.out.println(ActualLastname);
-                action.CompareResult("Verify Last Name ", expLastName,ActualLastname, test);
-                System.out.println(ActualEmail);
-                action.CompareResult("Verify Email Address ", expEmailAddress,ActualEmail, test);
-                System.out.println(ActualSAID);
-                action.CompareResult("Verify SA ID ", expSAID,ActualSAID, test);
-            }else{
-                action.CompareResult("Verify Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
-               
-            }
-        }else{
-            action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
-        }
-       
-       
-        System.out.println("done");
-        //action.selectExactValueFromListUsingText(elementAttr, value);
-    }
-	public void Magento_VerifyCustomerDetails(ExtentTest test,String expFristname,String expLastname,String expEmail,String expSAID) throws IOException{
-		//replace by this Parameter while merge parameter (ExtentTest test,String expFristname,String expLastname,String expEmail,String expSAID)
-		
-		try {
-			int loadtime=20;
-			
-			String expBPnumber =null;
-			
-			//Starts from Account information tab.
-			action.waitExplicit(loadtime);
-			String ActualFirstname = action.getAttribute(customerFirstname, "value");
-			String ActualLastname = action.getAttribute(customerLastname, "value");
-			String ActualEmail = action.getAttribute(customerEmail, "value");
-			String ActualBPnumber = action.getAttribute(customerBPnnumber, "value");
-			String ActualIdentityNumber= action.getAttribute(customerIdentityNumber, "value");
-			
-			action.CompareResult("Verify the First name of user in Magento", expFristname, ActualFirstname, test);
-			action.CompareResult("Verify the Last name of user in Magento", expLastname, ActualLastname, test);
-			action.CompareResult("Verify the Email of user in Magento", expEmail, ActualEmail, test);
-			
-			action.CompareResult("Verify the SA ID number of user in Magento", expEmail, ActualEmail, test);
-			boolean FlagGenerateBPnumber=false;
-			if(ActualBPnumber!=null){
-				FlagGenerateBPnumber=true;
-				action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
-				
-			}else{
-				action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			action.CompareResult("Magento_VerifyCustomerDetails method failed : "+"ERROR found as "+e.getMessage(), String.valueOf(true),String.valueOf(false), test);
-		}
 	}
 }

@@ -109,6 +109,7 @@ public class JDTests extends BaseTest {
 		ic_Magento_Login icMagento = new ic_Magento_Login(driver);
 		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver);
 		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver);
+		ic_AccountInformation verifyAcc = new ic_AccountInformation(driver,dataMap2);
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
 
 		ExtentTest test1=test.createNode(moduleToRun);
@@ -146,15 +147,15 @@ public class JDTests extends BaseTest {
 				break;
 			case "GenerateOrderSAPnumber":
 				icOrderSAPnumber.GenerateOrderSAPnumber(test1);
-			case "EnterNewUserDetails":
-				newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+			case "Verify_Acount_Information":
+				verifyAcc.Verify_Acount_Information(test1,testcaseID);
 				break;
 			case "accountCreation":
 				newAcc.accountCreation(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
-				break;	
-			case "icAccountConfirmation":
-				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);	
-
+				break;
+//			case "icAccountConfirmation":
+//				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+//				break;
 
 		}
 	}

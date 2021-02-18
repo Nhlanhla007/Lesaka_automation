@@ -503,7 +503,7 @@ public class Action {
 		}
 
 	}
-	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test) {
+	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test) throws IOException {
 		ExtentTest node = test.createNode("is element on next page ?");
 		try {
 			boolean flag = elementExists(elementAttr, time);
@@ -549,18 +549,18 @@ public class Action {
 	public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
 		boolean Finalresult = false;
 		boolean result = false;
-		
+
 		//test= ExtentFactory.getInstance().createCase(name);
-		
+
 		if (elementAttr.getClass().getName().contains("By")) {
 			result = driver.findElement((By) elementAttr).isEnabled();
-		
+
 		} else{
 			result = elementAttr.isEnabled();
 		}
-		
 
-		
+
+
 		return Finalresult;
 	}
 	
@@ -1463,15 +1463,15 @@ public class Action {
 			String screenShotPath=getScreenShot(dateName);
 			try{
 				if (Actual.contains(Exp)) {
-					
+
 					node.pass("Successfully Verified : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-					
+
 				} else {
-					
+
 					node.fail("Error found  : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-					
+
 				}
-				
+
 			} catch(Throwable e){
 				e.printStackTrace();
 				try {
@@ -1480,7 +1480,7 @@ public class Action {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
+
 			}
 		}
 		public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
@@ -1511,39 +1511,30 @@ public class Action {
 				}
 				
 		}
-
-		}
-		public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
-			boolean Finalresult = false;
-			boolean result = false;
-			
-			//test= ExtentFactory.getInstance().createCase(name);
-			
-			if (elementAttr.getClass().getName().contains("By")) {
-				result = driver.findElement((By) elementAttr).isEnabled();
-			
-			} else{
-				result = elementAttr.isEnabled();
-			}
-			//if(name != null){
-				//ADD THE VALIDATION METHODS- WILL BE USED WITH THE test INSTANCE THAT WILL PRINT OUT THE STEPS
-				
-				
-			
-			return Finalresult;
-		}
 	}
-	public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException{
-		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
-		ExtentTest node=test.createNode("Verify result for test "+TestDescription);
-		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-		String screenShotPath=getScreenShot(dateName);
-		try{
-			if (Actual.contains(Exp)) {
-				
-				test.pass("Successfully Verified : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-				
-		public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
+
+
+//		public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
+//			boolean Finalresult = false;
+//			boolean result = false;
+//
+//			//test= ExtentFactory.getInstance().createCase(name);
+//
+//			if (elementAttr.getClass().getName().contains("By")) {
+//				result = driver.findElement((By) elementAttr).isEnabled();
+//
+//			} else{
+//				result = elementAttr.isEnabled();
+//			}
+//			//if(name != null){
+//				//ADD THE VALIDATION METHODS- WILL BE USED WITH THE test INSTANCE THAT WILL PRINT OUT THE STEPS
+//
+//
+//
+//			return Finalresult;
+//		}
+
+	public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 			ExtentTest node = test.createNode("Has next Page louded? " + name);
 			try {
 				String screenShotPath = getScreenShot(name);
@@ -1563,7 +1554,6 @@ public class Action {
 
 			}
 			
-		}
 	}
 
 

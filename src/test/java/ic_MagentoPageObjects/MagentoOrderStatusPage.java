@@ -75,7 +75,7 @@ public class MagentoOrderStatusPage {
 	
 	public void confirmRows(List<WebElement> elements,ExtentTest test) {
 		System.out.println(elements.size());
-		action.expectSingleRow(elements, "Confirm single data row returned",test);
+//		action.expectSingleRow(elements, "Confirm single data row returned",test);
 	}
 	
 	public void clickOnOrderStatus() {
