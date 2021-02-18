@@ -9,13 +9,10 @@ import java.util.concurrent.TimeUnit;
 
 import base.TestCaseBase;
 
-import ic_MagentoPageObjects.MagentoOrderStatusPage;
-import ic_MagentoPageObjects.ic_Magento_Login;
-import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
+import ic_MagentoPageObjects.*;
 
 import ic_MagentoPageObjects.ic_Magento_Login;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
-import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
 
 import com.aventstack.extentreports.ExtentTest;
 import org.apache.poi.ss.usermodel.Cell;
@@ -122,6 +119,8 @@ public class JDTests extends BaseTest {
 		ic_AccountInformation verifyAcc = new ic_AccountInformation(driver,dataMap2);
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
 		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataMap2);
+		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver, dataMap2);
+
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -164,11 +163,14 @@ public class JDTests extends BaseTest {
 			case "accountCreation":
 				newAcc.accountCreation(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
-//			case "icAccountConfirmation":
-//				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
-//				break;
+			case "icAccountConfirmation":
+				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
 			case"RetrieveCustomerDetails":
 				custDetails.retrieveCustomerDetails(test1,testcaseID);
+				break;
+			case "VadidateCustomerInfo_backend":
+				MagentoCustDetail.VadidateCustomerInfo_backend(test1, testcaseID);
 				break;
 		}
 	}

@@ -91,7 +91,6 @@ public class MagentoRetrieveCustomerDetailsPage {
 		 HashMap<String, ArrayList<String>> accountCreationSheet = workbook.get("accountCreation++");
 		 int rowNumber = -1;
 		 rowNumber = findRowToRun(accountCreationSheet, 1, testcaseID);
-		 
 		String customerEmail = accountCreationSheet.get("customerEmail").get(rowNumber);
 		String webSite = accountCreationSheet.get("WebSite").get(rowNumber);
 		System.out.println(customerEmail);
@@ -99,9 +98,9 @@ public class MagentoRetrieveCustomerDetailsPage {
 		System.out.println("Hello from " + customerEmail);
 		searchForCustomer(customerEmail, test);
 		tableData(customerEmail, webSite, test);
-		//confirmRows(customerTableRecords, test);
+//		confirmRows(customerTableRecords, test);
 		try {
-			//action.click(viewCustomerDetails, "View Customer details", test);
+			action.click(viewCustomerDetails, "View Customer details", test);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
