@@ -549,18 +549,18 @@ public class Action {
 	public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
 		boolean Finalresult = false;
 		boolean result = false;
-
+		
 		//test= ExtentFactory.getInstance().createCase(name);
-
+		
 		if (elementAttr.getClass().getName().contains("By")) {
 			result = driver.findElement((By) elementAttr).isEnabled();
-
+		
 		} else{
 			result = elementAttr.isEnabled();
 		}
+		
 
-
-
+		
 		return Finalresult;
 	}
 	
@@ -1588,10 +1588,118 @@ public class Action {
 				e.printStackTrace();
 				node.fail("Pop up is NOT displayed");
 				return false;
-				
+			//}
+		} catch(Throwable e){
+			e.printStackTrace();
+			try {
+				String screenShotPath=getScreenShot(dateName);
+				node.fail("Unable to click element :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
+		}
+	}
+	
+	//NOTE THE BELOW METHOD IS CASE SENSTIVE WITH THE ACTUAL/EXP
+	public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException{
+		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
+		ExtentTest node=test.createNode("Verify result for test "+TestDescription);
+		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
+		String screenShotPath=getScreenShot(dateName);
+		try{
+			if (Actual.contains(Exp)) {
+				System.out.println("INSIDE COMPARE RESULT expected : " +Exp + " " +Actual);
+				node.pass("Successfully Verified : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				//CHANGED THE ABOVE FROM test.pass TO node.pass	AS IT WAS NOT DISPAYING IN REPORT
+			} else {
+				node.fail("Error found  : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+		
+			}
+			
+		} catch(Throwable e){
+			e.printStackTrace();
+			try {
+				node.fail(" Unknown Error found : : " + TestDescription + " Expected : "+Exp+" Actual :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		}
+	}
+	public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
+		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
+		ExtentTest node=test.createNode("Select value from dropdown : "+ Testname);
+		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
+		
+		try{
+			// Create object of the Select class
+			Select se = new Select(elementAttr);
+			 
+			// Select the option with value 
+			
+			se.selectByVisibleText(valueToselect);
+			String res = se.getFirstSelectedOption().getText();
+			if(res.equalsIgnoreCase(valueToselect)){
+				String screenShotPath=getScreenShot(dateName);
+				node.pass("Successfully selected : " + Testname + " Expected : "+valueToselect+" Actual :"+res,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+			}
+		  }catch(Throwable e){
+			e.printStackTrace();
+			try {
+				String screenShotPath=getScreenShot(dateName);
+				test.fail("Error to select  : " + valueToselect + " form the dropdown : "+Testname+" Error message :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+	}
 
 	}
 
+	public void expectSingleRow(List<WebElement> elements, String name, ExtentTest test) {
+		ExtentTest node = test.createNode("Clicked Element: " + name);
+		System.out.println(elements.size());
+		try {
+			String screenShotPath = getScreenShot(name);
+			if (elements.size() >= 2) {
+				node.fail("More than one element was returned" + name + node.addScreenCaptureFromPath(screenShotPath));
+			} else if (elements.size() == 1) {
+				node.pass(
+						"Exactly one element has been returned" + name + node.addScreenCaptureFromPath(screenShotPath));
+			} else {
+				node.fail("No results has been found" + name + node.addScreenCaptureFromPath(screenShotPath));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void checkIfPageIsLoadedByURL(String urlFragment,String name ,ExtentTest test) {
+		ExtentTest node = test.createNode("Clicked Element: " + name);
+		try {
+			String screenShotPath=getScreenShot(name);
+			if(driver.getCurrentUrl().contains(urlFragment)) {
+				node.pass("Page has been loaded: "+ name +node.addScreenCaptureFromPath(screenShotPath));
+			}else {
+				node.fail("Page has not been loaded: "+ name +node.addScreenCaptureFromPath(screenShotPath));
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void noRecordsReturnedFromTable(ExtentTest test,String name) {
+		try {
+			ExtentTest node = test.createNode("Clicked Element: " + name);
+			String screenShotPath=getScreenShot(name);
+			node.fail(name +node.addScreenCaptureFromPath(screenShotPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

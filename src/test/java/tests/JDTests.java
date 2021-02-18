@@ -14,6 +14,8 @@ import ic_MagentoPageObjects.ic_Magento_Login;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 
 import ic_MagentoPageObjects.ic_Magento_Login;
+import ic_MagentoPageObjects.MagentoOrderStatusPage;
+import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
 
 import com.aventstack.extentreports.ExtentTest;
 import org.apache.poi.ss.usermodel.Cell;
@@ -39,6 +41,7 @@ public class JDTests extends BaseTest {
 	public void setUp() {
 
 	}
+	//Login to Opera Cloud
 
 	@Test
 	public void suiteExecutor() throws Exception {
@@ -58,6 +61,8 @@ public class JDTests extends BaseTest {
 			}
 		}
 	}
+
+
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException, InterruptedException {
 
@@ -116,7 +121,7 @@ public class JDTests extends BaseTest {
 		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver);
 		ic_AccountInformation verifyAcc = new ic_AccountInformation(driver,dataMap2);
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
-
+		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataMap2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -162,7 +167,9 @@ public class JDTests extends BaseTest {
 //			case "icAccountConfirmation":
 //				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 //				break;
-
+			case"RetrieveCustomerDetails":
+				custDetails.retrieveCustomerDetails(test1,testcaseID);
+				break;
 		}
 	}
 
@@ -202,7 +209,7 @@ public class JDTests extends BaseTest {
 			if(navigateURL==null){
 				logger.info("System property returned Null URL. So getting data from Config file");
 				Report.info("System property returned Null URL. So getting data from Config file");
-				navigateURL = ConfigFileReader.getPropertyVal("URL");
+				navigateURL = ConfigFileReader.getPropertyVal("MagentoURL");
 			}
 
 			logger.info("Navigate to URL");
@@ -211,8 +218,9 @@ public class JDTests extends BaseTest {
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
+			
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(20000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

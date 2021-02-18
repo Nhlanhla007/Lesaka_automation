@@ -75,7 +75,7 @@ public class MagentoOrderStatusPage {
 	
 	public void confirmRows(List<WebElement> elements,ExtentTest test) {
 		System.out.println(elements.size());
-//		action.expectSingleRow(elements, "Confirm single data row returned",test);
+		action.expectSingleRow(elements, "Confirm single data row returned",test);
 	}
 	
 	public void clickOnOrderStatus() {
@@ -126,7 +126,7 @@ public class MagentoOrderStatusPage {
 		String idToSearch = input.get("productSearchId").get(rowNumber);
 		String orderStatus = input.get("orderStatus").get(rowNumber);
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(30000);
 			action.click(magentoSalesTab, "Sales tab", test);
 			action.click(magentoOrderTab, "Order tab", test);
 			driver.navigate().refresh();
@@ -134,7 +134,7 @@ public class MagentoOrderStatusPage {
 			ConfigFileReader configFileReader = new ConfigFileReader();
 			idToSearch=configFileReader.getPropertySavedVal("OrderID");
 			searchForOrder(idToSearch,test);
-//			orderStatusCheck(orderStatus, test);
+			orderStatusCheck(orderStatus, test);
 			viewOrderDetails(test);
 			
 		} catch (Exception e) {

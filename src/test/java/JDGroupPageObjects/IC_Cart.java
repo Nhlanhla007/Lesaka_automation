@@ -40,12 +40,12 @@ public class IC_Cart {
 	    
 	    
 	    public void iCcartVerification(ExtentTest test){
-	
+
 	    	try {
 	    	    action.explicitWait(5000);
 				action.click(iCCartButton, "iCCartButton",test);
 			} catch (IOException e1) {
-				
+
 			}
 	    	//int numberOfProducts = action.getlistSize(icAllCartProducts);
 	    	List<WebElement> elementName = driver.findElements(By.xpath("//*[@id=\"mini-cart\"]/li"));

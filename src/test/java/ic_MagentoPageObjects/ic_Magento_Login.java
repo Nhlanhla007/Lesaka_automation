@@ -44,7 +44,6 @@ public class ic_Magento_Login {
 			String Magento_url = input.get("URL").get(rowNumber);
 			String Username =input.get("Username").get(rowNumber);
 			String Password =input.get("Password").get(rowNumber);
-
 			action.navigateToURL(ConfigFileReader.getPropertyVal("MagentoURL"));
 			action.waitForPageLoaded(15);
 			driver.navigate().to(Magento_url);
