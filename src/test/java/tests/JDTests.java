@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import base.TestCaseBase;
 
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
+import ic_MagentoPageObjects.Magento_UserInfoVerification;
 import ic_MagentoPageObjects.ic_Magento_Login;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 
@@ -111,7 +112,7 @@ public class JDTests extends BaseTest {
 		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver);
 		ic_AccountInformation verifyAcc = new ic_AccountInformation(driver,dataMap2);
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
-
+		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -156,6 +157,8 @@ public class JDTests extends BaseTest {
 //			case "icAccountConfirmation":
 //				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 //				break;
+			case "Magento_UserInfoVerification":
+				Magentoverify.Validate_UserInfobackend(test1);
 
 		}
 	}
