@@ -22,9 +22,11 @@ public class MagentoRetrieveCustomerDetailsPage {
 	WebDriver driver;
 	Action action;
 	
+    HashMap<String, HashMap<String, ArrayList<String>>> workbook =null;
 	
-	public MagentoRetrieveCustomerDetailsPage(WebDriver driver) {
+	public MagentoRetrieveCustomerDetailsPage(WebDriver driver,HashMap<String, HashMap<String, ArrayList<String>>> workbook) {
 		this.driver = driver;
+		this.workbook = workbook;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 	}
@@ -83,9 +85,15 @@ public class MagentoRetrieveCustomerDetailsPage {
 	
 	}
 	
-	public void retrieveCustomerDetails(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) {
-		String customerEmail = input.get("customerEmail").get(rowNumber);
-		String webSite = input.get("WebSite").get(rowNumber);
+	public void retrieveCustomerDetails(ExtentTest test,int testcaseID) {
+
+		//ADDED HERE
+		 HashMap<String, ArrayList<String>> accountCreationSheet = workbook.get("accountCreation++");
+		 int rowNumber = -1;
+		 rowNumber = findRowToRun(accountCreationSheet, 1, testcaseID);
+		 
+		String customerEmail = accountCreationSheet.get("customerEmail").get(rowNumber);
+		String webSite = accountCreationSheet.get("WebSite").get(rowNumber);
 		System.out.println(customerEmail);
 		navigateToCustomer(test);
 		System.out.println("Hello from " + customerEmail);
@@ -117,7 +125,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 		if(totalRows>=2) {
 		try {
 			outerloop:
-			for(int i =2;i<totalRows;i++) {
+			for(int i =2;i<=totalRows;i++) {
 				for(int j = 1;j<totalColums;j++) {
 					String emailColumn = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[4]/div")).getText();
 					String webSite = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[11]/div")).getText();
@@ -153,5 +161,17 @@ public class MagentoRetrieveCustomerDetailsPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
+	}
+	
+	public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
+		int numberRows=input.get("TCID").size();
+		int rowNumber=-1;
+		occCount=occCount+1;
+		for(int i=0;i<numberRows;i++){
+			if(input.get("TCID").get(i).equals(Integer.toString(testcaseID))&&input.get("occurence").get(i).equals(Integer.toString(occCount))){
+				rowNumber=i;
+			}
+		}
+		return rowNumber;
 	}
 }

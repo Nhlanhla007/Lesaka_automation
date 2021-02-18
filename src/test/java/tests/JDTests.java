@@ -101,7 +101,7 @@ public class JDTests extends BaseTest {
 		ICDelivery icDelivery=new ICDelivery(driver);
 		ic_Magento_Login icMagento = new ic_Magento_Login(driver);
 		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver);
-		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver);
+		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataMap2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -133,10 +133,10 @@ public class JDTests extends BaseTest {
 				icMagento.Login_magento(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case"OrderStatusSearch":
-				orderStatus.navigateToOrderPage(dataMap2.get(currentKeyWord+"++"),test,rowNumber);
+				orderStatus.navigateToOrderPage(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 			case"RetrieveCustomerDetails":
-				custDetails.retrieveCustomerDetails(dataMap2.get(currentKeyWord+"++"),test,rowNumber);
+				custDetails.retrieveCustomerDetails(test1,testcaseID);
 				break;
 		}
 	}
