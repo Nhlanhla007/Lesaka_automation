@@ -516,7 +516,7 @@ public class Action {
 			}
 		}catch(Exception e){
 			node.fail("issue with getting element"+e.getMessage());
-			configFileReader.setPropertyVal("sequence","false");
+			//configFileReader.setPropertyVal("sequence","false");
 		}
 	}
 
@@ -543,23 +543,21 @@ public class Action {
 		return true;
 
 	}
-	public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
-		boolean Finalresult = false;
-		boolean result = false;
-		
-		//test= ExtentFactory.getInstance().createCase(name);
-		
-		if (elementAttr.getClass().getName().contains("By")) {
-			result = driver.findElement((By) elementAttr).isEnabled();
-		
-		} else{
-			result = elementAttr.isEnabled();
-		}
-		
-
-		
-		return Finalresult;
-	}
+	/*
+	 * public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
+	 * boolean Finalresult = false; boolean result = false;
+	 * 
+	 * //test= ExtentFactory.getInstance().createCase(name);
+	 * 
+	 * if (elementAttr.getClass().getName().contains("By")) { result =
+	 * driver.findElement((By) elementAttr).isEnabled();
+	 * 
+	 * } else{ result = elementAttr.isEnabled(); }
+	 * 
+	 * 
+	 * 
+	 * return Finalresult; }
+	 */
 	
 
 	//************************************ADDED LEVERCH FOR NEXT BUTTON ON PRODUCT PAGE
@@ -1548,5 +1546,15 @@ public class Action {
 
 			}
 
+		}
+		
+		public void noRecordsReturnedFromTable(ExtentTest test,String name) {
+			try {
+				ExtentTest node = test.createNode("Clicked Element: " + name);
+				String screenShotPath=getScreenShot(name);
+				node.fail(name +node.addScreenCaptureFromPath(screenShotPath));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
