@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import base.TestCaseBase;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
+import ic_MagentoPageObjects.MagentoRegisterNewUser;
 import ic_MagentoPageObjects.ic_Magento_Login;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 import com.aventstack.extentreports.ExtentTest;
@@ -105,6 +106,7 @@ public class JDTests extends BaseTest {
 		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver);
 		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver);
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
+		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -141,12 +143,14 @@ public class JDTests extends BaseTest {
 			case "GenerateOrderSAPnumber":
 				icOrderSAPnumber.GenerateOrderSAPnumber(test1);
 			case "EnterNewUserDetails":
-				newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				//newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 			case "accountCreation":
 				newAcc.accountCreation(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;	
-
+			case "CreateaccountBackend":
+				MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
 		}
 	}
 

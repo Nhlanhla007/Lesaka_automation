@@ -500,7 +500,7 @@ public class Action {
 		}
 		
 	}
-	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test) {
+	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test) throws IOException {
 		ExtentTest node = test.createNode("is element on next page ?");
 		try {
 			boolean flag = elementExists(elementAttr, time);
@@ -1509,24 +1509,7 @@ public class Action {
 		}
 
 		}
-		public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
-			boolean Finalresult = false;
-			boolean result = false;
-			
-			//test= ExtentFactory.getInstance().createCase(name);
-			
-			if (elementAttr.getClass().getName().contains("By")) {
-				result = driver.findElement((By) elementAttr).isEnabled();
-			
-			} else{
-				result = elementAttr.isEnabled();
-			}
-			
 
-			
-			return Finalresult;
-		}
-		
 		
 		public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 			ExtentTest node = test.createNode("Has next Page louded? " + name);
