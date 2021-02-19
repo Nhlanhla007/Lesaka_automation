@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
 import com.aventstack.extentreports.ExtentTest;
 
@@ -112,7 +113,7 @@ public class ic_NewAccountCreation {
     WebElement Email;
     @FindBy(xpath = "//input[@id='identity_number']")
     WebElement SAID;
-    
+
     
   // Sourav TA19 customer info after click on Customer info 
 	
@@ -138,6 +139,7 @@ public class ic_NewAccountCreation {
 			action.checkIfPageIsLoadedByURL("/customer/account/create/", "validate account page is loaded",test);
 		} catch (IOException e) {
 			logger.info(e.getMessage());
+
 		}
 	}
 
@@ -177,6 +179,7 @@ public class ic_NewAccountCreation {
 			action.writeText(User_EmailId, emailAddress, "Email", test);
 			action.writeText(taxVatNumber, taxVatNumbe, "Tax/Vat", test);
 			action.writeText(User_Password, password, "Password", test);
+
 			if(selectNewsLetter.equalsIgnoreCase("YES")) {
 			action.click(newsLetter, "News letter", test);
 			}
@@ -227,6 +230,7 @@ public class ic_NewAccountCreation {
 			}
 			
 				Verify_Acount_Information(test, firstName, lastName, emailAddress, identityNumber,taxVatNumbe,tavVatNumberFlagStatus,identityType,selectNewsLetter);
+
 			/*
 			 * if(verifyMagentoDetails.equalsIgnoreCase("Yes")) {
 			 * Magento_VerifyCustomerDetails(test
@@ -235,6 +239,7 @@ public class ic_NewAccountCreation {
 			
 		} catch (Exception e) {
 			logger.info(e.getMessage());
+
 		} 
 		
 		
@@ -264,6 +269,8 @@ public class ic_NewAccountCreation {
 	public  void ic_VerifyDuplicateUser_created(){
      // call ic_EnternewUserDetails proceed and check the pop-up
 	}
+	
+	//TA15 ID VALIDATION
 	@Step("Check SAID can be lesser than 13 digit")
 	public  void ic_VerifySAIDLimit(String saID,ExtentTest test){
 
@@ -283,9 +290,11 @@ public class ic_NewAccountCreation {
 			}
 		} catch (Exception e) {
 			logger.info(e.getMessage());
+
 		}
 	}
 
+	//TA15 PASSWORD CHECK
 	@Step("Check Password can be different")
 	public  String ic_VerifyPasswordcanDiffer(String passwordToChange){
 		passwordToChange += "fail";
@@ -293,23 +302,25 @@ public class ic_NewAccountCreation {
 	}
 	/*
 	 * public String alterId(String saId) { saId = saId. return; }
+	 * 
 	 */
-	
 	//TA29,30 CHECKS FOR THE STATUS OF THE NEWSLETTER IN IC FRONT END  
-			String newsletterStatusCheck(ExtentTest test) {
-				String subscriptionStatus = null;
-				try {
-					action.clickEle(myAccountOption, "My Account Link", test);
-					subscriptionStatus = findNewsLetterStatus.getText();
-					action.clickEle(Account_info_option, "Account info link", test);
-					return subscriptionStatus;
-				} catch (IOException e) {
-					//LOGGER HERE
-				}
-				return subscriptionStatus;
-			}
+	String newsletterStatusCheck(ExtentTest test) {
+		String subscriptionStatus = null;
+		try {
+			action.clickEle(myAccountOption, "My Account Link", test);
+			subscriptionStatus = findNewsLetterStatus.getText();
+			action.clickEle(Account_info_option, "Account info link", test);
+			return subscriptionStatus;
+		} catch (IOException e) {
+			logger.info(e.getMessage());
+		}
+		return subscriptionStatus;
+	}
+	
 	
 	//Sourav TA17
+	//TA27,28,29,30,31 CHECKS FLAG AND VALIDATES WHAT FLAG INDICATED COLUMN H IN accountCreation++
 	@Step("To verify account information")
     public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID,String expVatNumber,String expVatNumberFlag,String expIdentityType,String expNewsletter) throws IOException{
         String ExpPage ="edit";
@@ -334,6 +345,7 @@ public class ic_NewAccountCreation {
                 //TA31
                 String ActualTaxVatNumber =action.getAttribute(taxVatNumber, "value");
                 String ActualPassport = action.getAttribute(passport, "value");
+
                 action.CompareResult("Verify First Name ", expFirstName,ActualFirstname, test);
                 action.CompareResult("Verify Last Name ", expLastName,ActualLastname, test);
                 action.CompareResult("Verify Email Address ", expEmailAddress,ActualEmail, test);
