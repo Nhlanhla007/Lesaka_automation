@@ -158,8 +158,10 @@ public class JDTests extends BaseTest {
 //				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 //				break;
 			case "Magento_UserInfoVerification":
-				Magentoverify.Validate_UserInfobackend(test1);
-
+				
+				rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 1, testcaseID);
+				Magentoverify.Validate_UserInfobackend(dataMap2.get("accountCreation" + "++"),test1,rowNumber);
+				break;
 		}
 	}
 

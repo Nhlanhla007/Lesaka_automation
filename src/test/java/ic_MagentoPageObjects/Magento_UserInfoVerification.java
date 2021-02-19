@@ -1,6 +1,7 @@
 package ic_MagentoPageObjects;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.openqa.selenium.WebDriver;
@@ -16,12 +17,15 @@ public class Magento_UserInfoVerification {
 	
 	WebDriver driver;
 	Action action;
+	MagentoRetrieveCustomerDetailsPage MagentoRetrieveCustomer;
 	public Magento_UserInfoVerification(WebDriver driver) {
 		this.driver = driver;
+		MagentoRetrieveCustomer = new MagentoRetrieveCustomerDetailsPage(driver);
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 	}
-	@FindBy(xpath = "//div[@id='container']//span[contains(text(),'Account Information')]")
+	//@FindBy(xpath = "//span[contains(text(),'Account Information')]") 
+	@FindBy(xpath = "//*[@id='page:left']/div/div/ul/li[@class='admin__page-nav-item']")
 	WebElement Account_Information;
 	@FindBy(xpath = "//input[@name='customer[firstname]']")
 	WebElement Cust_Firstname;
@@ -42,22 +46,32 @@ public class Magento_UserInfoVerification {
 	
 	@FindBy(xpath = "//input[@id='_newslettersubscription']")
 	WebElement Cust_NewsLetter;
-	public void Validate_UserInfobackend(ExtentTest test) throws IOException{
-		int TimetoLoadpage=11;
-		//Vat Number,ID,Passport,Newsletter,No newsletter
-		String verficationFlag ="Vat Number";
+	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+		int TimetoLoadpage=11;	
+		String ExpWebsite =input.get("WebSite").get(rowNumber);
+		String ExpFirstname=input.get("firstName").get(rowNumber);//"Brian";
+		String ExpLastname=input.get("lastName").get(rowNumber);//"Jones";
+		String ExpEmail=input.get("emailAddress").get(rowNumber);//"BrenoFernandesMalingaPatrick8@armyspy.com";
+	
+		//new variables flag  identityType on ID and passport
+		String ExpidentityType =input.get("identityType").get(rowNumber);//"ID";
+		String ExpPassportnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
+		String ExpSAIDnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
 		
+		//new variable flag on newsletter
+		String ExpNewsletterFalg = input.get("newsletter").get(rowNumber);//"Yes";
+		String NewletterArgs = "";
 		
-		String ExpFirstname="Brian";
-		String ExpLastname="Jones";
-		String ExpEmail="BrenoFernandesMalingaPatrick8@armyspy.com";
+		//VAT validation
+		String vatNumberFlag=input.get("vatNumberFlag").get(rowNumber);//"Yes";
+		String ExpVATnumber=input.get("vatNumber").get(rowNumber);//"2222224";
 		
-		String ExpVATnumber="2222224";
-		String ExpPassportnumber="5311266534086";
-		String ExpSAIDnumber="5311266534086";
-		
+		//code block---------------------------------------
+		MagentoRetrieveCustomer.navigateToCustomer(test);
+		MagentoRetrieveCustomer.searchForCustomer(ExpEmail, test);
+		MagentoRetrieveCustomer.tableData(ExpEmail, ExpWebsite, test);
 		action.clickEle(Account_Information, "Account_Information", test);
-		//basic verification
+		//basic verification--------------------------------------------------------------------------------------
 		String ActFirstname = FetchDataFromCustInfo_MagentoBackend(Cust_Firstname, "Customer_Firstname", 11, 2, test);
 		action.CompareResult("Verify the First name in Magento backend : ", ExpFirstname, ActFirstname, test);
 		
@@ -66,15 +80,66 @@ public class Magento_UserInfoVerification {
 		
 		String ActEmailname = FetchDataFromCustInfo_MagentoBackend(Cust_Email, "Customer_Email", 11, 2, test);
 		action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, ActLastname, test);
+		//validate ID or passport is entered basis of identity type flag..
+		switch (ExpidentityType) {
+			case "ID":
+				
+				String ActSAID = FetchDataFromCustInfo_MagentoBackend(Cust_SAID, "Customer_SAID", 11, 2, test);
+				action.CompareResult("Verify the SAID number in Magento backend : ", ExpSAIDnumber, ActSAID, test);
+				break;
+			case "Passport":
+				String ActPassport = FetchDataFromCustInfo_MagentoBackend(Cust_Passport, "Customer_Passport", 11, 2, test);
+				action.CompareResult("Verify the Passport number in Magento backend : ", ExpPassportnumber, ActPassport, test);
+				break;
+		
+		}
+		//------Basic verification ends here------------------------------------
+		//validate news letter depending on ExpNewsletterFalg...
+		if(ExpNewsletterFalg.equalsIgnoreCase("Yes")){
+			NewletterArgs ="Newsletter";
+		}else{
+			NewletterArgs ="No newsletter";
+		}
+		
+		switch (NewletterArgs) {
+			case "Newsletter":
+				String ActNewsletteres="";
+				action.click(Tab_NewsLetter, "Click Tab_NewsLetter", test);
+				boolean checknewsletter =action.elementExists(Cust_NewsLetter, TimetoLoadpage);
+				if(checknewsletter==true){
+					 ActNewsletteres =action.getAttribute(Cust_NewsLetter, "value");
+					action.CompareResult("Verify the Newsletter subscription is Checked  : ", "true",String.valueOf(ActNewsletteres), test);
+				}else{
+					action.CompareResult("Verify the Newsletter subscription is Checked: ", "true", String.valueOf(ActNewsletteres), test);
+				}
+				
+				break;
+			case "No newsletter":
+				String ActNonewsletter="";
+				action.click(Tab_NewsLetter, "Click Tab_NewsLetter", test);
+				boolean checknewsletter1=action.elementExists(Cust_NewsLetter, TimetoLoadpage);
+				if(checknewsletter1==true){
+					ActNonewsletter =action.getAttribute(Cust_NewsLetter, "value");
+					action.CompareResult("Verify the No Newsletter subscription : ", "false",String.valueOf(ActNonewsletter), test);
+				}else{
+					action.CompareResult("Verify the No Newsletter subscription : ", "false", String.valueOf(ActNonewsletter), test);
+				}
+				break;
+		
+		}
+		//validate the VAT/Tax number
+		if(vatNumberFlag.equalsIgnoreCase("Yes")){
+			String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
+			action.CompareResult("Verify the VAT number in Magento backend : ", ExpVATnumber, ActVAT, test);
+		}
 		
 		
 		
-		
+		/*
 		//conditional verification on basis of verficationFlag
 		switch (verficationFlag) {
 			case "Vat Number":
-				String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
-				action.CompareResult("Verify the VAT number in Magento backend : ", ExpVATnumber, ActVAT, test);
+				
 			case "ID":
 				String ActSAID = FetchDataFromCustInfo_MagentoBackend(Cust_SAID, "Customer_SAID", 11, 2, test);
 				action.CompareResult("Verify the SAID number in Magento backend : ", ExpSAIDnumber, ActSAID, test);
@@ -104,7 +169,7 @@ public class Magento_UserInfoVerification {
 					action.CompareResult("Verify the No Newsletter subscription : ", "false", String.valueOf(ActNonewsletter), test);
 				}
 				
-		}
+		}*/
 		
 	}
 	public String FetchDataFromCustInfo_MagentoBackend(WebElement element,String elename,int TimetoLoadpage,int TotalTrycount,ExtentTest test) throws IOException{
