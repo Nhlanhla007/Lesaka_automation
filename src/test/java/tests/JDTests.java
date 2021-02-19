@@ -6,14 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
 import base.TestCaseBase;
-
 import ic_MagentoPageObjects.*;
-
 import ic_MagentoPageObjects.ic_Magento_Login;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
-
 import com.aventstack.extentreports.ExtentTest;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -21,8 +17,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-
 import JDGroupPageObjects.*;
 import utils.*;
 
@@ -120,12 +114,12 @@ public class JDTests extends BaseTest {
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
 		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataMap2);
 		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver, dataMap2);
-
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
 			rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
 		}
+		int i = 0;
 		switch (moduleToRun) {
 			case "Login":
 				ic.login(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
@@ -160,9 +154,12 @@ public class JDTests extends BaseTest {
 			case "Verify_Acount_Information":
 				verifyAcc.Verify_Acount_Information(test1,testcaseID);
 				break;
-			case "accountCreation":
-				newAcc.accountCreation(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+			case "EnterNewUserDetails":
+				//newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
+			case "accountCreation":
+				newAcc.accountCreation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;	
 			case "icAccountConfirmation":
 				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;

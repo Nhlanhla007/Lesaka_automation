@@ -98,9 +98,9 @@ public class MagentoRetrieveCustomerDetailsPage {
 		System.out.println("Hello from " + customerEmail);
 		searchForCustomer(customerEmail, test);
 		tableData(customerEmail, webSite, test);
-//		confirmRows(customerTableRecords, test);
+		//confirmRows(customerTableRecords, test);
 		try {
-			action.click(viewCustomerDetails, "View Customer details", test);
+			//action.click(viewCustomerDetails, "View Customer details", test);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

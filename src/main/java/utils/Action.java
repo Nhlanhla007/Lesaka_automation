@@ -501,7 +501,7 @@ public class Action {
 			node.pass("Pop up is NOT displayed ");
 			return false;
 		}
-
+		
 	}
 	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test) throws IOException {
 		ExtentTest node = test.createNode("is element on next page ?");
@@ -519,7 +519,7 @@ public class Action {
 			}
 		}catch(Exception e){
 			node.fail("issue with getting element"+e.getMessage());
-			configFileReader.setPropertyVal("sequence","false");
+			//configFileReader.setPropertyVal("sequence","false");
 		}
 	}
 
@@ -546,23 +546,21 @@ public class Action {
 		return true;
 
 	}
-	public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
-		boolean Finalresult = false;
-		boolean result = false;
-		
-		//test= ExtentFactory.getInstance().createCase(name);
-		
-		if (elementAttr.getClass().getName().contains("By")) {
-			result = driver.findElement((By) elementAttr).isEnabled();
-		
-		} else{
-			result = elementAttr.isEnabled();
-		}
-		
-
-		
-		return Finalresult;
-	}
+	/*
+	 * public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
+	 * boolean Finalresult = false; boolean result = false;
+	 * 
+	 * //test= ExtentFactory.getInstance().createCase(name);
+	 * 
+	 * if (elementAttr.getClass().getName().contains("By")) { result =
+	 * driver.findElement((By) elementAttr).isEnabled();
+	 * 
+	 * } else{ result = elementAttr.isEnabled(); }
+	 * 
+	 * 
+	 * 
+	 * return Finalresult; }
+	 */
 	
 
 	//************************************ADDED LEVERCH FOR NEXT BUTTON ON PRODUCT PAGE
@@ -1436,7 +1434,7 @@ public class Action {
 			//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
 			ExtentTest node=test.createNode("Clicked Element: "+ name);
 			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-		
+			
 			try{
 				if (elementAttr.getClass().getName().contains("By")) {
 					driver.findElement((By) elementAttr).click();
@@ -1525,7 +1523,7 @@ public class Action {
 //
 //		}
 //	}
-
+			
 
 //		public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
 //			boolean Finalresult = false;
@@ -1546,7 +1544,7 @@ public class Action {
 //
 //			return Finalresult;
 //		}
-
+			
 	public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 			ExtentTest node = test.createNode("Has next Page louded? " + name);
 			try {
@@ -1566,7 +1564,7 @@ public class Action {
 				node.fail("Page has not been loaded: " + name + e.getMessage());
 
 			}
-			
+
 	}
 
 
@@ -1628,6 +1626,16 @@ public class Action {
 				e1.printStackTrace();
 			}
 			
+		}
+		
+		public void noRecordsReturnedFromTable(ExtentTest test,String name) {
+			try {
+				ExtentTest node = test.createNode("Clicked Element: " + name);
+				String screenShotPath=getScreenShot(name);
+				node.fail(name +node.addScreenCaptureFromPath(screenShotPath));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
