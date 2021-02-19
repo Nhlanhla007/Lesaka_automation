@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.aventstack.extentreports.ExtentTest;
 
+import Logger.Log;
 import io.qameta.allure.Step;
 import utils.Action;
 
@@ -25,6 +27,8 @@ public class ic_NewAccountCreation {
 		action = new Action(driver);
 		
 	}
+	
+	static Logger logger = Log.getLogData(Action.class.getSimpleName());
 	
 	@FindBy(className = "my-account")
 	WebElement ic_myAccountButton;
@@ -52,6 +56,9 @@ public class ic_NewAccountCreation {
 	
 	@FindBy(id = "taxvat")
 	WebElement taxVatNumber;
+	
+	@FindBy(xpath = "//input[@id='passport_number']")
+    WebElement passport;
 	
 	@FindBy(xpath = "//span[contains(text(),'South African ID')]")
 	WebElement User_SAIDbtn;
@@ -86,7 +93,14 @@ public class ic_NewAccountCreation {
     @FindBy(xpath = "//*[@id='account-nav']/ul[@class='nav items']/li/a[contains(text(),'Account Information')]")
     WebElement Account_info_option;
    
+    
+    //TA31 Added the My Account click in IC AccountDetails
+    @FindBy(xpath = "//*[@id=\"account-nav\"]/ul/li[1]/a")
+    WebElement myAccountOption;
    
+    @FindBy(xpath = "//*[@id=\"maincontent\"]/div/div[2]/div[2]/div[2]/div[2]/div[1]/p")
+    WebElement findNewsLetterStatus;
+    
     @FindBy(xpath = "//input[@id='firstname']")
     WebElement Firstname;
     @FindBy(xpath = "//input[@id='lastname']")
@@ -98,6 +112,8 @@ public class ic_NewAccountCreation {
     WebElement Email;
     @FindBy(xpath = "//input[@id='identity_number']")
     WebElement SAID;
+    
+    
   // Sourav TA19 customer info after click on Customer info 
 	
 	  @FindBy(xpath = "//span[contains(text(),'Account Information')]")
@@ -121,7 +137,7 @@ public class ic_NewAccountCreation {
 			action.click(ic_createAccount, "Navigate to create Account",test);
 			action.checkIfPageIsLoadedByURL("/customer/account/create/", "validate account page is loaded",test);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.info(e.getMessage());
 		}
 	}
 
@@ -137,19 +153,20 @@ public class ic_NewAccountCreation {
 		String selectNewsLetter = input.get("newsletter").get(rowNumber);
 		String taxVatNumbe = input.get("vatNumber").get(rowNumber);
 		
+		//Added flag for VAT number status check TA31
+		String tavVatNumberFlagStatus = input.get("vatNumberFlag").get(rowNumber);
 		String passwordValidation = input.get("validatePassword").get(rowNumber);
 		String saIDvalidateIncorrectID = input.get("validateIncorrectID").get(rowNumber);
 		String saIDvalidateIDWithLessDigits = input.get("validateIDWithLessDigits").get(rowNumber);
 		String saIDvalidateIDWithMoreDigits = input.get("validateIDWithMoreDigits").get(rowNumber);
+		String existingAccountValidation =input.get("validateExistingAccount").get(rowNumber);
 		
 		//SouravTA17
-		String verifyAccFlag = input.get("verifyAccount").get(rowNumber);
+		//String verifyAccFlag = input.get("verifyAccount").get(rowNumber);
 		//Sourav TA19 
-		String verifyMagentoDetails = input.get("VerifyAccountDetailsInMagentoBackend").get(rowNumber);
+		//String verifyMagentoDetails = input.get("VerifyAccountDetailsInMagentoBackend").get(rowNumber);
 		
-		
-		
-		String existingAccountValidation =input.get("validateExistingAccount").get(rowNumber);		
+				
 		try {
 			ic_NavigateToCreateAccount(test);
 			
@@ -160,40 +177,32 @@ public class ic_NewAccountCreation {
 			action.writeText(User_EmailId, emailAddress, "Email", test);
 			action.writeText(taxVatNumber, taxVatNumbe, "Tax/Vat", test);
 			action.writeText(User_Password, password, "Password", test);
-			System.out.println(selectNewsLetter);
 			if(selectNewsLetter.equalsIgnoreCase("YES")) {
-				System.out.println("Inside newslwtter");
 			action.click(newsLetter, "News letter", test);
 			}
 			//action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
-			System.out.println(identityType);
 			
 			if(identityType.equalsIgnoreCase("ID")) {
-				System.out.println("Inside ID");
 			action.click(User_SAIDbtn, "Identity type: ID", test);
 			action.writeText(User_SAID, identityNumber, "ID/Passport number", test);
 			}else if(identityType.equalsIgnoreCase("Passport")){
-				System.out.println("Inside passport");
 				action.click(User_Passportbtn, "Identity type: Passport", test);
 				action.writeText(User_Passport, identityNumber, "ID/Passport number", test);
 			}
 
 			if (saIDvalidateIncorrectID.equalsIgnoreCase("yes")) {
-				System.out.println("Enters validate with incorrect digits");
 				String identityNumberIncorrect = "7657674565563";
 				User_SAID.clear();
 				action.writeText(User_SAID, identityNumberIncorrect, "ID/Passport number", test);
 				ic_VerifySAIDLimit(identityNumber, test);
 			}
 			if (saIDvalidateIDWithLessDigits.equalsIgnoreCase("yes")) {
-				System.out.println("Enters validate with less digits");
 				String identityWithLess = identityNumber.substring(0, 10);
 				User_SAID.clear();
 				action.writeText(User_SAID, identityWithLess, "ID/Passport number", test);
 				ic_VerifySAIDLimit(identityWithLess, test);
 			}
 			if (saIDvalidateIDWithMoreDigits.equalsIgnoreCase("yes")) {
-				System.out.println("Enters validate with more digits");
 				String identityWithMore = identityNumber.concat("543");
 				User_SAID.clear();
 				action.writeText(User_SAID, identityWithMore, "ID/Passport number", test);
@@ -217,15 +226,15 @@ public class ic_NewAccountCreation {
 				action.elementExistsPopUpMessage(existingAccountError, 4000, existingAccountError.getText(), test);
 			}
 			
-			if(verifyAccFlag.equalsIgnoreCase("yes")) {
-				Verify_Acount_Information(test, firstName, lastName, emailAddress, identityNumber);
-			}
-			if(verifyMagentoDetails.equalsIgnoreCase("Yes")) {
-				Magento_VerifyCustomerDetails(test ,firstName,lastName,emailAddress,identityNumber);
-			}
+				Verify_Acount_Information(test, firstName, lastName, emailAddress, identityNumber,taxVatNumbe,tavVatNumberFlagStatus,identityType,selectNewsLetter);
+			/*
+			 * if(verifyMagentoDetails.equalsIgnoreCase("Yes")) {
+			 * Magento_VerifyCustomerDetails(test
+			 * ,firstName,lastName,emailAddress,identityNumber); }
+			 */
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info(e.getMessage());
 		} 
 		
 		
@@ -264,7 +273,6 @@ public class ic_NewAccountCreation {
 				Thread.sleep(15000);
 				action.elementExistsPopUpMessage(identityNumberError, 4000, identityNumberError.getText(), test);
 			} else if (saID.length() > 13) {
-				System.out.println("Enters more than 13 digits");
 				action.click(CreateAccountBtn, "Create account", test);
 				Thread.sleep(15000);
 				action.elementExistsPopUpMessage(identityNumberError, 4000, identityNumberError.getText(), test);
@@ -274,7 +282,7 @@ public class ic_NewAccountCreation {
 				action.elementExistsPopUpMessage(identityNumberError, 4000, identityNumberError.getText(), test);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info(e.getMessage());
 		}
 	}
 
@@ -287,9 +295,23 @@ public class ic_NewAccountCreation {
 	 * public String alterId(String saId) { saId = saId. return; }
 	 */
 	
+	//TA29,30 CHECKS FOR THE STATUS OF THE NEWSLETTER IN IC FRONT END  
+			String newsletterStatusCheck(ExtentTest test) {
+				String subscriptionStatus = null;
+				try {
+					action.clickEle(myAccountOption, "My Account Link", test);
+					subscriptionStatus = findNewsLetterStatus.getText();
+					action.clickEle(Account_info_option, "Account info link", test);
+					return subscriptionStatus;
+				} catch (IOException e) {
+					//LOGGER HERE
+				}
+				return subscriptionStatus;
+			}
+	
 	//Sourav TA17
 	@Step("To verify account information")
-    public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID) throws IOException{
+    public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID,String expVatNumber,String expVatNumberFlag,String expIdentityType,String expNewsletter) throws IOException{
         String ExpPage ="edit";
         Boolean accInfoOpt = action.elementExists(Account_info_option, 11);
         if(accInfoOpt==true){
@@ -309,15 +331,44 @@ public class ic_NewAccountCreation {
                 action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
                
                 String ActualSAID = action.getAttribute(SAID, "value");
-            
-                System.out.println(ActualFirstname);
+                //TA31
+                String ActualTaxVatNumber =action.getAttribute(taxVatNumber, "value");
+                String ActualPassport = action.getAttribute(passport, "value");
                 action.CompareResult("Verify First Name ", expFirstName,ActualFirstname, test);
-                System.out.println(ActualLastname);
                 action.CompareResult("Verify Last Name ", expLastName,ActualLastname, test);
-                System.out.println(ActualEmail);
                 action.CompareResult("Verify Email Address ", expEmailAddress,ActualEmail, test);
-                System.out.println(ActualSAID);
-                action.CompareResult("Verify SA ID ", expSAID,ActualSAID, test);
+                
+                switch (expIdentityType) {
+				case "ID":
+					action.CompareResult("SA ID ", expSAID,ActualSAID, test);
+					break;
+				case "Passport":
+					action.CompareResult("Passport", expSAID, ActualPassport, test);
+					break;
+				}
+                
+                if(expNewsletter.equalsIgnoreCase("yes")) {
+                	String actualStatus = newsletterStatusCheck(test);
+					String expectedStatus ="You are subscribed to \"General Subscription\".";
+					if(actualStatus.contains("subscribed")) {
+						action.CompareResult("Verify Newsletter subscription, you are subscribed to newsletter", expectedStatus, actualStatus, test);
+					}else {
+						action.CompareResult("Verify Newsletter subscription", expectedStatus, actualStatus, test);
+					}
+                }else if(expNewsletter.equalsIgnoreCase("no")) {
+                	String actualStatus1 = newsletterStatusCheck(test);
+					String expectedStatus1 =  "You aren't subscribed to our newsletter.";
+					if(actualStatus1.contains("aren't")) {	
+						action.CompareResult("Verify Newsletter subscription, you are not Subscibed to newsletter", expectedStatus1, actualStatus1, test);
+					}else {
+						action.CompareResult("Verify Newsletter subscription", expectedStatus1, actualStatus1, test);
+					}
+					
+                }
+                //TA31
+                if(expVatNumberFlag.equalsIgnoreCase("yes")) {
+                action.CompareResult("Verify Tax Vat Number", expVatNumber, ActualTaxVatNumber, test);
+                }
             }else{
                 action.CompareResult("Verify Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
                
@@ -327,9 +378,9 @@ public class ic_NewAccountCreation {
         }
        
        
-        System.out.println("done");
         //action.selectExactValueFromListUsingText(elementAttr, value);
     }
+	
 	public void Magento_VerifyCustomerDetails(ExtentTest test,String expFristname,String expLastname,String expEmail,String expSAID) throws IOException{
 		//replace by this Parameter while merge parameter (ExtentTest test,String expFristname,String expLastname,String expEmail,String expSAID)
 		
@@ -345,6 +396,7 @@ public class ic_NewAccountCreation {
 			String ActualEmail = action.getAttribute(customerEmail, "value");
 			String ActualBPnumber = action.getAttribute(customerBPnnumber, "value");
 			String ActualIdentityNumber= action.getAttribute(customerIdentityNumber, "value");
+			
 			
 			action.CompareResult("Verify the First name of user in Magento", expFristname, ActualFirstname, test);
 			action.CompareResult("Verify the Last name of user in Magento", expLastname, ActualLastname, test);
