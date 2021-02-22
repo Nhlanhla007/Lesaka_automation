@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.apache.log4j.Logger;
+import com.aventstack.extentreports.ExtentTest;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,7 +19,9 @@ import Logger.Log;
 import io.qameta.allure.Step;
 import utils.Action;
 import utils.ConfigFileReader;
-
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,7 +95,7 @@ public class ic_NewAccountCreation {
 	
 	@FindBy(xpath = "//header/div[3]/div[2]/div[1]/div[1]/div[1]")
 	WebElement existingAccountError;
-	
+
 	//Sourav TA17
     @FindBy(xpath = "//*[@id='account-nav']/ul[@class='nav items']/li/a[contains(text(),'Account Information')]")
     WebElement Account_info_option;
@@ -141,6 +145,8 @@ public class ic_NewAccountCreation {
 			action.checkIfPageIsLoadedByURL("/customer/account/create/", "validate account page is loaded",test);
 		} catch (IOException e) {
 			logger.info(e.getMessage());
+			ExtentTest node =test.createNode("Click on create account");
+			node.fail(e.getMessage());
 		}
 	}
 
@@ -158,14 +164,13 @@ public class ic_NewAccountCreation {
 		String selectNewsLetter = input.get("newsletter").get(rowNumber);
 		String taxVatNumbe = input.get("vatNumber").get(rowNumber);
 
-
 		//Added flag for VAT number status check TA31
 		String tavVatNumberFlagStatus = input.get("vatNumberFlag").get(rowNumber);
 		String passwordValidation = input.get("validatePassword").get(rowNumber);
 		String saIDvalidateIncorrectID = input.get("validateIncorrectID").get(rowNumber);
 		String saIDvalidateIDWithLessDigits = input.get("validateIDWithLessDigits").get(rowNumber);
 		String saIDvalidateIDWithMoreDigits = input.get("validateIDWithMoreDigits").get(rowNumber);
-		String existingAccountValidation =input.get("validateExistingAccount").get(rowNumber);
+		String existingAccountValidation =input.get("validateExistingAccount").get(rowNumber);		
 
 		try {
 			ic_NavigateToCreateAccount(test);

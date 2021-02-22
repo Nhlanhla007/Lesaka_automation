@@ -40,7 +40,7 @@ public class IC_Cart {
 	    
 	    
 	    public void iCcartVerification(ExtentTest test){
-
+	
 	    	try {
 	    	    action.explicitWait(5000);
 				action.click(iCCartButton, "iCCartButton",test);

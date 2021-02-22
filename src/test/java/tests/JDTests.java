@@ -6,10 +6,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
 import base.TestCaseBase;
 import ic_MagentoPageObjects.*;
+import ic_MagentoPageObjects.MagentoOrderStatusPage;
+import ic_MagentoPageObjects.Magento_UserInfoVerification;
 import ic_MagentoPageObjects.ic_Magento_Login;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
+import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
+import ic_MagentoPageObjects.ic_Magento_Login;
 import com.aventstack.extentreports.ExtentTest;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -17,6 +22,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+
 import JDGroupPageObjects.*;
 import utils.*;
 
@@ -114,6 +121,7 @@ public class JDTests extends BaseTest {
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
 		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataMap2);
 		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver, dataMap2);
+		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -156,6 +164,10 @@ public class JDTests extends BaseTest {
 				break;
 			case "EnterNewUserDetails":
 				//newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				icOrderSAPnumber.GenerateOrderSAPnumber(test1);
+				break;
+			case "Verify_Acount_Information":
+				verifyAcc.Verify_Acount_Information(test1,testcaseID);
 				break;
 			case "accountCreation":
 				newAcc.accountCreation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
@@ -168,6 +180,13 @@ public class JDTests extends BaseTest {
 				break;
 			case "VadidateCustomerInfo_backend":
 				MagentoCustDetail.VadidateCustomerInfo_backend(test1, testcaseID);
+				break;
+//			case "icAccountConfirmation":
+//				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+//				break;
+			case "Magento_UserInfoVerification":
+    			rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 1, testcaseID);
+				Magentoverify.Validate_UserInfobackend(dataMap2.get("accountCreation" + "++"),test1,rowNumber);
 				break;
 		}
 	}
@@ -217,13 +236,6 @@ public class JDTests extends BaseTest {
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
-			
-			try {
-				Thread.sleep(20000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			logger.info("Browser name is "+browserName);
 			Report.info("Browser name is "+browserName);
 			logger.info("App URL: "+ navigateURL);

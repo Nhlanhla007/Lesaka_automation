@@ -1523,8 +1523,9 @@ public class Action {
 //
 //		}
 //	}
-			
-
+					
+					node.pass("Successfully Verified : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+					
 		public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
 			boolean Finalresult = false;
 			boolean result = false;
@@ -1539,12 +1540,75 @@ public class Action {
 			}
 			//if(name != null){
 				//ADD THE VALIDATION METHODS- WILL BE USED WITH THE test INSTANCE THAT WILL PRINT OUT THE STEPS
+				} else {
 
+					node.fail("Error found  : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 
+				}
 
-			return Finalresult;
+			} catch(Throwable e){
+				e.printStackTrace();
+				try {
+					node.fail(" Unknown Error found : : " + TestDescription + " Expected : "+Exp+" Actual :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
 		}
+		public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
+			//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
+			ExtentTest node=test.createNode("Select value from dropdown : "+ Testname);
+			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 			
+			try{
+				// Create object of the Select class
+				Select se = new Select(elementAttr);
+				 
+				// Select the option with value 
+				
+				se.selectByVisibleText(valueToselect);
+				String res = se.getFirstSelectedOption().getText();
+				if(res.equalsIgnoreCase(valueToselect)){
+					String screenShotPath=getScreenShot(dateName);
+					node.pass("Successfully selected : " + Testname + " Expected : "+valueToselect+" Actual :"+res,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				}
+			  }catch(Throwable e){
+				e.printStackTrace();
+				try {
+					String screenShotPath=getScreenShot(dateName);
+					test.fail("Error to select  : " + valueToselect + " form the dropdown : "+Testname+" Error message :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+		}
+	}
+
+
+//		public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
+//			boolean Finalresult = false;
+//			boolean result = false;
+//
+//			//test= ExtentFactory.getInstance().createCase(name);
+//
+//			if (elementAttr.getClass().getName().contains("By")) {
+//				result = driver.findElement((By) elementAttr).isEnabled();
+//
+//			} else{
+//				result = elementAttr.isEnabled();
+//			}
+//			//if(name != null){
+//				//ADD THE VALIDATION METHODS- WILL BE USED WITH THE test INSTANCE THAT WILL PRINT OUT THE STEPS
+//
+//
+//
+//			return Finalresult;
+//		}
+			
+
 	public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 			ExtentTest node = test.createNode("Has next Page louded? " + name);
 			try {
@@ -1701,5 +1765,29 @@ public class Action {
 //			e.printStackTrace();
 //		}
 //	}
+
+	public <T> boolean elementExistWelcome(T elementAttr, long time, String name, ExtentTest test){
+		ExtentTest node = test.createNode(name);
+		try {
+			String ScreenShotPath = getScreenShot(name);
+			WebDriverWait wait = new WebDriverWait(driver, time);
+			if (elementAttr.getClass().getName().contains("By")){
+				By loc = (By) elementAttr;
+				wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
+				return driver.findElements((By) elementAttr).size() > 0;	
+			} else {
+				wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
+				node.pass("Pop up is display "+ name+node.addScreenCaptureFromPath(ScreenShotPath));
+				return true;
+			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				node.fail("Pop up is NOT displayed");
+				return false;
+				
+			}
+
+	}
+
 
 }

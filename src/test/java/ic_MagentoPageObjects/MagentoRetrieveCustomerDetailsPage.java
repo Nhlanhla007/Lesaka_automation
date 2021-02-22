@@ -21,12 +21,9 @@ public class MagentoRetrieveCustomerDetailsPage {
 
 	WebDriver driver;
 	Action action;
-	
-    HashMap<String, HashMap<String, ArrayList<String>>> workbook =null;
-	
-	public MagentoRetrieveCustomerDetailsPage(WebDriver driver,HashMap<String, HashMap<String, ArrayList<String>>> workbook) {
+
+	public MagentoRetrieveCustomerDetailsPage(WebDriver driver) {
 		this.driver = driver;
-		this.workbook = workbook;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 	}
@@ -40,7 +37,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 	@FindBy(xpath = "//button[contains(text(),'Filters')]")
 	WebElement magentoFilterTab;
 
-	@FindBy(xpath = "//body/div[2]/main[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[3]/button[1]")
+	@FindBy(xpath = "//div[@class='admin__data-grid-filters-current _show']/div[@class='admin__current-filters-actions-wrap']/button[@class='action-tertiary action-clear'][1]")
 	WebElement clearFilters;
 
 	@FindBy(name = "email")
@@ -85,14 +82,9 @@ public class MagentoRetrieveCustomerDetailsPage {
 	
 	}
 	
-	public void retrieveCustomerDetails(ExtentTest test,int testcaseID) {
-
-		//ADDED HERE
-		 HashMap<String, ArrayList<String>> accountCreationSheet = workbook.get("accountCreation++");
-		 int rowNumber = -1;
-		 rowNumber = findRowToRun(accountCreationSheet, 1, testcaseID);
-		String customerEmail = accountCreationSheet.get("customerEmail").get(rowNumber);
-		String webSite = accountCreationSheet.get("WebSite").get(rowNumber);
+	public void retrieveCustomerDetails(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) {
+		String customerEmail = input.get("customerEmail").get(rowNumber);
+		String webSite = input.get("WebSite").get(rowNumber);
 		System.out.println(customerEmail);
 		navigateToCustomer(test);
 		System.out.println("Hello from " + customerEmail);
@@ -117,7 +109,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 	
 	
 	public void tableData(String email,String webStore,ExtentTest test) {
-		int totalRows = customerTableRecords.size()-1;
+		int totalRows = customerTableRecords.size();
 		System.out.println(totalRows);
 		int totalColums = customerTableHeaders.size();
 		System.out.println(totalColums);
@@ -160,17 +152,5 @@ public class MagentoRetrieveCustomerDetailsPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-	}
-	
-	public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
-		int numberRows=input.get("TCID").size();
-		int rowNumber=-1;
-		occCount=occCount+1;
-		for(int i=0;i<numberRows;i++){
-			if(input.get("TCID").get(i).equals(Integer.toString(testcaseID))&&input.get("occurence").get(i).equals(Integer.toString(occCount))){
-				rowNumber=i;
-			}
-		}
-		return rowNumber;
 	}
 }
