@@ -19,10 +19,9 @@ import utils.ExcelFunctions;
 public class MagentoAccountInformation {
 	WebDriver driver;
 	Action action;
-	HashMap<String, HashMap<String, ArrayList<String>>> workbook =null;
-	public MagentoAccountInformation(WebDriver driver, HashMap<String, HashMap<String, ArrayList<String>>> workbook) {
+
+	public MagentoAccountInformation(WebDriver driver) {
 		this.driver = driver;
-		this.workbook = workbook;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 		
@@ -44,16 +43,14 @@ public class MagentoAccountInformation {
 			  @FindBy(xpath = "//input[@name='customer[identity_number]']")
 			  WebElement customerIdentityNumber;
 			
-			public void VadidateCustomerInfo_backend(ExtentTest test,int testcaseID) throws IOException{
+			public void VadidateCustomerInfo_backend(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException{
 				//replace by this Parameter while merge parameter (ExtentTest test,String expFristname,String expLastname,String expEmail,String expSAID)
 				int loadtime=20;
-				HashMap<String, ArrayList<String>> accountCreationSheet = workbook.get("accountCreation++");
-				 int rowNumber = -1;
-				 rowNumber = findRowToRun(accountCreationSheet, 1, testcaseID);
-				String expFristname=accountCreationSheet.get("firstName").get(rowNumber); 
-				String expLastname=accountCreationSheet.get("lastName").get(rowNumber);
-				String expEmail=accountCreationSheet.get("emailAddress").get(rowNumber);
-				String expSAID=accountCreationSheet.get("identityNumber/passport").get(rowNumber);
+
+				String expFristname=input.get("firstName").get(rowNumber);
+				String expLastname=input.get("lastName").get(rowNumber);
+				String expEmail=input.get("emailAddress").get(rowNumber);
+				String expSAID=input.get("identityNumber/passport").get(rowNumber);
 				String expBPnumber =null;
 			
 				//Starts from Account information tab
@@ -79,17 +76,6 @@ public class MagentoAccountInformation {
 				}else{
 					action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
 			    }
-			}
-			public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
-				int numberRows=input.get("TCID").size();
-				int rowNumber=-1;
-				occCount=occCount+1;
-				for(int i=0;i<numberRows;i++){
-					if(input.get("TCID").get(i).equals(Integer.toString(testcaseID))&&input.get("occurence").get(i).equals(Integer.toString(occCount))){
-						rowNumber=i;
-					}
-				}
-				return rowNumber;
 			}
 }
 			

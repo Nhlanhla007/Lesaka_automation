@@ -79,7 +79,7 @@ public class Magento_UserInfoVerification {
 		action.CompareResult("Verify the Last name in Magento backend : ", ExpLastname, ActLastname, test);
 		
 		String ActEmailname = FetchDataFromCustInfo_MagentoBackend(Cust_Email, "Customer_Email", 11, 2, test);
-		action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, ActLastname, test);
+		action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, ActEmailname, test);
 		//validate ID or passport is entered basis of identity type flag..
 		switch (ExpidentityType) {
 			case "ID":

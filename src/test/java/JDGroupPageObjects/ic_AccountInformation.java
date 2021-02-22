@@ -46,17 +46,13 @@ public class ic_AccountInformation {
 		WebElement SAID;
 	    
 		@Step("To verify account information")
-	    public void Verify_Acount_Information(ExtentTest test,int testcaseID) throws IOException{
+	    public void Verify_Acount_Information(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException{
 			String ExpPage ="edit";
 			System.out.println();
-			 HashMap<String, ArrayList<String>> accountCreationSheet = workbook.get("accountCreation++");
-			 int rowNumber = -1;
-			 rowNumber = findRowToRun(accountCreationSheet, 1, testcaseID);
-			String ExpFirstname=accountCreationSheet.get("firstName").get(rowNumber); 
-			String ExpLastname=accountCreationSheet.get("lastName").get(rowNumber);
-			String ExpEmail=accountCreationSheet.get("emailAddress").get(rowNumber);
-			String ExpSAID=accountCreationSheet.get("identityNumber/passport").get(rowNumber);
-			
+			String ExpFirstname=input.get("firstName").get(rowNumber);
+			String ExpLastname=input.get("lastName").get(rowNumber);
+			String ExpEmail=input.get("emailAddress").get(rowNumber);
+			String ExpSAID=input.get("identityNumber/passport").get(rowNumber);
 			Boolean accInfoOpt = action.elementExists(Account_info_option, 11);
 			if(accInfoOpt==true){
 				action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
@@ -82,20 +78,8 @@ public class ic_AccountInformation {
 			}else{
 				action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
 			}
-			
-			
 			System.out.println("done");
-			//action.selectExactValueFromListUsingText(elementAttr, value);
-		}
-		public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
-			int numberRows=input.get("TCID").size();
-			int rowNumber=-1;
-			for(int i=0;i<numberRows;i++){
-				if(input.get("TCID").get(i).equals(Integer.toString(testcaseID))&&input.get("occurence").get(i).equals(Integer.toString(occCount))){
-					rowNumber=i;
-				}
-			}
-			return rowNumber;
+
 		}
 
 }

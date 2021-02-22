@@ -37,8 +37,8 @@ public class OperaCloudLogout {
 
 	@Step("Do Logout")
 	public void logOut() {
-		action.javaScriptClick(UserOptions, "UserOptions");
-		action.javaScriptClick(logOut, "Log Out");
+//		action.javaScriptClick(UserOptions, "UserOptions");
+//		action.javaScriptClick(logOut, "Log Out");
 		action.waitFluent(UName);
 	}
 }

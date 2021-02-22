@@ -59,7 +59,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 		try {
 			action.click(customerTab, "Customer Tab", test);
 			action.click(allCustomerTab, "All Customers Tab", test);
-			Thread.sleep(10000);
+			Thread.sleep(8000);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,7 +70,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 		try {
 			if (action.isDisplayed(clearFilters)) {
 				action.click(clearFilters, "Cleared Filters", test);
-				Thread.sleep(5000);
+				Thread.sleep(10000);
 			}
 			action.click(magentoFilterTab, "Filter tab", test);
 			action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
@@ -82,7 +82,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 	
 	}
 	
-	public void retrieveCustomerDetails(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) {
+	public void retrieveCustomerDetails(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException {
 		String customerEmail = input.get("customerEmail").get(rowNumber);
 		String webSite = input.get("WebSite").get(rowNumber);
 		System.out.println(customerEmail);
@@ -108,49 +108,17 @@ public class MagentoRetrieveCustomerDetailsPage {
 	 */
 	
 	
-	public void tableData(String email,String webStore,ExtentTest test) {
+	public void tableData(String email,String webStore,ExtentTest test) throws IOException {
 		int totalRows = customerTableRecords.size();
 		System.out.println(totalRows);
 		int totalColums = customerTableHeaders.size();
 		System.out.println(totalColums);
 		if(totalRows>=2) {
-		try {
-			outerloop:
-			for(int i =2;i<=totalRows;i++) {
-				for(int j = 1;j<totalColums;j++) {
-					String emailColumn = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[4]/div")).getText();
-					String webSite = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[11]/div")).getText();
-					WebElement clickEdit = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[17]/a"));
-					
-					if(emailColumn.equalsIgnoreCase(email) & webSite.equalsIgnoreCase(webStore)) {
-						//clickEdit.click();
-						viewCustomerDetails(clickEdit, test);
-						break outerloop;
-					}
-					
-					
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			WebElement clickEdit = driver.findElement(By.linkText("Edit"));
+			action.javaScriptClick(clickEdit,"edit",test);
+			action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
 		}else {
 			action.noRecordsReturnedFromTable(test, "No Records were returned");
 		}
-	}
-	
-	public void viewCustomerDetails(WebElement clickElement,ExtentTest test) {
-		try {
-			//confirmRows(customerTableRecords, test);
-			if (customerTableRecords.size() >= 1) {
-				action.click(clickElement, "Customer Details", test);
-				Thread.sleep(5000);
-				action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
-			} else {
-				action.checkIfPageIsLoadedByURL("/customer/index/edit/", "Customer not found", test);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
 	}
 }

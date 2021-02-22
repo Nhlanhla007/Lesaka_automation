@@ -41,21 +41,20 @@ public class ic_Magento_Login {
 		//vv
 		@Step("Login to magento")
 		public void Login_magento(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-			String Magento_url = input.get("URL").get(rowNumber);
-			String Username =input.get("Username").get(rowNumber);
-			String Password =input.get("Password").get(rowNumber);
 
+			String Magento_url = ConfigFileReader.getPropertyVal("MagentoURL");
+			String Username = input.get("Username").get(rowNumber);
+			String Password = input.get("Password").get(rowNumber);
 			action.navigateToURL(ConfigFileReader.getPropertyVal("MagentoURL"));
-			action.waitForPageLoaded(15);
 			driver.navigate().to(Magento_url);
-			action.waitForPageLoaded(21);
+			action.waitForPageLoaded(10);
 			String ResPage = driver.getTitle();
 			if(ResPage.equalsIgnoreCase("Magento Admin")){
 				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
 				action.writeText(Magento_Username, Username, "Username feild", test);
 				action.writeText(Magento_Password, Password, "Password feild", test);
 				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
-				action.waitExplicit(31);
+				action.waitExplicit(15);
 				String resWelcomescreen = action.getText(Dashboard, "Dashboard");
 				System.out.println(resWelcomescreen);
 			}else{

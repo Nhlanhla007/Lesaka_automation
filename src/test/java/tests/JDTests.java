@@ -119,8 +119,8 @@ public class JDTests extends BaseTest {
 		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver);
 		ic_AccountInformation verifyAcc = new ic_AccountInformation(driver,dataMap2);
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
-		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataMap2);
-		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver, dataMap2);
+		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver);
+		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver);
 		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
@@ -160,15 +160,12 @@ public class JDTests extends BaseTest {
 				icOrderSAPnumber.GenerateOrderSAPnumber(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 			case "Verify_Acount_Information":
-				verifyAcc.Verify_Acount_Information(test1,testcaseID);
+				verifyAcc.Verify_Acount_Information(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
-			case "EnterNewUserDetails":
-				//newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
-				icOrderSAPnumber.GenerateOrderSAPnumber(test1);
-				break;
-			case "Verify_Acount_Information":
-				verifyAcc.Verify_Acount_Information(test1,testcaseID);
-				break;
+//			case "EnterNewUserDetails":
+//				//newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+//				icOrderSAPnumber.GenerateOrderSAPnumber(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+//				break;
 			case "accountCreation":
 				newAcc.accountCreation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;	
@@ -176,16 +173,14 @@ public class JDTests extends BaseTest {
 				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case"RetrieveCustomerDetails":
-				custDetails.retrieveCustomerDetails(test1,testcaseID);
+				custDetails.retrieveCustomerDetails(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "VadidateCustomerInfo_backend":
-				MagentoCustDetail.VadidateCustomerInfo_backend(test1, testcaseID);
+				rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 1, testcaseID);
+				MagentoCustDetail.VadidateCustomerInfo_backend(dataMap2.get("accountCreation++"), test1, rowNumber);
 				break;
-//			case "icAccountConfirmation":
-//				icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
-//				break;
 			case "Magento_UserInfoVerification":
-    			rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 1, testcaseID);
+    			rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 0, testcaseID);
 				Magentoverify.Validate_UserInfobackend(dataMap2.get("accountCreation" + "++"),test1,rowNumber);
 				break;
 		}
