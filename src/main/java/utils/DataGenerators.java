@@ -118,7 +118,6 @@ public class DataGenerators {
                 requiredData = lastName;
                 currentLastName =  requiredData;
                 break;
-
             case "GENERATED - USE LASTNAME":
                 requiredData = currentLastName;
                 break;
@@ -154,6 +153,9 @@ public class DataGenerators {
                 break;
             case "GENERATED NUMBER - 10":
                 requiredData = faker.number().digits(10).replace('0', '1');
+                break;
+            default:
+                requiredData=dataTypeRequired;
                 break;
         }
         return requiredData;

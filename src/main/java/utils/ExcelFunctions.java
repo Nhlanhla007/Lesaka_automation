@@ -384,6 +384,7 @@ public class ExcelFunctions {
 		}
 
 		//read all data sheets
+		DataGenerators dataGen = new DataGenerators();
 		Object[] keys = allKeys.keySet().toArray();
 		for (int i = 0; i < keys.length; i++) {
 			String SheetName = (String) keys[i] + "++";
@@ -405,6 +406,7 @@ public class ExcelFunctions {
 							mySheetMap.put(value, new ArrayList<>());
 						} else {
 							Object Key = mySheetMap.keySet().toArray()[z];
+							value=dataGen.GenerateRequiredData(value);
 							mySheetMap.get(headers[z]).add(value);
 							if (z > 2 && !value.equals("")) {
 

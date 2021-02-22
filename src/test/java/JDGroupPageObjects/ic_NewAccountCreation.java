@@ -16,6 +16,8 @@ import com.aventstack.extentreports.ExtentTest;
 import Logger.Log;
 import io.qameta.allure.Step;
 import utils.Action;
+import utils.ConfigFileReader;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -144,6 +146,8 @@ public class ic_NewAccountCreation {
 
 	@Step("Create account")
 	public  void accountCreation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+		String navigateURL = ConfigFileReader.getPropertyVal("URL");
+		action.navigateToURL(navigateURL);
 		String firstName = input.get("firstName").get(rowNumber);
 		String lastName = input.get("lastName").get(rowNumber);
 		String emailAddress = input.get("emailAddress").get(rowNumber);
@@ -153,6 +157,7 @@ public class ic_NewAccountCreation {
 		String identityNumber = input.get("identityNumber/passport").get(rowNumber);
 		String selectNewsLetter = input.get("newsletter").get(rowNumber);
 		String taxVatNumbe = input.get("vatNumber").get(rowNumber);
+
 
 		//Added flag for VAT number status check TA31
 		String tavVatNumberFlagStatus = input.get("vatNumberFlag").get(rowNumber);

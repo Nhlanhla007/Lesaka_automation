@@ -1525,25 +1525,25 @@ public class Action {
 //	}
 			
 
-//		public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
-//			boolean Finalresult = false;
-//			boolean result = false;
-//
-//			//test= ExtentFactory.getInstance().createCase(name);
-//
-//			if (elementAttr.getClass().getName().contains("By")) {
-//				result = driver.findElement((By) elementAttr).isEnabled();
-//
-//			} else{
-//				result = elementAttr.isEnabled();
-//			}
-//			//if(name != null){
-//				//ADD THE VALIDATION METHODS- WILL BE USED WITH THE test INSTANCE THAT WILL PRINT OUT THE STEPS
-//
-//
-//
-//			return Finalresult;
-//		}
+		public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
+			boolean Finalresult = false;
+			boolean result = false;
+
+			//test= ExtentFactory.getInstance().createCase(name);
+
+			if (elementAttr.getClass().getName().contains("By")) {
+				result = driver.findElement((By) elementAttr).isEnabled();
+
+			} else{
+				result = elementAttr.isEnabled();
+			}
+			//if(name != null){
+				//ADD THE VALIDATION METHODS- WILL BE USED WITH THE test INSTANCE THAT WILL PRINT OUT THE STEPS
+
+
+
+			return Finalresult;
+		}
 			
 	public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 			ExtentTest node = test.createNode("Has next Page louded? " + name);
@@ -1602,31 +1602,32 @@ public class Action {
 	}
 	
 	//NOTE THE BELOW METHOD IS CASE SENSTIVE WITH THE ACTUAL/EXP
-	public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException{
+	public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException {
 		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
-		ExtentTest node=test.createNode("Verify result for test "+TestDescription);
+		ExtentTest node = test.createNode("Verify result for test " + TestDescription);
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-		String screenShotPath=getScreenShot(dateName);
-		try{
+		String screenShotPath = getScreenShot(dateName);
+		try {
 			if (Actual.contains(Exp)) {
-				System.out.println("INSIDE COMPARE RESULT expected : " +Exp + " " +Actual);
-				node.pass("Successfully Verified : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				System.out.println("INSIDE COMPARE RESULT expected : " + Exp + " " + Actual);
+				node.pass("Successfully Verified : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 				//CHANGED THE ABOVE FROM test.pass TO node.pass	AS IT WAS NOT DISPAYING IN REPORT
 			} else {
-				node.fail("Error found  : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-		
+				node.fail("Error found  : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+
 			}
-			
-		} catch(Throwable e){
+
+		} catch (Throwable e) {
 			e.printStackTrace();
 			try {
-				node.fail(" Unknown Error found : : " + TestDescription + " Expected : "+Exp+" Actual :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				node.fail(" Unknown Error found : : " + TestDescription + " Expected : " + Exp + " Actual :" + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
+
 		}
+	}
 		
 		public void noRecordsReturnedFromTable(ExtentTest test,String name) {
 			try {
@@ -1637,7 +1638,7 @@ public class Action {
 				e.printStackTrace();
 			}
 		}
-	}
+
 	public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
 		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
 		ExtentTest node=test.createNode("Select value from dropdown : "+ Testname);
@@ -1700,16 +1701,5 @@ public class Action {
 //			e.printStackTrace();
 //		}
 //	}
-	
-	
-	public void noRecordsReturnedFromTable(ExtentTest test,String name) {
-		try {
-			ExtentTest node = test.createNode("Clicked Element: " + name);
-			String screenShotPath=getScreenShot(name);
-			node.fail(name +node.addScreenCaptureFromPath(screenShotPath));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 }

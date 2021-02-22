@@ -14,7 +14,7 @@ import Logger.Log;
 public class DataTable2 {
 
 	//Added custom sheet for TA31...Change it when merging
-    public static final String TESTDATA_FILENAME="src/test/resources/data/jdgroupleverchTA15.xlsx";
+    public static final String TESTDATA_FILENAME="src/test/resources/data/jdgroup.xlsx";
     public static ExcelFunctions excelFunc=new ExcelFunctions();
     public static ConcurrentHashMap<String, String> dataMap = null;
     public static HashMap<String, HashMap<String, ArrayList<String>>> dataMap2 = null;
