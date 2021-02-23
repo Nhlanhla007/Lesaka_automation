@@ -11,6 +11,7 @@ import base.TestCaseBase;
 import ic_MagentoPageObjects.*;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.Magento_UserInfoVerification;
+import ic_MagentoPageObjects.MagentoRegisterNewUser;
 import ic_MagentoPageObjects.ic_Magento_Login;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
@@ -122,6 +123,7 @@ public class JDTests extends BaseTest {
 		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver);
 		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver);
 		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver);
+		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -159,13 +161,12 @@ public class JDTests extends BaseTest {
 			case "GenerateOrderSAPnumber":
 				icOrderSAPnumber.GenerateOrderSAPnumber(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
+			case "EnterNewUserDetails":
+				//newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
 			case "Verify_Acount_Information":
 				verifyAcc.Verify_Acount_Information(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
-//			case "EnterNewUserDetails":
-//				//newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
-//				icOrderSAPnumber.GenerateOrderSAPnumber(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
-//				break;
 			case "accountCreation":
 				newAcc.accountCreation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;	
@@ -182,6 +183,8 @@ public class JDTests extends BaseTest {
 			case "Magento_UserInfoVerification":
     			rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 0, testcaseID);
 				Magentoverify.Validate_UserInfobackend(dataMap2.get("accountCreation" + "++"),test1,rowNumber);
+			case "CreateaccountBackend":
+				MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 		}
 	}

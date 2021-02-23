@@ -21,7 +21,6 @@ public class MagentoRetrieveCustomerDetailsPage {
 
 	WebDriver driver;
 	Action action;
-
 	public MagentoRetrieveCustomerDetailsPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -70,7 +69,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 		try {
 			if (action.isDisplayed(clearFilters)) {
 				action.click(clearFilters, "Cleared Filters", test);
-				Thread.sleep(10000);
+				Thread.sleep(5000);
 			}
 			action.click(magentoFilterTab, "Filter tab", test);
 			action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
@@ -120,5 +119,19 @@ public class MagentoRetrieveCustomerDetailsPage {
 		}else {
 			action.noRecordsReturnedFromTable(test, "No Records were returned");
 		}
+	}
+	public void viewCustomerDetails(WebElement clickElement,ExtentTest test) {
+		try {
+			//confirmRows(customerTableRecords, test);
+			if (customerTableRecords.size() >= 1) {
+				action.click(clickElement, "Customer Details", test);
+				Thread.sleep(5000);
+				action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
+			} else {
+				action.checkIfPageIsLoadedByURL("/customer/index/edit/", "Customer not found", test);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 	}
 }

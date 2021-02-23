@@ -281,6 +281,7 @@ public class Action {
 				String screenShotPath=getScreenShot(name);
 				node.pass("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShotPath));
 			}
+			logger.info("Clicked Element: "+ name);
 
 		} catch(Throwable e){
 			logger.info("an error has occured : "+ e.getMessage());
@@ -1475,7 +1476,6 @@ public class Action {
 				}
 			}
 		}
-
 		public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
 			boolean Finalresult = false;
 			boolean result = false;
@@ -1493,15 +1493,72 @@ public class Action {
 	}
 
 	public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
+					node.pass("Successfully Verified : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+    			} else {
+					
+					node.fail("Error found  : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+					
+				}
+				
+			} catch(Throwable e){
+				e.printStackTrace();
+				try {
+					node.fail(" Unknown Error found : : " + TestDescription + " Expected : "+Exp+" Actual :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		}
+		public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
+			//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
+			ExtentTest node=test.createNode("Select value from dropdown : "+ Testname);
+			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
+			
+			try{
+				// Create object of the Select class
+				Select se = new Select(elementAttr);
+				 
+				// Select the option with value 
+				
+				se.selectByVisibleText(valueToselect);
+				String res = se.getFirstSelectedOption().getText();
+				if(res.equalsIgnoreCase(valueToselect)){
+					String screenShotPath=getScreenShot(dateName);
+					node.pass("Successfully selected : " + Testname + " Expected : "+valueToselect+" Actual :"+res,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				}
+			  }catch(Throwable e){
+				e.printStackTrace();
+				try {
+					String screenShotPath=getScreenShot(dateName);
+					test.fail("Error to select  : " + valueToselect + " form the dropdown : "+Testname+" Error message :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+		}
+
+		}
+
+		
+		public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 			ExtentTest node = test.createNode("Has next Page louded? " + name);
 			try {
 				String screenShotPath = getScreenShot(name);
 				if (driver.getCurrentUrl().contains(urlFragment)) {
+
 					node.pass("Page has been loaded: " + name + node.addScreenCaptureFromPath(screenShotPath));
+
 				} else {
+
 					node.fail("Page has not been loaded: " + name + node.addScreenCaptureFromPath(screenShotPath));
+
 				}
+
 			} catch (IOException e) {
+
 				node.fail("Page has not been loaded: " + name + e.getMessage());
 			}
 	}
