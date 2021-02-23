@@ -503,7 +503,7 @@ public class Action {
 		}
 
 	}
-	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test) {
+	public <T> void isElementOnNextPage(T elementAttr,Long time,ExtentTest test) throws IOException {
 		ExtentTest node = test.createNode("is element on next page ?");
 		try {
 			boolean flag = elementExists(elementAttr, time);
@@ -546,7 +546,7 @@ public class Action {
 		return true;
 
 	}
-	public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
+/*	public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
 		boolean Finalresult = false;
 		boolean result = false;
 		
@@ -562,7 +562,7 @@ public class Action {
 
 		
 		return Finalresult;
-	}
+	}*/
 	
 
 	//************************************ADDED LEVERCH FOR NEXT BUTTON ON PRODUCT PAGE
@@ -848,6 +848,37 @@ public class Action {
 			}
 		}
 	}
+	
+	
+	public <T> void selectExactValueFromListUsingTex(T elementAttr, String value) {
+
+		if (elementAttr.getClass().getName().contains("By")) {
+			List<WebElement> list = driver.findElements((By) elementAttr);
+			System.out.println("Size:" + list.size());
+			for (WebElement item : list) {
+				String text = item.getAttribute("text");
+				// System.out.println(text);
+				if (text.equals(value)) {
+					item.click();
+					System.out.println("Clicked on item: " + text);
+					break;
+				}
+			}
+		} else {
+			for (WebElement item : (List<WebElement>) elementAttr) {
+				String text = item.getText();
+				// System.out.println(text);
+				if (text.equals(value)) {
+					item.click();
+					System.out.println("Clicked on item: " + text);
+					break;
+				}
+			}
+		}
+	}
+	
+	
+	
 
 	@SuppressWarnings("unchecked")
 	public <T> void selectExactValueFromListUsingText(T elementAttr, String value) {
@@ -1532,17 +1563,9 @@ public class Action {
 			
 			return Finalresult;
 		}
-	}
-	public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException{
-		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
-		ExtentTest node=test.createNode("Verify result for test "+TestDescription);
-		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-		String screenShotPath=getScreenShot(dateName);
-		try{
-			if (Actual.contains(Exp)) {
-				
-				test.pass("Successfully Verified : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-				
+	
+			
+			
 		public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 			ExtentTest node = test.createNode("Has next Page louded? " + name);
 			try {
@@ -1564,7 +1587,7 @@ public class Action {
 			}
 			
 		}
-	}
+	
 
 
 	public <T> boolean elementExistWelcome(T elementAttr, long time, String name, ExtentTest test){
