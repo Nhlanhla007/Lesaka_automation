@@ -21,12 +21,14 @@ public class MagentoRetrieveCustomerDetailsPage {
 
 	WebDriver driver;
 	Action action;
+
+
 	public MagentoRetrieveCustomerDetailsPage(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 	}
-	
+
 	@FindBy(xpath = "//*[@class=\"admin__menu\"]/ul[@id='nav']/li[@id=\"menu-magento-customer-customer\"]/a/span[contains(text(),\"Customers\")]")
 	WebElement customerTab;
 
@@ -41,47 +43,64 @@ public class MagentoRetrieveCustomerDetailsPage {
 
 	@FindBy(name = "email")
 	WebElement emailSearchField;
-	
+
 	@FindBy(xpath = "//span[contains(text(),'Apply Filters')]")
 	public WebElement magentoApplyFilterTab;
-	
+
 	@FindBy(xpath = "//div/div[4]/table/tbody/tr")
-	List<WebElement> customerTableRecords; 
-	
+	List<WebElement> customerTableRecords;
+
 	@FindBy(xpath = "//div/div[3]/div/div[3]/table/thead/tr/th")
 	List<WebElement> customerTableHeaders;
-	
+
 	@FindBy(xpath = "//tbody/tr[2]/td[17]/a")
 	WebElement viewCustomerDetails;
-	
+
 	public void navigateToCustomer(ExtentTest test) {
 		try {
 			action.click(customerTab, "Customer Tab", test);
 			action.click(allCustomerTab, "All Customers Tab", test);
-			Thread.sleep(8000);
+			Thread.sleep(10000);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public void searchForCustomer(String emailToSearchBy,ExtentTest test) {
+
+	public void searchForCustomer(String emailToSearchBy,ExtentTest test) throws IOException {
+		boolean testallFlag=true;
 		try {
 			if (action.isDisplayed(clearFilters)) {
+				Thread.sleep(6000);
 				action.click(clearFilters, "Cleared Filters", test);
-				Thread.sleep(5000);
+				Thread.sleep(6000);
 			}
+
 			action.click(magentoFilterTab, "Filter tab", test);
+			action.clear(emailSearchField, "Email ID");
 			action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
 			action.click(magentoApplyFilterTab, "Apply to filters", test);
+			testallFlag=false;
+
+
 
 		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-	
+
+			if(testallFlag==true){
+
+				action.click(magentoFilterTab, "Filter tab", test);
+				action.clear(emailSearchField, "Email ID");
+				action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
+				action.click(magentoApplyFilterTab, "Apply to filters", test);
+
+			}else{
+				test.fail(e.getMessage());
+			}
+		}
+
 	}
-	
-	public void retrieveCustomerDetails(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException {
+
+	public void retrieveCustomerDetails(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException, InterruptedException {
 		String customerEmail = input.get("customerEmail").get(rowNumber);
 		String webSite = input.get("WebSite").get(rowNumber);
 		System.out.println(customerEmail);
@@ -96,8 +115,8 @@ public class MagentoRetrieveCustomerDetailsPage {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/*
 	 * public void confirmRows(ExtentTest test) {
 	 * System.out.println(elements.size()); //action.expectSingleRow(elements,
@@ -105,21 +124,39 @@ public class MagentoRetrieveCustomerDetailsPage {
 	 * //WebElement emailAdd = row.findElement(By.xpath("/td[4]/div"));
 	 * //System.out.println(emailAdd); //} }
 	 */
-	
-	
-	public void tableData(String email,String webStore,ExtentTest test) throws IOException {
+
+
+	public void tableData(String email,String webStore,ExtentTest test){
 		int totalRows = customerTableRecords.size();
 		System.out.println(totalRows);
 		int totalColums = customerTableHeaders.size();
 		System.out.println(totalColums);
 		if(totalRows>=2) {
-			WebElement clickEdit = driver.findElement(By.linkText("Edit"));
-			action.javaScriptClick(clickEdit,"edit",test);
-			action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
+			try {
+				outerloop:
+				for(int i =2;i<=totalRows;i++) {
+					for(int j = 1;j<totalColums;j++) {
+						String emailColumn = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[4]/div")).getText();
+						String webSite = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[11]/div")).getText();
+						WebElement clickEdit = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[17]/a"));
+
+						if(emailColumn.equalsIgnoreCase(email) & webSite.equalsIgnoreCase(webStore)) {
+							//clickEdit.click();
+							viewCustomerDetails(clickEdit, test);
+							break outerloop;
+						}
+
+
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}else {
-			action.noRecordsReturnedFromTable(test, "No Records were returned");
+			//action.noRecordsReturnedFromTable(test, "No Records were returned");
 		}
 	}
+
 	public void viewCustomerDetails(WebElement clickElement,ExtentTest test) {
 		try {
 			//confirmRows(customerTableRecords, test);
@@ -132,6 +169,6 @@ public class MagentoRetrieveCustomerDetailsPage {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 }

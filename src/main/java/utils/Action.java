@@ -6,18 +6,10 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
-import com.aventstack.extentreports.Status;
-import com.aventstack.extentreports.markuputils.ExtentColor;
-import com.aventstack.extentreports.markuputils.Markup;
-import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.google.common.base.Splitter;
-import com.google.common.collect.Iterables;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -105,7 +97,7 @@ public class Action {
 
 	public <T> void click(T elementAttr, String name,ExtentTest test) throws IOException {
 		ExtentTest node=test.createNode("Clicked Element: "+ name);
-		
+
 		try{
 			//String screenShotPath=getScreenShot(name);
 			if (elementAttr.getClass().getName().contains("By")) {
@@ -325,7 +317,7 @@ public class Action {
 
 			}
 		}catch(Throwable e){
-			e.printStackTrace();
+			node.fail(e.getMessage());
 //
 			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 			String screenShotPath=getScreenShot(dateName);
@@ -375,7 +367,7 @@ public class Action {
 
 			}
 		}catch(Throwable e){
-			e.printStackTrace();
+			logger.info("Mouse not hovering element: "+ e.getMessage());
 
 		}
 	}
@@ -422,7 +414,7 @@ public class Action {
 
 			}
 		}catch(Throwable e){
-			e.printStackTrace();
+			logger.info("Getting text from: "+ e.getMessage());
 
 		}
 		return text;
@@ -479,14 +471,16 @@ public class Action {
 			WebDriverWait wait = new WebDriverWait(driver, time);
 			if (elementAttr.getClass().getName().contains("By")) {
 				By loc = (By) elementAttr;
-				wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
+
+				logger.info("elementExists");
 				return driver.findElements((By) elementAttr).size() > 0;
 			} else {
-				wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
+
+				logger.info("elementExists");
 				return true;
 			}
-		} catch (Exception e) {			
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.info("element doesnt Exists:"+e.getMessage());
 			return false;
 		}
 
@@ -528,7 +522,7 @@ public class Action {
 			}
 		}catch(Exception e){
 			node.fail("issue with getting element"+e.getMessage());
-			//configFileReader.setPropertyVal("sequence","false");
+
 		}
 	}
 
@@ -600,25 +594,38 @@ public class Action {
 
 	/**
 	 * isDisplayed() to Check Whether the Element is visible Or not visible
-	 * 
+	 *
 	 * @param elementAttr
 	 *            Can be web element or By Object
+	 * @return
 	 */
-
-	public <T> Boolean isDisplayed(T elementAttr) {
-		if (elementAttr.getClass().getName().contains("By")) {
-			if ((driver.findElement((By) elementAttr).isDisplayed())) {
-				logger.info("Element displayed");
-				return true;
-			}
-		} else {
-			if (((WebElement) elementAttr).isDisplayed()) {
-				logger.info("Element displayed");
-				return true;
-			}
+	public<T> boolean waitUntilElementIsDisplayed(T elementAttr, int secs) throws InterruptedException {
+		boolean flag = isDisplayed(elementAttr);
+		int count = 0;
+		while (flag == false && count < secs){
+			Thread.sleep(1000);
+			flag = isDisplayed(elementAttr);
+			count++;
 		}
-		logger.info("Element is not displayed");
-		return false;
+		return flag;
+	}
+	public <T> Boolean isDisplayed(T elementAttr) {
+		boolean flag=false;
+		try{
+			if (elementAttr.getClass().getName().contains("By")) {
+					if ((driver.findElement((By) elementAttr).isDisplayed())) {
+						flag=true;
+					}
+			} else {
+					if (((WebElement) elementAttr).isDisplayed()) {
+						flag=true;
+					}
+			}
+		}catch(Exception e){
+			flag=false;
+			return flag;
+		}
+		return flag;
 	}
 
 
@@ -1000,7 +1007,6 @@ public class Action {
 			} catch (Exception e) {
 				logger.info("Element still present:" + loc);
 				Assert.fail("Element is not clickable");
-				System.out.println(e.toString());
 			}
 		}
 
@@ -1466,7 +1472,7 @@ public class Action {
 					
 				//}
 			} catch(Throwable e){
-				e.printStackTrace();
+				node.fail(e.getMessage());
 				try {
 					String screenShotPath=getScreenShot(dateName);
 					node.fail("Unable to click element :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
@@ -1492,57 +1498,8 @@ public class Action {
 
 	}
 
-	public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
-					node.pass("Successfully Verified : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-    			} else {
-					
-					node.fail("Error found  : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-					
-				}
-				
-			} catch(Throwable e){
-				e.printStackTrace();
-				try {
-					node.fail(" Unknown Error found : : " + TestDescription + " Expected : "+Exp+" Actual :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-			}
-		}
-		public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
-			//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
-			ExtentTest node=test.createNode("Select value from dropdown : "+ Testname);
-			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-			
-			try{
-				// Create object of the Select class
-				Select se = new Select(elementAttr);
-				 
-				// Select the option with value 
-				
-				se.selectByVisibleText(valueToselect);
-				String res = se.getFirstSelectedOption().getText();
-				if(res.equalsIgnoreCase(valueToselect)){
-					String screenShotPath=getScreenShot(dateName);
-					node.pass("Successfully selected : " + Testname + " Expected : "+valueToselect+" Actual :"+res,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-				}
-			  }catch(Throwable e){
-				e.printStackTrace();
-				try {
-					String screenShotPath=getScreenShot(dateName);
-					test.fail("Error to select  : " + valueToselect + " form the dropdown : "+Testname+" Error message :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				
-		}
 
-		}
 
-		
 		public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 			ExtentTest node = test.createNode("Has next Page louded? " + name);
 			try {
@@ -1580,7 +1537,7 @@ public class Action {
 			}
 
 		} catch (Throwable e) {
-			e.printStackTrace();
+			node.fail(e.getMessage());
 			try {
 				node.fail(" Unknown Error found : : " + TestDescription + " Expected : " + Exp + " Actual :" + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 			} catch (IOException e1) {
@@ -1592,12 +1549,13 @@ public class Action {
 	}
 		
 		public void noRecordsReturnedFromTable(ExtentTest test,String name) {
-			try {
-				ExtentTest node = test.createNode("Clicked Element: " + name);
+			ExtentTest node = test.createNode("Clicked Element: " + name);
+		try {
+
 				String screenShotPath=getScreenShot(name);
 				node.fail(name +node.addScreenCaptureFromPath(screenShotPath));
 			} catch (IOException e) {
-				e.printStackTrace();
+				node.fail(e.getMessage());
 			}
 		}
 
@@ -1619,13 +1577,13 @@ public class Action {
 				node.pass("Successfully selected : " + Testname + " Expected : "+valueToselect+" Actual :"+res,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 			}
 		  }catch(Throwable e){
-			e.printStackTrace();
+			node.fail(e.getMessage());
 			try {
 				String screenShotPath=getScreenShot(dateName);
 				test.fail("Error to select  : " + valueToselect + " form the dropdown : "+Testname+" Error message :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				node.fail(e1.getMessage());
 			}
 			
 	}
@@ -1646,7 +1604,7 @@ public class Action {
 				node.fail("No results has been found" + name + node.addScreenCaptureFromPath(screenShotPath));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			node.fail(e.getMessage());
 		}
 	}
 
@@ -1665,8 +1623,8 @@ public class Action {
 				return true;
 			}
 			} catch (Exception e) {
-				e.printStackTrace();
-				node.fail("Pop up is NOT displayed");
+				node.fail(e.getMessage());
+
 				return false;
 				
 			}

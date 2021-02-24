@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="OperaCloud TestSuite" parallel="tests">
+<suite name="JDTestSuite" parallel="tests">
 	<parameter name="browserType" value="chrome" />
 	<!-- <listeners>
 		<listener class-name="listner.TestNGListener" />

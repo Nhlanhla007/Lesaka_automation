@@ -46,7 +46,7 @@ public class Magento_UserInfoVerification {
 	
 	@FindBy(xpath = "//input[@id='_newslettersubscription']")
 	WebElement Cust_NewsLetter;
-	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException {
 		int TimetoLoadpage=11;	
 		String ExpWebsite =input.get("WebSite").get(rowNumber);
 		String ExpFirstname=input.get("firstName").get(rowNumber);//"Brian";

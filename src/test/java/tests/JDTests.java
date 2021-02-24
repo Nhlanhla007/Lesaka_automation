@@ -213,7 +213,7 @@ public class JDTests extends BaseTest {
 			browserName = System.getProperty("BrowserType");
 			if(browserName==null){
 				logger.info("System property returned Null browser type. So getting data from Config file");
-				Report.info("System property returned Null browser type. So getting data from Config file");
+
 				browserName=ConfigFileReader.getPropertyVal("BrowserType");
 
 			}
@@ -224,18 +224,16 @@ public class JDTests extends BaseTest {
 			navigateURL = System.getProperty("URL");
 			if(navigateURL==null){
 				logger.info("System property returned Null URL. So getting data from Config file");
-				Report.info("System property returned Null URL. So getting data from Config file");
+
 				navigateURL = ConfigFileReader.getPropertyVal("MagentoURL");
 			}
-
 			logger.info("Navigate to URL");
-			Report.info("Navigating to URL: "+navigateURL);
 
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
 			logger.info("Browser name is "+browserName);
-			Report.info("Browser name is "+browserName);
+
 			logger.info("App URL: "+ navigateURL);
 			Values.app= navigateURL;
 			Values.browser=browserName;
