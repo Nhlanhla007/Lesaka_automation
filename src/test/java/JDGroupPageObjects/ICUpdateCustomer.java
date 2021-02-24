@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -127,7 +128,7 @@ public class ICUpdateCustomer {
 	    
 	    @Step("Account Information")
 	    public void updateAccount(ArrayList<HashMap<String, ArrayList<String>>> mySheets,ExtentTest test,int testcaseID){
-	    	int sheetRow1= findRowToRun(mySheets.get(0), 0, testcaseID);;
+	    	int sheetRow1= findRowToRun(mySheets.get(0), 0, testcaseID);
 			int sheetRow2= findRowToRun(mySheets.get(1), 0, testcaseID);
 	    	
 	    try {
@@ -137,37 +138,33 @@ public class ICUpdateCustomer {
 	    	String taxVat = mySheets.get(0).get("taxVat").get(sheetRow1);
 	    	String email = mySheets.get(0).get("email").get(sheetRow1);
 	    	String passWord = mySheets.get(0).get("passWord").get(sheetRow1);
+	    	
+	    	Random rand = new Random();
+			String id = String.format("%04d", rand.nextInt(10000));
+	    	
 
 	    	//Default Billing address
 	    	String billingAddress = mySheets.get(0).get("billingAddress").get(sheetRow1);
 	    	String billing_streetAddress = mySheets.get(0).get("billing_streetAddress").get(sheetRow1);
-	    	String billing_buildingDetails = mySheets.get(0).get("billing_buildingDetails").get(sheetRow1);
-	    	String billing_province = mySheets.get(0).get("billing_province").get(sheetRow1);
-	    	String billing_provinceName = mySheets.get(0).get("billing_provinceName").get(sheetRow1);
-	    	String billing_city = mySheets.get(0).get("billing_city").get(sheetRow1);
-	    	String billing_suburb = mySheets.get(0).get("billing_suburb").get(sheetRow1);
-	    	String billing_postalCode = mySheets.get(0).get("billing_postalCode").get(sheetRow1);
+	    	//String billing_provinceName = mySheets.get(0).get("billing_provinceName").get(sheetRow1);
 	    	
 	    	//Default shipping address
 	    	String shippingAddress = mySheets.get(0).get("shippingAddress").get(sheetRow1);
 	    	String shipping_streetAddress = mySheets.get(0).get("shipping_streetAddress").get(sheetRow1);
-	    	String shipping_buildingDetails = mySheets.get(0).get("shipping_buildingDetails").get(sheetRow1);
-	    	String shipping_province = mySheets.get(0).get("shipping_province").get(sheetRow1);
-	    	String shipping_provinceName = mySheets.get(0).get("shipping_provinceName").get(sheetRow1);
-	    	String shipping_city = mySheets.get(0).get("shipping_city").get(sheetRow1);
-	    	String shipping_suburb = mySheets.get(0).get("shipping_suburb").get(sheetRow1);
-	    	String shipping_postalCode = mySheets.get(0).get("shipping_postalCode").get(sheetRow1);
+	    	//String shipping_provinceName = mySheets.get(0).get("shipping_provinceName").get(sheetRow1);
 	    	
 	    	System.out.println("We here!");
 	    	action.click(ic_myAccountButton, "Navigate to accountTab",test);
 	    	action.click(MyAccountButton2, "My Account", test);
-	    	if(firstName.equals("yes")){
+	    	if(firstName.equalsIgnoreCase("Yes")){
 	    		
 	    		AccountInfoEdit.click();
 	    		
 	    		String firstNameText = action.getAttribute(ic_firstname, "value");
+	    		String firstNameTextUpdated = firstNameText + "Updated" + id;
 	    		ic_firstname.clear();
-	    		action.writeText(ic_firstname, firstNameText+ "Updated","first Name", test);
+	    		action.writeText(ic_firstname, firstNameTextUpdated,"first Name", test);
+	    		mySheets.get(0).get("firstName_output").set(sheetRow1, firstNameTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
@@ -175,28 +172,33 @@ public class ICUpdateCustomer {
 	    		AccountInfoEdit.click();
 	    		
 	    		String firstNameTextSaved = firstUpdated.getText();
-	    		action.CompareResult("compare updated first name", firstNameText+ "Updated", firstNameTextSaved, test);
+	    		action.CompareResult("compare updated first name", firstNameTextUpdated, firstNameTextSaved, test);
 	    	}
-	    	if(lastName.equals("yes")){
+	    	if(lastName.equalsIgnoreCase("yes")){
 	    		
 	    		AccountInfoEdit.click();
 	    		String lastNameText = action.getAttribute(ic_lastname, "value");
+	    		String lastNameTextUpdated = lastNameText + "Updated" + id;
 	    		ic_lastname.clear();
-	    		action.writeText(ic_lastname, lastNameText+ "Updated","last Name", test);
+	    		action.writeText(ic_lastname, lastNameTextUpdated,"last Name", test);
+	    		mySheets.get(0).get("lastName_output").set(sheetRow1, lastNameTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
 	    		
 	    		AccountInfoEdit.click();
 	    		
-	    		String lastNameTextSaved = action.getText(lastNameUpdated, "");
+	    		String lastNameTextSaved = lastNameUpdated.getText();
 	    		action.CompareResult("compare updated last name", lastNameText+ "Updated", lastNameTextSaved, test);
 	    	}
 	    	
-	    	if(taxVat.equals("yes")){
+	    	if(taxVat.equalsIgnoreCase("yes")){
+	    		AccountInfoEdit.click();
 	    		String taxVatText = action.getAttribute(ic_taxVat, "value");
+	    		String taxVatTextUpdated = taxVatText + "Updated" + id;
 	    		ic_taxVat.clear();
 	    		action.writeText(ic_taxVat, taxVatText+ "Updated"," VAT/TAX", test);
+	    		mySheets.get(0).get("taxVat_output").set(sheetRow1, taxVatTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
@@ -204,12 +206,15 @@ public class ICUpdateCustomer {
 	    		
 	    	}
 	    	
-	    	if(email.equals("yes")){
+	    	if(email.equalsIgnoreCase("yes")){
+	    		AccountInfoEdit.click();
 	    		action.click(emailCheckBox, "EmailCheckBox", test);
 	    		String emailText = action.getText(ic_email, "");
+	    		String emailTextUpdated = emailText + "Updated" + id;
 	    		
 	    		ic_email.clear();
 	    		action.writeText(ic_email,"Updated"+ emailText ,"last Name", test);
+	    		mySheets.get(0).get("email_output").set(sheetRow1, emailTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);	
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
@@ -218,7 +223,7 @@ public class ICUpdateCustomer {
 	    		
 	    	}
 	    	
-	    	if(passWord.equals("yes")){
+	    	if(passWord.equalsIgnoreCase("yes")){
 	    		action.click(passCheckBox, "PassWordCheckBox", test);
 	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
 	    		
@@ -237,146 +242,81 @@ public class ICUpdateCustomer {
 	    	action.click(ic_addressInformation, "Information Address", test);
 	    	
 	    	//Billing Address
-	    	if(billingAddress.equals("yes")){
+	    	if(billingAddress.equalsIgnoreCase("Yes")){
 	    		action.click(ic_BillingAddress, "Change Billing address", test);
 	    		//ic_BillingAddress.click();
 	    		
-	    		if(billing_streetAddress.equals("yes")){
+	    		if(billing_streetAddress.equalsIgnoreCase("yes")){
 		    		String streetAdressText = action.getAttribute(ic_streetAddress, "value");
+		    		String streetAdressTextUpdated = streetAdressText + "Updated" + id;
 		    		ic_streetAddress.clear();
+	    	
+		    		action.writeText(ic_streetAddress, streetAdressTextUpdated, "Street address", test);
+		    		mySheets.get(0).get("billing_streetAddress_output").set(sheetRow1, streetAdressTextUpdated);
 		    		
-		    		action.writeText(ic_streetAddress,"Update " + streetAdressText, "Street address", test);
+		    		/*action.click(SaveButton, "Save", test);
+		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);*/
 		    		
-		    		action.click(SaveButton, "Save", test);
-		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);
-		    		
-		    		
-		    	}
 		    	
-		    	if(billing_buildingDetails.equals("yes")){
-		    		ic_BillingAddress.click();
 		    		String buildDetailsText = action.getAttribute(ic_buildingDetails, "value");
-		    		ic_buildingDetails.clear();
+		    		mySheets.get(0).get("billing_buildingDetails_output").set(sheetRow1, buildDetailsText);
 		    		
-		    		action.writeText(ic_buildingDetails,"Update " + buildDetailsText, "Building Details", test);
-		    		
-		    		action.click(SaveButton, "Save", test);
-		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);
-		    	
-		    	}
-		    	
-		    	if(billing_province.equalsIgnoreCase("Yes")){
-		    		ic_BillingAddress.click();
-		    		action.selectExactValueFromListUsingTex(ic_province, billing_provinceName);
-		    	
-		    		action.click(SaveButton, "Save", test);
-		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);
-		    		
-		    	}
-		    	
-		    	if(billing_city.equalsIgnoreCase("Yes")){
+		    		//action.selectExactValueFromListUsingTex(ic_province, billing_provinceName);
 		    		
 		    		String cityText = action.getAttribute(ic_city, "value");
-		    		ic_city.clear();
+		    		mySheets.get(0).get("billing_city_output").set(sheetRow1, cityText);
 		    		
-		    		action.writeText(ic_city,"Update " + cityText, "city", test);
-		    		
-		    		action.click(SaveButton, "Save", test);
-		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);
-		    		
-		    	}
-		    	
-		    	if(billing_suburb.equals("yes")){
 		    		String suburbText = action.getAttribute(ic_suburb, "value");
-		    		ic_suburb.clear();
+		    		mySheets.get(0).get("billing_suburb_output").set(sheetRow1, suburbText);
 		    		
-		    		action.writeText(ic_suburb,"Update " + suburbText, "suburb", test);
+		    		String postalCodeText = action.getAttribute(ic_postalCode, "value");
+		    		mySheets.get(0).get("billing_postalCode_output").set(sheetRow1, postalCodeText);
 		    		
 		    		action.click(SaveButton, "Save", test);
 		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);
-		
+		    	
 		    	}
 		    	
-		    	if(billing_postalCode.equals("yes")){
-		    		String postalCodeText = action.getAttribute(ic_postalCode, "value");
-		    		ic_postalCode.clear();
-		    		
-		    		action.writeText(ic_postalCode,"0123", "suburb", test);
-		    		
-		    		action.click(SaveButton, "Save", test);
-		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);
-		
-		    	}
+		    	
+		    	
 		 
 	    		
 	    		
 	    	}
 	    	
 	    	//address shipping address
-	    	if(shippingAddress.equals("yes")){
+	    	if(shippingAddress.equalsIgnoreCase("Yes")){
 	    		action.click(ic_ShippingAddress, "Change Billing address", test);
 	    	
 	    	if(shipping_streetAddress.equals("yes")){
-	    		String streetAdressText = action.getAttribute(ic_streetAddress, "value");
+	    		String streetAddressText = action.getAttribute(ic_streetAddress, "value");
+	    		String streetAddressTextUpdated = streetAddressText + "Updated" + id;
 	    		ic_streetAddress.clear();
 	    		
-	    		action.writeText(ic_streetAddress,"Update " + streetAdressText, "Street address", test);
+	    		action.writeText(ic_streetAddress,streetAddressText, "Street address", test);
+	    		mySheets.get(0).get("shipping_streetAddress_Output").set(sheetRow1, streetAddressTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);
 	    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);
 	    		
-	    	}
-	    	
-	    	if(shipping_buildingDetails.equals("yes")){
 	    		String buildDetailsText = action.getAttribute(ic_buildingDetails, "value");
-	    		ic_buildingDetails.clear();
+	    		mySheets.get(0).get("shipping_buildingDetails_output").set(sheetRow1, buildDetailsText);
 	    		
-	    		action.writeText(ic_buildingDetails,"Update " + buildDetailsText, "Building Details", test);
+	    		//action.selectExactValueFromListUsingTex(ic_province, billing_provinceName);
 	    		
-	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);
-	    	
-	    	}
-	    	
-	    	if(shipping_province.equalsIgnoreCase("Yes")){
-	    		action.selectExactValueFromListUsingTex(ic_province, shipping_provinceName);
-	    	
-	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);
-	    		
-	    	}
-	    	
-	    	if(shipping_city.equalsIgnoreCase("Yes")){
 	    		String cityText = action.getAttribute(ic_city, "value");
-	    		ic_city.clear();
+	    		mySheets.get(0).get("shipping_city_output").set(sheetRow1, cityText);
 	    		
-	    		action.writeText(ic_city,"Update " + cityText, "city", test);
-	    		
-	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);
-	    		
-	    	}
-	    	
-	    	if(shipping_suburb.equals("yes")){
 	    		String suburbText = action.getAttribute(ic_suburb, "value");
-	    		ic_suburb.clear();
+	    		mySheets.get(0).get("shipping_suburb_output").set(sheetRow1, suburbText);
 	    		
-	    		action.writeText(ic_suburb,"Update " + suburbText, "suburb", test);
-	    		
-	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);
-	
-	    	}
-	    	
-	    	if(shipping_postalCode.equals("yes")){
-	    		String shippingPostalCodeText = action.getAttribute(ic_postalCode, "value");
-	    		ic_postalCode.clear();
-	    		
-	    		action.writeText(ic_postalCode,"0123", "Postal", test);
+	    		String postalCodeText = action.getAttribute(ic_postalCode, "value");
+	    		mySheets.get(0).get("shipping_postalCode_output").set(sheetRow1, postalCodeText);
 	    		
 	    		action.click(SaveButton, "Save", test);
 	    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);
-	
+	    		
+	    
 	    	}
 	    	}
 	    
