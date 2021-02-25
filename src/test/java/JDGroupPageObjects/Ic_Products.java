@@ -2,7 +2,10 @@ package JDGroupPageObjects;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -31,8 +34,6 @@ public class Ic_Products {
 	 /*
 	  * PAGE OBJECTS
 	  */
-	 
-	
 	 @FindBy(xpath = "//span[contains(text(),'Products')]")
 	 WebElement icProductLink;
 	 
@@ -45,51 +46,18 @@ public class Ic_Products {
 	 @FindBy(css = "a.product-item-link")
 	 public List<WebElement> ic_products;
 	 
-	 @FindBy(xpath = "//a[@title='Next']")
+	 @FindBy(xpath = "//span[contains(text(),'Next')]")
 	 public WebElement ic_ClickNext;
 	 
 	 
-	 @FindBy(xpath = "//span[contains(text(),'Computers, Notebooks & Tablets')]")
+	 @FindBy(xpath = "//span[contains(text(),\"Computers, Notebooks & Tablet's\")]")
 	 WebElement computersNoteBooks;
-	 
-	 @FindBy(xpath = "//span[contains(text(),'Computer Accessories')]")
-	 WebElement compAccess;
-	 
-	 @FindBy(xpath = "//span[contains(text(),'Cellphones & Accessories')]")
-	 WebElement cellPhones;
-	 
-	 @FindBy(xpath = "//span[contains(text(),'Gaming, Gadgets & Wearables')]")
-	 WebElement gaming;
-	 
-	 @FindBy(xpath = "//span[contains(text(),'Printing, Scanners & Ink')]")
-	 WebElement printing;
-	 
-	 @FindBy(xpath = "//span[contains(text(),'TVs, Displays & Audio')]")
-	 WebElement tv;
 	 
 	 @FindBy(xpath = "//body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[3]/nav[1]/ul[1]/li[1]/ul[1]/li[1]/ul[1]/li[7]/a[1]/span[1]")
 	 WebElement fitness;
 	 
-	 @FindBy(xpath = "//span[contains(text(),'Office Solutions')]")
-	 WebElement officeSo;
-	 
 	 @FindBy(xpath = "//body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[3]/nav[1]/ul[1]/li[1]/ul[1]/li[1]/ul[1]/li[9]/a[1]/span[1]")
 	 WebElement software;
-	 
-	 @FindBy(xpath = "//span[contains(text(),'Networking')]")
-	 WebElement networking;
-	 
-	 @FindBy(xpath = "//span[contains(text(),'Photography')]")
-	 WebElement photo;
-	 
-	 @FindBy(xpath = "//span[contains(text(),'Home Security')]")
-	 WebElement homeSecurity;
-	 
-	 @FindBy(xpath = "//span[contains(text(),'Office Appliances')]")
-	 WebElement officeAp;
-	 
-	 @FindBy(xpath = "//span[contains(text(),'Gift Voucher')]")
-	 WebElement gift;
 	 
 	 @FindBy(xpath = "//body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[3]/nav[1]/ul[1]/li[1]/ul[1]/li[1]/ul[1]/li[15]/a[1]/span[1]")
 	 WebElement downloads;
@@ -100,70 +68,50 @@ public class Ic_Products {
 	  * PAGE METHODS
 	  */
 	 
-	 //select category from drop down next to product list 
-	 public void ic_CategoryFind(String category,String productToFind,ExtentTest test) {
-		 action.mouseover(icProductLink, "MouseOverICProduct");
-		 listElements = new ArrayList<WebElement>();
-		 listElements.add(computersNoteBooks);
-		 listElements.add(compAccess);
-		 listElements.add(cellPhones);
-		 listElements.add(gaming);
-		 listElements.add(printing);
-		 listElements.add(tv);
-		 listElements.add(fitness);
-		 listElements.add(officeSo);
-		 listElements.add(software);
-		 listElements.add(networking);
-		 listElements.add(photo);
-		 listElements.add(homeSecurity);
-		 listElements.add(officeAp);
-		 listElements.add(gift);
-		 listElements.add(downloads);
-		 
+	 public void clickNext(ExtentTest test) {
+		 action.mouseover(ic_ClickNext, "scroll to element");	 
 		 try {
-			for(WebElement el : listElements) {
-				System.out.println("ENTERS THE LOOP");
-				 if(el.getText().equalsIgnoreCase(category)) {
-					 System.out.println("ENTERS THE if FOR THE CATEGPRIES");
-					action.click(el, "Click product link",test);
-					//ic_SelectProduct(test);
-				 }
-			 }
-			Thread.sleep(10000);
-			ic_SelectProduct(test,productToFind);
+			 Thread.sleep(10000);
+			action.click(ic_ClickNext, "Clicked Next", test);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		 
 	 }
 	 
-	 public void clickNext(ExtentTest test) {
-		 action.mouseover(ic_ClickNext, "scroll to element");;		 
-		 try {
-			action.click(ic_ClickNext, "Clicked Next", test);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	 }
-	 
+	 /**
+	  * Returns a list of products from current viewing page
+	  * @return List<WebElement>
+	  */
 	 public List<WebElement> returnList(){
 		 return ic_products;
 	 }
 	 
+	 /**
+	  * Validates if the product click NEXT page button exists/is visible
+	  * @return WebElement
+	  */
 	 public WebElement returnNext() {
-		 return ic_ClickNext;
+		 boolean status = action.attributeEnabled(ic_ClickNext.findElement(By.xpath(".//parent::*")));
+		 if(status) {
+			 return ic_ClickNext.findElement(By.xpath(".//parent::*"));
+		 }
+		 return null;
 	 }
 	 
-	 //Click product link from bar
-	 public void ic_ClickProductLink(String productToFind, ExtentTest test) {
+	 /**
+	  * Clicks On product to view all products
+	  * @param productToFind
+	  * @param quantityOfProducts
+	  * @param test
+	  */
+	 public void ic_ClickProductLink(String productToFind,String quantityOfProducts, ExtentTest test) {
 		 try {
 			System.out.println("ENTERS CLICK ON PRODUCT LINK");
 			 if(ic_ElementVisable(icProductLink)) {
 			 action.click(icProductLink, "Click product link",test);
 			 Thread.sleep(10000);
-			 ic_SelectProduct(test,productToFind);
+			 List<WebElement> products =ic_SelectProduct(test,productToFind,quantityOfProducts);			 
 			 }
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -175,85 +123,198 @@ public class Ic_Products {
 	 
 	 //enters text into search bar
 		
-		public void ic_EnterTextToSearchBar(String text,String productToFind,ExtentTest test) {
+	 /**
+	  * Enters search data into the search bar and searches
+	  * @param productToFind
+	  * @param quantityOfProducts
+	  * @param test
+	  */
+		public void ic_EnterTextToSearchBar(String productToFind,String quantityOfProducts,ExtentTest test) {
 			try {
 				ic_ElementVisable(icSearchBar);
 				action.clear(icSearchBar,"SearchBar");
-				action.writeText(icSearchBar, text,"SearchBar",test);
+				action.writeText(icSearchBar, productToFind,"SearchBar",test);
 				action.click(icSearchIcon, "Click on search", test);
 				Thread.sleep(10000);
-				ic_SelectProduct(test,productToFind);
+				List<WebElement> products = ic_SelectProduct(test,productToFind,quantityOfProducts);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		 
 	 
-	 //clicks on search(magnifying glass icon)
-		/*
-		 * public void ic_ClickIcon(WebElement elementToClick) {
-		 * ic_ElementVisable(elementToClick); action.click(elementToClick,
-		 * "Click Icon"); }
-		 */
 	 //Checks if an element is visible
+		/**
+		 * Checks for the visability of an element
+		 * @param element
+		 * @return boolean
+		 */
 	 public boolean ic_ElementVisable(WebElement element) {
 		 return action.elementExists(element, 10);
 	 }
 	 
-		
-		  public boolean ic_ElementEnabled(WebElement elementAttr) {
-			  return action.attributeEnabled(elementAttr);
-			  }
+	 /**
+	  * Filters through excel data, removes delimeters.
+	  * @param allProductsToSearch
+	  * @return List<String>
+	  */
+		  public List<String> filterProducts(String allProductsToSearch){
+			  String[] productsArray= allProductsToSearch.split("#");
+			  List<String> productsList = new ArrayList<String>(Arrays.asList(productsArray));
+			  return productsList;
+		  }
 		 
-	 
-	 //Which search should be run
+		  /**
+		   * Gathers data from excel.
+		   * Determines search type inserted from excel and selects appropriate construct for execution
+		   * @param input
+		   * @param test
+		   * @param rowNumber
+		   */
 	 public void searchType(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) {
-		 String productToSearch = input.get("categorySearch").get(rowNumber);
-		 switch (input.get("typeSearch").get(rowNumber)) {
-		case "searchbar":
-			ic_EnterTextToSearchBar(input.get("productsToSearch").get(rowNumber),input.get("specificProduct").get(rowNumber),test);
+		 String typeSearch = input.get("typeSearch").get(rowNumber);
+		 String productsToSearch = input.get("specificProduct").get(rowNumber);
+		 String quantityOfSearchProducts = input.get("Quantity").get(rowNumber);
+		 
+		 switch (typeSearch) {
+		case "SearchUsingSearchBar":
+			ic_EnterTextToSearchBar(productsToSearch,quantityOfSearchProducts,test);
 			break;
-		case"general":
+		case"All Products":
 			System.out.println("ENTERS THE SWITCH");
-			ic_ClickProductLink(productToSearch,test);
-			break;
-		case "category":
-			System.out.println("ENTERS CATEGORY");
-			System.out.println(productToSearch);
-			ic_CategoryFind(input.get("categorySearch").get(rowNumber),productToSearch,test);
-		break;
-			
+			ic_ClickProductLink(productsToSearch,quantityOfSearchProducts,test);
+			break;		
 		default:
+			if(typeSearch.equalsIgnoreCase("Computers Notebooks & Tablet's")) {
+				action.mouseover(icProductLink, "MouseOverICProduct");
+				computersNoteBooks.click();
+				ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+			}
+			else if(typeSearch.equalsIgnoreCase("Downloads & Top Ups")) {
+				action.mouseover(icProductLink, "MouseOverICProduct");
+				downloads.click();
+				ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+			}else if(typeSearch.equalsIgnoreCase("Software")) {
+				action.mouseover(icProductLink, "MouseOverICProduct");
+				software.click();
+				ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+			}else if(typeSearch.equalsIgnoreCase("Fitness & Wearables")) {
+				action.mouseover(icProductLink, "MouseOverICProduct");
+				fitness.click();
+				ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+			}else {
+				System.out.println("ENTERS else for any other product");
+				System.out.println(typeSearch);
+				WebElement category = byCategory(typeSearch);
+				action.mouseover(icProductLink, "MouseOverICProduct");
+				category.click();
+				ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+			}
 			break;
 		}
 	 }
 	 
-	
-	 public void ic_SelectProduct(ExtentTest test,String productToFind) {
-			boolean flagExecute = true;
+	 /**
+	  * Finds the category that will be searched
+	  * @param nameOfCategory
+	  * @return WebElement
+	  * @author Leverch Watson
+	  */
+	 public WebElement byCategory(String nameOfCategory) {
+		 WebElement category = driver.findElement(By.xpath("//span[contains(text(),\""+nameOfCategory+"\")]"));
+		 return category;
+	 }
+	 
+
+	 /**
+	  * Adds product to the cart according to the quantity provided by excel
+	  * @param products
+	  * @param quantity
+	  */
+	 public void addToCart(List<WebElement> products,List<String> quantity) {	
+		 for(int i = 0; i < quantity.size();i++) { //quantity maximum elements
+				 int sv = 0;
+				 for(WebElement ele : products) {
+					 
+					 if(i == sv) {					 
+						 System.out.println(ele.getText());
+							for(int s = 0;s< Integer.parseInt(quantity.get(i)); s++) {
+								System.out.println(ele.getText());
+						 	WebElement clicls = ele.findElement(By.xpath(".//parent::*/following-sibling::div/div[3]/div/div[1]/form"));
+						 	clicls.click();
+						 	//ADD VALIDATION FOR THE ADD,ADDING,ADDED
+						 	//POP UP THAT COMES UP SAYING PRODUCTS ARE ADDED
+						 	//STORE PRICE,NAME,QUANTITY IN SOME DATA STRUCTURE -- CAN CREATE FROM products 
+						 	//CREATE METHOD THAT TALLY UP THE TOTALS AND COMPARES THE NAMES IN THE CART OF THE PRODUCTS
+						 	try {
+								Thread.sleep(8000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						 	}
+					 }
+					 sv++;
+				 }
+				
+			 
+		 }
+		 
+
+	 }
+
+	 /**
+	  * Finds the specified products from the listing product page.
+	  * Adds the product found to the cart 
+	  * @param test
+	  * @param productsList
+	  * @param quantityOfProducts
+	  * @return  List<WebElement>
+	  * @author Leverch Watson
+	  */
+	 public List<WebElement> ic_SelectProduct(ExtentTest test,String productsList,String quantityOfProducts) {
+		 	List<String> theProducts = filterProducts(productsList);
+		 	List<WebElement> finalResultsFromSearch = new ArrayList<>();
+		 	
+		 	List<WebElement> productsFromSearch = new ArrayList<>();
+		 	List<String> quantity = filterProducts(quantityOfProducts);
+		 	
+		 	boolean flag = true;
 			outerloop:
-			while(flagExecute) {
-				List<WebElement> allProducts = returnList();
-				WebElement nextButton = returnNext();
-				System.out.println("While loop flagexecute: "+ flagExecute );
+			while(flag) {
+				productsFromSearch.clear();
+			List<WebElement> allProducts = returnList();
 			for(WebElement el: allProducts) {
-				System.out.println("THIS RUNS INSIDE OF THE FOR LOOP");
+				System.out.println("LOOPS ALL THE PRODUCTS FROM LISTING PAGE " + el.getText() );
+				productsFromSearch.clear();
+			for(Iterator<String> iterator = theProducts.iterator(); iterator.hasNext(); ) {
+				String value = iterator.next();
+				System.out.println("Loops all the products to be search for "+ value);
 				System.out.println(el.getText());
-				if(el.getText().equalsIgnoreCase(productToFind)) {
-					System.out.println("ENTERS HERE");
-					//DECISION MECHANISM HERE
-					WebElement clickAddToCart = el.findElement(By.xpath("//parent::*/following-sibling::div/div[3]/div/div[1]/form"));
-					clickAddToCart.click();
-					//ic_ClickIcon(el);
-				//ADD TO CART METHOD INSIDE HERE, ALSO IT SHOULD TO A LIST
-				//THE LIST WOULD BE USED TO COMPARE LATER WITH OBJECTS INSIDE OF THE "CART"
-				break outerloop;
-					//flagExecute =false;
+				if(el.getText().trim().equalsIgnoreCase(value.trim())) {
+					System.out.println("FOUND THE PRODUCT " + value);
+					productsFromSearch.add(el);
+					finalResultsFromSearch.add(el);
+					System.out.println("ADDED SUCCESSFULLY TO LIST");
+					iterator.remove();
+					System.out.println("REMOVED SUCCESSFULLY FROM LIST");
+
+					if(!iterator.hasNext()) {
+						addToCart(productsFromSearch,quantity);
+						break outerloop;
+					}
 		}
 				
 				}
-			
-			if(ic_ElementEnabled(nextButton)) {
+			if(!productsFromSearch.isEmpty()) {
+				addToCart(productsFromSearch,quantity);		
+				for(int s = 0;s<productsFromSearch.size();s++) {
+				quantity.remove(0);
+				}
+				}
+			}
+			WebElement nextButton = returnNext();
+			if(nextButton != null) {
 				clickNext(test);
 				try {
 					Thread.sleep(5000);
@@ -262,13 +323,11 @@ public class Ic_Products {
 					e.printStackTrace();
 				}
 			}else {
-				flagExecute =false;
+				flag = false;
 				System.out.println("Item has not been found anywhere");
 			}
-			}
+			
+		 	}
+		 	return finalResultsFromSearch;
 		}
-	 
-	 
-	 
-	 
 }

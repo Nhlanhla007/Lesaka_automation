@@ -29,8 +29,9 @@ public class IC_Cart {
 	    @FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
 	    private WebElement iCCartButton;
 	    
+	    //loop throUGH THIS HERE TO DETERMINE IF THE PRODUCT IS FOUND, IF FOUND VALIDATE QUANTITY AND PRICE
 	    @FindBy(xpath="//*[@id=\"mini-cart\"]/li")
-	    private WebElement icAllCartProducts;
+	    private List<WebElement> icAllCartProducts;
 	    
 	    @FindBy(xpath="//*[@id=\"minicart-content-wrapper\"]/div[2]/div[2]/div[1]/div/span/span")
 	    private WebElement icSubtotal;
@@ -48,19 +49,23 @@ public class IC_Cart {
 
 			}
 	    	//int numberOfProducts = action.getlistSize(icAllCartProducts);
-	    	List<WebElement> elementName = driver.findElements(By.xpath("//*[@id=\"mini-cart\"]/li"));
 	    	
-	    	int sum = 0;
-	    	for(int i= 1; i <= elementName.size(); i++){
-	    		
-	    		WebElement priceElement = driver.findElement(By.xpath("//*[@id=\"mini-cart\"]/li["+i+"]/div/div/div[1]/div[1]/span/span/span/span"));
-	    		WebElement quantityElement = driver.findElement(By.xpath("//*[@id=\"mini-cart\"]/li["+i+"]/div/div/div[1]/div[2]/input"));
-	    		String priceElementVariable =  action.getText(priceElement, "PriceElement");
-	    		String quantityElementVariable  = quantityElement.getAttribute("value");
-	    		sum = sum + (Integer.parseInt(quantityElementVariable) * Integer.parseInt(priceElementVariable.replace("R", "").replace(",", "")));
-	    		
-	    	}
-	    	ExtentTest node = test.createNode("Cart Subtotal Check");
+			/*
+			 * int sum = 0; for(int i= 1; i <= elementName.size(); i++){
+			 * 
+			 * WebElement priceElement =
+			 * driver.findElement(By.xpath("//*[@id=\"mini-cart\"]/li["+i+
+			 * "]/div/div/div[1]/div[1]/span/span/span/span")); WebElement quantityElement =
+			 * driver.findElement(By.xpath("//*[@id=\"mini-cart\"]/li["+i+
+			 * "]/div/div/div[1]/div[2]/input")); String priceElementVariable =
+			 * action.getText(priceElement, "PriceElement"); String quantityElementVariable
+			 * = quantityElement.getAttribute("value"); sum = sum +
+			 * (Integer.parseInt(quantityElementVariable) *
+			 * Integer.parseInt(priceElementVariable.replace("R", "").replace(",", "")));
+			 * 
+			 * }
+			 */
+	    	/*ExtentTest node = test.createNode("Cart Subtotal Check");
 	    	try{
 	    		String icSubtotalElementVariable =  action.getText(icSubtotal, "icSubtotalElement").replace("R", "").replace(",", "").replace(".00", "");
 		    	Assert.assertEquals( Integer.parseInt(icSubtotalElementVariable) , sum);
@@ -80,7 +85,7 @@ public class IC_Cart {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	    }
+	    }*/
 	       	
-	   
+	    }  
 }

@@ -222,7 +222,7 @@ public class JDTests extends BaseTest {
 			if(navigateURL==null){
 				logger.info("System property returned Null URL. So getting data from Config file");
 				Report.info("System property returned Null URL. So getting data from Config file");
-				navigateURL = ConfigFileReader.getPropertyVal("MagentoURL");
+				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 
 			logger.info("Navigate to URL");
@@ -239,7 +239,7 @@ public class JDTests extends BaseTest {
 		}
 	}
 	public void endBrowserSession() throws IOException {
-		driver.close();
+		//driver.close();
 		writeToExcel();
 	}
 	public void writeToExcel() throws IOException {

@@ -574,8 +574,13 @@ public class Action {
 	//************************************ADDED LEVERCH FOR NEXT BUTTON ON PRODUCT PAGE
 	public boolean attributeEnabled(WebElement webe) {
 		boolean decide =false;
-		  try { if(webe.isDisplayed()) { decide = true; } }catch(NoSuchElementException
-		  e) { return decide = false; }
+		try {
+			if (webe.isDisplayed()) {
+				decide = true;
+			}
+		} catch (NoSuchElementException e) {
+			return decide = false; 
+			}
 		 
 		if(decide) {
 		try {
@@ -590,7 +595,7 @@ public class Action {
 					return true;
 			}
 		} catch (Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 			return false;
 		}
 		}
