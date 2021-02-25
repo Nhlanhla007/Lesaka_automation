@@ -12,6 +12,7 @@ import ic_MagentoPageObjects.*;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.Magento_UserInfoVerification;
 import ic_MagentoPageObjects.MagentoRegisterNewUser;
+import ic_MagentoPageObjects.admin_UserUpdate;
 import ic_MagentoPageObjects.ic_Magento_Login;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
@@ -124,6 +125,9 @@ public class JDTests extends BaseTest {
 		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver);
 		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver);
 		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver);
+		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver);
+		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver);
+		ic_Login ic_login = new ic_Login(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -133,6 +137,9 @@ public class JDTests extends BaseTest {
 		switch (moduleToRun) {
 			case "Login":
 				ic.login(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
+			case "ic_login":
+				ic_login.Login_ic(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 			case "Logout":
 				ic.logout(test1);
@@ -187,6 +194,18 @@ public class JDTests extends BaseTest {
 			case "CreateaccountBackend":
 				MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
+			case "ICUpdateUser":
+				   ArrayList<HashMap<String, ArrayList<String>>> mySheets=new ArrayList<HashMap<String, ArrayList<String>>>();
+				   mySheets.add(dataMap2.get(currentKeyWord+"++"));
+				   mySheets.add(dataMap2.get("ic_login++"));
+				   icUpdateUser.updateAccount(mySheets,test1,testcaseID);
+				   break;
+			case "adminUserUpdate":
+				   ArrayList<HashMap<String, ArrayList<String>>> adminSheets=new ArrayList<HashMap<String, ArrayList<String>>>();
+				   adminSheets.add(dataMap2.get(currentKeyWord+"++"));
+				   //mySheets.add(dataMap2.get("ic_login++"));
+				   adminUserUpdate.editCustomerDetails(adminSheets,test1,testcaseID);
+				   break;
 		}
 	}
 
@@ -225,14 +244,24 @@ public class JDTests extends BaseTest {
 			navigateURL = System.getProperty("URL");
 			if(navigateURL==null){
 				logger.info("System property returned Null URL. So getting data from Config file");
+				Report.info("System property returned Null URL. So getting data from Config file");
+				navigateURL = ConfigFileReader.getPropertyVal("URL");
+			}
 
 				navigateURL = ConfigFileReader.getPropertyVal("MagentoURL");
 			}
 			logger.info("Navigate to URL");
+			Report.info("Navigating to URL: "+navigateURL);
 
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			logger.info("Browser name is "+browserName);
 
 			logger.info("App URL: "+ navigateURL);

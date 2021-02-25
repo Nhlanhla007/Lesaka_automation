@@ -6,10 +6,18 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.Markup;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Iterables;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -97,7 +105,7 @@ public class Action {
 
 	public <T> void click(T elementAttr, String name,ExtentTest test) throws IOException {
 		ExtentTest node=test.createNode("Clicked Element: "+ name);
-
+		
 		try{
 			//String screenShotPath=getScreenShot(name);
 			if (elementAttr.getClass().getName().contains("By")) {
@@ -112,6 +120,7 @@ public class Action {
 			}
 			if(name != null){
 				logger.info("Clicked Element: "+ name);
+
 				String screenShotPath=getScreenShot(name);
 				node.pass("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShotPath));
 
@@ -479,7 +488,7 @@ public class Action {
 				logger.info("elementExists");
 				return true;
 			}
-		} catch (Exception e) {
+		} catch (Exception e) {			
 			logger.info("element doesnt Exists:"+e.getMessage());
 			return false;
 		}
@@ -594,7 +603,7 @@ public class Action {
 
 	/**
 	 * isDisplayed() to Check Whether the Element is visible Or not visible
-	 *
+	 * 
 	 * @param elementAttr
 	 *            Can be web element or By Object
 	 * @return
@@ -877,6 +886,37 @@ public class Action {
 		}
 	}
 
+	
+	public <T> void selectExactValueFromListUsingTex(T elementAttr, String value) {
+
+		if (elementAttr.getClass().getName().contains("By")) {
+			List<WebElement> list = driver.findElements((By) elementAttr);
+			System.out.println("Size:" + list.size());
+			for (WebElement item : list) {
+				String text = item.getAttribute("text");
+				// System.out.println(text);
+				if (text.equals(value)) {
+					item.click();
+					System.out.println("Clicked on item: " + text);
+					break;
+				}
+			}
+		} else {
+			for (WebElement item : (List<WebElement>) elementAttr) {
+				String text = item.getText();
+				// System.out.println(text);
+				if (text.equals(value)) {
+					item.click();
+					System.out.println("Clicked on item: " + text);
+					break;
+				}
+			}
+		}
+	}
+	
+	
+	
+
 	@SuppressWarnings("unchecked")
 	public <T> void selectExactValueFromListUsingText(T elementAttr, String value) {
 
@@ -1008,6 +1048,7 @@ public class Action {
 			} catch (Exception e) {
 				logger.info("Element still present:" + loc);
 				Assert.fail("Element is not clickable");
+				System.out.println(e.toString());
 			}
 		}
 
@@ -1233,9 +1274,12 @@ public class Action {
 		wait.withTimeout(time, TimeUnit.SECONDS);
 		Function<WebDriver, Boolean> function = new Function<WebDriver, Boolean>() {
 			public Boolean apply(WebDriver arg0) {
+
 				return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString()
 						.equals("complete");
+
 			}
+
 		};
 		wait.until(function);
 
@@ -1480,24 +1524,85 @@ public class Action {
 				}
 			}
 		}
+		public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException{
+			//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
+			ExtentTest node=test.createNode("Verify result for test "+TestDescription);
+			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
+			String screenShotPath=getScreenShot(dateName);
+			try{
+				if (Actual.contains(Exp)) {
+					
+					node.pass("Successfully Verified : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+					
+				} else {
+					
+					node.fail("Error found  : " + TestDescription + " Expected : "+Exp+" Actual :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+					
+				}
+				
+			} catch(Throwable e){
+				e.printStackTrace();
+				try {
+					node.fail(" Unknown Error found : : " + TestDescription + " Expected : "+Exp+" Actual :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		}
+		public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
+			//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
+			ExtentTest node=test.createNode("Select value from dropdown : "+ Testname);
+			String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
+			
+			try{
+				// Create object of the Select class
+				Select se = new Select(elementAttr);
+				 
+				// Select the option with value 
+				
+				se.selectByVisibleText(valueToselect);
+				String res = se.getFirstSelectedOption().getText();
+				if(res.equalsIgnoreCase(valueToselect)){
+					String screenShotPath=getScreenShot(dateName);
+					node.pass("Successfully selected : " + Testname + " Expected : "+valueToselect+" Actual :"+res,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				}
+			  }catch(Throwable e){
+				e.printStackTrace();
+				try {
+					String screenShotPath=getScreenShot(dateName);
+					test.fail("Error to select  : " + valueToselect + " form the dropdown : "+Testname+" Error message :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+		}
+
+		}
 		public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
 			boolean Finalresult = false;
 			boolean result = false;
-
+			
 			//test= ExtentFactory.getInstance().createCase(name);
-
+			
 			if (elementAttr.getClass().getName().contains("By")) {
 				result = driver.findElement((By) elementAttr).isEnabled();
-
+			
 			} else{
 				result = elementAttr.isEnabled();
 			}
 			return result;
-
+			
 	}
 
-
-
+			
+			return Finalresult;
+		}
+		
+		
+			
 		public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 			ExtentTest node = test.createNode("Has next Page louded? " + name);
 			try {
@@ -1544,6 +1649,30 @@ public class Action {
 			}
 
 		}
+	
+
+
+	public <T> boolean elementExistWelcome(T elementAttr, long time, String name, ExtentTest test){
+		ExtentTest node = test.createNode(name);
+		try {
+			String ScreenShotPath = getScreenShot(name);
+			WebDriverWait wait = new WebDriverWait(driver, time);
+			if (elementAttr.getClass().getName().contains("By")){
+				By loc = (By) elementAttr;
+				wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
+				return driver.findElements((By) elementAttr).size() > 0;	
+			} else {
+				wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
+				node.pass("Pop up is display "+ name+node.addScreenCaptureFromPath(ScreenShotPath));
+				return true;
+			}
+			} catch (Exception e) {
+				e.printStackTrace();
+				node.fail("Pop up is NOT displayed");
+				return false;
+				
+			}
+
 	}
 		
 		public void noRecordsReturnedFromTable(ExtentTest test,String name) {
