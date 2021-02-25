@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import base.TestCaseBase;
 
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
+import ic_MagentoPageObjects.admin_UserUpdate;
 import ic_MagentoPageObjects.ic_Magento_Login;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 
@@ -111,6 +112,7 @@ public class JDTests extends BaseTest {
 		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver);
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
 		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver);
+		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver);
 		ic_Login ic_login = new ic_Login(driver);
 
 		ExtentTest test1=test.createNode(moduleToRun);
@@ -165,6 +167,12 @@ public class JDTests extends BaseTest {
 				   mySheets.add(dataMap2.get(currentKeyWord+"++"));
 				   mySheets.add(dataMap2.get("ic_login++"));
 				   icUpdateUser.updateAccount(mySheets,test1,testcaseID);
+				   break;
+			case "adminUserUpdate":
+				   ArrayList<HashMap<String, ArrayList<String>>> adminSheets=new ArrayList<HashMap<String, ArrayList<String>>>();
+				   adminSheets.add(dataMap2.get(currentKeyWord+"++"));
+				   //mySheets.add(dataMap2.get("ic_login++"));
+				   adminUserUpdate.editCustomerDetails(adminSheets,test1,testcaseID);
 				   break;
 		}
 	}
