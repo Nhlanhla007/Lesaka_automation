@@ -101,7 +101,7 @@ public class MagentoRegisterNewUser {
 				action.clickEle(Account_Information, "Account Information", test);
 				if(action.waitUntilElementIsDisplayed(BPnumber, waitforelement)){
 					resBPnumber = FetchDataFromCustInfo_MagentoBackend(BPnumber, "BP number", waitforelement, 5, test);
-					 input.get("Identitynumber/passport").set(rowNumber,resBPnumber);
+					 input.get("BPnumber").set(rowNumber,resBPnumber);
 				}
 
 				if(resBPnumber!=null){
@@ -122,7 +122,7 @@ public class MagentoRegisterNewUser {
 		String resData="";
 		while(trycount<=TotalTrycount & resData.length()<1){
 			action.refresh();
-			action.waitForPageLoaded(TimetoLoadpage);
+			action.explicitWait(2000);
 			action.click(Account_Information, "Account_Information", test);
 			if(action.elementExists(element, TimetoLoadpage)==true){
 				resData = action.getAttribute(element, "value");

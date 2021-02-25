@@ -177,12 +177,13 @@ public class JDTests extends BaseTest {
 				custDetails.retrieveCustomerDetails(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "VadidateCustomerInfo_backend":
-				rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 1, testcaseID);
+				rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 0, testcaseID);
 				MagentoCustDetail.VadidateCustomerInfo_backend(dataMap2.get("accountCreation++"), test1, rowNumber);
 				break;
 			case "Magento_UserInfoVerification":
     			rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 0, testcaseID);
 				Magentoverify.Validate_UserInfobackend(dataMap2.get("accountCreation" + "++"),test1,rowNumber);
+				break;
 			case "CreateaccountBackend":
 				MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;

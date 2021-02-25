@@ -133,22 +133,22 @@ public class MagentoRetrieveCustomerDetailsPage {
 		System.out.println(totalColums);
 		if(totalRows>=2) {
 			try {
-				outerloop:
-				for(int i =2;i<=totalRows;i++) {
-					for(int j = 1;j<totalColums;j++) {
-						String emailColumn = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[4]/div")).getText();
-						String webSite = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[11]/div")).getText();
-						WebElement clickEdit = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[17]/a"));
+//				outerloop:
+//				for(int i =2;i<=totalRows;i++) {
+//					for(int j = 1;j<totalColums;j++) {
+//						String emailColumn = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[4]/div")).getText();
+//						String webSite = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[11]/div")).getText();
+						WebElement clickEdit = driver.findElement(By.xpath("//tbody/tr[2]/td[17]/a"));
 
-						if(emailColumn.equalsIgnoreCase(email) & webSite.equalsIgnoreCase(webStore)) {
+//						if(emailColumn.equalsIgnoreCase(email) & webSite.equalsIgnoreCase(webStore)) {
 							//clickEdit.click();
 							viewCustomerDetails(clickEdit, test);
-							break outerloop;
-						}
+//							break outerloop;
+//						}
 
 
-					}
-				}
+//					}
+//				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -161,7 +161,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 		try {
 			//confirmRows(customerTableRecords, test);
 			if (customerTableRecords.size() >= 1) {
-				action.click(clickElement, "Customer Details", test);
+				action.javaScriptClick(clickElement, "Customer Details", test);
 				Thread.sleep(5000);
 				action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
 			} else {

@@ -185,7 +185,7 @@ public class ic_NewAccountCreation {
 
 			if(selectNewsLetter.equalsIgnoreCase("YES")) {
 				System.out.println("Inside newslwtter");
-			action.click(newsLetter, "News letter", test);
+				action.click(newsLetter, "News letter", test);
 			}
 			//action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
 			System.out.println(identityType);

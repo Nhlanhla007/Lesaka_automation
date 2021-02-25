@@ -603,6 +603,7 @@ public class Action {
 		boolean flag = isDisplayed(elementAttr);
 		int count = 0;
 		while (flag == false && count < secs){
+//			refresh();
 			Thread.sleep(1000);
 			flag = isDisplayed(elementAttr);
 			count++;
@@ -1232,12 +1233,9 @@ public class Action {
 		wait.withTimeout(time, TimeUnit.SECONDS);
 		Function<WebDriver, Boolean> function = new Function<WebDriver, Boolean>() {
 			public Boolean apply(WebDriver arg0) {
-
 				return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString()
 						.equals("complete");
-
 			}
-
 		};
 		wait.until(function);
 

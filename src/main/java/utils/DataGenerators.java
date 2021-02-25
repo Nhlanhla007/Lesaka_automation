@@ -124,11 +124,11 @@ public class DataGenerators {
             case "GENERATED EMAIL":
                 firstName = faker.name().firstName();
                 currentFirstName = firstName;
-                requiredData = firstName.toLowerCase() + faker.number().digits(5) + "@automationjdg.co.za".toLowerCase();
+                requiredData = "fake"+faker.number().digits(15) + "@automationjdg.co.za".toLowerCase();
                 currentEmail = requiredData;
                 break;
             case "GENERATED EMAIL - USE NAME":
-                requiredData = currentFirstName.toLowerCase() + faker.number().digits(5) + "@automationjdg.co.za".toLowerCase();
+                requiredData = "fake"+faker.number().digits(10) + "@automationjdg.co.za".toLowerCase();
                 currentEmail = requiredData;
                 break;
             case "GENERATED - USE EMAIL":
