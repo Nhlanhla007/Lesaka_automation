@@ -268,7 +268,7 @@ public class JDTests extends BaseTest {
 			Values.app= navigateURL;
 			Values.browser=browserName;
 		}
-	}
+
 	public void endBrowserSession() throws IOException {
 		driver.close();
 		writeToExcel();

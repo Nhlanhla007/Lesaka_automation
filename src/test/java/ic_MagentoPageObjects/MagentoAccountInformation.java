@@ -60,7 +60,9 @@ public class MagentoAccountInformation {
 				String ActualEmail = action.getAttribute(customerEmail, "value");
 				String ActualBPnumber = action.getAttribute(customerBPnnumber, "value");
 				String ActualIdentityNumber= action.getAttribute(customerIdentityNumber, "value");
-				
+
+
+
 				action.CompareResult("Verify the First name of user in Magento", expFristname, ActualFirstname, test);
 				
 				action.CompareResult("Verify the Last name of user in Magento", expLastname, ActualLastname, test);

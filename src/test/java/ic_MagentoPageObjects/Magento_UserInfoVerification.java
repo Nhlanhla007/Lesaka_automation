@@ -1,6 +1,8 @@
 package ic_MagentoPageObjects;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,18 +14,23 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
+import utils.Hanaconnector;
 
 public class Magento_UserInfoVerification {
 	
 	WebDriver driver;
 	Action action;
 	MagentoRetrieveCustomerDetailsPage MagentoRetrieveCustomer;
+	MagentoAccountInformation magentoAccountInformation = new MagentoAccountInformation(driver);
 	public Magento_UserInfoVerification(WebDriver driver) {
 		this.driver = driver;
+
 		MagentoRetrieveCustomer = new MagentoRetrieveCustomerDetailsPage(driver);
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 	}
+	@FindBy(xpath = "//input[@name='customer[partner_number]']")
+	WebElement customerBPnnumber;
 	//@FindBy(xpath = "//span[contains(text(),'Account Information')]") 
 	@FindBy(xpath = "//*[@id='page:left']/div/div/ul/li[@class='admin__page-nav-item']")
 	WebElement Account_Information;
@@ -46,7 +53,7 @@ public class Magento_UserInfoVerification {
 	
 	@FindBy(xpath = "//input[@id='_newslettersubscription']")
 	WebElement Cust_NewsLetter;
-	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException {
+	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException, ClassNotFoundException {
 		int TimetoLoadpage=11;	
 		String ExpWebsite =input.get("WebSite").get(rowNumber);
 		String ExpFirstname=input.get("firstName").get(rowNumber);//"Brian";
@@ -75,11 +82,22 @@ public class Magento_UserInfoVerification {
 		String ActFirstname = FetchDataFromCustInfo_MagentoBackend(Cust_Firstname, "Customer_Firstname", 11, 2, test);
 		action.CompareResult("Verify the First name in Magento backend : ", ExpFirstname, ActFirstname, test);
 		
-		String ActLastname = FetchDataFromCustInfo_MagentoBackend(Cust_Lastname, "Custome_Firstname", 11, 2, test);
+		String ActLastname = FetchDataFromCustInfo_MagentoBackend(Cust_Lastname, "Custome_Lastname", 11, 2, test);
 		action.CompareResult("Verify the Last name in Magento backend : ", ExpLastname, ActLastname, test);
 		
 		String ActEmailname = FetchDataFromCustInfo_MagentoBackend(Cust_Email, "Customer_Email", 11, 2, test);
 		action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, ActEmailname, test);
+
+		String ActualBPnumber =FetchDataFromCustInfo_MagentoBackend(customerBPnnumber,"customerBPnnumber",TimetoLoadpage,40,test);
+		System.out.println("ActualBPnumber:"+ActualBPnumber);
+		Hanaconnector han = new Hanaconnector();
+//		han.hanaconnector(Integer.parseInt(ActualBPnumber));
+		int rowCount=han.hanaconnector(0104022744);
+		if(rowCount==0){
+			action.CompareResult("zero rec : ", ExpEmail, ActEmailname, test);
+		}else{
+			action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, ActEmailname, test);
+		}
 		//validate ID or passport is entered basis of identity type flag..
 		switch (ExpidentityType) {
 			case "ID":
@@ -172,10 +190,16 @@ public class Magento_UserInfoVerification {
 		}*/
 		
 	}
-	public String FetchDataFromCustInfo_MagentoBackend(WebElement element,String elename,int TimetoLoadpage,int TotalTrycount,ExtentTest test) throws IOException{
+	public String FetchDataFromCustInfo_MagentoBackend(WebElement element,String elename,int TimetoLoadpage,int TimeOutinSecond,ExtentTest test) throws IOException, InterruptedException {
 		int trycount=1;
 		String resData="";
-		while(trycount<=TotalTrycount & resData.length()<1){
+		long startTime = System.currentTimeMillis(); // ... long finish = System.currentTimeMillis(); long timeElapsed = finish - start
+		Instant start = Instant.now();
+		int elapsedTime = 0;
+		System.out.println(".....................................");
+		System.out.println("elementName: "+elename);
+		System.out.println(".....................................");
+		while(elapsedTime<=TimeOutinSecond & resData.length()<1){
 			action.refresh();
 			action.waitForPageLoaded(TimetoLoadpage);
 			action.click(Account_Information, "Account_Information", test);
@@ -183,14 +207,21 @@ public class Magento_UserInfoVerification {
 				resData = action.getAttribute(element, "value");
 			}
 			
-			trycount++;
+//			trycount++;
+			Thread.sleep(TimetoLoadpage * 1000);
+			long endTime = System.currentTimeMillis();
+			long elapsedTimeInMils = endTime-startTime;
+			elapsedTime = ((int) elapsedTimeInMils)/1000;
+			System.out.println("elapsedTime: "+elapsedTime);
+//			Instant finish = Instant.now();
+//			long timeElapsed = Duration.between(start,finish).toSeconds();
 		}
-		if(!resData.isEmpty() ||resData!=null){
-			
-			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "True", test);
+		if(resData.isEmpty() ||resData==null){
+
+			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "False", test);
 			return resData;
 		}else{
-			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "False", test);
+			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "True", test);
 			return resData;
 		}
 	}
