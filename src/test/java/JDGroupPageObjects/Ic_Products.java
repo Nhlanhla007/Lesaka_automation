@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -20,6 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.aventstack.extentreports.ExtentTest;
 
+import Logger.Log;
 import utils.Action;
 
 public class Ic_Products {
@@ -34,6 +36,8 @@ public class Ic_Products {
 	action = new Action(driver);
 	cartValidation = new IC_Cart(driver);
 	 }
+	 
+	 static Logger logger = Log.getLogData(Action.class.getSimpleName());
 	 
 	 /*
 	  * PAGE OBJECTS
@@ -79,7 +83,7 @@ public class Ic_Products {
 			action.click(ic_ClickNext, "Clicked Next", test);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info(e.getMessage());
 		}
 	 }
 	 
@@ -111,7 +115,6 @@ public class Ic_Products {
 	  */
 	 public void ic_ClickProductLink(String productToFind,String quantityOfProducts, ExtentTest test) {
 		 try {
-			System.out.println("ENTERS CLICK ON PRODUCT LINK");
 			 if(ic_ElementVisable(icProductLink)) {
 			 action.click(icProductLink, "Click product link",test);
 			 Thread.sleep(10000);
@@ -123,7 +126,7 @@ public class Ic_Products {
 			 }
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info(e.getMessage());
 		}
 		 //To validate page has been loaded
 		 //action.validateUrl("product", "Validate product URL");
@@ -147,7 +150,7 @@ public class Ic_Products {
 				Map<String, String> products = ic_SelectProduct(test,productToFind,quantityOfProducts);
 				
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.info(e.getMessage());
 			}
 		}
 	 
@@ -189,7 +192,6 @@ public class Ic_Products {
 			ic_EnterTextToSearchBar(productsToSearch,quantityOfSearchProducts,test);
 			break;
 		case"All Products":
-			System.out.println("ENTERS THE SWITCH");
 			ic_ClickProductLink(productsToSearch,quantityOfSearchProducts,test);
 			break;		
 		default:
@@ -215,8 +217,6 @@ public class Ic_Products {
 				Map<String, String> products=ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
 				cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
 			}else {
-				System.out.println("ENTERS else for any other product");
-				System.out.println(typeSearch);
 				WebElement category = byCategory(typeSearch);
 				action.mouseover(icProductLink, "MouseOverICProduct");
 				category.click();
@@ -249,9 +249,7 @@ public class Ic_Products {
 				 for(WebElement ele : products) {
 					 
 					 if(i == sv) {					 
-						 System.out.println(ele.getText());
 							for(int s = 0;s< Integer.parseInt(quantity.get(i)); s++) {
-								System.out.println(ele.getText());
 						 	WebElement clicls = ele.findElement(By.xpath(".//parent::*/following-sibling::div/div[3]/div/div[1]/form"));
 						 	clicls.click();
 						 	cartValidation.cartButtonValidation(products, test);
@@ -263,7 +261,7 @@ public class Ic_Products {
 								Thread.sleep(8000);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
-								e.printStackTrace();
+								logger.info(e.getMessage());
 							}
 						 	}
 					 }
@@ -298,22 +296,15 @@ public class Ic_Products {
 				productsFromSearch.clear();
 			List<WebElement> allProducts = ic_products;
 			for(WebElement el: allProducts) {
-				System.out.println("LOOPS ALL THE PRODUCTS FROM LISTING PAGE " + el.getText() );
-				System.out.println(el.getText());
 				productsFromSearch.clear();
 			for(Iterator<String> iterator = theProducts.iterator(); iterator.hasNext(); ) {
 				String value = iterator.next();
-				System.out.println("Loops all the products to be search for "+ value);
-				System.out.println(el.getText());
 				if(el.getText().trim().equalsIgnoreCase(value.trim())) {
-					System.out.println("FOUND THE PRODUCT " + value);
 					productsFromSearch.add(el);
 					//Add name here, find price have to find dom here because of restraints
 					String price = el.findElement(By.xpath(".//parent::*/following-sibling:: div/div[2]/div/span/span/span")).getText();
 					finalResultsFromSearch.put(el.getText(), price);
-					System.out.println("ADDED SUCCESSFULLY TO LIST");
 					iterator.remove();
-					System.out.println("REMOVED SUCCESSFULLY FROM LIST");
 
 					if(!iterator.hasNext()) {
 						addToCart(productsFromSearch,quantity,test);
@@ -336,7 +327,7 @@ public class Ic_Products {
 					Thread.sleep(5000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.info(e.getMessage());
 				}
 			}else {
 				flag = false;

@@ -91,24 +91,28 @@ public class IC_Cart {
 				// TODO: handle exception
 			}
 	    }
+	    
+	    int sum = 0;
 		  public void iCcartVerification2(Map<String, List<String>> products,ExtentTest test) {
 			  //Find all elements from the list
 			  try {
 				for(WebElement productsInCart : icAllCartProducts) {
 					  String nameOfProduct = productsInCart.findElement(By.xpath(".//strong/a")).getText();
-					  String price = productsInCart.findElement(By.xpath(".//span/span/span/span")).getText();
+					  String price = productsInCart.findElement(By.xpath(".//span/span/span/span")).getText();					  
 					  WebElement quantityTag = productsInCart.findElement(By.xpath(".//div[2]/input"));
 					  String quantity = action.getAttribute(quantityTag, "data-item-qty");
+					  sum += (Integer.parseInt(quantity)*Integer.parseInt(price.replace("R", "").replace(",", "")));
 					  for(Map.Entry selectedProducts : products.entrySet()) {
 						  //@SuppressWarnings("unchecked")
 						List<String> data = (List<String>)selectedProducts.getValue();
 						if(selectedProducts.getKey().equals(nameOfProduct)) {
 						  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
 						  action.CompareResult("Price : " +price, data.get(0), price, test);
-						  action.CompareResult("Quantity : " + quantity, data.get(1), quantity, test);
+						  action.CompareResult("Quantity : " + quantity, data.get(1), quantity, test);						  
 						}
 					  }
 				  }
+				action.CompareResult("Total", String.valueOf(sum), icSubtotal.getText().replace("R", "").replace(",", "").replace(".", "") , test);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
