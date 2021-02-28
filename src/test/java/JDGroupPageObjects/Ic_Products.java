@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -24,11 +26,13 @@ public class Ic_Products {
 
 	WebDriver driver;
 	Action action;
+	IC_Cart cartValidation;
 
 	 public Ic_Products(WebDriver driver) {
 	this.driver = driver;
 	PageFactory.initElements(driver, this);
 	action = new Action(driver);
+	cartValidation = new IC_Cart(driver);
 	 }
 	 
 	 /*
@@ -111,7 +115,11 @@ public class Ic_Products {
 			 if(ic_ElementVisable(icProductLink)) {
 			 action.click(icProductLink, "Click product link",test);
 			 Thread.sleep(10000);
-			 List<WebElement> products =ic_SelectProduct(test,productToFind,quantityOfProducts);			 
+			 Map<String, String> products =ic_SelectProduct(test,productToFind,quantityOfProducts);	
+			 List<String> quantity = filterProducts(quantityOfProducts);
+			 Map<String,List<String>> productQuantityPrice= cartValidation.productQuantityAndPrice(products,quantity,test);
+			 cartValidation.navigateToCart(test);
+			 cartValidation.iCcartVerification2(productQuantityPrice,test);
 			 }
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -136,7 +144,7 @@ public class Ic_Products {
 				action.writeText(icSearchBar, productToFind,"SearchBar",test);
 				action.click(icSearchIcon, "Click on search", test);
 				Thread.sleep(10000);
-				List<WebElement> products = ic_SelectProduct(test,productToFind,quantityOfProducts);
+				Map<String, String> products = ic_SelectProduct(test,productToFind,quantityOfProducts);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -175,7 +183,7 @@ public class Ic_Products {
 		 String typeSearch = input.get("typeSearch").get(rowNumber);
 		 String productsToSearch = input.get("specificProduct").get(rowNumber);
 		 String quantityOfSearchProducts = input.get("Quantity").get(rowNumber);
-		 
+		 List<String> quantityFilteres =filterProducts(quantityOfSearchProducts);
 		 switch (typeSearch) {
 		case "SearchUsingSearchBar":
 			ic_EnterTextToSearchBar(productsToSearch,quantityOfSearchProducts,test);
@@ -188,27 +196,32 @@ public class Ic_Products {
 			if(typeSearch.equalsIgnoreCase("Computers Notebooks & Tablet's")) {
 				action.mouseover(icProductLink, "MouseOverICProduct");
 				computersNoteBooks.click();
-				ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+				Map<String, String> products=ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+				cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
 			}
 			else if(typeSearch.equalsIgnoreCase("Downloads & Top Ups")) {
 				action.mouseover(icProductLink, "MouseOverICProduct");
 				downloads.click();
-				ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+				Map<String, String> products=ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+				cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
 			}else if(typeSearch.equalsIgnoreCase("Software")) {
 				action.mouseover(icProductLink, "MouseOverICProduct");
 				software.click();
-				ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+				Map<String, String> products=ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+				cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
 			}else if(typeSearch.equalsIgnoreCase("Fitness & Wearables")) {
 				action.mouseover(icProductLink, "MouseOverICProduct");
 				fitness.click();
-				ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+				Map<String, String> products=ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+				cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
 			}else {
 				System.out.println("ENTERS else for any other product");
 				System.out.println(typeSearch);
 				WebElement category = byCategory(typeSearch);
 				action.mouseover(icProductLink, "MouseOverICProduct");
 				category.click();
-				ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+				Map<String, String> products= ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
+				cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
 			}
 			break;
 		}
@@ -225,13 +238,12 @@ public class Ic_Products {
 		 return category;
 	 }
 	 
-
-	 /**
+	 	 /**
 	  * Adds product to the cart according to the quantity provided by excel
 	  * @param products
 	  * @param quantity
 	  */
-	 public void addToCart(List<WebElement> products,List<String> quantity) {	
+	 public void addToCart(List<WebElement> products,List<String> quantity,ExtentTest test) {	
 		 for(int i = 0; i < quantity.size();i++) { //quantity maximum elements
 				 int sv = 0;
 				 for(WebElement ele : products) {
@@ -242,6 +254,7 @@ public class Ic_Products {
 								System.out.println(ele.getText());
 						 	WebElement clicls = ele.findElement(By.xpath(".//parent::*/following-sibling::div/div[3]/div/div[1]/form"));
 						 	clicls.click();
+						 	cartValidation.cartButtonValidation(products, test);
 						 	//ADD VALIDATION FOR THE ADD,ADDING,ADDED
 						 	//POP UP THAT COMES UP SAYING PRODUCTS ARE ADDED
 						 	//STORE PRICE,NAME,QUANTITY IN SOME DATA STRUCTURE -- CAN CREATE FROM products 
@@ -272,9 +285,9 @@ public class Ic_Products {
 	  * @return  List<WebElement>
 	  * @author Leverch Watson
 	  */
-	 public List<WebElement> ic_SelectProduct(ExtentTest test,String productsList,String quantityOfProducts) {
+	 public Map<String, String> ic_SelectProduct(ExtentTest test,String productsList,String quantityOfProducts) {
 		 	List<String> theProducts = filterProducts(productsList);
-		 	List<WebElement> finalResultsFromSearch = new ArrayList<>();
+		 	Map<String, String> finalResultsFromSearch = new LinkedHashMap<>();
 		 	
 		 	List<WebElement> productsFromSearch = new ArrayList<>();
 		 	List<String> quantity = filterProducts(quantityOfProducts);
@@ -283,9 +296,10 @@ public class Ic_Products {
 			outerloop:
 			while(flag) {
 				productsFromSearch.clear();
-			List<WebElement> allProducts = returnList();
+			List<WebElement> allProducts = ic_products;
 			for(WebElement el: allProducts) {
 				System.out.println("LOOPS ALL THE PRODUCTS FROM LISTING PAGE " + el.getText() );
+				System.out.println(el.getText());
 				productsFromSearch.clear();
 			for(Iterator<String> iterator = theProducts.iterator(); iterator.hasNext(); ) {
 				String value = iterator.next();
@@ -294,20 +308,22 @@ public class Ic_Products {
 				if(el.getText().trim().equalsIgnoreCase(value.trim())) {
 					System.out.println("FOUND THE PRODUCT " + value);
 					productsFromSearch.add(el);
-					finalResultsFromSearch.add(el);
+					//Add name here, find price have to find dom here because of restraints
+					String price = el.findElement(By.xpath(".//parent::*/following-sibling:: div/div[2]/div/span/span/span")).getText();
+					finalResultsFromSearch.put(el.getText(), price);
 					System.out.println("ADDED SUCCESSFULLY TO LIST");
 					iterator.remove();
 					System.out.println("REMOVED SUCCESSFULLY FROM LIST");
 
 					if(!iterator.hasNext()) {
-						addToCart(productsFromSearch,quantity);
+						addToCart(productsFromSearch,quantity,test);
 						break outerloop;
 					}
 		}
 				
 				}
 			if(!productsFromSearch.isEmpty()) {
-				addToCart(productsFromSearch,quantity);		
+				addToCart(productsFromSearch,quantity,test);		
 				for(int s = 0;s<productsFromSearch.size();s++) {
 				quantity.remove(0);
 				}

@@ -144,9 +144,9 @@ public class JDTests extends BaseTest {
 			case "ProductSearch":
 				products.searchType(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
-			case "iCcartVerification":
-				icCart.iCcartVerification(test1);
-				break;
+			/*
+			 * case "iCcartVerification": icCart.iCcartVerification(test1); break;
+			 */
 			case "deliveryPopulation":
 				icDelivery.deliveryPopulation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
