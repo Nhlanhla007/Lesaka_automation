@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,6 +17,7 @@ import org.testng.Assert;
 
 import com.aventstack.extentreports.ExtentTest;
 
+import Logger.Log;
 import utils.Action;
 
 public class IC_Cart {
@@ -29,6 +31,7 @@ public class IC_Cart {
 	        action = new Action(driver);
 
 	    }
+	    static Logger logger = Log.getLogData(Action.class.getSimpleName());
 	    
 	    @FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
 	    private WebElement iCCartButton;
@@ -43,47 +46,7 @@ public class IC_Cart {
 	    @FindBy(xpath="//*[@id=\"top-cart-btn-checkout\"]/span")
 	    private WebElement icCCheckout;
 	    
-	    
 		
-		
-		/*
-		 * public void iCcartVerification(ExtentTest test){
-		 * 
-		 * try { action.explicitWait(5000); action.click(iCCartButton, "iCCartButton",
-		 * test); } catch (IOException e1) {
-		 * 
-		 * } int numberOfProducts = action.getlistSize(icAllCartProducts);
-		 * 
-		 * int sum = 0; for (int i = 1; i <= elementName.size(); i++) {
-		 * 
-		 * WebElement priceElement = driver.findElement(
-		 * By.xpath("//*[@id=\"mini-cart\"]/li[" + i +
-		 * "]/div/div/div[1]/div[1]/span/span/span/span")); WebElement quantityElement =
-		 * driver .findElement(By.xpath("//*[@id=\"mini-cart\"]/li[" + i +
-		 * "]/div/div/div[1]/div[2]/input")); String priceElementVariable =
-		 * action.getText(priceElement, "PriceElement"); String quantityElementVariable
-		 * = quantityElement.getAttribute("value"); sum = sum +
-		 * (Integer.parseInt(quantityElementVariable)
-		 * Integer.parseInt(priceElementVariable.replace("R", "").replace(",", "")));
-		 * 
-		 * }
-		 * 
-		 * ExtentTest node = test.createNode("Cart Subtotal Check"); try{ String
-		 * icSubtotalElementVariable = action.getText(icSubtotal,
-		 * "icSubtotalElement").replace("R", "").replace(",", "").replace(".00", "");
-		 * Assert.assertEquals( Integer.parseInt(icSubtotalElementVariable) , sum); if(
-		 * Integer.parseInt(icSubtotalElementVariable) == sum) {
-		 * node.pass("Cart items matches the Cart Subtotal"); } else{
-		 * node.fail("Cart Items not matching the Subtotal"); }
-		 * 
-		 * } catch (Exception e){ node.fail("Cart Items not matching the Subtotal");
-		 * 
-		 * } try { action.click(icCCheckout, "ClickingOnCheckutButton", test); } catch
-		 * (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); } }
-		 * 
-		 * }
-		 */
-	    
 	    public void navigateToCart(ExtentTest test) {
 	    	try {
 				action.clickEle(iCCartButton, "IC cart button", test);
@@ -107,15 +70,16 @@ public class IC_Cart {
 						List<String> data = (List<String>)selectedProducts.getValue();
 						if(selectedProducts.getKey().equals(nameOfProduct)) {
 						  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
-						  action.CompareResult("Price : " +price, data.get(0), price, test);
-						  action.CompareResult("Quantity : " + quantity, data.get(1), quantity, test);						  
+						  action.CompareResult("Price : " +price +" for " +nameOfProduct, data.get(0), price, test);
+						  action.CompareResult("Quantity : " + quantity +" for " + nameOfProduct, data.get(1), quantity, test);						  
 						}
 					  }
 				  }
 				action.CompareResult("Total", String.valueOf(sum), icSubtotal.getText().replace("R", "").replace(",", "").replace(".", "") , test);
+				action.clickEle(icCCheckout, "Secure Checkout", test);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.info(e.getMessage());
 			}
 			  //Compare with data from the map
 			  
@@ -128,7 +92,7 @@ public class IC_Cart {
 					  WebElement addToCartField = element.findElement(By.xpath(".//parent::*/following-sibling::div//form/button/span"));
 					  String status = addToCartField.getText();
 					  if(status.equalsIgnoreCase("Adding...")) {
-						  action.CompareResult("Adding confirmaton", "Adding...", status, test);
+						  action.CompareResult("Adding " + element.getText(), "Adding...", status, test);
 					  }
 					  if(status.equalsIgnoreCase("Added")) {
 						  action.CompareResult("Added Confirmation", "Added", status, test);
@@ -136,7 +100,7 @@ public class IC_Cart {
 				 }
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.info(e.getMessage());
 			}
 			  
 		 }
@@ -152,8 +116,6 @@ public class IC_Cart {
 	    			List<String> priceAndQuantity = new ArrayList<>();
 	    			String key = (String)map.getKey();
 	    			String value = (String)map.getValue();
-	    			System.out.println("Key :" + key);
-	    			System.out.println("Key :"+ value);
 	    			priceAndQuantity.add(value);
 	    			String quantityNum = iterator.next();
 	    			

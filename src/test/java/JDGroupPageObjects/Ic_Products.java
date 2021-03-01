@@ -147,7 +147,11 @@ public class Ic_Products {
 				action.writeText(icSearchBar, productToFind,"SearchBar",test);
 				action.click(icSearchIcon, "Click on search", test);
 				Thread.sleep(10000);
-				Map<String, String> products = ic_SelectProduct(test,productToFind,quantityOfProducts);
+				 Map<String, String> products = ic_SelectProduct(test,productToFind,quantityOfProducts);
+				 List<String> quantity = filterProducts(quantityOfProducts);
+				 Map<String,List<String>> productQuantityPrice= cartValidation.productQuantityAndPrice(products,quantity,test);
+				 cartValidation.navigateToCart(test);
+				 cartValidation.iCcartVerification2(productQuantityPrice,test);
 				
 			} catch (Exception e) {
 				logger.info(e.getMessage());
@@ -199,29 +203,39 @@ public class Ic_Products {
 				action.mouseover(icProductLink, "MouseOverICProduct");
 				computersNoteBooks.click();
 				Map<String, String> products=ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
-				cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
+				Map<String, List<String>> productQuantityPrice= cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
+				cartValidation.navigateToCart(test);
+				cartValidation.iCcartVerification2(productQuantityPrice,test);
 			}
 			else if(typeSearch.equalsIgnoreCase("Downloads & Top Ups")) {
 				action.mouseover(icProductLink, "MouseOverICProduct");
 				downloads.click();
 				Map<String, String> products=ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
-				cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
+				Map<String, List<String>> productQuantityPrice=cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
+				cartValidation.navigateToCart(test);
+				cartValidation.iCcartVerification2(productQuantityPrice,test);
 			}else if(typeSearch.equalsIgnoreCase("Software")) {
 				action.mouseover(icProductLink, "MouseOverICProduct");
 				software.click();
 				Map<String, String> products=ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
-				cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
+				Map<String, List<String>> productQuantityPrice=cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
+				cartValidation.navigateToCart(test);
+				cartValidation.iCcartVerification2(productQuantityPrice,test);
 			}else if(typeSearch.equalsIgnoreCase("Fitness & Wearables")) {
 				action.mouseover(icProductLink, "MouseOverICProduct");
 				fitness.click();
 				Map<String, String> products=ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
-				cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
+				Map<String, List<String>> productQuantityPrice=cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
+				cartValidation.navigateToCart(test);
+				cartValidation.iCcartVerification2(productQuantityPrice,test);
 			}else {
 				WebElement category = byCategory(typeSearch);
 				action.mouseover(icProductLink, "MouseOverICProduct");
 				category.click();
 				Map<String, String> products= ic_SelectProduct(test, productsToSearch, quantityOfSearchProducts);
-				cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
+				Map<String, List<String>> productQuantityPrice=cartValidation.productQuantityAndPrice(products, quantityFilteres,test);
+				cartValidation.navigateToCart(test);
+				cartValidation.iCcartVerification2(productQuantityPrice,test);
 			}
 			break;
 		}
