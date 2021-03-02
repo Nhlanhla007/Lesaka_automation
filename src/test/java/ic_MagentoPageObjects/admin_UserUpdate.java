@@ -133,7 +133,7 @@ public class admin_UserUpdate {
 	    		action.click(admin_AccountInfoCustomer, "Click Account information", test);
 	    		
 	    		String firstNameText = action.getAttribute(admin_firstname, "value");
-	    		String firstNameTextUpdated = "Updated" + id;
+	    		String firstNameTextUpdated = "Updated!" + id;
 	    		action.clear(admin_firstname, "Removing first name");
 	    		action.writeText(admin_firstname, firstNameTextUpdated,"first Name", test);
 	    		adminSheets.get(0).get("adminFirstName_output").set(sheetRow1, firstNameTextUpdated);
