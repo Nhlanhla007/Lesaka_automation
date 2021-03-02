@@ -1597,10 +1597,6 @@ public class Action {
 			
 	}
 
-			
-			return Finalresult;
-		}
-		
 		
 			
 		public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
@@ -1624,7 +1620,7 @@ public class Action {
 	}
 
 	//NOTE THE BELOW METHOD IS CASE SENSTIVE WITH THE ACTUAL/EXP
-	public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException {
+	/*public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException {
 		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
 		ExtentTest node = test.createNode("Verify result for test " + TestDescription);
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
@@ -1648,11 +1644,11 @@ public class Action {
 				e1.printStackTrace();
 			}
 
-		}
+		}*/
 	
 
 
-	public <T> boolean elementExistWelcome(T elementAttr, long time, String name, ExtentTest test){
+	/*public <T> boolean elementExistWelcome(T elementAttr, long time, String name, ExtentTest test){
 		ExtentTest node = test.createNode(name);
 		try {
 			String ScreenShotPath = getScreenShot(name);
@@ -1673,7 +1669,7 @@ public class Action {
 				
 			}
 
-	}
+	}*/
 		
 		public void noRecordsReturnedFromTable(ExtentTest test,String name) {
 			ExtentTest node = test.createNode("Clicked Element: " + name);
@@ -1686,7 +1682,7 @@ public class Action {
 			}
 		}
 
-	public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
+	/*public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
 		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
 		ExtentTest node=test.createNode("Select value from dropdown : "+ Testname);
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
@@ -1715,7 +1711,7 @@ public class Action {
 			
 	}
 
-	}
+	}*/
 
 	public void expectSingleRow(List<WebElement> elements, String name, ExtentTest test) {
 		ExtentTest node = test.createNode("Clicked Element: " + name);

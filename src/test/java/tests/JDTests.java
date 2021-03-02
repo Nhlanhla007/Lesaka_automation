@@ -127,6 +127,7 @@ public class JDTests extends BaseTest {
 		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver);
 		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver);
 		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver);
+		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver);
 		ic_Login ic_login = new ic_Login(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
@@ -195,17 +196,23 @@ public class JDTests extends BaseTest {
 				MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 			case "ICUpdateUser":
-				   ArrayList<HashMap<String, ArrayList<String>>> mySheets=new ArrayList<HashMap<String, ArrayList<String>>>();
-				   mySheets.add(dataMap2.get(currentKeyWord+"++"));
-				   mySheets.add(dataMap2.get("ic_login++"));
-				   icUpdateUser.updateAccount(mySheets,test1,testcaseID);
-				   break;
+				ArrayList<HashMap<String, ArrayList<String>>> mySheets=new ArrayList<HashMap<String, ArrayList<String>>>();
+				mySheets.add(dataMap2.get(currentKeyWord+"++"));
+				mySheets.add(dataMap2.get("ic_login++"));
+				icUpdateUser.updateAccount(mySheets,test1,testcaseID);
+				break;
+			case "customerValidationUpdates":
+				ArrayList<HashMap<String, ArrayList<String>>> adminsheets=new ArrayList<HashMap<String, ArrayList<String>>>();
+				adminsheets.add(dataMap2.get(currentKeyWord+"++"));
+				//rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 0, testcaseID);
+				customerVerifyEdits.VerifyCustomerinfoUpadtes(adminsheets,test1,testcaseID);
+				break;
 			case "adminUserUpdate":
-				   ArrayList<HashMap<String, ArrayList<String>>> adminSheets=new ArrayList<HashMap<String, ArrayList<String>>>();
-				   adminSheets.add(dataMap2.get(currentKeyWord+"++"));
-				   //mySheets.add(dataMap2.get("ic_login++"));
-				   adminUserUpdate.editCustomerDetails(adminSheets,test1,testcaseID);
-				   break;
+				ArrayList<HashMap<String, ArrayList<String>>> adminSheets=new ArrayList<HashMap<String, ArrayList<String>>>();
+				adminSheets.add(dataMap2.get(currentKeyWord+"++"));
+				adminUserUpdate.editCustomerDetails(adminSheets,test1,testcaseID);
+				break;
+			
 		}
 	}
 
@@ -268,7 +275,7 @@ public class JDTests extends BaseTest {
 			Values.app= navigateURL;
 			Values.browser=browserName;
 		}
-	}
+	
 	public void endBrowserSession() throws IOException {
 		driver.close();
 		writeToExcel();
