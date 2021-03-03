@@ -31,13 +31,6 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>net.sf.saxon</groupId>
-			<artifactId>saxon9-dom</artifactId>
-			<version>9.1.0.8</version>
-			<scope>runtime</scope>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>

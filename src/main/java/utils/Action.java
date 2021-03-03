@@ -1597,6 +1597,8 @@ public class Action {
 			
 	}
 
+		
+			
 		public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 			ExtentTest node = test.createNode("Has next Page louded? " + name);
 			try {

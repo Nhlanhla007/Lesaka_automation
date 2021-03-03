@@ -112,7 +112,10 @@ public class ICUpdateCustomer {
 	    @FindBy(xpath="//*[@id=\"maincontent\"]/div/div[2]/div[2]/div[2]/div[2]/div[2]/a/span")
 	    private WebElement ic_ShippingAddress;
 	 
-	    
+	    /**
+	     * 
+	     * @param test
+	     */
 	    @Step("after loging")
 		public void ic_NavigateToMyAccount(ExtentTest test) {
 			try {
@@ -153,7 +156,7 @@ public class ICUpdateCustomer {
 	    	String shipping_streetAddress = mySheets.get(0).get("shipping_streetAddress").get(sheetRow1);
 	    	//String shipping_provinceName = mySheets.get(0).get("shipping_provinceName").get(sheetRow1);
 	    	
-	    	System.out.println("We here!");
+	    	
 	    	action.click(ic_myAccountButton, "Navigate to accountTab",test);
 	    	action.click(MyAccountButton2, "My Account", test);
 	    	if(firstName.equalsIgnoreCase("Yes")){
@@ -167,7 +170,7 @@ public class ICUpdateCustomer {
 	    		mySheets.get(0).get("firstName_output").set(sheetRow1, firstNameTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
+	    		action.CompareResult("User Saved", " You saved the account information.", action.getText(successSaved, ""), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    		action.explicitWait(5000);
 	    		String firstNameTextSaved = action.getAttribute(firstUpdated, "value");
@@ -184,7 +187,7 @@ public class ICUpdateCustomer {
 	    		mySheets.get(0).get("lastName_output").set(sheetRow1, lastNameTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
+	    		action.CompareResult("User Saved", " You saved the account information.", action.getText(successSaved, ""), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    		action.explicitWait(5000);
 	    		String lastNameTextSaved = action.getAttribute(lastNameUpdated, "value");
@@ -217,7 +220,7 @@ public class ICUpdateCustomer {
 	    		
 	    		action.click(SaveButton, "Save", test);	
 	    		action.click(AccountInfoEdit, "Account Infor", test);
-	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
+	    		action.CompareResult("User Saved", " You saved the account information.", action.getText(successSaved, ""), test);
 	    		
 	    	}
 	    	
@@ -234,7 +237,7 @@ public class ICUpdateCustomer {
 	    		mySheets.get(0).get("passWord_output").set(sheetRow1, passWTextUpdated);
 	    		action.writeText(passConfirmation, passWTextUpdated, "Confirm new Password", test);
 	    		action.click(SaveButton, "Save", test);	
-	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
+	    		action.CompareResult("User Saved", " You saved the account information.", action.getText(successSaved, ""), test);
 	    		AccountInfoEdit.click();
 	    	
 	    	}
@@ -275,7 +278,7 @@ public class ICUpdateCustomer {
 		    		mySheets.get(0).get("billing_postalCode_output").set(sheetRow1, postalCodeText);
 		    		
 		    		action.click(SaveButton, "Save", test);
-		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, "Billing address updated"), test);
+		    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSaved, "Billing address updated"), test);
 		    	
 		    	}
 	    		
@@ -311,7 +314,7 @@ public class ICUpdateCustomer {
 	    		mySheets.get(0).get("shipping_postalCode_output").set(sheetRow1, postalCodeText);
 	    		
 	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, "Shipping address updated"), test);
+	    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSaved, "Shipping address updated"), test);
 	    		
 	    	}
 	    	}
