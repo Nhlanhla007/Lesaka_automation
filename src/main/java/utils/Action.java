@@ -581,27 +581,27 @@ public class Action {
 		} catch (NoSuchElementException e) {
 			return decide = false; 
 			}
-		 
-		if(decide) {
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, 5);
-			if (webe.getClass().getName().contains("By")) {
-				By loc = (By) webe;
-
-				wait.until(ExpectedConditions.visibilityOf(webe));
-				return true;
-			} else {
-				wait.until(ExpectedConditions.attributeToBe(webe, "aria-disabled", "false"));
-					return true;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		}
-		return false;
+				return decide;
 	}	
 
+	public boolean enableNextButton(WebElement element) {
+			try {
+				WebDriverWait wait = new WebDriverWait(driver, 5);
+				if (element.getClass().getName().contains("By")) {
+					By loc = (By) element;
+
+					wait.until(ExpectedConditions.visibilityOf(element));
+					return true;
+				} else {
+					wait.until(ExpectedConditions.attributeToBe(element, "aria-disabled", "false"));
+						return true;
+				}
+			} catch (Exception e) {				
+				return false;
+			}
+
+	}
+	
 	/**
 	 * isDisplayed() to Check Whether the Element is visible Or not visible
 	 * 

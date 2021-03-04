@@ -86,18 +86,16 @@ public class IC_Cart {
 		  }
 		  
 
-	    public void cartButtonValidation(List<WebElement> products,ExtentTest test) {
+	    public void cartButtonValidation(WebElement addToCartButton,ExtentTest test) {
 			 try {
-				for(WebElement element:products) {
-					  WebElement addToCartField = element.findElement(By.xpath(".//parent::*/following-sibling::div//form/button/span"));
-					  String status = addToCartField.getText();
-					  if(status.equalsIgnoreCase("Adding...")) {
-						  action.CompareResult("Adding " + element.getText(), "Adding...", status, test);
+					  WebElement addToCartField = addToCartButton.findElement(By.xpath("./button/span"));
+					  if(addToCartField.getText().equalsIgnoreCase("Adding...")) {
+						  action.CompareResult("Adding product " , "Adding...", addToCartField.getText(), test);
 					  }
-					  if(status.equalsIgnoreCase("Added")) {
-						  action.CompareResult("Added Confirmation", "Added", status, test);
+					  String status2 = addToCartField.getText();
+					  if(status2.equalsIgnoreCase("Added")) {
+						  action.CompareResult("Added Confirmation", "Added", status2, test);
 					  }
-				 }
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				logger.info(e.getMessage());
