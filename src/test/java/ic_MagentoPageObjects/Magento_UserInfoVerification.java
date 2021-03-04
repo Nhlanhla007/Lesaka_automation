@@ -14,7 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
-import utils.Hanaconnector;
+import utils.hana;
 
 public class Magento_UserInfoVerification {
 	
@@ -90,10 +90,11 @@ public class Magento_UserInfoVerification {
 
 		String ActualBPnumber =FetchDataFromCustInfo_MagentoBackend(customerBPnnumber,"customerBPnnumber",TimetoLoadpage,40,test);
 		System.out.println("ActualBPnumber:"+ActualBPnumber);
-		Hanaconnector han = new Hanaconnector();
+		//hana han = new hana();
 //		han.hanaconnector(Integer.parseInt(ActualBPnumber));
-		int rowCount=han.hanaconnector(0104022744);
-		if(rowCount==0){
+		int rowCount=0;
+		//int rowCount=han.hanaconnector(0104022744);
+		if( rowCount==0){
 			action.CompareResult("zero rec : ", ExpEmail, ActEmailname, test);
 		}else{
 			action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, ActEmailname, test);

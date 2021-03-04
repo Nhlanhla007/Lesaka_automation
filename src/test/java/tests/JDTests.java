@@ -190,7 +190,7 @@ public class JDTests extends BaseTest {
 				break;
 			case "Magento_UserInfoVerification":
     			rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 0, testcaseID);
-				Magentoverify.Validate_UserInfobackend(dataMap2.get("accountCreation" + "++"),test1,rowNumber);
+				//Magentoverify.Validate_UserInfobackend(dataMap2.get("accountCreation" + "++"),test1,rowNumber);
 				break;
 			case "CreateaccountBackend":
 				MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
