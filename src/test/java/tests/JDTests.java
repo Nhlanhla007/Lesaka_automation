@@ -129,6 +129,7 @@ public class JDTests extends BaseTest {
 		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver);
 		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver);
 		ic_Login ic_login = new ic_Login(driver);
+		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -161,7 +162,7 @@ public class JDTests extends BaseTest {
 				icDelivery.deliveryPopulation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "Login_magento":
-				icMagento.Login_magento(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				//icMagento.Login_magento(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case"OrderStatusSearch":
 				orderStatus.navigateToOrderPage(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
@@ -212,7 +213,13 @@ public class JDTests extends BaseTest {
 				adminSheets.add(dataMap2.get(currentKeyWord+"++"));
 				adminUserUpdate.editCustomerDetails(adminSheets,test1,testcaseID);
 				break;
-			
+			case "ic_CashDepositPayment":
+				ArrayList<HashMap<String, ArrayList<String>>> RequiredSheets = new ArrayList<HashMap<String, ArrayList<String>>>();
+				RequiredSheets.add(dataMap2.get(currentKeyWord+"++"));
+				RequiredSheets.add(dataMap2.get("Login_magento++"));
+				
+				ic_cashDepositPayment.InvoiceCashDeposit(RequiredSheets,test1,testcaseID);
+				break;
 		}
 	}
 

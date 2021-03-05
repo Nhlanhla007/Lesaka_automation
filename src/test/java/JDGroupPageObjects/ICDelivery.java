@@ -68,10 +68,10 @@ public class ICDelivery {
     public void deliveryPopulation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException {
 
 //        action.isElementOnNextPage(deliveryLink,(long)10,test);
-        Thread.sleep(5000);
+        Thread.sleep(8000);
         action.click(deliveryLink,"deliveryLink",test);
 //        action.isElementOnNextPage(streetName,(long)10,test);
-        Thread.sleep(5000);
+        Thread.sleep(8000);
         action.writeText(streetName,input.get("streetName").get(rowNumber),"streetName",test);
         action.writeText(firstName,input.get("firstName").get(rowNumber),"firstName",test);
         action.writeText(lastname,input.get("lastname").get(rowNumber),"lastname",test);

@@ -34,28 +34,56 @@ public class ic_MagentoOrderSAPnumber {
     
     Timer t = new Timer();
     
-    public void GenerateOrderSAPnumber(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException {
+    public void GenerateOrderSAPnumber(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException {
     	boolean flagres = false;
-    	int totalConunter=1;
+    	int totalConunter=0;
     	String OrderSAPnumber = "";
-    	do{
-    	System.out.println(totalConunter);
-    	OrderSAPnumber = action.getText(OrderDetailSAPNumber, "SAP Number");
-		action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
-    	System.out.println(OrderSAPnumber);
-    	if(OrderSAPnumber.length() <= 29){
-    		action.explicitWait(Integer.parseInt(input.get("totalConunter").get(rowNumber))*1000);
-    		action.refresh();
-			System.out.println("not found on count:" + totalConunter);
+    	long startTime = System.currentTimeMillis();
+    	int TimeOutinSecond =Integer.parseInt(input.get("TimeOutinSecond").get(rowNumber));
+    	int trycount =Integer.parseInt(input.get("totalCounter").get(rowNumber));
+    	int elapsedTime = 0;
+    	while(elapsedTime<=TimeOutinSecond && flagres==false)
+    	{
+			action.refresh();
+			action.waitForPageLoaded(TimeOutinSecond);
+			
+			try {
+				if(action.elementExists(OrderDetailSAPNumber, TimeOutinSecond)){
+						OrderSAPnumber = action.getText(OrderDetailSAPNumber, "SAP Number");
+						action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
+						System.out.println(OrderSAPnumber);
+					if(OrderSAPnumber.isEmpty()){
+			    		action.explicitWait(TimeOutinSecond);
+			    		action.refresh();
+						System.out.println("not found on count:" + totalConunter);
+			    	}else{
+			    		flagres = true;
+						System.out.println("OrderSAPnumber :" + OrderSAPnumber);
+						input.get("OrderSAPnumber").set(rowNumber,OrderSAPnumber.replace("[RabbitMQ] Order SAP Number: ",""));
+			    	}
+				}else{
+					System.out.println("OrderDetailSAPNumber not exist");
+				}
+					
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				if(trycount==totalConunter){
+					e.printStackTrace();
+				}
+			}
+
+			//Thread.sleep(TimeOutinSecond * 1000);
+			long endTime = System.currentTimeMillis();
+			long elapsedTimeInMils = endTime-startTime;
+			elapsedTime = ((int) elapsedTimeInMils)/1000;
+			System.out.println("elapsedTime: "+elapsedTime);
+			totalConunter++;
+		}
+    	if(flagres){
+    		action.CompareResult("Verify SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
     	}else{
-    		flagres = true;
-			System.out.println("OrderSAPnumber :" + OrderSAPnumber);
-			input.get("OrderSAPnumber").set(rowNumber,OrderSAPnumber.replace("[RabbitMQ] Order SAP Number: ",""));
+    		action.CompareResult("Verify SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
     	}
-    		totalConunter++;
-    	}while(totalConunter<=Integer.parseInt(input.get("totalCounter").get(rowNumber)) && !flagres);
-
-		action.explicitWait(1000,test);
-
+    	System.out.println();
     }
 }

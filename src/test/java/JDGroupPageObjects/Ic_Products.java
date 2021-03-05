@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
+import utils.ConfigFileReader;
 
 public class Ic_Products {
 
@@ -208,6 +209,10 @@ public class Ic_Products {
 	 
 	 //Which search should be run
 	 public void searchType(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) {
+		
+		 String navigateURL = ConfigFileReader.getPropertyVal("URL");
+		 action.navigateToURL(navigateURL);
+		 
 		 String productToSearch = input.get("categorySearch").get(rowNumber);
 		 switch (input.get("typeSearch").get(rowNumber)) {
 		case "searchbar":
