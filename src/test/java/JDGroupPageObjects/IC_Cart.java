@@ -58,6 +58,7 @@ public class IC_Cart {
 	    int sum = 0;
 		  public void iCcartVerification2(Map<String, List<String>> products,ExtentTest test) {
 			  //Find all elements from the list
+			  navigateToCart(test);
 			  try {
 				for(WebElement productsInCart : icAllCartProducts) {
 					  String nameOfProduct = productsInCart.findElement(By.xpath(".//strong/a")).getText();
@@ -75,7 +76,7 @@ public class IC_Cart {
 						}
 					  }
 				  }
-				action.CompareResult("Total", String.valueOf(sum), icSubtotal.getText().replace("R", "").replace(",", "").replace(".", "") , test);
+				action.CompareResult("Products Total", String.valueOf(sum), icSubtotal.getText().replace("R", "").replace(",", "").replace(".", "") , test);
 				action.clickEle(icCCheckout, "Secure Checkout", test);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -86,16 +87,50 @@ public class IC_Cart {
 		  }
 		  
 
-	    public void cartButtonValidation(WebElement addToCartButton,ExtentTest test) {
-			 try {
-					  WebElement addToCartField = addToCartButton.findElement(By.xpath("./button/span"));
-					  if(addToCartField.getText().equalsIgnoreCase("Adding...")) {
-						  action.CompareResult("Adding product " , "Adding...", addToCartField.getText(), test);
-					  }
-					  String status2 = addToCartField.getText();
-					  if(status2.equalsIgnoreCase("Added")) {
-						  action.CompareResult("Added Confirmation", "Added", status2, test);
-					  }
+	    public void cartButtonValidation(WebElement addToCartButton,int waitTimeInSeconds,ExtentTest test) {
+			try {
+				WebElement cartButton = addToCartButton.findElement(By.xpath(".//button/span"));
+				
+				boolean addingFlag = false;
+				boolean addedFlag = false;
+				int addingCount = 0;
+				int addedCount = 0;
+				
+				while (!addingFlag) {
+					//System.out.println("adding flag ="+ addingFlag);
+					if (cartButton.getText().equalsIgnoreCase("Adding...")) {
+						addingFlag = true;
+						//System.out.println("adding flag ="+ addingFlag);
+						
+						while(!addedFlag) {
+							//System.out.println("added flag ="+ addedFlag);
+							if(cartButton.getText().equalsIgnoreCase("Added")) {
+								addedFlag = true;
+								//System.out.println("added flag ="+ addedFlag);
+								break;
+							}else {
+								Thread.sleep(10);
+								addedCount+=10;
+								//System.out.println("addedCount = "+addedCount);
+								if(addedCount > waitTimeInSeconds * 1000) {
+									break;
+								}
+							}
+						}
+						
+					}else {
+						Thread.sleep(10);
+						addingCount+=10;
+						//System.out.println("addingCount = "+addingCount);
+						if(addingCount > waitTimeInSeconds * 1000) {
+							break;
+						}
+					}
+				} 
+				
+				action.CompareResult("Adding text appears on add to cart button" , "true",String.valueOf(addingFlag), test);
+				action.CompareResult("Added text appears on add to cart button" , "true",String.valueOf(addedFlag), test);
+			
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				logger.info(e.getMessage());

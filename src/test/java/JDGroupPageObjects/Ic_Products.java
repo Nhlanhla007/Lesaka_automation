@@ -103,7 +103,7 @@ public class Ic_Products {
 		 boolean clickN = action.attributeEnabled(ic_ClickNext);
 		 if(clickN) {
 		 WebElement web = ic_ClickNext.findElement(By.xpath(".//parent::*"));
-		 boolean status = action.enableNextButton(web);
+		 boolean status = action.attributeValidation(web,"aria-disabled","false",5);
 		 if(status) {
 			 return ic_ClickNext.findElement(By.xpath(".//parent::*"));
 		 }
@@ -122,24 +122,14 @@ public class Ic_Products {
 			 if(ic_ElementVisable(icProductLink)) {
 			 action.click(icProductLink, "Click product link",test);
 			 Thread.sleep(10000);
-			 //Map<String, String> products =ic_SelectProduct(test,productToFind,quantityOfProducts);
-			 //if(!products.isEmpty()){
-			 //List<String> quantity = filterProducts(quantityOfProducts);
-			 //Map<String,List<String>> productQuantityPrice= cartValidation.productQuantityAndPrice(products,quantity,test);
-			 //cartValidation.navigateToCart(test);
-			 //cartValidation.iCcartVerification2(productQuantityPrice,test);
 			 }
 			 	 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			logger.info(e.getMessage());
 		}
-		 //To validate page has been loaded
-		 //action.validateUrl("product", "Validate product URL");
 	 }
 	 
-	 //enters text into search bar
 		
 	 /**
 	  * Enters search data into the search bar and searches
@@ -154,16 +144,6 @@ public class Ic_Products {
 				action.writeText(icSearchBar, productToFind,"SearchBar",test);
 				action.click(icSearchIcon, "Click on search", test);
 				Thread.sleep(10000);
-				/*
-				 * Map<String, String> products =
-				 * ic_SelectProduct(test,productToFind,quantityOfProducts);
-				 * if(!products.isEmpty()) { List<String> quantity =
-				 * filterProducts(quantityOfProducts); Map<String,List<String>>
-				 * productQuantityPrice=
-				 * cartValidation.productQuantityAndPrice(products,quantity,test);
-				 * cartValidation.navigateToCart(test);
-				 * cartValidation.iCcartVerification2(productQuantityPrice,test); }
-				 */
 			} catch (Exception e) {
 				e.printStackTrace();
 				logger.info(e.getMessage());
@@ -197,34 +177,33 @@ public class Ic_Products {
 		   * @param input
 		   * @param test
 		   * @param rowNumber
-		   */
-		  //method name: 
+		   */		  
 	 public void ic_SelectProductAndAddToCart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) {
 		 String typeSearch = input.get("typeSearch").get(rowNumber);
 		 String productsToSearch = input.get("specificProduct").get(rowNumber);
 		 String quantityOfSearchProducts = input.get("Quantity").get(rowNumber);
+		 String waitTimeInSeconds = input.get("cartButtonWaitTimeInSeconds").get(rowNumber);
 		 List<String> theProducts = filterProducts(productsToSearch);		 
-		 //loadProductListingPage(typeSearch,productsToSearch);
-		// ic_SelectProductAndAddToCartssss(productsToSearch, quantityOfSearchProducts, test);
-		 ic_CreateCartFromProductListing(productsToSearch, quantityOfSearchProducts,typeSearch, test);
 		 
-			/*
-			 * for(int s = 0 ; s<theProducts.size();s++) {
-			 * loadProductListingPage(typeSearch,theProducts.get(s)); WebElement prod =
-			 * ic_FindProduct(test,theProducts.get(s)); if(prod!=null) { for(int o
-			 * =0;o<quantity.size();o++) { if(o==s) { for(int g =
-			 * 0;g<Integer.parseInt(quantity.get(o));g++) { WebElement cartButton =
-			 * getCartButton(prod); addToCart(cartButton,test);
-			 * 
-			 * } } } } }
-			 * 
-			 * }
-			 */
+		 try {
+			Map<String, List<String>> productsInCart =  ic_CreateCartFromProductListing(productsToSearch, quantityOfSearchProducts,typeSearch,waitTimeInSeconds, test);
+			cartValidation.iCcartVerification2(productsInCart, test);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		 
 		 
 		 }
 	 
-	 public void loadProductListingPage(String category,String product,ExtentTest test) {
+	 /**
+	  * Loads the listing page
+	  * @param category
+	  * @param product
+	  * @param test
+	  * @throws IOException
+	  */
+	 public void loadProductListingPage(String category,String product,ExtentTest test) throws IOException {
 		 switch (category) {
 			case "SearchUsingSearchBar":
 				ic_EnterTextToSearchBar(product,test);
@@ -234,26 +213,26 @@ public class Ic_Products {
 				break;		
 			default:
 				if(category.equalsIgnoreCase("Computers Notebooks & Tablet's")) {
-					action.mouseover(icProductLink, "MouseOverICProduct");
-					computersNoteBooks.click();
+					action.mouseover(icProductLink, "MouseOverICProduct");					
+					action.click(computersNoteBooks, "Computers Notebooks & Tablet's", test);
 				
 				}
 				else if(category.equalsIgnoreCase("Downloads & Top Ups")) {
 					action.mouseover(icProductLink, "MouseOverICProduct");
-					downloads.click();
+					action.click(downloads, "Downloads & Top Ups", test);
 			
 				}else if(category.equalsIgnoreCase("Software")) {
 					action.mouseover(icProductLink, "MouseOverICProduct");
-					software.click();
+					action.click(software, "Software", test);
 			
 				}else if(category.equalsIgnoreCase("Fitness & Wearables")) {
 					action.mouseover(icProductLink, "MouseOverICProduct");
-					fitness.click();
+					action.click(fitness, "Fitness & Wearables", test);
 		
 				}else {
 					WebElement typeOfSearch = byCategory(category);
 					action.mouseover(icProductLink, "MouseOverICProduct");
-					typeOfSearch.click();
+					action.click(typeOfSearch, typeOfSearch.getText(), test);
 			
 					}
 				
@@ -267,65 +246,11 @@ public class Ic_Products {
 	  * Finds the category that will be searched
 	  * @param nameOfCategory
 	  * @return WebElement
-	  * @author Leverch Watson
 	  */
 	 public WebElement byCategory(String nameOfCategory) {
 		 WebElement category = driver.findElement(By.xpath("//span[contains(text(),\""+nameOfCategory+"\")]"));
 		 return category;
 	 }
-	 
-	 	 /**
-	  * Adds product to the cart according to the quantity provided by excel
-	  * @param products
-	  * @param quantity
-	  */
-	 public void addToCart(List<WebElement> products,List<String> quantity,ExtentTest test) {	
-		 for(int i = 0; i < quantity.size();i++) { //quantity maximum elements
-				 int sv = 0;
-				 for(WebElement ele : products) {
-					 	
-					 if(i == sv) {					 
-							for(int s = 0;s< Integer.parseInt(quantity.get(i)); s++) {
-						 	WebElement clicls = ele.findElement(By.xpath(".//parent::*/following-sibling::div/div[3]/div/div[1]/form"));
-						 	clicls.click();
-						 	//cartValidation.cartButtonValidation(products, test);
-						 	//ADD VALIDATION FOR THE ADD,ADDING,ADDED
-						 	//POP UP THAT COMES UP SAYING PRODUCTS ARE ADDED
-						 	//STORE PRICE,NAME,QUANTITY IN SOME DATA STRUCTURE -- CAN CREATE FROM products 
-						 	//CREATE METHOD THAT TALLY UP THE TOTALS AND COMPARES THE NAMES IN THE CART OF THE PRODUCTS
-						 	try {
-								Thread.sleep(8000);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								logger.info(e.getMessage());
-							}
-						 	}
-					 }
-					 sv++;
-				 }
-				
-			 
-		 }
-		 
-
-	 }
-	 public void addToCart2(WebElement productCartButton,int quantityPosition,List<String> quantity,ExtentTest test) {	
-		 //quantity comes thru as 3,3,2,2
-		 for(int s = 0 ;s<quantity.size();s++) {
-			 	
-			 				String loop = quantity.get(quantityPosition);
-			 				if(quantity.indexOf(loop)==quantityPosition) {
-			 				for(int f = 0;f<Integer.parseInt(loop);f++) {
-			 					productCartButton.click();
-			 				}
-			 				}
-						 	//ADD VALIDATION FOR THE ADD,ADDING,ADDED
-						 	//POP UP THAT COMES UP SAYING PRODUCTS ARE ADDED
-						 	//STORE PRICE,NAME,QUANTITY IN SOME DATA STRUCTURE -- CAN CREATE FROM products 
-						 	//CREATE METHOD THAT TALLY UP THE TOTALS AND COMPARES THE NAMES IN THE CART OF THE PRODUCTS
-		 }
-	 }
-	 
 	 
 	 WebElement ic_FindProduct(WebElement elem) {		 
 		 return elem;
@@ -336,12 +261,12 @@ public class Ic_Products {
 		 return cartButton;
 	 }
 	 
-	 void addToCart(WebElement addToCartButton,ExtentTest test) {
+	 void addToCart(WebElement addToCartButton,String waitTimeInSeconds,ExtentTest test) {
 		 try {
 			 action.mouseover(addToCartButton, "Scroll to add to cart");
 			 Thread.sleep(2000);
 			 addToCartButton.click();
-			// cartValidation.cartButtonValidation(addToCartButton, test);
+			 cartValidation.cartButtonValidation(addToCartButton, Integer.parseInt(waitTimeInSeconds), test);
 			 Thread.sleep(7000);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -386,38 +311,46 @@ public class Ic_Products {
 			}else {
 				status = false;
 				action.CompareResult("Product Not Found",product, "", test);
-				System.out.println("Item has not been found anywhere");
+				//System.out.println("Item has not been found anywhere");
 			}
-			
-			
-			//Click next button
 		 }
 			return null;
 	 }
 	 
-	 //Create data structure for cart below, add global variable Map<String,Arraylist<String>>
-	 void ic_CreateCartFromProductListing(String productsList,String quantityOfProducts,String searchCategory,ExtentTest test) {		
-		 try {
+	 Map<String,List<String>> ic_CreateCartFromProductListing(String productsList,String quantityOfProducts,String searchCategory,String waitTimeInSeconds,ExtentTest test) {		
+		 Map<String,List<String>> productData = new LinkedHashMap<>();
+		 try {			 
 			List<String> theProducts = filterProducts(productsList);
 			 List<String> quantity = filterProducts(quantityOfProducts);
 			 for(int s = 0 ; s<theProducts.size();s++) {
+				 List<String> productPriceAndQuantity = new ArrayList<>();
 				 loadProductListingPage(searchCategory, theProducts.get(s),test);//change signatures
 				 WebElement prod =  ic_FindProduct(test,theProducts.get(s));
+				 String productName = prod.getText();
+				 String productPrice = findPrice(prod);
+				 productPriceAndQuantity.add(productPrice);
+				 int set = 0;
 				 if(prod!=null) {
 					 for(int o =0;o<quantity.size();o++) {
 						 if(o==s) {
 							 for(int g = 0;g<Integer.parseInt(quantity.get(o));g++) {
 							 WebElement cartButton = getCartButton(prod);
-							 addToCart(cartButton,test);
+							 addToCart(cartButton,waitTimeInSeconds,test);							 
+							 if(set<=0) {
+							 set++;
+							 productPriceAndQuantity.add(quantity.get(o));
+							 }
 							 }
 						 }
 					 }
 				 }
+				 productData.put(productName, productPriceAndQuantity);
 			 }
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 			e.printStackTrace();
 		}
+		 return productData;
 		 
 	 }
 }

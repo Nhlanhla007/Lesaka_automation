@@ -584,16 +584,16 @@ public class Action {
 				return decide;
 	}	
 
-	public boolean enableNextButton(WebElement element) {
+	public boolean attributeValidation(WebElement element,String attributeToCheck,String valueOfAttribute,int waitTime) {
 			try {
-				WebDriverWait wait = new WebDriverWait(driver, 5);
+				WebDriverWait wait = new WebDriverWait(driver, waitTime);
 				if (element.getClass().getName().contains("By")) {
 					By loc = (By) element;
 
 					wait.until(ExpectedConditions.visibilityOf(element));
 					return true;
 				} else {
-					wait.until(ExpectedConditions.attributeToBe(element, "aria-disabled", "false"));
+					wait.until(ExpectedConditions.attributeToBe(element, attributeToCheck, valueOfAttribute));
 						return true;
 				}
 			} catch (Exception e) {				
@@ -1514,7 +1514,7 @@ public class Action {
 	//NOTE THE BELOW METHOD IS CASE SENSTIVE WITH THE ACTUAL/EXP
 	public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException {
 		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
-		ExtentTest node = test.createNode("Verify result for test " + TestDescription);
+		ExtentTest node = test.createNode("Verify " + TestDescription);
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 		String screenShotPath = getScreenShot(dateName);
 		try {
