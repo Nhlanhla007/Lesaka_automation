@@ -1,8 +1,13 @@
 package JDGroupPageObjects;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +17,7 @@ import org.testng.Assert;
 
 import com.aventstack.extentreports.ExtentTest;
 
+import Logger.Log;
 import utils.Action;
 
 public class IC_Cart {
@@ -25,12 +31,14 @@ public class IC_Cart {
 	        action = new Action(driver);
 
 	    }
+	    static Logger logger = Log.getLogData(Action.class.getSimpleName());
 	    
 	    @FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
 	    private WebElement iCCartButton;
 	    
+	    //loop throUGH THIS HERE TO DETERMINE IF THE PRODUCT IS FOUND, IF FOUND VALIDATE QUANTITY AND PRICE
 	    @FindBy(xpath="//*[@id=\"mini-cart\"]/li")
-	    private WebElement icAllCartProducts;
+	    private List<WebElement> icAllCartProducts;
 	    
 	    @FindBy(xpath="//*[@id=\"minicart-content-wrapper\"]/div[2]/div[2]/div[1]/div/span/span")
 	    private WebElement icSubtotal;
@@ -38,49 +46,119 @@ public class IC_Cart {
 	    @FindBy(xpath="//*[@id=\"top-cart-btn-checkout\"]/span")
 	    private WebElement icCCheckout;
 	    
-	    
-	    public void iCcartVerification(ExtentTest test){
-	
+		
+	    public void navigateToCart(ExtentTest test) {
 	    	try {
-	    	    action.explicitWait(5000);
-				action.click(iCCartButton, "iCCartButton",test);
-			} catch (IOException e1) {
-
-			}
-	    	//int numberOfProducts = action.getlistSize(icAllCartProducts);
-	    	List<WebElement> elementName = driver.findElements(By.xpath("//*[@id=\"mini-cart\"]/li"));
-	    	
-	    	int sum = 0;
-	    	for(int i= 1; i <= elementName.size(); i++){
-	    		
-	    		WebElement priceElement = driver.findElement(By.xpath("//*[@id=\"mini-cart\"]/li["+i+"]/div/div/div[1]/div[1]/span/span/span/span"));
-	    		WebElement quantityElement = driver.findElement(By.xpath("//*[@id=\"mini-cart\"]/li["+i+"]/div/div/div[1]/div[2]/input"));
-	    		String priceElementVariable =  action.getText(priceElement, "PriceElement");
-	    		String quantityElementVariable  = quantityElement.getAttribute("value");
-	    		sum = sum + (Integer.parseInt(quantityElementVariable) * Integer.parseInt(priceElementVariable.replace("R", "").replace(",", "")));
-	    		
-	    	}
-	    	ExtentTest node = test.createNode("Cart Subtotal Check");
-	    	try{
-	    		String icSubtotalElementVariable =  action.getText(icSubtotal, "icSubtotalElement").replace("R", "").replace(",", "").replace(".00", "");
-		    	Assert.assertEquals( Integer.parseInt(icSubtotalElementVariable) , sum);
-		    	if(  Integer.parseInt(icSubtotalElementVariable) == sum) {
-		    		node.pass("Cart items matches the Cart Subtotal");
-		    	} else{
-		    		node.fail("Cart Items not matching the Subtotal");
-		    	}
-		    		
-		    	} catch (Exception e){
-		    		node.fail("Cart Items not matching the Subtotal");
-		    
-		    	}	
-	    	try {
-				action.click(icCCheckout, "ClickingOnCheckutButton", test);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				action.clickEle(iCCartButton, "IC cart button", test);
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
 	    }
-	       	
-	   
+	    
+	    int sum = 0;
+		  public void iCcartVerification2(Map<String, List<String>> products,ExtentTest test) {
+			  //Find all elements from the list
+			  navigateToCart(test);
+			  try {
+				for(WebElement productsInCart : icAllCartProducts) {
+					  String nameOfProduct = productsInCart.findElement(By.xpath(".//strong/a")).getText();
+					  String price = productsInCart.findElement(By.xpath(".//span/span/span/span")).getText();					  
+					  WebElement quantityTag = productsInCart.findElement(By.xpath(".//div[2]/input"));
+					  String quantity = action.getAttribute(quantityTag, "data-item-qty");
+					  sum += (Integer.parseInt(quantity)*Integer.parseInt(price.replace("R", "").replace(",", "")));
+					  for(Map.Entry selectedProducts : products.entrySet()) {
+						  //@SuppressWarnings("unchecked")
+						List<String> data = (List<String>)selectedProducts.getValue();
+						if(selectedProducts.getKey().equals(nameOfProduct)) {
+						  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
+						  action.CompareResult("Price : " +price +" for " +nameOfProduct, data.get(0), price, test);
+						  action.CompareResult("Quantity : " + quantity +" for " + nameOfProduct, data.get(1), quantity, test);						  
+						}
+					  }
+				  }
+				action.CompareResult("Products Total", String.valueOf(sum), icSubtotal.getText().replace("R", "").replace(",", "").replace(".", "") , test);
+				action.clickEle(icCCheckout, "Secure Checkout", test);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				logger.info(e.getMessage());
+			}
+			  //Compare with data from the map
+			  
+		  }
+		  
+
+	    public void cartButtonValidation(WebElement addToCartButton,int waitTimeInSeconds,ExtentTest test) {
+			try {
+				WebElement cartButton = addToCartButton.findElement(By.xpath(".//button/span"));
+				
+				boolean addingFlag = false;
+				boolean addedFlag = false;
+				int addingCount = 0;
+				int addedCount = 0;
+				
+				while (!addingFlag) {
+					//System.out.println("adding flag ="+ addingFlag);
+					if (cartButton.getText().equalsIgnoreCase("Adding...")) {
+						addingFlag = true;
+						//System.out.println("adding flag ="+ addingFlag);
+						
+						while(!addedFlag) {
+							//System.out.println("added flag ="+ addedFlag);
+							if(cartButton.getText().equalsIgnoreCase("Added")) {
+								addedFlag = true;
+								//System.out.println("added flag ="+ addedFlag);
+								break;
+							}else {
+								Thread.sleep(10);
+								addedCount+=10;
+								//System.out.println("addedCount = "+addedCount);
+								if(addedCount > waitTimeInSeconds * 1000) {
+									break;
+								}
+							}
+						}
+						
+					}else {
+						Thread.sleep(10);
+						addingCount+=10;
+						//System.out.println("addingCount = "+addingCount);
+						if(addingCount > waitTimeInSeconds * 1000) {
+							break;
+						}
+					}
+				} 
+				
+				action.CompareResult("Adding text appears on add to cart button" , "true",String.valueOf(addingFlag), test);
+				action.CompareResult("Added text appears on add to cart button" , "true",String.valueOf(addedFlag), test);
+			
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				logger.info(e.getMessage());
+			}
+			  
+		 }
+	    
+	    public Map<String, List<String>> productQuantityAndPrice(Map<String, String> products,List<String> quantity,ExtentTest test) {
+	    	Map<String, List<String>> productData = new HashMap<String, List<String>>();
+	    	
+	    	for(Iterator<String> iterator = quantity.iterator(); iterator.hasNext(); ) {
+	    		
+	    		//find quantity --Add it to the list
+	    		for(Map.Entry map : products.entrySet()) {
+	    		//find name of product add it as the key
+	    			List<String> priceAndQuantity = new ArrayList<>();
+	    			String key = (String)map.getKey();
+	    			String value = (String)map.getValue();
+	    			priceAndQuantity.add(value);
+	    			String quantityNum = iterator.next();
+	    			
+	    			
+	    			priceAndQuantity.add(quantityNum);	    			
+	    			iterator.remove();	
+	    			
+	    		productData.put(key, priceAndQuantity);
+	    		}
+	    	}	    	
+	    	return productData;
+	    }
 }

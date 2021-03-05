@@ -152,11 +152,11 @@ public class JDTests extends BaseTest {
 				PayU.PayUPagePayment(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 			case "ProductSearch":
-				products.searchType(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				products.ic_SelectProductAndAddToCart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
-			case "iCcartVerification":
-				icCart.iCcartVerification(test1);
-				break;
+			/*
+			 * case "iCcartVerification": icCart.iCcartVerification(test1); break;
+			 */
 			case "deliveryPopulation":
 				icDelivery.deliveryPopulation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
@@ -277,7 +277,7 @@ public class JDTests extends BaseTest {
 		}
 
 	public void endBrowserSession() throws IOException {
-		driver.close();
+		//driver.close();
 		writeToExcel();
 	}
 	public void writeToExcel() throws IOException {
