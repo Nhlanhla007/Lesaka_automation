@@ -589,6 +589,7 @@ public class Action {
 		} catch (NoSuchElementException e) {
 			return decide = false; 
 			}
+		}
 				return decide;
 	}	
 
@@ -1656,7 +1657,7 @@ public class Action {
 		}
 	}
 		
-		public void noRecordsReturnedFromTable(ExtentTest test,String name) {
+/*		public void noRecordsReturnedFromTable(ExtentTest test,String name) {
 			try {
 				ExtentTest node = test.createNode("Clicked Element: " + name);
 				String screenShotPath=getScreenShot(name);
@@ -1713,7 +1714,7 @@ public class Action {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	public <T> boolean elementExistWelcome(T elementAttr, long time, String name, ExtentTest test){
 		ExtentTest node = test.createNode(name);

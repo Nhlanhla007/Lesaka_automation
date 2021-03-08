@@ -126,6 +126,7 @@ public class JDTests extends BaseTest {
 		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver);
 		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver);
 		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver);
+		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver);
 		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver);
 		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver);
 		ic_Login ic_login = new ic_Login(driver);
@@ -212,6 +213,8 @@ public class JDTests extends BaseTest {
 				adminSheets.add(dataMap2.get(currentKeyWord+"++"));
 				adminUserUpdate.editCustomerDetails(adminSheets,test1,testcaseID);
 				break;
+			case "icGiftCardPurchase":
+				icGiftCardPurchase.purchaseGiftCard(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);	
 			
 		}
 	}
@@ -255,7 +258,7 @@ public class JDTests extends BaseTest {
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 
-				navigateURL = ConfigFileReader.getPropertyVal("MagentoURL");
+				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 			logger.info("Navigate to URL");
 			Report.info("Navigating to URL: "+navigateURL);
