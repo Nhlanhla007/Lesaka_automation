@@ -125,12 +125,10 @@ public class MagentoOrderStatusPage {
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) {
 		String idToSearch = input.get("productSearchId").get(rowNumber);
 		String orderStatus = input.get("orderStatus").get(rowNumber);
+		System.out.println("orderStatus :"+orderStatus);
 		try {
 			Thread.sleep(30000);
-			action.click(magentoSalesTab, "Sales tab", test);
-			action.click(magentoOrderTab, "Order tab", test);
-			driver.navigate().refresh();
-			Thread.sleep(5000);
+			NavigateOdersPage(test);
 			ConfigFileReader configFileReader = new ConfigFileReader();
 			idToSearch=configFileReader.getPropertySavedVal("OrderID");
 			searchForOrder(idToSearch,test);
@@ -140,5 +138,11 @@ public class MagentoOrderStatusPage {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public void NavigateOdersPage(ExtentTest test) throws IOException, InterruptedException{
+		action.click(magentoSalesTab, "Sales tab", test);
+		action.click(magentoOrderTab, "Order tab", test);
+		driver.navigate().refresh();
+		Thread.sleep(5000);
 	}
 }

@@ -23,6 +23,7 @@ import com.aventstack.extentreports.ExtentTest;
 
 import Logger.Log;
 import utils.Action;
+import utils.ConfigFileReader;
 
 public class Ic_Products {
 
@@ -42,6 +43,8 @@ public class Ic_Products {
 	 /*
 	  * PAGE OBJECTS
 	  */
+	 
+	
 	 @FindBy(xpath = "//span[contains(text(),'Products')]")
 	 WebElement icProductLink;
 	 
@@ -61,11 +64,44 @@ public class Ic_Products {
 	 @FindBy(xpath = "//span[contains(text(),\"Computers, Notebooks & Tablet's\")]")
 	 WebElement computersNoteBooks;
 	 
+	 @FindBy(xpath = "//span[contains(text(),'Computer Accessories')]")
+	 WebElement compAccess;
+	 
+	 @FindBy(xpath = "//span[contains(text(),'Cellphones & Accessories')]")
+	 WebElement cellPhones;
+	 
+	 @FindBy(xpath = "//span[contains(text(),'Gaming, Gadgets & Wearables')]")
+	 WebElement gaming;
+	 
+	 @FindBy(xpath = "//span[contains(text(),'Printing, Scanners & Ink')]")
+	 WebElement printing;
+	 
+	 @FindBy(xpath = "//span[contains(text(),'TVs, Displays & Audio')]")
+	 WebElement tv;
+	 
 	 @FindBy(xpath = "//body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[3]/nav[1]/ul[1]/li[1]/ul[1]/li[1]/ul[1]/li[7]/a[1]/span[1]")
 	 WebElement fitness;
 	 
+	 @FindBy(xpath = "//span[contains(text(),'Office Solutions')]")
+	 WebElement officeSo;
+	 
 	 @FindBy(xpath = "//body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[3]/nav[1]/ul[1]/li[1]/ul[1]/li[1]/ul[1]/li[9]/a[1]/span[1]")
 	 WebElement software;
+	 
+	 @FindBy(xpath = "//span[contains(text(),'Networking')]")
+	 WebElement networking;
+	 
+	 @FindBy(xpath = "//span[contains(text(),'Photography')]")
+	 WebElement photo;
+	 
+	 @FindBy(xpath = "//span[contains(text(),'Home Security')]")
+	 WebElement homeSecurity;
+	 
+	 @FindBy(xpath = "//span[contains(text(),'Office Appliances')]")
+	 WebElement officeAp;
+	 
+	 @FindBy(xpath = "//span[contains(text(),'Gift Voucher')]")
+	 WebElement gift;
 	 
 	 @FindBy(xpath = "//body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[3]/nav[1]/ul[1]/li[1]/ul[1]/li[1]/ul[1]/li[15]/a[1]/span[1]")
 	 WebElement downloads;
@@ -119,17 +155,23 @@ public class Ic_Products {
 	  */
 	 public void ic_ClickProductLink(ExtentTest test) {
 		 try {
+			System.out.println("ENTERS CLICK ON PRODUCT LINK");
 			 if(ic_ElementVisable(icProductLink)) {
 			 action.click(icProductLink, "Click product link",test);
 			 Thread.sleep(10000);
+			 ic_SelectProduct(test,productToFind);
 			 }
 			 	 
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 			logger.info(e.getMessage());
 		}
+		 //To validate page has been loaded
+		 //action.validateUrl("product", "Validate product URL");
 	 }
 	 
+	 //enters text into search bar
 		
 	 /**
 	  * Enters search data into the search bar and searches
@@ -144,12 +186,20 @@ public class Ic_Products {
 				action.writeText(icSearchBar, productToFind,"SearchBar",test);
 				action.click(icSearchIcon, "Click on search", test);
 				Thread.sleep(10000);
+				ic_SelectProduct(test,productToFind);
 			} catch (Exception e) {
 				e.printStackTrace();
 				logger.info(e.getMessage());
 			}
 		}
+		 
 	 
+	 //clicks on search(magnifying glass icon)
+		/*
+		 * public void ic_ClickIcon(WebElement elementToClick) {
+		 * ic_ElementVisable(elementToClick); action.click(elementToClick,
+		 * "Click Icon"); }
+		 */
 	 //Checks if an element is visible
 		/**
 		 * Checks for the visability of an element
@@ -170,7 +220,7 @@ public class Ic_Products {
 			  List<String> productsList = new ArrayList<String>(Arrays.asList(productsArray));
 			  return productsList;
 		  }
-		 
+		
 		  /**
 		   * Gathers data from excel.
 		   * Determines search type inserted from excel and selects appropriate construct for execution
@@ -184,13 +234,35 @@ public class Ic_Products {
 		 String quantityOfSearchProducts = input.get("Quantity").get(rowNumber);
 		 String waitTimeInSeconds = input.get("cartButtonWaitTimeInSeconds").get(rowNumber);
 		 List<String> theProducts = filterProducts(productsToSearch);		 
+		Map<String, List<String>> productsInCart =  ic_CreateCartFromProductListing(productsToSearch, quantityOfSearchProducts,typeSearch,waitTimeInSeconds, test);
+		cartValidation.iCcartVerification2(productsInCart, test);
+	 }
+
+
+	 
+	 //Which search should be run
+	 public void searchType(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) {
+		
+		 String navigateURL = ConfigFileReader.getPropertyVal("URL");
+		 action.navigateToURL(navigateURL);
 		 
-		 try {
-			Map<String, List<String>> productsInCart =  ic_CreateCartFromProductListing(productsToSearch, quantityOfSearchProducts,typeSearch,waitTimeInSeconds, test);
-			cartValidation.iCcartVerification2(productsInCart, test);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		 String productToSearch = input.get("categorySearch").get(rowNumber);
+		 switch (input.get("typeSearch").get(rowNumber)) {
+		case "searchbar":
+			ic_EnterTextToSearchBar(input.get("productsToSearch").get(rowNumber),input.get("specificProduct").get(rowNumber),test);
+			break;
+		case"general":
+			System.out.println("ENTERS THE SWITCH");
+			ic_ClickProductLink(productToSearch,test);
+			break;
+		case "category":
+			System.out.println("ENTERS CATEGORY");
+			System.out.println(productToSearch);
+			ic_CategoryFind(input.get("categorySearch").get(rowNumber),productToSearch,test);
+		break;
+			
+		default:
+			break;
 		}
 		 
 		 
@@ -280,7 +352,7 @@ public class Ic_Products {
 		 return price;
 	 }
 	 
-	 
+	
 	 /**
 	  * Finds the specified products from the listing product page.
 	  * Adds the product found to the cart 
@@ -351,6 +423,6 @@ public class Ic_Products {
 			e.printStackTrace();
 		}
 		 return productData;
-		 
+	 
 	 }
 }

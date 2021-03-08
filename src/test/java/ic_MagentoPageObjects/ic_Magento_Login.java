@@ -3,7 +3,6 @@ package ic_MagentoPageObjects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -25,7 +24,9 @@ public class ic_Magento_Login {
 			this.driver = driver;
 			PageFactory.initElements(driver, this);
 			action = new Action(driver);
+			
 		}
+		
 		//Login to magento
 		@FindBy(xpath = "//input[@id='username']")
 		WebElement Magento_Username;
@@ -41,25 +42,34 @@ public class ic_Magento_Login {
 		//vv
 		@Step("Login to magento")
 		public void Login_magento(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-
-			String Magento_url = ConfigFileReader.getPropertyVal("MagentoURL");
 			String Username = input.get("Username").get(rowNumber);
 			String Password = input.get("Password").get(rowNumber);
-			action.navigateToURL(ConfigFileReader.getPropertyVal("MagentoURL"));
-			driver.navigate().to(Magento_url);
-			action.waitForPageLoaded(10);
-			String ResPage = driver.getTitle();
-			if(ResPage.equalsIgnoreCase("Magento Admin")){
-				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
-				action.writeText(Magento_Username, Username, "Username feild", test);
-				action.writeText(Magento_Password, Password, "Password feild", test);
-				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
-				action.waitExplicit(15);
-				String resWelcomescreen = action.getText(Dashboard, "Dashboard");
-				System.out.println(resWelcomescreen);
-			}else{
-				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
-			}
+			LoginToMagento(test,Username,Password);
 	     }
+		@Step("Login  magento")
+		public void LoginToMagento(ExtentTest test,String Username, String Password) throws IOException{
+			
+			try {
+				//action.navigateToURL(ConfigFileReader.getPropertyVal("MagentoURL"));
+				driver.navigate().to(ConfigFileReader.getPropertyVal("MagentoURL"));
+				action.waitForPageLoaded(10);
+				String ResPage = driver.getTitle();
+				if(ResPage.equalsIgnoreCase("Magento Admin")){
+					action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
+					action.writeText(Magento_Username, Username, "Username feild", test);
+					action.writeText(Magento_Password, Password, "Password feild", test);
+					action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
+					action.waitExplicit(15);
+					String resWelcomescreen = action.getText(Dashboard, "Dashboard");
+					//System.out.println(resWelcomescreen);
+				}else{
+					action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 
 }

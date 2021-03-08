@@ -87,15 +87,20 @@ public class ic_PaymentOption {
      }
 
 	public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-		action.explicitWait(5000);
-		System.out.println("##############START Execution###############");
-		String Paytype = input.get("Paytype_Option").get(rowNumber);
-		action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
-		WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
-		action.waitExplicit(10);
-		action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
-		action.waitExplicit(15);
-		action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+		try {
+			action.explicitWait(8000);
+			System.out.println("##############START Execution###############");
+			String Paytype = input.get("Paytype_Option").get(rowNumber);
+			action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
+			WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
+			action.waitExplicit(10);
+			action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
+			action.waitExplicit(15);
+			action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
 	}
 	
