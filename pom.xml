@@ -268,7 +268,7 @@
 					
 					<suiteXmlFiles>
 						<suiteXmlFile>
-							${suiteXmlFile}
+							JDGroup.xml
 						</suiteXmlFile>
 					</suiteXmlFiles>
 					<systemPropertyVariables>
