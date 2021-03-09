@@ -23,6 +23,7 @@ import com.aventstack.extentreports.ExtentTest;
 
 import Logger.Log;
 import utils.Action;
+import utils.ConfigFileReader;
 
 public class Ic_Products {
 
@@ -179,6 +180,8 @@ public class Ic_Products {
 	 * @param rowNumber
 	 */
 	public void ic_SelectProductAndAddToCart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) {
+		String navigateURL = ConfigFileReader.getPropertyVal("URL");
+		action.navigateToURL(navigateURL);
 		String typeSearch = input.get("typeSearch").get(rowNumber);
 		String productsToSearch = input.get("specificProduct").get(rowNumber);
 		String quantityOfSearchProducts = input.get("Quantity").get(rowNumber);

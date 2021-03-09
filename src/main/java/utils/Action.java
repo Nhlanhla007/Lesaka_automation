@@ -30,6 +30,8 @@ import org.testng.Assert;
 import com.google.common.base.Function;
 import Logger.Log;
 
+import static org.apache.poi.sl.draw.binding.STRectAlignment.T;
+
 /**
  * <copyright file="TestCaseBase.java" company="Modi's Consulting Group">
  * Reproduction or transmission in whole or in part, in any form or by any
@@ -450,22 +452,6 @@ public class Action {
 	}
 
 	/**
-	 * The method used Java Thread sleep to halt the execution for specified
-	 * time
-	 * 
-	 * @paramtime
-	 *            Time in milliseconds
-	 */
-
-	public void onLoadDelay() {
-		/*try {
-			Thread.sleep(Values.time);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}*/
-	}
-
-	/**
 	 * The method is used to check the existence of the web element on the web
 	 * page
 	 * 
@@ -577,20 +563,28 @@ public class Action {
 
 	//************************************ADDED LEVERCH FOR NEXT BUTTON ON PRODUCT PAGE
 	public boolean attributeEnabled(WebElement webe) {
-		boolean decide =false;
-		  try { if(webe.isDisplayed()) { decide = true; } }catch(NoSuchElementException
-		  e) { return decide = false; }
-		 
-		if(decide) {
+		boolean decide = false;
 		try {
 			if (webe.isDisplayed()) {
 				decide = true;
 			}
-		} catch (NoSuchElementException e) {
-			return decide = false; 
+		} catch (NoSuchElementException
+				e) {
+			return decide = false;
+		}
+
+		if (decide) {
+			try {
+				if (webe.isDisplayed()) {
+					decide = true;
+				}
+			} catch (NoSuchElementException e) {
+				return decide = false;
 			}
-				return decide;
-	}	
+			return decide;
+		}
+		return decide;
+	}
 
 	public boolean attributeValidation(WebElement element,String attributeToCheck,String valueOfAttribute,int waitTime) {
 			try {
@@ -1030,14 +1024,14 @@ public class Action {
 		if (elementAttr.getClass().getName().contains("By")) {
 			By loc = (By) elementAttr;
 			try {
-				onLoadDelay();
+//				onLoadDelay();
 				wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		} else {
 			try {
-				onLoadDelay();
+//				onLoadDelay();
 				wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
 			} catch (Exception e) {
 				
@@ -1052,7 +1046,7 @@ public class Action {
 		if (elementAttr.getClass().getName().contains("By")) {
 			By loc = (By) elementAttr;
 			try {
-				onLoadDelay();
+//				onLoadDelay();
 				wait.until(ExpectedConditions.elementToBeClickable(loc));
 			} catch (Exception e) {
 				logger.info("Element still present:" + loc);
@@ -1063,7 +1057,7 @@ public class Action {
 
 		else {
 			try {
-				onLoadDelay();
+//				onLoadDelay();
 				wait.until((ExpectedConditions.elementToBeClickable(((WebElement) elementAttr))));
 			} catch (Exception e) {
 				Assert.fail("Element is not clickable");
@@ -1107,7 +1101,7 @@ public class Action {
 		WebDriverWait wait = new WebDriverWait(driver, time);
 
 		try {
-			onLoadDelay();
+//			onLoadDelay();
 			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameName));
 		} catch (Exception e) {
 			logger.info("Frame is not present:" + frameName);
@@ -1294,7 +1288,7 @@ public class Action {
 
 	}
 
-	@SuppressWarnings("deprecation")
+//	@SuppressWarnings("deprecation")
 	public <T> void waitForJQueryLoad(long time) {
 
 		FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver);
@@ -1312,7 +1306,7 @@ public class Action {
 
 	}
 
-	@SuppressWarnings("deprecation")
+//	@SuppressWarnings("deprecation")
 	public <T> void waitForJQueryReady(long time) {
 
 		FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver);
@@ -1330,7 +1324,7 @@ public class Action {
 
 	}
 
-	@SuppressWarnings("deprecation")
+//	@SuppressWarnings("deprecation")
 	public <T> void waitForAjaxComplete(long time) {
 
 		FluentWait<WebDriver> wait = new FluentWait<WebDriver>(driver);
@@ -1666,54 +1660,6 @@ public class Action {
 			}
 		}
 
-	public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
-		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
-		ExtentTest node=test.createNode("Select value from dropdown : "+ Testname);
-		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-		
-		try{
-			// Create object of the Select class
-			Select se = new Select(elementAttr);
-			 
-			// Select the option with value 
-			
-			se.selectByVisibleText(valueToselect);
-			String res = se.getFirstSelectedOption().getText();
-			if(res.equalsIgnoreCase(valueToselect)){
-				String screenShotPath=getScreenShot(dateName);
-				node.pass("Successfully selected : " + Testname + " Expected : "+valueToselect+" Actual :"+res,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-			}
-		  }catch(Throwable e){
-			e.printStackTrace();
-			try {
-				String screenShotPath=getScreenShot(dateName);
-				test.fail("Error to select  : " + valueToselect + " form the dropdown : "+Testname+" Error message :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-	}
-
-	}
-
-	public void expectSingleRow(List<WebElement> elements, String name, ExtentTest test) {
-		ExtentTest node = test.createNode("Clicked Element: " + name);
-		System.out.println(elements.size());
-		try {
-			String screenShotPath = getScreenShot(name);
-			if (elements.size() >= 2) {
-				node.fail("More than one element was returned" + name + node.addScreenCaptureFromPath(screenShotPath));
-			} else if (elements.size() == 1) {
-				node.pass(
-						"Exactly one element has been returned" + name + node.addScreenCaptureFromPath(screenShotPath));
-			} else {
-				node.fail("No results has been found" + name + node.addScreenCaptureFromPath(screenShotPath));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public <T> boolean elementExistWelcome(T elementAttr, long time, String name, ExtentTest test){
 		ExtentTest node = test.createNode(name);
@@ -1738,16 +1684,6 @@ public class Action {
 
 	}
 
-		public void noRecordsReturnedFromTable(ExtentTest test,String name) {
-			ExtentTest node = test.createNode("Clicked Element: " + name);
-		try {
-
-				String screenShotPath=getScreenShot(name);
-				node.fail(name +node.addScreenCaptureFromPath(screenShotPath));
-			} catch (IOException e) {
-				node.fail(e.getMessage());
-			}
-		}
 
 	public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
 		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
@@ -1757,9 +1693,6 @@ public class Action {
 		try{
 			// Create object of the Select class
 			Select se = new Select(elementAttr);
-			 
-			// Select the option with value 
-			
 			se.selectByVisibleText(valueToselect);
 			String res = se.getFirstSelectedOption().getText();
 			if(res.equalsIgnoreCase(valueToselect)){
