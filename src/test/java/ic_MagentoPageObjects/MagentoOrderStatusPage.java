@@ -12,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
+import JDGroupPageObjects.ic_PayUPayment;
 import io.qameta.allure.Step;
 import utils.Action;
 import utils.ConfigFileReader;
@@ -123,7 +124,7 @@ public class MagentoOrderStatusPage {
 	
 	@Step("Navigates to the order page")
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) {
-		String idToSearch = input.get("productSearchId").get(rowNumber);
+		String idToSearch =ic_PayUPayment.Oderid;// input.get("productSearchId").get(rowNumber);
 		String orderStatus = input.get("orderStatus").get(rowNumber);
 		System.out.println("orderStatus :"+orderStatus);
 		try {

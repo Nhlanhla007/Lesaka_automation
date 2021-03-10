@@ -75,6 +75,7 @@ public class hana {
 		//Statement stmt1 = hanaconnet.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_READ_ONLY);
 		java.sql.Statement stmt1 = hanaconnet.createStatement();
 	    ResultSet resultSet = stmt1.executeQuery(Query);
+	    stmt1.close();
 		return resultSet;
 		
 	}
@@ -162,7 +163,10 @@ public class hana {
 	    }
 	    return listofColumns;
 	}
-	
+	public void closeDB() throws SQLException{
+		hanaconnet.close();
+		
+	}
 }
 
 

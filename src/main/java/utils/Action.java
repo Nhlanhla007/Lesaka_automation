@@ -590,6 +590,8 @@ public class Action {
 			return decide = false; 
 			}
 				return decide;
+		}
+		return decide;
 	}	
 
 	public boolean attributeValidation(WebElement element,String attributeToCheck,String valueOfAttribute,int waitTime) {
@@ -1656,64 +1658,9 @@ public class Action {
 		}
 	}
 		
-		public void noRecordsReturnedFromTable(ExtentTest test,String name) {
-			try {
-				ExtentTest node = test.createNode("Clicked Element: " + name);
-				String screenShotPath=getScreenShot(name);
-				node.fail(name +node.addScreenCaptureFromPath(screenShotPath));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 
-	public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
-		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
-		ExtentTest node=test.createNode("Select value from dropdown : "+ Testname);
-		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-		
-		try{
-			// Create object of the Select class
-			Select se = new Select(elementAttr);
-			 
-			// Select the option with value 
-			
-			se.selectByVisibleText(valueToselect);
-			String res = se.getFirstSelectedOption().getText();
-			if(res.equalsIgnoreCase(valueToselect)){
-				String screenShotPath=getScreenShot(dateName);
-				node.pass("Successfully selected : " + Testname + " Expected : "+valueToselect+" Actual :"+res,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-			}
-		  }catch(Throwable e){
-			e.printStackTrace();
-			try {
-				String screenShotPath=getScreenShot(dateName);
-				test.fail("Error to select  : " + valueToselect + " form the dropdown : "+Testname+" Error message :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-	}
+	
 
-	}
-
-	public void expectSingleRow(List<WebElement> elements, String name, ExtentTest test) {
-		ExtentTest node = test.createNode("Clicked Element: " + name);
-		System.out.println(elements.size());
-		try {
-			String screenShotPath = getScreenShot(name);
-			if (elements.size() >= 2) {
-				node.fail("More than one element was returned" + name + node.addScreenCaptureFromPath(screenShotPath));
-			} else if (elements.size() == 1) {
-				node.pass(
-						"Exactly one element has been returned" + name + node.addScreenCaptureFromPath(screenShotPath));
-			} else {
-				node.fail("No results has been found" + name + node.addScreenCaptureFromPath(screenShotPath));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public <T> boolean elementExistWelcome(T elementAttr, long time, String name, ExtentTest test){
 		ExtentTest node = test.createNode(name);
