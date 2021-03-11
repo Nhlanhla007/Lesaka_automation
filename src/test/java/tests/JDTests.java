@@ -23,6 +23,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -79,13 +80,14 @@ public class JDTests extends BaseTest {
 				ExtentTest test=reportJD.createTest(testcaseID+" : "+testCaseDescription);
 				startBrowserSession();
 				configFileReader.setPropertyVal("sequence","true");
+				try {
 				for(int j=0;j<10;j++){
 					String actionToRunLable="Action"+(j+1);
 					String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
 					currentKeyWord=actionToRun;
 					System.out.println("actionToRunLable:"+actionToRunLable);
 					System.out.println("currentKeyWord:"+currentKeyWord);
-					try {
+
 						if(!currentKeyWord.equals("")){
 							if(!occCount.containsKey(currentKeyWord)){
 								occCount.put(currentKeyWord,0);
@@ -98,10 +100,12 @@ public class JDTests extends BaseTest {
 								runKeyWord(actionToRun,test);
 							}
 						}
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+
+				}
+				} catch (Exception e) {
+					String screenShot=GenerateScreenShot.getScreenShot(driver);
+					ExtentTest node = test.createNode("Exception");
+					node.fail(e.getMessage());
 				}
 				endBrowserSession();
 			}
@@ -292,7 +296,7 @@ public class JDTests extends BaseTest {
 		}
 
 	public void endBrowserSession() throws IOException {
-		//driver.close();
+		driver.close();
 		writeToExcel();
 	}
 	public void writeToExcel() throws IOException {

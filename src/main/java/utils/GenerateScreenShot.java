@@ -8,7 +8,7 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class GenearateScreenShot {
+public class GenerateScreenShot {
 
     public static String getScreenShot(WebDriver driver) throws IOException {
         File currentDirFile = new File(".");
