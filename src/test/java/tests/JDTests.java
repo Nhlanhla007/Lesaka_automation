@@ -103,9 +103,10 @@ public class JDTests extends BaseTest {
 
 				}
 				} catch (Exception e) {
+					logger.info(e.getMessage());
 					String screenShot=GenerateScreenShot.getScreenShot(driver);
 					ExtentTest node = test.createNode("Exception");
-					node.fail(e.getMessage());
+					node.fail(e.getMessage()+node.addScreenCaptureFromPath(screenShot));
 				}
 				endBrowserSession();
 			}
