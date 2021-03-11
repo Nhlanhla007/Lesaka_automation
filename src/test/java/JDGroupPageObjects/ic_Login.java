@@ -54,7 +54,7 @@ public class ic_Login {
 			ic_myAccountlist.click();
 			
 			List<String> userCred = new ArrayList<>();
-			String Magento_url = input.get("URL").get(rowNumber);
+			//String Magento_url = input.get("URL").get(rowNumber);
 			String Username =input.get("Username").get(rowNumber);
 			String Password =input.get("Password").get(rowNumber);
 			userCred.add(Username);
