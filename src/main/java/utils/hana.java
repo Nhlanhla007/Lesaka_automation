@@ -23,36 +23,35 @@ public class hana {
 	WebDriver driver;
 	static Connection hanaconnet = null;
 	 //ResultSet resultSet=null;
-	public hana(String DBType, String Server, String Port,String Username,String Password) throws SQLException, IOException {
-		Server = "11.19.2.172";
-		Port = "30215";
-		Username = "225505";
-		Password = "Welc0me@2021";
-		DBType ="ECC_QA";
+	public hana( String TypeOfDB,String Server, String Port,String Username,String Password) throws SQLException, IOException {
+		
 		//String name = "DBconnect";
-		 hanaconnet = hanaDBconnect(DBType, Server, Port, Username, Password);
+		 hanaconnet = hanaDBconnect(TypeOfDB,Server, Port, Username, Password);
 		 
 	}
 	Action action =new Action(driver);
 	
-	public Connection hanaDBconnect(String DBType,String Server, String Port, String Username,String Password) throws SQLException, IOException{
+	public Connection hanaDBconnect(String TypeOfDB, String Server, String Port, String Username,String Password) throws SQLException, IOException{
 		boolean connectFlag=false;
 		Connection connection = null;
 		
 		//ExtentTest node=test.createNode("Hana DB connect");
 		try {
-			switch (DBType) {
-			case "ECC_QA":
-				Server = "11.19.2.172";
-				Port = "30215";
-				Username = "225505";
-				Password = "Welc0me@2021";
-				String name = "DBconnect";
+			
+			switch (TypeOfDB){
+			case "HANA":
 				connection = DriverManager.getConnection("jdbc:sap://"+Server+":"+Port+"/?autocommit=true", Username,Password);
 				break;
-			case "CRM_QA":
+			case "SQL":
+				
+				connection = DriverManager.getConnection("jdbc:"+Server+"://"+Port+";user="+Username+";password="+Password);
+				
+					
 				break;
 			}
+				
+				
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			//logger.info("Unable Connect to Hana DB: "+ e.getMessage());
@@ -75,6 +74,7 @@ public class hana {
 		//Statement stmt1 = hanaconnet.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_READ_ONLY);
 		java.sql.Statement stmt1 = hanaconnet.createStatement();
 	    ResultSet resultSet = stmt1.executeQuery(Query);
+	    stmt1.close();
 		return resultSet;
 		
 	}
@@ -162,7 +162,10 @@ public class hana {
 	    }
 	    return listofColumns;
 	}
-	
+	public void closeDB() throws SQLException{
+		hanaconnet.close();
+		
+	}
 }
 
 

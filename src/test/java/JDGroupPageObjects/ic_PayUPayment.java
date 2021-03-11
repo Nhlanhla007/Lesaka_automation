@@ -40,7 +40,7 @@ public class ic_PayUPayment {
 		
 		@FindBy(xpath = "//p[contains(text(),'Your order # is')]")
 		WebElement OderID;
-		
+		public static String Oderid;
 
 		public void PayUPagePayment(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 			String cardnumber = input.get("cardnumber").get(rowNumber);
@@ -60,9 +60,10 @@ public class ic_PayUPayment {
 			action.explicitWait(10);
 			//Retrieve order ID
 			action.isElementOnNextPage(OderID, (long) 5,test);
-			String Oderid= action.getText(OderID, "Order ID");
+		    Oderid= action.getText(OderID, "Order ID");
+		    Oderid =Oderid.replace("Your order # is: ","").replace(".","");
 			ConfigFileReader configFileReader = new ConfigFileReader();
-			configFileReader.setPropertyVal("OrderID",Oderid.replace("Your order # is: ","").replace(".",""));
+			configFileReader.setPropertyVal("OrderID",Oderid);
 			input.get("OrderID").set(rowNumber,Oderid.replace("Your order # is: ","").replace(".",""));
 			System.out.println("##############END Execution###############");
 		}

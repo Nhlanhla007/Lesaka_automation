@@ -62,11 +62,14 @@ public class ICDelivery {
 
     @FindBy(xpath = "//*[@id='opc-sidebar']/div[1]/div[1]/button")
     WebElement Btn_PlaceOrder;
-
-
+    public static String Streetname;
+    public static String Cityname;
+    public static String Postalcode;
 
     public void deliveryPopulation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException {
-
+    	Streetname =input.get("streetName").get(rowNumber);
+    	Cityname =input.get("city").get(rowNumber);
+    	Postalcode = input.get("postalCode").get(rowNumber);
 //        action.isElementOnNextPage(deliveryLink,(long)10,test);
         Thread.sleep(8000);
         action.click(deliveryLink,"deliveryLink",test);
@@ -82,7 +85,7 @@ public class ICDelivery {
         action.writeText(vatNumber,input.get("vatNumber").get(rowNumber),"vatNumber",test);
         action.writeText(email,input.get("email").get(rowNumber),"email",test);
         action.writeText(idNumber,input.get("idNumber").get(rowNumber),"idNumber",test);
-        Thread.sleep(8000);
+        Thread.sleep(12000);
         action.dropDownselectbyvisibletext(province,input.get("province").get(rowNumber),"province",test);
         Thread.sleep(10000);
 //        action.isElementOnNextPage(ContinueToPayment,(long)10,test);

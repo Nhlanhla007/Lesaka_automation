@@ -55,7 +55,7 @@ public class IC_Cart {
 			}
 	    }
 	    
-	    int sum = 0;
+	    public static int sum;
 		  public void iCcartVerification2(Map<String, List<String>> products,ExtentTest test) {
 			  //Find all elements from the list
 			  navigateToCart(test);

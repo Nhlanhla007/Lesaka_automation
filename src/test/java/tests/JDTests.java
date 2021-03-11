@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +28,7 @@ import org.testng.annotations.Test;
 
 
 import JDGroupPageObjects.*;
+import SAP_HanaDB.SAPorderRelated;
 import utils.*;
 
 public class JDTests extends BaseTest {
@@ -107,7 +109,7 @@ public class JDTests extends BaseTest {
 		}
 	}
 
-	public void runKeyWord(String actionToRun,ExtentTest test) throws IOException, InterruptedException {
+	public void runKeyWord(String actionToRun,ExtentTest test) throws IOException, InterruptedException, SQLException {
 		String moduleToRun=actionToRun;
 		IConnection ic=new IConnection(driver);
 		ic_PaymentOption Payopt=new ic_PaymentOption(driver);
@@ -131,6 +133,7 @@ public class JDTests extends BaseTest {
 		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver);
 		ic_Login ic_login = new ic_Login(driver);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver);
+		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -221,6 +224,9 @@ public class JDTests extends BaseTest {
 				ic_cashDepositPayment.InvoiceCashDeposit(RequiredSheets,test1,testcaseID);
 			case "icGiftCardPurchase":
 				icGiftCardPurchase.purchaseGiftCard(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);	
+				break;
+			case "SAP_OrderRelated":
+				SaporderRelated.SAP_OrderDetailVadidation(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 		}
 	}
