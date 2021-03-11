@@ -132,7 +132,7 @@ public class JDTests extends BaseTest {
 		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver);
 		ic_Login ic_login = new ic_Login(driver);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver);
-		SAPorderRelated SaporderRelated = new SAPorderRelated(driver);
+		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -224,7 +224,8 @@ public class JDTests extends BaseTest {
 				ic_cashDepositPayment.InvoiceCashDeposit(RequiredSheets,test1,testcaseID);
 				break;
 			case "SAP_OrderRelated":
-				SaporderRelated.SAP_OrderDetailVadidation(test1);
+				SaporderRelated.SAP_OrderDetailVadidation(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
 		}
 	}
 

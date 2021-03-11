@@ -29,12 +29,12 @@ import utils.hana;
 	public class SAPorderRelated {
 		WebDriver driver;
 	    Action action;
-	  
-	    public SAPorderRelated(WebDriver driver) {
+	     HashMap<String, HashMap<String, ArrayList<String>>> dataMap2 =null;
+	    public SAPorderRelated(WebDriver driver,HashMap<String, HashMap<String, ArrayList<String>>> dataMap2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
-	        
+	        this.dataMap2=dataMap2;
 	    }
 	    
 	    enum Primarykey {
@@ -56,15 +56,33 @@ import utils.hana;
 	    enum schemas{
 	    	SAPEQ1,
 	    }
-	    
-		public void SAP_OrderDetailVadidation(ExtentTest test) throws SQLException, IOException{
+	    public int getConnectionRow(String Instance){
+	    	HashMap<String, ArrayList<String>> connectiondetailSheet = dataMap2.get("DB_connection_master++");
+	    	int finalrow=-1;
+	    	int noofRows = connectiondetailSheet.get("DB_Instance").size();
+	    	for(int con =0;con<noofRows;con++){
+	    		if(Instance == connectiondetailSheet.get("DB_Instance").get(con)){
+	    			finalrow=con;
+	    			
+	    			
+	    		}
+	    	}
+	    	return finalrow;
+	    }
+		public void SAP_OrderDetailVadidation(HashMap<String, ArrayList<String>> input, ExtentTest test,int rowNumber) throws SQLException, IOException{
 			boolean allcheckpoint =true;
-			String Server = "11.19.2.172";
-			String Port = "30215";
-			String Username = "225505";
-			String Password = "Welc0me@2021";
-			String name = "DBconnect";
-			String DBType ="ECC_QA";
+			
+			String DBinstance = input.get("DB_Instance").get(rowNumber);
+			//ECCQA
+			int irow = getConnectionRow(DBinstance);
+			
+			String Server = dataMap2.get("DB_connection_master++").get("Host").get(irow);//"11.19.2.172";
+			String Port =  dataMap2.get("DB_connection_master++").get("port").get(irow);
+			String Username =  dataMap2.get("DB_connection_master++").get("Username").get(irow);
+			String Password =  dataMap2.get("DB_connection_master++").get("Password").get(irow);
+			String TypeOfDB = dataMap2.get("DB_connection_master++").get("TypeOfDB").get(irow);
+			//String name = "DBconnect";
+			//String DBType ="ECC_QA";
 			//String Query ="Select * from SAPEQ1.VBAP Limit 9";
 			
 			 Primarykey key = Primarykey.VBELN;
@@ -96,7 +114,7 @@ import utils.hana;
 			String Query= "Select * from "+Schema+"."+Table1+" FULL OUTER JOIN "+Schema+"."+Table2+" ON "+Schema+"."+Table1+"."+key+" = "+Schema+"."+Table2+"."+key+" WHERE "+Schema+"."+Table1+"."+key+" = '"+SAP_orderNo+"' ";
 			//String Query= "SELECT * FROM SAPEQ1."+Table+" WHERE "+key+" = '"+SAP_orderNo+"'";
 			
-			hana hn =new hana("ECC_QA",Server,Port,Username,Password);
+			hana hn =new hana(TypeOfDB,Server,Port,Username,Password);
 			ResultSet rs = hn.ExecuteQuery(Query);
 			
 			int ExpRowcount=1;
@@ -134,10 +152,10 @@ import utils.hana;
 					Totalsum = Totalsum+eachproductSumation;
 				}
 				ActualPrice = Float.toString(Totalsum);
-				if(Integer.parseInt(ExpGrandTotal)>=Integer.parseInt(ActualPrice)){
+				if(Float.parseFloat(ActualPrice)>=Float.parseFloat(ExpGrandTotal)){
 					action.CompareResult(" Total Cart Price for all products in SAP DB "+"ActualPrice :"+ActualPrice+" Expected :"+ExpGrandTotal, "True", "True", test);
 				}else{
-					action.CompareResult(" Total Cart Price for all products in SAP DB "+"ActualPrice :"+ActualPrice+" Expected :"+ExpGrandTotal, "True", "True", test);
+					action.CompareResult(" Total Cart Price for all products in SAP DB "+"ActualPrice :"+ActualPrice+" Expected :"+ExpGrandTotal, "True", "False", test);
 				}
 				
 				
@@ -149,7 +167,7 @@ import utils.hana;
 					 String eachProduct = ExpProductName.get(k);
 					 String AllProductsNameDB =String.join("", alldataProductdesc);
 					 System.out.println("ExpeachProduct "+eachProduct+" Actual "+AllProductsNameDB);
-					 action.CompareResult(" Products Purchased Description in SAP DB", eachProduct.trim(), AllProductsNameDB.trim(), test);
+					 action.CompareResult(" Products Purchased Description in SAP DB", eachProduct.trim().toUpperCase(), AllProductsNameDB.trim().toUpperCase(), test);
 				
 				 }
 				 

@@ -23,12 +23,12 @@ public class HanaDBtest {
 		 String Username = "225505";
 		 String Password = "Welc0me@2021";
 		 String name = "DBconnect";
-		 String DBType ="ECC_QA";
+		 String DBType ="ECCQA";
 		//String Query ="Select * from SAPEQ1.KNA1 where KUNNR LIKE '%104022744'";and SAPEQ1.VBPA.PARVW = 'SH'
 		 //String Query1 = "select * from SAPEQ1.VBPA where SAPEQ1.VBPA.VBELN = '0005231326' and SAPEQ1.VBPA.POSNR='000010' and SAPEQ1.VBPA.KUNNR='0103774559'";
 		 //String Query1 = "select * from  SAPEQ1.ADRC where SAPEQ1.ADRC.ADDRNUMBER IN (select SAPEQ1.VBPA.ADRNR from SAPEQ1.VBPA where SAPEQ1.VBPA.VBELN = '0005231326' and SAPEQ1.VBPA.PARVW = 'WE' and SAPEQ1.VBPA.POSNR<>'')";
 		String Query ="Select * from SAPEQ1.VBAK FULL OUTER JOIN SAPEQ1.VBAP ON SAPEQ1.VBAK.VBELN=SAPEQ1.VBAP.VBELN WHERE SAPEQ1.VBAK.VBELN ='0005231326' ";
-		hana hn =new hana("ECC_QA",Server,Port,Username,Password);
+		hana hn =new hana(DBType,Server,Port,Username,Password);
 		ResultSet rs = hn.ExecuteQuery(Query);
 		
 		int rowsCountReturned = hn.GetRowsCount(rs);
