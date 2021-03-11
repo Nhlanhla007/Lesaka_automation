@@ -589,8 +589,10 @@ public class Action {
 		} catch (NoSuchElementException e) {
 			return decide = false; 
 			}
+		}
 				return decide;
-	}	
+	}
+	
 
 	public boolean attributeValidation(WebElement element,String attributeToCheck,String valueOfAttribute,int waitTime) {
 			try {
@@ -1738,7 +1740,7 @@ public class Action {
 
 	}
 
-		public void noRecordsReturnedFromTable(ExtentTest test,String name) {
+	/*	public void noRecordsReturnedFromTable(ExtentTest test,String name) {
 			ExtentTest node = test.createNode("Clicked Element: " + name);
 		try {
 
@@ -1747,9 +1749,9 @@ public class Action {
 			} catch (IOException e) {
 				node.fail(e.getMessage());
 			}
-		}
+		}*/
 
-	public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
+	/*public void dropDownselectbyvisibletext(WebElement elementAttr,String valueToselect,String Testname,ExtentTest test) {
 		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
 		ExtentTest node=test.createNode("Select value from dropdown : "+ Testname);
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
@@ -1779,8 +1781,8 @@ public class Action {
 	}
 
 	}
-
-	public void expectSingleRow(List<WebElement> elements, String name, ExtentTest test) {
+*/
+	/*public void expectSingleRow(List<WebElement> elements, String name, ExtentTest test) {
 		ExtentTest node = test.createNode("Clicked Element: " + name);
 		System.out.println(elements.size());
 		try {
@@ -1796,30 +1798,31 @@ public class Action {
 		} catch (Exception e) {
 			node.fail(e.getMessage());
 		}
-	}
+	}*/
 
-//	public <T> boolean elementExistWelcome(T elementAttr, long time, String name, ExtentTest test){
-//		ExtentTest node = test.createNode(name);
-//		try {
-//			String ScreenShotPath = getScreenShot(name);
-//			WebDriverWait wait = new WebDriverWait(driver, time);
-//			if (elementAttr.getClass().getName().contains("By")){
-//				By loc = (By) elementAttr;
-//				wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
-//				return driver.findElements((By) elementAttr).size() > 0;
-//			} else {
-//				wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
-//				node.pass("Pop up is display "+ name+node.addScreenCaptureFromPath(ScreenShotPath));
-//				return true;
-//			}
-//			} catch (Exception e) {
-//				node.fail(e.getMessage());
-//
-//				return false;
-//
-//			}
-//
-//	}
+	public boolean elementExistWelcome(WebElement elementAttr, long time, String name, ExtentTest test){
+		ExtentTest node = test.createNode(name);
+		try {
+			String ScreenShotPath = getScreenShot(name);
+			WebDriverWait wait = new WebDriverWait(driver, time);
+			if (elementAttr.getClass().getName().contains("By")){
+				By loc = (By) elementAttr;
+				wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
+				return driver.findElements((By) elementAttr).size() > 0;
+			} else {
+				wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
+				node.pass("Pop up is display "+ name+node.addScreenCaptureFromPath(ScreenShotPath));
+				return true;
+			}
+			} catch (Exception e) {
+				node.fail("Pop up is NOT displayed");
+
+			return false;
+
+		}
+
+	
+	}
 
 
 }

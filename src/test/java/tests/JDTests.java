@@ -129,7 +129,9 @@ public class JDTests extends BaseTest {
 		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver);
 		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver);
 		ic_Login ic_login = new ic_Login(driver);
+		ic_existingAddress icExistingAddress = new ic_existingAddress(driver);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver);
+		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -220,6 +222,13 @@ public class JDTests extends BaseTest {
 			
 				ic_cashDepositPayment.InvoiceCashDeposit(RequiredSheets,test1,testcaseID);
 				break;
+			case "icRedeemGiftCard":
+				icRedeemGiftCard.redeemGiftCard(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "icExistingAddress":
+				icExistingAddress.AddressThere(test1);
+				break;
+				
 		}
 	}
 
@@ -262,7 +271,7 @@ public class JDTests extends BaseTest {
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 
-				navigateURL = ConfigFileReader.getPropertyVal("MagentoURL");
+				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 			logger.info("Navigate to URL");
 			Report.info("Navigating to URL: "+navigateURL);

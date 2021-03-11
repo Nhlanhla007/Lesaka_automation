@@ -48,7 +48,7 @@ public class ic_MagentoOrderSAPnumber {
 			action.waitForPageLoaded(TimeOutinSecond);
 			
 			try {
-				if(action.elementExists(OrderDetailSAPNumber, TimeOutinSecond)){
+				if(action.elementExists(OrderDetailSAPNumber, 10)){
 						OrderSAPnumber = action.getText(OrderDetailSAPNumber, "SAP Number");
 						action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
 						System.out.println(OrderSAPnumber);
