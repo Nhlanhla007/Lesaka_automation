@@ -96,9 +96,7 @@ public class JDTests extends BaseTest {
 								occNum++;
 								occCount.put(currentKeyWord,occNum);
 							}
-							if(configFileReader.getPropertySavedVal("sequence").equals("true")){
 								runKeyWord(actionToRun,test);
-							}
 						}
 
 				}
