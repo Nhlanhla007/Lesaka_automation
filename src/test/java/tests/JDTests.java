@@ -96,9 +96,9 @@ public class JDTests extends BaseTest {
 								occNum++;
 								occCount.put(currentKeyWord,occNum);
 							}
-							if(configFileReader.getPropertySavedVal("sequence").equals("true")){
+							//if(configFileReader.getPropertySavedVal("sequence").equals("true")){
 								runKeyWord(actionToRun,test);
-							}
+							//}
 						}
 
 				}
@@ -139,6 +139,7 @@ public class JDTests extends BaseTest {
 		ic_Login ic_login = new ic_Login(driver);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver);
 		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
+		ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -232,6 +233,9 @@ public class JDTests extends BaseTest {
 				break;
 			case "SAP_OrderRelated":
 				SaporderRelated.SAP_OrderDetailVadidation(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
+			case "VeriyGiftcardUsableity":
+				GiftCardUsability.VeriyGiftcardUsableity(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 		}
 	}
