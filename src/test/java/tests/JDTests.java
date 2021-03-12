@@ -29,6 +29,7 @@ import org.testng.annotations.Test;
 
 
 import JDGroupPageObjects.*;
+import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
 import utils.*;
 
@@ -96,9 +97,9 @@ public class JDTests extends BaseTest {
 								occNum++;
 								occCount.put(currentKeyWord,occNum);
 							}
-							if(configFileReader.getPropertySavedVal("sequence").equals("true")){
+							//if(configFileReader.getPropertySavedVal("sequence").equals("true")){
 								runKeyWord(actionToRun,test);
-							}
+							//}
 						}
 
 				}
@@ -139,6 +140,7 @@ public class JDTests extends BaseTest {
 		ic_Login ic_login = new ic_Login(driver);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver);
 		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
+		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -233,6 +235,19 @@ public class JDTests extends BaseTest {
 			case "SAP_OrderRelated":
 				SaporderRelated.SAP_OrderDetailVadidation(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
+			case "SapCustomer":
+				ArrayList<HashMap<String, ArrayList<String>>> sheets = new ArrayList<HashMap<String, ArrayList<String>>>();
+				sheets.add(dataMap2.get("accountCreation++"));
+				sheets.add(dataMap2.get("deliveryPopulation++"));
+				//sheets.add(dataMap2.get("SapCustomer++"));//Falls away
+				sheets.add(dataMap2.get("ICUpdateUser++"));
+			try {
+				customerDB.sapDbTests(dataMap2.get(currentKeyWord+"++"),sheets, test1, testcaseID,rowNumber);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				break;
 		}
 	}
 
@@ -297,7 +312,7 @@ public class JDTests extends BaseTest {
 		}
 
 	public void endBrowserSession() throws IOException {
-		driver.close();
+		//driver.close();
 		writeToExcel();
 	}
 	public void writeToExcel() throws IOException {

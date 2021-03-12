@@ -53,6 +53,7 @@ public class ic_Magento_Login {
 				//action.navigateToURL(ConfigFileReader.getPropertyVal("MagentoURL"));
 				driver.navigate().to(ConfigFileReader.getPropertyVal("MagentoURL"));
 				action.waitForPageLoaded(10);
+				Thread.sleep(20000);
 				String ResPage = driver.getTitle();
 				if(ResPage.equalsIgnoreCase("Magento Admin")){
 					action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);

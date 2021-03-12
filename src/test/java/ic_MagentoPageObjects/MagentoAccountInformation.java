@@ -43,6 +43,8 @@ public class MagentoAccountInformation {
 			  @FindBy(xpath = "//input[@name='customer[identity_number]']")
 			  WebElement customerIdentityNumber;
 			
+			  public static String ActualBPnumber;
+			  
 			public void VadidateCustomerInfo_backend(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException{
 				//replace by this Parameter while merge parameter (ExtentTest test,String expFristname,String expLastname,String expEmail,String expSAID)
 				int loadtime=20;
@@ -55,10 +57,11 @@ public class MagentoAccountInformation {
 			
 				//Starts from Account information tab
 				action.waitExplicit(loadtime);
+				action.click(Account_Info_link, "Account Information", test);
 				String ActualFirstname = action.getAttribute(customerFirstname, "value");
 				String ActualLastname = action.getAttribute(customerLastname, "value");
 				String ActualEmail = action.getAttribute(customerEmail, "value");
-				String ActualBPnumber = action.getAttribute(customerBPnnumber, "value");
+				ActualBPnumber = action.getAttribute(customerBPnnumber, "value");
 				String ActualIdentityNumber= action.getAttribute(customerIdentityNumber, "value");
 
 

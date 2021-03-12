@@ -36,7 +36,9 @@ import utils.hana;
 	        action = new Action(driver);
 	        this.dataMap2=dataMap2;
 	    }
-	    
+	    //refer this-------------------------
+	    public static String BPnumber;
+	    //------------------------------------
 	    enum Primarykey {
 	    	VBELN,
 	    	}
@@ -69,6 +71,7 @@ import utils.hana;
 	    	}
 	    	return finalrow;
 	    }
+	  
 		public void SAP_OrderDetailVadidation(HashMap<String, ArrayList<String>> input, ExtentTest test,int rowNumber) throws SQLException, IOException{
 			boolean allcheckpoint =true;
 			
@@ -181,8 +184,10 @@ import utils.hana;
 			     }else{
 			    	 action.CompareResult(" Delivery block is lifted ", "EMPTY", ActualDeliveryBlock, test);
 			     }
-				
-	 
+			     //Collect the BP number for validating Customer details details -------------------------------
+			     List<String> allBPnumber= hn.GetRowdataByColumnName(rs, "KUNNR");
+			     System.out.println("BP number is  : "+allBPnumber);
+			     BPnumber = String.join("", allBPnumber);
 			}
 			
 			 
@@ -202,7 +207,7 @@ import utils.hana;
 			
 			List<String> alldataSTREET = hn.GetRowdataByColumnName(rs1, "STREET");
 			System.out.println("STREET is  : "+alldataSTREET);
-			String ActualStreet =String.join(",", alldataSTREET);
+			String ActualStreet =String.join(" ", alldataSTREET);
 			action.CompareResult(" Street name from SAP DB ", ExpSTREET, ActualStreet, test);
 			
 			List<String> alldataCITY = hn.GetRowdataByColumnName(rs1, "CITY1");
@@ -212,7 +217,7 @@ import utils.hana;
 			
 			List<String> alldataPOST_CODE = hn.GetRowdataByColumnName(rs1, "POST_CODE1");
 			System.out.println("POST_CODE number is  : "+alldataPOST_CODE);
-			String ActualPostalCode = String.join(",", alldataPOST_CODE);
+			String ActualPostalCode = String.join(" ", alldataPOST_CODE);
 			action.CompareResult(" Postal code from SAP DB ", ExpPostalcode, ActualPostalCode, test);
 			
 		}
