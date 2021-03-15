@@ -143,6 +143,9 @@ public class JDTests extends BaseTest {
 		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
 		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver);
     	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver);
+		ic_existingAddress icExistingAddress = new ic_existingAddress(driver);
+		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver);
+		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -175,7 +178,7 @@ public class JDTests extends BaseTest {
 				icDelivery.deliveryPopulation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "Login_magento":
-				icMagento.Login_magento(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				//icMagento.Login_magento(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case"OrderStatusSearch":
 				orderStatus.navigateToOrderPage(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
@@ -246,6 +249,12 @@ public class JDTests extends BaseTest {
 				break;
 			case "VeriyGiftcardUsableity":
 				GiftCardUsability.VeriyGiftcardUsableity(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
+			case "icRedeemGiftCard":
+				icRedeemGiftCard.redeemGiftCard(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "icExistingAddress":
+				icExistingAddress.AddressThere(test1);
 				break;
 		}
 	}

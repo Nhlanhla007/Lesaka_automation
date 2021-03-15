@@ -61,6 +61,7 @@ public class ic_Magento_Login {
 				//System.out.println(resWelcomescreen);
 			}else{
 				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
+
 			}
 		}
 		

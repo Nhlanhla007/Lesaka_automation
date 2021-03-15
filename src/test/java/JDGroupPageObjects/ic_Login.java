@@ -53,6 +53,7 @@ public class ic_Login {
 			action.waitForPageLoaded(10);
 			ic_myAccountButton.click();
 			ic_myAccountlist.click();
+			
 			List<String> userCred = new ArrayList<>();
 			String Username =input.get("Username").get(rowNumber);
 			String Password =input.get("Password").get(rowNumber);
@@ -62,7 +63,9 @@ public class ic_Login {
 			action.writeText(ic_Password, Password, "Password feild", test);
 			action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
 				userCreds(userCred);
+				
 				return userCred;
+
 				/*action.waitExplicit(31);
 				String resWelcomescreen = action.getText(Dashboard, "Dashboard");
 				System.out.println(resWelcomescreen);*/
