@@ -48,26 +48,19 @@ public class ic_Magento_Login {
 	     }
 		@Step("Login  magento")
 		public void LoginToMagento(ExtentTest test,String Username, String Password) throws IOException{
-			
-			try {
-				//action.navigateToURL(ConfigFileReader.getPropertyVal("MagentoURL"));
-				driver.navigate().to(ConfigFileReader.getPropertyVal("MagentoURL"));
-				action.waitForPageLoaded(10);
-				String ResPage = driver.getTitle();
-				if(ResPage.equalsIgnoreCase("Magento Admin")){
-					action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
-					action.writeText(Magento_Username, Username, "Username feild", test);
-					action.writeText(Magento_Password, Password, "Password feild", test);
-					action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
-					action.waitExplicit(15);
-					String resWelcomescreen = action.getText(Dashboard, "Dashboard");
-					//System.out.println(resWelcomescreen);
-				}else{
-					action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			driver.navigate().to(ConfigFileReader.getPropertyVal("MagentoURL"));
+			action.waitForPageLoaded(10);
+			String ResPage = driver.getTitle();
+			if(ResPage.equalsIgnoreCase("Magento Admin")){
+				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
+				action.writeText(Magento_Username, Username, "Username feild", test);
+				action.writeText(Magento_Password, Password, "Password feild", test);
+				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
+				action.waitExplicit(15);
+				String resWelcomescreen = action.getText(Dashboard, "Dashboard");
+				//System.out.println(resWelcomescreen);
+			}else{
+				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
 			}
 		}
 		

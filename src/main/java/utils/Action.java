@@ -416,15 +416,11 @@ public class Action {
 		return text;
 	}
 
-	/**
-	 * The method is used to retrieve the value of the specified attribute
-	 * 
-	 * @param elementAttr
-	 *            Can be web element or By Object
-	 * @param attribute
-	 *            name
-	 * @return returns the attribute value of the web element
-	 */
+
+	public <T> void setAttribute(String attribute) {
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript("document.getElementById('identifierId').setAttribute('data-initial-value', '10')");
+	}
 
 	public <T> String getAttribute(T elementAttr, String attribute) {
 		String attributeValue;

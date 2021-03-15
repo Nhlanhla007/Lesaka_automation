@@ -66,7 +66,7 @@ public class ic_GiftCardPurchase {
     private WebElement ic_secure;
 	
 	public void purchaseGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-		
+		driver.navigate().to(ConfigFileReader.getPropertyVal("MagentoURL"));
 		String selectAmountFlag = input.get("selectAmountFlag").get(rowNumber);
 		String selectAmount = input.get("selectAmount").get(rowNumber);
 		String inputAmount = input.get("inputAmount").get(rowNumber);
@@ -75,11 +75,8 @@ public class ic_GiftCardPurchase {
 		String recipientName = input.get("recipientName").get(rowNumber);
 		String recipientEmail = input.get("recipientEmail").get(rowNumber);
 		String cardMessage = input.get("cardMessage").get(rowNumber);
-		
 		ic_products.loadProductListingPage("SearchUsingSearchBar", "Gift Card", test);
-		
 		action.click(ic_MoreInfo, "more information", test);
-		
 		if(selectAmountFlag.equalsIgnoreCase("Yes")){
 		action.writeText(ic_Amount, selectAmount, "Select the Amount", test);
 		}else {
@@ -93,10 +90,8 @@ public class ic_GiftCardPurchase {
 		action.explicitWait(5000);
 		action.click(ic_AddToCart, "add to cart", test);
 		action.explicitWait(5000);
-		
 		action.click(ic_Cart, "cart clicked", test);
 		action.click(ic_secure, "Checkout Secure clicked", test);
-		
 	}
 	
 }

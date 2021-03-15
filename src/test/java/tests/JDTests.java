@@ -5,10 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import base.TestCaseBase;
+import emailverification.ICGiftCardVerification;
 import ic_MagentoPageObjects.*;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.Magento_UserInfoVerification;
@@ -97,6 +99,7 @@ public class JDTests extends BaseTest {
 								occCount.put(currentKeyWord,occNum);
 							}
 								runKeyWord(actionToRun,test);
+//								updateSheet();
 						}
 
 				}
@@ -112,7 +115,7 @@ public class JDTests extends BaseTest {
 		}
 	}
 
-	public void runKeyWord(String actionToRun,ExtentTest test) throws IOException, InterruptedException, SQLException {
+	public void runKeyWord(String actionToRun,ExtentTest test) throws IOException, InterruptedException, SQLException, ParseException {
 		String moduleToRun=actionToRun;
 		IConnection ic=new IConnection(driver);
 		ic_PaymentOption Payopt=new ic_PaymentOption(driver);
@@ -137,6 +140,7 @@ public class JDTests extends BaseTest {
 		ic_Login ic_login = new ic_Login(driver);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver);
 		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
+		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -231,6 +235,14 @@ public class JDTests extends BaseTest {
 			case "SAP_OrderRelated":
 				SaporderRelated.SAP_OrderDetailVadidation(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
+			case "icGiftCardVerificationSender":
+				icGiftCardVerification.icGiftCardVerificationSender(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
+			case "getnumberOfEmails":
+				rowNumber = findRowToRun(dataMap2.get("icGiftCardVerificationSender++"), 0, testcaseID);
+				icGiftCardVerification.getnumberOfEmails(dataMap2.get("icGiftCardVerificationSender++"),test1,rowNumber);
+				break;
+
 		}
 	}
 
