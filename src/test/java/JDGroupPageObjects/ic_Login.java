@@ -49,31 +49,20 @@ public class ic_Login {
 		//vv
 		@Step("Login to IC")
 		public List<String> Login_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-			
+			driver.navigate().to(ConfigFileReader.getPropertyVal("MagentoURL"));
+			action.waitForPageLoaded(10);
 			ic_myAccountButton.click();
 			ic_myAccountlist.click();
 			List<String> userCred = new ArrayList<>();
-			//String Magento_url = input.get("URL").get(rowNumber);
 			String Username =input.get("Username").get(rowNumber);
 			String Password =input.get("Password").get(rowNumber);
 			userCred.add(Username);
 			userCred.add(Password);
-
-			/*action.navigateToURL(ConfigFileReader.getPropertyVal("MagentoURL"));
-			action.waitForPageLoaded(15);
-			driver.navigate().to(Magento_url);
-			action.waitForPageLoaded(21);*/
-			//String ResPage = driver.getTitle();
-			//if(ResPage.equalsIgnoreCase("Magento Admin")){
-			//	action.CompareResult("Navigate to ic login page is success", ResPage, "IC", test);
-				action.writeText(ic_Username, Username, "Username feild", test);
-				action.writeText(ic_Password, Password, "Password feild", test);
-				action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
-				
+			action.writeText(ic_Username, Username, "Username feild", test);
+			action.writeText(ic_Password, Password, "Password feild", test);
+			action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
 				userCreds(userCred);
-				
 				return userCred;
-
 				/*action.waitExplicit(31);
 				String resWelcomescreen = action.getText(Dashboard, "Dashboard");
 				System.out.println(resWelcomescreen);*/

@@ -66,7 +66,6 @@ public class ic_GiftCardPurchase {
     private WebElement ic_secure;
 	
 	public void purchaseGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-		driver.navigate().to(ConfigFileReader.getPropertyVal("MagentoURL"));
 		String selectAmountFlag = input.get("selectAmountFlag").get(rowNumber);
 		String selectAmount = input.get("selectAmount").get(rowNumber);
 		String inputAmount = input.get("inputAmount").get(rowNumber);
