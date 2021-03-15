@@ -178,7 +178,7 @@ public class JDTests extends BaseTest {
 				icDelivery.deliveryPopulation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "Login_magento":
-				//icMagento.Login_magento(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				icMagento.Login_magento(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case"OrderStatusSearch":
 				orderStatus.navigateToOrderPage(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
