@@ -98,6 +98,7 @@ public class JDTests extends BaseTest {
 								occNum++;
 								occCount.put(currentKeyWord,occNum);
 							}
+
 								runKeyWord(actionToRun,test);
 //								updateSheet();
 						}
@@ -141,6 +142,7 @@ public class JDTests extends BaseTest {
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver);
 		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
 		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver);
+    	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -242,7 +244,9 @@ public class JDTests extends BaseTest {
 				rowNumber = findRowToRun(dataMap2.get("icGiftCardVerificationSender++"), 0, testcaseID);
 				icGiftCardVerification.getnumberOfEmails(dataMap2.get("icGiftCardVerificationSender++"),test1,rowNumber);
 				break;
-
+			case "VeriyGiftcardUsableity":
+				GiftCardUsability.VeriyGiftcardUsableity(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
 		}
 	}
 

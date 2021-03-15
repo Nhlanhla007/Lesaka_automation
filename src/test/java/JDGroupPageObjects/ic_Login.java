@@ -35,10 +35,10 @@ public class ic_Login {
 		@FindBy(xpath = "//*[@id=\"header-slideout--0\"]/li[3]/a")
 		WebElement ic_myAccountlist;
 		
-		@FindBy(xpath = "//*[@id=\"email\"]")
+		@FindBy(xpath = "//*[@id='email']")
 		WebElement ic_Username;
 		
-		@FindBy(xpath = "//*[@id=\"pass\"]")
+		@FindBy(xpath = "//*[@id='pass']")
 		WebElement ic_Password;
 		@FindBy(xpath = "//*[@id=\"send2\"]/span")
 		WebElement ic_SigninBtn;
