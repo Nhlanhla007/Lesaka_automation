@@ -21,7 +21,6 @@ public class ic_Login {
 
 		WebDriver driver;
 		Action action;
-		
 		public ic_Login(WebDriver driver) {
 			this.driver = driver;
 			PageFactory.initElements(driver, this);
@@ -49,8 +48,9 @@ public class ic_Login {
 		//vv
 		@Step("Login to IC")
 		public List<String> Login_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-			driver.navigate().to(ConfigFileReader.getPropertyVal("MagentoURL"));
-			action.waitForPageLoaded(10);
+			driver.navigate().to(ConfigFileReader.getPropertyVal("URL"));
+//			action.waitForPageLoaded(10);
+			action.explicitWait(10000);
 			ic_myAccountButton.click();
 			ic_myAccountlist.click();
 			

@@ -10,6 +10,7 @@ import utils.Action;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class ICDelivery {
     WebDriver driver;
@@ -60,8 +61,29 @@ public class ICDelivery {
     @FindBy(xpath = "//*[@id=\"opc-sidebar\"]/div[1]/div[1]/button")
     WebElement ContinueToPayment;
 
-    @FindBy(xpath = "//*[@id='opc-sidebar']/div[1]/div[1]/button")
-    WebElement Btn_PlaceOrder;
+    //---------------------------------------------------------------
+
+    @FindBy(name = "street[0]")
+    WebElement streetNameGift;
+
+    @FindBy(name = "telephone")
+    WebElement telephoneGift;
+
+    @FindBy(name = "region_id")
+    WebElement provinceGift;
+
+    @FindBy(name = "city")
+    WebElement cityGift;
+
+    @FindBy(name = "custom_attributes[suburb]")
+    WebElement SuburbGift;
+
+    @FindBy(name= "postcode")
+    WebElement postalCodeGift;
+
+    @FindBy(xpath = "//*[@id=\"opc-sidebar\"]/div[1]/div[1]/button/span")
+    WebElement placeOrder;
+
     public static String Streetname;
     public static String Cityname;
     public static String Postalcode;
@@ -70,10 +92,8 @@ public class ICDelivery {
     	Streetname =input.get("streetName").get(rowNumber);
     	Cityname =input.get("city").get(rowNumber);
     	Postalcode = input.get("postalCode").get(rowNumber);
-//        action.isElementOnNextPage(deliveryLink,(long)10,test);
         Thread.sleep(8000);
         action.click(deliveryLink,"deliveryLink",test);
-//        action.isElementOnNextPage(streetName,(long)10,test);
         Thread.sleep(8000);
         action.writeText(streetName,input.get("streetName").get(rowNumber),"streetName",test);
         action.writeText(firstName,input.get("firstName").get(rowNumber),"firstName",test);
@@ -88,10 +108,22 @@ public class ICDelivery {
         Thread.sleep(12000);
         action.dropDownselectbyvisibletext(province,input.get("province").get(rowNumber),"province",test);
         Thread.sleep(10000);
-//        action.isElementOnNextPage(ContinueToPayment,(long)10,test);
         action.click(ContinueToPayment,"ContinueToPayment",test);
-
-
-
+    }
+    public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws InterruptedException, IOException {
+        Streetname =input.get("streetName").get(rowNumber);
+        Cityname =input.get("city").get(rowNumber);
+        Postalcode = input.get("postalCode").get(rowNumber);
+        driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
+        streetNameGift.sendKeys("text");
+//        action.writeText(streetNameGift,"Indian Drive, Keysborough VIC, Australia","streetName",test);
+        action.writeText(telephoneGift,input.get("telephone").get(rowNumber),"telephone",test);
+        action.writeText(cityGift,input.get("city").get(rowNumber),"city",test);
+        action.writeText(SuburbGift,input.get("Suburb").get(rowNumber),"Suburb",test);
+        action.writeText(postalCodeGift,input.get("postalCode").get(rowNumber),"postalCode",test);
+        Thread.sleep(12000);
+        action.dropDownselectbyvisibletext(provinceGift,input.get("province").get(rowNumber),"province",test);
+        Thread.sleep(10000);
+        action.click(placeOrder,"placeOrder",test);
     }
 }

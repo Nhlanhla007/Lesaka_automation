@@ -346,7 +346,6 @@ public class ExcelFunctions {
 				String execute = dataMap2.get("Suites").get("Execute").get(i - 1);
 				String SheetName = dataMap2.get("Suites").get("testSuitName").get(i - 1);
 				System.out.println("SheetName:" + SheetName);
-
 				if (execute.toLowerCase().equals("yes")) {
 					sheet = workbook.getSheet(SheetName);
 					int numRows = sheet.getLastRowNum() + 1;
@@ -366,7 +365,6 @@ public class ExcelFunctions {
 								Object Key = mySheetMap.keySet().toArray()[z];
 								mySheetMap.get(headers[z]).add(value);
 								if (z > 2 && !value.equals("")) {
-
 									if (!allKeys.containsKey(value)) {
 										allKeys.put(value, 0);
 									} else {
@@ -383,7 +381,28 @@ public class ExcelFunctions {
 			}
 		}
 
-		//read all data sheets
+		allKeys.put("CheckoutpaymentOption",0);
+		allKeys.put("PayUPagePayment",0);
+		allKeys.put("ProductSearch",0);
+		allKeys.put("deliveryPopulation",0);
+		allKeys.put("Login_magento",0);
+		allKeys.put("OrderStatusSearch",0);
+		allKeys.put("GenerateOrderSAPnumber",0);
+		allKeys.put("Verify_Acount_Information",0);
+		allKeys.put("accountCreation",0);
+		allKeys.put("icAccountConfirmation",0);
+		allKeys.put("RetrieveCustomerDetails",0);
+		allKeys.put("CreateaccountBackend",0);
+		allKeys.put("ICUpdateUser",0);
+		allKeys.put("customerValidationUpdates",0);
+		allKeys.put("adminUserUpdate",0);
+		allKeys.put("ic_CashDepositPayment",0);
+		allKeys.put("icGiftCardPurchase",0);
+		allKeys.put("SAP_OrderRelated",0);
+		allKeys.put("icGiftCardVerificationSender",0);
+		allKeys.put("VeriyGiftcardUsableity",0);
+		allKeys.put("icRedeemGiftCard",0);
+		allKeys.put("icExistingAddress",0);
 		DataGenerators dataGen = new DataGenerators();
 		Object[] keys = allKeys.keySet().toArray();
 		for (int i = 0; i < keys.length; i++) {
