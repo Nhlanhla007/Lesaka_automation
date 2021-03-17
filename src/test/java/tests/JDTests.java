@@ -98,7 +98,7 @@ public class JDTests extends BaseTest {
 								occCount.put(currentKeyWord,occNum);
 							}
 							runKeyWord(actionToRun,test);
-//								updateSheet();
+							writeToExcel(new File(dataTable2.filePath()));
 						}
 
 				}
@@ -246,7 +246,7 @@ public class JDTests extends BaseTest {
 				break;
 			case "getnumberOfEmails":
 				rowNumber = findRowToRun(dataMap2.get("icGiftCardVerificationSender++"), 0, testcaseID);
-				icGiftCardVerification.getnumberOfEmails(dataMap2.get("icGiftCardVerificationSender++"),test1,rowNumber);
+				icGiftCardVerification.clearEmail(dataMap2.get("icGiftCardVerificationSender++"),test1,rowNumber);
 				break;
 			case "VeriyGiftcardUsableity":
 				GiftCardUsability.VeriyGiftcardUsableity(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
@@ -322,9 +322,9 @@ public class JDTests extends BaseTest {
 
 	public void endBrowserSession() throws IOException {
 		driver.close();
-		writeToExcel();
+		writeToExcel(createFile());
 	}
-	public void writeToExcel() throws IOException {
+	public void writeToExcel(File filePath) throws IOException {
 		FileOutputStream outputStream = new FileOutputStream(createFile());
 		XSSFWorkbook workbook= new XSSFWorkbook();;
 		XSSFSheet sheet;

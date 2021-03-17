@@ -3,6 +3,7 @@ package JDGroupPageObjects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -19,8 +20,8 @@ import utils.Action;
 public class ic_AccountInformation {
 	    WebDriver driver;
 	    Action action;
-	    HashMap<String, HashMap<String, ArrayList<String>>> workbook =null;
-	    public ic_AccountInformation(WebDriver driver, HashMap<String, HashMap<String, ArrayList<String>>> workbook) {
+		LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> workbook =null;
+	    public ic_AccountInformation(WebDriver driver, LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> workbook) {
 	        this.driver = driver;
 	        this.workbook = workbook;
 	        PageFactory.initElements(driver, this);

@@ -3,11 +3,7 @@ package SAP_HanaDB;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -29,8 +25,8 @@ import utils.hana;
 	public class SAPorderRelated {
 		WebDriver driver;
 	    Action action;
-	     HashMap<String, HashMap<String, ArrayList<String>>> dataMap2 =null;
-	    public SAPorderRelated(WebDriver driver,HashMap<String, HashMap<String, ArrayList<String>>> dataMap2) {
+		LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
+	    public SAPorderRelated(WebDriver driver,LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);

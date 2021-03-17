@@ -44,19 +44,22 @@ public class ICGiftCardVerification {
     }
     public void icGiftCardVerificationSender (HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException, ParseException {
         action.navigateToURL("https://mail.google.com/");
+//        navigateToGmail(input.get("userName").get(rowNumber),input.get("password").get(rowNumber),test);
         action.explicitWait(10000);
-        List<WebElement> email = driver.findElements(By.xpath("//*[@id=\":2d\"]/tbody/tr"));
-        int numberOfEmailsBefore=Integer.parseInt(input.get("emailCountbeforeGiftCardBuy").get(rowNumber));
+        List<WebElement> email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[9]/div/div[1]/div[3]/div/table/tbody/tr"));
         int waitTimeForBarcodeEmailInSec=Integer.parseInt(input.get("waitTimeForBarcodeEmailInSec").get(rowNumber));
         int numberOfEmailsAfter=email.size();
         Date date1 =new Date();
         long curTime1=date1.getTime();
         long difference = 0;
-        boolean found=false;
-        while((difference<=waitTimeForBarcodeEmailInSec)||found) {
-            if(numberOfEmailsAfter>=(numberOfEmailsBefore+3)) {
+        boolean foundGiftCard=false;
+        boolean foundInvoice=false;
+        boolean foundOrderConfirmation=false;
+        while((difference<=waitTimeForBarcodeEmailInSec)||(foundGiftCard&&foundInvoice&&foundOrderConfirmation)) {
+//
                 for (WebElement emailsub : email) {
-                    if (emailsub.getText().indexOf("You've been sent a gift from Incredible Connection") != -1) {
+
+                    if ((emailsub.getText().contains("been sent a gift from Incredible Connection"))&&!foundGiftCard) {
                         emailsub.click();
                         action.explicitWait(5000);
                         String emailText = action.getText(singleEmailText,"emailText");
@@ -69,11 +72,16 @@ public class ICGiftCardVerification {
                         input.get("serialNumber").set(rowNumber,emailText.substring(serialNumberIndex, serialNumberIndex + 30));
                         System.out.println(emailText.substring(scratchCodeIndex, scratchCodeIndex + 19));
                         input.get("scratchCode").set(rowNumber,emailText.substring(scratchCodeIndex, scratchCodeIndex + 19));
-                        found=true;
-                        break;
-//
+                        foundGiftCard=true;
+                        driver.findElement(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[1]/div[2]/div[1]/div/div[1]/div/div")).click();
                     }
-                }
+                    if ((emailsub.getText().contains("Your Incredible Connection order confirmation"))&&!foundOrderConfirmation) {
+                        foundOrderConfirmation=true;
+                    }
+                    if ((emailsub.getText().contains("Invoice for your Incredible Connection order"))&&!foundInvoice) {
+                        foundInvoice=true;
+                    }
+//                }
             }
             action.refresh();
             action.explicitWait(30000);
@@ -82,13 +90,18 @@ public class ICGiftCardVerification {
             difference=(curTime2-curTime1)/1000;
             System.out.println("Time waiting for email(sec): "+difference);
             System.out.println("Number of emails: "+numberOfEmailsAfter);
-            email = driver.findElements(By.xpath("//*[@id=\":2d\"]/tbody/tr"));
+            email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[9]/div/div[1]/div[3]/div/table/tbody/tr"));
+
             numberOfEmailsAfter=email.size();
         }
-        action.CompareResult("Finding Email","true",String.valueOf(found),test);
+        input.get("emailCountAfterGiftCardBuy").set(rowNumber,String.valueOf(email.size()));
+        action.CompareResult(" You've been sent a gift from Incredible Connection Email for reciever","true",String.valueOf(foundGiftCard),test);
+        action.CompareResult(" Invoice for your Incredible Connection order Email for sender ","true",String.valueOf(foundInvoice),test);
+        action.CompareResult(" Your Incredible Connection order confirmation Email for sender ","true",String.valueOf(foundOrderConfirmation),test);
     }
-    public void navigateToGmail(String userName,String password,ExtentTest test) throws IOException {
+        public void navigateToGmail(String userName,String password,ExtentTest test) throws IOException {
         action.navigateToURL("https://mail.google.com/");
+        action.explicitWait(5000);
         driver.findElement(By.id("identifierId")).sendKeys(userName);
         driver.findElement(By.xpath("//*[@id=\"identifierNext\"]/div/button/div[2]")).click();
         action.explicitWait(5000);
@@ -102,9 +115,16 @@ public class ICGiftCardVerification {
 //        action.click(nextButton,"nextButton",test);
 //        action.explicitWait(10000);
     }
-    public void getnumberOfEmails(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException {
+    public void clearEmail(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException {
         navigateToGmail(input.get("userName").get(rowNumber),input.get("password").get(rowNumber),test);
-        List<WebElement> email = driver.findElements(By.xpath("//*[@id=\":2d\"]/tbody/tr"));
+        action.explicitWait(20000);
+        List<WebElement> email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[9]/div/div[1]/div[3]/div/table/tbody/tr"));
         input.get("emailCountbeforeGiftCardBuy").set(rowNumber,String.valueOf(email.size()));
+        if(email.size()>0){
+            driver.findElement(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[1]/div/div[1]/div[1]/div/div/div[1]/div/div[1]/span")).click();
+            action.explicitWait(2000);
+            driver.findElement(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[1]/div/div[1]/div[1]/div/div/div[2]/div[3]/div")).click();
+            action.explicitWait(2000);
+        }
     }
 }

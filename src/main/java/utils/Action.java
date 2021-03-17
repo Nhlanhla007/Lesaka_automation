@@ -304,8 +304,6 @@ public class Action {
 
 	public <T> void writeText(T elementAttr, String text, String name, ExtentTest test) throws IOException {
 		ExtentTest node = test.createNode("Writing text: "+text+" to Element: "+ name);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		try {
 			if (elementAttr.getClass().getName().contains("By")) {
 				JavascriptExecutor jse = (JavascriptExecutor) driver;
 				jse.executeScript("arguments[0].style.border='2px solid red'", driver.findElement((By) elementAttr));
@@ -320,12 +318,6 @@ public class Action {
 				String screenShotPath = getScreenShot(dateName);
 				node.pass("Writing text: " + text + " to Element: " + node.addScreenCaptureFromPath(screenShotPath));
 			}
-		}catch(Exception e) {
-			e.printStackTrace();
-//			logger.info(e.getMessage());
-			String screenShot=GenerateScreenShot.getScreenShot(driver);
-			node.fail(e.getMessage()+node.addScreenCaptureFromPath(screenShot));
-		}
 	}
 
 	/**
@@ -1493,8 +1485,6 @@ public class Action {
 		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
 		ExtentTest node=test.createNode("Clicked Element: "+ name);
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-
-		try{
 			if (elementAttr.getClass().getName().contains("By")) {
 				driver.findElement((By) elementAttr).click();
 				String screenShotPath=getScreenShot(dateName);
@@ -1515,16 +1505,7 @@ public class Action {
 
 
 			//}
-		} catch(Throwable e){
-			node.fail(e.getMessage());
-			try {
-				String screenShotPath=getScreenShot(dateName);
-				node.fail("Unable to click element :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
+
 	}
 	//		public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException{
 //			//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
@@ -1623,29 +1604,14 @@ public class Action {
 
 	//NOTE THE BELOW METHOD IS CASE SENSTIVE WITH THE ACTUAL/EXP
 	public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException {
-		//INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS CREATED
 		ExtentTest node = test.createNode("Verify " + TestDescription);
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 		String screenShotPath = getScreenShot(dateName);
-		try {
-			if (Actual.contains(Exp)) {
-				System.out.println("INSIDE COMPARE RESULT expected : " + Exp + " " + Actual);
-				node.pass("Successfully Verified : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-				//CHANGED THE ABOVE FROM test.pass TO node.pass	AS IT WAS NOT DISPAYING IN REPORT
-			} else {
-				node.fail("Error found  : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-
-			}
-
-		} catch (Throwable e) {
-			node.fail(e.getMessage());
-			try {
-				node.fail(" Unknown Error found : : " + TestDescription + " Expected : " + Exp + " Actual :" + e.getMessage(), MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
+		if (Actual.contains(Exp)) {
+			System.out.println("INSIDE COMPARE RESULT expected : " + Exp + " " + Actual);
+			node.pass("Successfully Verified : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+		} else {
+			node.fail("Error found  : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 		}
 	}
 
@@ -1689,11 +1655,8 @@ public class Action {
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 
 		try{
-			// Create object of the Select class
 			Select se = new Select(elementAttr);
-
 			// Select the option with value
-
 			se.selectByVisibleText(valueToselect);
 			String res = se.getFirstSelectedOption().getText();
 			if(res.equalsIgnoreCase(valueToselect)){

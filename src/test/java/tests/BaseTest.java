@@ -3,6 +3,7 @@ package tests;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class BaseTest {
 	protected String browserName;
 	protected String navigateURL;
 	protected DataTable2 dataTable2 = null;
-	protected HashMap<String, HashMap<String, ArrayList<String>>> dataMap2 = new HashMap<String, HashMap<String, ArrayList<String>>>();
+	protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 	
 	Logger logger = Log.getLogData(this.getClass().getSimpleName());
 	

@@ -1,9 +1,12 @@
 package utils;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -33,8 +36,9 @@ public class ExcelFunctions {
 	private static XSSFSheet sheet;
 	private static int sheetNumber;
 	private static ConcurrentHashMap<String, String> dataMap = null;
-	private static HashMap<String, HashMap<String, ArrayList<String>>> dataMap2 = null;
+	private static LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = null;
 	static Logger logger = Log.getLogData(ExcelFunctions.class.getSimpleName());
+	FileOutputStream outputStream=null;
 
 
 
@@ -47,6 +51,15 @@ public class ExcelFunctions {
 		try {
 			FileInputStream fis = new FileInputStream(fileLocation);
 			workbook = new XSSFWorkbook(fis);
+		} catch (Exception e) {
+			logger.error("Error in excel initialization");
+			e.printStackTrace();
+		}
+	}
+	public  void initializeExcelSheetForWriting(String fileLocation) {
+		try {
+			FileOutputStream outputStream = new FileOutputStream(fileLocation);
+			workbook = new XSSFWorkbook();
 		} catch (Exception e) {
 			logger.error("Error in excel initialization");
 			e.printStackTrace();
@@ -305,15 +318,15 @@ public class ExcelFunctions {
 			return dataMap;
 
 		}
-	public  HashMap<String, HashMap<String, ArrayList<String>>> getExcelData() {
+	public  LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> getExcelData() throws IOException {
 //		sheet = workbook.getSheetAt(sheetNumber);
-		HashMap<String, Integer> allKeys = new HashMap<String, Integer>();
+		LinkedHashMap<String, Integer> allKeys = new LinkedHashMap<String, Integer>();
 		int numSheets = workbook.getNumberOfSheets();
 		dataMap = new ConcurrentHashMap<String, String>();
 		ArrayList<String> columArray = null;
-		HashMap<String, ArrayList<String>> mySheetMap = null;
+		LinkedHashMap<String, ArrayList<String>> mySheetMap = null;
 		String[] headers = null;
-		dataMap2 = new HashMap<String, HashMap<String, ArrayList<String>>>();
+		dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 		int numberOfSiuts = 0;
 
 		for (int i = 0; i <= numSheets; i++) {
@@ -321,7 +334,7 @@ public class ExcelFunctions {
 				System.out.println("i:" + i);
 				sheet = workbook.getSheet("Suites");
 				int numRows = sheet.getLastRowNum() + 1;
-				mySheetMap = new HashMap<String, ArrayList<String>>();
+				mySheetMap = new LinkedHashMap<String, ArrayList<String>>();
 				Row row = sheet.getRow(0);
 				int noOfColumns = row.getLastCellNum();
 				headers = new String[noOfColumns];
@@ -334,6 +347,7 @@ public class ExcelFunctions {
 
 							headers[z] = value;
 							mySheetMap.put(value, new ArrayList<>());
+
 						} else {
 							Object Key = mySheetMap.keySet().toArray()[z];
 							mySheetMap.get(headers[z]).add(value);
@@ -349,7 +363,7 @@ public class ExcelFunctions {
 				if (execute.toLowerCase().equals("yes")) {
 					sheet = workbook.getSheet(SheetName);
 					int numRows = sheet.getLastRowNum() + 1;
-					mySheetMap = new HashMap<String, ArrayList<String>>();
+					mySheetMap = new LinkedHashMap<String, ArrayList<String>>();
 					Row row = sheet.getRow(0);
 					int noOfColumns = row.getLastCellNum();
 					headers = new String[noOfColumns];
@@ -411,7 +425,7 @@ public class ExcelFunctions {
 				System.out.println(SheetName + ":" + workbook.getSheetIndex(SheetName));
 				sheet = workbook.getSheet(SheetName);
 				int numRows = sheet.getLastRowNum() + 1;
-				mySheetMap = new HashMap<String, ArrayList<String>>();
+				mySheetMap = new LinkedHashMap<String, ArrayList<String>>();
 				Row row = sheet.getRow(0);
 				int noOfColumns = row.getLastCellNum();
 				headers = new String[noOfColumns];
@@ -445,7 +459,31 @@ public class ExcelFunctions {
 
 			}
 		}
+		workbook.close();
 		return dataMap2;
+	}
+	public void updateSheet(String sheetName,String fileLocation) throws IOException {
+		initializeExcelSheetForWriting(fileLocation);
+		sheet = workbook.getSheet(sheetName);
+		int numCol=dataMap2.get(sheetName).size();
+		Object[] colArray = dataMap2.get(sheetName).keySet().toArray();
+		int rowNum = dataMap2.get(sheetName).get(colArray[0]).size();
+		for(int j=0;j<=rowNum;j++){
+			Row row = sheet.createRow(j);
+			if (j==0){
+				for(int z=0;z<numCol;z++){
+					Cell cell = row.createCell(z);
+					cell.setCellValue(colArray[z].toString());
+				}
+			}else{
+				for(int z=0;z<numCol;z++){
+					Cell cell = row.createCell(z);
+					cell.setCellValue((String) dataMap2.get(sheetName).get(colArray[z]).get(j-1));
+				}
+			}
+		}
+		workbook.write(outputStream);
+
 	}
 	public   Map<Object, Object> getRowData(int keytRowNumber,
 			int valueRowNumber, int columnNumber,int sheetNumber) {

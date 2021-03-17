@@ -1,8 +1,10 @@
 package utils;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,31 +19,25 @@ public class DataTable2 {
     public static final String TESTDATA_FILENAME="src/test/resources/data/jdgroup.xlsx";
     public static ExcelFunctions excelFunc=new ExcelFunctions();
     public static ConcurrentHashMap<String, String> dataMap = null;
-    public static HashMap<String, HashMap<String, ArrayList<String>>> dataMap2 = null;
+    public static LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = null;
     static Logger logger = Log.getLogData(DataTable.class.getSimpleName());
-
     public static void initializeTestDataWorkbook()
     {
         excelFunc.initializeExcelSheet(TESTDATA_FILENAME);
     }
-
-
-    public  HashMap<String, HashMap<String,ArrayList<String>>> getExcelData() throws Exception
+    public  LinkedHashMap<String, LinkedHashMap<String,ArrayList<String>>> getExcelData() throws Exception
     {
         initializeTestDataWorkbook();
         dataMap=new ConcurrentHashMap <String, String>();
-
-        dataMap2=new HashMap<String, HashMap<String,ArrayList<String>>>();
+        dataMap2=new LinkedHashMap<String, LinkedHashMap<String,ArrayList<String>>>();
         dataMap2=excelFunc.getExcelData();
         return dataMap2;
-
-
     }
-
+    public String filePath(){
+        return TESTDATA_FILENAME;
+    }
     public Object[][] getTestData(String sheetName, String testCaseName) {
-
         Object[][] obj = null ;
-//        excelFunc.initializeExcelSheet(TESTDATA_FILENAME);
         int sheetNumber=excelFunc.getSheetNumber(sheetName);
         String startRowNumber=excelFunc.locateTestCaseRow(testCaseName, sheetNumber);
         if(startRowNumber == "")
