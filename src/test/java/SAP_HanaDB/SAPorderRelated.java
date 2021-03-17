@@ -3,7 +3,11 @@ package SAP_HanaDB;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -25,14 +29,16 @@ import utils.hana;
 	public class SAPorderRelated {
 		WebDriver driver;
 	    Action action;
-		LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
+	     LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
 	    public SAPorderRelated(WebDriver driver,LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
 	        this.dataMap2=dataMap2;
 	    }
-	    
+	    //refer this-------------------------
+	    public static String BPnumber;
+	    //------------------------------------
 	    enum Primarykey {
 	    	VBELN,
 	    	}
@@ -53,7 +59,7 @@ import utils.hana;
 	    	SAPEQ1,
 	    }
 	    public int getConnectionRow(String Instance){
-	    	HashMap<String, ArrayList<String>> connectiondetailSheet = dataMap2.get("DB_connection_master++");
+	    	LinkedHashMap<String, ArrayList<String>> connectiondetailSheet = dataMap2.get("DB_connection_master++");
 	    	int finalrow=-1;
 	    	int noofRows = connectiondetailSheet.get("DB_Instance").size();
 	    	for(int con =0;con<noofRows;con++){
@@ -65,7 +71,8 @@ import utils.hana;
 	    	}
 	    	return finalrow;
 	    }
-		public void SAP_OrderDetailVadidation(HashMap<String, ArrayList<String>> input, ExtentTest test,int rowNumber) throws SQLException, IOException{
+	  
+		public void SAP_OrderDetailVadidation(LinkedHashMap<String, ArrayList<String>> input, ExtentTest test,int rowNumber) throws SQLException, IOException{
 			boolean allcheckpoint =true;
 			
 			String DBinstance = input.get("DB_Instance").get(rowNumber);
@@ -177,8 +184,14 @@ import utils.hana;
 			     }else{
 			    	 action.CompareResult(" Delivery block is lifted ", "EMPTY", ActualDeliveryBlock, test);
 			     }
-				
-	 
+			     //Collect the BP number for validating Customer details details -------------------------------
+			     List<String> allBPnumber= hn.GetRowdataByColumnName(rs, "KUNNR");
+			     System.out.println("BP number is  : "+allBPnumber);
+			     BPnumber = String.join("", allBPnumber).trim();
+			     BPnumber=BPnumber.replace(" ", "");			     
+			     input.get("BP_Number").set(rowNumber,BPnumber);
+
+			     
 			}
 			
 			 
@@ -198,7 +211,7 @@ import utils.hana;
 			
 			List<String> alldataSTREET = hn.GetRowdataByColumnName(rs1, "STREET");
 			System.out.println("STREET is  : "+alldataSTREET);
-			String ActualStreet =String.join(",", alldataSTREET);
+			String ActualStreet =String.join(" ", alldataSTREET);
 			action.CompareResult(" Street name from SAP DB ", ExpSTREET, ActualStreet, test);
 			
 			List<String> alldataCITY = hn.GetRowdataByColumnName(rs1, "CITY1");
@@ -208,7 +221,7 @@ import utils.hana;
 			
 			List<String> alldataPOST_CODE = hn.GetRowdataByColumnName(rs1, "POST_CODE1");
 			System.out.println("POST_CODE number is  : "+alldataPOST_CODE);
-			String ActualPostalCode = String.join(",", alldataPOST_CODE);
+			String ActualPostalCode = String.join(" ", alldataPOST_CODE);
 			action.CompareResult(" Postal code from SAP DB ", ExpPostalcode, ActualPostalCode, test);
 			
 		}
