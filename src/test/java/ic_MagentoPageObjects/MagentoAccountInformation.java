@@ -82,5 +82,21 @@ public class MagentoAccountInformation {
 					action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
 			    }
 			}
+			
+			public String getPartnerNumber(ExtentTest test) throws Exception {
+				action.click(Account_Info_link, "Account Information", test);
+				ActualBPnumber = action.getAttribute(customerBPnnumber, "value");
+				action.waitExplicit(10);
+				boolean FlagGenerateBPnumber = false;
+				if(ActualBPnumber!=null){
+					FlagGenerateBPnumber = true;
+					action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
+					return ActualBPnumber = action.getAttribute(customerBPnnumber, "value");
+				}else{
+					action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
+					return null;
+			    }
+				
+			}
 }
 			

@@ -241,6 +241,8 @@ public class JDTests extends BaseTest {
 				sheets.add(dataMap2.get("deliveryPopulation++"));
 				//sheets.add(dataMap2.get("SapCustomer++"));//Falls away
 				sheets.add(dataMap2.get("ICUpdateUser++"));
+				sheets.add(dataMap2.get("CreateaccountBackend++"));
+				sheets.add(dataMap2.get("adminUserUpdate++"));
 			try {
 				customerDB.sapDbTests(dataMap2.get(currentKeyWord+"++"),sheets, test1, testcaseID,rowNumber);
 			} catch (Exception e) {

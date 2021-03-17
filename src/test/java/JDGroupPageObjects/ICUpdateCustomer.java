@@ -159,73 +159,78 @@ public class ICUpdateCustomer {
 	    	
 	    	action.click(ic_myAccountButton, "Navigate to accountTab",test);
 	    	action.click(MyAccountButton2, "My Account", test);
+	    	
+	    	action.click(AccountInfoEdit, "Account Infor", test);
+	    	String firstNameText = action.getAttribute(ic_firstname, "value");
 	    	if(firstName.equalsIgnoreCase("Yes")){
 	    		
-	    		action.click(AccountInfoEdit, "Account Infor", test);
-	    		
-	    		String firstNameText = action.getAttribute(ic_firstname, "value");
 	    		String firstNameTextUpdated = "Updated" + id;
 	    		action.clear(ic_firstname, "Remmoving first name");
 	    		action.writeText(ic_firstname, firstNameTextUpdated,"first Name", test);
 	    		mySheets.get(0).get("firstName_output").set(sheetRow1, firstNameTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User Saved", " You saved the account information.", action.getText(successSaved, ""), test);
+	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    		action.explicitWait(5000);
 	    		String firstNameTextSaved = action.getAttribute(firstUpdated, "value");
 	    		action.CompareResult("compare updated first name", firstNameTextUpdated, firstNameTextSaved, test);
-	    		
+	    	}else {
+	    		mySheets.get(0).get("firstName_output").set(sheetRow1, firstNameText);
 	    	}
-	    	if(lastName.equalsIgnoreCase("yes")){
+	    	
+	    	String lastNameText = action.getAttribute(ic_lastname, "value");
+	    	if(lastName.equalsIgnoreCase("yes")) {
 	    		
-	    		action.click(AccountInfoEdit, "Account Infor", test);
-	    		String lastNameText = action.getAttribute(ic_lastname, "value");
 	    		String lastNameTextUpdated = "Updated" + id;
 	    		action.clear(ic_lastname, "Remmoving last name");
 	    		action.writeText(ic_lastname, lastNameTextUpdated,"last Name", test);
 	    		mySheets.get(0).get("lastName_output").set(sheetRow1, lastNameTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User Saved", " You saved the account information.", action.getText(successSaved, ""), test);
+	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    		action.explicitWait(5000);
 	    		String lastNameTextSaved = action.getAttribute(lastNameUpdated, "value");
 	    		action.CompareResult("compare updated last name", lastNameTextUpdated, lastNameTextSaved, test);
+	    	}else {
+	    		mySheets.get(0).get("lastName_output").set(sheetRow1, lastNameText);
 	    	}
 	    	
+	    	
+	    	String taxVatText = action.getAttribute(ic_taxVat, "value");
 	    	if(taxVat.equalsIgnoreCase("yes")){
-	    		action.click(AccountInfoEdit, "Account Infor", test);
-	    		String taxVatText = action.getAttribute(ic_taxVat, "value");
-	    		String taxVatTextUpdated = taxVatText + "Updated" + id;
+	    		String taxVatTextUpdated = "Updated" + id;
 	    		action.clear(ic_taxVat, "Remmoving Vat");
 	    		action.writeText(ic_taxVat, taxVatTextUpdated," VAT/TAX", test);
 	    		mySheets.get(0).get("taxVat_output").set(sheetRow1, taxVatTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
-	    		
-	    		
+	    	}else {
+	    		mySheets.get(0).get("taxVat_output").set(sheetRow1, taxVatText);
 	    	}
 	    	
+	    	action.click(emailCheckBox, "EmailCheckBox", test);
+	    	String emailText = action.getAttribute(ic_email, "value");
 	    	if(email.equalsIgnoreCase("yes")){
-	    		action.click(AccountInfoEdit, "Account Infor", test);
-	    		action.click(emailCheckBox, "EmailCheckBox", test);
-	    		String emailText = action.getText(ic_email, "");
-	    		String emailTextUpdated = emailText + "Updated" + id;
+	    		String emailTextUpdated = id+"Updated"+ emailText;
 	    		
 	    		ic_email.clear();
-	    		action.writeText(ic_email, emailTextUpdated ,"last Name", test);
+	    		action.writeText(ic_email, emailTextUpdated ,"email", test);
 	    		mySheets.get(0).get("email_output").set(sheetRow1, emailTextUpdated);
 	    		
-	    		action.click(SaveButton, "Save", test);	
-	    		action.click(AccountInfoEdit, "Account Infor", test);
-	    		action.CompareResult("User Saved", " You saved the account information.", action.getText(successSaved, ""), test);
+	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
+	    		action.writeText(passCurrent, currentPassWordText, "Current password", test);
 	    		
+	    		action.click(SaveButton, "Save", test);
+	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
+	    		action.click(AccountInfoEdit, "Account Infor", test);
+	    	}else {
+	    		mySheets.get(0).get("email_output").set(sheetRow1, emailText);
 	    	}
 	    	
 	    	if(passWord.equalsIgnoreCase("yes")){
-	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    		action.click(passCheckBox, "PassWordCheckBox", test);
 	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
 	    		
@@ -237,9 +242,8 @@ public class ICUpdateCustomer {
 	    		mySheets.get(0).get("passWord_output").set(sheetRow1, passWTextUpdated);
 	    		action.writeText(passConfirmation, passWTextUpdated, "Confirm new Password", test);
 	    		action.click(SaveButton, "Save", test);	
-	    		action.CompareResult("User Saved", " You saved the account information.", action.getText(successSaved, ""), test);
-	    		AccountInfoEdit.click();
-	    	
+	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
+	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    	}
 	    	
 	    	//Address Book edit
@@ -248,11 +252,11 @@ public class ICUpdateCustomer {
 	    	
 	    	//Billing Address
 	    	if(billingAddress.equalsIgnoreCase("Yes")){
-	    		action.click(ic_BillingAddress, "Change Billing address", test);
+	    		//action.click(ic_BillingAddress, "Change Billing address", test);
 	    		//ic_BillingAddress.click();
-	    		
+	    		action.javaScriptClick(ic_BillingAddress, "Change Billing address", test);
+	    		String streetAdressText = action.getAttribute(ic_streetAddress, "value");	    		
 	    		if(billing_streetAddress.equalsIgnoreCase("yes")){
-		    		String streetAdressText = action.getAttribute(ic_streetAddress, "value");
 		    		String streetAdressTextUpdated = streetAdressText + "Updated" + id;
 		    		action.clear(ic_streetAddress, "Removing Streeta address");
 	    	
@@ -266,7 +270,9 @@ public class ICUpdateCustomer {
 		    		String buildDetailsText = action.getAttribute(ic_buildingDetails, "value");
 		    		mySheets.get(0).get("billing_buildingDetails_output").set(sheetRow1, buildDetailsText);
 		    		
-		    		//action.selectExactValueFromListUsingTex(ic_province, billing_provinceName);
+		    		//Fix this province get the proper province
+		    		String province = action.getSelectedOptionFromDropDown(ic_province);
+		    		
 		    		
 		    		String cityText = action.getAttribute(ic_city, "value");
 		    		mySheets.get(0).get("billing_city_output").set(sheetRow1, cityText);
@@ -280,6 +286,8 @@ public class ICUpdateCustomer {
 		    		action.click(SaveButton, "Save", test);
 		    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSaved, "Billing address updated"), test);
 		    	
+		    	}else {
+		    		mySheets.get(0).get("billing_streetAddress_output").set(sheetRow1, streetAdressText);
 		    	}
 	    		
 	    	}
