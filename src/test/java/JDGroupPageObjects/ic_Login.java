@@ -46,8 +46,6 @@ public class ic_Login {
 		@FindBy(xpath = "//h1[contains(text(),'Dashboard')]")
 		WebElement Dashboard;
 		
-		public static String Username;
-		
 		//vv
 		@Step("Login to IC")
 		public List<String> Login_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
@@ -56,7 +54,7 @@ public class ic_Login {
 			
 			List<String> userCred = new ArrayList<>();
 			//String Magento_url = input.get("URL").get(rowNumber);
-			Username =input.get("Username").get(rowNumber);
+			String Username =input.get("Username").get(rowNumber);
 			String Password =input.get("Password").get(rowNumber);
 			userCred.add(Username);
 			userCred.add(Password);

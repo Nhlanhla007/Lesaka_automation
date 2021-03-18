@@ -257,6 +257,7 @@ public class ICUpdateCustomer {
 	    		action.javaScriptClick(ic_BillingAddress, "Change Billing address", test);
 	    		String streetAdressText = action.getAttribute(ic_streetAddress, "value");	    		
 	    		if(billing_streetAddress.equalsIgnoreCase("yes")){
+	    			//ADD random data from list here for addresses
 		    		String streetAdressTextUpdated = streetAdressText + "Updated" + id;
 		    		action.clear(ic_streetAddress, "Removing Streeta address");
 	    	
