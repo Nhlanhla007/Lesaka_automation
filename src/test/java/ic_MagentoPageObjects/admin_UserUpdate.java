@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -70,7 +71,7 @@ public class admin_UserUpdate {
 	@FindBy(xpath="//*[@id=\"tab_address\"]")
 	private WebElement admin_AddressBtn;
 					//*[@id="container"]/div/div/div[2]/div[2]/div/div[2]/fieldset/div[1]/button/span 
-	@FindBy(xpath="//*[@id=\"container\"]/div/div/div[2]/div[2]/div/div[2]/fieldset/div[1]/button/span")//button[@title='Add New Customer'] /html[1]/body[1]/div[6]/aside[1]/div[2]/header[1]/div[1]/div[1]/button[1]/span[1]/span[1]
+	@FindBy(className ="edit-default-billing-address-button action-additional")//button[@title='Add New Customer'] /html[1]/body[1]/div[6]/aside[1]/div[2]/header[1]/div[1]/div[1]/button[1]/span[1]/span[1]
 	private WebElement admin_billingEdit;	
 	
 	@FindBy(xpath="//*[@id=\"container\"]/div/div/div[2]/div[2]/div/div[2]/fieldset/div[3]/div/div[3]/table/tbody/tr[2]/td[10]/div/ul/li[1]/a")
@@ -79,7 +80,7 @@ public class admin_UserUpdate {
 	@FindBy(xpath="//input[@name='street[0]']")
 	private WebElement admin_BillingStreetAddress;
 	
-	@FindBy(xpath="//*[@id=\"container\"]/div/div/div[2]/div[3]/div/div[2]/fieldset/div[2]/button/span")
+	@FindBy(className =  "edit-default-shipping-address-button action-additional")
 	private WebElement admin_shippingEdit;
 	
 	@FindBy(xpath="//input[@name='street[0]']")
@@ -106,7 +107,7 @@ public class admin_UserUpdate {
     		String firstName = adminSheets.get(0).get("firstName").get(sheetRow1);
 	    	String lastName = adminSheets.get(0).get("lastName").get(sheetRow1);
 	    	String taxVat = adminSheets.get(0).get("taxVat").get(sheetRow1);
-	    	String email = adminSheets.get(0).get("adminEmail_output").get(sheetRow1);
+	    	String email = adminSheets.get(0).get("emailAddress_input").get(sheetRow1);
 	    	
 	    	Random rand = new Random();
 			String id = String.format("%04d", rand.nextInt(10000));
@@ -126,14 +127,13 @@ public class admin_UserUpdate {
 	    	
 	    	magRetri.searchForCustomer(email, test);
 			magRetri.tableData(email, "Incredible Connection", test);
+			
+			action.click(admin_AccountInfoCustomer, "Click Account information", test);	    	
 	    	
-	    	
+			String firstNameText = action.getAttribute(admin_firstname, "value");
 			if(firstName.equalsIgnoreCase("Yes")){
 	    		
-	    		action.click(admin_AccountInfoCustomer, "Click Account information", test);
-	    		
-	    		String firstNameText = action.getAttribute(admin_firstname, "value");
-	    		String firstNameTextUpdated = "Updated!" + id;
+	    		String firstNameTextUpdated = "Updated" + id;
 	    		action.clear(admin_firstname, "Removing first name");
 	    		action.writeText(admin_firstname, firstNameTextUpdated,"first Name", test);
 	    		adminSheets.get(0).get("adminFirstName_output").set(sheetRow1, firstNameTextUpdated);
@@ -146,11 +146,14 @@ public class admin_UserUpdate {
 	    		
 	    		String firstNameTextSaved = action.getAttribute(admin_firstUpdated, "value");
 	    		action.CompareResult("compare updated first name", firstNameTextUpdated, firstNameTextSaved, test);
+	    	}else {
+	    		adminSheets.get(0).get("adminFirstName_output").set(sheetRow1, firstNameText);
 	    	}
+			
+			action.click(admin_AccountInfoCustomer, "Click Account information", test);
+			String lastNameText = action.getAttribute(admin_lastname, "value");
 	    	if(lastName.equalsIgnoreCase("yes")){
 	    		
-	    		action.click(admin_AccountInfoCustomer, "Click Account information", test);
-	    		String lastNameText = action.getAttribute(admin_lastname, "value");
 	    		String lastNameTextUpdated = "Updated" + id;
 	    		action.clear(admin_lastname, "Remove last name");
 	    		action.writeText(admin_lastname, lastNameTextUpdated,"last Name", test);
@@ -165,11 +168,13 @@ public class admin_UserUpdate {
 	    		
 	    		String lastNameTextSaved = action.getAttribute(admin_lastUpdated, "value");
 	    		action.CompareResult("compare updated last name", lastNameTextUpdated, lastNameTextSaved, test);
+	    	}else {
+	    		adminSheets.get(0).get("adminLastName_output").set(sheetRow1, lastNameText);
 	    	}
-	    	
+
+	    	admin_AccountInfoCustomer.click();
+	    	String taxVatText = action.getAttribute(admin_taxVat, "value");
 	    	if(taxVat.equalsIgnoreCase("yes")){
-	    		admin_AccountInfoCustomer.click();
-	    		String taxVatText = action.getAttribute(admin_taxVat, "value");
 	    		String taxVatTextUpdated = "Updated" + id;
 	    		action.clear(admin_taxVat, "removing tax/vat");
 	    		action.writeText(admin_taxVat, taxVatTextUpdated ," VAT/TAX", test);
@@ -182,13 +187,15 @@ public class admin_UserUpdate {
 	    		action.explicitWait(5000);
 	    		admin_AccountInfoCustomer.click();
 	    		
+	    	}else {
+	    		adminSheets.get(0).get("adminTaxVat_output").set(sheetRow1, taxVatText);
 	    	}
 	    	
+	    	admin_AccountInfoCustomer.click();
+	    	String emailText = action.getAttribute(admin_email, "value");
 	    	if(email.equalsIgnoreCase("yes")){
-	    		admin_AccountInfoCustomer.click();
-	   
-	    		String emailText = action.getAttribute(admin_email, "value");
-	    		String emailTextUpdated = emailText + "Updated" + id;
+	    		
+	    		String emailTextUpdated = "Updated" + id+  emailText;
 	    		
 	    		action.clear(admin_email, "removing the email");
 	    		action.writeText(admin_email,emailTextUpdated ,"last Name", test);
@@ -200,8 +207,8 @@ public class admin_UserUpdate {
 	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
 	    		action.explicitWait(5000);
 	    		admin_AccountInfoCustomer.click();
-	 
-	    		
+	    	}else {
+	    		adminSheets.get(0).get("adminEmail_output").set(sheetRow1, emailText);
 	    	}
 	    	
 	    	//action.click(admin_AddressBtn, "Change addresses", test);
@@ -209,11 +216,14 @@ public class admin_UserUpdate {
 	    	action.explicitWait(5000);
 	    	//Billing Address
 	    	if(billingAddress.equalsIgnoreCase("Yes")){
-	    		//action.click(admin_BillingEdit, "Change Billing address", test);
+	    		admin_billingEdit.click();
+	    		action.click(admin_billingEdit, "Edit", test);
 	    		action.javaScriptClick(admin_billingEdit, "Billing edit clicked", test);
 	    		
+	    		driver.findElement(By.xpath("//*[@id=\"container\"]/div/div/div[2]/div[3]/div/div[2]/fieldset/div[1]/button/span")).click();
+	    		String streetAdressText = action.getAttribute(admin_BillingStreetAddress, "value");
 	    		if(billing_streetAddress.equalsIgnoreCase("yes")){
-		    		String streetAdressText = action.getAttribute(admin_BillingStreetAddress, "value");
+		    		
 		    		String streetAdressTextUpdated = streetAdressText + "Updated" + id;
 		    		action.clear(admin_BillingStreetAddress, "Removing Street address");
 	    	
@@ -221,8 +231,8 @@ public class admin_UserUpdate {
 		    		adminSheets.get(0).get("adminBilling_streetAddress_output").set(sheetRow1, streetAdressTextUpdated);
 		    		
 		    		action.click(admin_SaveBillingBtn, "Save", test);
-		    		
-		    	
+		    	}else {
+		    		adminSheets.get(0).get("adminBilling_streetAddress_output").set(sheetRow1, streetAdressText);
 		    	}
 	    		action.explicitWait(5000);
 	    		action.click(admin_AddressBtn, "address button", test);
@@ -232,10 +242,10 @@ public class admin_UserUpdate {
 		    	if(shippingAddress.equalsIgnoreCase("Yes")){
 		    		
 		    		action.javaScriptClick(admin_shippingEdit, "Shipping edit clicked", test);
-		    	
+		    		String streetAddressText = action.getAttribute(admin_shippingStreetAddress, "value");
 		    	if(shipping_streetAddress.equals("yes")){
 		    		action.explicitWait(5000);
-		    		String streetAddressText = action.getAttribute(admin_shippingStreetAddress, "value");
+		    		
 		    		String streetAddressTextUpdated = streetAddressText + "Updated" + id;
 		    		action.clear(admin_shippingStreetAddress, "Removing shipping Street address");
 		    		
@@ -244,6 +254,8 @@ public class admin_UserUpdate {
 		    		
 		    		action.click(admin_SaveBillingBtn, "Save", test);
 		    		
+		    	}else {
+		    		adminSheets.get(0).get("adminShipping_streetAddress_Output").set(sheetRow1, streetAddressText);
 		    	}
 		    	}
 		    	} 	

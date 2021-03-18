@@ -21,6 +21,7 @@ public class ic_Login {
 
 		WebDriver driver;
 		Action action;
+		
 		public ic_Login(WebDriver driver) {
 			this.driver = driver;
 			PageFactory.initElements(driver, this);
@@ -45,15 +46,15 @@ public class ic_Login {
 		@FindBy(xpath = "//h1[contains(text(),'Dashboard')]")
 		WebElement Dashboard;
 		
+		public static String Username;
+		
 		//vv
 		@Step("Login to IC")
 		public List<String> Login_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 			driver.navigate().to(ConfigFileReader.getPropertyVal("URL"));
-//			action.waitForPageLoaded(10);
 			action.explicitWait(10000);
 			ic_myAccountButton.click();
 			ic_myAccountlist.click();
-			
 			List<String> userCred = new ArrayList<>();
 			String Username =input.get("Username").get(rowNumber);
 			String Password =input.get("Password").get(rowNumber);
