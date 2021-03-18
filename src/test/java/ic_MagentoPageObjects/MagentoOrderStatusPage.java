@@ -128,7 +128,8 @@ public class MagentoOrderStatusPage {
 		String orderStatus = input.get("orderStatus").get(rowNumber);
 		System.out.println("orderStatus :"+orderStatus);
 		try {
-			Thread.sleep(30000);
+//			Thread.sleep(15000);
+			action.explicitWait(15000);
 			NavigateOdersPage(test);
 			ConfigFileReader configFileReader = new ConfigFileReader();
 			idToSearch=configFileReader.getPropertySavedVal("OrderID");

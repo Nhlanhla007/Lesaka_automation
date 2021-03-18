@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utils.Action;
+import utils.DataTable2;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,11 +16,13 @@ import java.util.concurrent.TimeUnit;
 public class ICDelivery {
     WebDriver driver;
     Action action;
+    DataTable2 dataSheets;
 
-    public ICDelivery(WebDriver driver) {
+    public ICDelivery(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
+        dataSheets=dataTable2;
     }
 
     @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]")
@@ -95,18 +98,18 @@ public class ICDelivery {
         Thread.sleep(8000);
         action.click(deliveryLink,"deliveryLink",test);
         Thread.sleep(8000);
-        action.writeText(streetName,input.get("streetName").get(rowNumber),"streetName",test);
-        action.writeText(firstName,input.get("firstName").get(rowNumber),"firstName",test);
-        action.writeText(lastname,input.get("lastname").get(rowNumber),"lastname",test);
-        action.writeText(telephone,input.get("telephone").get(rowNumber),"telephone",test);
-        action.writeText(city,input.get("city").get(rowNumber),"city",test);
-        action.writeText(Suburb,input.get("Suburb").get(rowNumber),"Suburb",test);
-        action.writeText(postalCode,input.get("postalCode").get(rowNumber),"postalCode",test);
-        action.writeText(vatNumber,input.get("vatNumber").get(rowNumber),"vatNumber",test);
-        action.writeText(email,input.get("email").get(rowNumber),"email",test);
-        action.writeText(idNumber,input.get("idNumber").get(rowNumber),"idNumber",test);
+        action.writeText(streetName,dataSheets.getValueOnCurrentModule("streetName"),"streetName",test);
+        action.writeText(firstName,dataSheets.getValueOnCurrentModule("firstName"),"firstName",test);
+        action.writeText(lastname,dataSheets.getValueOnCurrentModule("lastname"),"lastname",test);
+        action.writeText(telephone,dataSheets.getValueOnCurrentModule("telephone"),"telephone",test);
+        action.writeText(city,dataSheets.getValueOnCurrentModule("city"),"city",test);
+        action.writeText(Suburb,dataSheets.getValueOnCurrentModule("Suburb"),"Suburb",test);
+        action.writeText(postalCode,dataSheets.getValueOnCurrentModule("postalCode"),"postalCode",test);
+        action.writeText(vatNumber,dataSheets.getValueOnCurrentModule("vatNumber"),"vatNumber",test);
+        action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
+        action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
         Thread.sleep(12000);
-        action.dropDownselectbyvisibletext(province,input.get("province").get(rowNumber),"province",test);
+        action.dropDownselectbyvisibletext(province,dataSheets.getValueOnCurrentModule("province"),"province",test);
         Thread.sleep(10000);
         action.click(ContinueToPayment,"ContinueToPayment",test);
     }

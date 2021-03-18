@@ -52,22 +52,18 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		dataMap2=dataTable2.getExcelData();
-
-		int numberOfSuits=dataMap2.size();
+		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
+		int numberOfSuits=suites.get("Execute").size();
 		for(int i=0;i<numberOfSuits;i++){
-			Object Key = dataMap2.keySet().toArray()[i];
-			if(!Key.toString().contains("++")&&!Key.toString().contains("Suites")&&!Key.toString().contains("inputData")) {
-				currentSuite=Key.toString();
-				HashMap<String, ArrayList<String>> singleSuiteData = dataMap2.get(Key);
+			if(suites.get("Execute").get(i).toLowerCase().equals("yes")) {
+				currentSuite=suites.get("testSuitName").get(i);
 				System.out.println("currentSuite:"+currentSuite);
 				reportJD=new ExtentReportJD(currentSuite);
-				runSuite(singleSuiteData);
+				runSuite(dataMap2.get(currentSuite));
 				reportJD.endReport();
 			}
 		}
 	}
-
-
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException, InterruptedException {
 
@@ -79,29 +75,30 @@ public class JDTests extends BaseTest {
 			if(execute.toLowerCase().equals("yes")){
 				String testCaseDescription=singleSuiteData.get("testCaseDescription").get(i);
 				testcaseID=Integer.parseInt(singleSuiteData.get("TestCaseID").get(i)) ;
+				dataTable2.setTestCaseID(testcaseID);
 				ExtentTest test=reportJD.createTest(testcaseID+" : "+testCaseDescription);
 				startBrowserSession();
-				configFileReader.setPropertyVal("sequence","true");
 				try {
-				for(int j=0;j<10;j++){
-					String actionToRunLable="Action"+(j+1);
-					String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
-					currentKeyWord=actionToRun;
-					System.out.println("actionToRunLable:"+actionToRunLable);
-					System.out.println("currentKeyWord:"+currentKeyWord);
-						if(!currentKeyWord.equals("")){
-							if(!occCount.containsKey(currentKeyWord)){
-								occCount.put(currentKeyWord,0);
-							}else{
-								int occNum=occCount.get(currentKeyWord);
-								occNum++;
-								occCount.put(currentKeyWord,occNum);
+					for(int j=0;j<10;j++){
+						String actionToRunLable="Action"+(j+1);
+						String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
+						currentKeyWord=actionToRun;
+						System.out.println("actionToRunLable:"+actionToRunLable);
+						System.out.println("currentKeyWord:"+currentKeyWord);
+							if(!currentKeyWord.equals("")){
+								if(!occCount.containsKey(currentKeyWord)){
+									occCount.put(currentKeyWord,0);
+								}else{
+									int occNum=occCount.get(currentKeyWord);
+									occNum++;
+									occCount.put(currentKeyWord,occNum);
+								}
+								dataTable2.setTestCaseID(actionToRun);
+								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
+								runKeyWord(actionToRun,test);
+								writeToExcel(new File(dataTable2.filePath()));
 							}
-							runKeyWord(actionToRun,test);
-							writeToExcel(new File(dataTable2.filePath()));
-						}
-
-				}
+					}
 				} catch (Exception e) {
 					logger.info(e.getMessage());
 					String screenShot=GenerateScreenShot.getScreenShot(driver);
@@ -122,7 +119,7 @@ public class JDTests extends BaseTest {
 		Ic_Products products = new Ic_Products(driver);
 		IC_Cart icCart=new IC_Cart(driver);
 		ic_AccountConfirmation icAccountConfirmation = new ic_AccountConfirmation(driver);
-		ICDelivery icDelivery=new ICDelivery(driver);
+		ICDelivery icDelivery=new ICDelivery(driver,dataTable2);
 		ic_Magento_Login icMagento = new ic_Magento_Login(driver);
 		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver);
 		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver);
@@ -136,7 +133,7 @@ public class JDTests extends BaseTest {
 		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver);
 		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver);
 		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver);
-		ic_Login ic_login = new ic_Login(driver);
+		ic_Login ic_login = new ic_Login(driver,dataTable2);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver);
 		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
 		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver);
@@ -325,7 +322,7 @@ public class JDTests extends BaseTest {
 		writeToExcel(createFile());
 	}
 	public void writeToExcel(File filePath) throws IOException {
-		FileOutputStream outputStream = new FileOutputStream(createFile());
+		FileOutputStream outputStream = new FileOutputStream(filePath);
 		XSSFWorkbook workbook= new XSSFWorkbook();;
 		XSSFSheet sheet;
 		for(int i=0;i<dataMap2.size() ;i++){

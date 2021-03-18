@@ -16,15 +16,18 @@ import com.aventstack.extentreports.ExtentTest;
 import io.qameta.allure.Step;
 import utils.Action;
 import utils.ConfigFileReader;
+import utils.DataTable2;
 
 public class ic_Login {
 
-		WebDriver driver;
-		Action action;
-		public ic_Login(WebDriver driver) {
+	WebDriver driver;
+	Action action;
+	DataTable2 dataTable2;
+		public ic_Login(WebDriver driver, DataTable2 dataTable2) {
 			this.driver = driver;
 			PageFactory.initElements(driver, this);
 			action = new Action(driver);
+			this.dataTable2=dataTable2;
 		}
 		//Login to magento
 		@FindBy(className = "my-account")
@@ -55,8 +58,8 @@ public class ic_Login {
 			ic_myAccountlist.click();
 			
 			List<String> userCred = new ArrayList<>();
-			String Username =input.get("Username").get(rowNumber);
-			String Password =input.get("Password").get(rowNumber);
+			String Username =dataTable2.getValueOnCurrentModule("Username");
+			String Password =dataTable2.getValueOnCurrentModule("Password");
 			userCred.add(Username);
 			userCred.add(Password);
 			action.writeText(ic_Username, Username, "Username feild", test);

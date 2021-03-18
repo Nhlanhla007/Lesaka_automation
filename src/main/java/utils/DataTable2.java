@@ -1,7 +1,6 @@
 package utils;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -20,6 +19,9 @@ public class DataTable2 {
     public static ExcelFunctions excelFunc=new ExcelFunctions();
     public static ConcurrentHashMap<String, String> dataMap = null;
     public static LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = null;
+    public static int testCaseID = -1;
+    public static String currentModule = "";
+    public static int occCount = -1;
     static Logger logger = Log.getLogData(DataTable.class.getSimpleName());
     public static void initializeTestDataWorkbook()
     {
@@ -36,7 +38,45 @@ public class DataTable2 {
     public String filePath(){
         return TESTDATA_FILENAME;
     }
-    public Object[][] getTestData(String sheetName, String testCaseName) {
+    public void setTestCaseID(int TestCaseID){
+        this.testCaseID=TestCaseID;
+    }
+    public void setTestCaseID(String currentModule){
+        this.currentModule=currentModule;
+    }
+    public void setOccurenceCount(int occCount){
+        this.occCount=occCount;
+    }
+
+
+    public LinkedHashMap<String, ArrayList<String>> getModuleData(String sheetName){
+        return dataMap2.get(sheetName);
+    }
+
+    public int findRowToRun(String SheetName,int occCount,int testcaseID){
+        int numberRows=getSheetRows(SheetName);
+        int rowNumber=-1;
+        occCount=occCount+1;
+        for(int i=0;i<numberRows;i++){
+            if(dataMap2.get(SheetName).get("TCID").get(i).equals(Integer.toString(testcaseID))&&dataMap2.get(SheetName).get("occurence").get(i).equals(Integer.toString(occCount))){
+                rowNumber=i;
+            }
+        }
+        return rowNumber;
+    }
+
+    public int getSheetRows(String sheetName){
+        return dataMap2.get(sheetName).get("TCID").size();
+    }
+    public String getValueOnOtherModule(String sheetName,String colName){
+        return dataMap2.get(sheetName+"++").get(colName).get(findRowToRun(sheetName,0,testCaseID));
+    }
+    public String getValueOnCurrentModule(String colName){
+        return dataMap2.get(currentModule+"++").get(colName).get(findRowToRun(currentModule+"++",occCount,testCaseID));
+    }
+
+
+        public Object[][] getTestData(String sheetName, String testCaseName) {
         Object[][] obj = null ;
         int sheetNumber=excelFunc.getSheetNumber(sheetName);
         String startRowNumber=excelFunc.locateTestCaseRow(testCaseName, sheetNumber);

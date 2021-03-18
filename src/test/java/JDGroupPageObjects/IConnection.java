@@ -50,7 +50,6 @@ public class IConnection {
 
     public void login(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) {
         try {
-
 //
             System.out.println("modelStart");
             System.out.println("rowNumber:"+rowNumber);

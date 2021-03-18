@@ -327,137 +327,32 @@ public class ExcelFunctions {
 		LinkedHashMap<String, ArrayList<String>> mySheetMap = null;
 		String[] headers = null;
 		dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
-		int numberOfSiuts = 0;
+		for (int i = 0; i < numSheets; i++) {
+			System.out.println("i:" + i);
+			sheet = workbook.getSheetAt(i);
+			String sheetName=workbook.getSheetName(i);
+			int numRows = sheet.getLastRowNum() + 1;
+			mySheetMap = new LinkedHashMap<String, ArrayList<String>>();
+			Row row = sheet.getRow(0);
+			int noOfColumns = row.getLastCellNum();
+			headers = new String[noOfColumns];
+			for (int j = 0; j < numRows; j++) {
+				row = sheet.getRow(j);
+				for (int z = 0; z < noOfColumns; z++) {
+					Cell cell = row.getCell(z);
+					String value = getExcelDataBasedOnCellType(cell);
+					if (j == 0) {
 
-		for (int i = 0; i <= numSheets; i++) {
-			if (i == 0) {
-				System.out.println("i:" + i);
-				sheet = workbook.getSheet("Suites");
-				int numRows = sheet.getLastRowNum() + 1;
-				mySheetMap = new LinkedHashMap<String, ArrayList<String>>();
-				Row row = sheet.getRow(0);
-				int noOfColumns = row.getLastCellNum();
-				headers = new String[noOfColumns];
-				for (int j = 0; j < numRows; j++) {
-					row = sheet.getRow(j);
-					for (int z = 0; z < noOfColumns; z++) {
-						Cell cell = row.getCell(z);
-						String value = getExcelDataBasedOnCellType(cell);
-						if (j == 0) {
+						headers[z] = value;
+						mySheetMap.put(value, new ArrayList<>());
 
-							headers[z] = value;
-							mySheetMap.put(value, new ArrayList<>());
-
-						} else {
-							Object Key = mySheetMap.keySet().toArray()[z];
-							mySheetMap.get(headers[z]).add(value);
-						}
+					} else {
+						Object Key = mySheetMap.keySet().toArray()[z];
+						mySheetMap.get(headers[z]).add(value);
 					}
-				}
-				dataMap2.put("Suites", mySheetMap);
-				numSheets = dataMap2.get("Suites").get("Execute").size();
-			} else {
-				String execute = dataMap2.get("Suites").get("Execute").get(i - 1);
-				String SheetName = dataMap2.get("Suites").get("testSuitName").get(i - 1);
-				System.out.println("SheetName:" + SheetName);
-				if (execute.toLowerCase().equals("yes")) {
-					sheet = workbook.getSheet(SheetName);
-					int numRows = sheet.getLastRowNum() + 1;
-					mySheetMap = new LinkedHashMap<String, ArrayList<String>>();
-					Row row = sheet.getRow(0);
-					int noOfColumns = row.getLastCellNum();
-					headers = new String[noOfColumns];
-					for (int j = 0; j < numRows; j++) {
-						row = sheet.getRow(j);
-						for (int z = 0; z < noOfColumns; z++) {
-							Cell cell = row.getCell(z);
-							String value = getExcelDataBasedOnCellType(cell);
-							if (j == 0) {
-								headers[z] = value;
-								mySheetMap.put(value, new ArrayList<>());
-							} else {
-								Object Key = mySheetMap.keySet().toArray()[z];
-								mySheetMap.get(headers[z]).add(value);
-								if (z > 2 && !value.equals("")) {
-									if (!allKeys.containsKey(value)) {
-										allKeys.put(value, 0);
-									} else {
-										int occKeyNum = allKeys.get(value);
-										occKeyNum++;
-										allKeys.put(value, occKeyNum);
-									}
-								}
-							}
-						}
-					}
-					dataMap2.put(SheetName, mySheetMap);
 				}
 			}
-		}
-
-		allKeys.put("CheckoutpaymentOption",0);
-		allKeys.put("PayUPagePayment",0);
-		allKeys.put("ProductSearch",0);
-		allKeys.put("deliveryPopulation",0);
-		allKeys.put("Login_magento",0);
-		allKeys.put("OrderStatusSearch",0);
-		allKeys.put("GenerateOrderSAPnumber",0);
-		allKeys.put("Verify_Acount_Information",0);
-		allKeys.put("accountCreation",0);
-		allKeys.put("icAccountConfirmation",0);
-		allKeys.put("RetrieveCustomerDetails",0);
-		allKeys.put("CreateaccountBackend",0);
-		allKeys.put("ICUpdateUser",0);
-		allKeys.put("customerValidationUpdates",0);
-		allKeys.put("adminUserUpdate",0);
-		allKeys.put("ic_CashDepositPayment",0);
-		allKeys.put("icGiftCardPurchase",0);
-		allKeys.put("SAP_OrderRelated",0);
-		allKeys.put("icGiftCardVerificationSender",0);
-		allKeys.put("VeriyGiftcardUsableity",0);
-		allKeys.put("icRedeemGiftCard",0);
-		allKeys.put("icExistingAddress",0);
-		DataGenerators dataGen = new DataGenerators();
-		Object[] keys = allKeys.keySet().toArray();
-		for (int i = 0; i < keys.length; i++) {
-			String SheetName = (String) keys[i] + "++";
-			if (workbook.getSheetIndex(SheetName) != -1) {
-				System.out.println(SheetName + ":" + workbook.getSheetIndex(SheetName));
-				sheet = workbook.getSheet(SheetName);
-				int numRows = sheet.getLastRowNum() + 1;
-				mySheetMap = new LinkedHashMap<String, ArrayList<String>>();
-				Row row = sheet.getRow(0);
-				int noOfColumns = row.getLastCellNum();
-				headers = new String[noOfColumns];
-				for (int j = 0; j < numRows; j++) {
-					row = sheet.getRow(j);
-					for (int z = 0; z < noOfColumns; z++) {
-						Cell cell = row.getCell(z);
-						String value = getExcelDataBasedOnCellType(cell);
-						if (j == 0) {
-							headers[z] = value;
-							mySheetMap.put(value, new ArrayList<>());
-						} else {
-							Object Key = mySheetMap.keySet().toArray()[z];
-							value=dataGen.GenerateRequiredData(value);
-							mySheetMap.get(headers[z]).add(value);
-							if (z > 2 && !value.equals("")) {
-
-								if (!allKeys.containsKey(value)) {
-									allKeys.put(value, 0);
-								} else {
-									int occKeyNum = allKeys.get(value);
-									occKeyNum++;
-									allKeys.put(value, occKeyNum);
-								}
-							}
-						}
-					}
-				}
-
-				dataMap2.put(SheetName, mySheetMap);
-
-			}
+			dataMap2.put(sheetName, mySheetMap);
 		}
 		workbook.close();
 		return dataMap2;
