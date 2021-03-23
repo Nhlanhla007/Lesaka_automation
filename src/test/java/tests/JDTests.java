@@ -31,6 +31,7 @@ import org.testng.annotations.Test;
 
 
 import JDGroupPageObjects.*;
+import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
 import utils.*;
 
@@ -65,6 +66,8 @@ public class JDTests extends BaseTest {
 		}
 	}
 
+
+
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException, InterruptedException {
 
 		int numberOfTestCases =singleSuiteData.get("Execute").size();
@@ -78,6 +81,7 @@ public class JDTests extends BaseTest {
 				dataTable2.setTestCaseID(testcaseID);
 				ExtentTest test=reportJD.createTest(testcaseID+" : "+testCaseDescription);
 				startBrowserSession();
+				configFileReader.setPropertyVal("sequence","true");
 				try {
 					for(int j=0;j<10;j++){
 						String actionToRunLable="Action"+(j+1);
@@ -140,6 +144,7 @@ public class JDTests extends BaseTest {
     	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver);
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver);
+		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -253,6 +258,15 @@ public class JDTests extends BaseTest {
 				break;
 			case "icExistingAddress":
 				icExistingAddress.AddressThere(test1);
+			case "SapCustomer":
+				ArrayList<HashMap<String, ArrayList<String>>> sheets = new ArrayList<HashMap<String, ArrayList<String>>>();
+				sheets.add(dataMap2.get("accountCreation++"));
+				sheets.add(dataMap2.get("deliveryPopulation++"));
+				//sheets.add(dataMap2.get("SapCustomer++"));//Falls away
+				sheets.add(dataMap2.get("ICUpdateUser++"));
+				sheets.add(dataMap2.get("CreateaccountBackend++"));
+				sheets.add(dataMap2.get("adminUserUpdate++"));
+				customerDB.sapDbTests(dataMap2.get(currentKeyWord+"++"),sheets, test1, testcaseID,rowNumber);
 				break;
 		}
 	}

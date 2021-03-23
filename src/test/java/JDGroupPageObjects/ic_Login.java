@@ -24,6 +24,9 @@ public class ic_Login {
 	Action action;
 	DataTable2 dataTable2;
 		public ic_Login(WebDriver driver, DataTable2 dataTable2) {
+		WebDriver driver;
+		Action action;
+		public ic_Login(WebDriver driver) {
 			this.driver = driver;
 			PageFactory.initElements(driver, this);
 			action = new Action(driver);
@@ -47,6 +50,8 @@ public class ic_Login {
 		
 		@FindBy(xpath = "//h1[contains(text(),'Dashboard')]")
 		WebElement Dashboard;
+		
+		public static String Username;
 		
 		//vv
 		@Step("Login to IC")
