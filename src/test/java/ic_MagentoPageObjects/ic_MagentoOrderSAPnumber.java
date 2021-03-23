@@ -17,12 +17,13 @@ import com.aventstack.extentreports.ExtentTest;
 import groovy.time.TimeDuration;
 import utils.Action;
 import utils.ConfigFileReader;
+import utils.DataTable2;
 
 public class ic_MagentoOrderSAPnumber {
 	WebDriver driver;
     Action action;
     
-    public ic_MagentoOrderSAPnumber(WebDriver driver) {
+    public ic_MagentoOrderSAPnumber(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);

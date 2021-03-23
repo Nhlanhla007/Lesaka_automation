@@ -3,9 +3,7 @@ package ic_MagentoPageObjects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,13 +12,13 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
-import utils.ExcelFunctions;
+import utils.DataTable2;
 
 public class MagentoAccountInformation {
 	WebDriver driver;
 	Action action;
 
-	public MagentoAccountInformation(WebDriver driver) {
+	public MagentoAccountInformation(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);

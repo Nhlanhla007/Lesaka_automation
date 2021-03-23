@@ -4,27 +4,23 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.aventstack.extentreports.ExtentTest;
 
 import Logger.Log;
 import utils.Action;
 import utils.ConfigFileReader;
+import utils.DataTable2;
 
 public class Ic_Products {
 
@@ -32,11 +28,11 @@ public class Ic_Products {
 	Action action;
 	IC_Cart cartValidation;
 
-	public Ic_Products(WebDriver driver) {
+	public Ic_Products(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
-		cartValidation = new IC_Cart(driver);
+		cartValidation = new IC_Cart(driver, dataTable2);
 	}
 
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());

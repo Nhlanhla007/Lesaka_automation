@@ -14,19 +14,19 @@ import com.aventstack.extentreports.ExtentTest;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.ic_Magento_Login;
 import utils.Action;
-import utils.ConfigFileReader;
+import utils.DataTable2;
 
 public class ic_CashDepositPayment {
 	WebDriver driver;
 	Action action;
 	ic_Magento_Login Magentologin;
 	MagentoOrderStatusPage magentoOrderStatusPage;
-	public ic_CashDepositPayment(WebDriver driver) {
+	public ic_CashDepositPayment(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
-        Magentologin =new ic_Magento_Login(driver);
-        magentoOrderStatusPage = new MagentoOrderStatusPage(driver);
+        Magentologin =new ic_Magento_Login(driver, dataTable2);
+        magentoOrderStatusPage = new MagentoOrderStatusPage(driver, dataTable2);
 	}
 	
 	

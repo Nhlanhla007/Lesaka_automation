@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.Action;
+import utils.DataTable2;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -38,7 +39,7 @@ public class ICGiftCardVerification {
     @FindBy(xpath="//*[@id=\":7a\"]/div[1]")
     private WebElement singleEmailText;
 
-    public ICGiftCardVerification (WebDriver driver){
+    public ICGiftCardVerification(WebDriver driver, DataTable2 dataTable2){
         this.driver = driver;
         action = new Action(driver);
     }

@@ -19,6 +19,8 @@ import Logger.Log;
 import io.qameta.allure.Step;
 import utils.Action;
 import utils.ConfigFileReader;
+import utils.DataTable2;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +31,7 @@ import java.util.HashMap;
 public class ic_NewAccountCreation {
 	WebDriver driver;
 	Action action;
-	public ic_NewAccountCreation(WebDriver driver) {
+	public ic_NewAccountCreation(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);

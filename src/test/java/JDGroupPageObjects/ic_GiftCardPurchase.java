@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
-import utils.ConfigFileReader;
+import utils.DataTable2;
 
 public class ic_GiftCardPurchase {
 	WebDriver driver;
@@ -20,13 +20,13 @@ public class ic_GiftCardPurchase {
     Ic_Products ic_products;
     ic_PayUPayment ic_payU;
 	
-	public ic_GiftCardPurchase(WebDriver driver){
+	public ic_GiftCardPurchase(WebDriver driver, DataTable2 dataTable2){
 		
 		this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
-        ic_products = new Ic_Products(driver);
-        ic_payU = new ic_PayUPayment(driver);
+        ic_products = new Ic_Products(driver, dataTable2);
+        ic_payU = new ic_PayUPayment(driver, dataTable2);
 	}
 
 	@FindBy(xpath="//input[@id='giftcard-amount']")

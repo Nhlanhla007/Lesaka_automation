@@ -1,7 +1,6 @@
 package ic_MagentoPageObjects;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,18 +13,18 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
-import utils.hana;
+import utils.DataTable2;
 
 public class Magento_UserInfoVerification {
 	
 	WebDriver driver;
 	Action action;
 	MagentoRetrieveCustomerDetailsPage MagentoRetrieveCustomer;
-	MagentoAccountInformation magentoAccountInformation = new MagentoAccountInformation(driver);
-	public Magento_UserInfoVerification(WebDriver driver) {
+	MagentoAccountInformation magentoAccountInformation = new MagentoAccountInformation(driver, dataTable2);
+	public Magento_UserInfoVerification(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 
-		MagentoRetrieveCustomer = new MagentoRetrieveCustomerDetailsPage(driver);
+		MagentoRetrieveCustomer = new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 	}

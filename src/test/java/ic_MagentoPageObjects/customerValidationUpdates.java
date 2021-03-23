@@ -12,20 +12,20 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
-	
+import utils.DataTable2;
 
 
 public class customerValidationUpdates {
 	WebDriver driver;
 	Action action;
 	
-	public customerValidationUpdates(WebDriver driver) {
+	public customerValidationUpdates(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 		
-		magRetri = new MagentoRetrieveCustomerDetailsPage(driver);
-		magAccInfo = new MagentoAccountInformation(driver);
+		magRetri = new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
+		magAccInfo = new MagentoAccountInformation(driver, dataTable2);
 		
 	}
 	

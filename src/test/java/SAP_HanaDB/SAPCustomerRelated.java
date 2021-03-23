@@ -17,8 +17,6 @@ import com.aventstack.extentreports.ExtentTest;
 import JDGroupPageObjects.ic_Login;
 import ic_MagentoPageObjects.MagentoAccountInformation;
 import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
-import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
-import net.bytebuddy.implementation.bytecode.Throw;
 import utils.Action;
 import utils.hana;
 
@@ -27,20 +25,20 @@ public class SAPCustomerRelated {
 
 	WebDriver driver;
     Action action;
-    HashMap<String, HashMap<String, ArrayList<String>>> dataMap2 =null;
+    LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
     String bp = SAPorderRelated.BPnumber; //BP Number -->Customer BP number, if line 99 is null set this.
     hana hn;
     MagentoRetrieveCustomerDetailsPage magentoRetrieve;
     MagentoAccountInformation magentoVerification;
     static Map<String, String> dataStore;
-    public SAPCustomerRelated(WebDriver driver,HashMap<String, HashMap<String, ArrayList<String>>> dataMap2) {
+    public SAPCustomerRelated(WebDriver driver, LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2) {
     	  this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
 	        dataStore = new LinkedHashMap<>();
 	        this.dataMap2=dataMap2;
-	        magentoRetrieve = new MagentoRetrieveCustomerDetailsPage(driver);
-	        magentoVerification = new MagentoAccountInformation(driver);
+	        magentoRetrieve = new MagentoRetrieveCustomerDetailsPage(driver, dataMap2);
+	        magentoVerification = new MagentoAccountInformation(driver, dataMap2);
     }
     
     public int getConnectionRow(String Instance){

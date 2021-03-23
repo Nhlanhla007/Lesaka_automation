@@ -16,12 +16,13 @@ import com.aventstack.extentreports.ExtentTest;
 
 import io.qameta.allure.Step;
 import utils.Action;
+import utils.DataTable2;
 
 public class ic_PaymentOption {
 	WebDriver driver;
 	Action action;
 	
-	public ic_PaymentOption(WebDriver driver) {
+	public ic_PaymentOption(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);

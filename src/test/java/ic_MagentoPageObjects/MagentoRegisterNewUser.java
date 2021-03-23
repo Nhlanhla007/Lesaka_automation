@@ -14,16 +14,17 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
+import utils.DataTable2;
 
 public class MagentoRegisterNewUser {
 	WebDriver driver;
 	Action action;
 	MagentoRetrieveCustomerDetailsPage RetriveCust;
-	public MagentoRegisterNewUser(WebDriver driver) {
+	public MagentoRegisterNewUser(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
-		RetriveCust =new MagentoRetrieveCustomerDetailsPage(driver);
+		RetriveCust =new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
 	}
 	//navigate to all customer
 	@FindBy(xpath = "//*[@class=\"admin__menu\"]/ul[@id='nav']/li[@id=\"menu-magento-customer-customer\"]/a/span[contains(text(),\"Customers\")]")

@@ -1,8 +1,6 @@
 package JDGroupPageObjects;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
+import utils.DataTable2;
 
 public class ic_existingAddress {
 	
@@ -19,11 +18,11 @@ public class ic_existingAddress {
     Action action;
     Ic_Products ic_products;
     
-    public ic_existingAddress(WebDriver driver) {
+    public ic_existingAddress(WebDriver driver, DataTable2 dataTable2) {
 		 this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
-	        ic_products = new Ic_Products(driver);
+	        ic_products = new Ic_Products(driver, dataTable2);
 	 }
 	 
     @FindBy(xpath="//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")

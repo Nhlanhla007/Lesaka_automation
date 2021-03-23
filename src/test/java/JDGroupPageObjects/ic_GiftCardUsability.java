@@ -12,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
+import utils.DataTable2;
 
 public class ic_GiftCardUsability {
 	WebDriver driver;
@@ -19,7 +20,7 @@ public class ic_GiftCardUsability {
     
    
 	
-	public ic_GiftCardUsability(WebDriver driver){
+	public ic_GiftCardUsability(WebDriver driver, DataTable2 dataTable2){
 		
 		this.driver = driver;
         PageFactory.initElements(driver, this);

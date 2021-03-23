@@ -74,6 +74,9 @@ public class DataTable2 {
     public String getValueOnCurrentModule(String colName){
         return dataMap2.get(currentModule+"++").get(colName).get(findRowToRun(currentModule+"++",occCount,testCaseID));
     }
+    public String setValueOnCurrentModule(String colName,String colValue){
+        return dataMap2.get(currentModule+"++").get(colName).set(findRowToRun(currentModule+"++",occCount,testCaseID),colValue);
+    }
 
 
         public Object[][] getTestData(String sheetName, String testCaseName) {

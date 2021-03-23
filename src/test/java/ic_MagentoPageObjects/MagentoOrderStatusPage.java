@@ -16,6 +16,7 @@ import JDGroupPageObjects.ic_PayUPayment;
 import io.qameta.allure.Step;
 import utils.Action;
 import utils.ConfigFileReader;
+import utils.DataTable2;
 
 public class MagentoOrderStatusPage {
 
@@ -23,7 +24,7 @@ public class MagentoOrderStatusPage {
 	Action action;
 	
 	
-	public MagentoOrderStatusPage(WebDriver driver) {
+	public MagentoOrderStatusPage(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);

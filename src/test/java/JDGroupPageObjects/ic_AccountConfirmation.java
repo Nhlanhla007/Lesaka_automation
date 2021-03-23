@@ -12,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
+import utils.DataTable2;
 
 public class ic_AccountConfirmation {
 	
@@ -19,7 +20,7 @@ public class ic_AccountConfirmation {
 	  WebDriver driver;
 	    Action action;
 
-	    public ic_AccountConfirmation(WebDriver driver) {
+	    public ic_AccountConfirmation(WebDriver driver, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);

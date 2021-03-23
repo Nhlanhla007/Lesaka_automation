@@ -14,13 +14,14 @@ import com.aventstack.extentreports.ExtentTest;
 
 import io.qameta.allure.Step;
 import utils.Action;
+import utils.DataTable2;
 
 public class ICUpdateCustomer {
 	
 	 WebDriver driver;
 	    Action action;
 
-	    public ICUpdateCustomer(WebDriver driver) {
+	    public ICUpdateCustomer(WebDriver driver, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);

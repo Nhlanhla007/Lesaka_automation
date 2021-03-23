@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utils.Action;
 import utils.ConfigFileReader;
+import utils.DataTable2;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class ic_PayUPayment {
 		WebDriver driver;
 		Action action;
 		
-		public ic_PayUPayment(WebDriver driver) {
+		public ic_PayUPayment(WebDriver driver, DataTable2 dataTable2) {
 			this.driver = driver;
 			PageFactory.initElements(driver, this);
 			action = new Action(driver);

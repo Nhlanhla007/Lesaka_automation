@@ -1,6 +1,5 @@
 package JDGroupPageObjects;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,19 +12,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
 
 import com.aventstack.extentreports.ExtentTest;
 
 import Logger.Log;
 import utils.Action;
+import utils.DataTable2;
 
 public class IC_Cart {
 		
 	  WebDriver driver;
 	    Action action;
 
-	    public IC_Cart(WebDriver driver) {
+	    public IC_Cart(WebDriver driver, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);

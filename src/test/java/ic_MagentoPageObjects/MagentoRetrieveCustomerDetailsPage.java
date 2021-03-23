@@ -8,14 +8,13 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
+import utils.DataTable2;
 
 public class MagentoRetrieveCustomerDetailsPage {
 
@@ -23,7 +22,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 	Action action;
 
 
-	public MagentoRetrieveCustomerDetailsPage(WebDriver driver) {
+	public MagentoRetrieveCustomerDetailsPage(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);

@@ -101,6 +101,7 @@ public class JDTests extends BaseTest {
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								runKeyWord(actionToRun,test);
 								writeToExcel(new File(dataTable2.filePath()));
+								writeToExcel(createFile());
 							}
 					}
 				} catch (Exception e) {
@@ -115,35 +116,35 @@ public class JDTests extends BaseTest {
 		}
 	}
 
-	public void runKeyWord(String actionToRun,ExtentTest test) throws IOException, InterruptedException, SQLException, ParseException {
+	public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
 		String moduleToRun=actionToRun;
-		IConnection ic=new IConnection(driver);
-		ic_PaymentOption Payopt=new ic_PaymentOption(driver);
-		ic_PayUPayment  PayU = new ic_PayUPayment(driver);
-		Ic_Products products = new Ic_Products(driver);
-		IC_Cart icCart=new IC_Cart(driver);
-		ic_AccountConfirmation icAccountConfirmation = new ic_AccountConfirmation(driver);
+		IConnection ic=new IConnection(driver,dataTable2);
+		ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);
+		ic_PayUPayment  PayU = new ic_PayUPayment(driver,dataTable2);
+		Ic_Products products = new Ic_Products(driver,dataTable2);
+		IC_Cart icCart=new IC_Cart(driver,dataTable2);
+		ic_AccountConfirmation icAccountConfirmation = new ic_AccountConfirmation(driver,dataTable2);
 		ICDelivery icDelivery=new ICDelivery(driver,dataTable2);
-		ic_Magento_Login icMagento = new ic_Magento_Login(driver);
-		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver);
-		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver);
+		ic_Magento_Login icMagento = new ic_Magento_Login(driver,dataTable2);
+		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver,dataTable2);
+		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver,dataTable2);
 		ic_AccountInformation verifyAcc = new ic_AccountInformation(driver,dataMap2);
-		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver);
-		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver);
-		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver);
-		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver);
-		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver);
-		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver);
-		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver);
-		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver);
-		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver);
+		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver,dataTable2);
+		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
+		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver,dataTable2);
+		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
+		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver,dataTable2);
+		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver,dataTable2);
+		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver,dataTable2);
+		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver,dataTable2);
+		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver,dataTable2);
 		ic_Login ic_login = new ic_Login(driver,dataTable2);
-		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver);
+		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver,dataTable2);
 		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
-		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver);
-    	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver);
-		ic_existingAddress icExistingAddress = new ic_existingAddress(driver);
-		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver);
+		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver,dataTable2);
+    	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver,dataTable2);
+		ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);
+		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver,dataTable2);
 		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
@@ -333,7 +334,7 @@ public class JDTests extends BaseTest {
 
 	public void endBrowserSession() throws IOException {
 		driver.close();
-		writeToExcel(createFile());
+
 	}
 	public void writeToExcel(File filePath) throws IOException {
 		FileOutputStream outputStream = new FileOutputStream(filePath);

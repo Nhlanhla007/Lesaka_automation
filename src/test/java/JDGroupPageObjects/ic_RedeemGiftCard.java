@@ -14,6 +14,7 @@ import com.aventstack.extentreports.ExtentTest;
 
 import Logger.Log;
 import utils.Action;
+import utils.DataTable2;
 
 public class ic_RedeemGiftCard {
 	
@@ -22,11 +23,11 @@ public class ic_RedeemGiftCard {
     
    Ic_Products ic_products;
 	
-	 public ic_RedeemGiftCard(WebDriver driver) {
+	 public ic_RedeemGiftCard(WebDriver driver, DataTable2 dataTable2) {
 		 this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
-	        ic_products = new Ic_Products(driver);
+	        ic_products = new Ic_Products(driver, dataTable2);
 	 }
 	 
 	 static Logger logger = Log.getLogData(Action.class.getSimpleName());
