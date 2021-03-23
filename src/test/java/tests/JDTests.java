@@ -140,6 +140,7 @@ public class JDTests extends BaseTest {
     	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver);
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver);
+		ic_SearchTextReturningNoResult icReturnNoResults = new ic_SearchTextReturningNoResult(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -254,6 +255,10 @@ public class JDTests extends BaseTest {
 			case "icExistingAddress":
 				icExistingAddress.AddressThere(test1);
 				break;
+			case "icSearchNoResultsReturned":
+				icReturnNoResults.ic_DoesNotExtistSearch(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+				
 		}
 	}
 
