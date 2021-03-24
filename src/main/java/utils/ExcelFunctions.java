@@ -289,6 +289,7 @@ public class ExcelFunctions {
 		{
 //			e.printStackTrace();
 			logger.error("There is a exception in reading the data from excel");
+			e.printStackTrace();
 			return "";
 		}
 			return value;

@@ -37,8 +37,8 @@ public class SAPCustomerRelated {
 	        action = new Action(driver);
 	        dataStore = new LinkedHashMap<>();
 	        this.dataMap2=dataMap2;
-	        magentoRetrieve = new MagentoRetrieveCustomerDetailsPage(driver, dataMap2);
-	        magentoVerification = new MagentoAccountInformation(driver, dataMap2);
+	        //magentoRetrieve = new MagentoRetrieveCustomerDetailsPage(driver, dataMap2);
+	        //magentoVerification = new MagentoAccountInformation(driver, dataMap2);
     }
     
     public int getConnectionRow(String Instance){

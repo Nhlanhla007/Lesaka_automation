@@ -19,11 +19,12 @@ public class Magento_UserInfoVerification {
 	
 	WebDriver driver;
 	Action action;
+	DataTable2 dataTable2;
 	MagentoRetrieveCustomerDetailsPage MagentoRetrieveCustomer;
 	MagentoAccountInformation magentoAccountInformation = new MagentoAccountInformation(driver, dataTable2);
 	public Magento_UserInfoVerification(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
-
+		this.dataTable2 = dataTable2;
 		MagentoRetrieveCustomer = new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);

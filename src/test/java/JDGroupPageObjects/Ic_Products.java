@@ -27,12 +27,13 @@ public class Ic_Products {
 	WebDriver driver;
 	Action action;
 	IC_Cart cartValidation;
-
+	DataTable2 dataTable2;
 	public Ic_Products(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 		cartValidation = new IC_Cart(driver, dataTable2);
+		this.dataTable2 = dataTable2;
 	}
 
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());
@@ -69,6 +70,9 @@ public class Ic_Products {
 	WebElement downloads;
 
 	List<WebElement> listElements;
+	
+	@FindBy(id = "product-addtocart-button")
+	WebElement productDetailsPageAddToCartButton;
 
 	/*
 	 * PAGE METHODS
@@ -118,7 +122,6 @@ public class Ic_Products {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			logger.info(e.getMessage());
 		}
 	}
@@ -131,7 +134,6 @@ public class Ic_Products {
 			action.click(icSearchIcon, "Click on search", test);
 			Thread.sleep(10000);
 		} catch (Exception e) {
-			e.printStackTrace();
 			logger.info(e.getMessage());
 		}
 	}
@@ -179,7 +181,7 @@ public class Ic_Products {
 			cartValidation.iCcartVerification2(productsInCart, test);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info(e.getMessage());
 		}
 
 
@@ -259,9 +261,20 @@ public class Ic_Products {
 			Thread.sleep(7000);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info(e.getMessage());
 		}
 
+	}
+	
+	void addToCartFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
+		if(quanity == 1) {
+			action.clickEle(productLink, "Navigate to product listing page", test);
+		}
+		//click on product name and enter listing page
+		//confirm that page has loaded
+		productDetailsPageAddToCartButton.click();
+		cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds), test);
+		//click add to cart button
 	}
 
 	String findPrice(WebElement theProduct) {
@@ -299,6 +312,7 @@ public class Ic_Products {
 
 	Map<String,List<String>> ic_CreateCartFromProductListing(String productsList,String quantityOfProducts,String searchCategory,String waitTimeInSeconds,ExtentTest test) {
 		productData = new LinkedHashMap<>();
+		String cartAdditionMethod= dataTable2.getValueOnCurrentModule("CartAdditionMethod");
 		try {
 			List<String> theProducts = filterProducts(productsList);
 			List<String> quantity = filterProducts(quantityOfProducts);
@@ -310,12 +324,19 @@ public class Ic_Products {
 				String productPrice = findPrice(prod);
 				productPriceAndQuantity.add(productPrice);
 				int set = 0;
+				int quantityExecu = 0;
 				if(prod!=null) {
 					for(int o =0;o<quantity.size();o++) {
 						if(o==s) {
 							for(int g = 0;g<Integer.parseInt(quantity.get(o));g++) {
-								WebElement cartButton = getCartButton(prod);
+								
+								if(cartAdditionMethod.equalsIgnoreCase("ProductListingPage")) {
+									WebElement cartButton = getCartButton(prod);
 								addToCart(cartButton,waitTimeInSeconds,test);
+								}else if(cartAdditionMethod.equalsIgnoreCase("ProductDetailPage")) {
+									quantityExecu++;
+									addToCartFromProdDetailsPage(prod,waitTimeInSeconds,quantityExecu,test);
+								}
 								if(set<=0) {
 									set++;
 									productPriceAndQuantity.add(quantity.get(o));
@@ -328,7 +349,6 @@ public class Ic_Products {
 			}
 		} catch (Exception e) {
 			logger.info(e.getMessage());
-			e.printStackTrace();
 		}
 		return productData;
 

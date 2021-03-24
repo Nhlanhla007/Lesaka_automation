@@ -23,16 +23,17 @@ public class IC_Cart {
 		
 	  WebDriver driver;
 	    Action action;
-
+	    DataTable2 dataTable2;
 	    public IC_Cart(WebDriver driver, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
-
+	        this.dataTable2 = dataTable2;
 	    }
 	    static Logger logger = Log.getLogData(Action.class.getSimpleName());
 	    
-	    @FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
+	    //@FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
+	    @FindBy(xpath = "//header/div[2]/div/div[3]/div[3]/a")
 	    private WebElement iCCartButton;
 	    
 	    //loop throUGH THIS HERE TO DETERMINE IF THE PRODUCT IS FOUND, IF FOUND VALIDATE QUANTITY AND PRICE
@@ -88,7 +89,14 @@ public class IC_Cart {
 
 	    public void cartButtonValidation(WebElement addToCartButton,int waitTimeInSeconds,ExtentTest test) {
 			try {
-				WebElement cartButton = addToCartButton.findElement(By.xpath(".//button/span"));
+				String cartAdditionMethod = "ProductDetailPage";
+				WebElement cartButton;
+				if(cartAdditionMethod.equalsIgnoreCase("ProductListingPage")) {
+				 cartButton = addToCartButton.findElement(By.xpath(".//button/span"));
+				}else {
+				 cartButton = addToCartButton.findElement(By.xpath(".//span"));
+				}
+				
 				
 				boolean addingFlag = false;
 				boolean addedFlag = false;

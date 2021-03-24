@@ -39,8 +39,8 @@ public class ic_PayUPayment {
 		@FindBy(xpath = "//button[@id='btnPay']")
 		WebElement PayBtn;
 		
-		@FindBy(xpath = "//*[@class='checkout-success']/p/span")
-		WebElement OderID;
+		@FindBy(xpath = "//*[@class='checkout-success']/p//span")
+        WebElement OderID;
 		public static String Oderid;
 
 		public void PayUPagePayment(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
