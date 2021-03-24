@@ -60,8 +60,8 @@ public class ic_Login {
 			ic_myAccountlist.click();
 			
 			List<String> userCred = new ArrayList<>();
-			String Username =dataTable2.getValueOnCurrentModule("Username");
-			String Password =dataTable2.getValueOnCurrentModule("Password");
+			String Username =input.get("Username").get(rowNumber);
+			String Password =input.get("Password").get(rowNumber);
 			userCred.add(Username);
 			userCred.add(Password);
 			action.writeText(ic_Username, Username, "Username feild", test);

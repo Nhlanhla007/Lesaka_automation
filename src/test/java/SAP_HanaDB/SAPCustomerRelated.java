@@ -105,6 +105,8 @@ public class SAPCustomerRelated {
 	String email ;
 	String website;
 	String taxVatNumberFlag;
+	
+	String bpPartnerBumber;
 	public void sapDbTests(HashMap<String, ArrayList<String>> input,ArrayList<HashMap<String, ArrayList<String>>> mySheets,ExtentTest test,int testcaseID,int rowNumber) throws Exception {
 		int sheetRow1= findRowToRun(mySheets.get(0), 0, testcaseID); //accountCreation
 		int sheetRow2= findRowToRun(mySheets.get(1), 0, testcaseID); //deliverypopulation
@@ -112,6 +114,8 @@ public class SAPCustomerRelated {
 		int sheetRow4= findRowToRun(mySheets.get(2), 0, testcaseID); //updatesheet
 		int createCustomerBackEndSheet = findRowToRun(mySheets.get(3), 0, testcaseID); //magentoCreate back end sheet
 		int customerUpdateBackEndSheet = findRowToRun(mySheets.get(4), 0, testcaseID); //magentoCreate back end sheet
+		HashMap<String,ArrayList<String>> loginSheet =dataMap2.get("ic_Login++");
+		int ic_LoginRow = findRowToRun(loginSheet, 0, testcaseID);
 		
 		  	String DBinstance = input.get("DB_Instance").get(rowNumber); 
 		  	int irow= getConnectionRow(DBinstance);
@@ -147,16 +151,16 @@ public class SAPCustomerRelated {
 			navigateToCustomerBpNumber(updateEmail, website, test);
 			}else {
 				//email that logged into ic with
-				navigateToCustomerBpNumber(ic_Login.Username, website, test);
+				navigateToCustomerBpNumber(loginSheet.get("Username").get(ic_LoginRow), website, test); //Change
 			}
-			magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Creation Magento Admin")) {
 			customerMagentoEmail =mySheets.get(3).get("Email").get(createCustomerBackEndSheet);
 			navigateToCustomerBpNumber(customerMagentoEmail, website, test);
-			magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Creation")) {
 			navigateToCustomerBpNumber(email, website, test);
-			magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Update Magento Admin")) {
 			updatedMagentoBillingEmailFlag = mySheets.get(4).get("email").get(customerUpdateBackEndSheet);
 			if(updatedMagentoBillingEmailFlag.equalsIgnoreCase("yes")) {
@@ -166,12 +170,12 @@ public class SAPCustomerRelated {
 				currentCustomerMagentoBillingEmail = mySheets.get(4).get("emailAddress_input").get(customerUpdateBackEndSheet);
 				navigateToCustomerBpNumber(currentCustomerMagentoBillingEmail, "Main Website", test);
 			}
-			magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 				
 		}
 
 		//Get Customer partner number
-		String SAPorderNumber=MagentoAccountInformation.ActualBPnumber;
+		String SAPorderNumber=bpPartnerBumber;
 		
 		//If not partner number is returned throw an error
 		if(SAPorderNumber == null) {
