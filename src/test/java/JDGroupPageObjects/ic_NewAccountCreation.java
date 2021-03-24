@@ -156,7 +156,7 @@ public class ic_NewAccountCreation {
 	public  void accountCreation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 		String navigateURL = ConfigFileReader.getPropertyVal("URL");
 		action.navigateToURL(navigateURL);
-
+		action.explicitWait(3000);
 		String firstName = input.get("firstName").get(rowNumber);
 		String lastName = input.get("lastName").get(rowNumber);
 		String emailAddress = input.get("emailAddress").get(rowNumber);
@@ -178,7 +178,7 @@ public class ic_NewAccountCreation {
 		try {
 			ic_NavigateToCreateAccount(test);
 			
-			action.explicitWait(5000);
+			Thread.sleep(5000);
 			
 			action.writeText(User_Firstname, firstName, "First name", test);
 			action.writeText(User_Lastname, lastName, "Last Name", test);
@@ -187,31 +187,38 @@ public class ic_NewAccountCreation {
 			action.writeText(User_Password, password, "Password", test);
 
 			if(selectNewsLetter.equalsIgnoreCase("YES")) {
+				System.out.println("Inside newslwtter");
 				action.click(newsLetter, "News letter", test);
 			}
 			//action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
+			System.out.println(identityType);
 			
 			if(identityType.equalsIgnoreCase("ID")) {
+				System.out.println("Inside ID");
 			action.click(User_SAIDbtn, "Identity type: ID", test);
 			action.writeText(User_SAID, identityNumber, "ID/Passport number", test);
 			}else if(identityType.equalsIgnoreCase("Passport")){
+				System.out.println("Inside passport");
 				action.click(User_Passportbtn, "Identity type: Passport", test);
 				action.writeText(User_Passport, identityNumber, "ID/Passport number", test);
 			}
 
 			if (saIDvalidateIncorrectID.equalsIgnoreCase("yes")) {
+				System.out.println("Enters validate with incorrect digits");
 				String identityNumberIncorrect = "7657674565563";
 				User_SAID.clear();
 				action.writeText(User_SAID, identityNumberIncorrect, "ID/Passport number", test);
 				ic_VerifySAIDLimit(identityNumber, test);
 			}
 			if (saIDvalidateIDWithLessDigits.equalsIgnoreCase("yes")) {
+				System.out.println("Enters validate with less digits");
 				String identityWithLess = identityNumber.substring(0, 10);
 				User_SAID.clear();
 				action.writeText(User_SAID, identityWithLess, "ID/Passport number", test);
 				ic_VerifySAIDLimit(identityWithLess, test);
 			}
 			if (saIDvalidateIDWithMoreDigits.equalsIgnoreCase("yes")) {
+				System.out.println("Enters validate with more digits");
 				String identityWithMore = identityNumber.concat("543");
 				User_SAID.clear();
 				action.writeText(User_SAID, identityWithMore, "ID/Passport number", test);
@@ -282,15 +289,16 @@ public class ic_NewAccountCreation {
 		try {
 			if (saID.length() < 13) {
 				action.click(CreateAccountBtn, "Create account", test);
-				action.waitExplicit(15000);
+				Thread.sleep(15000);
 				action.elementExistsPopUpMessage(identityNumberError, 4000, identityNumberError.getText(), test);
 			} else if (saID.length() > 13) {
+				System.out.println("Enters more than 13 digits");
 				action.click(CreateAccountBtn, "Create account", test);
-				action.waitExplicit(15000);
+				Thread.sleep(15000);
 				action.elementExistsPopUpMessage(identityNumberError, 4000, identityNumberError.getText(), test);
 			} else {
 				action.click(CreateAccountBtn, "Create account", test);
-				action.waitExplicit(15000);
+				Thread.sleep(15000);
 				action.elementExistsPopUpMessage(identityNumberError, 4000, identityNumberError.getText(), test);
 			}
 		} catch (Exception e) {

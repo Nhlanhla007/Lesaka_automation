@@ -18,6 +18,7 @@ import JDGroupPageObjects.ic_Login;
 import ic_MagentoPageObjects.MagentoAccountInformation;
 import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
 import utils.Action;
+import utils.DataTable2;
 import utils.hana;
 
 
@@ -31,14 +32,16 @@ public class SAPCustomerRelated {
     MagentoRetrieveCustomerDetailsPage magentoRetrieve;
     MagentoAccountInformation magentoVerification;
     static Map<String, String> dataStore;
-    public SAPCustomerRelated(WebDriver driver, LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2) {
+	DataTable2 dataTable2;
+    public SAPCustomerRelated(WebDriver driver, LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2, DataTable2 dataTable2) {
     	  this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
 	        dataStore = new LinkedHashMap<>();
 	        this.dataMap2=dataMap2;
-	        magentoRetrieve = new MagentoRetrieveCustomerDetailsPage(driver, dataMap2);
-	        magentoVerification = new MagentoAccountInformation(driver, dataMap2);
+	        this.dataTable2=dataTable2;
+	        magentoRetrieve = new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
+	        magentoVerification = new MagentoAccountInformation(driver, dataTable2);
     }
     
     public int getConnectionRow(String Instance){
@@ -114,8 +117,8 @@ public class SAPCustomerRelated {
 		int sheetRow4= findRowToRun(mySheets.get(2), 0, testcaseID); //updatesheet
 		int createCustomerBackEndSheet = findRowToRun(mySheets.get(3), 0, testcaseID); //magentoCreate back end sheet
 		int customerUpdateBackEndSheet = findRowToRun(mySheets.get(4), 0, testcaseID); //magentoCreate back end sheet
-		HashMap<String,ArrayList<String>> loginSheet =dataMap2.get("ic_Login++");
-		int ic_LoginRow = findRowToRun(loginSheet, 0, testcaseID);
+//		HashMap<String,ArrayList<String>> loginSheet =dataMap2.get("ic_Login++");
+//		int ic_LoginRow = findRowToRun(loginSheet, 0, testcaseID);
 		
 		  	String DBinstance = input.get("DB_Instance").get(rowNumber); 
 		  	int irow= getConnectionRow(DBinstance);
@@ -132,8 +135,9 @@ public class SAPCustomerRelated {
 		String typeOfSAPValidation = input.get("typeOfSapValidation").get(rowNumber); 
 		//System.out.println(mySheets.get(2).get("firstName_output").get(sheetRow4));
 		email = mySheets.get(0).get("emailAddress").get(sheetRow1);
+//		email="fake856088001957589@automationjdg.co.za";
 		website = mySheets.get(0).get("WebSite").get(sheetRow1);
-		
+//		website="";
 		//If the update flag is checked it takes the latest updated email, 
 		//if not checked it takes the original email
 		String updateEmailFlag =null;
@@ -151,7 +155,8 @@ public class SAPCustomerRelated {
 			navigateToCustomerBpNumber(updateEmail, website, test);
 			}else {
 				//email that logged into ic with
-				navigateToCustomerBpNumber(loginSheet.get("Username").get(ic_LoginRow), website, test); //Change
+				navigateToCustomerBpNumber(dataTable2.getValueOnOtherModule ("ic_login++","Username",0),website, test);
+//				navigateToCustomerBpNumber(loginSheet.get("Username").get(ic_LoginRow), website, test); //Change
 			}
 			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Creation Magento Admin")) {
@@ -361,8 +366,8 @@ public class SAPCustomerRelated {
 		 * "225505"; String Password = "Welc0me@2021"; String name = "DBconnect"; String
 		 * DBType ="ECC_QA";
 		 */
+		hn =new hana(TypeOfDB,Server,Port,Username,Password);
 		String Query ="Select * from SAPEQ1.KNA1 WHERE KUNNR = '"+sapOrderNumber+"' Limit 1";
-		hn =new hana(TypeOfDB,Server,Port,Username,Password); 
 		ResultSet rs = hn.ExecuteQuery(Query);
 		
 		int rowsCountReturned = hn.GetRowsCount(rs);

@@ -20,7 +20,7 @@ public class Magento_UserInfoVerification {
 	WebDriver driver;
 	Action action;
 	MagentoRetrieveCustomerDetailsPage MagentoRetrieveCustomer;
-	MagentoAccountInformation magentoAccountInformation = new MagentoAccountInformation(driver, dataTable2);
+//	MagentoAccountInformation magentoAccountInformation = new MagentoAccountInformation(driver, dataTable2);
 	public Magento_UserInfoVerification(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 

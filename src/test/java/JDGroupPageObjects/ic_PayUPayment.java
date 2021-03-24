@@ -16,11 +16,13 @@ import java.util.HashMap;
 public class ic_PayUPayment {
 		WebDriver driver;
 		Action action;
+		DataTable2 dataTable2;
 		
 		public ic_PayUPayment(WebDriver driver, DataTable2 dataTable2) {
 			this.driver = driver;
 			PageFactory.initElements(driver, this);
 			action = new Action(driver);
+			this.dataTable2=dataTable2;
 		}
 		
 		// PAYU site pay option
@@ -61,11 +63,8 @@ public class ic_PayUPayment {
 			action.explicitWait(10);
 			//Retrieve order ID
 //			action.isElementOnNextPage(OderID, (long) 5,test);
-		    Oderid= action.getText(OderID, "Order ID");
-		    Oderid =Oderid.replace("Your order number is:","").replace(".","");
-			ConfigFileReader configFileReader = new ConfigFileReader();
-			configFileReader.setPropertyVal("OrderID",Oderid);
-			input.get("OrderID").set(rowNumber,Oderid.replace("Your order number is:","").replace(".",""));
+			dataTable2.setValueOnCurrentModule ("orderID",Oderid);
+			dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);
 			System.out.println("##############END Execution###############");
 		}
 }

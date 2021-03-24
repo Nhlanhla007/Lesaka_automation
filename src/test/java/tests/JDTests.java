@@ -1,9 +1,6 @@
 package tests;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.*;
@@ -21,6 +18,7 @@ import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 import ic_MagentoPageObjects.ic_Magento_Login;
 import com.aventstack.extentreports.ExtentTest;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -69,7 +67,6 @@ public class JDTests extends BaseTest {
 
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException, InterruptedException {
-
 		int numberOfTestCases =singleSuiteData.get("Execute").size();
 		for(int i=0;i<numberOfTestCases;i++){
 			System.out.println("TestCaseNumber:"+i);
@@ -85,7 +82,12 @@ public class JDTests extends BaseTest {
 				try {
 					for(int j=0;j<10;j++){
 						String actionToRunLable="Action"+(j+1);
-						String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
+						String actionToRun= "";
+						try {
+							actionToRun = singleSuiteData.get(actionToRunLable).get(i);
+						}catch (Exception e){
+
+						}
 						currentKeyWord=actionToRun;
 						System.out.println("actionToRunLable:"+actionToRunLable);
 						System.out.println("currentKeyWord:"+currentKeyWord);
@@ -100,12 +102,15 @@ public class JDTests extends BaseTest {
 								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								runKeyWord(actionToRun,test);
-								writeToExcel(new File(dataTable2.filePath()));
+//								writeToExcel(new File(dataTable2.filePath()));
+								writeToSingleSheet(new File(dataTable2.filePath()),"ic_login");
 								writeToExcel(createFile());
+
 							}
 					}
 				} catch (Exception e) {
 					logger.info(e.getMessage());
+					e.printStackTrace();
 					String screenShot=GenerateScreenShot.getScreenShot(driver);
 					ExtentTest node = test.createNode("Exception");
 					node.fail(e.getMessage()+node.addScreenCaptureFromPath(screenShot));
@@ -145,7 +150,8 @@ public class JDTests extends BaseTest {
     	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver,dataTable2);
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver,dataTable2);
-		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2);
+		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
+		IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -193,9 +199,9 @@ public class JDTests extends BaseTest {
 			case "EnterNewUserDetails":
 				//newAcc.EnterNewUserDetails(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
-			case "Verify_Acount_Information":
-				verifyAcc.Verify_Acount_Information(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
-				break;
+//			case "Verify_Acount_Information":
+//				verifyAcc.Verify_Acount_Information(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+//				break;
 			case "accountCreation":
 				newAcc.accountCreation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;	
@@ -211,7 +217,7 @@ public class JDTests extends BaseTest {
 				break;
 			case "Magento_UserInfoVerification":
     			rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 0, testcaseID);
-				//Magentoverify.Validate_UserInfobackend(dataMap2.get("accountCreation" + "++"),test1,rowNumber);
+				Magentoverify.Validate_UserInfobackend(dataMap2.get("accountCreation" + "++"),test1,rowNumber);
 				break;
 			case "CreateaccountBackend":
 				MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
@@ -259,6 +265,10 @@ public class JDTests extends BaseTest {
 				break;
 			case "icExistingAddress":
 				icExistingAddress.AddressThere(test1);
+				break;
+			case "ic_RetriveOrderID":
+				ic_RetriveOrderID.RetriveOrderID(test1);
+				break;
 			case "SapCustomer":
 				ArrayList<HashMap<String, ArrayList<String>>> sheets = new ArrayList<HashMap<String, ArrayList<String>>>();
 				sheets.add(dataMap2.get("accountCreation++"));
@@ -334,36 +344,76 @@ public class JDTests extends BaseTest {
 
 	public void endBrowserSession() throws IOException {
 		driver.close();
+	}
+	public void writeToSingleSheet(File filePath,String sheetToUpdate) throws IOException, InvalidFormatException {
+		FileOutputStream outputStream = new FileOutputStream(filePath);
+		FileInputStream fis = new FileInputStream(filePath);
+		XSSFWorkbook workbook2 = new XSSFWorkbook(fis);
+		XSSFWorkbook workbook= new XSSFWorkbook();
+		XSSFSheet sheet;
+		for(int i=0;i<dataMap2.size() ;i++) {
+			Object[] keys = dataMap2.keySet().toArray();
+			if (!keys[i].toString().toLowerCase().equals("suits") && !keys[i].toString().toLowerCase().equals("ic")) {
+				if((sheetToUpdate+"++").equals(keys[i].toString())){
+					sheet = workbook2.createSheet(sheetToUpdate);
+				}else{
+					sheet = workbook.getSheet(keys[i].toString());
+				}
+				int numCol = dataMap2.get(keys[i]).size();
+				Object[] colArray = dataMap2.get(keys[i]).keySet().toArray();
+				int rowNum = dataMap2.get(keys[i]).get(colArray[0]).size();
+				for (int j = 0; j <= rowNum; j++) {
+					Row row = sheet.createRow(j);
+					if (j == 0) {
+						for (int z = 0; z < numCol; z++) {
+							Cell cell = row.createCell(z);
+							cell.setCellValue(colArray[z].toString());
+						}
+					} else {
 
+						for (int z = 0; z < numCol; z++) {
+							Cell cell = row.createCell(z);
+							cell.setCellValue((String) dataMap2.get(keys[i]).get(colArray[z]).get(j - 1));
+						}
+					}
+				}
+			}
+		}
+		workbook.write(outputStream);
+		workbook.close();
 	}
 	public void writeToExcel(File filePath) throws IOException {
 		FileOutputStream outputStream = new FileOutputStream(filePath);
 		XSSFWorkbook workbook= new XSSFWorkbook();;
 		XSSFSheet sheet;
-		for(int i=0;i<dataMap2.size() ;i++){
+		for(int i=0;i<dataMap2.size() ;i++) {
 			Object[] keys = dataMap2.keySet().toArray();
-			sheet = workbook.createSheet(keys[i].toString());
-			int numCol=dataMap2.get(keys[i]).size();
-			Object[] colArray = dataMap2.get(keys[i]).keySet().toArray();
-			int rowNum = dataMap2.get(keys[i]).get(colArray[0]).size();
-			for(int j=0;j<=rowNum;j++){
-				Row row = sheet.createRow(j);
-				if (j==0){
-					for(int z=0;z<numCol;z++){
-						Cell cell = row.createCell(z);
-						cell.setCellValue(colArray[z].toString());
-					}
-				}else{
+			if (!keys[i].toString().toLowerCase().equals("suits") && !keys[i].toString().toLowerCase().equals("ic")) {
+				sheet = workbook.createSheet(keys[i].toString());
+				workbook.getSheet(keys[i].toString());
+				int numCol = dataMap2.get(keys[i]).size();
+				Object[] colArray = dataMap2.get(keys[i]).keySet().toArray();
+				int rowNum = dataMap2.get(keys[i]).get(colArray[0]).size();
+				for (int j = 0; j <= rowNum; j++) {
+					Row row = sheet.createRow(j);
+					if (j == 0) {
+						for (int z = 0; z < numCol; z++) {
+							Cell cell = row.createCell(z);
+							cell.setCellValue(colArray[z].toString());
+						}
+					} else {
 
-					for(int z=0;z<numCol;z++){
-						Cell cell = row.createCell(z);
-						cell.setCellValue((String) dataMap2.get(keys[i]).get(colArray[z]).get(j-1));
+						for (int z = 0; z < numCol; z++) {
+							Cell cell = row.createCell(z);
+							cell.setCellValue((String) dataMap2.get(keys[i]).get(colArray[z]).get(j - 1));
+						}
 					}
 				}
 			}
 		}
 
 		workbook.write(outputStream);
+		workbook.close();
 	}
 
 	public File createFile() throws IOException {
