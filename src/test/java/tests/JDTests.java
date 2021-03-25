@@ -152,6 +152,8 @@ public class JDTests extends BaseTest {
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver,dataTable2);
 		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
 		IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
+		IC_CreditAppEmploymentDetails creditAppEmployDetails = new IC_CreditAppEmploymentDetails(driver, dataTable2);
+		IC_CreditAppAddressDetails creditAppAddressDetails = new IC_CreditAppAddressDetails(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -278,6 +280,12 @@ public class JDTests extends BaseTest {
 				sheets.add(dataMap2.get("CreateaccountBackend++"));
 				sheets.add(dataMap2.get("adminUserUpdate++"));
 				customerDB.sapDbTests(dataMap2.get(currentKeyWord+"++"),sheets, test1, testcaseID,rowNumber);
+				break;
+			case "CreditEnterEmploymentDetails":
+				creditAppEmployDetails.dataInput(dataTable2,test1);
+				break;
+			case"CreditEnterAddressDetails":
+				creditAppAddressDetails.dataInput(dataTable2, test1);
 				break;
 		}
 	}
