@@ -111,7 +111,7 @@ public class JDTests extends BaseTest {
 		}
 	}
 
-	public void runKeyWord(String actionToRun,ExtentTest test) throws IOException, InterruptedException, SQLException, ParseException {
+	public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
 		String moduleToRun=actionToRun;
 		IConnection ic=new IConnection(driver);
 		ic_PaymentOption Payopt=new ic_PaymentOption(driver);
@@ -139,6 +139,7 @@ public class JDTests extends BaseTest {
 		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver);
     	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver);
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver);
+		ic_EnterBasicDetails icEnterBasicDetails = new ic_EnterBasicDetails(driver, dataTable2);
 		ic_SpouseDetails icEnterSpouseInfo = new ic_SpouseDetails(driver, dataTable2);
 		ic_ContactDetailsLoan icContactInfo = new ic_ContactDetailsLoan(driver, dataTable2);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver);
@@ -253,6 +254,9 @@ public class JDTests extends BaseTest {
 			case "icRedeemGiftCard":
 				icRedeemGiftCard.redeemGiftCard(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
+			case "EnterBasicDetails":
+				icEnterBasicDetails.enterBasicInfor(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;	
 			case "EnterSpouseInfor":
 				icEnterSpouseInfo.enterSpouseDetails(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
