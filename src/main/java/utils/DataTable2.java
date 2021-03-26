@@ -47,12 +47,9 @@ public class DataTable2 {
     public void setOccurenceCount(int occCount){
         this.occCount=occCount;
     }
-
-
     public LinkedHashMap<String, ArrayList<String>> getModuleData(String sheetName){
         return dataMap2.get(sheetName);
     }
-
     public int findRowToRun(String SheetName,int occCount,int testcaseID){
         int numberRows=getSheetRows(SheetName);
         int rowNumber=-1;
@@ -70,7 +67,7 @@ public class DataTable2 {
     }
     public String getValueOnOtherModule(String sheetName,String colName,int occCount){
         //occCount = 0 refers occurence 1 in the excelsheet and so on.
-        return dataMap2.get(sheetName+"++").get(colName).get(findRowToRun(sheetName,occCount,testCaseID));
+        return dataMap2.get(sheetName+"++").get(colName).get(findRowToRun(sheetName+"++",occCount,testCaseID));
     }
     public String getValueOnCurrentModule(String colName){
         return dataMap2.get(currentModule+"++").get(colName).get(findRowToRun(currentModule+"++",occCount,testCaseID));
@@ -78,13 +75,10 @@ public class DataTable2 {
     public String setValueOnCurrentModule(String colName,String colValue){
         return dataMap2.get(currentModule+"++").get(colName).set(findRowToRun(currentModule+"++",occCount,testCaseID),colValue);
     }
-
     public String setValueOnOtherModule(String sheetName,String colName,String colValue,int occCount){
         //occCount = 0 refers occurence 1 in the excelsheet and so on.
         return dataMap2.get(sheetName+"++").get(colName).set(findRowToRun(sheetName+"++",occCount,testCaseID),colValue);
     }
-
-
         public Object[][] getTestData(String sheetName, String testCaseName) {
         Object[][] obj = null ;
         int sheetNumber=excelFunc.getSheetNumber(sheetName);
