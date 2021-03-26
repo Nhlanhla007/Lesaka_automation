@@ -107,6 +107,7 @@ public class ICDelivery {
         action.writeText(postalCode,dataSheets.getValueOnCurrentModule("postalCode"),"postalCode",test);
         action.writeText(vatNumber,dataSheets.getValueOnCurrentModule("vatNumber"),"vatNumber",test);
         action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
+        Thread.sleep(15000);
         action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
         Thread.sleep(12000);
         action.dropDownselectbyvisibletext(province,dataSheets.getValueOnCurrentModule("province"),"province",test);

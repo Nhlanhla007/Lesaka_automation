@@ -63,8 +63,8 @@ public class ic_PayUPayment {
 			action.explicitWait(10);
 			//Retrieve order ID
 //			action.isElementOnNextPage(OderID, (long) 5,test);
-			dataTable2.setValueOnCurrentModule ("orderID",Oderid);
-			dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);
+//			dataTable2.setValueOnCurrentModule ("orderID",Oderid);
+//			dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);
 			System.out.println("##############END Execution###############");
 		}
 }

@@ -194,7 +194,13 @@ public class SAPCustomerRelated {
 		}
 		//SAPorderNumber=SAPorderNumber.replace("[RabbitMQ] Order SAP Number: ", ""); 
 		vatNumberFlag = mySheets.get(0).get("vatNumberFlag").get(sheetRow1);
-		Map<String, String> customerDetails = customerSAPDetails(SAPorderNumber);
+		Map<String, String> customerDetails = null;
+		if(typeOfSAPValidation.equalsIgnoreCase("Guest Customer Creation")) {
+			String bpNumber = SAPorderRelated.BPnumber;
+			customerDetails = customerSAPDetails(bpNumber);
+		}else {
+			customerDetails = customerSAPDetails(SAPorderNumber);
+		}
 		
 		//GET DETAILS FROM SAP
 		String SAPFirstName = customerDetails.get("NAME_FIRST");
@@ -346,6 +352,33 @@ public class SAPCustomerRelated {
 				action.CompareResult("SAP Postal Code", updatedBillingPostalCode, SAPpostCode, test);
 			}
 			break;
+			case "Guest Customer Creation":
+				String newFirstName = mySheets.get(1).get("firstName").get(sheetRow2);
+				String newLastName = mySheets.get(1).get("lastname").get(sheetRow2);
+				String newTelephone = mySheets.get(1).get("telephone").get(sheetRow2);
+				String newStreetName = mySheets.get(1).get("streetName").get(sheetRow2);
+				String newProvince = mySheets.get(1).get("province").get(sheetRow2);
+				String newCity = mySheets.get(1).get("city").get(sheetRow2);
+				String newSuburb = mySheets.get(1).get("Suburb").get(sheetRow2);
+				String newPostalcode = mySheets.get(1).get("postalCode").get(sheetRow2);
+				String newVatNumber = mySheets.get(1).get("vatNumber").get(sheetRow2);
+				String newEmail = mySheets.get(1).get("email").get(sheetRow2);
+				String newIDNumber = mySheets.get(1).get("idNumber").get(sheetRow2);
+
+				action.CompareResult("SAP First name", newFirstName, SAPFirstName, test);
+				action.CompareResult("SAP Last name", newLastName, SAPLastName, test);
+				action.CompareResult("SAP Email", newEmail, SAPEmail, test);
+
+				action.CompareResult("SAP Updated postal code", newPostalcode, SAPpostCode, test);
+				action.CompareResult("SAP Updated Billing Suburb", newSuburb, SAPsuburb, test);
+				action.CompareResult("SAP Updated City", newCity, SAPcity, test);
+				action.CompareResult("SAP Updated Province", newProvince, SAPProvince, test);
+				action.CompareResult("SAP Updated Billing Address", newStreetName, SAPStreetAddress, test);
+				action.CompareResult("SAP SA ID", newIDNumber, SAID, test);
+				action.CompareResult("SAP Vat number", newVatNumber, sapVatnumber, test);
+				action.CompareResult("SAP Telephone", newTelephone, SAPStreetAddress, test);
+
+				break;
 		default:
 			break;
 		}

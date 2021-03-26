@@ -44,7 +44,7 @@
 		<ul id='nav-mobile' class='right hide-on-med-and-down nav-right'>
 			<li>
                 <a href='#!'>
-                    <span class='label suite-start-time blue darken-3'>Mar 24, 2021 12:50:21 PM</span>
+                    <span class='label suite-start-time blue darken-3'>Mar 26, 2021 11:44:37 AM</span>
 				</a>
 			</li>
 			<li>
@@ -70,6 +70,7 @@
 				</a>
 				<ul id='tests-toggle' class='dropdown-content'>
 											<li status='pass'><a href='#!'>Pass <i class='material-icons green-text'>check_circle</i></a></li>
+						<li status='fail'><a href='#!'>Fail <i class='material-icons red-text'>cancel</i></a></li>
 					<li class='divider'></li>
 					<li status='clear' clear='true'><a href='#!'>Clear Filters <i class='material-icons'>clear</i></a></li>
 				</ul>
@@ -120,10 +121,10 @@
 					<canvas id='parent-analysis' width='100' height='80'></canvas>
 				</div>
 				<div class='block text-small'>
-					<span class='tooltipped' data-position='top' data-tooltip='100%'><span class='strong'>42</span> test(s) passed</span>
+					<span class='tooltipped' data-position='top' data-tooltip='97.297%'><span class='strong'>36</span> test(s) passed</span>
 				</div>
 				<div class='block text-small'>
-					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> test(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+					<span class='strong tooltipped' data-position='top' data-tooltip='2.703%'>1</span> test(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
 				</div>
 			</div>
 		</div>
@@ -135,10 +136,10 @@
 					<canvas id='child-analysis' width='100' height='80'></canvas>
 				</div>
 				<div class='block text-small'>
-					<span class='tooltipped' data-position='top' data-tooltip='100%'><span class='strong'>42</span> step(s) passed</span>
+					<span class='tooltipped' data-position='top' data-tooltip='97.297%'><span class='strong'>36</span> step(s) passed</span>
 				</div>
 				<div class='block text-small'>
-					<span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> step(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
+					<span class='strong tooltipped' data-position='top' data-tooltip='2.703%'>1</span> step(s) failed, <span class='strong tooltipped' data-position='top' data-tooltip='0%'>0</span> others
 				</div>
 			</div>
 		</div>
@@ -153,33 +154,33 @@
 			<ul id='test-collection' class='test-collection'>
 				
 				
-				<li class='test displayed active has-leaf pass' status='pass' bdd='false' test-id='1'>
+				<li class='test displayed active has-leaf fail' status='fail' bdd='false' test-id='1'>
 					<div class='test-heading'>
-						<span class='test-name'>1 : Create new customer in IC and Validate VAT Number</span>
-						<span class='test-time'>Mar 24, 2021 12:50:22 PM</span>
-						<span class='test-status right pass'>pass</span>
+						<span class='test-name'>31 : Create Customer Account from Sales Order</span>
+						<span class='test-time'>Mar 26, 2021 11:44:37 AM</span>
+						<span class='test-status right fail'>fail</span>
 					</div>
 					<div class='test-content hide'>
 <div class='test-time-info'>
-	<span class='label start-time'>Mar 24, 2021 12:50:22 PM</span>
-	<span class='label end-time'>Mar 24, 2021 12:52:59 PM</span>
-	<span class='label time-taken grey lighten-1 white-text'>0h 2m 37s+158ms</span>
+	<span class='label start-time'>Mar 26, 2021 11:44:37 AM</span>
+	<span class='label end-time'>Mar 26, 2021 11:48:46 AM</span>
+	<span class='label time-taken grey lighten-1 white-text'>0h 4m 8s+785ms</span>
 </div>
 	<ul class='collapsible node-list' data-collapsible='accordion'>
 		
 				<li class='node level-1  pass' status='pass' test-id='2'>
 					<div class='collapsible-header'>
-						<div class='node-name'>accountCreation</div>						
-						<span class='node-time'>Mar 24, 2021 12:50:44 PM</span>
-						<span class='node-duration'>0h 0m 46s+491ms</span>
+						<div class='node-name'>ProductSearch</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:01 AM</span>
+						<span class='node-duration'>0h 0m 42s+267ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<ul class='collapsible node-list' data-collapsible='accordion'>
 				<li class='node level-2 leaf pass' status='pass' test-id='3'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Navigate to accountTab</div>						
-						<span class='node-time'>Mar 24, 2021 12:50:49 PM</span>
-						<span class='node-duration'>0h 0m 0s+779ms</span>
+						<div class='node-name'>Writing text: Canon 737 Blk Toner to Element: SearchBar</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:02 AM</span>
+						<span class='node-duration'>0h 0m 1s+73ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -195,22 +196,22 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:50:49 PM</td>
-													<td class='step-details'>Clicked Element: Navigate to accountTabcom.aventstack.extentreports.ExtentTest@4806fbf7</td>
+													<td class='timestamp'>11:45:03 AM</td>
+													<td class='step-details'>Writing text: Canon 737 Blk Toner to Element: com.aventstack.extentreports.ExtentTest@f2b4303</td>
 												</tr>
 										</tbody>
 									</table>
 										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125049264.png' width='10%' src='\reports\screenshots\120210324125049264.png' data-src='\reports\screenshots\120210324125049264.png'></li>
+												<li><img data-featherlight='\reports\screenshots\120210326114502811.png' width='10%' src='\reports\screenshots\120210326114502811.png' data-src='\reports\screenshots\120210326114502811.png'></li>
 										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='4'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Navigate to create Account</div>						
-						<span class='node-time'>Mar 24, 2021 12:50:49 PM</span>
-						<span class='node-duration'>0h 0m 2s+90ms</span>
+						<div class='node-name'>Clicked Element: Click on search</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:03 AM</span>
+						<span class='node-duration'>0h 0m 3s+683ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -226,22 +227,22 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:50:52 PM</td>
-													<td class='step-details'>Clicked Element: Navigate to create Accountcom.aventstack.extentreports.ExtentTest@1e041848</td>
+													<td class='timestamp'>11:45:07 AM</td>
+													<td class='step-details'>Clicked Element: Click on searchcom.aventstack.extentreports.ExtentTest@10abd94f</td>
 												</tr>
 										</tbody>
 									</table>
 										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125051628.png' width='10%' src='\reports\screenshots\120210324125051628.png' data-src='\reports\screenshots\120210324125051628.png'></li>
+												<li><img data-featherlight='\reports\screenshots\120210326114507040.png' width='10%' src='\reports\screenshots\120210326114507040.png' data-src='\reports\screenshots\120210326114507040.png'></li>
 										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='5'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Has next Page louded? validate account page is loaded</div>						
-						<span class='node-time'>Mar 24, 2021 12:50:52 PM</span>
-						<span class='node-duration'>0h 0m 0s+390ms</span>
+						<div class='node-name'>Verify Adding text appears on add to cart button</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:20 AM</span>
+						<span class='node-duration'>0h 0m 0s+296ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -257,22 +258,19 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:50:52 PM</td>
-													<td class='step-details'>Page has been loaded: validate account page is loadedcom.aventstack.extentreports.ExtentTest@7097ead6</td>
+													<td class='timestamp'>11:45:21 AM</td>
+													<td class='step-details'>Successfully Verified : Adding text appears on add to cart button Expected : true Actual :true<img data-featherlight='\reports\screenshots\120210326114520962.png' width='10%' src='\reports\screenshots\120210326114520962.png' data-src='\reports\screenshots\120210326114520962.png'></td>
 												</tr>
 										</tbody>
 									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125052037.png' width='10%' src='\reports\screenshots\120210324125052037.png' data-src='\reports\screenshots\120210324125052037.png'></li>
-										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='6'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Writing text: Brian to Element: First name</div>						
-						<span class='node-time'>Mar 24, 2021 12:50:57 PM</span>
-						<span class='node-duration'>0h 0m 0s+451ms</span>
+						<div class='node-name'>Verify Added text appears on add to cart button</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:21 AM</span>
+						<span class='node-duration'>0h 0m 0s+342ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -288,22 +286,19 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:50:57 PM</td>
-													<td class='step-details'>Writing text: Brian to Element: com.aventstack.extentreports.ExtentTest@27bc2650</td>
+													<td class='timestamp'>11:45:21 AM</td>
+													<td class='step-details'>Successfully Verified : Added text appears on add to cart button Expected : true Actual :true<img data-featherlight='\reports\screenshots\120210326114521258.png' width='10%' src='\reports\screenshots\120210326114521258.png' data-src='\reports\screenshots\120210326114521258.png'></td>
 												</tr>
 										</tbody>
 									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125057563.png' width='10%' src='\reports\screenshots\120210324125057563.png' data-src='\reports\screenshots\120210324125057563.png'></li>
-										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='7'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Writing text: Jones to Element: Last Name</div>						
-						<span class='node-time'>Mar 24, 2021 12:50:57 PM</span>
-						<span class='node-duration'>0h 0m 0s+412ms</span>
+						<div class='node-name'>Verify Adding text appears on add to cart button</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:31 AM</span>
+						<span class='node-duration'>0h 0m 0s+299ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -319,22 +314,19 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:50:58 PM</td>
-													<td class='step-details'>Writing text: Jones to Element: com.aventstack.extentreports.ExtentTest@17635531</td>
+													<td class='timestamp'>11:45:31 AM</td>
+													<td class='step-details'>Successfully Verified : Adding text appears on add to cart button Expected : true Actual :true<img data-featherlight='\reports\screenshots\120210326114531379.png' width='10%' src='\reports\screenshots\120210326114531379.png' data-src='\reports\screenshots\120210326114531379.png'></td>
 												</tr>
 										</tbody>
 									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125057987.png' width='10%' src='\reports\screenshots\120210324125057987.png' data-src='\reports\screenshots\120210324125057987.png'></li>
-										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='8'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Writing text: fake051966124547736@automationjdg.co.za to Element: Email</div>						
-						<span class='node-time'>Mar 24, 2021 12:50:58 PM</span>
-						<span class='node-duration'>0h 0m 0s+589ms</span>
+						<div class='node-name'>Verify Added text appears on add to cart button</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:31 AM</span>
+						<span class='node-duration'>0h 0m 0s+305ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -350,22 +342,19 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:50:58 PM</td>
-													<td class='step-details'>Writing text: fake051966124547736@automationjdg.co.za to Element: com.aventstack.extentreports.ExtentTest@2bfa5678</td>
+													<td class='timestamp'>11:45:31 AM</td>
+													<td class='step-details'>Successfully Verified : Added text appears on add to cart button Expected : true Actual :true<img data-featherlight='\reports\screenshots\120210326114531678.png' width='10%' src='\reports\screenshots\120210326114531678.png' data-src='\reports\screenshots\120210326114531678.png'></td>
 												</tr>
 										</tbody>
 									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125058554.png' width='10%' src='\reports\screenshots\120210324125058554.png' data-src='\reports\screenshots\120210324125058554.png'></li>
-										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='9'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Writing text: 2222224 to Element: Tax/Vat</div>						
-						<span class='node-time'>Mar 24, 2021 12:50:58 PM</span>
-						<span class='node-duration'>0h 0m 0s+497ms</span>
+						<div class='node-name'>Clicked Element: IC cart button</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:38 AM</span>
+						<span class='node-duration'>0h 0m 0s+447ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -381,22 +370,19 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:50:59 PM</td>
-													<td class='step-details'>Writing text: 2222224 to Element: com.aventstack.extentreports.ExtentTest@5929059c</td>
+													<td class='timestamp'>11:45:39 AM</td>
+													<td class='step-details'>Successfully clicked on IC cart button<img data-featherlight='\reports\screenshots\120210326114539114.png' width='10%' src='\reports\screenshots\120210326114539114.png' data-src='\reports\screenshots\120210326114539114.png'></td>
 												</tr>
 										</tbody>
 									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125059068.png' width='10%' src='\reports\screenshots\120210324125059068.png' data-src='\reports\screenshots\120210324125059068.png'></li>
-										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='10'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Writing text: Password2 to Element: Password</div>						
-						<span class='node-time'>Mar 24, 2021 12:50:59 PM</span>
-						<span class='node-duration'>0h 0m 0s+465ms</span>
+						<div class='node-name'>Verify Name : Canon 737 Blk Toner</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:39 AM</span>
+						<span class='node-duration'>0h 0m 0s+302ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -412,22 +398,19 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:50:59 PM</td>
-													<td class='step-details'>Writing text: Password2 to Element: com.aventstack.extentreports.ExtentTest@21202507</td>
+													<td class='timestamp'>11:45:39 AM</td>
+													<td class='step-details'>Successfully Verified : Name : Canon 737 Blk Toner Expected : Canon 737 Blk Toner Actual :Canon 737 Blk Toner<img data-featherlight='\reports\screenshots\120210326114539558.png' width='10%' src='\reports\screenshots\120210326114539558.png' data-src='\reports\screenshots\120210326114539558.png'></td>
 												</tr>
 										</tbody>
 									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125059556.png' width='10%' src='\reports\screenshots\120210324125059556.png' data-src='\reports\screenshots\120210324125059556.png'></li>
-										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='11'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Identity type: ID</div>						
-						<span class='node-time'>Mar 24, 2021 12:50:59 PM</span>
-						<span class='node-duration'>0h 0m 0s+438ms</span>
+						<div class='node-name'>Verify Price : R1,399 for Canon 737 Blk Toner</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:39 AM</span>
+						<span class='node-duration'>0h 0m 0s+322ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -443,22 +426,19 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:00 PM</td>
-													<td class='step-details'>Clicked Element: Identity type: IDcom.aventstack.extentreports.ExtentTest@3c717ef2</td>
+													<td class='timestamp'>11:45:40 AM</td>
+													<td class='step-details'>Successfully Verified : Price : R1,399 for Canon 737 Blk Toner Expected : R1,399 Actual :R1,399<img data-featherlight='\reports\screenshots\120210326114539861.png' width='10%' src='\reports\screenshots\120210326114539861.png' data-src='\reports\screenshots\120210326114539861.png'></td>
 												</tr>
 										</tbody>
 									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125059957.png' width='10%' src='\reports\screenshots\120210324125059957.png' data-src='\reports\screenshots\120210324125059957.png'></li>
-										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='12'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Writing text: 9708027466084 to Element: ID/Passport number</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:00 PM</span>
-						<span class='node-duration'>0h 0m 0s+474ms</span>
+						<div class='node-name'>Verify Quantity : 2 for Canon 737 Blk Toner</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:40 AM</span>
+						<span class='node-duration'>0h 0m 0s+293ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -474,22 +454,19 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:00 PM</td>
-													<td class='step-details'>Writing text: 9708027466084 to Element: com.aventstack.extentreports.ExtentTest@71e55e48</td>
+													<td class='timestamp'>11:45:40 AM</td>
+													<td class='step-details'>Successfully Verified : Quantity : 2 for Canon 737 Blk Toner Expected : 2 Actual :2<img data-featherlight='\reports\screenshots\120210326114540183.png' width='10%' src='\reports\screenshots\120210326114540183.png' data-src='\reports\screenshots\120210326114540183.png'></td>
 												</tr>
 										</tbody>
 									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125100458.png' width='10%' src='\reports\screenshots\120210324125100458.png' data-src='\reports\screenshots\120210324125100458.png'></li>
-										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='13'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Writing text: Password2 to Element: Confirm password</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:00 PM</span>
-						<span class='node-duration'>0h 0m 0s+448ms</span>
+						<div class='node-name'>Verify Products Total</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:40 AM</span>
+						<span class='node-duration'>0h 0m 0s+268ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -505,22 +482,19 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:01 PM</td>
-													<td class='step-details'>Writing text: Password2 to Element: com.aventstack.extentreports.ExtentTest@6c68f29c</td>
+													<td class='timestamp'>11:45:40 AM</td>
+													<td class='step-details'>Successfully Verified : Products Total Expected : 2798 Actual :279800<img data-featherlight='\reports\screenshots\120210326114540503.png' width='10%' src='\reports\screenshots\120210326114540503.png' data-src='\reports\screenshots\120210326114540503.png'></td>
 												</tr>
 										</tbody>
 									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125100896.png' width='10%' src='\reports\screenshots\120210324125100896.png' data-src='\reports\screenshots\120210324125100896.png'></li>
-										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='14'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Create account</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:01 PM</span>
-						<span class='node-duration'>0h 0m 3s+154ms</span>
+						<div class='node-name'>Clicked Element: Secure Checkout</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:40 AM</span>
+						<span class='node-duration'>0h 0m 3s+24ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -536,78 +510,60 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:04 PM</td>
-													<td class='step-details'>Clicked Element: Create accountcom.aventstack.extentreports.ExtentTest@43cf97a8</td>
+													<td class='timestamp'>11:45:43 AM</td>
+													<td class='step-details'>Successfully clicked on Secure Checkout<img data-featherlight='\reports\screenshots\120210326114543171.png' width='10%' src='\reports\screenshots\120210326114543171.png' data-src='\reports\screenshots\120210326114543171.png'></td>
+												</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+				</li>
+						</ul>
+				</li>
+				<li class='node level-1  pass' status='pass' test-id='15'>
+					<div class='collapsible-header'>
+						<div class='node-name'>deliveryPopulation</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:46 AM</span>
+						<span class='node-duration'>0h 0m 59s+150ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<ul class='collapsible node-list' data-collapsible='accordion'>
+				<li class='node level-2 leaf pass' status='pass' test-id='16'>
+					<div class='collapsible-header'>
+						<div class='node-name'>Clicked Element: deliveryLink</div>						
+						<span class='node-time'>Mar 26, 2021 11:45:54 AM</span>
+						<span class='node-duration'>0h 0m 0s+548ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>11:45:54 AM</td>
+													<td class='step-details'>Clicked Element: deliveryLinkcom.aventstack.extentreports.ExtentTest@30a79476</td>
 												</tr>
 										</tbody>
 									</table>
 										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125104000.png' width='10%' src='\reports\screenshots\120210324125104000.png' data-src='\reports\screenshots\120210324125104000.png'></li>
+												<li><img data-featherlight='\reports\screenshots\120210326114554455.png' width='10%' src='\reports\screenshots\120210326114554455.png' data-src='\reports\screenshots\120210326114554455.png'></li>
 										</ul>
-								</div>
-						</div>
-				</li>
-				<li class='node level-2 leaf pass' status='pass' test-id='15'>
-					<div class='collapsible-header'>
-						<div class='node-name'>Verify Verify account info option is present</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:04 PM</span>
-						<span class='node-duration'>0h 0m 0s+333ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:04 PM</td>
-													<td class='step-details'>Successfully Verified : Verify account info option is present Expected : true Actual :true<img data-featherlight='\reports\screenshots\120210324125104406.png' width='10%' src='\reports\screenshots\120210324125104406.png' data-src='\reports\screenshots\120210324125104406.png'></td>
-												</tr>
-										</tbody>
-									</table>
-								</div>
-						</div>
-				</li>
-				<li class='node level-2 leaf pass' status='pass' test-id='16'>
-					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Account info link</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:04 PM</span>
-						<span class='node-duration'>0h 0m 2s+521ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:07 PM</td>
-													<td class='step-details'>Successfully clicked on Account info link<img data-featherlight='\reports\screenshots\120210324125106869.png' width='10%' src='\reports\screenshots\120210324125106869.png' data-src='\reports\screenshots\120210324125106869.png'></td>
-												</tr>
-										</tbody>
-									</table>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='17'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Verify Verify Account info page is opened</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:18 PM</span>
-						<span class='node-duration'>0h 0m 0s+265ms</span>
+						<div class='node-name'>Writing text: 38 Pritchard Street to Element: streetName</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:02 AM</span>
+						<span class='node-duration'>0h 0m 0s+477ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -623,19 +579,22 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:18 PM</td>
-													<td class='step-details'>Successfully Verified : Verify Account info page is opened Expected : edit Actual :https://staging-incredibleconnection-m23.vaimo.net/customer/account/edit/<img data-featherlight='\reports\screenshots\120210324125118273.png' width='10%' src='\reports\screenshots\120210324125118273.png' data-src='\reports\screenshots\120210324125118273.png'></td>
+													<td class='timestamp'>11:46:03 AM</td>
+													<td class='step-details'>Writing text: 38 Pritchard Street to Element: com.aventstack.extentreports.ExtentTest@6408a8ac</td>
 												</tr>
 										</tbody>
 									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114603081.png' width='10%' src='\reports\screenshots\120210326114603081.png' data-src='\reports\screenshots\120210326114603081.png'></li>
+										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='18'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Enable click email checkbox</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:18 PM</span>
-						<span class='node-duration'>0h 0m 0s+481ms</span>
+						<div class='node-name'>Writing text: Thokozani to Element: firstName</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:03 AM</span>
+						<span class='node-duration'>0h 0m 0s+464ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -651,19 +610,22 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:19 PM</td>
-													<td class='step-details'>Successfully clicked on Enable click email checkbox<img data-featherlight='\reports\screenshots\120210324125118807.png' width='10%' src='\reports\screenshots\120210324125118807.png' data-src='\reports\screenshots\120210324125118807.png'></td>
+													<td class='timestamp'>11:46:03 AM</td>
+													<td class='step-details'>Writing text: Thokozani to Element: com.aventstack.extentreports.ExtentTest@6e161cea</td>
 												</tr>
 										</tbody>
 									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114603504.png' width='10%' src='\reports\screenshots\120210326114603504.png' data-src='\reports\screenshots\120210326114603504.png'></li>
+										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='19'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Enable click email checkbox</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:24 PM</span>
-						<span class='node-duration'>0h 0m 0s+418ms</span>
+						<div class='node-name'>Writing text: Shabalala to Element: lastname</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:03 AM</span>
+						<span class='node-duration'>0h 0m 0s+435ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -679,19 +641,22 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:24 PM</td>
-													<td class='step-details'>Successfully clicked on Enable click email checkbox<img data-featherlight='\reports\screenshots\120210324125124210.png' width='10%' src='\reports\screenshots\120210324125124210.png' data-src='\reports\screenshots\120210324125124210.png'></td>
+													<td class='timestamp'>11:46:04 AM</td>
+													<td class='step-details'>Writing text: Shabalala to Element: com.aventstack.extentreports.ExtentTest@40ef385f</td>
 												</tr>
 										</tbody>
 									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114603934.png' width='10%' src='\reports\screenshots\120210326114603934.png' data-src='\reports\screenshots\120210326114603934.png'></li>
+										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='20'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Verify Verify First Name</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:24 PM</span>
-						<span class='node-duration'>0h 0m 0s+280ms</span>
+						<div class='node-name'>Writing text: 0670441099 to Element: telephone</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:04 AM</span>
+						<span class='node-duration'>0h 0m 0s+468ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -707,19 +672,22 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:24 PM</td>
-													<td class='step-details'>Successfully Verified : Verify First Name  Expected : Brian Actual :Brian<img data-featherlight='\reports\screenshots\120210324125124623.png' width='10%' src='\reports\screenshots\120210324125124623.png' data-src='\reports\screenshots\120210324125124623.png'></td>
+													<td class='timestamp'>11:46:04 AM</td>
+													<td class='step-details'>Writing text: 0670441099 to Element: com.aventstack.extentreports.ExtentTest@50bc0bbd</td>
 												</tr>
 										</tbody>
 									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114604387.png' width='10%' src='\reports\screenshots\120210326114604387.png' data-src='\reports\screenshots\120210326114604387.png'></li>
+										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='21'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Verify Verify Last Name</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:24 PM</span>
-						<span class='node-duration'>0h 0m 0s+308ms</span>
+						<div class='node-name'>Writing text: Randburg to Element: city</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:04 AM</span>
+						<span class='node-duration'>0h 0m 0s+422ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -735,19 +703,22 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:25 PM</td>
-													<td class='step-details'>Successfully Verified : Verify Last Name  Expected : Jones Actual :Jones<img data-featherlight='\reports\screenshots\120210324125124902.png' width='10%' src='\reports\screenshots\120210324125124902.png' data-src='\reports\screenshots\120210324125124902.png'></td>
+													<td class='timestamp'>11:46:05 AM</td>
+													<td class='step-details'>Writing text: Randburg to Element: com.aventstack.extentreports.ExtentTest@3f7a7ce6</td>
 												</tr>
 										</tbody>
 									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114604830.png' width='10%' src='\reports\screenshots\120210326114604830.png' data-src='\reports\screenshots\120210326114604830.png'></li>
+										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='22'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Verify Verify Email Address</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:25 PM</span>
-						<span class='node-duration'>0h 0m 0s+292ms</span>
+						<div class='node-name'>Writing text: Johannesburg to Element: Suburb</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:05 AM</span>
+						<span class='node-duration'>0h 0m 0s+415ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -763,19 +734,22 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:25 PM</td>
-													<td class='step-details'>Successfully Verified : Verify Email Address  Expected : fake051966124547736@automationjdg.co.za Actual :fake051966124547736@automationjdg.co.za<img data-featherlight='\reports\screenshots\120210324125125210.png' width='10%' src='\reports\screenshots\120210324125125210.png' data-src='\reports\screenshots\120210324125125210.png'></td>
+													<td class='timestamp'>11:46:05 AM</td>
+													<td class='step-details'>Writing text: Johannesburg to Element: com.aventstack.extentreports.ExtentTest@68024e57</td>
 												</tr>
 										</tbody>
 									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114605273.png' width='10%' src='\reports\screenshots\120210326114605273.png' data-src='\reports\screenshots\120210326114605273.png'></li>
+										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='23'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Verify SA ID</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:25 PM</span>
-						<span class='node-duration'>0h 0m 0s+262ms</span>
+						<div class='node-name'>Writing text: 2000 to Element: postalCode</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:05 AM</span>
+						<span class='node-duration'>0h 0m 0s+397ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -791,19 +765,22 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:25 PM</td>
-													<td class='step-details'>Successfully Verified : SA ID  Expected : 9708027466084 Actual :9708027466084<img data-featherlight='\reports\screenshots\120210324125125503.png' width='10%' src='\reports\screenshots\120210324125125503.png' data-src='\reports\screenshots\120210324125125503.png'></td>
+													<td class='timestamp'>11:46:05 AM</td>
+													<td class='step-details'>Writing text: 2000 to Element: com.aventstack.extentreports.ExtentTest@7d7888a5</td>
 												</tr>
 										</tbody>
 									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114605663.png' width='10%' src='\reports\screenshots\120210326114605663.png' data-src='\reports\screenshots\120210326114605663.png'></li>
+										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='24'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: My Account Link</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:25 PM</span>
-						<span class='node-duration'>0h 0m 2s+716ms</span>
+						<div class='node-name'>Writing text: 0670441099 to Element: vatNumber</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:05 AM</span>
+						<span class='node-duration'>0h 0m 0s+426ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -819,19 +796,22 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:28 PM</td>
-													<td class='step-details'>Successfully clicked on My Account Link<img data-featherlight='\reports\screenshots\120210324125128138.png' width='10%' src='\reports\screenshots\120210324125128138.png' data-src='\reports\screenshots\120210324125128138.png'></td>
+													<td class='timestamp'>11:46:06 AM</td>
+													<td class='step-details'>Writing text: 0670441099 to Element: com.aventstack.extentreports.ExtentTest@58922a00</td>
 												</tr>
 										</tbody>
 									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114606081.png' width='10%' src='\reports\screenshots\120210326114606081.png' data-src='\reports\screenshots\120210326114606081.png'></li>
+										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='25'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Account info link</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:28 PM</span>
-						<span class='node-duration'>0h 0m 2s+396ms</span>
+						<div class='node-name'>Writing text: thokozaniSha@jdg.co.za to Element: email</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:06 AM</span>
+						<span class='node-duration'>0h 0m 0s+577ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -847,19 +827,22 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:30 PM</td>
-													<td class='step-details'>Successfully clicked on Account info link<img data-featherlight='\reports\screenshots\120210324125130531.png' width='10%' src='\reports\screenshots\120210324125130531.png' data-src='\reports\screenshots\120210324125130531.png'></td>
+													<td class='timestamp'>11:46:06 AM</td>
+													<td class='step-details'>Writing text: thokozaniSha@jdg.co.za to Element: com.aventstack.extentreports.ExtentTest@3f36c191</td>
 												</tr>
 										</tbody>
 									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114606583.png' width='10%' src='\reports\screenshots\120210326114606583.png' data-src='\reports\screenshots\120210326114606583.png'></li>
+										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='26'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Verify Verify Newsletter subscription, you are not Subscibed to newsletter</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:30 PM</span>
-						<span class='node-duration'>0h 0m 0s+314ms</span>
+						<div class='node-name'>Writing text: 9108238533089 to Element: idNumber</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:21 AM</span>
+						<span class='node-duration'>0h 0m 0s+472ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -875,88 +858,91 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:31 PM</td>
-													<td class='step-details'>Successfully Verified : Verify Newsletter subscription, you are not Subscibed to newsletter Expected : You aren't subscribed to our newsletter. Actual :You aren't subscribed to our newsletter.<img data-featherlight='\reports\screenshots\120210324125130912.png' width='10%' src='\reports\screenshots\120210324125130912.png' data-src='\reports\screenshots\120210324125130912.png'></td>
+													<td class='timestamp'>11:46:22 AM</td>
+													<td class='step-details'>Writing text: 9108238533089 to Element: com.aventstack.extentreports.ExtentTest@7c4697fc</td>
 												</tr>
 										</tbody>
 									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114622123.png' width='10%' src='\reports\screenshots\120210326114622123.png' data-src='\reports\screenshots\120210326114622123.png'></li>
+										</ul>
+								</div>
+						</div>
+				</li>
+				<li class='node level-2 leaf pass' status='pass' test-id='27'>
+					<div class='collapsible-header'>
+						<div class='node-name'>Select value from dropdown : province</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:34 AM</span>
+						<span class='node-duration'>0h 0m 0s+559ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>11:46:34 AM</td>
+													<td class='step-details'>Successfully selected : province Expected : Gauteng Actual :Gauteng<img data-featherlight='\reports\screenshots\120210326114634714.png' width='10%' src='\reports\screenshots\120210326114634714.png' data-src='\reports\screenshots\120210326114634714.png'></td>
+												</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+				</li>
+				<li class='node level-2 leaf pass' status='pass' test-id='28'>
+					<div class='collapsible-header'>
+						<div class='node-name'>Clicked Element: ContinueToPayment</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:44 AM</span>
+						<span class='node-duration'>0h 0m 0s+486ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>11:46:45 AM</td>
+													<td class='step-details'>Clicked Element: ContinueToPaymentcom.aventstack.extentreports.ExtentTest@140fa482</td>
+												</tr>
+										</tbody>
+									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114645124.png' width='10%' src='\reports\screenshots\120210326114645124.png' data-src='\reports\screenshots\120210326114645124.png'></li>
+										</ul>
 								</div>
 						</div>
 				</li>
 						</ul>
 				</li>
-				<li class='node level-1  pass' status='pass' test-id='27'>
+				<li class='node level-1  pass' status='pass' test-id='29'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Login_magento</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:33 PM</span>
-						<span class='node-duration'>0h 0m 12s+673ms</span>
+						<div class='node-name'>CheckoutpaymentOption</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:46 AM</span>
+						<span class='node-duration'>0h 0m 34s+404ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<ul class='collapsible node-list' data-collapsible='accordion'>
-				<li class='node level-2 leaf pass' status='pass' test-id='28'>
-					<div class='collapsible-header'>
-						<div class='node-name'>Verify Navigate to magento admin page is success</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:39 PM</span>
-						<span class='node-duration'>0h 0m 0s+286ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:39 PM</td>
-													<td class='step-details'>Successfully Verified : Navigate to magento admin page is success Expected : Magento Admin Actual :Magento Admin<img data-featherlight='\reports\screenshots\120210324125139531.png' width='10%' src='\reports\screenshots\120210324125139531.png' data-src='\reports\screenshots\120210324125139531.png'></td>
-												</tr>
-										</tbody>
-									</table>
-								</div>
-						</div>
-				</li>
-				<li class='node level-2 leaf pass' status='pass' test-id='29'>
-					<div class='collapsible-header'>
-						<div class='node-name'>Writing text: 225505 to Element: Username feild</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:39 PM</span>
-						<span class='node-duration'>0h 0m 0s+431ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:40 PM</td>
-													<td class='step-details'>Writing text: 225505 to Element: com.aventstack.extentreports.ExtentTest@2df7766b</td>
-												</tr>
-										</tbody>
-									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125139920.png' width='10%' src='\reports\screenshots\120210324125139920.png' data-src='\reports\screenshots\120210324125139920.png'></li>
-										</ul>
-								</div>
-						</div>
-				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='30'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Writing text: Password4 to Element: Password feild</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:40 PM</span>
-						<span class='node-duration'>0h 0m 0s+412ms</span>
+						<div class='node-name'>Check Enability of Button is false</div>						
+						<span class='node-time'>Mar 26, 2021 11:46:54 AM</span>
+						<span class='node-duration'>0h 0m 0s+324ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -972,22 +958,19 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:40 PM</td>
-													<td class='step-details'>Writing text: Password4 to Element: com.aventstack.extentreports.ExtentTest@3031d9e9</td>
+													<td class='timestamp'>11:46:54 AM</td>
+													<td class='step-details'>Verify that Place Order button Enabled  Expected : false Actual :false<img data-featherlight='\reports\screenshots\120210326114654103.png' width='10%' src='\reports\screenshots\120210326114654103.png' data-src='\reports\screenshots\120210326114654103.png'></td>
 												</tr>
 										</tbody>
 									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125140371.png' width='10%' src='\reports\screenshots\120210324125140371.png' data-src='\reports\screenshots\120210324125140371.png'></li>
-										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='31'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: click Magento_SigninBtn</div>						
-						<span class='node-time'>Mar 24, 2021 12:51:40 PM</span>
-						<span class='node-duration'>0h 0m 5s+194ms</span>
+						<div class='node-name'>Clicked Element: Select Payment option payUcreditcard</div>						
+						<span class='node-time'>Mar 26, 2021 11:47:04 AM</span>
+						<span class='node-duration'>0h 0m 0s+567ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -1003,8 +986,36 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:51:45 PM</td>
-													<td class='step-details'>Successfully clicked on click Magento_SigninBtn<img data-featherlight='\reports\screenshots\120210324125145578.png' width='10%' src='\reports\screenshots\120210324125145578.png' data-src='\reports\screenshots\120210324125145578.png'></td>
+													<td class='timestamp'>11:47:05 AM</td>
+													<td class='step-details'>Successfully clicked on Select Payment option payUcreditcard<img data-featherlight='\reports\screenshots\120210326114704679.png' width='10%' src='\reports\screenshots\120210326114704679.png' data-src='\reports\screenshots\120210326114704679.png'></td>
+												</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+				</li>
+				<li class='node level-2 leaf pass' status='pass' test-id='32'>
+					<div class='collapsible-header'>
+						<div class='node-name'>Clicked Element: Click on Place order Button</div>						
+						<span class='node-time'>Mar 26, 2021 11:47:20 AM</span>
+						<span class='node-duration'>0h 0m 0s+437ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>11:47:20 AM</td>
+													<td class='step-details'>Successfully clicked on Click on Place order Button<img data-featherlight='\reports\screenshots\120210326114720161.png' width='10%' src='\reports\screenshots\120210326114720161.png' data-src='\reports\screenshots\120210326114720161.png'></td>
 												</tr>
 										</tbody>
 									</table>
@@ -1013,50 +1024,19 @@
 				</li>
 						</ul>
 				</li>
-				<li class='node level-1  pass' status='pass' test-id='32'>
+				<li class='node level-1  pass' status='pass' test-id='33'>
 					<div class='collapsible-header'>
-						<div class='node-name'>SapCustomer</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:05 PM</span>
-						<span class='node-duration'>0h 0m 54s+31ms</span>
+						<div class='node-name'>PayUPagePayment</div>						
+						<span class='node-time'>Mar 26, 2021 11:47:20 AM</span>
+						<span class='node-duration'>0h 0m 10s+690ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<ul class='collapsible node-list' data-collapsible='accordion'>
-				<li class='node level-2 leaf pass' status='pass' test-id='33'>
-					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Customer Tab</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:05 PM</span>
-						<span class='node-duration'>0h 0m 0s+607ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:05 PM</td>
-													<td class='step-details'>Clicked Element: Customer Tabcom.aventstack.extentreports.ExtentTest@30b075b9</td>
-												</tr>
-										</tbody>
-									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125205563.png' width='10%' src='\reports\screenshots\120210324125205563.png' data-src='\reports\screenshots\120210324125205563.png'></li>
-										</ul>
-								</div>
-						</div>
-				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='34'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: All Customers Tab</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:05 PM</span>
-						<span class='node-duration'>0h 0m 3s+224ms</span>
+						<div class='node-name'>Clicked Element:  Card option in PayU</div>						
+						<span class='node-time'>Mar 26, 2021 11:47:25 AM</span>
+						<span class='node-duration'>0h 0m 2s+863ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -1072,22 +1052,19 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:09 PM</td>
-													<td class='step-details'>Clicked Element: All Customers Tabcom.aventstack.extentreports.ExtentTest@7ccfed46</td>
+													<td class='timestamp'>11:47:28 AM</td>
+													<td class='step-details'>Successfully clicked on  Card option in PayU<img data-featherlight='\reports\screenshots\120210326114728471.png' width='10%' src='\reports\screenshots\120210326114728471.png' data-src='\reports\screenshots\120210326114728471.png'></td>
 												</tr>
 										</tbody>
 									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125208784.png' width='10%' src='\reports\screenshots\120210324125208784.png' data-src='\reports\screenshots\120210324125208784.png'></li>
-										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='35'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Cleared Filters</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:25 PM</span>
-						<span class='node-duration'>0h 0m 0s+428ms</span>
+						<div class='node-name'>Writing text: 4532071567169271 to Element: card number</div>						
+						<span class='node-time'>Mar 26, 2021 11:47:28 AM</span>
+						<span class='node-duration'>0h 0m 0s+446ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -1103,22 +1080,22 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:25 PM</td>
-													<td class='step-details'>Clicked Element: Cleared Filterscom.aventstack.extentreports.ExtentTest@5cdafb4d</td>
+													<td class='timestamp'>11:47:29 AM</td>
+													<td class='step-details'>Writing text: 4532071567169271 to Element: com.aventstack.extentreports.ExtentTest@60c68c7b</td>
 												</tr>
 										</tbody>
 									</table>
 										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125225277.png' width='10%' src='\reports\screenshots\120210324125225277.png' data-src='\reports\screenshots\120210324125225277.png'></li>
+												<li><img data-featherlight='\reports\screenshots\120210326114728988.png' width='10%' src='\reports\screenshots\120210326114728988.png' data-src='\reports\screenshots\120210326114728988.png'></li>
 										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='36'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Filter tab</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:31 PM</span>
-						<span class='node-duration'>0h 0m 0s+523ms</span>
+						<div class='node-name'>Writing text: Felipe Oliveira Cunha to Element: name on card</div>						
+						<span class='node-time'>Mar 26, 2021 11:47:29 AM</span>
+						<span class='node-duration'>0h 0m 0s+420ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -1134,52 +1111,21 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:32 PM</td>
-													<td class='step-details'>Clicked Element: Filter tabcom.aventstack.extentreports.ExtentTest@5ad13be4</td>
+													<td class='timestamp'>11:47:29 AM</td>
+													<td class='step-details'>Writing text: Felipe Oliveira Cunha to Element: com.aventstack.extentreports.ExtentTest@5d1907fb</td>
 												</tr>
 										</tbody>
 									</table>
 										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125231776.png' width='10%' src='\reports\screenshots\120210324125231776.png' data-src='\reports\screenshots\120210324125231776.png'></li>
+												<li><img data-featherlight='\reports\screenshots\120210326114729421.png' width='10%' src='\reports\screenshots\120210326114729421.png' data-src='\reports\screenshots\120210326114729421.png'></li>
 										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='37'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Writing text: fake051966124547736@automationjdg.co.za to Element: Email search field</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:32 PM</span>
-						<span class='node-duration'>0h 0m 0s+588ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:32 PM</td>
-													<td class='step-details'>Writing text: fake051966124547736@automationjdg.co.za to Element: com.aventstack.extentreports.ExtentTest@4fe4b8b6</td>
-												</tr>
-										</tbody>
-									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125232504.png' width='10%' src='\reports\screenshots\120210324125232504.png' data-src='\reports\screenshots\120210324125232504.png'></li>
-										</ul>
-								</div>
-						</div>
-				</li>
-				<li class='node level-2 leaf pass' status='pass' test-id='38'>
-					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Apply to filters</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:32 PM</span>
+						<div class='node-name'>Select value from dropdown : Select Expirey Month on Card</div>						
+						<span class='node-time'>Mar 26, 2021 11:47:29 AM</span>
 						<span class='node-duration'>0h 0m 0s+586ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
@@ -1196,22 +1142,19 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:33 PM</td>
-													<td class='step-details'>Clicked Element: Apply to filterscom.aventstack.extentreports.ExtentTest@f4aec23</td>
+													<td class='timestamp'>11:47:30 AM</td>
+													<td class='step-details'>Successfully selected : Select Expirey Month on Card Expected : 8 Actual :8<img data-featherlight='\reports\screenshots\120210326114729992.png' width='10%' src='\reports\screenshots\120210326114729992.png' data-src='\reports\screenshots\120210326114729992.png'></td>
 												</tr>
 										</tbody>
 									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125233052.png' width='10%' src='\reports\screenshots\120210324125233052.png' data-src='\reports\screenshots\120210324125233052.png'></li>
-										</ul>
 								</div>
 						</div>
 				</li>
-				<li class='node level-2 leaf pass' status='pass' test-id='39'>
+				<li class='node level-2 leaf pass' status='pass' test-id='38'>
 					<div class='collapsible-header'>
-						<div class='node-name'>javaScriptClick element: Customer Details</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:33 PM</span>
-						<span class='node-duration'>0h 0m 6s+300ms</span>
+						<div class='node-name'>Select value from dropdown : Select Expirey Month on Card</div>						
+						<span class='node-time'>Mar 26, 2021 11:47:30 AM</span>
+						<span class='node-duration'>0h 0m 0s+546ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -1227,22 +1170,50 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:39 PM</td>
-													<td class='step-details'>Clicked Element: Customer Detailscom.aventstack.extentreports.ExtentTest@3437fc4f</td>
+													<td class='timestamp'>11:47:30 AM</td>
+													<td class='step-details'>Successfully selected : Select Expirey Month on Card Expected : 2026 Actual :2026<img data-featherlight='\reports\screenshots\120210326114730532.png' width='10%' src='\reports\screenshots\120210326114730532.png' data-src='\reports\screenshots\120210326114730532.png'></td>
+												</tr>
+										</tbody>
+									</table>
+								</div>
+						</div>
+				</li>
+				<li class='node level-2 leaf pass' status='pass' test-id='39'>
+					<div class='collapsible-header'>
+						<div class='node-name'>Writing text: 773 to Element: cvv number</div>						
+						<span class='node-time'>Mar 26, 2021 11:47:30 AM</span>
+						<span class='node-duration'>0h 0m 0s+428ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>11:47:31 AM</td>
+													<td class='step-details'>Writing text: 773 to Element: com.aventstack.extentreports.ExtentTest@570089c4</td>
 												</tr>
 										</tbody>
 									</table>
 										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125239571.png' width='10%' src='\reports\screenshots\120210324125239571.png' data-src='\reports\screenshots\120210324125239571.png'></li>
+												<li><img data-featherlight='\reports\screenshots\120210326114730945.png' width='10%' src='\reports\screenshots\120210326114730945.png' data-src='\reports\screenshots\120210326114730945.png'></li>
 										</ul>
 								</div>
 						</div>
 				</li>
 				<li class='node level-2 leaf pass' status='pass' test-id='40'>
 					<div class='collapsible-header'>
-						<div class='node-name'>Has next Page louded? View Customer Details Page</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:44 PM</span>
-						<span class='node-duration'>0h 0m 0s+414ms</span>
+						<div class='node-name'>Clicked Element: Payment submission button</div>						
+						<span class='node-time'>Mar 26, 2021 11:47:31 AM</span>
+						<span class='node-duration'>0h 0m 0s+398ms</span>
 						<span class='test-status right pass'>pass</span>
 					</div>
 						<div class='collapsible-body'>
@@ -1258,182 +1229,8 @@
 										<tbody>
 												<tr class='log' status='pass'>
 													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:45 PM</td>
-													<td class='step-details'>Page has been loaded: View Customer Details Pagecom.aventstack.extentreports.ExtentTest@42a198dd</td>
-												</tr>
-										</tbody>
-									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125244954.png' width='10%' src='\reports\screenshots\120210324125244954.png' data-src='\reports\screenshots\120210324125244954.png'></li>
-										</ul>
-								</div>
-						</div>
-				</li>
-				<li class='node level-2 leaf pass' status='pass' test-id='41'>
-					<div class='collapsible-header'>
-						<div class='node-name'>Clicked Element: Account Information</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:45 PM</span>
-						<span class='node-duration'>0h 0m 0s+524ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:45 PM</td>
-													<td class='step-details'>Clicked Element: Account Informationcom.aventstack.extentreports.ExtentTest@3b446d7</td>
-												</tr>
-										</tbody>
-									</table>
-										<ul class='screenshots'>
-												<li><img data-featherlight='\reports\screenshots\120210324125245511.png' width='10%' src='\reports\screenshots\120210324125245511.png' data-src='\reports\screenshots\120210324125245511.png'></li>
-										</ul>
-								</div>
-						</div>
-				</li>
-				<li class='node level-2 leaf pass' status='pass' test-id='42'>
-					<div class='collapsible-header'>
-						<div class='node-name'>Verify Verify the BP number of user in Magento :</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:56 PM</span>
-						<span class='node-duration'>0h 0m 0s+291ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:56 PM</td>
-													<td class='step-details'>Successfully Verified : Verify the BP number of user in Magento : Expected : true Actual :true-BP no : 0105290387<img data-featherlight='\reports\screenshots\120210324125256014.png' width='10%' src='\reports\screenshots\120210324125256014.png' data-src='\reports\screenshots\120210324125256014.png'></td>
-												</tr>
-										</tbody>
-									</table>
-								</div>
-						</div>
-				</li>
-				<li class='node level-2 leaf pass' status='pass' test-id='43'>
-					<div class='collapsible-header'>
-						<div class='node-name'>Verify SAP First name</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:58 PM</span>
-						<span class='node-duration'>0h 0m 0s+288ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:58 PM</td>
-													<td class='step-details'>Successfully Verified : SAP First name Expected : Brian Actual :Brian<img data-featherlight='\reports\screenshots\120210324125258176.png' width='10%' src='\reports\screenshots\120210324125258176.png' data-src='\reports\screenshots\120210324125258176.png'></td>
-												</tr>
-										</tbody>
-									</table>
-								</div>
-						</div>
-				</li>
-				<li class='node level-2 leaf pass' status='pass' test-id='44'>
-					<div class='collapsible-header'>
-						<div class='node-name'>Verify SAP Last name</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:58 PM</span>
-						<span class='node-duration'>0h 0m 0s+338ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:58 PM</td>
-													<td class='step-details'>Successfully Verified : SAP Last name Expected : Jones Actual :Jones<img data-featherlight='\reports\screenshots\120210324125258464.png' width='10%' src='\reports\screenshots\120210324125258464.png' data-src='\reports\screenshots\120210324125258464.png'></td>
-												</tr>
-										</tbody>
-									</table>
-								</div>
-						</div>
-				</li>
-				<li class='node level-2 leaf pass' status='pass' test-id='45'>
-					<div class='collapsible-header'>
-						<div class='node-name'>Verify SAP Email</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:58 PM</span>
-						<span class='node-duration'>0h 0m 0s+267ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:59 PM</td>
-													<td class='step-details'>Successfully Verified : SAP Email Expected : fake051966124547736@automationjdg.co.za Actual :fake051966124547736@automationjdg.co.za<img data-featherlight='\reports\screenshots\120210324125258802.png' width='10%' src='\reports\screenshots\120210324125258802.png' data-src='\reports\screenshots\120210324125258802.png'></td>
-												</tr>
-										</tbody>
-									</table>
-								</div>
-						</div>
-				</li>
-				<li class='node level-2 leaf pass' status='pass' test-id='46'>
-					<div class='collapsible-header'>
-						<div class='node-name'>Verify SAP SA ID</div>						
-						<span class='node-time'>Mar 24, 2021 12:52:59 PM</span>
-						<span class='node-duration'>0h 0m 0s+264ms</span>
-						<span class='test-status right pass'>pass</span>
-					</div>
-						<div class='collapsible-body'>
-								<div class='node-steps'>
-									<table class='bordered table-results'>
-										<thead>
-											<tr>
-												<th>Status</th>
-												<th>Timestamp</th>
-												<th>Details</th>
-											</tr>
-										</thead>
-										<tbody>
-												<tr class='log' status='pass'>
-													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
-													<td class='timestamp'>12:52:59 PM</td>
-													<td class='step-details'>Successfully Verified : SAP SA ID Expected : 9708027466084 Actual :9708027466084<img data-featherlight='\reports\screenshots\120210324125259069.png' width='10%' src='\reports\screenshots\120210324125259069.png' data-src='\reports\screenshots\120210324125259069.png'></td>
+													<td class='timestamp'>11:47:31 AM</td>
+													<td class='step-details'>Successfully clicked on Payment submission button<img data-featherlight='\reports\screenshots\120210326114731362.png' width='10%' src='\reports\screenshots\120210326114731362.png' data-src='\reports\screenshots\120210326114731362.png'></td>
 												</tr>
 										</tbody>
 									</table>
@@ -1441,6 +1238,78 @@
 						</div>
 				</li>
 						</ul>
+				</li>
+				<li class='node level-1  pass' status='pass' test-id='41'>
+					<div class='collapsible-header'>
+						<div class='node-name'>ic_RetriveOrderID</div>						
+						<span class='node-time'>Mar 26, 2021 11:47:31 AM</span>
+						<span class='node-duration'>0h 0m 10s+292ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<ul class='collapsible node-list' data-collapsible='accordion'>
+				<li class='node level-2 leaf pass' status='pass' test-id='42'>
+					<div class='collapsible-header'>
+						<div class='node-name'>is element on next page ?</div>						
+						<span class='node-time'>Mar 26, 2021 11:47:41 AM</span>
+						<span class='node-duration'>0h 0m 0s+290ms</span>
+						<span class='test-status right pass'>pass</span>
+					</div>
+						<div class='collapsible-body'>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='pass'>
+													<td class='status pass' title='pass' alt='pass'><i class='material-icons'>check_circle</i></td>
+													<td class='timestamp'>11:47:42 AM</td>
+													<td class='step-details'>Element is on next pagecom.aventstack.extentreports.ExtentTest@66c88fce</td>
+												</tr>
+										</tbody>
+									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114741948.png' width='10%' src='\reports\screenshots\120210326114741948.png' data-src='\reports\screenshots\120210326114741948.png'></li>
+										</ul>
+								</div>
+						</div>
+				</li>
+						</ul>
+				</li>
+				<li class='node level-1 leaf fail' status='fail' test-id='43'>
+					<div class='collapsible-header'>
+						<div class='node-name'>Exception</div>						
+						<span class='node-time'>Mar 26, 2021 11:48:46 AM</span>
+						<span class='node-duration'>0h 0m 0s+0ms</span>
+						<span class='test-status right fail'>fail</span>
+					</div>
+						<div class='collapsible-body'>
+								<div class='node-steps'>
+									<table class='bordered table-results'>
+										<thead>
+											<tr>
+												<th>Status</th>
+												<th>Timestamp</th>
+												<th>Details</th>
+											</tr>
+										</thead>
+										<tbody>
+												<tr class='log' status='fail'>
+													<td class='status fail' title='fail' alt='fail'><i class='material-icons'>cancel</i></td>
+													<td class='timestamp'>11:48:46 AM</td>
+													<td class='step-details'>Expected condition failed: waiting for utils.Action$11@22db12f6 (tried for 30 second(s) with 1000 milliseconds interval)com.aventstack.extentreports.ExtentTest@59f56892</td>
+												</tr>
+										</tbody>
+									</table>
+										<ul class='screenshots'>
+												<li><img data-featherlight='\reports\screenshots\120210326114846347.png' width='10%' src='\reports\screenshots\120210326114846347.png' data-src='\reports\screenshots\120210326114846347.png'></li>
+										</ul>
+								</div>
+						</div>
 				</li>
 	</ul>
 					</div>
@@ -1480,31 +1349,31 @@
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Tests
-					<div class='panel-lead'>42</div>
+					<div class='panel-lead'>37</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Steps
-					<div class='panel-lead'>42</div>
+					<div class='panel-lead'>37</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Start
-					<div class='panel-lead'>Mar 24, 2021 12:50:21 PM</div>
+					<div class='panel-lead'>Mar 26, 2021 11:44:37 AM</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 			 		End
-			 		<div class='panel-lead'>Mar 24, 2021 12:53:03 PM</div>
+			 		<div class='panel-lead'>Mar 26, 2021 11:48:50 AM</div>
 				</div>
 			</div>
 			<div class='col s2'>
 				<div class='card-panel r'>
 					Time Taken
-					<div class='panel-lead'>161,884ms</div>
+					<div class='panel-lead'>252,757ms</div>
 				</div>
 			</div>
 			<div class='col s4'>
@@ -1537,22 +1406,22 @@
 
 		<script>
 			var statusGroup = {
-				passParent: 42,
-				failParent: 0,
+				passParent: 36,
+				failParent: 1,
 				fatalParent: 0,
 				errorParent: 0,
 				warningParent: 0,
 				skipParent: 0,
-				exceptionsParent: 0,
+				exceptionsParent: 1,
 				
-				passChild: 42,
-				failChild: 0,
+				passChild: 36,
+				failChild: 1,
 				fatalChild: 0,
 				errorChild: 0,
 				warningChild: 0,
 				skipChild: 0,
 				infoChild: 0,
-				exceptionsChild: 0,
+				exceptionsChild: 1,
 				
 				passGrandChild: 0,
 				failGrandChild: 0,

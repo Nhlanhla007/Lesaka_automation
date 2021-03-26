@@ -102,10 +102,7 @@ public class JDTests extends BaseTest {
 								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								runKeyWord(actionToRun,test);
-//								writeToExcel(new File(dataTable2.filePath()));
-								writeToSingleSheet(new File(dataTable2.filePath()),"ic_login");
 								writeToExcel(createFile());
-
 							}
 					}
 				} catch (Exception e) {
@@ -152,6 +149,7 @@ public class JDTests extends BaseTest {
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver,dataTable2);
 		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
 		IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
+        admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -257,6 +255,11 @@ public class JDTests extends BaseTest {
 				rowNumber = findRowToRun(dataMap2.get("icGiftCardVerificationSender++"), 0, testcaseID);
 				icGiftCardVerification.clearEmail(dataMap2.get("icGiftCardVerificationSender++"),test1,rowNumber);
 				break;
+            case "giftCardReport":
+                ArrayList<HashMap<String, ArrayList<String>>> mySheet=new ArrayList<HashMap<String, ArrayList<String>>>();
+                mySheet.add(dataMap2.get(currentKeyWord+"++"));
+                giftCardReport.giftCardReports(mySheet,test1,testcaseID);
+                break;
 			case "VeriyGiftcardUsableity":
 				GiftCardUsability.VeriyGiftcardUsableity(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;

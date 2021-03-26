@@ -24,15 +24,17 @@ public class IC_RetriveOrderID {
     }
 
 //    @FindBy(xpath = "//p[contains(text(),'Your order # is')]")
-    @FindBy(xpath = "//*[@class='checkout-success']/p//span")
+    @FindBy(xpath = "//*[@class='checkout-success']/p/span")
     WebElement OderID;
 
     public void RetriveOrderID(ExtentTest test) throws IOException {
         String Oderid = null;
+        action.explicitWait(10000);
         action.isElementOnNextPage(OderID, (long) 11,test);
         Oderid = action.getText(OderID, "Order ID");
         Oderid = Oderid.replace("Your order # is: ","").replace(".","");
         dataTable2.setValueOnCurrentModule ("orderID",Oderid);
         dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);
     }
+
 }
