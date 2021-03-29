@@ -157,7 +157,10 @@ public class JDTests extends BaseTest {
         Magento_CancelSalesorderVerification CancelSalesorderVerification =new Magento_CancelSalesorderVerification(driver,dataTable2);
         Magento_CreditApp_NavigateFilter CreditApp_NavigateFilter = new Magento_CreditApp_NavigateFilter(driver,dataTable2);
         Magento_CreditStatusVerification CreditStatusVerification = new Magento_CreditStatusVerification(driver,dataTable2);
-        ExtentTest test1=test.createNode(moduleToRun);
+		ic_RefreshLogoHomepage icLogo = new ic_RefreshLogoHomepage(driver, dataTable2);
+		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver);
+		ic_PopularSearch PopularSearch =new ic_PopularSearch(driver,dataTable2);
+		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
 			rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
@@ -295,12 +298,16 @@ public class JDTests extends BaseTest {
 			case "CancelSalesorderVerification":
 				CancelSalesorderVerification.verifyCancelOrderdetails_commentHistory(test1, rowNumber);
 				break;
-		
 			case "CreditApp_NavigateFilter":
 				CreditApp_NavigateFilter.VerifyCreditAppSelection(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "CreditStatusVerification":
 				CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+			case "icLogoHomepage":
+				icLogo.homepageLogo(test1);
+				break;
+			case "icPopularSearch":
+				PopularSearch.VerifyPopularSearch(test1, rowNumber);
 				break;
 		}
 	}
