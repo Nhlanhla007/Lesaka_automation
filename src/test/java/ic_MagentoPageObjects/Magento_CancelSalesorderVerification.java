@@ -35,7 +35,7 @@ public class Magento_CancelSalesorderVerification {
 	public void verifyCancelOrderdetails_commentHistory(ExtentTest test, int rowNumber) throws IOException{
 		boolean checkFinalstatus =false;
 		int timeout=21;
-		try {
+		
 			action.click(CommentHistoryTab, "CommentHistory Tab", test);
 			if(action.elementExists(OrderStatusMsg, timeout)){
 				String OderstatusOnCommentHistory = action.getText(OrderStatusMsg, "Order Status on comment history");
@@ -54,10 +54,7 @@ public class Magento_CancelSalesorderVerification {
 					}
 				}
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			action.CompareResult("Validate Order cancel related message on Comment History Tab", "True", "False", test);
-		}
+		
 		if(checkFinalstatus){
 			action.CompareResult("Verification of details in magento comment history", "True", "True", test);
 		}else{

@@ -44,16 +44,15 @@ public class Magento_CancelSalerOrderCreditMemo {
 	public void magento_CancelSalesOrder(ExtentTest test, int rowNumber) throws IOException{
 		int Standardtimeout =21;
 		String orderStatuscheck ="Closed";
-		try {
+		
 			action.click(Credit_memo, "Credit Memo", test);
 			boolean refundProcessFalg  = Verify_RefundOffline(test, Standardtimeout);
 			if(refundProcessFalg){
 				action.CompareResult("Order Status", orderStatuscheck, OrderStatusele.getText().trim(), test);	
+			}else{
+				action.CompareResult("Order Status", orderStatuscheck, OrderStatusele.getText().trim(), test);	
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			action.CompareResult("Cancel sales order in magento backend", "True", e.getMessage().toString(), test);
-		}
+	
 	}
 	
 	
