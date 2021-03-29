@@ -150,7 +150,9 @@ public class JDTests extends BaseTest {
 		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
 		IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
         admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
-		ExtentTest test1=test.createNode(moduleToRun);
+        Magento_CreditApp_NavigateFilter CreditApp_NavigateFilter = new Magento_CreditApp_NavigateFilter(driver,dataTable2);
+        Magento_CreditStatusVerification CreditStatusVerification = new Magento_CreditStatusVerification(driver,dataTable2);
+        ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
 			rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
@@ -281,6 +283,12 @@ public class JDTests extends BaseTest {
 				sheets.add(dataMap2.get("CreateaccountBackend++"));
 				sheets.add(dataMap2.get("adminUserUpdate++"));
 				customerDB.sapDbTests(dataMap2.get(currentKeyWord+"++"),sheets, test1, testcaseID,rowNumber);
+				break;
+			case "CreditApp_NavigateFilter":
+				CreditApp_NavigateFilter.VerifyCreditAppSelection(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "CreditStatusVerification":
+				CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 		}
 	}
