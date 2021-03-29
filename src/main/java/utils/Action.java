@@ -623,6 +623,7 @@ public class Action {
 			} else {
 				if (((WebElement) elementAttr).isDisplayed()) {
 					flag=true;
+					return flag;
 				}
 			}
 		}catch(Exception e){

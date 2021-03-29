@@ -23,13 +23,11 @@ public class MagentoOrderStatusPage {
 	WebDriver driver;
 	Action action;
 	DataTable2 dataTable2;
-	
-	
 	public MagentoOrderStatusPage(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
-		this.dataTable2=dataTable2;
+		this.dataTable2 = dataTable2;
 	}
 	
 	@FindBy(id = "menu-magento-sales-sales")
@@ -89,6 +87,7 @@ public class MagentoOrderStatusPage {
 	public void searchForOrder(String idToSearch, ExtentTest test) {
 		try {
 			if (action.isDisplayed(clearFilters)) {
+				Thread.sleep(5000);
 				action.click(clearFilters, "Cleared Filters", test);
 				Thread.sleep(5000);
 			}
@@ -127,20 +126,22 @@ public class MagentoOrderStatusPage {
 	
 	@Step("Navigates to the order page")
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) {
-//		String idToSearch =ic_PayUPayment.Oderid;
-		String idToSearch =dataTable2.getValueOnCurrentModule("orderID");
-//		String idToSearch =dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);
+		String POfetchFrom = dataTable2.getValueOnOtherModule("OrderStatusSearch", "Fetch PO number", 0);
+		String idToSearch = "";
+		if(POfetchFrom.equalsIgnoreCase("IC")) {
+			idToSearch= ic_PayUPayment.Oderid;	
+		}else {
+			idToSearch = input.get("productSearchId").get(rowNumber); 
+		}
 		String orderStatus = input.get("orderStatus").get(rowNumber);
 		System.out.println("orderStatus :"+orderStatus);
 		try {
-//			Thread.sleep(15000);
 			action.explicitWait(15000);
 			NavigateOdersPage(test);
-//			ConfigFileReader configFileReader = new ConfigFileReader();
-//			idToSearch=configFileReader.getPropertySavedVal("OrderID");
 			searchForOrder(idToSearch,test);
 			orderStatusCheck(orderStatus, test);
 			viewOrderDetails(test);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
