@@ -76,8 +76,11 @@ public class MagentoRetrieveCustomerDetailsPage {
 			}
 
 			action.click(magentoFilterTab, "Filter tab", test);
+			action.explicitWait(2000);
 			action.clear(emailSearchField, "Email ID");
+			action.explicitWait(2000);
 			action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
+			action.explicitWait(2000);
 			action.click(magentoApplyFilterTab, "Apply to filters", test);
 			testallFlag=false;
 

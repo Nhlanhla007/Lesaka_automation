@@ -83,7 +83,7 @@ public class JDTests extends BaseTest {
 				startBrowserSession();
 				configFileReader.setPropertyVal("sequence","true");
 				try {
-					for(int j=0;j<10;j++){
+					for(int j=0;j<11;j++){
 						String actionToRunLable="Action"+(j+1);
 						String actionToRun=singleSuiteData.get(actionToRunLable).get(i);
 						currentKeyWord=actionToRun;
@@ -106,6 +106,7 @@ public class JDTests extends BaseTest {
 					}
 				} catch (Exception e) {
 					logger.info(e.getMessage());
+					e.printStackTrace();
 					String screenShot=GenerateScreenShot.getScreenShot(driver);
 					ExtentTest node = test.createNode("Exception");
 					node.fail(e.getMessage()+node.addScreenCaptureFromPath(screenShot));
@@ -119,6 +120,7 @@ public class JDTests extends BaseTest {
 	public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
 		String moduleToRun=actionToRun;
 		IConnection ic=new IConnection(driver,dataTable2);
+		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
 		ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);
 		ic_PayUPayment  PayU = new ic_PayUPayment(driver,dataTable2);
 		Ic_Products products = new Ic_Products(driver,dataTable2);
@@ -132,7 +134,7 @@ public class JDTests extends BaseTest {
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver,dataTable2);
 		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
 		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver,dataTable2);
-		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
+		
 		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver,dataTable2);
 		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver,dataTable2);
 		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver,dataTable2);
@@ -145,7 +147,7 @@ public class JDTests extends BaseTest {
     	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver,dataTable2);
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver,dataTable2);
-		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2);
+		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -211,7 +213,7 @@ public class JDTests extends BaseTest {
 				break;
 			case "Magento_UserInfoVerification":
     			rowNumber = findRowToRun(dataMap2.get("accountCreation++"), 0, testcaseID);
-				//Magentoverify.Validate_UserInfobackend(dataMap2.get("accountCreation" + "++"),test1,rowNumber);
+				Magentoverify.Validate_UserInfobackend(dataMap2.get("accountCreation" + "++"),test1,rowNumber);
 				break;
 			case "CreateaccountBackend":
 				MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
@@ -333,7 +335,7 @@ public class JDTests extends BaseTest {
 		}
 
 	public void endBrowserSession() throws IOException {
-		driver.close();
+		//driver.close();
 
 	}
 	public void writeToExcel(File filePath) throws IOException {

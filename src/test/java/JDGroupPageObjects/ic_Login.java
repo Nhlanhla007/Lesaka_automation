@@ -57,6 +57,7 @@ public class ic_Login {
 //			action.waitForPageLoaded(10);
 			action.explicitWait(10000);
 			ic_myAccountButton.click();
+			action.explicitWait(3000);
 			ic_myAccountlist.click();
 			
 			List<String> userCred = new ArrayList<>();

@@ -1,9 +1,11 @@
 package ic_MagentoPageObjects;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,26 +14,36 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
+import JDGroupPageObjects.ICDelivery;
 import utils.Action;
 import utils.DataTable2;
+import utils.hana;
 
 public class Magento_UserInfoVerification {
 	
 	WebDriver driver;
 	Action action;
+	DataTable2 dataTable2;
 	MagentoRetrieveCustomerDetailsPage MagentoRetrieveCustomer;
-	MagentoAccountInformation magentoAccountInformation = new MagentoAccountInformation(driver, dataTable2);
-	public Magento_UserInfoVerification(WebDriver driver, DataTable2 dataTable2) {
-		this.driver = driver;
-
-		MagentoRetrieveCustomer = new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
-		PageFactory.initElements(driver, this);
-		action = new Action(driver);
+	MagentoAccountInformation magentoAccountInformation = new MagentoAccountInformation(driver,dataTable2);
+	ICDelivery registeredCustomerDetails;
+	
+	 public Magento_UserInfoVerification (WebDriver driver, DataTable2 dataTable2) {
+			this.driver = driver;
+			this.dataTable2 = dataTable2;
+			MagentoRetrieveCustomer = new MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
+			PageFactory.initElements(driver, this);
+			action = new Action(driver);
+			registeredCustomerDetails = new ICDelivery(driver, dataTable2);
+		}
+	
+	public Magento_UserInfoVerification() {
+		System.out.println("Hello");
 	}
 	@FindBy(xpath = "//input[@name='customer[partner_number]']")
 	WebElement customerBPnnumber;
-	//@FindBy(xpath = "//span[contains(text(),'Account Information')]") 
-	@FindBy(xpath = "//*[@id='page:left']/div/div/ul/li[@class='admin__page-nav-item']")
+	@FindBy(xpath = "//span[contains(text(),'Account Information')]") 
+	//@FindBy(xpath = "//*[@id='page:left']/div/div/ul/li[@class='admin__page-nav-item']")
 	WebElement Account_Information;
 	@FindBy(xpath = "//input[@name='customer[firstname]']")
 	WebElement Cust_Firstname;
@@ -49,57 +61,96 @@ public class Magento_UserInfoVerification {
 	
 	@FindBy(xpath = "//a[@id='tab_newsletter_content']")
 	WebElement Tab_NewsLetter;
-	
+	//Ic Update usr first/lastname taxvat email
 	@FindBy(xpath = "//input[@id='_newslettersubscription']")
 	WebElement Cust_NewsLetter;
-	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException, ClassNotFoundException {
-		int TimetoLoadpage=11;	
-		String ExpWebsite =input.get("WebSite").get(rowNumber);
-		String ExpFirstname=input.get("firstName").get(rowNumber);//"Brian";
-		String ExpLastname=input.get("lastName").get(rowNumber);//"Jones";
-		String ExpEmail=input.get("emailAddress").get(rowNumber);//"BrenoFernandesMalingaPatrick8@armyspy.com";
 	
+	@FindBy(xpath = "//*[@id=\"sales_order_view_tabs_order_info_content\"]/section[2]//a")
+	WebElement guestEditBtn;
+	
+	@FindBy(xpath = "//*[@id=\"sales_order_view_tabs_order_info_content\"]/section[1]//table/tbody/tr[2]/td/a")
+	WebElement guestEmail;
+	
+	@FindBy(id = "firstname")
+	WebElement guestFirstName;
+	
+	@FindBy(id = "lastname")
+	WebElement guestLastName;
+	
+	@FindBy(id = "street0")
+	WebElement guestStreetAddress;
+	
+	@FindBy(id = "city")
+	WebElement guestCity;
+	
+	@FindBy(id = "region_id")
+	WebElement guestProvince;
+	
+	@FindBy(id = "postcode")
+	WebElement guestPostalCode;
+	
+	@FindBy(id = "telephone")
+	WebElement guestTelephone;
+	
+	@FindBy(id = "vat_id")
+	WebElement guestVatNumber;
+	
+	@FindBy(id = "suburb")
+	WebElement guestSuburb;
+	
+	@FindBy(id = "identity_number")
+	WebElement guestID;
+	
+	/* MAGENTO ADDRESS INFORMATION
+	 * @FindBy(xpath="//*[@id=\"tab_address\"]/span[1]") private WebElement
+	 * admin_AddressBtn;
+	 * 
+	 * @FindBy(xpath = "//*[@id=\"container\"]//fieldset/div[1]/button") private
+	 * WebElement editAddressBtn;
+	 * 
+	 * @FindBy(xpath="//input[@name='street[0]']") private WebElement
+	 * admin_Billing_streetAddress;
+	 */
+	
+	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException, ClassNotFoundException {
+		int TimetoLoadpage=11;
+		String ExpFirstname = null;
+		String ExpLastname = null;
+		String ExpEmail = null;
+		String ExpidentityType = null;
+		String ExpPassportnumber = null;
+		String ExpSAIDnumber = null;
+		String vatNumberFlag = null;
+		String ExpVATnumber = null;
+		//DOES NOT WORK
+		//String ExpWebsite =dataTable2.getValueOnOtherModule("accountCreation", "WebSite",0);
+		
+		String typeOfVerificationFlag = dataTable2.getValueOnCurrentModule("Data Source");
+		
+		action.clickEle(Account_Information, "Account Information", test);
+		//IF CONSTUCT FOR WHAT TYPE OF VALIDATION IS TAKING PLACE
+		//For Account creation(Set this way by default)
+		//***************************************
+		if(typeOfVerificationFlag.equalsIgnoreCase("Create Account")) {	
+			//GETS DATA FROM ACCOUNT CREATION
+		ExpFirstname=input.get("firstName").get(rowNumber);//"Brian";
+		ExpLastname=input.get("lastName").get(rowNumber);//"Jones";
+		ExpEmail=input.get("emailAddress").get(rowNumber);//"BrenoFernandesMalingaPatrick8@armyspy.com";
+		
 		//new variables flag  identityType on ID and passport
-		String ExpidentityType =input.get("identityType").get(rowNumber);//"ID";
-		String ExpPassportnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
-		String ExpSAIDnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
+		 ExpidentityType =input.get("identityType").get(rowNumber);//"ID";
+		 ExpPassportnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
+		 ExpSAIDnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
 		
 		//new variable flag on newsletter
 		String ExpNewsletterFalg = input.get("newsletter").get(rowNumber);//"Yes";
 		String NewletterArgs = "";
 		
 		//VAT validation
-		String vatNumberFlag=input.get("vatNumberFlag").get(rowNumber);//"Yes";
-		String ExpVATnumber=input.get("vatNumber").get(rowNumber);//"2222224";
-		
-		//code block---------------------------------------
-		MagentoRetrieveCustomer.navigateToCustomer(test);
-		MagentoRetrieveCustomer.searchForCustomer(ExpEmail, test);
-		MagentoRetrieveCustomer.tableData(ExpEmail, ExpWebsite, test);
-		action.clickEle(Account_Information, "Account_Information", test);
-		//basic verification--------------------------------------------------------------------------------------
-		String ActFirstname = FetchDataFromCustInfo_MagentoBackend(Cust_Firstname, "Customer_Firstname", 11, 2, test);
-		action.CompareResult("Verify the First name in Magento backend : ", ExpFirstname, ActFirstname, test);
-		
-		String ActLastname = FetchDataFromCustInfo_MagentoBackend(Cust_Lastname, "Custome_Lastname", 11, 2, test);
-		action.CompareResult("Verify the Last name in Magento backend : ", ExpLastname, ActLastname, test);
-		
-		String ActEmailname = FetchDataFromCustInfo_MagentoBackend(Cust_Email, "Customer_Email", 11, 2, test);
-		action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, ActEmailname, test);
-
-		String ActualBPnumber =FetchDataFromCustInfo_MagentoBackend(customerBPnnumber,"customerBPnnumber",TimetoLoadpage,40,test);
-		System.out.println("ActualBPnumber:"+ActualBPnumber);
-		//hana han = new hana();
-//		han.hanaconnector(Integer.parseInt(ActualBPnumber));
-		int rowCount=0;
-		//int rowCount=han.hanaconnector(0104022744);
-		if( rowCount==0){
-			action.CompareResult("zero rec : ", ExpEmail, ActEmailname, test);
-		}else{
-			action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, ActEmailname, test);
-		}
-		//validate ID or passport is entered basis of identity type flag..
-		switch (ExpidentityType) {
+		 vatNumberFlag=input.get("vatNumberFlag").get(rowNumber);//"Yes";
+		 ExpVATnumber=input.get("vatNumber").get(rowNumber);//"2222224";
+		 
+		 switch (ExpidentityType) {
 			case "ID":
 				
 				String ActSAID = FetchDataFromCustInfo_MagentoBackend(Cust_SAID, "Customer_SAID", 11, 2, test);
@@ -117,6 +168,12 @@ public class Magento_UserInfoVerification {
 			NewletterArgs ="Newsletter";
 		}else{
 			NewletterArgs ="No newsletter";
+		}
+		
+		//validate the VAT/Tax number
+		if(vatNumberFlag.equalsIgnoreCase("Yes")){
+			String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
+			action.CompareResult("Verify the VAT number in Magento backend : ", ExpVATnumber, ActVAT, test);
 		}
 		
 		switch (NewletterArgs) {
@@ -145,13 +202,153 @@ public class Magento_UserInfoVerification {
 				break;
 		
 		}
-		//validate the VAT/Tax number
-		if(vatNumberFlag.equalsIgnoreCase("Yes")){
+		
+		}else if(typeOfVerificationFlag.equalsIgnoreCase("Create Account Magento Admin")) {
+			//GETS DATA FROM THE CREATE ACCOUNT BACKEND SHEET
+					ExpFirstname= dataTable2.getValueOnOtherModule("CreateaccountBackend", "Firstname", 0);
+					ExpLastname = dataTable2.getValueOnOtherModule("CreateaccountBackend", "Lastname", 0);
+					ExpEmail =dataTable2.getValueOnOtherModule("CreateaccountBackend", "Email", 0);
+					ExpSAIDnumber =dataTable2.getValueOnOtherModule("CreateaccountBackend", "SAID", 0);
+					ExpidentityType = dataTable2.getValueOnOtherModule("CreateaccountBackend", "Identitynumber/passport", 0);
+					ExpPassportnumber= dataTable2.getValueOnOtherModule("CreateaccountBackend", "Passport", 0);
+					switch (ExpidentityType) {
+					case "ID":
+						String ActSAID = FetchDataFromCustInfo_MagentoBackend(Cust_SAID, "Customer_SAID", 11, 2, test);
+						action.CompareResult("Verify the SAID number in Magento backend : ", ExpSAIDnumber, ActSAID, test);
+						break;
+					case "Passport":
+						String ActPassport = FetchDataFromCustInfo_MagentoBackend(Cust_Passport, "Customer_Passport", 11, 2, test);
+						action.CompareResult("Verify the Passport number in Magento backend : ", ExpPassportnumber, ActPassport, test);
+						break;
+				}
+					
+					
+			
+		}else if(typeOfVerificationFlag.equalsIgnoreCase("Update Account")) {
+			//GETS DATA FROM THE icUpdateUser sheet
+			ExpFirstname = dataTable2.getValueOnOtherModule("ICUpdateUser", "firstName_output", 0);
+			ExpLastname = dataTable2.getValueOnOtherModule("ICUpdateUser", "lastName_output", 0);
+			ExpEmail = dataTable2.getValueOnOtherModule("ICUpdateUser", "email_output", 0);
+			ExpVATnumber = dataTable2.getValueOnOtherModule("ICUpdateUser", "taxVat_output", 0);
+			
+		}else if(typeOfVerificationFlag.equalsIgnoreCase("Update Account Magento Admin")) {	
+			//GETS DATA FROM adminUserUpdates
+			ExpFirstname=dataTable2.getValueOnOtherModule("adminUserUpdate", "adminFirstName_output", 0);
+			ExpLastname =dataTable2.getValueOnOtherModule("adminUserUpdate", "adminLastName_output", 0);
+			ExpEmail =dataTable2.getValueOnOtherModule("adminUserUpdate", "adminEmail_output", 0);
+			//ExpSAIDnumber =dataTable2.getValueOnOtherModule("adminUserUpdate++", "", 0);
+			ExpVATnumber = dataTable2.getValueOnOtherModule("adminUserUpdate", "adminTaxVat_output", 0);
+			
 			String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
 			action.CompareResult("Verify the VAT number in Magento backend : ", ExpVATnumber, ActVAT, test);
+			
+		}else if(typeOfVerificationFlag.equalsIgnoreCase("Guest Customer Creation")) {
+			//GETS DATA FROM deliveryPopulation
+			//Compares to data in the order page
+			ExpFirstname=dataTable2.getValueOnOtherModule("deliveryPopulation", "firstName",0);
+			ExpLastname = dataTable2.getValueOnOtherModule("deliveryPopulation", "lastname",0);
+			ExpEmail = dataTable2.getValueOnOtherModule("deliveryPopulation", "email",0);
+			//VAT number has not been implemented in delivery population
+			ExpSAIDnumber = dataTable2.getValueOnOtherModule("deliveryPopulation", "idNumber",0);
+			ExpVATnumber = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber",0);
+			String expStreetAddress = dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName",0);
+			String expCity = dataTable2.getValueOnOtherModule("deliveryPopulation", "city",0);
+			String expSuburb = dataTable2.getValueOnOtherModule("deliveryPopulation", "Suburb",0);
+			String expProvince = dataTable2.getValueOnOtherModule("deliveryPopulation", "province",0);
+			String expPostalCode = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode",0);
+			String expTelephone =dataTable2.getValueOnOtherModule("deliveryPopulation", "telephone",0);
+			String magentoGuestEmail = guestEmail.getText();
+			
+			guestEditBtn.click();
+			String magentoGuestID = action.getAttribute(guestID, "value");
+			String magentoGuestFirstName = action.getAttribute(guestFirstName, "value");
+			String magentoGuestLastName = action.getAttribute(guestLastName, "value");
+			String magentoGuestVatNumber = action.getAttribute(guestVatNumber, "value");
+			String magentoGuestStreetAddress = action.getAttribute(guestStreetAddress, "value");
+			String magentoGuestCity = action.getAttribute(guestCity, "value");
+			String magentoGuestSuburb = action.getAttribute(guestSuburb, "value");
+			//String magentoGuestProvince = action.getAttribute(guestP, attribute);
+			String magentoGuestPostalCode = action.getAttribute(guestPostalCode, "value");
+			String magentoGuestTelephone = action.getAttribute(guestTelephone, "value");
+			
+			action.mouseover(guestFirstName, "Guest first name");
+			action.CompareResult("Verify the First name in Magento backend : ", ExpFirstname, magentoGuestFirstName, test);
+			action.mouseover(guestLastName, "Guest Last Name");
+			action.CompareResult("Verify the Last name in Magento backend : ", ExpLastname, magentoGuestLastName, test);
+			action.mouseover(guestEmail, "Guest email");
+			action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, magentoGuestEmail, test);
+			action.mouseover(guestID, "Guest ID");
+			action.CompareResult("Verify the SAID number in Magento backend : ", ExpSAIDnumber, magentoGuestID, test);
+			action.mouseover(guestVatNumber, "Guest VAT number");
+			action.CompareResult("Verify the VAT number in Magento backend : ", ExpVATnumber, magentoGuestVatNumber, test);
+			action.CompareResult("Verify Street address in Magento backend :", expStreetAddress,magentoGuestStreetAddress , test);
+			action.CompareResult("Verify City in Magento backend : ", expCity, magentoGuestCity, test);
+			action.CompareResult("Verify Suburb in Magento backend : ", expSuburb, magentoGuestSuburb, test);
+			action.CompareResult("Verify Postal code in Magento backend : ", expPostalCode, magentoGuestPostalCode, test);
+			action.CompareResult("Verify Telephone in Magento backend : ", expTelephone, magentoGuestTelephone, test);
+			//GET ADDRESS INFORMATION 
+			/*
+			 * String expStreetAddress
+			 * =dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName",0);
+			 * String expCity =dataTable2.getValueOnOtherModule("deliveryPopulation",
+			 * "city",0); String expProvince
+			 * =dataTable2.getValueOnOtherModule("deliveryPopulation", "province",0); String
+			 * expSuburb = dataTable2.getValueOnOtherModule("deliveryPopulation",
+			 * "Suburb",0); String postalCode
+			 * =dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode",0);
+			 */
+		}else if(typeOfVerificationFlag.equalsIgnoreCase("Registered customer from sales order")) {
+			//NOTE DELIVERY POPULATION WITH REGISTERED new USER HAS TO RUN FOR THIS TO POPULATE ALSO EXISTING WITH EXISTING ADDRESS
+			Map<String,String> customerDetails =ICDelivery.registeredUserDetails;
+			//CAN GET FROM SHEET AS WELL
+			ExpFirstname = customerDetails.get("firstName");
+			ExpLastname = customerDetails.get("Last name");
+			ExpEmail = customerDetails.get("email");
+			ExpSAIDnumber = customerDetails.get("ID");
+			ExpVATnumber = customerDetails.get("Vat number");
+			
+			String ActSAID = FetchDataFromCustInfo_MagentoBackend(Cust_SAID, "Customer_SAID", 11, 2, test);
+			action.CompareResult("Verify the SAID number in Magento backend : ", ExpSAIDnumber, ActSAID, test);
+			
+			String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
+			action.CompareResult("Verify the VAT number in Magento backend : ", ExpVATnumber, ActVAT, test);
+			
 		}
 		
 		
+		
+		
+		
+		//code block---------------------------------------
+		if(!(typeOfVerificationFlag.equalsIgnoreCase("Guest Customer Creation"))) {
+		MagentoRetrieveCustomer.navigateToCustomer(test);
+		MagentoRetrieveCustomer.searchForCustomer(ExpEmail, test);
+		//Website(Incredible Connection) should come from excel
+		MagentoRetrieveCustomer.tableData(ExpEmail, "Incredible Connection", test);
+		action.clickEle(Account_Information, "Account_Information", test);
+		//basic verification--------------------------------------------------------------------------------------
+		String ActFirstname = FetchDataFromCustInfo_MagentoBackend(Cust_Firstname, "Customer_Firstname", 11, 2, test);
+		action.CompareResult("Verify the First name in Magento backend : ", ExpFirstname, ActFirstname, test);
+		
+		String ActLastname = FetchDataFromCustInfo_MagentoBackend(Cust_Lastname, "Custome_Lastname", 11, 2, test);
+		action.CompareResult("Verify the Last name in Magento backend : ", ExpLastname, ActLastname, test);
+		
+		String ActEmailname = FetchDataFromCustInfo_MagentoBackend(Cust_Email, "Customer_Email", 11, 2, test);
+		action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, ActEmailname, test);
+
+		String ActualBPnumber =FetchDataFromCustInfo_MagentoBackend(customerBPnnumber,"customerBPnnumber",TimetoLoadpage,40,test);
+		System.out.println("ActualBPnumber:"+ActualBPnumber);
+		//hana han = new hana();
+//		han.hanaconnector(Integer.parseInt(ActualBPnumber));
+		int rowCount=0;
+		//int rowCount=han.hanaconnector(0104022744);
+		if( rowCount==0){
+			action.CompareResult("zero rec : ", ExpEmail, ActEmailname, test);
+		}else{
+			action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, ActEmailname, test);
+		}
+		}
+		//validate ID or passport is entered basis of identity type flag..
 		
 		/*
 		//conditional verification on basis of verficationFlag

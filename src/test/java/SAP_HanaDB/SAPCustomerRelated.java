@@ -14,10 +14,14 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
+import JDGroupPageObjects.ICDelivery;
 import JDGroupPageObjects.ic_Login;
 import ic_MagentoPageObjects.MagentoAccountInformation;
 import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
+import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
+import net.bytebuddy.implementation.bytecode.Throw;
 import utils.Action;
+import utils.DataTable2;
 import utils.hana;
 
 
@@ -31,14 +35,16 @@ public class SAPCustomerRelated {
     MagentoRetrieveCustomerDetailsPage magentoRetrieve;
     MagentoAccountInformation magentoVerification;
     static Map<String, String> dataStore;
-    public SAPCustomerRelated(WebDriver driver, LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2) {
+    DataTable2 dataTable2;
+    public SAPCustomerRelated(WebDriver driver,LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2,DataTable2 dataTable2) {
     	  this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
 	        dataStore = new LinkedHashMap<>();
 	        this.dataMap2=dataMap2;
-	        magentoRetrieve = new MagentoRetrieveCustomerDetailsPage(driver, dataMap2);
-	        magentoVerification = new MagentoAccountInformation(driver, dataMap2);
+	        this.dataTable2 = dataTable2;
+	        magentoRetrieve = new MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
+	        magentoVerification = new MagentoAccountInformation(driver,dataTable2);
     }
     
     public int getConnectionRow(String Instance){
@@ -105,6 +111,8 @@ public class SAPCustomerRelated {
 	String email ;
 	String website;
 	String taxVatNumberFlag;
+	
+	String bpPartnerBumber;
 	public void sapDbTests(HashMap<String, ArrayList<String>> input,ArrayList<HashMap<String, ArrayList<String>>> mySheets,ExtentTest test,int testcaseID,int rowNumber) throws Exception {
 		int sheetRow1= findRowToRun(mySheets.get(0), 0, testcaseID); //accountCreation
 		int sheetRow2= findRowToRun(mySheets.get(1), 0, testcaseID); //deliverypopulation
@@ -147,16 +155,16 @@ public class SAPCustomerRelated {
 			navigateToCustomerBpNumber(updateEmail, website, test);
 			}else {
 				//email that logged into ic with
-				navigateToCustomerBpNumber(ic_Login.Username, website, test);
+				navigateToCustomerBpNumber(dataTable2.getValueOnOtherModule("ic_login", "Username", 0), website, test); //Change
 			}
-			magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Creation Magento Admin")) {
 			customerMagentoEmail =mySheets.get(3).get("Email").get(createCustomerBackEndSheet);
 			navigateToCustomerBpNumber(customerMagentoEmail, website, test);
-			magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Creation")) {
 			navigateToCustomerBpNumber(email, website, test);
-			magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Update Magento Admin")) {
 			updatedMagentoBillingEmailFlag = mySheets.get(4).get("email").get(customerUpdateBackEndSheet);
 			if(updatedMagentoBillingEmailFlag.equalsIgnoreCase("yes")) {
@@ -166,12 +174,16 @@ public class SAPCustomerRelated {
 				currentCustomerMagentoBillingEmail = mySheets.get(4).get("emailAddress_input").get(customerUpdateBackEndSheet);
 				navigateToCustomerBpNumber(currentCustomerMagentoBillingEmail, "Main Website", test);
 			}
-			magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 				
+		}else if(typeOfSAPValidation.equalsIgnoreCase("Registered customer from sales order")) {
+			String registeredUserEmail = dataTable2.getValueOnOtherModule("ic_login", "Username", 0);
+			navigateToCustomerBpNumber(registeredUserEmail, "Incredible Connection", test);
+			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}
 
 		//Get Customer partner number
-		String SAPorderNumber=MagentoAccountInformation.ActualBPnumber;
+		String SAPorderNumber=bpPartnerBumber;
 		
 		//If not partner number is returned throw an error
 		if(SAPorderNumber == null) {
@@ -185,7 +197,17 @@ public class SAPCustomerRelated {
 		}
 		//SAPorderNumber=SAPorderNumber.replace("[RabbitMQ] Order SAP Number: ", ""); 
 		vatNumberFlag = mySheets.get(0).get("vatNumberFlag").get(sheetRow1);
-		Map<String, String> customerDetails = customerSAPDetails(SAPorderNumber);
+		
+		
+		Map<String, String> customerDetails = null;
+		if(typeOfSAPValidation.equalsIgnoreCase("Guest Customer Creation")) {
+			String bpNumber = SAPorderRelated.BPnumber;
+			customerDetails = customerSAPDetails(bpNumber);
+		}else {
+		customerDetails = customerSAPDetails(SAPorderNumber);
+		}
+		
+		
 		
 		//GET DETAILS FROM SAP
 		String SAPFirstName = customerDetails.get("NAME_FIRST");
@@ -336,6 +358,65 @@ public class SAPCustomerRelated {
 				action.CompareResult("SAP Suburb", updatedBillingSuburb, SAPsuburb, test);
 				action.CompareResult("SAP Postal Code", updatedBillingPostalCode, SAPpostCode, test);
 			}
+			break;
+		case "Guest Customer Creation":
+			//DEVLIVERY POPULATION IS WHERE IT GETS DATA FROM:
+			String newFirstName = mySheets.get(1).get("firstName").get(sheetRow2);
+			String newLastName = mySheets.get(1).get("lastname").get(sheetRow2);
+			String newTelephone = mySheets.get(1).get("telephone").get(sheetRow2);
+			String newStreetName = mySheets.get(1).get("streetName").get(sheetRow2);
+			String newProvince = mySheets.get(1).get("province").get(sheetRow2);
+			String newCity = mySheets.get(1).get("city").get(sheetRow2);
+			String newSuburb = mySheets.get(1).get("Suburb").get(sheetRow2);
+			String newPostalcode = mySheets.get(1).get("postalCode").get(sheetRow2);
+			String newVatNumber = mySheets.get(1).get("vatNumber").get(sheetRow2);
+			String newEmail = mySheets.get(1).get("email").get(sheetRow2);
+			String newIDNumber = mySheets.get(1).get("idNumber").get(sheetRow2);
+			
+			action.CompareResult("SAP First name", newFirstName, SAPFirstName, test);
+			action.CompareResult("SAP Last name", newLastName, SAPLastName, test);
+			action.CompareResult("SAP Email", newEmail, SAPEmail, test);
+			
+			action.CompareResult("SAP Updated postal code", newPostalcode, SAPpostCode, test);
+			action.CompareResult("SAP Updated Billing Suburb", newSuburb, SAPsuburb, test);
+			action.CompareResult("SAP Updated City", newCity, SAPcity, test);
+			action.CompareResult("SAP Updated Province", newProvince, SAPProvince, test);
+			action.CompareResult("SAP Updated Billing Address", newStreetName, SAPStreetAddress, test);
+			action.CompareResult("SAP SA ID", newIDNumber, SAID, test);
+			action.CompareResult("SAP Vat number", newVatNumber, sapVatnumber, test);
+			action.CompareResult("SAP Telephone", newTelephone, SAPStreetAddress, test);
+			
+			break;
+		case "Registered customer from sales order":
+			//GETS DATA FROM THE FRONT END
+			Map<String,String> registeredCustomerDetails =ICDelivery.registeredUserDetails;
+			String registFirstname = registeredCustomerDetails.get("firstName");
+			String registLastname = registeredCustomerDetails.get("Last name");
+			String registEmail = registeredCustomerDetails.get("email");
+			String registIDnumber = registeredCustomerDetails.get("ID");
+			String registVATnumber = registeredCustomerDetails.get("Vat number");
+			
+			String registTelephone = registeredCustomerDetails.get("Telephone");
+			String registStreetAddress = registeredCustomerDetails.get("Street Address");
+		//	String registBuildingDetails = registeredCustomerDetails.get("");
+			String registProvince = registeredCustomerDetails.get("Province");
+			String registCity = registeredCustomerDetails.get("City");
+			String registSuburb = registeredCustomerDetails.get("Suburb");
+			String registPostalCode = registeredCustomerDetails.get("Post Code");
+			
+			action.CompareResult("SAP First name", registFirstname, SAPFirstName, test);
+			action.CompareResult("SAP Last name", registLastname, SAPLastName, test);
+			action.CompareResult("SAP Email", registEmail, SAPEmail, test);
+			
+			action.CompareResult("SAP Updated postal code", registPostalCode, SAPpostCode, test);
+			action.CompareResult("SAP Updated Billing Suburb", registSuburb, SAPsuburb, test);
+			action.CompareResult("SAP Updated City", registCity, SAPcity, test);
+			action.CompareResult("SAP Updated Province", registProvince, SAPProvince, test);
+			action.CompareResult("SAP Updated Billing Address", registStreetAddress, SAPStreetAddress, test);
+			action.CompareResult("SAP SA ID", registIDnumber, SAID, test);
+			action.CompareResult("SAP Vat number", registVATnumber, sapVatnumber, test);
+			action.CompareResult("SAP Telephone", registTelephone, SAPStreetAddress, test);
+			
 			break;
 		default:
 			break;
