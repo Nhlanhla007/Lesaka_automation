@@ -150,6 +150,7 @@ public class JDTests extends BaseTest {
     	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver,dataTable2);
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver,dataTable2);
+		ic_SearchMinimumCharacter icMinimumCharacter = new ic_SearchMinimumCharacter(driver, dataTable2);
 		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
 		IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
         admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
@@ -290,6 +291,8 @@ public class JDTests extends BaseTest {
 				icContactInfo.enterContactDetailsForLoan(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 			case "icExistingAddress":
 				icExistingAddress.AddressThere(test1);
+			case "icSearchMinimumCharacter":
+				icMinimumCharacter.icValidMinimumSearch(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "ic_RetriveOrderID":
 				ic_RetriveOrderID.RetriveOrderID(test1);
