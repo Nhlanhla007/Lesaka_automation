@@ -163,6 +163,7 @@ public class JDTests extends BaseTest {
 		ic_ContactDetailsLoan icContactInfo = new ic_ContactDetailsLoan(driver, dataTable2);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver);
 		ic_PopularSearch PopularSearch =new ic_PopularSearch(driver,dataTable2);
+		ic_SearchTextReturningNoResult icReturnNoResults = new ic_SearchTextReturningNoResult(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -319,6 +320,9 @@ public class JDTests extends BaseTest {
 				break;
 			case "icPopularSearch":
 				PopularSearch.VerifyPopularSearch(test1, rowNumber);
+				break;
+			case "icSearchNoResultsReturned":
+				icReturnNoResults.ic_DoesNotExtistSearch(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 		}
 	}
