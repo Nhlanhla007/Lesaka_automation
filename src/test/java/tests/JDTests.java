@@ -155,6 +155,8 @@ public class JDTests extends BaseTest {
         admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
         Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,dataTable2);
         Magento_CancelSalesorderVerification CancelSalesorderVerification =new Magento_CancelSalesorderVerification(driver,dataTable2);
+        Magento_CreditApp_NavigateFilter CreditApp_NavigateFilter = new Magento_CreditApp_NavigateFilter(driver,dataTable2);
+        Magento_CreditStatusVerification CreditStatusVerification = new Magento_CreditStatusVerification(driver,dataTable2);
         ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -293,7 +295,13 @@ public class JDTests extends BaseTest {
 			case "CancelSalesorderVerification":
 				CancelSalesorderVerification.verifyCancelOrderdetails_commentHistory(test1, rowNumber);
 				break;
-				
+		
+			case "CreditApp_NavigateFilter":
+				CreditApp_NavigateFilter.VerifyCreditAppSelection(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "CreditStatusVerification":
+				CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
 		}
 	}
 
