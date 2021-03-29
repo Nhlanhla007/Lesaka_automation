@@ -141,6 +141,7 @@ public class JDTests extends BaseTest {
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver);
 		ic_RefreshLogoHomepage icLogo = new ic_RefreshLogoHomepage(driver, dataTable2);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver);
+		ic_PopularSearch PopularSearch =new ic_PopularSearch(driver,dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -257,6 +258,9 @@ public class JDTests extends BaseTest {
 				break;
 			case "icLogoHomepage":
 				icLogo.homepageLogo(test1);
+				break;
+			case "icPopularSearch":
+				PopularSearch.VerifyPopularSearch(test1, rowNumber);
 				break;
 		}
 	}
