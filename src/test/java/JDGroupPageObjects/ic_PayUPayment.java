@@ -46,11 +46,11 @@ public class ic_PayUPayment {
 		public static String Oderid;
 
 		public void PayUPagePayment(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-			String cardnumber = input.get("cardnumber").get(rowNumber);
-			String cardholdername = input.get("cardholdername").get(rowNumber);
-			String Expiremonth = input.get("Expiremonth").get(rowNumber);
-			String ExpireYear = input.get("ExpireYear").get(rowNumber);
-			String cvv = input.get("cvv").get(rowNumber);
+			String cardnumber = dataTable2.getValueOnCurrentModule("cardnumber");
+			String cardholdername = dataTable2.getValueOnCurrentModule("cardholdername");
+			String Expiremonth = dataTable2.getValueOnCurrentModule("Expiremonth");
+			String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
+			String cvv = dataTable2.getValueOnCurrentModule("cvv");
 			action.explicitWait(5000);
 			action.clickEle(PayU_Card, " Card option in PayU",test);
 			//Enter card details
@@ -61,10 +61,6 @@ public class ic_PayUPayment {
 			action.writeText(cvvNumber, cvv, "cvv number",test);
 			action.clickEle(PayBtn, "Payment submission button",test);
 			action.explicitWait(10);
-			//Retrieve order ID
-//			action.isElementOnNextPage(OderID, (long) 5,test);
-//			dataTable2.setValueOnCurrentModule ("orderID",Oderid);
-//			dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);
 			System.out.println("##############END Execution###############");
 		}
 }
