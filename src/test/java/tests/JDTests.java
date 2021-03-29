@@ -158,6 +158,9 @@ public class JDTests extends BaseTest {
         Magento_CreditApp_NavigateFilter CreditApp_NavigateFilter = new Magento_CreditApp_NavigateFilter(driver,dataTable2);
         Magento_CreditStatusVerification CreditStatusVerification = new Magento_CreditStatusVerification(driver,dataTable2);
 		ic_RefreshLogoHomepage icLogo = new ic_RefreshLogoHomepage(driver, dataTable2);
+		ic_EnterBasicDetails icEnterBasicDetails = new ic_EnterBasicDetails(driver, dataTable2);
+		ic_SpouseDetails icEnterSpouseInfo = new ic_SpouseDetails(driver, dataTable2);
+		ic_ContactDetailsLoan icContactInfo = new ic_ContactDetailsLoan(driver, dataTable2);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver);
 		ic_PopularSearch PopularSearch =new ic_PopularSearch(driver,dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
@@ -276,6 +279,14 @@ public class JDTests extends BaseTest {
 			case "icRedeemGiftCard":
 				icRedeemGiftCard.redeemGiftCard(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
+			case "EnterBasicDetails":
+				icEnterBasicDetails.enterBasicInfor(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;	
+			case "EnterSpouseInfor":
+				icEnterSpouseInfo.enterSpouseDetails(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "EnterContact":
+				icContactInfo.enterContactDetailsForLoan(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 			case "icExistingAddress":
 				icExistingAddress.AddressThere(test1);
 				break;
