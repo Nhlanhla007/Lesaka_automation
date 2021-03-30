@@ -27,7 +27,7 @@ import Logger.Log;
  * transmission in whole or in part, in any form or by any means, electronic,
  * mechanical or otherwise, is prohibited without the prior written permission
  * of the copyright owner. </copyright>
- * 
+ *
  */
 
 public class ExcelFunctions {
@@ -53,7 +53,7 @@ public class ExcelFunctions {
 			workbook = new XSSFWorkbook(fis);
 		} catch (Exception e) {
 			logger.error("Error in excel initialization");
-//			e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 	public  void initializeExcelSheetForWriting(String fileLocation) {
@@ -62,7 +62,7 @@ public class ExcelFunctions {
 			workbook = new XSSFWorkbook();
 		} catch (Exception e) {
 			logger.error("Error in excel initialization");
-//			e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
@@ -90,7 +90,7 @@ public class ExcelFunctions {
 	 * @param testcaseName
 	 *            Name of the configuration to be executed.
 	 * @return Row number corresponding to the configuration name
-	 * 
+	 *
 	 */
 
 	public  String locateTestCaseRow(String testcaseName,int sheetNumber) {
@@ -114,7 +114,7 @@ public class ExcelFunctions {
 	 * @param value
 	 *            Value to be searched
 	 * @return Returns start row number based on the value
-	 * 
+	 *
 	 */
 
 
@@ -126,7 +126,7 @@ public class ExcelFunctions {
 	 * @param startRowNumber
 	 *            Value to be searched
 	 * @return Returns last row number based on the value
-	 * 
+	 *
 	 */
 
 	public  int findEndRow(int sheetNumber, int startRowNumber) {
@@ -154,7 +154,7 @@ public class ExcelFunctions {
 	 * @param sheetNumber
 	 *            Sheet number of the configuration
 	 * @return Returns last row number of a particular sheet
-	 * 
+	 *
 	 */
 
 	public  int findLastRow(int sheetNumber) {
@@ -169,7 +169,7 @@ public class ExcelFunctions {
 	 * @param rowNumber
 	 *            Value to be searched
 	 * @return Returns last row number of a particular sheet
-	 * 
+	 *
 	 */
 
 	public  int findLastColumn(int rowNumber,int sheetNumber) {
@@ -182,7 +182,7 @@ public class ExcelFunctions {
 	 * @param sheetNumber
 	 *            number sheet number of the configuration
 	 * @return Returns the operation type (Insert/Update/Delete)
-	 * 
+	 *
 	 */
 
 	public  String getCellData(int RowNo, int columnNumber,int sheetNumber) {
@@ -205,10 +205,10 @@ public class ExcelFunctions {
 	 * @param sheetNumber
 	 *            sheet number of the configuration
 	 * @return Returns cell data for the corresponding row and columns number
-	 * 
+	 *
 	 */
 	public  String getCellData(int keyRowNo, int valueRowNo,
-			String columnName, int sheetNumber) {
+							   String columnName, int sheetNumber) {
 
 		sheet = workbook.getSheetAt(sheetNumber);
 		int noOfColumns = sheet.getRow(keyRowNo).getLastCellNum();
@@ -229,7 +229,7 @@ public class ExcelFunctions {
 	 * @param sheetNumber
 	 *            Sheet number of the configuration
 	 * @return Returns number of the iterations
-	 * 
+	 *
 	 */
 
 	public  int getNumberofIterations(int sheetNumber) {
@@ -242,10 +242,10 @@ public class ExcelFunctions {
 	/**
 	 * @param cell
 	 *            cell of the excel sheet
-	 * 
+	 *
 	 * @return Returns the String value of each cell irrespective of its data
 	 *         type
-	 * 
+	 *
 	 */
 	public static  String getExcelDataBasedOnCellType(Cell cell) {
 		String value = "";
@@ -253,74 +253,74 @@ public class ExcelFunctions {
 		{
 //			System.out.println("celltype:"+cell.getCellType());
 			switch (cell.getCellType()) {
-			case STRING:
-				value = cell.getStringCellValue();
-				break;
-			case NUMERIC:
-				if (DateUtil.isCellDateFormatted(cell)) {
-					SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-					//	System.out.print(dateFormat.format(cell.getDateCellValue()) + "\t\t");
-					value=dateFormat.format(cell.getDateCellValue());
-				} 
-				else
-				{
-					Double value1 = cell.getNumericCellValue();
-					Long longValue = value1.longValue();
-					value = new String(longValue.toString());
-				}
-				break;
-			case BOOLEAN:
-				value = Boolean.toString(cell.getBooleanCellValue());
-				break;
-			case FORMULA:
+				case STRING:
+					value = cell.getStringCellValue();
+					break;
+				case NUMERIC:
+					if (DateUtil.isCellDateFormatted(cell)) {
+						SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						//	System.out.print(dateFormat.format(cell.getDateCellValue()) + "\t\t");
+						value=dateFormat.format(cell.getDateCellValue());
+					}
+					else
+					{
+						Double value1 = cell.getNumericCellValue();
+						Long longValue = value1.longValue();
+						value = new String(longValue.toString());
+					}
+					break;
+				case BOOLEAN:
+					value = Boolean.toString(cell.getBooleanCellValue());
+					break;
+				case FORMULA:
 //				System.out.println(cell.getCellFormula());
-				break;
-			case BLANK:
-				value="";
-				break;
-			case _NONE:
-				value="";
-				break;
-			default:
-				break;
+					break;
+				case BLANK:
+					value="";
+					break;
+				case _NONE:
+					value="";
+					break;
+				default:
+					break;
 			}
 		}
 		catch(NullPointerException e)
 		{
 //			e.printStackTrace();
-			logger.error("There is a exception in reading the data from excel");
-			e.printStackTrace();
+//			logger.error("There is a exception in reading the data from excel");
 			return "";
 		}
-			return value;
+		return value;
+	}
+	/**
+	 *            row number row number of the configuration to be executed
+	 * @param startRowNumber
+	 *            column number column number from where data needs to be read.
+	 * @param endRowNumber
+	 *            column number column number till where the data has to be read
+	 *
+	 */
+
+
+	public  ConcurrentHashMap<String, String> getExcelData(int startRowNumber,
+														   int endRowNumber, int endColumnNumber,int sheetNumber) {
+		sheet = workbook.getSheetAt(sheetNumber);
+		dataMap = new ConcurrentHashMap<String,String>();
+		for(int columnNumber=1;columnNumber<endColumnNumber;columnNumber++){
+			String key  = sheet.getRow(startRowNumber).getCell(columnNumber).getStringCellValue();
+			Row row = sheet.getRow(startRowNumber+1);
+			Cell cell = row.getCell(columnNumber);
+			String value=getExcelDataBasedOnCellType(cell);
+			dataMap.put(key, value);
 		}
-		/**
-		 *            row number row number of the configuration to be executed
-		 * @param startRowNumber
-		 *            column number column number from where data needs to be read.
-		 * @param endRowNumber
-		 *            column number column number till where the data has to be read
-		 *
-		 */
 
+		return dataMap;
 
-		public  ConcurrentHashMap<String, String> getExcelData(int startRowNumber,
-				int endRowNumber, int endColumnNumber,int sheetNumber) {
-			sheet = workbook.getSheetAt(sheetNumber);
-			dataMap = new ConcurrentHashMap<String,String>();
-			for(int columnNumber=1;columnNumber<endColumnNumber;columnNumber++){
-				String key  = sheet.getRow(startRowNumber).getCell(columnNumber).getStringCellValue();
-				Row row = sheet.getRow(startRowNumber+1);
-				Cell cell = row.getCell(columnNumber);
-				String value=getExcelDataBasedOnCellType(cell);
-				dataMap.put(key, value);
-			}
-
-			return dataMap;
-
-		}
+	}
 	public  LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> getExcelData() throws IOException {
 //		sheet = workbook.getSheetAt(sheetNumber);
+		DataGenerators dg= new DataGenerators();
 		LinkedHashMap<String, Integer> allKeys = new LinkedHashMap<String, Integer>();
 		int numSheets = workbook.getNumberOfSheets();
 		dataMap = new ConcurrentHashMap<String, String>();
@@ -332,6 +332,7 @@ public class ExcelFunctions {
 			System.out.println("i:" + i);
 			sheet = workbook.getSheetAt(i);
 			String sheetName=workbook.getSheetName(i);
+			logger.info("sheetName :"+sheetName);
 			int numRows = sheet.getLastRowNum() + 1;
 			mySheetMap = new LinkedHashMap<String, ArrayList<String>>();
 			Row row = sheet.getRow(0);
@@ -340,16 +341,21 @@ public class ExcelFunctions {
 			for (int j = 0; j < numRows; j++) {
 				row = sheet.getRow(j);
 				for (int z = 0; z < noOfColumns; z++) {
-					Cell cell = row.getCell(z);
-					String value = getExcelDataBasedOnCellType(cell);
-					if (j == 0) {
+					try {
+						Cell cell = row.getCell(z);
+						String value = getExcelDataBasedOnCellType(cell);
+						logger.info(z + ":" + value);
+						if (j == 0) {
+							headers[z] = value;
+							mySheetMap.put(value, new ArrayList<>());
 
-						headers[z] = value;
-						mySheetMap.put(value, new ArrayList<>());
+						} else {
+							Object Key = mySheetMap.keySet().toArray()[z];
+							value=dg.GenerateRequiredData(value);
+							mySheetMap.get(headers[z]).add(value);
+						}
+					}catch (Exception e){
 
-					} else {
-						Object Key = mySheetMap.keySet().toArray()[z];
-						mySheetMap.get(headers[z]).add(value);
 					}
 				}
 			}
@@ -382,9 +388,9 @@ public class ExcelFunctions {
 
 	}
 	public   Map<Object, Object> getRowData(int keytRowNumber,
-			int valueRowNumber, int columnNumber,int sheetNumber) {
+											int valueRowNumber, int columnNumber,int sheetNumber) {
 		sheet = workbook.getSheetAt(sheetNumber);
-	 	Map<Object, Object> datamap = new HashMap<>();
+		Map<Object, Object> datamap = new HashMap<>();
 		String key  = sheet.getRow(keytRowNumber).getCell(columnNumber).getStringCellValue();
 		Row row = sheet.getRow(valueRowNumber);
 		Cell cell = row.getCell(columnNumber);
