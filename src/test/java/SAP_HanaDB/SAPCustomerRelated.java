@@ -210,7 +210,7 @@ public class SAPCustomerRelated {
 		}else {
 		customerDetails = customerSAPDetails(SAPorderNumber);
 		}
-
+		
 		//GET DETAILS FROM SAP
 		String SAPFirstName = customerDetails.get("NAME_FIRST");
 		String SAPLastName = customerDetails.get("NAME_LAST");

@@ -356,6 +356,9 @@ public class ExcelFunctions {
 						}
 					}catch (Exception e){
 
+					} else {
+						Object Key = mySheetMap.keySet().toArray()[z];
+						mySheetMap.get(headers[z]).add(value);
 					}
 				}
 			}

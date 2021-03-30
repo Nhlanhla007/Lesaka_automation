@@ -34,10 +34,6 @@ public class Magento_UserInfoVerification {
 			PageFactory.initElements(driver, this);
 			action = new Action(driver);
 			registeredCustomerDetails = new ICDelivery(driver, dataTable2);
-		}
-	
-	public Magento_UserInfoVerification() {
-		System.out.println("Hello");
 	}
 	@FindBy(xpath = "//input[@name='customer[partner_number]']")
 	WebElement customerBPnnumber;
