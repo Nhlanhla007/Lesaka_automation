@@ -150,6 +150,7 @@ public class JDTests extends BaseTest {
 		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
 		IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
         admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
+        ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
         Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,dataTable2);
         Magento_CancelSalesorderVerification CancelSalesorderVerification =new Magento_CancelSalesorderVerification(driver,dataTable2);
         ExtentTest test1=test.createNode(moduleToRun);
@@ -268,6 +269,9 @@ public class JDTests extends BaseTest {
 			case "icRedeemGiftCard":
 				icRedeemGiftCard.redeemGiftCard(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
+			case "icInvalidEmail":
+				icNewsletterEmail.ic_NewsLetterInvalidEmail(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;	
 			case "icExistingAddress":
 				icExistingAddress.AddressThere(test1);
 				break;
