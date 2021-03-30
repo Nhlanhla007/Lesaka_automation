@@ -438,7 +438,7 @@ public class SAPCustomerRelated {
 		 */
 		String Query ="Select * from SAPEQ1.KNA1 WHERE KUNNR = '"+sapOrderNumber+"' Limit 1";
 		hn =new hana(TypeOfDB,Server,Port,Username,Password); 
-		String Query ="Select * from SAPEQ1.KNA1 WHERE KUNNR = '"+sapOrderNumber+"' Limit 1";
+		String Query1 ="Select * from SAPEQ1.KNA1 WHERE KUNNR = '"+sapOrderNumber+"' Limit 1";
 		ResultSet rs = hn.ExecuteQuery(Query);
 		
 		int rowsCountReturned = hn.GetRowsCount(rs);
