@@ -167,7 +167,8 @@ public class JDTests extends BaseTest {
 		ic_SearchTextReturningNoResult icReturnNoResults = new ic_SearchTextReturningNoResult(driver, dataTable2);
 		IC_CreditAppEmploymentDetails creditAppEmployDetails = new IC_CreditAppEmploymentDetails(driver, dataTable2);
 		IC_CreditAppAddressDetails creditAppAddressDetails = new IC_CreditAppAddressDetails(driver, dataTable2);
-        ExtentTest test1=test.createNode(moduleToRun);
+		ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
+		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
 			rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
@@ -339,6 +340,9 @@ public class JDTests extends BaseTest {
 				break;
 			case"CreditEnterAddressDetails":
 				creditAppAddressDetails.dataInput(dataTable2, test1);
+				break;
+			case "ic_SubscribeNews_DupliEmailID":
+				ic_SubscribeNews_DupliEmailID.SubscribeNewsletter_DuplicateEmail(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 		}
 	}
