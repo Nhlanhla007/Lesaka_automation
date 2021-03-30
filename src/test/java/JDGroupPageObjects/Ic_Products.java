@@ -320,12 +320,13 @@ public class Ic_Products {
 				List<String> productPriceAndQuantity = new ArrayList<>();
 				loadProductListingPage(searchCategory, theProducts.get(s),test);//change signatures
 				WebElement prod =  ic_FindProduct(test,theProducts.get(s));
-				String productName = prod.getText();
-				String productPrice = findPrice(prod);
-				productPriceAndQuantity.add(productPrice);
+				String productName = "";
 				int set = 0;
 				int quantityExecu = 0;
 				if(prod!=null) {
+					productName = prod.getText();
+					String productPrice = findPrice(prod);
+					productPriceAndQuantity.add(productPrice);
 					for(int o =0;o<quantity.size();o++) {
 						if(o==s) {
 							for(int g = 0;g<Integer.parseInt(quantity.get(o));g++) {

@@ -3,7 +3,9 @@ package JDGroupPageObjects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -46,6 +48,9 @@ public class IC_ProductsSortBy {
 	List<String> sortedProducts = new ArrayList<>();
 	List<String> unSortedProducts = new ArrayList<>();
 	
+	List<Integer> unSortedProductWithPrice = new ArrayList<>();
+	List<Integer> sortedProductWithPrice = new ArrayList<>();
+	
 	
 
 	public void sortByName(ExtentTest test) throws Exception {
@@ -55,30 +60,72 @@ public class IC_ProductsSortBy {
 		action.CompareResult("Sort By Name comparison", "true", String.valueOf(isListSorted), test);
 	}
 	
+	public void sortByPrice(ExtentTest test, String typeOfValidation) throws Exception {
+		
+		if(typeOfValidation.equalsIgnoreCase("Price-High To Low")) {
+			Collections.sort(sortedProductWithPrice, Collections.reverseOrder());
+			//List<Integer>sortedList=sortedProductWithPrice.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()); 
+			boolean sortedPrice = sortedProductWithPrice.equals(unSortedProductWithPrice);
+			action.CompareResult("Sort By price high to low", "true", String.valueOf(sortedPrice), test);
+		}else {
+		Collections.sort(sortedProductWithPrice);
+		boolean sortedPrice = sortedProductWithPrice.equals(unSortedProductWithPrice);
+		action.CompareResult("Sort By price low to high", "true", String.valueOf(sortedPrice), test);
+		}
+	}
+	
 	public void sortBy(ExtentTest test) throws Exception {
-		String categorySearch = dataTable2.getValueOnCurrentModule("Search Type");		
+		String categorySearch = dataTable2.getValueOnCurrentModule("Search Type");	
+		//REFRESH PAGE HERE
 		productsTypeSearch.loadProductListingPage(categorySearch, " ", test);
 		String typeOfValidation = dataTable2.getValueOnCurrentModule("Validation Type");
 		if(typeOfValidation.equalsIgnoreCase("Name")) {
 			action.selectFromDropDownUsingVisibleText(sortByFilter, "Name", "Select filter by name");
-			ic_FindProduct(test);
+			ic_FindProduct(test,typeOfValidation);
 			sortByName(test);
-		}else if(typeOfValidation.equalsIgnoreCase("Price-Low To High")) {
-			action.selectFromDropDownUsingVisibleText(sortByFilter, "Name", "Select filter by name");
 		}else if(typeOfValidation.equalsIgnoreCase("Price-High To Low")) {
-			action.selectFromDropDownUsingVisibleText(sortByFilter, "Name", "Select filter by name");
+			action.selectFromDropDownUsingVisibleText(sortByFilter, "Price: High to Low", "Select filter by name");
+			ic_FindProduct(test, typeOfValidation);
+			sortByPrice(test,typeOfValidation);
+		}else if(typeOfValidation.equalsIgnoreCase("Price-Low To High")) {
+			action.selectFromDropDownUsingVisibleText(sortByFilter, "Price: Low to High", "Select filter by Price: Low to High");
+			action.explicitWait(8000);
+			action.selectFromDropDownUsingVisibleText(sortByFilter, "Price: Low to High", "Select filter by Price: Low to High");
+			action.explicitWait(8000);
+			ic_FindProduct(test, typeOfValidation);
+			sortByPrice(test,typeOfValidation);
 		}
 
 	}
 
 
-	public WebElement ic_FindProduct(ExtentTest test) throws IOException {
+	public WebElement ic_FindProduct(ExtentTest test, String typeOfValidation) throws IOException {
 		boolean status= true;
 		while(status) {
 			List<WebElement> allProducts = ic_products;
 			for(WebElement el: allProducts) {
 				sortedProducts.add(el.getText());
 				unSortedProducts.add(el.getText());
+				if(!(typeOfValidation.equalsIgnoreCase("Name"))) {
+					System.out.println(el.getText());
+					if(!(el.getText().equalsIgnoreCase("group-test-kristers"))) {
+					String price = el.findElement(By.xpath(".//parent::*/following-sibling:: div/div[2]/div/span/span/span")).getText();
+					if(price.equalsIgnoreCase("Special Price") | price.equalsIgnoreCase("")) {
+						price = el.findElement(By.xpath(".//parent::*/following-sibling:: div/div[2]/div/span/span/span/span")).getText();
+					}
+					price = price.replace("R", "");
+					price = price.replace(",", "");
+					unSortedProductWithPrice.add(Integer.parseInt(price));
+					sortedProductWithPrice.add(Integer.parseInt(price));
+				}
+					
+				}
+
+				if (el.getText().equalsIgnoreCase("group-test-kristers")) {
+					unSortedProductWithPrice.add(Integer.parseInt("149"));
+					sortedProductWithPrice.add(Integer.parseInt("149"));
+				}
+ 
 			}
 			WebElement nextButton = returnNext();
 			if(nextButton != null) {
