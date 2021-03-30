@@ -103,7 +103,7 @@ public class JDTests extends BaseTest {
 								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								runKeyWord(actionToRun,test);
-								writeToExcel(new File(dataTable2.filePath()));
+//								writeToExcel(new File(dataTable2.filePath()));
 								writeToExcel(createFile());
 
 							}
@@ -163,7 +163,6 @@ public class JDTests extends BaseTest {
 		ic_EnterBasicDetails icEnterBasicDetails = new ic_EnterBasicDetails(driver, dataTable2);
 		ic_SpouseDetails icEnterSpouseInfo = new ic_SpouseDetails(driver, dataTable2);
 		ic_ContactDetailsLoan icContactInfo = new ic_ContactDetailsLoan(driver, dataTable2);
-		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver);
 		ic_PopularSearch PopularSearch =new ic_PopularSearch(driver,dataTable2);
 		ic_SearchTextReturningNoResult icReturnNoResults = new ic_SearchTextReturningNoResult(driver, dataTable2);
 		IC_CreditAppEmploymentDetails creditAppEmployDetails = new IC_CreditAppEmploymentDetails(driver, dataTable2);
@@ -292,6 +291,7 @@ public class JDTests extends BaseTest {
 				break;
 			case "EnterContact":
 				icContactInfo.enterContactDetailsForLoan(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
 			case "icExistingAddress":
 				icExistingAddress.AddressThere(test1);
 			case "icSearchMinimumCharacter":
@@ -321,6 +321,7 @@ public class JDTests extends BaseTest {
 				break;
 			case "CreditStatusVerification":
 				CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
 			case "icLogoHomepage":
 				icLogo.homepageLogo(test1);
 				break;
