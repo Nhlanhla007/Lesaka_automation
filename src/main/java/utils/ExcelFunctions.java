@@ -53,7 +53,7 @@ public class ExcelFunctions {
 			workbook = new XSSFWorkbook(fis);
 		} catch (Exception e) {
 			logger.error("Error in excel initialization");
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 	public  void initializeExcelSheetForWriting(String fileLocation) {
@@ -62,7 +62,7 @@ public class ExcelFunctions {
 			workbook = new XSSFWorkbook();
 		} catch (Exception e) {
 			logger.error("Error in excel initialization");
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 
