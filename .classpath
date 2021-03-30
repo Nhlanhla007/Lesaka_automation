@@ -32,7 +32,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="C:/Users/37601/Documents/saxon9-dom-9.1.0.8.jar"/>
-	<classpathentry kind="lib" path="C:/Users/37601/Downloads/ngdbc-2.7.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/34642/Downloads/saxon9-dom-9.1.0.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/34642/Desktop/HANA-DB/ngdbc-2.7.11.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -162,9 +162,10 @@ public class JDTests extends BaseTest {
 		ic_EnterBasicDetails icEnterBasicDetails = new ic_EnterBasicDetails(driver, dataTable2);
 		ic_SpouseDetails icEnterSpouseInfo = new ic_SpouseDetails(driver, dataTable2);
 		ic_ContactDetailsLoan icContactInfo = new ic_ContactDetailsLoan(driver, dataTable2);
-		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver);
+		//ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver, dataTable2);
 		ic_PopularSearch PopularSearch =new ic_PopularSearch(driver,dataTable2);
 		ic_SearchTextReturningNoResult icReturnNoResults = new ic_SearchTextReturningNoResult(driver, dataTable2);
+		ic_Subscriber_Newsletter_ValidEmailaddress ic_SubscribeNewsletter = new ic_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -326,6 +327,9 @@ public class JDTests extends BaseTest {
 				break;
 			case "icSearchNoResultsReturned":
 				icReturnNoResults.ic_DoesNotExtistSearch(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "ic_SubscribeNewsletter":
+				ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 		}
 	}
