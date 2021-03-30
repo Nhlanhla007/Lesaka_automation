@@ -9,8 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.aventstack.extentreports.ExtentTest;
 
@@ -33,7 +31,7 @@ public class ic_PaymentOption {
 	//payement options
 	
 	@FindBy(xpath = "//span[contains(text(),'Credit Card (Processed By PayU)')]")
-	WebElement creditcard;
+	WebElement payUcreditcard;
 	@FindBy(xpath = "//span[contains(text(),'Visa Checkout')]")
 	WebElement VisaCheckout;
 	@FindBy(xpath = "//span[contains(text(),'EFT Pro (Processed By PayU)')]")
@@ -63,7 +61,7 @@ public class ic_PaymentOption {
 	@Step("To Select payment method")
 	public WebElement ic_SelectPaymentMethod(String Paytype){
 			Map<String,WebElement> PaymentMap=new HashMap<String,WebElement>();
-			PaymentMap.put("creditcard",creditcard);  
+			PaymentMap.put("payUcreditcard", payUcreditcard);
 			PaymentMap.put("VisaCheckout",VisaCheckout);
 			PaymentMap.put("EFT_Pro",EFT_Pro);
 			PaymentMap.put("Masterpass",Masterpass);
@@ -88,15 +86,21 @@ public class ic_PaymentOption {
      }
 
 	public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-		action.explicitWait(8000);
-		System.out.println("##############START Execution###############");
-		String Paytype = input.get("Paytype_Option").get(rowNumber);
-		action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
-		WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
-		action.waitExplicit(10);
-		action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
-		action.waitExplicit(15);
-		action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+		try {
+			action.explicitWait(14000);
+			System.out.println("##############START Execution###############");
+			action.explicitWait(8000);
+			String Paytype = input.get("Paytype_Option").get(rowNumber);
+			action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
+			WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
+			action.waitExplicit(10);
+			action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
+			action.waitExplicit(15);
+			action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 	

@@ -623,6 +623,7 @@ public class Action {
 			} else {
 				if (((WebElement) elementAttr).isDisplayed()) {
 					flag=true;
+					return flag;
 				}
 			}
 		}catch(Exception e){
@@ -1464,21 +1465,12 @@ public class Action {
 		//ExtentTest test= ExtentFactory.getInstance().createCase(TestDescription);
 		ExtentTest node=test.createNode("Check Enability of Button is "+ String.valueOf(Expstatus));
 		try{
-
 			resEnable = ic_isEnabled(elementAttr);
 			String screenShotPath=getScreenShot(dateName);
-			Assert.assertEquals(resEnable, Expstatus);
 			node.pass(TestDescription + " Expected : "+Expstatus+" Actual :"+resEnable,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-
-
 		}catch(Exception e){
-			try{
 				String screenShotPath=getScreenShot(dateName);
-				test.fail(TestDescription + " Expected : "+Expstatus+" Actual :"+resEnable,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-			}catch(Exception e1){
-				e1.printStackTrace();
-				test.fail(TestDescription + " Expected : "+Expstatus+" Actual :"+e1.getMessage());
-			}
+			node.fail(TestDescription + " Expected : "+Expstatus+" Actual :"+resEnable,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 		}
 	}
 	public <T> void clickEle(T elementAttr, String name,ExtentTest test) throws IOException  {
@@ -1574,7 +1566,7 @@ public class Action {
 			result = driver.findElement((By) elementAttr).isEnabled();
 
 		} else{
-			result = elementAttr.isEnabled();
+			result = ((WebElement) elementAttr).isEnabled();
 		}
 		return result;
 

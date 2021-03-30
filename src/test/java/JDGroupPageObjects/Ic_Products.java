@@ -70,7 +70,7 @@ public class Ic_Products {
 	WebElement downloads;
 
 	List<WebElement> listElements;
-	
+
 	@FindBy(id = "product-addtocart-button")
 	WebElement productDetailsPageAddToCartButton;
 
@@ -122,6 +122,7 @@ public class Ic_Products {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.info(e.getMessage());
 		}
 	}
@@ -134,6 +135,7 @@ public class Ic_Products {
 			action.click(icSearchIcon, "Click on search", test);
 			Thread.sleep(10000);
 		} catch (Exception e) {
+			e.printStackTrace();
 			logger.info(e.getMessage());
 		}
 	}
@@ -265,7 +267,7 @@ public class Ic_Products {
 		}
 
 	}
-	
+
 	void addToCartFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
 		if(quanity == 1) {
 			action.clickEle(productLink, "Navigate to product listing page", test);
@@ -350,6 +352,7 @@ public class Ic_Products {
 			}
 		} catch (Exception e) {
 			logger.info(e.getMessage());
+			e.printStackTrace();
 		}
 		return productData;
 

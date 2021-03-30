@@ -2,7 +2,9 @@ package JDGroupPageObjects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.openqa.selenium.WebDriver;
@@ -19,13 +21,14 @@ import utils.DataTable2;
 public class ICUpdateCustomer {
 	
 	 WebDriver driver;
-	    Action action;
+	 Action action;
+	 DataTable2 dataTable2;
 
 	    public ICUpdateCustomer(WebDriver driver, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
-
+			this.dataTable2=dataTable2;
 	    }
 	    
 	    
@@ -92,8 +95,8 @@ public class ICUpdateCustomer {
 	    @FindBy(xpath="//*[@id=\"building_details\"]")
 	    private WebElement ic_buildingDetails;
 	    
-	    @FindBy(xpath="//*[@id=\"region_id\"]/option")
-	    private List<WebElement> ic_province;
+	    @FindBy(xpath="//*[@id=\"region_id\"]")
+	    private WebElement ic_province;
 	    
 	    @FindBy(xpath="//*[@id=\"city\"]")
 	    private WebElement ic_city;
@@ -113,6 +116,29 @@ public class ICUpdateCustomer {
 	    @FindBy(xpath="//*[@id=\"maincontent\"]/div/div[2]/div[2]/div[2]/div[2]/div[2]/a/span")
 	    private WebElement ic_ShippingAddress;
 	 
+	    @FindBy(id = "identity_number")
+	    private WebElement identityNumber;
+	    
+	    @FindBy(id = "passport_number")
+	    private WebElement passportNumber;
+	    
+	    @FindBy(id = "switcher--id-field")
+	    private WebElement idRadioButton;
+	    
+	    @FindBy(name = "telephone")
+	    private WebElement telephone;
+	    
+	    @FindBy(css = "a.go-back")
+	    private WebElement backButton;
+	    
+	    @FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
+	    private WebElement iCCartButton;
+	    
+	    @FindBy(xpath="//*[@id=\"top-cart-btn-checkout\"]/span")
+	    private WebElement icCCheckout;
+	    
+	    
+	    
 	    /**
 	     * 
 	     * @param test
@@ -137,24 +163,24 @@ public class ICUpdateCustomer {
 	    	
 	    try {
 	    	
-	    	String firstName = mySheets.get(0).get("firstName").get(sheetRow1);
-	    	String lastName = mySheets.get(0).get("lastName").get(sheetRow1);
-	    	String taxVat = mySheets.get(0).get("taxVat").get(sheetRow1);
-	    	String email = mySheets.get(0).get("email").get(sheetRow1);
-	    	String passWord = mySheets.get(0).get("passWord").get(sheetRow1);
+	    	String firstName = dataTable2.getValueOnCurrentModule("firstName");
+	    	String lastName = dataTable2.getValueOnCurrentModule("lastName");
+	    	String taxVat = dataTable2.getValueOnCurrentModule("taxVat");
+	    	String email = dataTable2.getValueOnCurrentModule("email");
+	    	String passWord = dataTable2.getValueOnCurrentModule("passWord");
 	    	
 	    	Random rand = new Random();
 			String id = String.format("%04d", rand.nextInt(10000));
 	    	
 
 	    	//Default Billing address
-	    	String billingAddress = mySheets.get(0).get("billingAddress").get(sheetRow1);
-	    	String billing_streetAddress = mySheets.get(0).get("billing_streetAddress").get(sheetRow1);
+	    	String billingAddress = dataTable2.getValueOnCurrentModule("billingAddress");
+	    	String billing_streetAddress = dataTable2.getValueOnCurrentModule("billing_streetAddress");
 	    	//String billing_provinceName = mySheets.get(0).get("billing_provinceName").get(sheetRow1);
 	    	
 	    	//Default shipping address
-	    	String shippingAddress = mySheets.get(0).get("shippingAddress").get(sheetRow1);
-	    	String shipping_streetAddress = mySheets.get(0).get("shipping_streetAddress").get(sheetRow1);
+	    	String shippingAddress = dataTable2.getValueOnCurrentModule("shippingAddress");
+	    	String shipping_streetAddress = dataTable2.getValueOnCurrentModule("shipping_streetAddress");
 	    	//String shipping_provinceName = mySheets.get(0).get("shipping_provinceName").get(sheetRow1);
 	    	
 	    	
@@ -164,12 +190,10 @@ public class ICUpdateCustomer {
 	    	action.click(AccountInfoEdit, "Account Infor", test);
 	    	String firstNameText = action.getAttribute(ic_firstname, "value");
 	    	if(firstName.equalsIgnoreCase("Yes")){
-	    		
 	    		String firstNameTextUpdated = "Updated" + id;
 	    		action.clear(ic_firstname, "Remmoving first name");
 	    		action.writeText(ic_firstname, firstNameTextUpdated,"first Name", test);
-	    		mySheets.get(0).get("firstName_output").set(sheetRow1, firstNameTextUpdated);
-	    		
+				dataTable2.setValueOnCurrentModule("firstName_output",firstNameTextUpdated);
 	    		action.click(SaveButton, "Save", test);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
@@ -177,7 +201,7 @@ public class ICUpdateCustomer {
 	    		String firstNameTextSaved = action.getAttribute(firstUpdated, "value");
 	    		action.CompareResult("compare updated first name", firstNameTextUpdated, firstNameTextSaved, test);
 	    	}else {
-	    		mySheets.get(0).get("firstName_output").set(sheetRow1, firstNameText);
+				dataTable2.setValueOnCurrentModule("firstName_output",firstNameText);
 	    	}
 	    	
 	    	String lastNameText = action.getAttribute(ic_lastname, "value");
@@ -186,7 +210,7 @@ public class ICUpdateCustomer {
 	    		String lastNameTextUpdated = "Updated" + id;
 	    		action.clear(ic_lastname, "Remmoving last name");
 	    		action.writeText(ic_lastname, lastNameTextUpdated,"last Name", test);
-	    		mySheets.get(0).get("lastName_output").set(sheetRow1, lastNameTextUpdated);
+				dataTable2.setValueOnCurrentModule("lastName_output",lastNameTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
@@ -195,7 +219,7 @@ public class ICUpdateCustomer {
 	    		String lastNameTextSaved = action.getAttribute(lastNameUpdated, "value");
 	    		action.CompareResult("compare updated last name", lastNameTextUpdated, lastNameTextSaved, test);
 	    	}else {
-	    		mySheets.get(0).get("lastName_output").set(sheetRow1, lastNameText);
+				dataTable2.setValueOnCurrentModule("lastName_output",lastNameText);
 	    	}
 	    	
 	    	
@@ -204,43 +228,38 @@ public class ICUpdateCustomer {
 	    		String taxVatTextUpdated = "Updated" + id;
 	    		action.clear(ic_taxVat, "Remmoving Vat");
 	    		action.writeText(ic_taxVat, taxVatTextUpdated," VAT/TAX", test);
-	    		mySheets.get(0).get("taxVat_output").set(sheetRow1, taxVatTextUpdated);
-	    		
+				dataTable2.setValueOnCurrentModule("taxVat_output",taxVatTextUpdated);
 	    		action.click(SaveButton, "Save", test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    	}else {
-	    		mySheets.get(0).get("taxVat_output").set(sheetRow1, taxVatText);
+				dataTable2.setValueOnCurrentModule("taxVat_output",taxVatText);
 	    	}
 	    	
 	    	action.click(emailCheckBox, "EmailCheckBox", test);
 	    	String emailText = action.getAttribute(ic_email, "value");
 	    	if(email.equalsIgnoreCase("yes")){
-	    		String emailTextUpdated = id+"Updated"+ emailText;
-	    		
+	    		String emailTextUpdated = id+"Updated@updated.com";
 	    		ic_email.clear();
 	    		action.writeText(ic_email, emailTextUpdated ,"email", test);
-	    		mySheets.get(0).get("email_output").set(sheetRow1, emailTextUpdated);
-	    		
-	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
-	    		action.writeText(passCurrent, currentPassWordText, "Current password", test);
-	    		
+				dataTable2.setValueOnCurrentModule("email_output",emailTextUpdated);
+				dataTable2.setValueOnOtherModule("ic_login","Username",emailTextUpdated,0);
+//	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
+//	    		action.writeText(passCurrent, currentPassWordText, "Current password", test);
 	    		action.click(SaveButton, "Save", test);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    	}else {
-	    		mySheets.get(0).get("email_output").set(sheetRow1, emailText);
+				dataTable2.setValueOnCurrentModule("email_output",emailText);
 	    	}
 	    	
 	    	if(passWord.equalsIgnoreCase("yes")){
 	    		action.click(passCheckBox, "PassWordCheckBox", test);
-	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
-	    		
-	    		action.writeText(passCurrent, currentPassWordText, "current Password", test);
-	    		
-	    		String passWTextUpdated = "updated" +currentPassWordText+ id;
-	    		
+	    		String currentPassWordText = dataTable2.getValueOnCurrentModule("Password");
+//	    		action.writeText(passCurrent, currentPassWordText, "current Password", test);
+	    		String passWTextUpdated = "updated"+id;
 	    		action.writeText(passNew, passWTextUpdated , "new Password", test);
-	    		mySheets.get(0).get("passWord_output").set(sheetRow1, passWTextUpdated);
+				dataTable2.setValueOnCurrentModule("passWord_output",passWTextUpdated);
+				dataTable2.setValueOnOtherModule("ic_login","Password",passWTextUpdated,0);
 	    		action.writeText(passConfirmation, passWTextUpdated, "Confirm new Password", test);
 	    		action.click(SaveButton, "Save", test);	
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
@@ -258,6 +277,7 @@ public class ICUpdateCustomer {
 	    		action.javaScriptClick(ic_BillingAddress, "Change Billing address", test);
 	    		String streetAdressText = action.getAttribute(ic_streetAddress, "value");	    		
 	    		if(billing_streetAddress.equalsIgnoreCase("yes")){
+	    			//ADD random data from list here for addresses
 		    		String streetAdressTextUpdated = streetAdressText + "Updated" + id;
 		    		action.clear(ic_streetAddress, "Removing Streeta address");
 	    	
@@ -266,29 +286,24 @@ public class ICUpdateCustomer {
 		    		
 		    		/*action.click(SaveButton, "Save", test);
 		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);*/
-		    		
-		    	
 		    		String buildDetailsText = action.getAttribute(ic_buildingDetails, "value");
-		    		mySheets.get(0).get("billing_buildingDetails_output").set(sheetRow1, buildDetailsText);
-		    		
+		    		dataTable2.setValueOnCurrentModule("billing_buildingDetails_output",buildDetailsText);
 		    		//Fix this province get the proper province
 		    		String province = action.getSelectedOptionFromDropDown(ic_province);
-		    		
-		    		
 		    		String cityText = action.getAttribute(ic_city, "value");
-		    		mySheets.get(0).get("billing_city_output").set(sheetRow1, cityText);
+		    		dataTable2.setValueOnCurrentModule("billing_city_output",cityText);
 		    		
 		    		String suburbText = action.getAttribute(ic_suburb, "value");
-		    		mySheets.get(0).get("billing_suburb_output").set(sheetRow1, suburbText);
+		    		dataTable2.setValueOnCurrentModule("billing_suburb_output",suburbText);
 		    		
 		    		String postalCodeText = action.getAttribute(ic_postalCode, "value");
-		    		mySheets.get(0).get("billing_postalCode_output").set(sheetRow1, postalCodeText);
+		    		dataTable2.setValueOnCurrentModule("billing_postalCode_output",postalCodeText);
 		    		
 		    		action.click(SaveButton, "Save", test);
 		    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSaved, "Billing address updated"), test);
 		    	
 		    	}else {
-		    		mySheets.get(0).get("billing_streetAddress_output").set(sheetRow1, streetAdressText);
+		    		dataTable2.setValueOnCurrentModule("billing_streetAddress_output",streetAdressText);
 		    	}
 	    		
 	    	}
@@ -303,24 +318,24 @@ public class ICUpdateCustomer {
 	    		action.clear(ic_streetAddress, "Removing Streeta address");
 	    		
 	    		action.writeText(ic_streetAddress,streetAddressText, "Street address", test);
-	    		mySheets.get(0).get("shipping_streetAddress_Output").set(sheetRow1, streetAddressTextUpdated);
+	    		dataTable2.setValueOnCurrentModule("shipping_streetAddress_Output",streetAddressTextUpdated);
 	    		
 	    		/*action.click(SaveButton, "Save", test);
 	    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, ""), test);*/
 	    		
 	    		String buildDetailsText = action.getAttribute(ic_buildingDetails, "value");
-	    		mySheets.get(0).get("shipping_buildingDetails_output").set(sheetRow1, buildDetailsText);
+	    		dataTable2.setValueOnCurrentModule("shipping_buildingDetails_output",buildDetailsText);
 	    		
 	    		//action.selectExactValueFromListUsingTex(ic_province, billing_provinceName);
 	    		
 	    		String cityText = action.getAttribute(ic_city, "value");
-	    		mySheets.get(0).get("shipping_city_output").set(sheetRow1, cityText);
+	    		dataTable2.setValueOnCurrentModule("shipping_city_output",cityText);
 	    		
 	    		String suburbText = action.getAttribute(ic_suburb, "value");
-	    		mySheets.get(0).get("shipping_suburb_output").set(sheetRow1, suburbText);
+	    		dataTable2.setValueOnCurrentModule("shipping_suburb_output",suburbText);
 	    		
 	    		String postalCodeText = action.getAttribute(ic_postalCode, "value");
-	    		mySheets.get(0).get("shipping_postalCode_output").set(sheetRow1, postalCodeText);
+	    		dataTable2.setValueOnCurrentModule("shipping_postalCode_output",postalCodeText);
 	    		
 	    		action.click(SaveButton, "Save", test);
 	    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSaved, "Shipping address updated"), test);
@@ -345,5 +360,65 @@ public class ICUpdateCustomer {
 		}
 		return rowNumber;
 	}
+	
+	public void navigateBackToCustomerDetails(String userType,String addressExist) {
+		action.explicitWait(4000);
+		backButton.click();
+		action.explicitWait(4000);
+		ic_myAccountButton.click();
+		action.explicitWait(4000);
+		MyAccountButton2.click();
+		action.explicitWait(4000);
+		if(userType.equalsIgnoreCase("Registered") & addressExist.equalsIgnoreCase("Select a saved address or add a new address:")) {
+		AddressBookEdit.click();
+		ic_BillingAddress.click();
+		}
+	}
+	
+	public Map<String,String> getExistingAddressInformation(String userType,String addressExist ) {
+		Map<String, String> addressInfo = new LinkedHashMap<>();
+		if(userType.equalsIgnoreCase("Registered") & addressExist.equalsIgnoreCase("Select a saved address or add a new address:") ){
+		String streetAdd = action.getAttribute(ic_streetAddress, "value");
+		addressInfo.put("Street Address", streetAdd);
+		String city =action.getAttribute(ic_city, "value");
+		addressInfo.put("City", city);
+		String province = action.getSelectedOptionFromDropDown(ic_province);
+		addressInfo.put("Province", province);
+		String suburb = action.getAttribute(ic_suburb, "value");
+		addressInfo.put("Suburb", suburb);	
+		String postal = action.getAttribute(ic_postalCode, "value");
+		addressInfo.put("Post Code", postal);
+		String tele =action.getAttribute(telephone, "value");
+		addressInfo.put("Telephone", tele);
+		}
+		AccountInfoEdit.click();
+		action.explicitWait(5000);
+		String firstName = action.getAttribute(ic_firstname, "value");
+		addressInfo.put("firstName", firstName);
+		String lastNAme = action.getAttribute(ic_lastname, "value");
+		addressInfo.put("Last name", lastNAme);
+		String taxVat = action.getAttribute(ic_taxVat, "value");
+		addressInfo.put("Vat number", taxVat);
+		emailCheckBox.click();
+		action.explicitWait(4000);
+		String email = action.getAttribute(ic_email, "value");
+		addressInfo.put("email", email);
+		emailCheckBox.click();
+		if(idRadioButton.isSelected()) {
+			addressInfo.put("ID", action.getAttribute(identityNumber, "value")) ;
+		}else {
+			addressInfo.put("ID", action.getAttribute(passportNumber, "value"));
+		}
+		action.explicitWait(5000);
+		iCCartButton.click();
+		icCCheckout.click();
+
+		return addressInfo;
+		
+	}
+	
+
+	
+	
 	
 }

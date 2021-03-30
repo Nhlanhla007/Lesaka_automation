@@ -20,6 +20,7 @@ public class ic_RedeemGiftCard {
 	
 	WebDriver driver;
     Action action;
+	DataTable2 dataTable2;
     
    Ic_Products ic_products;
 	
@@ -27,6 +28,7 @@ public class ic_RedeemGiftCard {
 		 this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
+		 this.dataTable2=dataTable2;
 	        ic_products = new Ic_Products(driver, dataTable2);
 	 }
 	 

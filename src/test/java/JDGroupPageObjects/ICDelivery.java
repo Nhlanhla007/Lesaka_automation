@@ -11,6 +11,7 @@ import utils.DataTable2;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class ICDelivery {
@@ -18,11 +19,13 @@ public class ICDelivery {
     Action action;
     DataTable2 dataSheets;
 
+    ICUpdateCustomer customerAddressDetails;
     public ICDelivery(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
         dataSheets=dataTable2;
+        customerAddressDetails = new ICUpdateCustomer(driver,dataTable2);
     }
 
     @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]")
@@ -87,17 +90,81 @@ public class ICDelivery {
     @FindBy(xpath = "//*[@id=\"opc-sidebar\"]/div[1]/div[1]/button/span")
     WebElement placeOrder;
 
+    @FindBy(className = "form-checkout-title")
+    WebElement ic_AddressType;
+    
+    @FindBy(name = "street[0]")
+    WebElement popUpStreetName;
+    
+    @FindBy(name = "region_id")
+    WebElement popUpProvince;
+    
+	/*
+	 * @FindBy(name = "firstname") WebElement popUpFirstName;
+	 * 
+	 * @FindBy(name = "lastname") WebElement popUpLastName;
+	 */
+    
+    @FindBy(name = "city")
+    WebElement popUpCity;
+
+    @FindBy(name = "postcode")
+    WebElement popUpPostalCode;
+    
+    @FindBy(name = "custom_attributes[suburb]")
+    WebElement popUpsuburb;
+    
+    @FindBy(name = "vat_id")
+    WebElement popUpVatNumber;
+    
+    @FindBy(name = "telephone")
+    WebElement popUpPhone;
+    
+    @FindBy(xpath = "//span[contains(text(),'New Address')]")
+    WebElement newAddressButton;
+    
+    @FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
+    WebElement popUpSave;
+    
     public static String Streetname;
     public static String Cityname;
     public static String Postalcode;
 
+    public static Map<String,String> registeredUserDetails;
+    
     public void deliveryPopulation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException {
     	Streetname =input.get("streetName").get(rowNumber);
     	Cityname =input.get("city").get(rowNumber);
     	Postalcode = input.get("postalCode").get(rowNumber);
-        Thread.sleep(8000);
+    	String addressType = dataSheets.getValueOnCurrentModule("AddressType"); 
+    	String userType = dataSheets.getValueOnCurrentModule("UserType");
+        Thread.sleep(1500);
         action.click(deliveryLink,"deliveryLink",test);
-        Thread.sleep(8000);
+        String addressTypeICFont = ic_AddressType.getText();
+        Thread.sleep(4000);
+        if(addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Enter your delivery address & contact details:")) {
+        if(userType.equalsIgnoreCase("Guest")) {
+            action.writeText(firstName,dataSheets.getValueOnCurrentModule("firstName"),"firstName",test);
+            action.writeText(lastname,dataSheets.getValueOnCurrentModule("lastname"),"lastname",test);
+            action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
+            action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
+        }else if(userType.equalsIgnoreCase("Registered")) {
+        	customerAddressDetails.navigateBackToCustomerDetails(userType,addressTypeICFont);
+        	registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType,addressTypeICFont);
+        	dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
+        	dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
+        	dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
+        	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
+			/*
+			 * registeredUserDetails.put("Street Address", value);
+			 * registeredUserDetails.put("City", value);
+			 * registeredUserDetails.put("Province", value);
+			 * registeredUserDetails.put("Suburb", value);
+			 * registeredUserDetails.put("Post Code", value);
+			 * registeredUserDetails.put("Telephone", value);
+			 */
+        	
+        }
         action.writeText(streetName,dataSheets.getValueOnCurrentModule("streetName"),"streetName",test);
         action.writeText(firstName,dataSheets.getValueOnCurrentModule("firstName"),"firstName",test);
         action.writeText(lastname,dataSheets.getValueOnCurrentModule("lastname"),"lastname",test);
@@ -107,12 +174,59 @@ public class ICDelivery {
         action.writeText(postalCode,dataSheets.getValueOnCurrentModule("postalCode"),"postalCode",test);
         action.writeText(vatNumber,dataSheets.getValueOnCurrentModule("vatNumber"),"vatNumber",test);
         action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
+        Thread.sleep(15000);
         action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
         Thread.sleep(12000);
         action.dropDownselectbyvisibletext(province,dataSheets.getValueOnCurrentModule("province"),"province",test);
         Thread.sleep(10000);
+        }else if(addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")) {
+        	//details returned from this map will be written to excel --DONE NEED THOKOZANI'S INPUT AS TO DOES IT REALLY ADD AND THE TCID AND OCCURENCE
+        	customerAddressDetails.navigateBackToCustomerDetails(userType,addressTypeICFont);
+        	registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType,addressTypeICFont);  
+        	//SHOULD BE TESTED THOKOZANI
+        	dataSheets.setValueOnCurrentModule("streetName", registeredUserDetails.get("Street Address"));
+        	dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
+        	dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
+        	dataSheets.setValueOnCurrentModule("telephone", registeredUserDetails.get("Telephone"));
+        	dataSheets.setValueOnCurrentModule("province", registeredUserDetails.get("Province"));
+        	dataSheets.setValueOnCurrentModule("city", registeredUserDetails.get("City"));
+        	dataSheets.setValueOnCurrentModule("Suburb", registeredUserDetails.get("Suburb"));
+        	dataSheets.setValueOnCurrentModule("postalCode", registeredUserDetails.get("Post Code"));
+        	dataSheets.setValueOnCurrentModule("vatNumber", registeredUserDetails.get("Vat number"));
+        	dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
+        	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
+        	action.explicitWait(12000);
+        	
+        }else if(addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")){
+        	//Enters a new address with an existing address
+        	enterNewAddressWithAnExistingAddress(test);
+		} /*
+			 * else if(addressType.equalsIgnoreCase("Existing") & addressTypeICFont.
+			 * equalsIgnoreCase("Enter your delivery address & contact details:")){ //WHAT
+			 * SHOULD HAPPEN HERE THERE IS NO EXISITNG ADDRESS????????????? }
+			 *///Add else if for other scenario
         action.click(ContinueToPayment,"ContinueToPayment",test);
     }
+    
+    public void enterNewAddressWithAnExistingAddress(ExtentTest test) throws IOException {
+    	customerAddressDetails.navigateBackToCustomerDetails("New","Select a saved address or add a new address:");
+    	registeredUserDetails = customerAddressDetails.getExistingAddressInformation("New","Select a saved address or add a new address:");
+    	dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
+    	dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
+    	dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
+    	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
+       	newAddressButton.click();
+       	//action.writeText(popUpFirstName, dataSheets.getValueOnCurrentModule(""), "New First name", test);
+    	action.writeText(popUpStreetName, dataSheets.getValueOnCurrentModule("streetName"), "New Address Street name", test);
+    	action.writeText(popUpCity, dataSheets.getValueOnCurrentModule("city"), "New Address City", test);
+    	action.writeText(popUpPhone, dataSheets.getValueOnCurrentModule("telephone"), "New Address Telephone", test);
+    	action.writeText(popUpsuburb, dataSheets.getValueOnCurrentModule("Suburb"), "New Address Suburb", test);
+    	action.writeText(popUpPostalCode, dataSheets.getValueOnCurrentModule("postalCode"), "New Address postal code", test);
+    	action.writeText(popUpVatNumber, dataSheets.getValueOnCurrentModule("vatNumber"), "New Address Vat number", test);
+    	action.selectFromDropDownUsingVisibleText(popUpProvince, dataSheets.getValueOnCurrentModule("province"), "New Address Province");
+    	popUpSave.click();
+    }
+    
     public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws InterruptedException, IOException {
         Streetname =input.get("streetName").get(rowNumber);
         Cityname =input.get("city").get(rowNumber);
