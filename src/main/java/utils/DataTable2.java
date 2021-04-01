@@ -15,7 +15,7 @@ import Logger.Log;
 public class DataTable2 {
 
 	//Added custom sheet for TA31...Change it when merging
-    public static final String TESTDATA_FILENAME="src/test/resources/data/jdgroup.xlsx";
+    public static String TESTDATA_FILENAME="src/test/resources/data/jdgroup.xlsx";
     public static ExcelFunctions excelFunc=new ExcelFunctions();
     public static ConcurrentHashMap<String, String> dataMap = null;
     public static LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = null;
@@ -26,6 +26,10 @@ public class DataTable2 {
     public static void initializeTestDataWorkbook()
     {
         excelFunc.initializeExcelSheet(TESTDATA_FILENAME);
+    }
+    public void setPath(String moduleName)
+    {
+        TESTDATA_FILENAME="src/test/resources/data/jdgroup"+moduleName.toUpperCase()+ ".xlsx";
     }
     public  LinkedHashMap<String, LinkedHashMap<String,ArrayList<String>>> getExcelData() throws Exception
     {
