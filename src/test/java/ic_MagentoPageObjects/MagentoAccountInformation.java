@@ -41,7 +41,7 @@ public class MagentoAccountInformation {
 			  @FindBy(xpath = "//input[@name='customer[identity_number]']")
 			  WebElement customerIdentityNumber;
 			
-			  public static String ActualBPnumber;
+			  public String ActualBPnumber;
 			  
 			public void VadidateCustomerInfo_backend(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException{
 				//replace by this Parameter while merge parameter (ExtentTest test,String expFristname,String expLastname,String expEmail,String expSAID)

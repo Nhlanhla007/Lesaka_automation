@@ -27,7 +27,6 @@ public class Magento_UserInfoVerification {
 	MagentoRetrieveCustomerDetailsPage MagentoRetrieveCustomer;
 	MagentoAccountInformation magentoAccountInformation = new MagentoAccountInformation(driver,dataTable2);
 	ICDelivery registeredCustomerDetails;
-	
 	 public Magento_UserInfoVerification (WebDriver driver, DataTable2 dataTable2) {
 			this.driver = driver;
 			this.dataTable2 = dataTable2;
@@ -113,7 +112,7 @@ public class Magento_UserInfoVerification {
 	 */
 	
 	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException, ClassNotFoundException {
-		int TimetoLoadpage=11;
+		int TimetoLoadpage=11;	
 		String ExpFirstname = null;
 		String ExpLastname = null;
 		String ExpEmail = null;
@@ -136,7 +135,7 @@ public class Magento_UserInfoVerification {
 		ExpFirstname=input.get("firstName").get(rowNumber);//"Brian";
 		ExpLastname=input.get("lastName").get(rowNumber);//"Jones";
 		ExpEmail=input.get("emailAddress").get(rowNumber);//"BrenoFernandesMalingaPatrick8@armyspy.com";
-		
+	
 		//new variables flag  identityType on ID and passport
 		 ExpidentityType =input.get("identityType").get(rowNumber);//"ID";
 		 ExpPassportnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
@@ -149,7 +148,7 @@ public class Magento_UserInfoVerification {
 		//VAT validation
 		 vatNumberFlag=input.get("vatNumberFlag").get(rowNumber);//"Yes";
 		 ExpVATnumber=input.get("vatNumber").get(rowNumber);//"2222224";
-		 
+		
 		 switch (ExpidentityType) {
 			case "ID":
 				

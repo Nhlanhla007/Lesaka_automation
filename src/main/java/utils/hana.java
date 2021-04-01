@@ -43,10 +43,7 @@ public class hana {
 				connection = DriverManager.getConnection("jdbc:sap://"+Server+":"+Port+"/?autocommit=true", Username,Password);
 				break;
 			case "SQL":
-				
 				connection = DriverManager.getConnection("jdbc:"+Server+"://"+Port+";user="+Username+";password="+Password);
-				
-					
 				break;
 			}
 				

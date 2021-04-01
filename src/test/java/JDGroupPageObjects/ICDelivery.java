@@ -89,7 +89,7 @@ public class ICDelivery {
 
     @FindBy(xpath = "//*[@id=\"opc-sidebar\"]/div[1]/div[1]/button/span")
     WebElement placeOrder;
-    
+
     @FindBy(className = "form-checkout-title")
     WebElement ic_AddressType;
     
@@ -129,7 +129,7 @@ public class ICDelivery {
     public static String Streetname;
     public static String Cityname;
     public static String Postalcode;
-    
+
     public static Map<String,String> registeredUserDetails;
     
     public void deliveryPopulation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException {
@@ -166,12 +166,17 @@ public class ICDelivery {
         	
         }
         action.writeText(streetName,dataSheets.getValueOnCurrentModule("streetName"),"streetName",test);
+        action.writeText(firstName,dataSheets.getValueOnCurrentModule("firstName"),"firstName",test);
+        action.writeText(lastname,dataSheets.getValueOnCurrentModule("lastname"),"lastname",test);
         action.writeText(telephone,dataSheets.getValueOnCurrentModule("telephone"),"telephone",test);
         action.writeText(city,dataSheets.getValueOnCurrentModule("city"),"city",test);
         action.writeText(Suburb,dataSheets.getValueOnCurrentModule("Suburb"),"Suburb",test);
         action.writeText(postalCode,dataSheets.getValueOnCurrentModule("postalCode"),"postalCode",test);
         action.writeText(vatNumber,dataSheets.getValueOnCurrentModule("vatNumber"),"vatNumber",test);
-
+        action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
+        Thread.sleep(15000);
+        action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
+        Thread.sleep(12000);
         action.dropDownselectbyvisibletext(province,dataSheets.getValueOnCurrentModule("province"),"province",test);
         Thread.sleep(10000);
         }else if(addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")) {

@@ -43,19 +43,17 @@ public class ic_GiftCardUsability {
 	
 	@FindBy(xpath="//*[@id='giftcard-form']/div[1]/div[3]/div[2]/span[2]")
     private WebElement Giftcard_Balance;
+
 	@FindBy(xpath="//table//tbody//tr[@class='grand totals']//td//span[@class='price']")
     private WebElement GrandTotal;
-	
 	public void VeriyGiftcardUsableity(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException{
 	    action.waitExplicit(15);
 		int WaitTime =Integer.parseInt(input.get("DelayTime").get(rowNumber));// 5;
 		String GiftcardCode = input.get("GiftcardCode").get(rowNumber);//"RFU6Z5BAZ7X8HG3";
 		String ScratchCode = input.get("ScratchCode").get(rowNumber);//"5QDHR";
 		String ExpBalance =input.get("ExpBalance").get(rowNumber);
-		
 		action.elementExists(Reedem_giftcardOption, WaitTime);
 		action.clickEle(Reedem_giftcardOption, "Reedem_giftcardOption", test);
-		
 		if(GiftcardCode!=""){
 			action.elementExists(Giftcard_code, WaitTime);
 			action.writeText(Giftcard_code, GiftcardCode, "Giftcard_code", test);
@@ -64,8 +62,6 @@ public class ic_GiftCardUsability {
 			action.elementExists(Giftcard_Scratchcode, WaitTime);
 			action.writeText(Giftcard_Scratchcode, ScratchCode, "Giftcard_Scratchcode", test);
 		}
-		
-		
 		String ExpAmoutBeforegiftcard = action.getText(GrandTotal, " Total price before applying for gift card ");
 		action.elementExists(Giftcard_Apply, WaitTime);
 		action.clickEle(Giftcard_Apply, "Giftcard_Apply", test);
@@ -75,10 +71,8 @@ public class ic_GiftCardUsability {
 		Thread.sleep(8000);
 		String ActualBalance = action.getText(Giftcard_Balance, "Giftcard_Balance");
 		action.CompareResult(" Total Balance Left on Re-Using Gift card ", ExpBalance, ActualBalance, test);
-		
 		String AmountAfterGiftcard = action.getText(GrandTotal, " Total price before applying for gift card ");
 		action.CompareResult(" Total Value of product remains constant, No balance in giftcard", ExpAmoutBeforegiftcard, AmountAfterGiftcard, test);
-		
 	}
 	
 }

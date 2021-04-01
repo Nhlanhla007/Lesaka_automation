@@ -9,8 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.aventstack.extentreports.ExtentTest;
 
@@ -33,7 +31,7 @@ public class ic_PaymentOption {
 	//payement options
 	
 	@FindBy(xpath = "//span[contains(text(),'Credit Card (Processed By PayU)')]")
-	WebElement creditcard;
+	WebElement payUcreditcard;
 	@FindBy(xpath = "//span[contains(text(),'Visa Checkout')]")
 	WebElement VisaCheckout;
 	@FindBy(xpath = "//span[contains(text(),'EFT Pro (Processed By PayU)')]")
@@ -63,7 +61,7 @@ public class ic_PaymentOption {
 	@Step("To Select payment method")
 	public WebElement ic_SelectPaymentMethod(String Paytype){
 			Map<String,WebElement> PaymentMap=new HashMap<String,WebElement>();
-			PaymentMap.put("creditcard",creditcard);  
+			PaymentMap.put("payUcreditcard", payUcreditcard);
 			PaymentMap.put("VisaCheckout",VisaCheckout);
 			PaymentMap.put("EFT_Pro",EFT_Pro);
 			PaymentMap.put("Masterpass",Masterpass);

@@ -156,12 +156,7 @@ public class ic_NewAccountCreation {
 	public  void accountCreation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 		String navigateURL = ConfigFileReader.getPropertyVal("URL");
 		action.navigateToURL(navigateURL);
-		try {
-			Thread.sleep(20000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		action.explicitWait(3000);
 		String firstName = input.get("firstName").get(rowNumber);
 		String lastName = input.get("lastName").get(rowNumber);
 		String emailAddress = input.get("emailAddress").get(rowNumber);

@@ -16,11 +16,13 @@ import java.util.HashMap;
 public class ic_PayUPayment {
 		WebDriver driver;
 		Action action;
+		DataTable2 dataTable2;
 		
 		public ic_PayUPayment(WebDriver driver, DataTable2 dataTable2) {
 			this.driver = driver;
 			PageFactory.initElements(driver, this);
 			action = new Action(driver);
+			this.dataTable2=dataTable2;
 		}
 		
 		// PAYU site pay option
@@ -44,11 +46,11 @@ public class ic_PayUPayment {
 		public static String Oderid;
 
 		public void PayUPagePayment(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-			String cardnumber = input.get("cardnumber").get(rowNumber);
-			String cardholdername = input.get("cardholdername").get(rowNumber);
-			String Expiremonth = input.get("Expiremonth").get(rowNumber);
-			String ExpireYear = input.get("ExpireYear").get(rowNumber);
-			String cvv = input.get("cvv").get(rowNumber);
+			String cardnumber = dataTable2.getValueOnCurrentModule("cardnumber");
+			String cardholdername = dataTable2.getValueOnCurrentModule("cardholdername");
+			String Expiremonth = dataTable2.getValueOnCurrentModule("Expiremonth");
+			String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
+			String cvv = dataTable2.getValueOnCurrentModule("cvv");
 			action.explicitWait(5000);
 			action.clickEle(PayU_Card, " Card option in PayU",test);
 			//Enter card details
@@ -59,13 +61,6 @@ public class ic_PayUPayment {
 			action.writeText(cvvNumber, cvv, "cvv number",test);
 			action.clickEle(PayBtn, "Payment submission button",test);
 			action.explicitWait(10);
-			//Retrieve order ID
-//			action.isElementOnNextPage(OderID, (long) 5,test);
-		    Oderid= action.getText(OderID, "Order ID");
-		    Oderid =Oderid.replace("Your order number is:","").replace(".","");
-			ConfigFileReader configFileReader = new ConfigFileReader();
-			configFileReader.setPropertyVal("OrderID",Oderid);
-			input.get("OrderID").set(rowNumber,Oderid.replace("Your order number is:","").replace(".",""));
 			System.out.println("##############END Execution###############");
 		}
 }

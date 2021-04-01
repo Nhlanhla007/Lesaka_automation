@@ -19,14 +19,16 @@ import utils.DataTable2;
 public class ic_CashDepositPayment {
 	WebDriver driver;
 	Action action;
-	ic_Magento_Login Magentologin;
-	MagentoOrderStatusPage magentoOrderStatusPage;
+	DataTable2 dataTable2;
+//	ic_Magento_Login Magentologin;
+//	MagentoOrderStatusPage magentoOrderStatusPage;
 	public ic_CashDepositPayment(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
-        Magentologin =new ic_Magento_Login(driver, dataTable2);
-        magentoOrderStatusPage = new MagentoOrderStatusPage(driver, dataTable2);
+		this.dataTable2=dataTable2;
+//        Magentologin =new ic_Magento_Login(driver, dataTable2);
+//        magentoOrderStatusPage = new MagentoOrderStatusPage(driver, dataTable2);
 	}
 	
 	
@@ -43,34 +45,30 @@ public class ic_CashDepositPayment {
 	
 	@FindBy(xpath = "//table[@class='admin__table-secondary order-information-table']//tr//td//span[@id='order_status']")
 	WebElement OrderStatus;
-	public String RetriveOrderID(ExtentTest test) throws IOException {
-		String Oderid = null;
-		action.isElementOnNextPage(OderID, (long) 11,test);
-	    Oderid = action.getText(OderID, "Order ID");
-	    Oderid = Oderid.replace("Your order # is: ","").replace(".","");
-		return Oderid;
-		
-	}
+//	public String RetriveOrderID(ExtentTest test) throws IOException {
+//		String Oderid = null;
+//		action.isElementOnNextPage(OderID, (long) 11,test);
+//	    Oderid = action.getText(OderID, "Order ID");
+//	    Oderid = Oderid.replace("Your order # is: ","").replace(".","");
+//		return Oderid;
+//	}
 	public void InvoiceCashDeposit(ArrayList<HashMap<String, ArrayList<String>>> RequiredSheets,ExtentTest test,int testcaseID) throws IOException{
 		int CurrentSheetRow = findRowToRun(RequiredSheets.get(0), 0, testcaseID);
 		int LoginsheetRow = findRowToRun(RequiredSheets.get(1), 0, testcaseID);
 		String ExpOrderStatus = "Received Paid";
 		try{
-			String OrderID = RetriveOrderID(test);
-			
-			System.out.println("OrderID found is :"+OrderID);
-			//RequiredSheets.get(1).get("Retrived OrderID").set(LoginsheetRow,OrderID.replace("Your order # is: ","").replace(".",""));
-			String Username = RequiredSheets.get(1).get("Username").get(LoginsheetRow);
-			String Password = RequiredSheets.get(1).get("Password").get(LoginsheetRow);
-			
-			Magentologin.LoginToMagento(test, Username, Password);
-			System.out.println("login success");
-			magentoOrderStatusPage.NavigateOdersPage(test);
-			magentoOrderStatusPage.searchForOrder(OrderID, test);
-			magentoOrderStatusPage.viewOrderDetails(test);
+//			String OrderID = dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);
+//			System.out.println("OrderID found is :"+OrderID);
+//			//RequiredSheets.get(1).get("Retrived OrderID").set(LoginsheetRow,OrderID.replace("Your order # is: ","").replace(".",""));
+//			String Username = RequiredSheets.get(1).get("Username").get(LoginsheetRow);
+//			String Password = RequiredSheets.get(1).get("Password").get(LoginsheetRow);
+//			Magentologin.LoginToMagento(test, Username, Password);
+//			System.out.println("login success");
+//			magentoOrderStatusPage.NavigateOdersPage(test);
+//			magentoOrderStatusPage.searchForOrder(OrderID, test);
+//			magentoOrderStatusPage.viewOrderDetails(test);
 			MagentoAdminDoInvoiceing(test);
 			MagentoOrderInfoVerification(test, ExpOrderStatus);
-			
 		}catch(Exception e){
 			e.printStackTrace();
 		}

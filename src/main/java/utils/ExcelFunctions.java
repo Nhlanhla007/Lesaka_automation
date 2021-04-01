@@ -288,7 +288,7 @@ public class ExcelFunctions {
 		catch(NullPointerException e)
 		{
 //			e.printStackTrace();
-			logger.error("There is a exception in reading the data from excel");
+//			logger.error("There is a exception in reading the data from excel");
 			return "";
 		}
 			return value;
@@ -320,6 +320,7 @@ public class ExcelFunctions {
 		}
 	public  LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> getExcelData() throws IOException {
 //		sheet = workbook.getSheetAt(sheetNumber);
+		DataGenerators dg= new DataGenerators();
 		LinkedHashMap<String, Integer> allKeys = new LinkedHashMap<String, Integer>();
 		int numSheets = workbook.getNumberOfSheets();
 		dataMap = new ConcurrentHashMap<String, String>();
@@ -331,6 +332,7 @@ public class ExcelFunctions {
 			System.out.println("i:" + i);
 			sheet = workbook.getSheetAt(i);
 			String sheetName=workbook.getSheetName(i);
+			logger.info("sheetName :"+sheetName);
 			int numRows = sheet.getLastRowNum() + 1;
 			mySheetMap = new LinkedHashMap<String, ArrayList<String>>();
 			Row row = sheet.getRow(0);
@@ -339,16 +341,21 @@ public class ExcelFunctions {
 			for (int j = 0; j < numRows; j++) {
 				row = sheet.getRow(j);
 				for (int z = 0; z < noOfColumns; z++) {
-					Cell cell = row.getCell(z);
-					String value = getExcelDataBasedOnCellType(cell);
-					if (j == 0) {
+					try {
+						Cell cell = row.getCell(z);
+						String value = getExcelDataBasedOnCellType(cell);
+						logger.info(z + ":" + value);
+						if (j == 0) {
+							headers[z] = value;
+							mySheetMap.put(value, new ArrayList<>());
 
-						headers[z] = value;
-						mySheetMap.put(value, new ArrayList<>());
+						} else {
+							Object Key = mySheetMap.keySet().toArray()[z];
+							value=dg.GenerateRequiredData(value);
+							mySheetMap.get(headers[z]).add(value);
+						}
+					}catch (Exception e){
 
-					} else {
-						Object Key = mySheetMap.keySet().toArray()[z];
-						mySheetMap.get(headers[z]).add(value);
 					}
 				}
 			}
