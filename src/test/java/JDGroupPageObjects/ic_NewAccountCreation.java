@@ -171,7 +171,6 @@ public class ic_NewAccountCreation {
 		String identityNumber = input.get("identityNumber/passport").get(rowNumber);
 		String selectNewsLetter = input.get("newsletter").get(rowNumber);
 		String taxVatNumbe = input.get("vatNumber").get(rowNumber);
-
 		//Added flag for VAT number status check TA31
 		String tavVatNumberFlagStatus = input.get("vatNumberFlag").get(rowNumber);
 		String passwordValidation = input.get("validatePassword").get(rowNumber);

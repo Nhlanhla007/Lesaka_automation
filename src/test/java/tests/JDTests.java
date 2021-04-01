@@ -1,14 +1,12 @@
 package tests;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import SAP_HanaDB.SAPCustomerRelated;
 import base.TestCaseBase;
 import emailverification.ICGiftCardVerification;
 import ic_MagentoPageObjects.*;
@@ -17,21 +15,17 @@ import ic_MagentoPageObjects.Magento_UserInfoVerification;
 import ic_MagentoPageObjects.MagentoRegisterNewUser;
 import ic_MagentoPageObjects.admin_UserUpdate;
 import ic_MagentoPageObjects.ic_Magento_Login;
-import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
-import ic_MagentoPageObjects.ic_Magento_Login;
 import com.aventstack.extentreports.ExtentTest;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
 import JDGroupPageObjects.*;
-import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
 import utils.*;
 
@@ -100,7 +94,7 @@ public class JDTests extends BaseTest {
 								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								runKeyWord(actionToRun,test);
-								writeToExcel(new File(dataTable2.filePath()));
+//								writeToExcel(new File(dataTable2.filePath()));
 								writeToExcel(createFile());
 							}
 					}
@@ -335,7 +329,7 @@ public class JDTests extends BaseTest {
 		}
 
 	public void endBrowserSession() throws IOException {
-		//driver.close();
+		driver.close();
 
 	}
 	public void writeToExcel(File filePath) throws IOException {
