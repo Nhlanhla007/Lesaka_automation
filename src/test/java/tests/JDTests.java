@@ -3,9 +3,12 @@ package tests;
 import java.io.*;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
+import SAP_HanaDB.SAPCustomerRelated;
 import base.TestCaseBase;
 import emailverification.ICGiftCardVerification;
 import ic_MagentoPageObjects.*;
@@ -105,7 +108,6 @@ public class JDTests extends BaseTest {
 								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								runKeyWord(actionToRun,test);
-//								writeToExcel(new File(dataTable2.filePath()));
 								writeToExcel(createFile());
 
 							}
@@ -172,6 +174,7 @@ public class JDTests extends BaseTest {
 		ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
 		ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
 		IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
+		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {

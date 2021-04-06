@@ -126,13 +126,13 @@ public class MagentoOrderStatusPage {
 	
 	@Step("Navigates to the order page")
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) {
-		String POfetchFrom = dataTable2.getValueOnOtherModule("OrderStatusSearch", "Fetch PO number", 0);
-		String idToSearch = "";
-		if(POfetchFrom.equalsIgnoreCase("IC")) {
-			idToSearch= ic_PayUPayment.Oderid;	
-		}else {
-			idToSearch = input.get("productSearchId").get(rowNumber); 
-		}
+//		String POfetchFrom = dataTable2.getValueOnOtherModule("OrderStatusSearch", "Fetch PO number", 0);
+		String idToSearch = dataTable2.getValueOnOtherModule("PayUPagePayment","OrderID",0);
+//		if(POfetchFrom.equalsIgnoreCase("IC")) {
+//			idToSearch= ic_PayUPayment.Oderid;
+//		}else {
+//			idToSearch = input.get("productSearchId").get(rowNumber);
+//		}
 		String orderStatus = input.get("orderStatus").get(rowNumber);
 		System.out.println("orderStatus :"+orderStatus);
 		try {

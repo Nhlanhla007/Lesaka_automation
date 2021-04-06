@@ -116,12 +116,13 @@ import utils.hana;
 			//"Select * from SAPEQ1.VBAK FULL OUTER JOIN SAPEQ1.VBAP ON SAPEQ1.VBAK.VBELN=SAPEQ1.VBAP.VBELN WHERE SAPEQ1.VBAK.VBELN ='0005231326' ";
 			String Query= "Select * from "+Schema+"."+Table1+" FULL OUTER JOIN "+Schema+"."+Table2+" ON "+Schema+"."+Table1+"."+key+" = "+Schema+"."+Table2+"."+key+" WHERE "+Schema+"."+Table1+"."+key+" = '"+SAP_orderNo+"' ";
 			//String Query= "SELECT * FROM SAPEQ1."+Table+" WHERE "+key+" = '"+SAP_orderNo+"'";
-			
+			System.out.println("Query:"+Query);
 			hana hn =new hana(TypeOfDB,Server,Port,Username,Password);
 			ResultSet rs = hn.ExecuteQuery(Query);
 			
 			int ExpRowcount=1;
 			int rowsCountReturned = hn.GetRowsCount(rs);
+			System.out.println("rowsCountReturned: "+rowsCountReturned);
 			//check a single record is found for the SAP order no.
 			if( rowsCountReturned>=0){
 				action.CompareResult(" SAP #Order :"+SAP_orderNo+" SAP hana DB record count is greater than O, Populated rows:"+rowsCountReturned, "True", "True", test);

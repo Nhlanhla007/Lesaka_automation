@@ -60,7 +60,8 @@ public class Magento_UserInfoVerification {
 	@FindBy(xpath = "//input[@id='_newslettersubscription']")
 	WebElement Cust_NewsLetter;
 	
-	@FindBy(xpath = "//*[@id=\"sales_order_view_tabs_order_info_content\"]/section[2]//a")
+
+	@FindBy(xpath = "//*[@id=\"sales_order_view_tabs_order_info_content\"]/section[2]/div[2]/div[1]/div/div/a")
 	WebElement guestEditBtn;
 	
 	@FindBy(xpath = "//*[@id=\"sales_order_view_tabs_order_info_content\"]/section[1]//table/tbody/tr[2]/td/a")
@@ -121,8 +122,7 @@ public class Magento_UserInfoVerification {
 		//String ExpWebsite =dataTable2.getValueOnOtherModule("accountCreation", "WebSite",0);
 		
 		String typeOfVerificationFlag = dataTable2.getValueOnCurrentModule("Data Source");
-		
-		action.clickEle(Account_Information, "Account Information", test);
+//		action.clickEle(Account_Information, "Account Information", test);
 		//IF CONSTUCT FOR WHAT TYPE OF VALIDATION IS TAKING PLACE
 		//For Account creation(Set this way by default)
 		//***************************************
@@ -253,7 +253,8 @@ public class Magento_UserInfoVerification {
 			String expPostalCode = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode",0);
 			String expTelephone =dataTable2.getValueOnOtherModule("deliveryPopulation", "telephone",0);
 			String magentoGuestEmail = guestEmail.getText();
-			
+			action.mouseover(guestEditBtn,"edit address");
+			action.explicitWait(2000);
 			guestEditBtn.click();
 			String magentoGuestID = action.getAttribute(guestID, "value");
 			String magentoGuestFirstName = action.getAttribute(guestFirstName, "value");

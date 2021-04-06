@@ -136,6 +136,7 @@ public class hana {
 	public List<String> GetRowdataByColumnName(ResultSet Res,String CoulmnNameToSearch) throws SQLException{
 		//DBrecords = new ArrayList <HashMap<String, String>>();
 		//DBrecords = RetriveRowsData(Res);
+//		GetRowsCount(Res);
 		List<String> Dataforcols = new ArrayList<>();
 		for(int i=0;i<DBrecords.size();i++){
 			Dataforcols.add(DBrecords.get(i).get(CoulmnNameToSearch));
