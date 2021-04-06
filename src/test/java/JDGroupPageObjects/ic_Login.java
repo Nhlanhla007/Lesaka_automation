@@ -43,10 +43,11 @@ public class ic_Login {
 		@FindBy(xpath = "//*[@id='pass']")
 		WebElement ic_Password;
 		@FindBy(xpath = "//*[@id=\"send2\"]/span")
-		WebElement ic_SigninBtn;
 		
-		@FindBy(xpath = "//h1[contains(text(),'Dashboard')]")
-		WebElement Dashboard;
+		WebElement ic_SigninBtn;
+		//div[contains(text(),'Your account sign-in was incorrect. Please try again.')]Your account sign-in was incorrect. Please try again.
+		@FindBy(xpath = "//html/body/div[1]/header/div[3]/div[2]/div/div")
+		WebElement ic_InvalidCreds;
 		
 		public static String Username;
 		
@@ -61,8 +62,8 @@ public class ic_Login {
 			ic_myAccountlist.click();
 			
 			List<String> userCred = new ArrayList<>();
-			String Username =input.get("Username").get(rowNumber);
-			String Password =input.get("Password").get(rowNumber);
+			String Username =dataTable2.getValueOnCurrentModule("Username");
+			String Password =dataTable2.getValueOnCurrentModule("Password");
 			userCred.add(Username);
 			userCred.add(Password);
 			action.writeText(ic_Username, Username, "Username feild", test);
@@ -72,12 +73,6 @@ public class ic_Login {
 				
 				return userCred;
 
-				/*action.waitExplicit(31);
-				String resWelcomescreen = action.getText(Dashboard, "Dashboard");
-				System.out.println(resWelcomescreen);*/
-			//}else{
-			//	action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
-			//}
 	     }
 		
 		public List<String> userCreds(List<String> userCreds){
