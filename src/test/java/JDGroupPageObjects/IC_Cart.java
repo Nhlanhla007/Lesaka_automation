@@ -1,5 +1,6 @@
 package JDGroupPageObjects;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -46,7 +48,24 @@ public class IC_Cart {
 	    @FindBy(xpath="//*[@id=\"top-cart-btn-checkout\"]/span")
 	    private WebElement icCCheckout;
 	    
+	    @FindBy(xpath = "//*[@class=\"counter-number\"]")
+	    private WebElement cartCounterIcon;
+	    
+	    @FindBy(xpath = "//*[@class=\"action viewcart\"]")
+	    private WebElement viewAndEditCart;
+	    
+	    @FindBy(xpath = "//*[@class=\"custom-clear\"]")
+	    private WebElement removeAllCartItems;
 		
+	    @FindBy(xpath = "//*[@class=\"modal-inner-wrap\"]")
+	    public WebElement removeConfirmationPopUp;
+	    
+	    @FindBy(xpath = "//*[@class=\"action-primary action-accept\"]")
+	    public WebElement okButtonRemoveAllItems;
+	    
+	    @FindBy(xpath = "//*[@id=\"maincontent\"]/div[2]//p[1]")
+	    public WebElement emptyCartConfrimation;
+	    
 	    public void navigateToCart(ExtentTest test) {
 	    	try {
 				action.clickEle(iCCartButton, "IC cart button", test);
@@ -168,4 +187,39 @@ public class IC_Cart {
 	    	}	    	
 	    	return productData;
 	    }
+	    
+	    
+	    public String itemsInCartCounter(ExtentTest test) {
+	    	String counterValue = cartCounterIcon.getText();
+	    	return counterValue;
+	    }
+	    
+	    public void removeAllItemsInCart(ExtentTest test) throws Exception {
+	    	String cartCounter = itemsInCartCounter(test);
+	    	if(Integer.parseInt(cartCounter)>0) {
+	    	navigateToCart(test);
+	    	action.click(viewAndEditCart, "View And Edit Cart", test);
+	    	action.explicitWait(4000);
+	    	//action.mouseover(removeAllCartItems, "However over cart element");
+	    	//action.explicitWait(7000);
+	    	//action.click(removeAllCartItems, "Remove All items From Cart", test);
+	    	//action.javaScriptClick(removeAllCartItems, "Remove All items From Cart", test);
+	    	JavascriptExecutor executor = (JavascriptExecutor) driver;
+			executor.executeScript("arguments[0].click();", removeAllCartItems);
+			action.explicitWait(5000);
+	    	boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4000, "Remove Pop Up Exists", test);
+	    	if(isRemovePopUpDisplayed) {
+	    		action.explicitWait(4000);
+	    		action.click(okButtonRemoveAllItems, "Remove All Items Button", test);
+	    		action.explicitWait(4000);
+	    		String emptyCartVerification = emptyCartConfrimation.getText();
+	    		action.CompareResult("Empty Cart Message Verification", "You have no items in your shopping cart.", emptyCartVerification.trim(), test);
+	    		cartCounter = itemsInCartCounter(test);
+	    		action.CompareResult("Cart Count:Mini Cart Is Empty", "0", cartCounter	, test);
+	    	}
+	    	}else {
+	    		action.CompareResult("Cart Count:Mini Cart Is Empty", "0", cartCounter, test);
+	    	}
+	    }
+	    
 }
