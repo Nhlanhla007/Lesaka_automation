@@ -357,17 +357,19 @@ public class SAPCustomerRelated {
 						String updatedBillingStreeAddress = mySheets.get(4).get("adminBilling_streetAddress_output").get(customerUpdateBackEndSheet);
 						action.CompareResult("SAP billing street", updatedBillingStreeAddress, SAPStreetAddress, test);
 					}
+					/*
 					String updatedBillingBuilding = mySheets.get(4).get("billing_buildingDetails_output").get(customerUpdateBackEndSheet);
 					String updatedBillingProvince = mySheets.get(4).get("billing_provinceName_output").get(customerUpdateBackEndSheet);
 					String updatedBillingCity = mySheets.get(4).get("billing_city_output").get(customerUpdateBackEndSheet);
 					String updatedBillingSuburb = mySheets.get(4).get("billing_suburb_output").get(customerUpdateBackEndSheet);
 					String updatedBillingPostalCode = mySheets.get(4).get("billing_postalCode_output").get(customerUpdateBackEndSheet);
-
+					
 					action.CompareResult("SAP Billing building", updatedBillingBuilding, SAPbuildingDetails, test);
 					action.CompareResult("SAP Province", updatedBillingProvince, SAPProvince, test);
 					action.CompareResult("SAP City", updatedBillingCity, SAPcity, test);
 					action.CompareResult("SAP Suburb", updatedBillingSuburb, SAPsuburb, test);
 					action.CompareResult("SAP Postal Code", updatedBillingPostalCode, SAPpostCode, test);
+				*/
 				}
 				break;
 			case "Guest Customer Creation":
