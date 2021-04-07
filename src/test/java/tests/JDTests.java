@@ -156,7 +156,6 @@ public class JDTests extends BaseTest {
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver,dataTable2);
 		ic_SearchMinimumCharacter icMinimumCharacter = new ic_SearchMinimumCharacter(driver, dataTable2);
-		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
 		IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
         admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
         Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,dataTable2);
