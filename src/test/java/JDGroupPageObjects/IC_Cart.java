@@ -76,6 +76,10 @@ public class IC_Cart {
 	    
 	    public static int sum;
 		  public void iCcartVerification2(Map<String, List<String>> products,ExtentTest test) {
+			  //Verifies if all the products have been added in the cart
+			  String itemsCount = itemsInCartCounter(test);
+			  //need to compare that the quantity in the list matches the itemsCount
+			  int allProductsInCartQuantity = 0;
 			  //Find all elements from the list
 			  navigateToCart(test);
 			  try {
@@ -88,6 +92,7 @@ public class IC_Cart {
 					  for(Map.Entry selectedProducts : products.entrySet()) {
 						  //@SuppressWarnings("unchecked")
 						List<String> data = (List<String>)selectedProducts.getValue();
+						allProductsInCartQuantity += Integer.parseInt(data.get(1));
 						if(selectedProducts.getKey().equals(nameOfProduct)) {
 						  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
 						  action.CompareResult("Price : " +price +" for " +nameOfProduct, data.get(0), price, test);
@@ -96,6 +101,7 @@ public class IC_Cart {
 					  }
 				  }
 				action.CompareResult("Products Total", String.valueOf(sum), icSubtotal.getText().replace("R", "").replace(",", "").replace(".", "") , test);
+				action.CompareResult("Cart Counter Verfication", String.valueOf(allProductsInCartQuantity), itemsCount, test);
 				action.clickEle(icCCheckout, "Secure Checkout", test);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -191,6 +197,9 @@ public class IC_Cart {
 	    
 	    public String itemsInCartCounter(ExtentTest test) {
 	    	String counterValue = cartCounterIcon.getText();
+	    	if(counterValue == "") {
+	    		counterValue = "0";
+	    	}
 	    	return counterValue;
 	    }
 	    
