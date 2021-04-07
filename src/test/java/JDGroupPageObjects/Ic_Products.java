@@ -37,7 +37,7 @@ public class Ic_Products {
 		this.dataTable2 = dataTable2;
 		WishList = new ic_WishList(driver, dataTable2);
 	}
-	
+
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());
 
 	/*
@@ -181,13 +181,16 @@ public class Ic_Products {
 		String quantityOfSearchProducts = input.get("Quantity").get(rowNumber);
 		String waitTimeInSeconds = input.get("cartButtonWaitTimeInSeconds").get(rowNumber);
 		String TypeOfOperation = dataTable2.getValueOnCurrentModule("TypeOfOperation");
+		String validationRequired = dataTable2.getValueOnCurrentModule("validationRequired");
 		List<String> theProducts = filterProducts(productsToSearch);
 
 		try {
 			Map<String, List<String>> productsInCart =  ic_CreateCartFromProductListing(productsToSearch, quantityOfSearchProducts,typeSearch,waitTimeInSeconds, test);
 			switch(TypeOfOperation){
 			case "Add_To_Wishlist":
-				WishList.ValidateProductsIn_Wishlist(productsInCart, test);
+				if(validationRequired=="Yes_Wishlist"){
+					WishList.ValidateProductsIn_Wishlist(productsInCart, test);
+				}
 				break;
 			default:
 				cartValidation.iCcartVerification2(productsInCart, test);
