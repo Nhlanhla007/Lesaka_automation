@@ -185,8 +185,6 @@ public class Ic_Products {
 		List<String> theProducts = filterProducts(productsToSearch);
 
 		try {
-			cartValidation.removeAllItemsInCart(test);
-			
 			Map<String, List<String>> productsInCart =  ic_CreateCartFromProductListing(productsToSearch, quantityOfSearchProducts,typeSearch,waitTimeInSeconds, test);
 			switch(TypeOfOperation){
 			case "Add_To_Wishlist":
