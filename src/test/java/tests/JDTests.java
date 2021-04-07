@@ -54,7 +54,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("MAIN");
+		dataTable2.setPath("TA312");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -149,6 +149,7 @@ public class JDTests extends BaseTest {
 		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver,dataTable2);
 		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver,dataTable2);
 		ic_Login ic_login = new ic_Login(driver,dataTable2);
+		ic_forgotPasswordLink icforgottenPassLink = new ic_forgotPasswordLink(driver, dataTable2);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver,dataTable2);
 		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
 		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver,dataTable2);
@@ -186,6 +187,9 @@ public class JDTests extends BaseTest {
 				break;
 			case "ic_login":
 				ic_login.Login_ic(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
+			case "icForgotPasswordLink":
+				icforgottenPassLink.forgotPasswordLink(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 			case "Logout":
 				ic.logout(test1);
