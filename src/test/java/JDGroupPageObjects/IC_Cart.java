@@ -194,22 +194,23 @@ public class IC_Cart {
 	    	return counterValue;
 	    }
 	    
+	    public void navigateToViewAndEditCart(ExtentTest test) throws Exception {
+	    	action.click(viewAndEditCart, "View And Edit Cart", test);
+	    }
+	    
 	    public void removeAllItemsInCart(ExtentTest test) throws Exception {
 	    	String cartCounter = itemsInCartCounter(test);
 	    	if(Integer.parseInt(cartCounter)>0) {
 	    	navigateToCart(test);
-	    	action.click(viewAndEditCart, "View And Edit Cart", test);
-	    	action.explicitWait(4000);
+	    	navigateToViewAndEditCart(test);
 	    	//action.mouseover(removeAllCartItems, "However over cart element");
 	    	//action.explicitWait(7000);
 	    	//action.click(removeAllCartItems, "Remove All items From Cart", test);
 	    	//action.javaScriptClick(removeAllCartItems, "Remove All items From Cart", test);
 	    	JavascriptExecutor executor = (JavascriptExecutor) driver;
-			executor.executeScript("arguments[0].click();", removeAllCartItems);
-			action.explicitWait(5000);
-	    	boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4000, "Remove Pop Up Exists", test);
-	    	if(isRemovePopUpDisplayed) {
-	    		action.explicitWait(4000);
+			executor.executeScript("arguments[0].click();", removeAllCartItems);		
+	    	boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4000, "Clear Shopping Cart Pop Up", test);
+	    	if(isRemovePopUpDisplayed) {	    		
 	    		action.click(okButtonRemoveAllItems, "Remove All Items Button", test);
 	    		action.explicitWait(4000);
 	    		String emptyCartVerification = emptyCartConfrimation.getText();
