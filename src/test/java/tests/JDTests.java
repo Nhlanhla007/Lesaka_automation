@@ -54,7 +54,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("MAIN");
+		dataTable2.setPath("TA245");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -108,6 +108,7 @@ public class JDTests extends BaseTest {
 								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								runKeyWord(actionToRun,test);
+//								writeToExcel(new File(dataTable2.filePath()));
 								writeToExcel(createFile());
 
 							}
@@ -156,6 +157,7 @@ public class JDTests extends BaseTest {
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver,dataTable2);
 		ic_SearchMinimumCharacter icMinimumCharacter = new ic_SearchMinimumCharacter(driver, dataTable2);
+		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
 		IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
         admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
         Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,dataTable2);
@@ -174,6 +176,10 @@ public class JDTests extends BaseTest {
 		ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
 		IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
 		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
+		ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
+		ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
+		ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
+		ic_WishList WishList = new ic_WishList(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -352,6 +358,15 @@ public class JDTests extends BaseTest {
 				break;
 			case "IC_ProductsSortBy":
 				productsSortBy.sortBy(test1);
+				break;
+			case "ic_NavigetoWishlist":
+				NavigetoWishlist.NavigateToWishlist_verifymsg(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "ic_verifyWishlistItem":
+				verifyWishlistItem.handleWishlistItem(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "ic_RemoveFromcart":
+				RemoveFromcart.Clear_miniCart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 		}
 	}
