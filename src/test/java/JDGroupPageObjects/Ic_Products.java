@@ -188,7 +188,7 @@ public class Ic_Products {
 			Map<String, List<String>> productsInCart =  ic_CreateCartFromProductListing(productsToSearch, quantityOfSearchProducts,typeSearch,waitTimeInSeconds, test);
 			switch(TypeOfOperation){
 			case "Add_To_Wishlist":
-				if(validationRequired=="Yes_Wishlist"){
+				if(validationRequired.equalsIgnoreCase("Yes_Wishlist")){
 					WishList.ValidateProductsIn_Wishlist(productsInCart, test);
 				}
 				break;
