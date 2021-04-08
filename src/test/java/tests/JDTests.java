@@ -54,7 +54,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("TA252");
+		dataTable2.setPath("MAIN");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -175,7 +175,7 @@ public class JDTests extends BaseTest {
 		ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
 		ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
 		IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
-		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
+	//	SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
 		ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
 		ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
 		ic_WishList WishList = new ic_WishList(driver, dataTable2);
