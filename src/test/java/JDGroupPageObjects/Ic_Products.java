@@ -28,14 +28,16 @@ public class Ic_Products {
 	Action action;
 	IC_Cart cartValidation;
 	DataTable2 dataTable2;
+	ic_WishList WishList;
 	public Ic_Products(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 		cartValidation = new IC_Cart(driver, dataTable2);
 		this.dataTable2 = dataTable2;
+		WishList = new ic_WishList(driver, dataTable2);
 	}
-
+	
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());
 
 	/*
@@ -73,6 +75,8 @@ public class Ic_Products {
 
 	@FindBy(id = "product-addtocart-button")
 	WebElement productDetailsPageAddToCartButton;
+	@FindBy(xpath = "//a[@class='action towishlist']//span[contains(text(),'Add to Wish List')]")
+	WebElement productDetailsPageAddToWishlistButton;
 
 	/*
 	 * PAGE METHODS
@@ -176,11 +180,23 @@ public class Ic_Products {
 		String productsToSearch = input.get("specificProduct").get(rowNumber);
 		String quantityOfSearchProducts = input.get("Quantity").get(rowNumber);
 		String waitTimeInSeconds = input.get("cartButtonWaitTimeInSeconds").get(rowNumber);
+		String TypeOfOperation = dataTable2.getValueOnCurrentModule("TypeOfOperation");
+		String validationRequired = dataTable2.getValueOnCurrentModule("validationRequired");
 		List<String> theProducts = filterProducts(productsToSearch);
-
 		try {
 			Map<String, List<String>> productsInCart =  ic_CreateCartFromProductListing(productsToSearch, quantityOfSearchProducts,typeSearch,waitTimeInSeconds, test);
-			cartValidation.iCcartVerification2(productsInCart, test);
+			switch(TypeOfOperation){
+			case "Add_To_Wishlist":
+				if(validationRequired.equalsIgnoreCase("Yes_Wishlist")){
+					WishList.ValidateProductsIn_Wishlist(productsInCart, test);
+				}
+				break;
+			default:
+				cartValidation.iCcartVerification2(productsInCart, test);
+				break;
+			
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.info(e.getMessage());
@@ -278,6 +294,17 @@ public class Ic_Products {
 		cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds), test);
 		//click add to cart button
 	}
+	void addToWishlistFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
+		if(quanity == 1) {
+			action.clickEle(productLink, "Navigate to product listing page", test);
+		}
+		//click on product name and enter listing page
+		//confirm that page has loaded
+		productDetailsPageAddToWishlistButton.click();
+		action.explicitWait(Integer.parseInt(waitTimeInSeconds));
+		//click add to wish list
+		
+	}
 
 	String findPrice(WebElement theProduct) {
 		String price = theProduct.findElement(By.xpath(".//parent::*/following-sibling:: div/div[2]/div/span/span/span")).getText();
@@ -315,6 +342,7 @@ public class Ic_Products {
 	Map<String,List<String>> ic_CreateCartFromProductListing(String productsList,String quantityOfProducts,String searchCategory,String waitTimeInSeconds,ExtentTest test) {
 		productData = new LinkedHashMap<>();
 		String cartAdditionMethod= dataTable2.getValueOnCurrentModule("CartAdditionMethod");
+		String TypeOfOperation = dataTable2.getValueOnCurrentModule("TypeOfOperation");//"Add_To_Cart";//Add_To_Wishlist
 		try {
 			List<String> theProducts = filterProducts(productsList);
 			List<String> quantity = filterProducts(quantityOfProducts);
@@ -335,10 +363,22 @@ public class Ic_Products {
 								
 								if(cartAdditionMethod.equalsIgnoreCase("ProductListingPage")) {
 									WebElement cartButton = getCartButton(prod);
-								addToCart(cartButton,waitTimeInSeconds,test);
+									addToCart(cartButton,waitTimeInSeconds,test);
 								}else if(cartAdditionMethod.equalsIgnoreCase("ProductDetailPage")) {
 									quantityExecu++;
-									addToCartFromProdDetailsPage(prod,waitTimeInSeconds,quantityExecu,test);
+									switch(TypeOfOperation){
+									case "Add_To_Cart":
+										quantityExecu++;
+										addToCartFromProdDetailsPage(prod,waitTimeInSeconds,quantityExecu,test);
+										break;
+									case "Add_To_Wishlist":
+										addToWishlistFromProdDetailsPage(prod, waitTimeInSeconds, quantityExecu, test);
+										
+										//add to wish list method call
+										break;
+									}
+										
+								
 								}
 								if(set<=0) {
 									set++;
