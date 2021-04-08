@@ -92,10 +92,10 @@ public class IC_Cart {
 					  for(Map.Entry selectedProducts : products.entrySet()) {
 						  //@SuppressWarnings("unchecked")
 						List<String> data = (List<String>)selectedProducts.getValue();
-						allProductsInCartQuantity += Integer.parseInt(data.get(1));
 						if(selectedProducts.getKey().equals(nameOfProduct)) {
 						  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
 						  action.CompareResult("Price : " +price +" for " +nameOfProduct, data.get(0), price, test);
+						  allProductsInCartQuantity += Integer.parseInt(data.get(1));
 						  action.CompareResult("Quantity : " + quantity +" for " + nameOfProduct, data.get(1), quantity, test);						  
 						}
 					  }
