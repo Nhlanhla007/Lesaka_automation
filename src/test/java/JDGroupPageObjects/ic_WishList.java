@@ -39,7 +39,7 @@ public class ic_WishList {
 	    	for(WebElement productsInCart : ic_AllMywishlistProducts) {
 	    		String nameOfProduct = productsInCart.findElement(By.xpath(".//strong/a")).getText();
 	    		if(selectedProducts.getKey().equals(nameOfProduct)) {
-					  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
+					  action.CompareResult("Name : " + nameOfProduct +" present in wishlist", (String)selectedProducts.getKey(), nameOfProduct, test);
 					  
 					}
 	    	}
