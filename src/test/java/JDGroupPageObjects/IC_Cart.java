@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -14,6 +15,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.aventstack.extentreports.ExtentTest;
 
@@ -66,6 +69,10 @@ public class IC_Cart {
 	    @FindBy(xpath = "//*[@id=\"maincontent\"]/div[2]//p[1]")
 	    public WebElement emptyCartConfrimation;
 	    
+	    @FindBy(css = "a.go-back")
+	    private WebElement backButton;
+	    
+	    
 	    public void navigateToCart(ExtentTest test) {
 	    	try {
 				action.clickEle(iCCartButton, "IC cart button", test);
@@ -88,12 +95,13 @@ public class IC_Cart {
 					  String price = productsInCart.findElement(By.xpath(".//span/span/span/span")).getText();					  
 					  WebElement quantityTag = productsInCart.findElement(By.xpath(".//div[2]/input"));
 					  String quantity = action.getAttribute(quantityTag, "data-item-qty");
-					  sum += (Integer.parseInt(quantity)*Integer.parseInt(price.replace("R", "").replace(",", "")));
+					 
 					  for(Map.Entry selectedProducts : products.entrySet()) {
 						  //@SuppressWarnings("unchecked")
 						List<String> data = (List<String>)selectedProducts.getValue();
 						if(selectedProducts.getKey().equals(nameOfProduct)) {
 						  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
+						  sum = sum + (Integer.parseInt(quantity) * Integer.parseInt(price.replace("R", "").replace(",", "") ) );
 						  action.CompareResult("Price : " +price +" for " +nameOfProduct, data.get(0), price, test);
 						  allProductsInCartQuantity += Integer.parseInt(data.get(1));
 						  action.CompareResult("Quantity : " + quantity +" for " + nameOfProduct, data.get(1), quantity, test);						  
@@ -208,6 +216,15 @@ public class IC_Cart {
 	    }
 	    
 	    public void removeAllItemsInCart(ExtentTest test) throws Exception {
+	    	driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+	    	//WebDriverWait wait=new WebDriverWait(driver,3);
+	    	//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[1]/header/div/div/a/span[2]")));
+	    	//(new WebDriverWait(driver, 5)).until(ExpectedConditions.visibilityOf(backButton));
+	    	boolean isPresent = driver.findElements(By.cssSelector("a.go-back")).size() > 0;
+	    	action.explicitWait(5000);
+	    	if(isPresent) {
+	    		backButton.click();
+	    	}
 	    	String cartCounter = itemsInCartCounter(test);
 	    	if(Integer.parseInt(cartCounter)>0) {
 	    	navigateToCart(test);
@@ -229,7 +246,6 @@ public class IC_Cart {
 	    	}
 	    	}else {
 	    		action.CompareResult("Cart Count:Mini Cart Is Empty", "0", cartCounter, test);
-	    	}
 	    }
-	    
+	    }
 }

@@ -25,7 +25,7 @@ public class ic_RefreshLogoHomepage {
 
 	    }
 
-	    @FindBy(xpath="//header/div[2]/div[1]/div[1]/a[1]")
+	    @FindBy(xpath="//html/body/div[1]/header/div/div/div/a/img")
 	    private WebElement ic_logo;
 	    
 	    @FindBy(xpath="//html/head/title")
