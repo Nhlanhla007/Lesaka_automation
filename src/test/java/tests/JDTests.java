@@ -27,6 +27,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -54,7 +55,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("MAIN");
+		dataTable2.setPath("TA335");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -179,6 +180,7 @@ public class JDTests extends BaseTest {
 		ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
 		ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
 		ic_WishList WishList = new ic_WishList(driver, dataTable2);
+		ic_CompareProducts productsCompared = new ic_CompareProducts(driver, dataTable2);
 		ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
 		IC_verifyLogin ic_verifyLogin =new IC_verifyLogin(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
@@ -187,6 +189,7 @@ public class JDTests extends BaseTest {
 			rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
 		}
 		int i = 0;
+		WebElement el = null;
 		switch (moduleToRun) {
 			case "Login":
 				ic.login(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
@@ -206,6 +209,11 @@ public class JDTests extends BaseTest {
 			case "ProductSearch":
 				products.ic_SelectProductAndAddToCart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
+			case "CompareProducts":
+				productsCompared.validateAddedProductsCompare(test1,el );
+				productsCompared.clearAllProduct(test1, el);
+				break;
+				
 			/*
 			 * case "iCcartVerification": icCart.iCcartVerification(test1); break;
 			 */
