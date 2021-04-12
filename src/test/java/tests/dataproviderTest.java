@@ -185,7 +185,7 @@ public class dataproviderTest extends BaseTest {
                 ic.login(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
                 break;
             case "ic_login":
-                ic_login.Login_ic(test1);
+                ic_login.Login_ic(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
                 break;
             case "Logout":
                 ic.logout(test1);
