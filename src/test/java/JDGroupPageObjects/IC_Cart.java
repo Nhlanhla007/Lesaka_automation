@@ -21,6 +21,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.aventstack.extentreports.ExtentTest;
 
 import Logger.Log;
+import tests.JDTests;
 import utils.Action;
 import utils.DataTable2;
 
@@ -28,12 +29,17 @@ public class IC_Cart {
 		
 	  WebDriver driver;
 	    Action action;
-	    DataTable2 dataTable2;
+	    DataTable2 dataTable2;	    
+	    
+	    JDTests browser ;
+	    ic_Login login ;
 	    public IC_Cart(WebDriver driver, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
 	        this.dataTable2 = dataTable2;
+	        browser =  new JDTests();
+	        login =  new ic_Login(driver, dataTable2);
 	    }
 	    static Logger logger = Log.getLogData(Action.class.getSimpleName());
 	    
@@ -248,4 +254,5 @@ public class IC_Cart {
 	    		action.CompareResult("Cart Count:Mini Cart Is Empty", "0", cartCounter, test);
 	    }
 	    }
+	    
 }
