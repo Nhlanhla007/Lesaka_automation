@@ -1,4 +1,5 @@
 package tests;
+
 import JDGroupPageObjects.*;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
@@ -6,127 +7,103 @@ import base.TestCaseBase;
 import com.aventstack.extentreports.ExtentTest;
 import emailverification.ICGiftCardVerification;
 import ic_MagentoPageObjects.*;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.testng.annotations.*;
+import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import utils.*;
+import Logger.Log;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
 
-public class dataproviderTest extends BaseTest {
+public class JDGTest_TestNG{
+    public WebDriver driver;
+    protected DataTable dataTable = null;
+    protected ConfigFileReader configFileReader;
+    protected String browserName;
+    protected String navigateURL;
+    protected DataTable2 dataTable2 = null;
     ExtentReportJD reportJD;
     public String currentSuite;
     public String currentKeyWord;
     HashMap<String, Integer> occCount=null;
     int testcaseID;
-    DataTable2 dataTable2;
-    LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
+    Logger logger =null;
+    protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 
-    @BeforeClass
-    public void setUp(){
+//    @BeforeTest
+    public void setUp() throws Exception {
+        logger = Log.getLogData(this.getClass().getSimpleName());
+        startBrowserSession();
         reportJD=new ExtentReportJD("IC");
+        dataTable2= new DataTable2();
+        dataTable2.setPath("MAIN");
+        dataMap2=dataTable2.getExcelData();
+
     }
-    @DataProvider (name = "data-provider")
-     public Object[][] dpMethod() throws Exception {
-         dataTable2= new DataTable2();
-         dataTable2.setPath("MAIN");
-         dataMap2=dataTable2.getExcelData();
-         //Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-
-         LinkedHashMap<String, ArrayList<String>> icTestCase=dataMap2.get("IC");
-         int numberOfICTestCases=icTestCase.get("Execute").size();
-         int count=0;
-         String elementBuilder="";
-         for(int i=0;i<numberOfICTestCases;i++){
-             System.out.println(icTestCase.get("Execute").get(i));
-             if(icTestCase.get("Execute").get(i).toLowerCase().equals("yes")){
-                 elementBuilder=elementBuilder+icTestCase.get("TestCaseID").get(i)+",";
-                 count++;
-             }
-         }
-         elementBuilder = elementBuilder.substring(0, elementBuilder.length() - 1);
-         Object[][] dp = new Object[count][3];
-         String []testIdArray=elementBuilder.split(",");
-
-         for(int i=0;i<testIdArray.length;i++){
-             for(int j=0;j<numberOfICTestCases;j++){
-                 if(testIdArray[i].equals(icTestCase.get("TestCaseID").get(j))){
-                     dp[i][0]=icTestCase.get("TestCaseID").get(j);
-                     dp[i][1]=icTestCase.get("Test Case Name").get(j);
-                     dp[i][2]=String.valueOf(j);
-                     break;
-                 }
-             }
-
-         }
-         return dp;
-     }
 
 
-     @Test (dataProvider = "data-provider")
-     public void myTest (String testcaseIDPara,String testCaseDescriptionPara,String index) throws Exception {
-//         System.out.println("Passed Parameter Is : " + val1);
-//         System.out.println("Passed Parameter Is : " + val2);
-         System.out.println();
-         System.out.println();
-         System.out.println();
-         HashMap<String, ArrayList<String>> singleSuiteData=dataMap2.get("IC");
-         occCount=new HashMap<String, Integer>();
-         String testCaseDescription=testCaseDescriptionPara;
-         testcaseID=Integer.parseInt(testcaseIDPara) ;
-         dataTable2.setTestCaseID(testcaseID);
-         ExtentTest test=reportJD.createTest(testcaseID+" : "+testCaseDescription);
-         startBrowserSession();
-         configFileReader.setPropertyVal("sequence","true");
-//         try {
-             for(int j=0;j<1;j++){
-                 String actionToRunLable="Action"+(j+1);
-                 String actionToRun= "";
-                 try {
-                     actionToRun = singleSuiteData.get(actionToRunLable).get(Integer.parseInt(index));
-                 }catch (Exception e){
 
-                 }
-                 currentKeyWord=actionToRun;
-                 System.out.println("actionToRunLable:"+actionToRunLable);
-                 System.out.println("currentKeyWord:"+currentKeyWord);
-                 if(!currentKeyWord.equals("")){
-                     if(!occCount.containsKey(currentKeyWord)){
-                         occCount.put(currentKeyWord,0);
-                     }else{
-                         int occNum=occCount.get(currentKeyWord);
-                         occNum++;
-                         occCount.put(currentKeyWord,occNum);
-                     }
-//                     dataTable2.setTestCaseID(actionToRun);
-                     dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
-                     runKeyWord(actionToRun,test);
-//						writeToExcel(new File(dataTable2.filePath()));
-                     writeToExcel(createFile());
+    @Test(testName ="Click_the_IC_logo_to_go_home_page" )
+    public void Click_the_IC_logo_to_go_home_page() throws Exception {
+        String testMethodName="Click_the_IC_logo_to_go_home_page";
+        setUp();
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+//        startBrowserSession();
+        runAllKeys(TCIndex,test);
+        endBrowserSession();
+    }
+    @Test(testName ="Validating_the_minimum_search_characters" )
+    public void Validating_the_minimum_search_characters() throws Exception {
+        String testMethodName="Validating_the_minimum_search_characters";
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+        startBrowserSession();
+        runAllKeys(TCIndex,test);
+        endBrowserSession();
+    }
 
-                 }
-             }
-//         } catch (Exception e) {
-//             logger.info(e.getMessage());
-//             e.printStackTrace();
-//             String screenShot= GenerateScreenShot.getScreenShot(driver);
-//             ExtentTest node = test.createNode("Exception");
-//             node.fail(e.getMessage()+node.addScreenCaptureFromPath(screenShot));
-//         }
-         endBrowserSession();
-     }
+    public int getTestCaseIndex(String testMethodName){
+        int numTC=dataMap2.get("IC").get("Test Case Name").size();
+        int index=0;
+        for(int i=0;i<numTC;i++){
+            if(testMethodName.equals(dataMap2.get("IC").get("Test Case Name").get(i))){
+                index=i;
+                testcaseID=Integer.parseInt(dataMap2.get("IC").get("TestCaseID").get(i));
+                dataTable2.setTestCaseID(testcaseID);
+            }
+        }
+        return index;
+    }
 
-    public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
+    public void runAllKeys(int index, ExtentTest test) throws Exception {
+
+        for(int j=0;j<20;j++) {
+            String actionToRunLable = "Action" + (j + 1);
+            String actionToRun = "";
+            try {
+                actionToRun = dataMap2.get("IC").get(actionToRunLable).get(index);
+            } catch (Exception e) {
+
+            }
+            currentKeyWord=actionToRun;
+            dataTable2.setOccurenceCount(0);
+            dataTable2.setModule(currentKeyWord);
+            if(!actionToRun.equals("")) {
+                System.out.println("xxxxxxxxxxxxx :"+actionToRun);
+                runKeyWord(actionToRun, test);
+            }
+        }
+    }
+
+    public void runKeyWord(String actionToRun, ExtentTest test) throws Exception {
         String moduleToRun=actionToRun;
         IConnection ic=new IConnection(driver,dataTable2);
         Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
@@ -355,7 +332,6 @@ public class dataproviderTest extends BaseTest {
                 break;
         }
     }
-
     public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
         int numberRows=input.get("TCID").size();
         int rowNumber=-1;
@@ -367,8 +343,6 @@ public class dataproviderTest extends BaseTest {
         }
         return rowNumber;
     }
-
-
     public void startBrowserSession()
     {
         driver=null;
@@ -419,85 +393,8 @@ public class dataproviderTest extends BaseTest {
     public void endBrowserSession() throws IOException {
         driver.close();
     }
-    public void writeToSingleSheet(File filePath, String sheetToUpdate) throws IOException, InvalidFormatException {
-        FileOutputStream outputStream = new FileOutputStream(filePath);
-        FileInputStream fis = new FileInputStream(filePath);
-        XSSFWorkbook workbook2 = new XSSFWorkbook(fis);
-        XSSFWorkbook workbook= new XSSFWorkbook();
-        XSSFSheet sheet;
-        for(int i=0;i<dataMap2.size() ;i++) {
-            Object[] keys = dataMap2.keySet().toArray();
-            if (!keys[i].toString().toLowerCase().equals("suits") && !keys[i].toString().toLowerCase().equals("ic")) {
-                if((sheetToUpdate+"++").equals(keys[i].toString())){
-                    sheet = workbook2.createSheet(sheetToUpdate);
-                }else{
-                    sheet = workbook.getSheet(keys[i].toString());
-                }
-                int numCol = dataMap2.get(keys[i]).size();
-                Object[] colArray = dataMap2.get(keys[i]).keySet().toArray();
-                int rowNum = dataMap2.get(keys[i]).get(colArray[0]).size();
-                for (int j = 0; j <= rowNum; j++) {
-                    Row row = sheet.createRow(j);
-                    if (j == 0) {
-                        for (int z = 0; z < numCol; z++) {
-                            Cell cell = row.createCell(z);
-                            cell.setCellValue(colArray[z].toString());
-                        }
-                    } else {
 
-                        for (int z = 0; z < numCol; z++) {
-                            Cell cell = row.createCell(z);
-                            cell.setCellValue((String) dataMap2.get(keys[i]).get(colArray[z]).get(j - 1));
-                        }
-                    }
-                }
-            }
-        }
-        workbook.write(outputStream);
-        workbook.close();
-    }
-    public void writeToExcel(File filePath) throws IOException {
-        FileOutputStream outputStream = new FileOutputStream(filePath);
-        XSSFWorkbook workbook= new XSSFWorkbook();;
-        XSSFSheet sheet;
-        for(int i=0;i<dataMap2.size() ;i++) {
-            Object[] keys = dataMap2.keySet().toArray();
-            if (!keys[i].toString().toLowerCase().equals("suits") && !keys[i].toString().toLowerCase().equals("ic")) {
-                sheet = workbook.createSheet(keys[i].toString());
-                workbook.getSheet(keys[i].toString());
-                int numCol = dataMap2.get(keys[i]).size();
-                Object[] colArray = dataMap2.get(keys[i]).keySet().toArray();
-                int rowNum = dataMap2.get(keys[i]).get(colArray[0]).size();
-                for (int j = 0; j <= rowNum; j++) {
-                    Row row = sheet.createRow(j);
-                    if (j == 0) {
-                        for (int z = 0; z < numCol; z++) {
-                            Cell cell = row.createCell(z);
-                            cell.setCellValue(colArray[z].toString());
-                        }
-                    } else {
 
-                        for (int z = 0; z < numCol; z++) {
-                            Cell cell = row.createCell(z);
-                            cell.setCellValue((String) dataMap2.get(keys[i]).get(colArray[z]).get(j - 1));
-                        }
-                    }
-                }
-            }
-        }
 
-        workbook.write(outputStream);
-        workbook.close();
-    }
-
-    public File createFile() throws IOException {
-        File myObj = new File(System.getProperty("user.dir")+"\\reports\\Datasheet.xlsx");
-        return myObj;
-    }
-
-    @AfterClass
-    public void tearDown(){
-        reportJD.endReport();
-    }
 
 }
