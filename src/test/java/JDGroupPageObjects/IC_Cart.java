@@ -36,11 +36,11 @@ public class IC_Cart {
 	    
 	    //@FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
 	    @FindBy(xpath = "//header/div[2]/div/div[3]/div[3]/a")
-	    private WebElement iCCartButton;
+	    public WebElement iCCartButton;
 	    
 	    //loop throUGH THIS HERE TO DETERMINE IF THE PRODUCT IS FOUND, IF FOUND VALIDATE QUANTITY AND PRICE
 	    @FindBy(xpath="//*[@id=\"mini-cart\"]/li")
-	    private List<WebElement> icAllCartProducts;
+	     List<WebElement> icAllCartProducts;
 	    
 	    @FindBy(xpath="//*[@id=\"minicart-content-wrapper\"]/div[2]/div[2]/div[1]/div/span/span")
 	    private WebElement icSubtotal;
@@ -65,7 +65,7 @@ public class IC_Cart {
 	    
 	    @FindBy(xpath = "//*[@id=\"maincontent\"]/div[2]//p[1]")
 	    public WebElement emptyCartConfrimation;
-	    
+		
 	    public void navigateToCart(ExtentTest test) {
 	    	try {
 				action.clickEle(iCCartButton, "IC cart button", test);

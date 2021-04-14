@@ -3,9 +3,12 @@ package tests;
 import java.io.*;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-
+import SAP_HanaDB.SAPCustomerRelated;
 import base.TestCaseBase;
 import emailverification.ICGiftCardVerification;
 import ic_MagentoPageObjects.*;
@@ -21,6 +24,7 @@ import com.aventstack.extentreports.ExtentTest;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
@@ -104,6 +108,7 @@ public class JDTests extends BaseTest {
 								}
 								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
+								dataTable2.setModule(actionToRun);
 								runKeyWord(actionToRun,test);
 //								writeToExcel(new File(dataTable2.filePath()));
 								writeToExcel(createFile());
@@ -172,6 +177,12 @@ public class JDTests extends BaseTest {
 		ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
 		ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
 		IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
+		ic_WishlistToCart IC_WishlistToCart =new ic_WishlistToCart(driver, dataTable2);
+		ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
+		ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
+		ic_WishList WishList = new ic_WishList(driver, dataTable2);
+		ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
+		IC_verifyLogin ic_verifyLogin =new IC_verifyLogin(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -351,6 +362,21 @@ public class JDTests extends BaseTest {
 			case "IC_ProductsSortBy":
 				productsSortBy.sortBy(test1);
 				break;
+			case "ic_NavigetoWishlist":
+				NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
+				break;
+			case "ic_verifyWishlistItem":
+				verifyWishlistItem.handleWishlistItem(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "ic_RemoveFromcart":
+				RemoveFromcart.Clear_miniCart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+			case "ic_verifyLogin":
+				ic_verifyLogin.IC_verifyLogin_addingProductTowishlist(test1, rowNumber);
+				break;
+			case "IC_WishlistToCart":
+				IC_WishlistToCart.verifyProducts_wishlistTocart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
 		}
 	}
 
@@ -455,38 +481,34 @@ public class JDTests extends BaseTest {
 		workbook.close();
 	}
 	public void writeToExcel(File filePath) throws IOException {
-		FileOutputStream outputStream = new FileOutputStream(filePath);
-		XSSFWorkbook workbook= new XSSFWorkbook();;
-		XSSFSheet sheet;
-		for(int i=0;i<dataMap2.size() ;i++) {
-			Object[] keys = dataMap2.keySet().toArray();
-			if (!keys[i].toString().toLowerCase().equals("suits") && !keys[i].toString().toLowerCase().equals("ic")) {
-				sheet = workbook.createSheet(keys[i].toString());
-				workbook.getSheet(keys[i].toString());
-				int numCol = dataMap2.get(keys[i]).size();
-				Object[] colArray = dataMap2.get(keys[i]).keySet().toArray();
-				int rowNum = dataMap2.get(keys[i]).get(colArray[0]).size();
-				for (int j = 0; j <= rowNum; j++) {
-					Row row = sheet.createRow(j);
-					if (j == 0) {
-						for (int z = 0; z < numCol; z++) {
-							Cell cell = row.createCell(z);
-							cell.setCellValue(colArray[z].toString());
-						}
-					} else {
-
-						for (int z = 0; z < numCol; z++) {
-							Cell cell = row.createCell(z);
-							cell.setCellValue((String) dataMap2.get(keys[i]).get(colArray[z]).get(j - 1));
-						}
+		XSSFWorkbook myWorkBook = new XSSFWorkbook ();
+		int numberSheets=dataMap2.size();
+		Object[] keys = dataMap2.keySet().toArray();
+		for(int i=0;i<numberSheets;i++) {
+			Sheet sheet1 = myWorkBook.createSheet(keys[i].toString());
+			int numCell = dataMap2.get(keys[i].toString()).size();
+			Object[] colList = dataMap2.get(keys[i].toString()).keySet().toArray();
+			int rownum = dataMap2.get(keys[i].toString()).get(colList[0].toString()).size();
+			for (int j=0;j<=rownum;j++) {
+				Row row = sheet1.createRow(j);
+				if(j==0) {
+					for (int z = 0; z < numCell; z++) {
+						Cell cell = row.createCell(z);
+						cell.setCellValue((String)colList[z]);
+					}
+				}else {
+					for (int z = 0; z < numCell; z++) {
+						Cell cell = row.createCell(z);
+						cell.setCellValue((String) dataMap2.get(keys[i].toString()).get(colList[z]).get(j-1));
 					}
 				}
 			}
 		}
-
-		workbook.write(outputStream);
-		outputStream.close();
-		workbook.close();
+		FileOutputStream os = new FileOutputStream(createFile());
+		myWorkBook.write(os);
+		os.close();
+		myWorkBook.close();
+		System.out.println("Writing on XLSX file Finished ...");
 	}
 
 	public File createFile() throws IOException {

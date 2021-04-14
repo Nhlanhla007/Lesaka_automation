@@ -329,10 +329,10 @@ public class ExcelFunctions {
 		String[] headers = null;
 		dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 		for (int i = 0; i < numSheets; i++) {
-			System.out.println("i:" + i);
+//			System.out.println("i:" + i);
 			sheet = workbook.getSheetAt(i);
 			String sheetName=workbook.getSheetName(i);
-			logger.info("sheetName :"+sheetName);
+//			logger.info("sheetName :"+sheetName);
 			int numRows = sheet.getLastRowNum() + 1;
 			mySheetMap = new LinkedHashMap<String, ArrayList<String>>();
 			Row row = sheet.getRow(0);
@@ -344,7 +344,7 @@ public class ExcelFunctions {
 					try {
 						Cell cell = row.getCell(z);
 						String value = getExcelDataBasedOnCellType(cell);
-						logger.info(z + ":" + value);
+//						logger.info(z + ":" + value);
 						if (j == 0) {
 							headers[z] = value;
 							mySheetMap.put(value, new ArrayList<>());

@@ -37,7 +37,7 @@ public class Ic_Products {
 		this.dataTable2 = dataTable2;
 		WishList = new ic_WishList(driver, dataTable2);
 	}
-	
+
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());
 
 	/*
@@ -186,14 +186,13 @@ public class Ic_Products {
 			Map<String, List<String>> productsInCart =  ic_CreateCartFromProductListing(productsToSearch, quantityOfSearchProducts,typeSearch,waitTimeInSeconds, test);
 			switch(TypeOfOperation){
 			case "Add_To_Wishlist":
-				if(validationRequired=="Yes_Wishlist"){
+				if(validationRequired.equalsIgnoreCase("Yes_Wishlist")){
 					WishList.ValidateProductsIn_Wishlist(productsInCart, test);
 				}
 				break;
 			default:
 				cartValidation.iCcartVerification2(productsInCart, test);
 				break;
-			
 			}
 
 	}
@@ -363,7 +362,8 @@ public class Ic_Products {
 								}else if(cartAdditionMethod.equalsIgnoreCase("ProductDetailPage")) {
 									quantityExecu++;
 									switch(TypeOfOperation){
-									case "Add_To_Cart":										
+									case "Add_To_Cart":
+										quantityExecu++;
 										addToCartFromProdDetailsPage(prod,waitTimeInSeconds,quantityExecu,test);
 										break;
 									case "Add_To_Wishlist":

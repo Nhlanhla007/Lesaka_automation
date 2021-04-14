@@ -45,7 +45,7 @@ public class ic_NavigetoWishlist {
 		
 		@FindBy(xpath = "//div[@class='message info empty']/span[contains(text(),'You have no items in your wish list.')]")
 		WebElement mywishlist_msg;
-		public void NavigateToWishlist_verifymsg(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+		public void NavigateToWishlist_verifymsg(ExtentTest test) throws IOException{
 			String ExpLoginType =dataTable2.getValueOnCurrentModule("Login_type");//"ExistingUser";// logedOn_user or ExistingUser
 			String Username =dataTable2.getValueOnCurrentModule("Username");
 			String password = dataTable2.getValueOnCurrentModule("Password");

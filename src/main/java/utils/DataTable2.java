@@ -45,7 +45,7 @@ public class DataTable2 {
     public void setTestCaseID(int TestCaseID){
         this.testCaseID=TestCaseID;
     }
-    public void setTestCaseID(String currentModule){
+    public void setModule(String currentModule){
         this.currentModule=currentModule;
     }
     public void setOccurenceCount(int occCount){
@@ -72,15 +72,19 @@ public class DataTable2 {
     public int getSheetRows(String sheetName){
         return dataMap2.get(sheetName).get("TCID").size();
     }
-    public String getValueOnCurrentModule(String colName){
-        return dataMap2.get(currentModule+"++").get(colName).get(findRowToRun(currentModule+"++",occCount,testCaseID));
-    }
-
     public String getValueOnOtherModule(String sheetName,String colName,int occCount){
         //occCount = 0 refers occurence 1 in the excelsheet and so on.
         return dataMap2.get(sheetName+"++").get(colName).get(findRowToRun(sheetName+"++",occCount,testCaseID));
     }
-   
+    public String getValueOnCurrentModule(String colName){
+        return dataMap2.get(currentModule+"++").get(colName).get(findRowToRun(currentModule+"++",occCount,testCaseID));
+    }
+/*
+    public String getValueOnOtherModule(String sheetName,String colName,int occCount){
+        //occCount = 0 refers occurence 1 in the excelsheet and so on.
+        return dataMap2.get(sheetName+"++").get(colName).get(findRowToRun(sheetName+"++",occCount,testCaseID));
+    }
+   */
     public String setValueOnCurrentModule(String colName,String colValue){
         return dataMap2.get(currentModule+"++").get(colName).set(findRowToRun(currentModule+"++",occCount,testCaseID),colValue);
     }
