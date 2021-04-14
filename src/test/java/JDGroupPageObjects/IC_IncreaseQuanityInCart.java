@@ -51,9 +51,9 @@ public class IC_IncreaseQuanityInCart {
 		action.click(quantityAdd, "Increase Quantity", test);
 		//}
 		//click update
-		action.explicitWait(3000);
+		action.explicitWait(2000);
 		action.click(updateQuantity, "Update Quantity", test);
-		action.explicitWait(5000);
+		action.explicitWait(7000);
 		//confirm cart counter
 		String cartCount = cart.itemsInCartCounter(test);
 		action.CompareResult("Cart Count After update", "2", cartCount, test);
