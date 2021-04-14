@@ -106,13 +106,10 @@ public class JDTests extends BaseTest {
 									occNum++;
 									occCount.put(currentKeyWord,occNum);
 								}
-								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								dataTable2.setModule(actionToRun);
 								runKeyWord(actionToRun,test);
-//								writeToExcel(new File(dataTable2.filePath()));
 								writeToExcel(createFile());
-
 							}
 					}
 				} catch (Exception e) {
