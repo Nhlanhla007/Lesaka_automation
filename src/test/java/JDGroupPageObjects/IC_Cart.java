@@ -65,7 +65,7 @@ public class IC_Cart {
 	    
 	    @FindBy(xpath = "//*[@id=\"maincontent\"]/div[2]//p[1]")
 	    public WebElement emptyCartConfrimation;
-		
+	    
 	    public void navigateToCart(ExtentTest test) {
 	    	try {
 				action.clickEle(iCCartButton, "IC cart button", test);
@@ -205,7 +205,7 @@ public class IC_Cart {
 	    }
 	    
 	    public void navigateToViewAndEditCart(ExtentTest test) throws Exception {
-	    	action.click(viewAndEditCart, "View And Edit Cart", test);
+	    	action.clickEle(viewAndEditCart, "View And Edit Cart", test);
 	    }
 	    
 	    public void removeAllItemsInCart(ExtentTest test) throws Exception {
