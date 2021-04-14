@@ -55,7 +55,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("MAIN");
+		dataTable2.setPath("TA255");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -106,9 +106,11 @@ public class JDTests extends BaseTest {
 									occNum++;
 									occCount.put(currentKeyWord,occNum);
 								}
+								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								dataTable2.setModule(actionToRun);
 								runKeyWord(actionToRun,test);
+//								writeToExcel(new File(dataTable2.filePath()));
 								writeToExcel(createFile());
 
 							}
@@ -175,12 +177,12 @@ public class JDTests extends BaseTest {
 		ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
 		ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
 		IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
-		IC_verifyLogin ic_verifyLogin =new IC_verifyLogin(driver, dataTable2);
-		ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
+		ic_WishlistToCart IC_WishlistToCart =new ic_WishlistToCart(driver, dataTable2);
 		ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
 		ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
 		ic_WishList WishList = new ic_WishList(driver, dataTable2);
-		ic_WishlistToCart IC_WishlistToCart =new ic_WishlistToCart(driver, dataTable2);
+		ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
+		IC_verifyLogin ic_verifyLogin =new IC_verifyLogin(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -440,6 +442,43 @@ public class JDTests extends BaseTest {
 
 	public void endBrowserSession() throws IOException {
 		driver.close();
+	}
+	public void writeToSingleSheet(File filePath,String sheetToUpdate) throws IOException, InvalidFormatException {
+		FileOutputStream outputStream = new FileOutputStream(filePath);
+		FileInputStream fis = new FileInputStream(filePath);
+		XSSFWorkbook workbook2 = new XSSFWorkbook(fis);
+		XSSFWorkbook workbook= new XSSFWorkbook();
+		XSSFSheet sheet;
+		for(int i=0;i<dataMap2.size() ;i++) {
+			Object[] keys = dataMap2.keySet().toArray();
+			if (!keys[i].toString().toLowerCase().equals("suits") && !keys[i].toString().toLowerCase().equals("ic")) {
+				if((sheetToUpdate+"++").equals(keys[i].toString())){
+					sheet = workbook2.createSheet(sheetToUpdate);
+				}else{
+					sheet = workbook.getSheet(keys[i].toString());
+				}
+				int numCol = dataMap2.get(keys[i]).size();
+				Object[] colArray = dataMap2.get(keys[i]).keySet().toArray();
+				int rowNum = dataMap2.get(keys[i]).get(colArray[0]).size();
+				for (int j = 0; j <= rowNum; j++) {
+					Row row = sheet.createRow(j);
+					if (j == 0) {
+						for (int z = 0; z < numCol; z++) {
+							Cell cell = row.createCell(z);
+							cell.setCellValue(colArray[z].toString());
+						}
+					} else {
+
+						for (int z = 0; z < numCol; z++) {
+							Cell cell = row.createCell(z);
+							cell.setCellValue((String) dataMap2.get(keys[i]).get(colArray[z]).get(j - 1));
+						}
+					}
+				}
+			}
+		}
+		workbook.write(outputStream);
+		workbook.close();
 	}
 	public void writeToExcel(File filePath) throws IOException {
 		XSSFWorkbook myWorkBook = new XSSFWorkbook ();
