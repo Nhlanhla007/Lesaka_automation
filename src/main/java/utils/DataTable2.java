@@ -48,6 +48,9 @@ public class DataTable2 {
     public void setTestCaseID(String currentModule){
         this.currentModule=currentModule;
     }
+    public void setModule(String currentModule){
+        this.currentModule=currentModule;
+    }
     public void setOccurenceCount(int occCount){
         this.occCount=occCount;
     }
