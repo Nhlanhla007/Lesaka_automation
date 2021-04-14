@@ -172,7 +172,7 @@ public class Ic_Products {
 	 * @param test
 	 * @param rowNumber
 	 */
-	public void ic_SelectProductAndAddToCart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) {
+	public void ic_SelectProductAndAddToCart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException {
 		String navigateURL = ConfigFileReader.getPropertyVal("URL");
 		action.navigateToURL(navigateURL);
 		
@@ -183,8 +183,6 @@ public class Ic_Products {
 		String TypeOfOperation = dataTable2.getValueOnCurrentModule("TypeOfOperation");
 		String validationRequired = dataTable2.getValueOnCurrentModule("validationRequired");
 		List<String> theProducts = filterProducts(productsToSearch);
-
-		try {
 			Map<String, List<String>> productsInCart =  ic_CreateCartFromProductListing(productsToSearch, quantityOfSearchProducts,typeSearch,waitTimeInSeconds, test);
 			switch(TypeOfOperation){
 			case "Add_To_Wishlist":
@@ -196,12 +194,6 @@ public class Ic_Products {
 				cartValidation.iCcartVerification2(productsInCart, test);
 				break;
 			}
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.info(e.getMessage());
-		}
-
 
 	}
 
@@ -290,6 +282,9 @@ public class Ic_Products {
 		}
 		//click on product name and enter listing page
 		//confirm that page has loaded
+		
+		//ADD PROPER THAT WAIT THAT CHECKS AND WAITS UNTIL THE BUTTON SAYS ADD TO CART
+		action.explicitWait(7000);
 		productDetailsPageAddToCartButton.click();
 		cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds), test);
 		//click add to cart button
