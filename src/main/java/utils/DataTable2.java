@@ -45,9 +45,6 @@ public class DataTable2 {
     public void setTestCaseID(int TestCaseID){
         this.testCaseID=TestCaseID;
     }
-    public void setTestCaseID(String currentModule){
-        this.currentModule=currentModule;
-    }
     public void setModule(String currentModule){
         this.currentModule=currentModule;
     }
