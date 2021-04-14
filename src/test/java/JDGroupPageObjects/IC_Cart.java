@@ -1,5 +1,6 @@
 package JDGroupPageObjects;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -46,6 +48,23 @@ public class IC_Cart {
 	    @FindBy(xpath="//*[@id=\"top-cart-btn-checkout\"]/span")
 	    private WebElement icCCheckout;
 	    
+	    @FindBy(xpath = "//*[@class=\"counter-number\"]")
+	    private WebElement cartCounterIcon;
+	    
+	    @FindBy(xpath = "//*[@class=\"action viewcart\"]")
+	    private WebElement viewAndEditCart;
+	    
+	    @FindBy(xpath = "//*[@class=\"custom-clear\"]")
+	    private WebElement removeAllCartItems;
+		
+	    @FindBy(xpath = "//*[@class=\"modal-inner-wrap\"]")
+	    public WebElement removeConfirmationPopUp;
+	    
+	    @FindBy(xpath = "//*[@class=\"action-primary action-accept\"]")
+	    public WebElement okButtonRemoveAllItems;
+	    
+	    @FindBy(xpath = "//*[@id=\"maincontent\"]/div[2]//p[1]")
+	    public WebElement emptyCartConfrimation;
 		
 	    public void navigateToCart(ExtentTest test) {
 	    	try {
@@ -57,6 +76,10 @@ public class IC_Cart {
 	    
 	    public static int sum;
 		  public void iCcartVerification2(Map<String, List<String>> products,ExtentTest test) {
+			  //Verifies if all the products have been added in the cart
+			  String itemsCount = itemsInCartCounter(test);
+			  //need to compare that the quantity in the list matches the itemsCount
+			  int allProductsInCartQuantity = 0;
 			  //Find all elements from the list
 			  navigateToCart(test);
 			  try {
@@ -69,6 +92,7 @@ public class IC_Cart {
 					  for(Map.Entry selectedProducts : products.entrySet()) {
 						  //@SuppressWarnings("unchecked")
 						List<String> data = (List<String>)selectedProducts.getValue();
+						allProductsInCartQuantity += Integer.parseInt(data.get(1));
 						if(selectedProducts.getKey().equals(nameOfProduct)) {
 						  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
 						  action.CompareResult("Price : " +price +" for " +nameOfProduct, data.get(0), price, test);
@@ -77,6 +101,7 @@ public class IC_Cart {
 					  }
 				  }
 				action.CompareResult("Products Total", String.valueOf(sum), icSubtotal.getText().replace("R", "").replace(",", "").replace(".", "") , test);
+				action.CompareResult("Cart Counter Verfication", String.valueOf(allProductsInCartQuantity), itemsCount, test);
 				action.clickEle(icCCheckout, "Secure Checkout", test);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -168,4 +193,44 @@ public class IC_Cart {
 	    	}	    	
 	    	return productData;
 	    }
+	    
+	    
+	    public String itemsInCartCounter(ExtentTest test) {
+
+	    	String counterValue = cartCounterIcon.getText();
+	    	if(counterValue.equals("")|counterValue==null|counterValue.equals("0")) {
+	    		counterValue = "0";
+	    	}
+	    	return counterValue;
+	    }
+	    
+	    public void navigateToViewAndEditCart(ExtentTest test) throws Exception {
+	    	action.click(viewAndEditCart, "View And Edit Cart", test);
+	    }
+	    
+	    public void removeAllItemsInCart(ExtentTest test) throws Exception {
+	    	String cartCounter = itemsInCartCounter(test);
+	    	if(Integer.parseInt(cartCounter)>0) {
+	    	navigateToCart(test);
+	    	navigateToViewAndEditCart(test);
+	    	//action.mouseover(removeAllCartItems, "However over cart element");
+	    	//action.explicitWait(7000);
+	    	//action.click(removeAllCartItems, "Remove All items From Cart", test);
+	    	//action.javaScriptClick(removeAllCartItems, "Remove All items From Cart", test);
+	    	JavascriptExecutor executor = (JavascriptExecutor) driver;
+			executor.executeScript("arguments[0].click();", removeAllCartItems);		
+	    	boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4000, "Clear Shopping Cart Pop Up", test);
+	    	if(isRemovePopUpDisplayed) {	    		
+	    		action.click(okButtonRemoveAllItems, "Remove All Items Button", test);
+	    		action.explicitWait(4000);
+	    		String emptyCartVerification = emptyCartConfrimation.getText();
+	    		action.CompareResult("Empty Cart Message Verification", "You have no items in your shopping cart.", emptyCartVerification.trim(), test);
+	    		cartCounter = itemsInCartCounter(test);
+	    		action.CompareResult("Cart Count:Mini Cart Is Empty", "0", cartCounter	, test);
+	    	}
+	    	}else {
+	    		action.CompareResult("Cart Count:Mini Cart Is Empty", "0", cartCounter, test);
+	    	}
+	    }
+	    
 }

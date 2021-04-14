@@ -55,7 +55,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("MAIN");
+		dataTable2.setPath("TA265_TA266_TA271");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -106,9 +106,11 @@ public class JDTests extends BaseTest {
 									occNum++;
 									occCount.put(currentKeyWord,occNum);
 								}
+								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								dataTable2.setModule(actionToRun);
 								runKeyWord(actionToRun,test);
+//								writeToExcel(new File(dataTable2.filePath()));
 								writeToExcel(createFile());
 
 							}
@@ -206,9 +208,9 @@ public class JDTests extends BaseTest {
 			case "ProductSearch":
 				products.ic_SelectProductAndAddToCart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
-			/*
-			 * case "iCcartVerification": icCart.iCcartVerification(test1); break;
-			 */
+			case "ClearCart":
+				icCart.removeAllItemsInCart(test1);
+				break;
 			case "deliveryPopulation":
 				icDelivery.deliveryPopulation(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;

@@ -200,6 +200,7 @@ public class Ic_Products {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.info(e.getMessage());
+			e.printStackTrace();
 		}
 
 
@@ -290,6 +291,9 @@ public class Ic_Products {
 		}
 		//click on product name and enter listing page
 		//confirm that page has loaded
+		
+		//ADD PROPER THAT WAIT THAT CHECKS AND WAITS UNTIL THE BUTTON SAYS ADD TO CART
+		action.explicitWait(7000);
 		productDetailsPageAddToCartButton.click();
 		cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds), test);
 		//click add to cart button
