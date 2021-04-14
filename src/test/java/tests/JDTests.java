@@ -485,6 +485,7 @@ public class JDTests extends BaseTest {
 		}
 
 		workbook.write(outputStream);
+		outputStream.close();
 		workbook.close();
 	}
 

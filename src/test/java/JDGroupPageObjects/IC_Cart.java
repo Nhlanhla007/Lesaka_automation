@@ -196,8 +196,9 @@ public class IC_Cart {
 	    
 	    
 	    public String itemsInCartCounter(ExtentTest test) {
+
 	    	String counterValue = cartCounterIcon.getText();
-	    	if(counterValue == "") {
+	    	if(counterValue.equals("")|counterValue==null|counterValue.equals("0")) {
 	    		counterValue = "0";
 	    	}
 	    	return counterValue;
