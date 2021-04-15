@@ -153,6 +153,7 @@ public class JDTests extends BaseTest {
 		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver,dataTable2);
 		ic_Login ic_login = new ic_Login(driver,dataTable2);
 		ic_invalidLoginCreds ic_invalidCredslogin = new ic_invalidLoginCreds(driver, dataTable2);
+		ic_LoginPasswordIsSecured icPasswordSecured = new ic_LoginPasswordIsSecured(driver, dataTable2);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver,dataTable2);
 		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
 		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver,dataTable2);
@@ -202,6 +203,9 @@ public class JDTests extends BaseTest {
 			case "ic_invalidCredslogin":
 			ic_invalidCredslogin.invalidLogin_ic(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
+			case "icPasswordSecured":
+				icPasswordSecured.loginPasswordSafe(dataMap2.get("ic_login++"), test1, rowNumber);
+					break;
 			case "Logout":
 				ic.logout(test1);
 				break;
