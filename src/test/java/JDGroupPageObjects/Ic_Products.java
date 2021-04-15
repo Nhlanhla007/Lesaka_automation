@@ -29,6 +29,8 @@ public class Ic_Products {
 	IC_Cart cartValidation;
 	DataTable2 dataTable2;
 	ic_WishList WishList;
+	ic_validateProductSKU validateProductSKU;
+	ic_CompareProducts compareProducts;
 	public Ic_Products(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -36,6 +38,8 @@ public class Ic_Products {
 		cartValidation = new IC_Cart(driver, dataTable2);
 		this.dataTable2 = dataTable2;
 		WishList = new ic_WishList(driver, dataTable2);
+		validateProductSKU = new ic_validateProductSKU(driver, dataTable2);
+		compareProducts = new ic_CompareProducts(driver, dataTable2);
 	}
 
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());
@@ -183,6 +187,8 @@ public class Ic_Products {
 		String TypeOfOperation = dataTable2.getValueOnCurrentModule("TypeOfOperation");
 		String validationRequired = dataTable2.getValueOnCurrentModule("validationRequired");
 		List<String> theProducts = filterProducts(productsToSearch);
+
+		try {
 			Map<String, List<String>> productsInCart =  ic_CreateCartFromProductListing(productsToSearch, quantityOfSearchProducts,typeSearch,waitTimeInSeconds, test);
 			switch(TypeOfOperation){
 			case "Add_To_Wishlist":
@@ -190,10 +196,19 @@ public class Ic_Products {
 					WishList.ValidateProductsIn_Wishlist(productsInCart, test);
 				}
 				break;
+			case "Add_To_Cart":
+				cartValidation.iCcartVerification2(productsInCart, test);
+				break;
 			default:
 				cartValidation.iCcartVerification2(productsInCart, test);
 				break;
 			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.info(e.getMessage());
+		}
+
 
 	}
 
@@ -371,9 +386,16 @@ public class Ic_Products {
 										
 										//add to wish list method call
 										break;
-									}
-										
-								
+									case "Get_SKU_Code":
+										validateProductSKU.displayProductSKU(test, prod);
+										break;
+								   case "Add_To_Compare":
+									   compareProducts.compareProductsFunctionality(test, prod);
+									   //compareProducts.validateAddedProductsCompare(test, prod);
+									  // compareProducts.clearAllProduct(test, prod);
+									   break;
+								}
+
 								}
 								if(set<=0) {
 									set++;
