@@ -34,12 +34,15 @@ public class ic_WishList {
     	int waitTime = 11;
     	//NavigetoWishlist.navigateWishlist(waitTime, test);
     	for(Map.Entry selectedProducts : products.entrySet()) {
+    		
+    	
 	    	for(WebElement productsInCart : ic_AllMywishlistProducts) {
 	    		String nameOfProduct = productsInCart.findElement(By.xpath(".//strong/a")).getText();
 					  action.CompareResult("Name : " + nameOfProduct +" present in wishlist", (String)selectedProducts.getKey(), nameOfProduct, test);
     				  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
 	    		if(selectedProducts.getKey().equals(nameOfProduct)) {
 					  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
+					  action.CompareResult("Name : " + nameOfProduct +" present in wishlist", (String)selectedProducts.getKey(), nameOfProduct, test);
 					}
 	    	}
         }
