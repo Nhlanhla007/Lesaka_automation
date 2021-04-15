@@ -65,7 +65,7 @@ public class IC_Cart {
 	    
 	    @FindBy(xpath = "//*[@id=\"maincontent\"]/div[2]//p[1]")
 	    public WebElement emptyCartConfrimation;
-	    
+		
 	    public void navigateToCart(ExtentTest test) {
 	    	try {
 				action.clickEle(iCCartButton, "IC cart button", test);
