@@ -46,7 +46,7 @@ public class SAPCustomerRelated {
 		magentoRetrieve = new MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
 		magentoVerification = new MagentoAccountInformation(driver,dataTable2);
 	}
-
+    
 	public int getConnectionRow(String Instance){
 		HashMap<String, ArrayList<String>> connectiondetailSheet = dataMap2.get("DB_connection_master++");//Db connection h
 		int finalrow=-1;
@@ -207,7 +207,7 @@ public class SAPCustomerRelated {
 		vatNumberFlag = mySheets.get(0).get("vatNumberFlag").get(sheetRow1);
 		Map<String, String> customerDetails = null;
 		customerDetails = customerSAPDetails(bpNumber1);
-
+		
 		//GET DETAILS FROM SAP
 		String SAPFirstName = customerDetails.get("NAME_FIRST");
 		String SAPLastName = customerDetails.get("NAME_LAST");
@@ -265,16 +265,16 @@ public class SAPCustomerRelated {
 					}
 					String billingProvince = mySheets.get(2).get("billing_provinceName_output").get(sheetRow4);
 					action.CompareResult("SAP Updated Province", billingProvince, SAPProvince, test);
-
+				
 					String billingCity = mySheets.get(2).get("billing_city_output").get(sheetRow4);
 					action.CompareResult("SAP Updated City", billingCity, SAPcity, test);
-
+			
 					String billingSuburb = mySheets.get(2).get("billing_suburb_output").get(sheetRow4);
 					action.CompareResult("SAP Updated Billing Suburb", billingSuburb, SAPsuburb, test);
-
+			
 					String billingPostalCode = mySheets.get(2).get("billing_postalCode_output").get(sheetRow4);
 					action.CompareResult("SAP Updated postal code", billingPostalCode, SAPpostCode, test);
-
+			
 				}
 
 				break;

@@ -66,8 +66,8 @@ public class ic_Login {
 			String Password =dataTable2.getValueOnCurrentModule("Password");
 			userCred.add(Username);
 			userCred.add(Password);
-			action.writeText(ic_Username, Username, "Username feild", test);
-			action.writeText(ic_Password, Password, "Password feild", test);
+			action.writeText(ic_Username, Username, "Username field", test);
+			action.writeText(ic_Password, Password, "Password field", test);
 			action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
 				userCreds(userCred);
 				
