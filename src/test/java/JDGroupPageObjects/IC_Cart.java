@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -21,9 +22,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.aventstack.extentreports.ExtentTest;
 
 import Logger.Log;
+import base.TestCaseBase;
 import tests.JDTests;
 import utils.Action;
+import utils.ConfigFileReader;
 import utils.DataTable2;
+import utils.Values;
 
 public class IC_Cart {
 		
@@ -87,7 +91,7 @@ public class IC_Cart {
 			}
 	    }
 	    
-	    public static int sum;
+	    public int sum;
 		  public void iCcartVerification2(Map<String, List<String>> products,ExtentTest test) {
 			  //Verifies if all the products have been added in the cart
 			  String itemsCount = itemsInCartCounter(test);
@@ -114,12 +118,14 @@ public class IC_Cart {
 						}
 					  }
 				  }
-				action.CompareResult("Products Total", String.valueOf(sum), icSubtotal.getText().replace("R", "").replace(",", "").replace(".", "") , test);
+				action.CompareResult("Products Total", String.valueOf(sum), icSubtotal.getText().replace("R", "").replace(",", "").replace(".", "") , test);				
 				action.CompareResult("Cart Counter Verfication", String.valueOf(allProductsInCartQuantity), itemsCount, test);
 				action.clickEle(icCCheckout, "Secure Checkout", test);
+				dataTable2.setValueOnOtherModule("ClearCart", "CartTotal", String.valueOf(sum), 0);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				logger.info(e.getMessage());
+				e.printStackTrace();
 			}
 			  //Compare with data from the map
 			  
@@ -211,7 +217,7 @@ public class IC_Cart {
 	    
 	    public String itemsInCartCounter(ExtentTest test) {
 	    	String counterValue = cartCounterIcon.getText();
-	    	if(counterValue == "") {
+	    	if(counterValue == ""|counterValue==null|counterValue.equals("0")) {
 	    		counterValue = "0";
 	    	}
 	    	return counterValue;
@@ -253,6 +259,60 @@ public class IC_Cart {
 	    	}else {
 	    		action.CompareResult("Cart Count:Mini Cart Is Empty", "0", cartCounter, test);
 	    }
+	    }
+	    
+	    public void logonAgainAndVerifyCart(HashMap<String, ArrayList<String>> input,ExtentTest test) throws Exception {	    	
+	    	//check cart quantity
+	    	String itemsInCart = itemsInCartCounter(test);
+	    	action.CompareResult("items in cart", "1", itemsInCart, test);
+	    	//startBrowserSession
+	    	//close browser
+	    	//driver.quit();
+	    	
+	    	//driver = null;
+	    	//WebDriver driver1 = new ChromeDriver();
+	    	//navigate to login again
+	    	//startBrowserSession(driver1);
+	    	
+			/*
+			 * ic_Login login = new ic_Login(driver1, dataTable2); WebElement myAccount =
+			 * driver1.findElement(By.xpath(
+			 * "/html/body/div[1]/header/div[2]/div/div[3]/div[2]/span")); WebElement
+			 * selectLogin =
+			 * driver1.findElement(By.xpath("//*[@id=\"header-slideout--0\"]/li[3]/a"));
+			 * WebElement userName = driver1.findElement(By.xpath("//*[@id='email']"));
+			 * WebElement password = driver1.findElement(By.xpath("\"//*[@id='pass']\""));
+			 * WebElement signIn = driver1.findElement(By.xpath("//*[@id=\"send2\"]/span"));
+			 * 
+			 * myAccount.click();
+			 */
+	    	//int rowNumber = Integer.parseInt(dataTable2.getValueOnOtherModule("ic_login", "TCID", 0));
+	    	//login.Login_ic(input, test, rowNumber);
+	    	
+	    	//String itemsInCartAfterLogin = itemsInCartCounter(test);
+	    	//action.CompareResult("Items in cart", "1", itemsInCartAfterLogin, test);
+	    	//check the product
+	    	//login.Login_ic(, test, rowNumber);
+	    	//driver.navigate().to("https://JDGroup:JDGr0up2021@staging-incredibleconnection-m23.vaimo.net/");
+			//driver.manage().window().maximize();
+			//driver.navigate().refresh();
+	    	//verify cart
+	    	
+	    }	    	  
+	    
+	    public void verifyCart(ExtentTest test) throws Exception {
+	    	//check cart
+	    	action.explicitWait(5000);
+	    	String itemsInCart = itemsInCartCounter(test);
+	    	String productQuantity = dataTable2.getValueOnOtherModule("ProductSearch", "Quantity", 0);
+	    	String productFromExcel = dataTable2.getValueOnOtherModule("ProductSearch","specificProduct", 0);
+	    	action.CompareResult("Items in cart", productQuantity, itemsInCart, test);
+	    	
+	    	action.click(iCCartButton, "Cart button", test);
+	    	WebElement product =icAllCartProducts.get(0);
+	    	String prodInCart = product.findElement(By.xpath(".//strong/a")).getText();
+	    	action.CompareResult("Product in cart", productFromExcel, prodInCart, test);
+	    	//check product in cart
 	    }
 	    
 }

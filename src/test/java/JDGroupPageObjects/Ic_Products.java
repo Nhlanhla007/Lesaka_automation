@@ -130,7 +130,6 @@ public class Ic_Products {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
 			logger.info(e.getMessage());
 		}
 	}
@@ -143,7 +142,6 @@ public class Ic_Products {
 			action.click(icSearchIcon, "Click on search", test);
 			Thread.sleep(10000);
 		} catch (Exception e) {
-			e.printStackTrace();
 			logger.info(e.getMessage());
 		}
 	}
@@ -409,7 +407,6 @@ public class Ic_Products {
 			}
 		} catch (Exception e) {
 			logger.info(e.getMessage());
-			e.printStackTrace();
 		}
 		return productData;
 

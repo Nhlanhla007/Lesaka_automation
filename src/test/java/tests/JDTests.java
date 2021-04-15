@@ -51,7 +51,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("TA280");
+		dataTable2.setPath("TA278");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -113,6 +113,8 @@ public class JDTests extends BaseTest {
 				} catch (Exception e) {
 					logger.info(e.getMessage());
 					e.printStackTrace();
+					e.getCause();
+					System.out.println(e.getMessage());
 					String screenShot=GenerateScreenShot.getScreenShot(driver);
 					ExtentTest node = test.createNode("Exception");
 					node.fail(e.getMessage()+node.addScreenCaptureFromPath(screenShot));
@@ -148,7 +150,7 @@ public class JDTests extends BaseTest {
 		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver,dataTable2);
 		ic_Login ic_login = new ic_Login(driver,dataTable2);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver,dataTable2);
-		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
+		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2,dataTable2);
 		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver,dataTable2);
     	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver,dataTable2);
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);
@@ -365,6 +367,12 @@ public class JDTests extends BaseTest {
 				break;
 			case "giftCardWithInvalidCouponCode":
 				icRedeemGiftCard.giftCardWithInvalidCouponCode(test1);
+				break;
+			case "ic_logout":
+				ic_login.logout(test1,dataMap2.get("ic_login++"),rowNumber);
+				break;
+			case"verifyCart":
+				icCart.verifyCart(test1);
 				break;
 		}
 	}

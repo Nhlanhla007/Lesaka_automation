@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -48,6 +49,9 @@ public class ic_Login {
 		@FindBy(xpath = "//h1[contains(text(),'Dashboard')]")
 		WebElement Dashboard;
 		
+		@FindBy(className = "authorization-link")
+		WebElement logout;
+		
 		public static String Username;
 		
 		//vv
@@ -65,8 +69,8 @@ public class ic_Login {
 			String Password =input.get("Password").get(rowNumber);
 			userCred.add(Username);
 			userCred.add(Password);
-			action.writeText(ic_Username, Username, "Username feild", test);
-			action.writeText(ic_Password, Password, "Password feild", test);
+			action.writeText(ic_Username, Username, "Username Field", test);
+			action.writeText(ic_Password, Password, "Password Field", test);
 			action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
 				userCreds(userCred);
 				
@@ -83,6 +87,16 @@ public class ic_Login {
 		public List<String> userCreds(List<String> userCreds){
 			return userCreds;
 		}	
+		
+		public void logout(ExtentTest test,HashMap<String, ArrayList<String>> input,int rowNumber) throws Exception {
+			action.click(ic_myAccountButton, "My account", test);
+			//action.mouseover(logout, "logout");
+			JavascriptExecutor js = (JavascriptExecutor)driver;
+			js.executeScript("arguments[0].scrollIntoView();", logout); 
+			action.click(logout, "logout", test);
+//			action.explicitWait(7000);
+			//Login_ic(input, test, rowNumber);
+		}
 		
 
 }
