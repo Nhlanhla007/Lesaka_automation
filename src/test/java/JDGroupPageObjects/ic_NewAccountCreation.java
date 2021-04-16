@@ -122,6 +122,8 @@ public class ic_NewAccountCreation {
     @FindBy(xpath = "//input[@id='identity_number']")
     WebElement SAID;
 
+    @FindBy(id = "cellphone_number")
+    WebElement telephoneNumber;
     
   // Sourav TA19 customer info after click on Customer info 
 	
@@ -166,6 +168,7 @@ public class ic_NewAccountCreation {
 		String identityNumber = input.get("identityNumber/passport").get(rowNumber);
 		String selectNewsLetter = input.get("newsletter").get(rowNumber);
 		String taxVatNumbe = input.get("vatNumber").get(rowNumber);
+		String telephone = input.get("Telephone").get(rowNumber);
 		//Added flag for VAT number status check TA31
 		String tavVatNumberFlagStatus = input.get("vatNumberFlag").get(rowNumber);
 		String passwordValidation = input.get("validatePassword").get(rowNumber);
@@ -182,6 +185,7 @@ public class ic_NewAccountCreation {
 			action.writeText(User_Firstname, firstName, "First name", test);
 			action.writeText(User_Lastname, lastName, "Last Name", test);
 			action.writeText(User_EmailId, emailAddress, "Email", test);
+			action.writeText(telephoneNumber, telephone, "Telephone", test);
 			action.writeText(taxVatNumber, taxVatNumbe, "Tax/Vat", test);
 			action.writeText(User_Password, password, "Password", test);
 
