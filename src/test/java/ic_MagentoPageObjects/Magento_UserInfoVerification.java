@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -128,6 +129,11 @@ public class Magento_UserInfoVerification {
 		String typeOfVerificationFlag = dataTable2.getValueOnCurrentModule("Data Source");
 		
 		driver.navigate().refresh();
+		action.explicitWait(5000);
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		js.executeScript("window.scrollBy(0,0)");
+		//driver.manage().window().s
+		
 		//IF CONSTUCT FOR WHAT TYPE OF VALIDATION IS TAKING PLACE
 		//For Account creation(Set this way by default)
 		//***************************************

@@ -200,6 +200,8 @@ public class SAPCustomerRelated {
 			taxVatNumberFlag = mySheets.get(2).get("taxVat").get(sheetRow4);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			taxVatNumberFlag = "yes";
+		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Update Magento Admin")) {
+			taxVatNumberFlag = dataTable2.getValueOnOtherModule("adminUserUpdate", "taxVat", 0);
 		}
 		else {
 			taxVatNumberFlag = "No";
