@@ -77,6 +77,5 @@ public class ic_Login {
 		
 		public List<String> userCreds(List<String> userCreds){
 			return userCreds;
-			//Change Leverch
 		}
 }

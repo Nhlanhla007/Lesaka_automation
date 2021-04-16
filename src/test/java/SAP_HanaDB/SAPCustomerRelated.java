@@ -150,6 +150,7 @@ public class SAPCustomerRelated {
 		String updatedMagentoBillingEmailFlag = null;
 		String updatedMagentoBillingEmail = null;		
 		String currentCustomerMagentoBillingEmail = null;
+		
 		if(typeOfSAPValidation.equalsIgnoreCase("Customer Update")) {
 			updateEmailFlag = mySheets.get(2).get("email").get(sheetRow4);
 			updateEmail = mySheets.get(2).get("email_output").get(sheetRow4);
@@ -191,7 +192,7 @@ public class SAPCustomerRelated {
 		String SAPorderNumber=bpPartnerBumber;
 		String bpNumber1=bpPartnerBumber;
 		//If not partner number is returned throw an error
-		if(bpNumber1 == null) {
+		if(bpNumber1 == null | bpNumber1.equals("")) {
 			throw new Exception("Partner Number is not generated");
 		}
 		

@@ -73,7 +73,7 @@ public class ic_NewAccountCreation {
 	@FindBy(xpath = "//span[contains(text(),'South African ID')]")
 	WebElement User_SAIDbtn;
 	
-	@FindBy(xpath = "//body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/fieldset[1]/div[5]/div[2]/label[1]/span[1]")
+	@FindBy(xpath = "//*[@id=\"switcher--passport-field\"]/following-sibling::label/span")
 	WebElement User_Passportbtn;
 	
 	@FindBy(xpath = "//input[@id='identity_number']")
@@ -445,4 +445,3 @@ public class ic_NewAccountCreation {
 		}
 	}
 }
-//Leverch Change
