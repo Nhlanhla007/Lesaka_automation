@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import SAP_HanaDB.SAPCustomerRelated;
 import base.TestCaseBase;
 import emailverification.ICGiftCardVerification;
+import emailverification.ic_PasswordForgotEmailVerification;
+import emailverification.ICWishlistverification;
 import ic_MagentoPageObjects.*;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.Magento_UserInfoVerification;
@@ -24,9 +26,11 @@ import com.aventstack.extentreports.ExtentTest;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -54,7 +58,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("TA252");
+		dataTable2.setPath("MAIN");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -72,7 +76,6 @@ public class JDTests extends BaseTest {
 
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException, InterruptedException {
-
 		int numberOfTestCases =singleSuiteData.get("Execute").size();
 		for(int i=0;i<numberOfTestCases;i++){
 			System.out.println("TestCaseNumber:"+i);
@@ -105,8 +108,8 @@ public class JDTests extends BaseTest {
 									occNum++;
 									occCount.put(currentKeyWord,occNum);
 								}
-//								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
+								dataTable2.setModule(actionToRun);
 								runKeyWord(actionToRun,test);
 //								writeToExcel(new File(dataTable2.filePath()));
 								writeToExcel(createFile());
@@ -116,6 +119,8 @@ public class JDTests extends BaseTest {
 				} catch (Exception e) {
 					logger.info(e.getMessage());
 					e.printStackTrace();
+					e.getCause();
+					System.out.println(e.getMessage());
 					String screenShot=GenerateScreenShot.getScreenShot(driver);
 					ExtentTest node = test.createNode("Exception");
 					node.fail(e.getMessage()+node.addScreenCaptureFromPath(screenShot));
@@ -143,15 +148,19 @@ public class JDTests extends BaseTest {
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver,dataTable2);
 		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
 		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver,dataTable2);
-		
 		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver,dataTable2);
 		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver,dataTable2);
 		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver,dataTable2);
 		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver,dataTable2);
 		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver,dataTable2);
 		ic_Login ic_login = new ic_Login(driver,dataTable2);
+		ic_invalidLoginCreds ic_invalidCredslogin = new ic_invalidLoginCreds(driver, dataTable2);
+		ic_LoginPasswordIsSecured icPasswordSecured = new ic_LoginPasswordIsSecured(driver, dataTable2);
+		ic_forgotPasswordLink icforgottenPassLink = new ic_forgotPasswordLink(driver, dataTable2);
+		verifyForgotPassword icVerifyForgotPass = new verifyForgotPassword(driver, dataTable2);
+		ic_PasswordForgotEmailVerification icForgotEmailSent = new ic_PasswordForgotEmailVerification(driver, dataTable2);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver,dataTable2);
-		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
+		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2,dataTable2);
 		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver,dataTable2);
     	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver,dataTable2);
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);
@@ -175,24 +184,46 @@ public class JDTests extends BaseTest {
 		ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
 		ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
 		IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
-//		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
+		ic_WishlistToCart IC_WishlistToCart =new ic_WishlistToCart(driver, dataTable2);
 		ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
 		ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
 		ic_WishList WishList = new ic_WishList(driver, dataTable2);
+		ic_CompareProducts productsCompared = new ic_CompareProducts(driver, dataTable2);
 		ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
 		IC_verifyLogin ic_verifyLogin =new IC_verifyLogin(driver, dataTable2);
+		IC_IncreaseQuanityInCart increQuantity = new IC_IncreaseQuanityInCart(driver, dataTable2);
+		IC_RemoveItemsFromCart removeItemsFromCart = new IC_RemoveItemsFromCart(driver, dataTable2);
+		ic_SendWishlistToEmail SendWishlistToEmail = new ic_SendWishlistToEmail(driver, dataTable2);
+		ICWishlistverification icEmailWishlistverification = new ICWishlistverification(driver, dataTable2);
+		RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
 			rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
 		}
 		int i = 0;
+		WebElement el = null;
 		switch (moduleToRun) {
 			case "Login":
 				ic.login(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 			case "ic_login":
 				ic_login.Login_ic(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
+			case "ic_invalidCredslogin":
+			ic_invalidCredslogin.invalidLogin_ic(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "icPasswordSecured":
+				icPasswordSecured.loginPasswordSafe(dataMap2.get("ic_login++"), test1, rowNumber);
+					break;
+			case "icForgotPasswordLink":
+				icforgottenPassLink.forgotPasswordLink(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				break;
+			case "icVerifyForgotPass":
+				icVerifyForgotPass.forgotPasswordPage(dataMap2.get("accountCreation++"),test1,rowNumber);
+				break;
+			case "icEmailSentVerification":
+				icForgotEmailSent.icVerifyNewPasswordEmailSent(dataMap2.get("accountCreation++"),test1,rowNumber);
 				break;
 			case "Logout":
 				ic.logout(test1);
@@ -205,6 +236,13 @@ public class JDTests extends BaseTest {
 				break;
 			case "ProductSearch":
 				products.ic_SelectProductAndAddToCart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "ClearCart":
+				icCart.removeAllItemsInCart(test1);
+				break;
+			case "CompareProducts":
+				productsCompared.validateAddedProductsCompare(test1,el );
+				productsCompared.clearAllProduct(test1, el);
 				break;
 			/*
 			 * case "iCcartVerification": icCart.iCcartVerification(test1); break;
@@ -361,7 +399,7 @@ public class JDTests extends BaseTest {
 				productsSortBy.sortBy(test1);
 				break;
 			case "ic_NavigetoWishlist":
-				NavigetoWishlist.NavigateToWishlist_verifymsg(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
 				break;
 			case "ic_verifyWishlistItem":
 				verifyWishlistItem.handleWishlistItem(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
@@ -371,6 +409,32 @@ public class JDTests extends BaseTest {
                 break;
 			case "ic_verifyLogin":
 				ic_verifyLogin.IC_verifyLogin_addingProductTowishlist(test1, rowNumber);
+				break;
+			case "IC_WishlistToCart":
+				IC_WishlistToCart.verifyProducts_wishlistTocart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+			case "IncreaseQuanityInCart":
+				increQuantity.increaseQuantity(test1);
+				break;
+			case "RemoveArticleFromCart":
+				removeItemsFromCart.removeItemFromCart(test1);
+			case "SendWishlistToEmail":
+				SendWishlistToEmail.ShareYourwishlist(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "icEmailWishlistverification":
+				icEmailWishlistverification.icWishlistVerificationSender(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "RedirectToProdDetailPageFromCart":
+				redirectAndVerify.verifyNavigationToProductDetailPageFromCart(test1);
+				break;
+			case "giftCardWithInvalidCouponCode":
+				icRedeemGiftCard.giftCardWithInvalidCouponCode(test1);
+				break;
+			case "ic_logout":
+				ic_login.logout(test1,dataMap2.get("ic_login++"),rowNumber);
+				break;
+			case"verifyCart":
+				icCart.verifyCart(test1);
 				break;
 		}
 	}
@@ -476,37 +540,34 @@ public class JDTests extends BaseTest {
 		workbook.close();
 	}
 	public void writeToExcel(File filePath) throws IOException {
-		FileOutputStream outputStream = new FileOutputStream(filePath);
-		XSSFWorkbook workbook= new XSSFWorkbook();;
-		XSSFSheet sheet;
-		for(int i=0;i<dataMap2.size() ;i++) {
-			Object[] keys = dataMap2.keySet().toArray();
-			if (!keys[i].toString().toLowerCase().equals("suits") && !keys[i].toString().toLowerCase().equals("ic")) {
-				sheet = workbook.createSheet(keys[i].toString());
-				workbook.getSheet(keys[i].toString());
-				int numCol = dataMap2.get(keys[i]).size();
-				Object[] colArray = dataMap2.get(keys[i]).keySet().toArray();
-				int rowNum = dataMap2.get(keys[i]).get(colArray[0]).size();
-				for (int j = 0; j <= rowNum; j++) {
-					Row row = sheet.createRow(j);
-					if (j == 0) {
-						for (int z = 0; z < numCol; z++) {
-							Cell cell = row.createCell(z);
-							cell.setCellValue(colArray[z].toString());
-						}
-					} else {
-
-						for (int z = 0; z < numCol; z++) {
-							Cell cell = row.createCell(z);
-							cell.setCellValue((String) dataMap2.get(keys[i]).get(colArray[z]).get(j - 1));
-						}
+		XSSFWorkbook myWorkBook = new XSSFWorkbook ();
+		int numberSheets=dataMap2.size();
+		Object[] keys = dataMap2.keySet().toArray();
+		for(int i=0;i<numberSheets;i++) {
+			Sheet sheet1 = myWorkBook.createSheet(keys[i].toString());
+			int numCell = dataMap2.get(keys[i].toString()).size();
+			Object[] colList = dataMap2.get(keys[i].toString()).keySet().toArray();
+			int rownum = dataMap2.get(keys[i].toString()).get(colList[0].toString()).size();
+			for (int j=0;j<=rownum;j++) {
+				Row row = sheet1.createRow(j);
+				if(j==0) {
+					for (int z = 0; z < numCell; z++) {
+						Cell cell = row.createCell(z);
+						cell.setCellValue((String)colList[z]);
+					}
+				}else {
+					for (int z = 0; z < numCell; z++) {
+						Cell cell = row.createCell(z);
+						cell.setCellValue((String) dataMap2.get(keys[i].toString()).get(colList[z]).get(j-1));
 					}
 				}
 			}
 		}
-
-		workbook.write(outputStream);
-		workbook.close();
+		FileOutputStream os = new FileOutputStream(createFile());
+		myWorkBook.write(os);
+		os.close();
+		myWorkBook.close();
+		System.out.println("Writing on XLSX file Finished ...");
 	}
 
 	public File createFile() throws IOException {

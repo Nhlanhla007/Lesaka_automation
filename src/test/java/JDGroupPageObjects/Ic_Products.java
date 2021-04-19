@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -29,6 +30,8 @@ public class Ic_Products {
 	IC_Cart cartValidation;
 	DataTable2 dataTable2;
 	ic_WishList WishList;
+	ic_validateProductSKU validateProductSKU;
+	ic_CompareProducts compareProducts;
 	public Ic_Products(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -36,6 +39,8 @@ public class Ic_Products {
 		cartValidation = new IC_Cart(driver, dataTable2);
 		this.dataTable2 = dataTable2;
 		WishList = new ic_WishList(driver, dataTable2);
+		validateProductSKU = new ic_validateProductSKU(driver, dataTable2);
+		compareProducts = new ic_CompareProducts(driver, dataTable2);
 	}
 
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());
@@ -70,6 +75,9 @@ public class Ic_Products {
 
 	@FindBy(xpath = "//body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[3]/nav[1]/ul[1]/li[1]/ul[1]/li[1]/ul[1]/li[15]/a[1]/span[1]")
 	WebElement downloads;
+
+	@FindBy(xpath = "//*[@class=\"box-tocart\"]/div/span")
+	WebElement productOutOfStock;
 
 	List<WebElement> listElements;
 
@@ -172,7 +180,7 @@ public class Ic_Products {
 	 * @param test
 	 * @param rowNumber
 	 */
-	public void ic_SelectProductAndAddToCart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) {
+	public void ic_SelectProductAndAddToCart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException {
 		String navigateURL = ConfigFileReader.getPropertyVal("URL");
 		action.navigateToURL(navigateURL);
 		
@@ -192,11 +200,16 @@ public class Ic_Products {
 					WishList.ValidateProductsIn_Wishlist(productsInCart, test);
 				}
 				break;
+			case "Add_To_Cart":
+				cartValidation.iCcartVerification2(productsInCart, test);
+				break;
+			case "Validate_Out_Of_Stock":
+				break;
 			default:
 				cartValidation.iCcartVerification2(productsInCart, test);
 				break;
 			}
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.info(e.getMessage());
@@ -286,17 +299,25 @@ public class Ic_Products {
 
 	void addToCartFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
 		if(quanity == 1) {
-			action.clickEle(productLink, "Navigate to product listing page", test);
+			action.clickEle(productLink, "Navigate to product Details page", test);
 		}
 		//click on product name and enter listing page
 		//confirm that page has loaded
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);        
+        boolean isPresent = driver.findElements(By.id("product-addtocart-button")).size() > 0;
+        if(isPresent) {
 		productDetailsPageAddToCartButton.click();
 		cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds), test);
+		action.explicitWait(8000);
+        }else {
+        	String outOfStockMessage = productOutOfStock.getText();
+        	action.CompareResult("Product is out of stock", "Currently Out of Stock", outOfStockMessage, test);
+        }
 		//click add to cart button
 	}
 	void addToWishlistFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
 		if(quanity == 1) {
-			action.clickEle(productLink, "Navigate to product listing page", test);
+			action.clickEle(productLink, "Navigate to product Details page", test);
 		}
 		//click on product name and enter listing page
 		//confirm that page has loaded
@@ -376,9 +397,19 @@ public class Ic_Products {
 										
 										//add to wish list method call
 										break;
-									}
-										
-								
+									case "Get_SKU_Code":
+										validateProductSKU.displayProductSKU(test, prod);
+										break;
+								   case "Add_To_Compare":
+									   compareProducts.compareProductsFunctionality(test, prod);
+									   //compareProducts.validateAddedProductsCompare(test, prod);
+									  // compareProducts.clearAllProduct(test, prod);
+									   break;
+									case "Validate_Out_Of_Stock":
+										addToCartFromProdDetailsPage(prod,waitTimeInSeconds,quantityExecu,test);
+										break;
+								}
+
 								}
 								if(set<=0) {
 									set++;

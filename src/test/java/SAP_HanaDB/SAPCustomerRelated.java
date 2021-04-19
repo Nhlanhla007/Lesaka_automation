@@ -252,7 +252,6 @@ public class SAPCustomerRelated {
 					String Email = updateEmail;
 					action.CompareResult("SAP Updated Email", Email, SAPEmail, test);
 				}
-
 				String updateBillingFlag =mySheets.get(2).get("billingAddress").get(sheetRow4);
 				if(updateBillingFlag.equalsIgnoreCase("yes")) {
 					String updateBillingStreetFlag = mySheets.get(2).get("billing_streetAddress").get(sheetRow4);
