@@ -20,6 +20,7 @@ import JDGroupPageObjects.Ic_Products;
 import JDGroupPageObjects.ic_PayUPayment;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 import utils.Action;
+import utils.DataTable2;
 import utils.hana;
 
 
@@ -29,12 +30,14 @@ import utils.hana;
 	public class SAPorderRelated {
 		WebDriver driver;
 	    Action action;
+	    DataTable2 dataTable2;
 	     LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
-	    public SAPorderRelated(WebDriver driver,LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2) {
+	    public SAPorderRelated(WebDriver driver,LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2,DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
 	        this.dataMap2=dataMap2;
+	        this.dataTable2 = dataTable2;
 	    }
 	    //refer this-------------------------
 	    public static String BPnumber;
@@ -93,7 +96,8 @@ import utils.hana;
 			//Expected al details to be validated--------------------------------------
 			String SAP_orderNo=ic_MagentoOrderSAPnumber.OrderSAPnumber;//"0005233074";// sap order number genrator
 			String ExpPurchaseOrderNo =ic_PayUPayment.Oderid; //from IC paymentPAYU confirmation order number.
-			String ExpGrandTotal =String.valueOf(IC_Cart.sum);//comes from cart total
+			String cartSum = dataTable2.getValueOnOtherModule("ClearCart", "CartTotal", 0);
+			String ExpGrandTotal =String.valueOf(cartSum);//comes from cart total
 			
 			List<String> ExpProductName =new ArrayList<>();
 			Map<String,List<String>> AllICprducts = Ic_Products.productData;

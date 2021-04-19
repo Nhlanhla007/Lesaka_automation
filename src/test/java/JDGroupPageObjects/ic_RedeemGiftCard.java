@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,6 +23,7 @@ public class ic_RedeemGiftCard {
 	WebDriver driver;
     Action action;
 	DataTable2 dataTable2;
+	IC_Cart cart ;
     
    Ic_Products ic_products;
 	
@@ -30,6 +33,7 @@ public class ic_RedeemGiftCard {
 	        action = new Action(driver);
 		 this.dataTable2=dataTable2;
 	        ic_products = new Ic_Products(driver, dataTable2);
+	        cart = new IC_Cart(driver, dataTable2);
 	 }
 	 
 	 static Logger logger = Log.getLogData(Action.class.getSimpleName());
@@ -76,6 +80,9 @@ public class ic_RedeemGiftCard {
 	 @FindBy(xpath="//*[@id=\"opc-sidebar\"]/div[1]/div[1]/button/span")
 	    private WebElement ic_continuePayment;
 	 
+	 @FindBy(xpath = "//*[@class=\"message-error error message\"]")
+	 private WebElement invalidCouponCodeErrorPopUp;
+	 
 	 int finalAmount = 0;
 	 int finalOrder = 0;
 	 public void redeemGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
@@ -113,4 +120,18 @@ public class ic_RedeemGiftCard {
 		 
 	 }
 
+	 
+	 public void giftCardWithInvalidCouponCode(ExtentTest test) throws Exception {
+		 cart.navigateToCart(test);
+		 cart.navigateToViewAndEditCart(test);
+		 action.click(ic_RedeemGiftCardSelect, "Redeem gift cart", test);
+		 JavascriptExecutor js = (JavascriptExecutor) driver;
+		 js.executeScript("window.scrollBy(0,1000)");
+		 action.writeText(ic_GiftCardCode, "abcdGiftWrongGiftCart", "Enter incorrect gift cart code", test);
+		 action.click(ic_Apply, "Apply gift card coupon code", test);
+		 action.elementExistWelcome(invalidCouponCodeErrorPopUp, 7, "Invalid Coupon Code pop up error", test);
+		 String popUpErrorMessage = invalidCouponCodeErrorPopUp.findElement(By.xpath(".//div")).getText();
+		 action.CompareResult("Pop up error message", "Please correct the gift card code.", popUpErrorMessage, test);
+	 }
+	 
 }
