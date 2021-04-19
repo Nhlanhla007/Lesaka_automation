@@ -205,7 +205,6 @@ public class Ic_Products {
 				break;
 			case "Validate_Out_Of_Stock":
 				break;
-			}
 			default:
 				cartValidation.iCcartVerification2(productsInCart, test);
 				break;
