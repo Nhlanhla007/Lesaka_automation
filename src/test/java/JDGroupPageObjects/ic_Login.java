@@ -45,8 +45,7 @@ public class ic_Login {
 		WebElement ic_Password;
 		@FindBy(xpath = "//*[@id=\"send2\"]/span")
 		WebElement ic_SigninBtn;
-		
-		WebElement ic_SigninBtn;
+
 		//div[contains(text(),'Your account sign-in was incorrect. Please try again.')]Your account sign-in was incorrect. Please try again.
 		@FindBy(xpath = "//html/body/div[1]/header/div[3]/div[2]/div/div")
 		WebElement ic_InvalidCreds;
