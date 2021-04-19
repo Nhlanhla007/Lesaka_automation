@@ -43,9 +43,31 @@ public class JDGTest_TestNG{
         startBrowserSession();
         reportJD=new ExtentReportJD("IC");
         dataTable2= new DataTable2();
-        dataTable2.setPath("MAIN");
+        dataTable2.setPath("UPDATEFINAL");
         dataMap2=dataTable2.getExcelData();
 
+    }
+
+    @Test(testName ="Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
+    public void Create_Sales_Order_Guest_User_Thorugh_Product_Search() throws Exception {
+        String testMethodName="Create_Sales_Order_Guest_User_Thorugh_Product_Search";
+        setUp();
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+//        startBrowserSession();
+        runAllKeys(TCIndex,test);
+        endBrowserSession();
+    }
+
+    @Test(testName ="Create_new_customer_in_IC_with_ID_Number" )
+    public void Create_new_customer_in_IC_with_ID_Number() throws Exception {
+        String testMethodName="Create_new_customer_in_IC_with_ID_Number";
+        setUp();
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+//        startBrowserSession();
+        runAllKeys(TCIndex,test);
+        endBrowserSession();
     }
 
 
