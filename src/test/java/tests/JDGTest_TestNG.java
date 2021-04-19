@@ -9,10 +9,7 @@ import emailverification.ICGiftCardVerification;
 import ic_MagentoPageObjects.*;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import utils.*;
 import Logger.Log;
 
@@ -48,7 +45,7 @@ public class JDGTest_TestNG{
 
     }
 
-    @Test(testName ="Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
+    @Test(testName ="26_Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
     public void Create_Sales_Order_Guest_User_Thorugh_Product_Search() throws Exception {
         String testMethodName="Create_Sales_Order_Guest_User_Thorugh_Product_Search";
         setUp();
@@ -59,7 +56,7 @@ public class JDGTest_TestNG{
         endBrowserSession();
     }
 
-    @Test(testName ="Create_new_customer_in_IC_with_ID_Number" )
+    @Test(testName ="2_Create_new_customer_in_IC_with_ID_Number" )
     public void Create_new_customer_in_IC_with_ID_Number() throws Exception {
         String testMethodName="Create_new_customer_in_IC_with_ID_Number";
         setUp();
@@ -70,9 +67,7 @@ public class JDGTest_TestNG{
         endBrowserSession();
     }
 
-
-
-    @Test(testName ="Click_the_IC_logo_to_go_home_page" )
+    @Test(testName ="42_Click_the_IC_logo_to_go_home_page" )
     public void Click_the_IC_logo_to_go_home_page() throws Exception {
         String testMethodName="Click_the_IC_logo_to_go_home_page";
         setUp();
@@ -82,7 +77,7 @@ public class JDGTest_TestNG{
         runAllKeys(TCIndex,test);
         endBrowserSession();
     }
-    @Test(testName ="Validating_the_minimum_search_characters" )
+    @Test(testName ="45_Validating_the_minimum_search_characters" )
     public void Validating_the_minimum_search_characters() throws Exception {
         String testMethodName="Validating_the_minimum_search_characters";
         ExtentTest test =reportJD.createTest(testMethodName);
@@ -149,7 +144,7 @@ public class JDGTest_TestNG{
         customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver,dataTable2);
         ic_Login ic_login = new ic_Login(driver,dataTable2);
         ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver,dataTable2);
-        SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
+        SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2,dataTable2);
         ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver,dataTable2);
         ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver,dataTable2);
         ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);
@@ -414,6 +409,14 @@ public class JDGTest_TestNG{
 
     public void endBrowserSession() throws IOException {
         driver.close();
+    }
+//    @AfterTest
+//    public void closeBrowser() throws IOException {
+//        endBrowserSession();
+//    }
+    @AfterClass
+    public void tearDown(){
+        reportJD.endReport();
     }
 
 

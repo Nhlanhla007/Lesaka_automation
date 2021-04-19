@@ -58,7 +58,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("Updated");
+		dataTable2.setPath("UPDATEFINAL");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -160,7 +160,7 @@ public class JDTests extends BaseTest {
 		verifyForgotPassword icVerifyForgotPass = new verifyForgotPassword(driver, dataTable2);
 		ic_PasswordForgotEmailVerification icForgotEmailSent = new ic_PasswordForgotEmailVerification(driver, dataTable2);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver,dataTable2);
-		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
+		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2,dataTable2);
 		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver,dataTable2);
     	ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver,dataTable2);
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);

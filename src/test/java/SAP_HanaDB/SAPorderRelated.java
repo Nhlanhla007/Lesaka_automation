@@ -20,6 +20,7 @@ import JDGroupPageObjects.Ic_Products;
 import JDGroupPageObjects.ic_PayUPayment;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 import utils.Action;
+import utils.DataTable2;
 import utils.hana;
 
 
@@ -29,12 +30,14 @@ import utils.hana;
 	public class SAPorderRelated {
 		WebDriver driver;
 	    Action action;
+		DataTable2 dataTable2;
 	     LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
-	    public SAPorderRelated(WebDriver driver,LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2) {
+	    public SAPorderRelated(WebDriver driver, LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
 	        this.dataMap2=dataMap2;
+			this.dataTable2=dataTable2;
 	    }
 	    //refer this-------------------------
 	    public static String BPnumber;
@@ -91,8 +94,11 @@ import utils.hana;
 			 Primarykey key = Primarykey.VBELN;
 			 
 			//Expected al details to be validated--------------------------------------
-			String SAP_orderNo=ic_MagentoOrderSAPnumber.OrderSAPnumber;//"0005233074";// sap order number genrator
-			String ExpPurchaseOrderNo =ic_PayUPayment.Oderid; //from IC paymentPAYU confirmation order number.
+//			String SAP_orderNo=ic_MagentoOrderSAPnumber.OrderSAPnumber;//"0005233074";// sap order number genrator
+			String SAP_orderNo=dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber","OrderSAPnumber",0);
+			System.out.println("OrderSAPnumber:"+SAP_orderNo);
+//			String ExpPurchaseOrderNo =ic_PayUPayment.Oderid; //from IC paymentPAYU confirmation order number.
+			String ExpPurchaseOrderNo =dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);
 			String ExpGrandTotal =String.valueOf(IC_Cart.sum);//comes from cart total
 			
 			List<String> ExpProductName =new ArrayList<>();
@@ -115,7 +121,7 @@ import utils.hana;
 			schemas Schema =schemas.SAPEQ1;
 			//"Select * from SAPEQ1.VBAK FULL OUTER JOIN SAPEQ1.VBAP ON SAPEQ1.VBAK.VBELN=SAPEQ1.VBAP.VBELN WHERE SAPEQ1.VBAK.VBELN ='0005231326' ";
 			String Query= "Select * from "+Schema+"."+Table1+" FULL OUTER JOIN "+Schema+"."+Table2+" ON "+Schema+"."+Table1+"."+key+" = "+Schema+"."+Table2+"."+key+" WHERE "+Schema+"."+Table1+"."+key+" = '"+SAP_orderNo+"' ";
-			//String Query= "SELECT * FROM SAPEQ1."+Table+" WHERE "+key+" = '"+SAP_orderNo+"'";
+//			String Query= "SELECT * FROM SAPEQ1."+Table1+" WHERE "+key+" = '"+SAP_orderNo+"'";
 			System.out.println("Query:"+Query);
 			hana hn =new hana(TypeOfDB,Server,Port,Username,Password);
 			ResultSet rs = hn.ExecuteQuery(Query);
@@ -189,8 +195,9 @@ import utils.hana;
 			     List<String> allBPnumber= hn.GetRowdataByColumnName(rs, "KUNNR");
 			     System.out.println("BP number is  : "+allBPnumber);
 			     BPnumber = String.join("", allBPnumber).trim();
-			     BPnumber=BPnumber.replace(" ", "");			     
-			     input.get("BP_Number").set(rowNumber,BPnumber);
+			     BPnumber=BPnumber.replace(" ", "");
+			     //commenting this line but will check for other testcase dependencies
+//			     input.get("BP_Number").set(rowNumber,BPnumber);
 			}
 			
 			 

@@ -27,7 +27,7 @@ public class Run {
         document.appendChild(root);
         DataTable2 dataTable2;
         dataTable2= new DataTable2();
-        dataTable2.setPath("MAIN");
+        dataTable2.setPath("UPDATEFINAL");
         LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
         dataMap2=dataTable2.getExcelData();
         LinkedHashMap<String, ArrayList<String>> suiteIC = dataMap2.get("IC");
