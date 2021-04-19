@@ -1,5 +1,8 @@
-package tests;
+package utils;
 
+import org.testng.TestListenerAdapter;
+import org.testng.TestNG;
+import org.testng.collections.Lists;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -14,6 +17,7 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class Run {
     public static void main(String[]args) throws Exception {
@@ -65,6 +69,13 @@ public class Run {
         StreamResult streamResult = new StreamResult(new File("testNG.xml"));
         transformer.transform(domSource, streamResult);
         System.out.println("Done creating XML File");
+        TestListenerAdapter tla = new TestListenerAdapter();
+        TestNG testng = new TestNG();
+        List<String> suites = Lists.newArrayList();
+        suites.add("testNG.xml");//path to xml..
+        testng.setTestSuites(suites);
+        testng.run();
+
 //        generateXML();
 //
 //        Attr attr = document.createAttribute("id");
