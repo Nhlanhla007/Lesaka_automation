@@ -42,7 +42,19 @@ public class JDGTest_TestNG{
         dataTable2= new DataTable2();
         dataTable2.setPath("UPDATEFINAL");
         dataMap2=dataTable2.getExcelData();
+        occCount=new HashMap<String, Integer>();
 
+    }
+
+    @Test(testName ="31_Create_Customer_Account_from_Sales_Order" )
+    public void Create_Customer_Account_from_Sales_Order() throws Exception {
+        String testMethodName="Create_Customer_Account_from_Sales_Order";
+        setUp();
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+//        startBrowserSession();
+        runAllKeys(TCIndex,test);
+        endBrowserSession();
     }
 
     @Test(testName ="26_Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
@@ -115,6 +127,14 @@ public class JDGTest_TestNG{
             dataTable2.setModule(currentKeyWord);
             if(!actionToRun.equals("")) {
                 System.out.println("xxxxxxxxxxxxx :"+actionToRun);
+                if(!occCount.containsKey(currentKeyWord)){
+                    occCount.put(currentKeyWord,0);
+                }else{
+                    int occNum=occCount.get(currentKeyWord);
+                    occNum++;
+                    occCount.put(currentKeyWord,occNum);
+                }
+                dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
                 runKeyWord(actionToRun, test);
             }
         }

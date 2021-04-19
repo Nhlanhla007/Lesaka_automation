@@ -470,6 +470,7 @@ public class SAPCustomerRelated {
 		if(typeValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			String sapOrderNumeber = dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber", "OrderSAPnumber", 0);
 			String Query = "select KUNNR from SAPEQ1.VBAK where VBELN = '"+sapOrderNumeber+"'";
+			System.out.println("Query:"+Query);
 			ResultSet rs1 = hn.ExecuteQuery(Query);
 			hn.GetRowsCount(rs1);
 			newBpNumber = hn.GetRowdataByColumnName(rs1, "KUNNR").get(0);
