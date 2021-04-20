@@ -114,8 +114,10 @@ public class Ic_Products {
 	 * @return WebElement
 	 */
 	public WebElement returnNext() {
-		boolean clickN = action.attributeEnabled(ic_ClickNext);
-		if(clickN) {
+		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		boolean isPresent = driver.findElements(By.xpath( "//span[contains(text(),'Next')]" ) ).size() > 0;
+		//boolean clickN = action.attributeEnabled(ic_ClickNext);
+		if(isPresent) {
 			WebElement web = ic_ClickNext.findElement(By.xpath(".//parent::*"));
 			boolean status = action.attributeValidation(web,"aria-disabled","false",5);
 			if(status) {

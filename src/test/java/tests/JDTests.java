@@ -58,7 +58,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("MAIN");
+		dataTable2.setPath("UPDATEFINAL");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -196,6 +196,7 @@ public class JDTests extends BaseTest {
 		ic_SendWishlistToEmail SendWishlistToEmail = new ic_SendWishlistToEmail(driver, dataTable2);
 		ICWishlistverification icEmailWishlistverification = new ICWishlistverification(driver, dataTable2);
 		RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
+		IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -435,6 +436,9 @@ public class JDTests extends BaseTest {
 				break;
 			case"verifyCart":
 				icCart.verifyCart(test1);
+				break;
+			case "Pagination":
+				pagination.paginate(test1);
 				break;
 		}
 	}
