@@ -58,7 +58,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("TA345");
+		dataTable2.setPath("TA348");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -155,6 +155,7 @@ public class JDTests extends BaseTest {
 		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver,dataTable2);
 		ic_Login ic_login = new ic_Login(driver,dataTable2);
 		ic_verifyDeliveryOptions icDeliveryOptionDisplay = new ic_verifyDeliveryOptions(driver,dataTable2);
+		ic_validateDifferentPaymentOptions icPaymentOptions = new ic_validateDifferentPaymentOptions(driver, dataTable2);
 		ic_invalidLoginCreds ic_invalidCredslogin = new ic_invalidLoginCreds(driver, dataTable2);
 		ic_LoginPasswordIsSecured icPasswordSecured = new ic_LoginPasswordIsSecured(driver, dataTable2);
 		ic_forgotPasswordLink icforgottenPassLink = new ic_forgotPasswordLink(driver, dataTable2);
@@ -439,6 +440,9 @@ public class JDTests extends BaseTest {
 				break;
 			case"verifyDeliveryOption":
 				icDeliveryOptionDisplay.validateDeliveryOptionsDisplays(test1, rowNumber);
+				break;
+			case"validatePaymentOption":
+				icPaymentOptions.validatePaymentOption(dataMap2.get(currentKeyWord+"++"),test1, rowNumber);
 				break;
 		}
 	}

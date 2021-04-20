@@ -299,7 +299,7 @@ public class Ic_Products {
 
 	void addToCartFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
 		if(quanity == 1) {
-			action.clickEle(productLink, "Navigate to product Details page", test);
+			action.click(productLink, "Navigate to product Details page", test);
 		}
 		//click on product name and enter listing page
 		//confirm that page has loaded
@@ -389,7 +389,6 @@ public class Ic_Products {
 									quantityExecu++;
 									switch(TypeOfOperation){
 									case "Add_To_Cart":
-										quantityExecu++;
 										addToCartFromProdDetailsPage(prod,waitTimeInSeconds,quantityExecu,test);
 										break;
 									case "Add_To_Wishlist":
