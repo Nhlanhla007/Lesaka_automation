@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
 
-@Listeners(listner.TestNGListener.class)
+//@Listeners(listner.TestNGListener.class)
 
 public class JDGTest_TestNG{
     public WebDriver driver;
@@ -30,65 +30,59 @@ public class JDGTest_TestNG{
     protected String browserName;
     protected String navigateURL;
     protected DataTable2 dataTable2 = null;
-    ExtentReportJD reportJD;
+    ExtentReportJD reportJD=new ExtentReportJD("IC");
     public String currentSuite;
     public String currentKeyWord;
     HashMap<String, Integer> occCount=null;
     int testcaseID;
-    Logger logger =null;
+
+
+    Logger logger = Log.getLogData(this.getClass().getSimpleName());
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 
-//    @BeforeTest
-    public void setUp() throws Exception {
-        startBrowserSession();
-        occCount=new HashMap<String, Integer>();
-        logger = Log.getLogData(this.getClass().getSimpleName());
-        reportJD=new ExtentReportJD("IC");
+    @BeforeSuite
+    public void callStart() throws Exception {
         dataTable2= new DataTable2();
         dataTable2.setPath("UPDATEFINAL");
         dataMap2=dataTable2.getExcelData();
     }
 
-//    public void testStart(){
-//
-//    }
+    @BeforeMethod
+    public void setUp() throws Exception {
+        startBrowserSession();
+        occCount=new HashMap<String, Integer>();
+    }
 
     @Test(testName ="31_Create_Customer_Account_from_Sales_Order" )
     public void Create_Customer_Account_from_Sales_Order() throws Exception {
         String testMethodName="Create_Customer_Account_from_Sales_Order";
-        setUp();
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
-        runAllKeys(TCIndex,test);
-//        closeReport();
+        runner(TCIndex,test);
     }
 
     @Test(testName ="26_Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
     public void Create_Sales_Order_Guest_User_Thorugh_Product_Search() throws Exception {
         String testMethodName="Create_Sales_Order_Guest_User_Thorugh_Product_Search";
-        setUp();
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
-        runAllKeys(TCIndex,test);
-
+        runner(TCIndex,test);
     }
 
     @Test(testName ="2_Create_new_customer_in_IC_with_ID_Number" )
     public void Create_new_customer_in_IC_with_ID_Number() throws Exception {
         String testMethodName="Create_new_customer_in_IC_with_ID_Number";
-//        setUp();
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
-        runAllKeys(TCIndex,test);
+        runner(TCIndex,test);
     }
 
     @Test(testName ="42_Click_the_IC_logo_to_go_home_page" )
     public void Click_the_IC_logo_to_go_home_page() throws Exception {
         String testMethodName="Click_the_IC_logo_to_go_home_page";
-//        setUp();
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
-        runAllKeys(TCIndex,test);
+        runner(TCIndex,test);
     }
     @Test(testName ="45_Validating_the_minimum_search_characters" )
     public void Validating_the_minimum_search_characters() throws Exception {
@@ -96,7 +90,21 @@ public class JDGTest_TestNG{
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         startBrowserSession();
-        runAllKeys(TCIndex,test);
+        runner(TCIndex,test);
+    }
+
+    public void runner(int TCIndex,ExtentTest test) throws Exception {
+        try {
+            runAllKeys(TCIndex,test);
+            endBrowserSession();
+        } catch (Exception e) {
+            e.printStackTrace();
+            String screenShot=GenerateScreenShot.getScreenShot(driver);
+            endBrowserSession();
+            ExtentTest node = test.createNode("Exception");
+            node.fail(e.getMessage()+node.addScreenCaptureFromPath(screenShot));
+            throw e;
+        }
     }
 
     public int getTestCaseIndex(String testMethodName){
@@ -430,11 +438,12 @@ public class JDGTest_TestNG{
     public void endBrowserSession() throws IOException {
         driver.close();
     }
-//    @AfterTest
-//    public void closeBrowser() throws IOException {
-//        endBrowserSession();
-//    }
-//
+    @AfterMethod
+    public void closeBrowser() throws IOException {
+        endBrowserSession();
+    }
+
+
     @AfterClass
     public void closeReport(){
         reportJD.endReport();

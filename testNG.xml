@@ -6,7 +6,9 @@
       <classes>
          <class name="tests.JDGTest_TestNG">
             <methods>
+               <include name="Create_new_customer_in_IC_with_ID_Number"/>
                <include name="Create_Sales_Order_Guest_User_Thorugh_Product_Search"/>
+               <include name="Click_the_IC_logo_to_go_home_page"/>
                <include name="Validating_the_minimum_search_characters"/>
             </methods>
          </class>

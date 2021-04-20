@@ -17,12 +17,12 @@ public class GenerateScreenShot {
         String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
         TakesScreenshot ts = (TakesScreenshot) driver;
         File source = ts.getScreenshotAs(OutputType.FILE);
-        String destination = "\\reports\\screenshots\\" + 1 + dateName + ".png";
+        String destination = helper+"\\reports\\screenshots\\" + 1 + dateName + ".png";
         File finalDestination = new File(destination);
         try {
             copyFile(source,finalDestination);
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
         return destination;
     }

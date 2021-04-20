@@ -147,7 +147,7 @@ public class ICDelivery {
             action.writeText(firstName,dataSheets.getValueOnCurrentModule("firstName"),"firstName",test);
             action.writeText(lastname,dataSheets.getValueOnCurrentModule("lastname"),"lastname",test);
             action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
-//            action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
+            action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
         }else if(userType.equalsIgnoreCase("Registered")) {
         	customerAddressDetails.navigateBackToCustomerDetails(userType,addressTypeICFont);
         	registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType,addressTypeICFont);
