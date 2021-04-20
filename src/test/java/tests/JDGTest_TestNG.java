@@ -8,6 +8,8 @@ import com.aventstack.extentreports.ExtentTest;
 import emailverification.ICGiftCardVerification;
 import ic_MagentoPageObjects.*;
 import org.apache.log4j.Logger;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Before;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 import utils.*;
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
+
+@Listeners(listner.TestNGListener.class)
 
 public class JDGTest_TestNG{
     public WebDriver driver;
@@ -36,15 +40,18 @@ public class JDGTest_TestNG{
 
 //    @BeforeTest
     public void setUp() throws Exception {
-        logger = Log.getLogData(this.getClass().getSimpleName());
         startBrowserSession();
+        occCount=new HashMap<String, Integer>();
+        logger = Log.getLogData(this.getClass().getSimpleName());
         reportJD=new ExtentReportJD("IC");
         dataTable2= new DataTable2();
         dataTable2.setPath("UPDATEFINAL");
         dataMap2=dataTable2.getExcelData();
-        occCount=new HashMap<String, Integer>();
-
     }
+
+//    public void testStart(){
+//
+//    }
 
     @Test(testName ="31_Create_Customer_Account_from_Sales_Order" )
     public void Create_Customer_Account_from_Sales_Order() throws Exception {
@@ -52,9 +59,8 @@ public class JDGTest_TestNG{
         setUp();
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
-//        startBrowserSession();
         runAllKeys(TCIndex,test);
-        endBrowserSession();
+//        closeReport();
     }
 
     @Test(testName ="26_Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
@@ -63,31 +69,26 @@ public class JDGTest_TestNG{
         setUp();
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
-//        startBrowserSession();
         runAllKeys(TCIndex,test);
-        endBrowserSession();
+
     }
 
     @Test(testName ="2_Create_new_customer_in_IC_with_ID_Number" )
     public void Create_new_customer_in_IC_with_ID_Number() throws Exception {
         String testMethodName="Create_new_customer_in_IC_with_ID_Number";
-        setUp();
+//        setUp();
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
-//        startBrowserSession();
         runAllKeys(TCIndex,test);
-        endBrowserSession();
     }
 
     @Test(testName ="42_Click_the_IC_logo_to_go_home_page" )
     public void Click_the_IC_logo_to_go_home_page() throws Exception {
         String testMethodName="Click_the_IC_logo_to_go_home_page";
-        setUp();
+//        setUp();
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
-//        startBrowserSession();
         runAllKeys(TCIndex,test);
-        endBrowserSession();
     }
     @Test(testName ="45_Validating_the_minimum_search_characters" )
     public void Validating_the_minimum_search_characters() throws Exception {
@@ -96,7 +97,6 @@ public class JDGTest_TestNG{
         int TCIndex=getTestCaseIndex(testMethodName);
         startBrowserSession();
         runAllKeys(TCIndex,test);
-        endBrowserSession();
     }
 
     public int getTestCaseIndex(String testMethodName){
@@ -142,6 +142,7 @@ public class JDGTest_TestNG{
 
     public void runKeyWord(String actionToRun, ExtentTest test) throws Exception {
         String moduleToRun=actionToRun;
+        ExtentTest test1=test.createNode(moduleToRun);
         IConnection ic=new IConnection(driver,dataTable2);
         Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
         ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);
@@ -188,7 +189,6 @@ public class JDGTest_TestNG{
         ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
         ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
         IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
-        ExtentTest test1=test.createNode(moduleToRun);
         int rowNumber=-1;
         if(dataMap2.containsKey(currentKeyWord+"++")) {
             rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
@@ -434,8 +434,9 @@ public class JDGTest_TestNG{
 //    public void closeBrowser() throws IOException {
 //        endBrowserSession();
 //    }
+//
     @AfterClass
-    public void tearDown(){
+    public void closeReport(){
         reportJD.endReport();
     }
 
