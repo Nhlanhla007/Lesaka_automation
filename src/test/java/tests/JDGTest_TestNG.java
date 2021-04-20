@@ -29,19 +29,17 @@ public class JDGTest_TestNG{
     protected ConfigFileReader configFileReader;
     protected String browserName;
     protected String navigateURL;
-    protected DataTable2 dataTable2 = null;
+    protected DataTable2 dataTable2;
     ExtentReportJD reportJD=new ExtentReportJD("IC");
     public String currentSuite;
     public String currentKeyWord;
     HashMap<String, Integer> occCount=null;
     int testcaseID;
-
-
     Logger logger = Log.getLogData(this.getClass().getSimpleName());
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 
-    @BeforeSuite
-    public void callStart() throws Exception {
+    @BeforeClass
+    public void once() throws Exception {
         dataTable2= new DataTable2();
         dataTable2.setPath("UPDATEFINAL");
         dataMap2=dataTable2.getExcelData();
@@ -49,8 +47,8 @@ public class JDGTest_TestNG{
 
     @BeforeMethod
     public void setUp() throws Exception {
-        startBrowserSession();
         occCount=new HashMap<String, Integer>();
+        startBrowserSession();
     }
 
     @Test(testName ="31_Create_Customer_Account_from_Sales_Order" )
@@ -98,11 +96,8 @@ public class JDGTest_TestNG{
             runAllKeys(TCIndex,test);
             endBrowserSession();
         } catch (Exception e) {
-            e.printStackTrace();
-            String screenShot=GenerateScreenShot.getScreenShot(driver);
             endBrowserSession();
-            ExtentTest node = test.createNode("Exception");
-            node.fail(e.getMessage()+node.addScreenCaptureFromPath(screenShot));
+            e.printStackTrace();
             throw e;
         }
     }
@@ -438,11 +433,6 @@ public class JDGTest_TestNG{
     public void endBrowserSession() throws IOException {
         driver.close();
     }
-    @AfterMethod
-    public void closeBrowser() throws IOException {
-        endBrowserSession();
-    }
-
 
     @AfterClass
     public void closeReport(){
