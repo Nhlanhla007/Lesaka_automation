@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class GenerateScreenShot {
 
-    public static String getScreenShot(WebDriver driver) throws IOException {
+    public static String getScreenShot(WebDriver driver) {
         File currentDirFile = new File(".");
         String helper = currentDirFile.getAbsolutePath();
         helper=helper.replace(".","").replaceAll("\"\"","/");
@@ -19,7 +19,11 @@ public class GenerateScreenShot {
         File source = ts.getScreenshotAs(OutputType.FILE);
         String destination = "\\reports\\screenshots\\" + 1 + dateName + ".png";
         File finalDestination = new File(destination);
-        copyFile(source,finalDestination);
+        try {
+            copyFile(source,finalDestination);
+        } catch (IOException e) {
+
+        }
         return destination;
     }
     public static void copyFile(File source,File dest) throws IOException {
