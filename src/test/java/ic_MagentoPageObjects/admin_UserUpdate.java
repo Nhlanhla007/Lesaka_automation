@@ -72,7 +72,7 @@ public class admin_UserUpdate {
 	@FindBy(xpath="//*[@id=\"tab_address\"]")
 	private WebElement admin_AddressBtn;
 					//*[@id="container"]/div/div/div[2]/div[2]/div/div[2]/fieldset/div[1]/button/span 
-	@FindBy(className ="edit-default-billing-address-button action-additional")//button[@title='Add New Customer'] /html[1]/body[1]/div[6]/aside[1]/div[2]/header[1]/div[1]/div[1]/button[1]/span[1]/span[1]
+	@FindBy(xpath = "//*[@class=\"edit-default-billing-address-button action-additional\"]/span")//button[@title='Add New Customer'] /html[1]/body[1]/div[6]/aside[1]/div[2]/header[1]/div[1]/div[1]/button[1]/span[1]/span[1]
 	private WebElement admin_billingEdit;	
 	
 	@FindBy(xpath="//*[@id=\"container\"]/div/div/div[2]/div[2]/div/div[2]/fieldset/div[3]/div/div[3]/table/tbody/tr[2]/td[10]/div/ul/li[1]/a")
@@ -218,10 +218,10 @@ public class admin_UserUpdate {
 	    	//Billing Address
 	    	if(billingAddress.equalsIgnoreCase("Yes")){
 	    		admin_billingEdit.click();
-	    		action.click(admin_billingEdit, "Edit", test);
-	    		action.javaScriptClick(admin_billingEdit, "Billing edit clicked", test);
+	    		//action.click(admin_billingEdit, "Edit", test);
+	    		//action.javaScriptClick(admin_billingEdit, "Billing edit clicked", test);
 	    		
-	    		driver.findElement(By.xpath("//*[@id=\"container\"]/div/div/div[2]/div[3]/div/div[2]/fieldset/div[1]/button/span")).click();
+	    		//driver.findElement(By.xpath("//*[@id=\"container\"]/div/div/div[2]/div[3]/div/div[2]/fieldset/div[1]/button/span")).click();
 	    		String streetAdressText = action.getAttribute(admin_BillingStreetAddress, "value");
 	    		if(billing_streetAddress.equalsIgnoreCase("yes")){
 		    		

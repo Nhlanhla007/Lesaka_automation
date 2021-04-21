@@ -185,7 +185,7 @@ public class ic_NewAccountCreation {
 			action.writeText(User_Firstname, firstName, "First name", test);
 			action.writeText(User_Lastname, lastName, "Last Name", test);
 			action.writeText(User_EmailId, emailAddress, "Email", test);
-			action.writeText(telephoneNumber, telephone, "Telephone", test);
+				//action.writeText(telephoneNumber, telephone, "Telephone", test);
 			action.writeText(taxVatNumber, taxVatNumbe, "Tax/Vat", test);
 			action.writeText(User_Password, password, "Password", test);
 

@@ -540,7 +540,7 @@ public class SAPCustomerRelated {
 		}
 	}
 	public void adr6Data(String ADRCNumber) throws SQLException {
-		String query = "SELECT * FROM SAPEQ1.ADR6 WHERE ADDRNUMBER = '"+ADRCNumber+"' AND FLG_NOUSE = ''";
+		String query = "SELECT * FROM SAPEQ1.ADR6 WHERE ADDRNUMBER = '"+ADRCNumber+"' AND FLG_NOUSE = ''"; //NEED TO CHANGE SOMETHING IN THE QUERY
 		ResultSet set = hn.ExecuteQuery(query);
 		int rowsCountReturned = hn.GetRowsCount(set);
 		for(adrc6Columns but000 : adrc6Columns.values()) {
