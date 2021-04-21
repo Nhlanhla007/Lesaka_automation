@@ -44,6 +44,7 @@ public class ic_Login {
 		@FindBy(xpath = "//*[@id='pass']")
 		WebElement ic_Password;
 		@FindBy(xpath = "//*[@id=\"send2\"]/span")
+		
 		WebElement ic_SigninBtn;
 
 		//div[contains(text(),'Your account sign-in was incorrect. Please try again.')]Your account sign-in was incorrect. Please try again.
@@ -88,7 +89,7 @@ public class ic_Login {
 		public List<String> userCreds(List<String> userCreds){
 			return userCreds;
 		}	
-		
+
 		public void logout(ExtentTest test,HashMap<String, ArrayList<String>> input,int rowNumber) throws Exception {
 			action.click(ic_myAccountButton, "My account", test);
 			//action.mouseover(logout, "logout");
@@ -98,6 +99,4 @@ public class ic_Login {
 //			action.explicitWait(7000);
 			//Login_ic(input, test, rowNumber);
 		}
-		
-
 }

@@ -94,11 +94,10 @@ import utils.hana;
 			 Primarykey key = Primarykey.VBELN;
 			 
 			//Expected al details to be validated--------------------------------------
-			String SAP_orderNo=ic_MagentoOrderSAPnumber.OrderSAPnumber;//"0005233074";// sap order number genrator
-			String ExpPurchaseOrderNo =ic_PayUPayment.Oderid; //from IC paymentPAYU confirmation order number.
 			String cartSum = dataTable2.getValueOnOtherModule("ClearCart", "CartTotal", 0);
+			String SAP_orderNo=dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber","OrderSAPnumber",0);
+			String ExpPurchaseOrderNo =dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);
 			String ExpGrandTotal =String.valueOf(cartSum);//comes from cart total
-			
 			List<String> ExpProductName =new ArrayList<>();
 			Map<String,List<String>> AllICprducts = Ic_Products.productData;
 			for(Map.Entry map : AllICprducts.entrySet()) {
@@ -119,7 +118,7 @@ import utils.hana;
 			schemas Schema =schemas.SAPEQ1;
 			//"Select * from SAPEQ1.VBAK FULL OUTER JOIN SAPEQ1.VBAP ON SAPEQ1.VBAK.VBELN=SAPEQ1.VBAP.VBELN WHERE SAPEQ1.VBAK.VBELN ='0005231326' ";
 			String Query= "Select * from "+Schema+"."+Table1+" FULL OUTER JOIN "+Schema+"."+Table2+" ON "+Schema+"."+Table1+"."+key+" = "+Schema+"."+Table2+"."+key+" WHERE "+Schema+"."+Table1+"."+key+" = '"+SAP_orderNo+"' ";
-			//String Query= "SELECT * FROM SAPEQ1."+Table+" WHERE "+key+" = '"+SAP_orderNo+"'";
+//			String Query= "SELECT * FROM SAPEQ1."+Table1+" WHERE "+key+" = '"+SAP_orderNo+"'";
 			System.out.println("Query:"+Query);
 			hana hn =new hana(TypeOfDB,Server,Port,Username,Password);
 			ResultSet rs = hn.ExecuteQuery(Query);
@@ -194,7 +193,8 @@ import utils.hana;
 			     System.out.println("BP number is  : "+allBPnumber);
 			     BPnumber = String.join("", allBPnumber).trim();
 			     BPnumber=BPnumber.replace(" ", "");			     
-			     input.get("BP_Number").set(rowNumber,BPnumber);
+			     //commenting this line but will check for other testcase dependencies
+//			     input.get("BP_Number").set(rowNumber,BPnumber);
 			}
 			
 			 

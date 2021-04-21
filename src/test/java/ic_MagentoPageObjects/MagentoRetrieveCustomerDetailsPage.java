@@ -20,12 +20,13 @@ public class MagentoRetrieveCustomerDetailsPage {
 
 	WebDriver driver;
 	Action action;
-
+	DataTable2 dataTable2;
 
 	public MagentoRetrieveCustomerDetailsPage(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
+		this.dataTable2 = dataTable2;
 	}
 
 	@FindBy(xpath = "//*[@class=\"admin__menu\"]/ul[@id='nav']/li[@id=\"menu-magento-customer-customer\"]/a/span[contains(text(),\"Customers\")]")
@@ -103,8 +104,23 @@ public class MagentoRetrieveCustomerDetailsPage {
 	}
 
 	public void retrieveCustomerDetails(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException, InterruptedException {
-		String customerEmail = input.get("customerEmail").get(rowNumber);
-		String webSite = input.get("WebSite").get(rowNumber);
+		String typeOfOperation = dataTable2.getValueOnOtherModule("Magento_UserInfoVerification", "Data Source", 0);
+		//need to add distinction for
+		String customerEmail;
+		if(typeOfOperation.equalsIgnoreCase("Create Account")) {
+		customerEmail = dataTable2.getValueOnOtherModule("accountCreation", "emailAddress", 0);//input.get("customerEmail").get(rowNumber);
+		}//else if(typeOfOperation.equalsIgnoreCase("Create Account Magento Admin")) {
+			//customerEmail = dataTable2.getValueOnOtherModule("CreateaccountBackend", "Email", 0);
+		else if(typeOfOperation.equalsIgnoreCase("Update Account")) {
+			customerEmail = dataTable2.getValueOnOtherModule("ICUpdateUser", "email_output", 0);
+		}else if(typeOfOperation.equalsIgnoreCase("Registered customer from sales order")){
+			customerEmail = dataTable2.getValueOnOtherModule("ic_login", "Username", 0);
+		}else if(typeOfOperation.equalsIgnoreCase("Guest Customer Creation")){
+			customerEmail = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0);
+		}else {
+			customerEmail = "";
+		}
+		String webSite = dataTable2.getValueOnOtherModule("accountCreation", "WebSite", 0);//input.get("WebSite").get(rowNumber);
 		System.out.println(customerEmail);
 		navigateToCustomer(test);
 		System.out.println("Hello from " + customerEmail);

@@ -150,6 +150,7 @@ public class SAPCustomerRelated {
 		String updatedMagentoBillingEmailFlag = null;
 		String updatedMagentoBillingEmail = null;		
 		String currentCustomerMagentoBillingEmail = null;
+		
 		if(typeOfSAPValidation.equalsIgnoreCase("Customer Update")) {
 			updateEmailFlag = mySheets.get(2).get("email").get(sheetRow4);
 			updateEmail = mySheets.get(2).get("email_output").get(sheetRow4);
@@ -191,7 +192,7 @@ public class SAPCustomerRelated {
 		String SAPorderNumber=bpPartnerBumber;
 		String bpNumber1=bpPartnerBumber;
 		//If not partner number is returned throw an error
-		if(bpNumber1 == null) {
+		if(bpNumber1 == null | bpNumber1.equals("")) {
 			throw new Exception("Partner Number is not generated");
 		}
 		
@@ -199,6 +200,8 @@ public class SAPCustomerRelated {
 			taxVatNumberFlag = mySheets.get(2).get("taxVat").get(sheetRow4);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			taxVatNumberFlag = "yes";
+		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Update Magento Admin")) {
+			taxVatNumberFlag = dataTable2.getValueOnOtherModule("adminUserUpdate", "taxVat", 0);
 		}
 		else {
 			taxVatNumberFlag = "No";
@@ -467,6 +470,7 @@ public class SAPCustomerRelated {
 		if(typeValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			String sapOrderNumeber = dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber", "OrderSAPnumber", 0);
 			String Query = "select KUNNR from SAPEQ1.VBAK where VBELN = '"+sapOrderNumeber+"'";
+			System.out.println("Query:"+Query);
 			ResultSet rs1 = hn.ExecuteQuery(Query);
 			hn.GetRowsCount(rs1);
 			newBpNumber = hn.GetRowdataByColumnName(rs1, "KUNNR").get(0);
