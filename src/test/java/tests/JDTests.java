@@ -76,7 +76,6 @@ public class JDTests extends BaseTest {
 
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException, InterruptedException {
-
 		int numberOfTestCases =singleSuiteData.get("Execute").size();
 		for(int i=0;i<numberOfTestCases;i++){
 			System.out.println("TestCaseNumber:"+i);
@@ -120,6 +119,8 @@ public class JDTests extends BaseTest {
 				} catch (Exception e) {
 					logger.info(e.getMessage());
 					e.printStackTrace();
+					e.getCause();
+					System.out.println(e.getMessage());
 					String screenShot=GenerateScreenShot.getScreenShot(driver);
 					ExtentTest node = test.createNode("Exception");
 					node.fail(e.getMessage()+node.addScreenCaptureFromPath(screenShot));
@@ -147,7 +148,6 @@ public class JDTests extends BaseTest {
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver,dataTable2);
 		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
 		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver,dataTable2);
-		
 		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver,dataTable2);
 		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver,dataTable2);
 		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver,dataTable2);
@@ -195,6 +195,7 @@ public class JDTests extends BaseTest {
 		IC_RemoveItemsFromCart removeItemsFromCart = new IC_RemoveItemsFromCart(driver, dataTable2);
 		ic_SendWishlistToEmail SendWishlistToEmail = new ic_SendWishlistToEmail(driver, dataTable2);
 		ICWishlistverification icEmailWishlistverification = new ICWishlistverification(driver, dataTable2);
+		RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -422,6 +423,18 @@ public class JDTests extends BaseTest {
 				break;
 			case "icEmailWishlistverification":
 				icEmailWishlistverification.icWishlistVerificationSender(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "RedirectToProdDetailPageFromCart":
+				redirectAndVerify.verifyNavigationToProductDetailPageFromCart(test1);
+				break;
+			case "giftCardWithInvalidCouponCode":
+				icRedeemGiftCard.giftCardWithInvalidCouponCode(test1);
+				break;
+			case "ic_logout":
+				ic_login.logout(test1,dataMap2.get("ic_login++"),rowNumber);
+				break;
+			case"verifyCart":
+				icCart.verifyCart(test1);
 				break;
 		}
 	}

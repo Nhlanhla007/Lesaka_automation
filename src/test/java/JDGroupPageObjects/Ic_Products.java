@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -74,6 +75,9 @@ public class Ic_Products {
 
 	@FindBy(xpath = "//body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[3]/nav[1]/ul[1]/li[1]/ul[1]/li[1]/ul[1]/li[15]/a[1]/span[1]")
 	WebElement downloads;
+
+	@FindBy(xpath = "//*[@class=\"box-tocart\"]/div/span")
+	WebElement productOutOfStock;
 
 	List<WebElement> listElements;
 
@@ -199,11 +203,13 @@ public class Ic_Products {
 			case "Add_To_Cart":
 				cartValidation.iCcartVerification2(productsInCart, test);
 				break;
+			case "Validate_Out_Of_Stock":
+				break;
 			default:
 				cartValidation.iCcartVerification2(productsInCart, test);
 				break;
 			}
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.info(e.getMessage());
@@ -293,20 +299,25 @@ public class Ic_Products {
 
 	void addToCartFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
 		if(quanity == 1) {
-			action.clickEle(productLink, "Navigate to product listing page", test);
+			action.clickEle(productLink, "Navigate to product Details page", test);
 		}
 		//click on product name and enter listing page
 		//confirm that page has loaded
-		
-		//ADD PROPER THAT WAIT THAT CHECKS AND WAITS UNTIL THE BUTTON SAYS ADD TO CART
-		action.explicitWait(7000);
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);        
+        boolean isPresent = driver.findElements(By.id("product-addtocart-button")).size() > 0;
+        if(isPresent) {
 		productDetailsPageAddToCartButton.click();
 		cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds), test);
+		action.explicitWait(8000);
+        }else {
+        	String outOfStockMessage = productOutOfStock.getText();
+        	action.CompareResult("Product is out of stock", "Currently Out of Stock", outOfStockMessage, test);
+        }
 		//click add to cart button
 	}
 	void addToWishlistFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
 		if(quanity == 1) {
-			action.clickEle(productLink, "Navigate to product listing page", test);
+			action.clickEle(productLink, "Navigate to product Details page", test);
 		}
 		//click on product name and enter listing page
 		//confirm that page has loaded
@@ -394,6 +405,9 @@ public class Ic_Products {
 									   //compareProducts.validateAddedProductsCompare(test, prod);
 									  // compareProducts.clearAllProduct(test, prod);
 									   break;
+									case "Validate_Out_Of_Stock":
+										addToCartFromProdDetailsPage(prod,waitTimeInSeconds,quantityExecu,test);
+										break;
 								}
 
 								}

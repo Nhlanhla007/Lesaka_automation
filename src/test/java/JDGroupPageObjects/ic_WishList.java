@@ -41,9 +41,8 @@ public class ic_WishList {
 					  action.CompareResult("Name : " + nameOfProduct +" present in wishlist", (String)selectedProducts.getKey(), nameOfProduct, test);
     				  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
 	    		if(selectedProducts.getKey().equals(nameOfProduct)) {
-					  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
 					  action.CompareResult("Name : " + nameOfProduct +" present in wishlist", (String)selectedProducts.getKey(), nameOfProduct, test);
-					}
+				}
 	    	}
         }
     }
