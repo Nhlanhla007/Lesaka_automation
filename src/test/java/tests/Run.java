@@ -55,8 +55,8 @@ public class Run {
                 includeName.setValue(suiteIC.get("Test Case Name").get(i));
                 include.setAttributeNode(includeName);
                 methods.appendChild(include);
-                System.out.println("include");
-                System.out.println(suiteIC.get("Test Case Name").get(i));
+//                System.out.println("include");
+//                System.out.println(suiteIC.get("Test Case Name").get(i));
             }
         }
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -66,13 +66,13 @@ public class Run {
         DOMSource domSource = new DOMSource(document);
         StreamResult streamResult = new StreamResult(new File("testNG.xml"));
         transformer.transform(domSource, streamResult);
-        System.out.println("Done creating XML File");
-        Thread.sleep(10000);
-        TestNG runner=new TestNG();
-        List<String> suitefiles=new ArrayList<String>();
-        suitefiles.add("testNG.xml");
-        runner.setTestSuites(suitefiles);
-        runner.run();
+//        System.out.println("Done creating XML File");
+//        Thread.sleep(10000);
+//        TestNG runner=new TestNG();
+//        List<String> suitefiles=new ArrayList<String>();
+//        suitefiles.add("testNG.xml");
+//        runner.setTestSuites(suitefiles);
+//        runner.run();
     }
 
 
