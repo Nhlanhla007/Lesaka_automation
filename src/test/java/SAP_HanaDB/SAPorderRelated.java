@@ -159,12 +159,12 @@ import utils.hana;
 					float eachproductSumation = eachOrder*eachPrice;
 					Totalsum = Totalsum+eachproductSumation;
 				}
-//				ActualPrice = Float.toString(Totalsum);
-//				if(Float.parseFloat(ActualPrice)>=Float.parseFloat(ExpGrandTotal)){
-//					action.CompareResult(" Total Cart Price for all products in SAP DB "+"ActualPrice :"+ActualPrice+" Expected :"+ExpGrandTotal, "True", "True", test);
-//				}else{
-//					action.CompareResult(" Total Cart Price for all products in SAP DB "+"ActualPrice :"+ActualPrice+" Expected :"+ExpGrandTotal, "True", "False", test);
-//				}
+				ActualPrice = Float.toString(Totalsum);
+				if(Float.parseFloat(ActualPrice)>=Float.parseFloat(ExpGrandTotal)){
+					action.CompareResult(" Total Cart Price for all products in SAP DB "+"ActualPrice :"+ActualPrice+" Expected :"+ExpGrandTotal, "True", "True", test);
+				}else{
+					action.CompareResult(" Total Cart Price for all products in SAP DB "+"ActualPrice :"+ActualPrice+" Expected :"+ExpGrandTotal, "True", "False", test);
+				}
 				
 				
 				
