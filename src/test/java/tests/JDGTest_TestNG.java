@@ -47,6 +47,7 @@ public class JDGTest_TestNG{
 
     @BeforeMethod
     public void setUp() throws Exception {
+        GenerateEmail.errorFlag=false;
         occCount=new HashMap<String, Integer>();
         startBrowserSession();
     }
@@ -94,6 +95,9 @@ public class JDGTest_TestNG{
         try {
             runAllKeys(TCIndex,test);
             endBrowserSession();
+            if(GenerateEmail.errorFlag=true){
+                throw new Exception();
+            }
         } catch (Exception e) {
             endBrowserSession();
             e.printStackTrace();

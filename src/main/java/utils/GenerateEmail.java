@@ -29,6 +29,7 @@ import Logger.Log;
 import customreports.TestSuites;
 
 public class GenerateEmail {
+	public static boolean errorFlag;
 	static Properties mailServerProperties;
 	static Session getMailSession;
 	static MimeMessage generateMailMessage;

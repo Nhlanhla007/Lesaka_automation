@@ -1609,6 +1609,7 @@ public class Action {
 			node.pass("Successfully Verified : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual, MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
 		} else {
 			node.fail("Error found  : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual, MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
+			GenerateEmail.errorFlag=true;
 		}
 	}
 
