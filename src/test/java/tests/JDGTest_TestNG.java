@@ -87,7 +87,6 @@ public class JDGTest_TestNG{
         String testMethodName="Validating_the_minimum_search_characters";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
-        startBrowserSession();
         runner(TCIndex,test);
     }
 

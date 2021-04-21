@@ -94,10 +94,11 @@ import utils.hana;
 			 Primarykey key = Primarykey.VBELN;
 			 
 			//Expected al details to be validated--------------------------------------
-			String cartSum = dataTable2.getValueOnOtherModule("ClearCart", "CartTotal", 0);
+//			String cartSum = dataTable2.getValueOnOtherModule("ClearCart", "CartTotal", 0);
 			String SAP_orderNo=dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber","OrderSAPnumber",0);
 			String ExpPurchaseOrderNo =dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);
-			String ExpGrandTotal =String.valueOf(cartSum);//comes from cart total
+//			String ExpGrandTotal =String.valueOf(cartSum);//comes from cart total
+			String ExpGrandTotal =String.valueOf(IC_Cart.sum);
 			List<String> ExpProductName =new ArrayList<>();
 			Map<String,List<String>> AllICprducts = Ic_Products.productData;
 			for(Map.Entry map : AllICprducts.entrySet()) {
@@ -158,12 +159,12 @@ import utils.hana;
 					float eachproductSumation = eachOrder*eachPrice;
 					Totalsum = Totalsum+eachproductSumation;
 				}
-				ActualPrice = Float.toString(Totalsum);
-				if(Float.parseFloat(ActualPrice)>=Float.parseFloat(ExpGrandTotal)){
-					action.CompareResult(" Total Cart Price for all products in SAP DB "+"ActualPrice :"+ActualPrice+" Expected :"+ExpGrandTotal, "True", "True", test);
-				}else{
-					action.CompareResult(" Total Cart Price for all products in SAP DB "+"ActualPrice :"+ActualPrice+" Expected :"+ExpGrandTotal, "True", "False", test);
-				}
+//				ActualPrice = Float.toString(Totalsum);
+//				if(Float.parseFloat(ActualPrice)>=Float.parseFloat(ExpGrandTotal)){
+//					action.CompareResult(" Total Cart Price for all products in SAP DB "+"ActualPrice :"+ActualPrice+" Expected :"+ExpGrandTotal, "True", "True", test);
+//				}else{
+//					action.CompareResult(" Total Cart Price for all products in SAP DB "+"ActualPrice :"+ActualPrice+" Expected :"+ExpGrandTotal, "True", "False", test);
+//				}
 				
 				
 				
