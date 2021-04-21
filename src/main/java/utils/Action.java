@@ -69,8 +69,6 @@ public class Action {
 		return destination;
 	}
 	public void copyFile(File source,File dest){
-
-
 		try {
 //			File file1 = new File(source);
 //			File file2 = new File(dest);

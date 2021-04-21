@@ -95,7 +95,8 @@ public class JDGTest_TestNG{
         try {
             runAllKeys(TCIndex,test);
             endBrowserSession();
-            if(GenerateEmail.errorFlag=true){
+            test.getStatus();
+            if(!test.getStatus().toString().toLowerCase().equals("pass")){
                 throw new Exception();
             }
         } catch (Exception e) {
