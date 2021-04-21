@@ -17,14 +17,15 @@ public class GenerateScreenShot {
         String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
         TakesScreenshot ts = (TakesScreenshot) driver;
         File source = ts.getScreenshotAs(OutputType.FILE);
-        String destination =helper+"Reports\\screenshots\\" + 1 + dateName + ".png";
-        File finalDestination = new File(destination);
+        String destination1 =helper+"Reports\\screenshots\\" + 1 + dateName + ".png";
+        String destination2 ="screenshots\\" + 1 + dateName + ".png";
+        File finalDestination = new File(destination1);
         try {
             copyFile(source,finalDestination);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return destination;
+        return destination2;
     }
     public static void copyFile(File source,File dest) throws IOException {
             FileInputStream fis = new FileInputStream(source);

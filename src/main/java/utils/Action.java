@@ -109,7 +109,7 @@ public class Action {
 		ExtentTest node=test.createNode("Clicked Element: "+ name);
 
 		try{
-			//String screenShot=getScreenShot(name);
+			//String screenShot=GenerateScreenShot.getScreenShot(driver);
 			if (elementAttr.getClass().getName().contains("By")) {
 				JavascriptExecutor jse = (JavascriptExecutor) driver;
 				jse.executeScript("arguments[0].style.border='2px solid red'", driver.findElement((By) elementAttr));
@@ -122,7 +122,7 @@ public class Action {
 			}
 			if(name != null){
 				logger.info("Clicked Element: "+ name);
-				String screenShot=getScreenShot(name);
+				String screenShot=GenerateScreenShot.getScreenShot(driver);
 				node.pass("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShot));
 
 			}
@@ -272,21 +272,21 @@ public class Action {
 				JavascriptExecutor executor = (JavascriptExecutor) driver;
 				executor.executeScript("arguments[0].click();", element);
 				logger.info("Clicked Element: "+ name);
-				String screenShot=getScreenShot(name);
+				String screenShot=GenerateScreenShot.getScreenShot(driver);
 				node.pass("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShot));
 
 			} else {
 				JavascriptExecutor executor = (JavascriptExecutor) driver;
 				executor.executeScript("arguments[0].click();", elementAttr);
 				logger.info("Clicked Element: "+ name);
-				String screenShot=getScreenShot(name);
+				String screenShot=GenerateScreenShot.getScreenShot(driver);
 				node.pass("Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShot));
 			}
 			logger.info("Clicked Element: "+ name);
 
 		} catch(Throwable e){
 			logger.info("an error has occured : "+ e.getMessage());
-			String screenShot=getScreenShot(name);
+			String screenShot=GenerateScreenShot.getScreenShot(driver);
 			node.fail(" failed to Clicked Element: "+ name+node.addScreenCaptureFromPath(screenShot));
 
 		}
@@ -479,7 +479,7 @@ public class Action {
 	public <T> boolean elementExistsPopUpMessage(T elementAttr, long time,String name,ExtentTest test) {
 		ExtentTest node = test.createNode(name);
 		try {
-			String screenShot=getScreenShot(name);
+			String screenShot=GenerateScreenShot.getScreenShot(driver);
 			WebDriverWait wait = new WebDriverWait(driver, time);
 			if (elementAttr.getClass().getName().contains("By")) {
 				By loc = (By) elementAttr;
@@ -1639,7 +1639,7 @@ public class Action {
 		ExtentTest node = test.createNode("Clicked Element: " + name);
 		try {
 
-			String screenShot=getScreenShot(name);
+			String screenShot=GenerateScreenShot.getScreenShot(driver);
 			node.fail(name +node.addScreenCaptureFromPath(screenShot));
 		} catch (IOException e) {
 			node.fail(e.getMessage());
