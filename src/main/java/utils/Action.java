@@ -315,7 +315,7 @@ public class Action {
 			}
 			if (name != null) {
 				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-				String screenShot = getScreenShot(dateName);
+				String screenShot = GenerateScreenShot.getScreenShot(driver);
 				node.pass("Writing text: " + text + " to Element: " + node.addScreenCaptureFromPath(screenShot));
 			}
 		} catch (Exception e) {
@@ -1582,7 +1582,7 @@ public class Action {
 	public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 		ExtentTest node = test.createNode("Has next Page louded? " + name);
 		try {
-			String screenShot = getScreenShot(name);
+			String screenShot = GenerateScreenShot.getScreenShot(driver);
 			if (driver.getCurrentUrl().contains(urlFragment)) {
 
 				node.pass("Page has been loaded: " + name + node.addScreenCaptureFromPath(screenShot));
@@ -1603,7 +1603,7 @@ public class Action {
 	public void CompareResult(String TestDescription,String Exp, String Actual,ExtentTest test) throws IOException {
 		ExtentTest node = test.createNode("Verify " + TestDescription);
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-		String screenShot = getScreenShot(dateName);
+		String screenShot = GenerateScreenShot.getScreenShot(driver);
 		if (Actual.contains(Exp)) {
 			System.out.println("INSIDE COMPARE RESULT expected : " + Exp + " " + Actual);
 			node.pass("Successfully Verified : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual, MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
@@ -1615,7 +1615,7 @@ public class Action {
 	public <T> boolean elementExistWelcome(T elementAttr, long time, String name, ExtentTest test){
 		ExtentTest node = test.createNode(name);
 		try {
-			String screenShot = getScreenShot(name);
+			String screenShot = GenerateScreenShot.getScreenShot(driver);
 			WebDriverWait wait = new WebDriverWait(driver, time);
 			if (elementAttr.getClass().getName().contains("By")){
 				By loc = (By) elementAttr;
@@ -1678,7 +1678,7 @@ public class Action {
 		ExtentTest node = test.createNode("Clicked Element: " + name);
 		System.out.println(elements.size());
 		try {
-			String screenShot = getScreenShot(name);
+			String screenShot = GenerateScreenShot.getScreenShot(driver);
 			if (elements.size() >= 2) {
 				node.fail("More than one element was returned" + name + node.addScreenCaptureFromPath(screenShot));
 			} else if (elements.size() == 1) {
