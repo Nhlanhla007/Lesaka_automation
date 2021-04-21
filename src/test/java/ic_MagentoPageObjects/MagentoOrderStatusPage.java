@@ -101,8 +101,7 @@ public class MagentoOrderStatusPage {
 		} 
 	}
 	
-	public void viewOrderDetails(ExtentTest test) {
-		try {
+	public void viewOrderDetails(ExtentTest test) throws IOException, InterruptedException {
 			confirmRows(magentoTableRecords, test);
 			if (magentoTableRecords.size() == 1) {
 				action.click(viewOrderDetails, "Order Status", test);
@@ -111,17 +110,10 @@ public class MagentoOrderStatusPage {
 			} else {
 				action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
 	}
 	
-	public void orderStatusCheck(String orderStatus, ExtentTest test) {
-	try {
+	public void orderStatusCheck(String orderStatus, ExtentTest test) throws IOException {
 		action.CompareResult("Order Status", orderStatus, magentoOrderStatus.getText(), test);
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
 	}
 	
 	@Step("Navigates to the order page")
