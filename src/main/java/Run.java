@@ -27,7 +27,10 @@ public class Run {
         document.appendChild(root);
         DataTable2 dataTable2;
         dataTable2= new DataTable2();
-        dataTable2.setPath("UPDATEFINAL");
+
+        String moduleName="UPDATEFINAL";
+
+        dataTable2.setPath(moduleName);
         LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
         dataMap2=dataTable2.getExcelData();
         LinkedHashMap<String, ArrayList<String>> suiteIC = dataMap2.get("IC");
@@ -37,6 +40,14 @@ public class Run {
         testNameAttr.setValue("JDGTestIC");
         test.setAttributeNode(testNameAttr);
         root.appendChild(test);
+        Element parameter1 = document.createElement("parameter");
+        Attr parameter1Attr1 = document.createAttribute("name");
+        Attr parameter1Attr2 = document.createAttribute("value");
+        parameter1Attr1.setValue("moduleName");
+        parameter1.setAttributeNode(parameter1Attr1);
+        parameter1Attr2.setValue(moduleName);
+        parameter1.setAttributeNode(parameter1Attr2);
+        test.appendChild(parameter1);
         Element classes = document.createElement("classes");
         test.appendChild(classes);
         Element className = document.createElement("class");
@@ -65,12 +76,6 @@ public class Run {
         StreamResult streamResult = new StreamResult(new File("testNG.xml"));
         transformer.transform(domSource, streamResult);
         System.out.println("Done creating XML File");
-        Thread.sleep(10000);
-//        TestNG runner=new TestNG();
-//        List<String> suitefiles=new ArrayList<String>();
-//        suitefiles.add("testNG.xml");
-//        runner.setTestSuites(suitefiles);
-//        runner.run();
     }
 
 

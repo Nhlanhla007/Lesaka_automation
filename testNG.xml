@@ -3,11 +3,80 @@
   SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="JDGTestIC">
    <test name="JDGTestIC">
+      <parameter name="moduleName" value="UPDATEFINAL"/>
       <classes>
          <class name="tests.JDGTest_TestNG">
             <methods>
+               <include name="Create_new_customer_in_IC_with_VAT_Number"/>
+               <include name="Create_new_customer_in_IC_with_ID_Number"/>
+               <include name="Create_new_customer_in_IC_with_Passport"/>
+               <include name="Create_new_customer_in_IC_with_with_Newsletter"/>
+               <include name="Create_new_customer_in_IC_with_without_Newsletter"/>
+               <include name="Create_new_customer_in_Magento_admin"/>
+               <include name="Create_new_customer_in_Magento_admin_with_ID_Number"/>
+               <include name="Create_new_customer_in_Magento_admin_with_Passport"/>
+               <include name="Update_customer_information_on_Magento"/>
+               <include name="Updating_customer_first_name_on_Magento"/>
+               <include name="Updating_customer_last_name_on_Magento"/>
+               <include name="Updating_customers_email_on_Magento"/>
+               <include name="Updating_customers_billing_address_on_Magento"/>
+               <include name="Updating_customers_VatNo_on_Magento"/>
+               <include name="Update_customer_information_on_IC"/>
+               <include name="Updating_customer_first_name_on_IC"/>
+               <include name="Updating_customer_last_name_on_IC"/>
+               <include name="Updating_customers_email_on_IC"/>
+               <include name="Updating_customers_billing_address_on_IC"/>
+               <include name="Updating_customers_VatNo_on_IC"/>
+               <include name="Create_New_Customer_Validate_Registration_Form_validate_Existing_Account"/>
+               <include name="Create_New_Customer_Validate_Registration_Form_Password_Field"/>
+               <include name="Create_New_Customer_Validate_Registration_Form_SAID_Field_With_Less_than_13_Digits"/>
+               <include name="Create_New_Customer_Validate_Registration_Form_SAID_Field_With_More_than_13_Digits"/>
+               <include name="Create_New_Customer_Validate_Registration_Form_Incorrect_SAID"/>
                <include name="Create_Sales_Order_Guest_User_Thorugh_Product_Search"/>
+               <include name="Create_Sales_Order_Guest_User_Through_Product_Category_Search_Single_Product"/>
+               <include name="Create_Sales_Order_Guest_User_Through_Product_Category_Search_Multiple_product"/>
+               <include name="Magneto_Sales_Order_Guest_User_Payment_PayU"/>
+               <include name="Magento_Sales_Order_Guest_User_Payment_Cash_Deposit"/>
+               <include name="Create_Customer_Account_from_Sales_Order"/>
+               <include name="Gift_Card_Purchase_Guest_User"/>
+               <include name="Gift_Card_Purchase_Registered_user"/>
+               <include name="Gift_Card_Reuse"/>
+               <include name="Gift_Card_Redeem_Guest_User"/>
+               <include name="Gift_Card_Redeem_Registered_user"/>
+               <include name="Gift_Card_Report_New_Purchase"/>
+               <include name="Gift_Card_Report_Used_Card"/>
+               <include name="Sales_order_with_registered_user_add_new_address"/>
+               <include name="Sales_order_with_registered_user_existing_address"/>
+               <include name="Sales_order_with_registered_user_with_Existing_Address_addres_adding_New_Address"/>
+               <include name="Click_the_IC_logo_to_go_home_page"/>
+               <include name="Verify_popular_search_in_IC"/>
+               <include name="search_items_to_return_invalid_search"/>
                <include name="Validating_the_minimum_search_characters"/>
+               <include name="Credit_Loan_Quick_App_Create_and_Verify_Magento"/>
+               <include name="CreditAppEmploymentDetails"/>
+               <include name="Subscriber_Newsletter_Valid_Duplicate_Email_address"/>
+               <include name="Sort_Products_By_Name"/>
+               <include name="Sort_Products_By_Price_High_To_Low"/>
+               <include name="Sort_Products_By_Price_Low_To_High"/>
+               <include name="Wish_List_Clear_Wish_List_with_default_product"/>
+               <include name="Wish_List_Clear_Wish_List_with_added_product"/>
+               <include name="Wish_List_Validate_Product_can_be_added_to_cart_from_Wish_list"/>
+               <include name="Wish_List_Validate_Multiple_Products_can_be_added_to_Wish_List"/>
+               <include name="Wish_List_Validate_Add_All_to_Cart"/>
+               <include name="Clear_cart"/>
+               <include name="Cart_Add_the_same_Item_multiple_Times_and_Verify"/>
+               <include name="Cart_Add_One_Item_to_the_Cart_and_Verify"/>
+               <include name="Cart_Validate_Quantity_can_be_increased_in_Cart"/>
+               <include name="Cart_Remove_some_items_from_the_cart_and_verify"/>
+               <include name="Invalid_login_creditials_No_Password"/>
+               <include name="Invalid login creditials_No Username"/>
+               <include name="Validate_the_password_is_not_visible"/>
+               <include name="Forgotten_password_link"/>
+               <include name="Verify_Message_after_submit_email_on_Forgot_Password_Page"/>
+               <include name="Login_Page_verify_Mail_is_received_for_Forget_Password"/>
+               <include name="Validate_SKU_code_visible"/>
+               <include name="Compare_products"/>
+               <include name="Wish_List_Validate_Mail_for_Wish_List_Share"/>
             </methods>
          </class>
       </classes>

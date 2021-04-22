@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 //@Listeners(listner.TestNGListener.class)
 
-public class JDGTest_TestNG{
+public class JDGTest_TestNG<moduleName> {
     public WebDriver driver;
     protected DataTable dataTable = null;
     protected ConfigFileReader configFileReader;
@@ -37,11 +37,11 @@ public class JDGTest_TestNG{
     int testcaseID;
     Logger logger = Log.getLogData(this.getClass().getSimpleName());
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
-
     @BeforeClass
-    public void once() throws Exception {
+    @Parameters({"moduleName"})
+    public void once(String moduleName) throws Exception {
         dataTable2= new DataTable2();
-        dataTable2.setPath("UPDATEFINAL");
+        dataTable2.setPath(moduleName);
         dataMap2=dataTable2.getExcelData();
     }
 
