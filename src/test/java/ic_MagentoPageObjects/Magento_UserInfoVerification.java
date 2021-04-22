@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -65,7 +66,7 @@ public class Magento_UserInfoVerification {
 	@FindBy(xpath = "//input[@id='_newslettersubscription']")
 	WebElement Cust_NewsLetter;
 	
-	@FindBy(xpath = "//*[@id=\"sales_order_view_tabs_order_info_content\"]/section[2]//a")
+	@FindBy(xpath = "//*[@id=\"sales_order_view_tabs_order_info_content\"]/section[2]/div[2]/div[1]//a")
 	WebElement guestEditBtn;
 	
 	@FindBy(xpath = "//*[@id=\"sales_order_view_tabs_order_info_content\"]/section[1]//table/tbody/tr[2]/td/a")
@@ -128,11 +129,17 @@ public class Magento_UserInfoVerification {
 		String typeOfVerificationFlag = dataTable2.getValueOnCurrentModule("Data Source");
 		
 		driver.navigate().refresh();
+		action.explicitWait(7000);
+		JavascriptExecutor js = (JavascriptExecutor)driver;
+		
+		//driver.manage().window().s
+		
 		//IF CONSTUCT FOR WHAT TYPE OF VALIDATION IS TAKING PLACE
 		//For Account creation(Set this way by default)
 		//***************************************
 		if(typeOfVerificationFlag.equalsIgnoreCase("Create Account")) {	
 			//GETS DATA FROM ACCOUNT CREATION
+			js.executeScript("window.scrollBy(0,0)");
 		action.click(Account_Information, "Account Information", test);
 		ExpFirstname=input.get("firstName").get(rowNumber);//"Brian";
 		ExpLastname=input.get("lastName").get(rowNumber);//"Jones";
@@ -210,7 +217,8 @@ public class Magento_UserInfoVerification {
 		
 		}else if(typeOfVerificationFlag.equalsIgnoreCase("Create Account Magento Admin")) {
 			//GETS DATA FROM THE CREATE ACCOUNT BACKEND SHEET
-					//action.scrollElementIntoView(Account_Information);
+					js.executeScript("window.scrollBy(0,0)");
+					action.scrollElemetnToCenterOfView(Account_Information);					
 					action.click(Account_Information, "Account Information", test);
 					ExpFirstname= dataTable2.getValueOnOtherModule("CreateaccountBackend", "Firstname", 0);
 					ExpLastname = dataTable2.getValueOnOtherModule("CreateaccountBackend", "Lastname", 0);
@@ -234,8 +242,10 @@ public class Magento_UserInfoVerification {
 					
 			
 		}else if(typeOfVerificationFlag.equalsIgnoreCase("Update Account")) {
+			js.executeScript("window.scrollBy(0,0)");
 			//GETS DATA FROM THE icUpdateUser sheet
-			action.scrollElementIntoView(Account_Information);
+			//action.scrollElementIntoView(Account_Information);
+			action.scrollElemetnToCenterOfView(Account_Information);
 			action.click(Account_Information, "Account Information", test);
 			ExpFirstname = dataTable2.getValueOnOtherModule("ICUpdateUser", "firstName_output", 0);
 			ExpLastname = dataTable2.getValueOnOtherModule("ICUpdateUser", "lastName_output", 0);
@@ -243,6 +253,7 @@ public class Magento_UserInfoVerification {
 			ExpVATnumber = dataTable2.getValueOnOtherModule("ICUpdateUser", "taxVat_output", 0);
 			
 		}else if(typeOfVerificationFlag.equalsIgnoreCase("Update Account Magento Admin")) {	
+			js.executeScript("window.scrollBy(0,0)");
 			//GETS DATA FROM adminUserUpdates
 			//action.scrollElementIntoView(Account_Information);
 			action.click(Account_Information, "Account Information", test);
@@ -274,7 +285,12 @@ public class Magento_UserInfoVerification {
 			String expTelephone =dataTable2.getValueOnOtherModule("deliveryPopulation", "telephone",0).trim();
 			String magentoGuestEmail = guestEmail.getText();
 			
-			guestEditBtn.click();
+			
+			//action.scrollElementIntoView(guestEditBtn);
+			action.scrollElemetnToCenterOfView(guestEditBtn);
+			//action.explicitWait(000);
+			action.click(guestEditBtn, "Guest Edit Button", test);
+			//guestEditBtn.click();
 			String magentoGuestID = action.getAttribute(guestID, "value");
 			String magentoGuestFirstName = action.getAttribute(guestFirstName, "value");
 			String magentoGuestLastName = action.getAttribute(guestLastName, "value");

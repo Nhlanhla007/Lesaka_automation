@@ -86,9 +86,9 @@ public class ic_GiftCardPurchase {
 		action.writeText(ic_RecipientName, recipientName, "recipient ame", test);
 		action.writeText(ic_RecipientEmail, recipientEmail, "recipient email", test);
 		action.writeText(ic_CardMessage, cardMessage, "card message", test);
-		action.explicitWait(5000);
+		action.explicitWait(9000);
 		action.click(ic_AddToCart, "add to cart", test);
-		action.explicitWait(5000);
+		action.explicitWait(9000);
 		action.click(ic_Cart, "cart clicked", test);
 		action.click(ic_secure, "Checkout Secure clicked", test);
 	}
