@@ -96,7 +96,7 @@ import utils.hana;
 			//Expected al details to be validated--------------------------------------
 			String SAP_orderNo=ic_MagentoOrderSAPnumber.OrderSAPnumber;//"0005233074";// sap order number genrator
 			String ExpPurchaseOrderNo =ic_PayUPayment.Oderid; //from IC paymentPAYU confirmation order number.
-			String cartSum = dataTable2.getValueOnOtherModule("ClearCart", "CartTotal", 0);
+			String cartSum = dataTable2.getValueOnOtherModule("ProductSearch", "CartTotal", 0);
 			String ExpGrandTotal =String.valueOf(cartSum);//comes from cart total
 			
 			List<String> ExpProductName =new ArrayList<>();
