@@ -150,7 +150,7 @@ public class dataproviderTest extends BaseTest {
         customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver,dataTable2);
         ic_Login ic_login = new ic_Login(driver,dataTable2);
         ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver,dataTable2);
-        SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2);
+        SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2,dataTable2);
         ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver,dataTable2);
         ic_GiftCardUsability GiftCardUsability = new ic_GiftCardUsability(driver,dataTable2);
         ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);

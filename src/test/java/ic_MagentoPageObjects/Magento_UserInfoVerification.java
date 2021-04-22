@@ -131,7 +131,7 @@ public class Magento_UserInfoVerification {
 		driver.navigate().refresh();
 		action.explicitWait(7000);
 		JavascriptExecutor js = (JavascriptExecutor)driver;
-		
+
 		//driver.manage().window().s
 		
 		//IF CONSTUCT FOR WHAT TYPE OF VALIDATION IS TAKING PLACE

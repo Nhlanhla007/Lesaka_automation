@@ -10,17 +10,22 @@ import java.util.Date;
 
 public class GenerateScreenShot {
 
-    public static String getScreenShot(WebDriver driver) throws IOException {
+    public static String getScreenShot(WebDriver driver) {
         File currentDirFile = new File(".");
         String helper = currentDirFile.getAbsolutePath();
         helper=helper.replace(".","").replaceAll("\"\"","/");
         String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
         TakesScreenshot ts = (TakesScreenshot) driver;
         File source = ts.getScreenshotAs(OutputType.FILE);
-        String destination = "\\reports\\screenshots\\" + 1 + dateName + ".png";
-        File finalDestination = new File(destination);
-        copyFile(source,finalDestination);
-        return destination;
+        String destination1 =helper+"Reports\\screenshots\\" + 1 + dateName + ".png";
+        String destination2 ="screenshots\\" + 1 + dateName + ".png";
+        File finalDestination = new File(destination1);
+        try {
+            copyFile(source,finalDestination);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return destination2;
     }
     public static void copyFile(File source,File dest) throws IOException {
             FileInputStream fis = new FileInputStream(source);
