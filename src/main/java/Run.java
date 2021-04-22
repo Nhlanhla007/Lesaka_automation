@@ -1,5 +1,3 @@
-package tests;
-
 import org.testng.TestNG;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -66,8 +64,8 @@ public class Run {
         DOMSource domSource = new DOMSource(document);
         StreamResult streamResult = new StreamResult(new File("testNG.xml"));
         transformer.transform(domSource, streamResult);
-//        System.out.println("Done creating XML File");
-//        Thread.sleep(10000);
+        System.out.println("Done creating XML File");
+        Thread.sleep(10000);
 //        TestNG runner=new TestNG();
 //        List<String> suitefiles=new ArrayList<String>();
 //        suitefiles.add("testNG.xml");
