@@ -50,46 +50,54 @@ public class JDGTest_TestNG{
         occCount=new HashMap<String, Integer>();
         startBrowserSession();
     }
+    
+    @Test(testName ="71_Validate_Parallel_Login_to_IC" )
+    public void Validate_Parallel_Login_to_IC() throws Exception {
+        String testMethodName="Validate_Parallel_Login_to_IC";
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+        runner(TCIndex,test);
+    } 	
 
-    @Test(testName ="31_Create_Customer_Account_from_Sales_Order" )
-    public void Create_Customer_Account_from_Sales_Order() throws Exception {
-        String testMethodName="Create_Customer_Account_from_Sales_Order";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
-    @Test(testName ="26_Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
-    public void Create_Sales_Order_Guest_User_Thorugh_Product_Search() throws Exception {
-        String testMethodName="Create_Sales_Order_Guest_User_Thorugh_Product_Search";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
-    @Test(testName ="2_Create_new_customer_in_IC_with_ID_Number" )
-    public void Create_new_customer_in_IC_with_ID_Number() throws Exception {
-        String testMethodName="Create_new_customer_in_IC_with_ID_Number";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
-    @Test(testName ="42_Click_the_IC_logo_to_go_home_page" )
-    public void Click_the_IC_logo_to_go_home_page() throws Exception {
-        String testMethodName="Click_the_IC_logo_to_go_home_page";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-    @Test(testName ="45_Validating_the_minimum_search_characters" )
-    public void Validating_the_minimum_search_characters() throws Exception {
-        String testMethodName="Validating_the_minimum_search_characters";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        startBrowserSession();
-        runner(TCIndex,test);
-    }
+//    @Test(testName ="31_Create_Customer_Account_from_Sales_Order" )
+//    public void Create_Customer_Account_from_Sales_Order() throws Exception {
+//        String testMethodName="Create_Customer_Account_from_Sales_Order";
+//        ExtentTest test =reportJD.createTest(testMethodName);
+//        int TCIndex=getTestCaseIndex(testMethodName);
+//        runner(TCIndex,test);
+//    }
+//
+//    @Test(testName ="26_Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
+//    public void Create_Sales_Order_Guest_User_Thorugh_Product_Search() throws Exception {
+//        String testMethodName="Create_Sales_Order_Guest_User_Thorugh_Product_Search";
+//        ExtentTest test =reportJD.createTest(testMethodName);
+//        int TCIndex=getTestCaseIndex(testMethodName);
+//        runner(TCIndex,test);
+//    }
+//
+//    @Test(testName ="2_Create_new_customer_in_IC_with_ID_Number" )
+//    public void Create_new_customer_in_IC_with_ID_Number() throws Exception {
+//        String testMethodName="Create_new_customer_in_IC_with_ID_Number";
+//        ExtentTest test =reportJD.createTest(testMethodName);
+//        int TCIndex=getTestCaseIndex(testMethodName);
+//        runner(TCIndex,test);
+//    }
+//
+//    @Test(testName ="42_Click_the_IC_logo_to_go_home_page" )
+//    public void Click_the_IC_logo_to_go_home_page() throws Exception {
+//        String testMethodName="Click_the_IC_logo_to_go_home_page";
+//        ExtentTest test =reportJD.createTest(testMethodName);
+//        int TCIndex=getTestCaseIndex(testMethodName);
+//        runner(TCIndex,test);
+//    }
+//    @Test(testName ="45_Validating_the_minimum_search_characters" )
+//    public void Validating_the_minimum_search_characters() throws Exception {
+//        String testMethodName="Validating_the_minimum_search_characters";
+//        ExtentTest test =reportJD.createTest(testMethodName);
+//        int TCIndex=getTestCaseIndex(testMethodName);
+//        startBrowserSession();
+//        runner(TCIndex,test);
+//    }
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {
         try {
