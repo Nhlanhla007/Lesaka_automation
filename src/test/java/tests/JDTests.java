@@ -12,6 +12,7 @@ import SAP_HanaDB.SAPCustomerRelated;
 import base.TestCaseBase;
 import emailverification.ICGiftCardVerification;
 import emailverification.ic_PasswordForgotEmailVerification;
+import emailverification.ic_ResetPasswordEmailLink;
 import ic_MagentoPageObjects.*;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.Magento_UserInfoVerification;
@@ -55,7 +56,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("TA318");
+		dataTable2.setPath("TA322");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -178,6 +179,7 @@ public class JDTests extends BaseTest {
 		ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
 		IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
 		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
+		ic_ResetPasswordEmailLink ResetPasswordLink = new ic_ResetPasswordEmailLink(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -199,6 +201,11 @@ public class JDTests extends BaseTest {
 				break;
 			case "icEmailSentVerification":
 				icForgotEmailSent.icVerifyNewPasswordEmailSent(dataMap2.get("accountCreation++"),test1,rowNumber);
+				break;
+			case "icResetForgottenPassword":
+				ResetPasswordLink.clickLinkOnGmail(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				ResetPasswordLink.resetNewPassword(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				ResetPasswordLink.clickUsedResetLink(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 				
 			case "Logout":
@@ -501,6 +508,7 @@ public class JDTests extends BaseTest {
 		}
 
 		workbook.write(outputStream);
+		outputStream.close();
 		workbook.close();
 	}
 

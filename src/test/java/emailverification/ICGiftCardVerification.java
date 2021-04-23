@@ -118,7 +118,7 @@ public class ICGiftCardVerification {
     }
     public void clearEmail(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException {
         navigateToGmail(input.get("userName").get(rowNumber),input.get("password").get(rowNumber),test);
-        action.explicitWait(20000);
+        action.explicitWait(10000);
         List<WebElement> email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[9]/div/div[1]/div[3]/div/table/tbody/tr"));
         input.get("emailCountbeforeGiftCardBuy").set(rowNumber,String.valueOf(email.size()));
         if(email.size()>0){

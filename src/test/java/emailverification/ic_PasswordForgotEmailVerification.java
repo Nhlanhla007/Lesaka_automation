@@ -21,6 +21,7 @@ public class ic_PasswordForgotEmailVerification {
 	WebDriver driver;
 	Action action;
 	DataTable2 dataTable2;
+	ic_ResetPasswordEmailLink resetPasswordEmailLink = new ic_ResetPasswordEmailLink(driver,dataTable2);
 
 	public ic_PasswordForgotEmailVerification(WebDriver driver, DataTable2 dataTable2){
 		this.driver = driver;
@@ -49,10 +50,9 @@ public class ic_PasswordForgotEmailVerification {
 	    
 	    public void icVerifyNewPasswordEmailSent(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException{
 	    	action.navigateToURL("https://mail.google.com/");
-	        navigateToGmail(dataTable2.getValueOnOtherModule("icGiftCardVerificationSender", "userName", 0),dataTable2.getValueOnOtherModule("icGiftCardVerificationSender", "password", 0),test);
-	        action.explicitWait(10000);
-	        
-	        List<WebElement> email = driver.findElements(By.xpath("//html/body//table[@id=':2c']//tr"));
+	        //navigateToGmail(dataTable2.getValueOnOtherModule("icGiftCardVerificationSender", "userName", 0),dataTable2.getValueOnOtherModule("icGiftCardVerificationSender", "password", 0),test);
+	        action.explicitWait(5000);
+	        List<WebElement> email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[9]/div/div[1]/div[3]/div/table//tr"));
 	        int waitTimeForBarcodeEmailInSec=Integer.parseInt(dataTable2.getValueOnOtherModule("icGiftCardVerificationSender", "waitTimeForBarcodeEmailInSec", 0));
 	        int numberOfEmailsAfter=email.size();
 	        Date date1 =new Date();
@@ -60,38 +60,32 @@ public class ic_PasswordForgotEmailVerification {
 	        long difference = 0;
 	        boolean foundSubject=false;
 	        boolean foundSender=false;
-	        
 	        while((difference<=waitTimeForBarcodeEmailInSec) && (!foundSubject)) {
                 for (WebElement emailsub : email) {
-
-	                    if ((emailsub.getText().contains("Password Reset Confirmation for"))&&!foundSubject&&!foundSender) {
+	                    if ((emailsub.getText().contains("Password Reset Confirmation for"))) {
 	                        emailsub.click();
 	                        action.explicitWait(5000);
 	                        foundSubject=true;
 	                        String SenderEmail ="";
 	                        SenderEmail = action.getText(EmailSender, "EmailSender");
-	                    
-	                    if ((SenderEmail.contains("websiteorders@incredible.com"))&&!foundSender) {
+	                    if ((SenderEmail.contains("websiteorders@incredible.com"))) {
 	                    	foundSender=true;
+							break;
 	                    }
-                    }
-	                    if(foundSender==true &&foundSubject ==true){
-	                    	break;
-	                    }
-	                
-//                }
-                if(foundSender==true &&foundSubject ==true){
-                	break;
-                } 
+	            }
             }
+			if (foundSender&foundSubject) {
+				break;
+			}
+
             action.refresh();
-            action.explicitWait(30000);
+            action.explicitWait(5000);
             Date date2 =new Date();;
             long curTime2=date2.getTime();
             difference=(curTime2-curTime1)/1000;
             System.out.println("Time waiting for email(sec): "+difference);
             System.out.println("Number of emails: "+numberOfEmailsAfter);
-            email = driver.findElements(By.xpath("//html/body//table[@id=':2c']//tr"));
+            email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[9]/div/div[1]/div[3]/div/table//tr"));
 
             numberOfEmailsAfter=email.size();
             }
