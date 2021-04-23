@@ -220,28 +220,29 @@ public class admin_UserUpdate {
 	    	action.explicitWait(5000);
 	    	//Billing Address
 	    	
-	    	Random r = new Random();
-    		//String randomAddres = streetAddresses.get(randomitem);
-    		
-    		streetAddresses = new ArrayList<>();
-    		streetAddresses.add("98 Van Riebeeck Avenue");
-    		streetAddresses.add("28 Harrison Street");
-    		streetAddresses.add("45 Zenith Drive");
-    		streetAddresses.add("510 Mississippi Street");
-    		streetAddresses.add("4 Loop Street");
-    		streetAddresses.add("234 Glover Avenue");
-    		streetAddresses.add("72 Ceramic Curve");
-    		streetAddresses.add("15 Alice Lane");
-    		streetAddresses.add("315 York Avenue");
-    		streetAddresses.add("35 Ballyclare Drive");
-    		streetAddresses.add("100 Northern Parkway");
-    		int randomitem = r.nextInt(streetAddresses.size());
+
 	    	
 	    	if(billingAddress.equalsIgnoreCase("Yes")){
 	    		admin_billingEdit.click();
 	    		//action.click(admin_billingEdit, "Edit", test);
 	    		//action.javaScriptClick(admin_billingEdit, "Billing edit clicked", test);
 	    		
+		    	Random r = new Random();
+	    		//String randomAddres = streetAddresses.get(randomitem);
+	    		
+	    		streetAddresses = new ArrayList<>();
+	    		streetAddresses.add("98 Van Riebeeck Avenue");
+	    		streetAddresses.add("28 Harrison Street");
+	    		streetAddresses.add("45 Zenith Drive");
+	    		streetAddresses.add("510 Mississippi Street");
+	    		streetAddresses.add("4 Loop Street");
+	    		streetAddresses.add("234 Glover Avenue");
+	    		streetAddresses.add("72 Ceramic Curve");
+	    		streetAddresses.add("15 Alice Lane");
+	    		streetAddresses.add("315 York Avenue");
+	    		streetAddresses.add("35 Ballyclare Drive");
+	    		streetAddresses.add("100 Northern Parkway");
+	    		int randomitem = r.nextInt(streetAddresses.size());
 	    		//driver.findElement(By.xpath("//*[@id=\"container\"]/div/div/div[2]/div[3]/div/div[2]/fieldset/div[1]/button/span")).click();
 	    		String streetAdressText = action.getAttribute(admin_BillingStreetAddress, "value");
 	    		if(billing_streetAddress.equalsIgnoreCase("yes")){
@@ -252,6 +253,7 @@ public class admin_UserUpdate {
 		    		action.writeText(admin_BillingStreetAddress, streetAdressTextUpdated, "Street address", test);
 		    		adminSheets.get(0).get("adminBilling_streetAddress_output").set(sheetRow1, streetAdressTextUpdated);
 		    		
+		    		action.explicitWait(6000);
 		    		action.click(admin_SaveBillingBtn, "Save", test);
 		    	}else {
 		    		adminSheets.get(0).get("adminBilling_streetAddress_output").set(sheetRow1, streetAdressText);

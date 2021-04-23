@@ -167,8 +167,9 @@ public class ICDelivery {
             action.writeText(firstName,dataSheets.getValueOnCurrentModule("firstName"),"firstName",test);
             action.writeText(lastname,dataSheets.getValueOnCurrentModule("lastname"),"lastname",test);
             action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
-        	action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
-        	
+
+            action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
+
         }
         action.writeText(streetName,dataSheets.getValueOnCurrentModule("streetName"),"streetName",test);
         action.writeText(telephone,dataSheets.getValueOnCurrentModule("telephone"),"telephone",test);
@@ -177,8 +178,6 @@ public class ICDelivery {
         action.writeText(postalCode,dataSheets.getValueOnCurrentModule("postalCode"),"postalCode",test);
         action.writeText(vatNumber,dataSheets.getValueOnCurrentModule("vatNumber"),"vatNumber",test);
 
-        //Thread.sleep(15000);
-        Thread.sleep(12000);
         action.dropDownselectbyvisibletext(province,dataSheets.getValueOnCurrentModule("province"),"province",test);
         Thread.sleep(10000);
         }else if(addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")) {

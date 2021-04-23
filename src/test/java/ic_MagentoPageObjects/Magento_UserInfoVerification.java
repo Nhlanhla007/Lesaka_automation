@@ -102,16 +102,18 @@ public class Magento_UserInfoVerification {
 	@FindBy(id = "identity_number")
 	WebElement guestID;
 	
-	/* MAGENTO ADDRESS INFORMATION
-	 * @FindBy(xpath="//*[@id=\"tab_address\"]/span[1]") private WebElement
-	 * admin_AddressBtn;
-	 * 
-	 * @FindBy(xpath = "//*[@id=\"container\"]//fieldset/div[1]/button") private
-	 * WebElement editAddressBtn;
-	 * 
-	 * @FindBy(xpath="//input[@name='street[0]']") private WebElement
-	 * admin_Billing_streetAddress;
-	 */
+	
+	//  MAGENTO ADDRESS INFORMATION
+	  
+	@FindBy(xpath = "//*[@id=\"tab_address\"]")
+	private WebElement admin_AddressBtn;
+
+	@FindBy(xpath = "//*[@class=\"edit-default-billing-address-button action-additional\"]/span")//button[@title='Add New Customer'] /html[1]/body[1]/div[6]/aside[1]/div[2]/header[1]/div[1]/div[1]/button[1]/span[1]/span[1]
+	private WebElement admin_billingEdit;	
+	   
+	  @FindBy(xpath="//input[@name='street[0]']") 
+	  WebElement admin_Billing_streetAddress;
+	 
 	
 	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException, ClassNotFoundException {
 		int TimetoLoadpage=11;
@@ -131,7 +133,7 @@ public class Magento_UserInfoVerification {
 		driver.navigate().refresh();
 		action.explicitWait(7000);
 		JavascriptExecutor js = (JavascriptExecutor)driver;
-		
+
 		//driver.manage().window().s
 		
 		//IF CONSTUCT FOR WHAT TYPE OF VALIDATION IS TAKING PLACE
@@ -266,8 +268,18 @@ public class Magento_UserInfoVerification {
 			
 			//String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
 			String actualVat = action.getAttribute(Cust_VAT, "value");
-			action.CompareResult("Verify the VAT number in Magento backend : ", ExpVATnumber, actualVat, test);
+			action.CompareResult("VAT number in Magento backend : ", ExpVATnumber, actualVat, test);
 
+			String verifyBillingAddChange = dataTable2.getValueOnOtherModule("adminUserUpdate", "billingAddress", 0);
+			if(verifyBillingAddChange.equalsIgnoreCase("yes")) {
+				action.click(admin_AddressBtn, "Address Tab", test);
+				action.explicitWait(6000);
+				action.click(admin_billingEdit, "Billing Address Edit", test);
+				String updatedBillingAddress = dataTable2.getValueOnOtherModule("adminUserUpdate", "adminBilling_streetAddress_output", 0);
+				String actualBillingAdd = action.getAttribute(admin_Billing_streetAddress, "value");
+				action.CompareResult("Billing Address In Magento Backend", updatedBillingAddress, actualBillingAdd, test);
+			}
+					
 			
 		}else if(typeOfVerificationFlag.equalsIgnoreCase("Guest Customer Creation")) {
 			//GETS DATA FROM deliveryPopulation

@@ -33,7 +33,7 @@ public class IC_Cart {
 		
 	  WebDriver driver;
 	    Action action;
-	    DataTable2 dataTable2;	    
+	    DataTable2 dataTable2;
 	    
 	    JDTests browser ;
 	    ic_Login login ;
@@ -78,10 +78,9 @@ public class IC_Cart {
 	    
 	    @FindBy(xpath = "//*[@id=\"maincontent\"]/div[2]//p[1]")
 	    public WebElement emptyCartConfrimation;
-	    
+
 	    @FindBy(css = "a.go-back")
 	    private WebElement backButton;
-	    
 	    
 	    public void navigateToCart(ExtentTest test) {
 	    	try {
