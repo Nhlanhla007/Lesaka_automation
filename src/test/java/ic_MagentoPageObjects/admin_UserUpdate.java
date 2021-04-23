@@ -199,7 +199,7 @@ public class admin_UserUpdate {
 	    	String emailText = action.getAttribute(admin_email, "value");
 	    	if(emailFlag.equalsIgnoreCase("yes")){
 	    		
-	    		String emailTextUpdated = "Updated" + id+  emailText;
+	    		String emailTextUpdated = ""+id+emailText;
 	    		
 	    		action.clear(admin_email, "removing the email");
 	    		action.writeText(admin_email,emailTextUpdated ,"last Name", test);
