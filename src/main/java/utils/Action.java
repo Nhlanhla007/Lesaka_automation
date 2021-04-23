@@ -26,7 +26,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import com.google.common.base.Function;
 import Logger.Log;
 
@@ -525,11 +524,11 @@ public class Action {
 		if (elementAttr.getClass().getName().contains("By")) {
 			if (!(driver.findElement((By) elementAttr).isEnabled()))
 				logger.info("Element not enabled");
-			Assert.fail("Element is not displayed");
+
 		} else {
 			if (!((WebElement) elementAttr).isEnabled())
 				logger.info("Element not enabled");
-			Assert.fail("Element is not displayed");
+
 
 		}
 		return true;
@@ -1042,7 +1041,6 @@ public class Action {
 				wait.until(ExpectedConditions.elementToBeClickable(loc));
 			} catch (Exception e) {
 				logger.info("Element still present:" + loc);
-				Assert.fail("Element is not clickable");
 				System.out.println(e.toString());
 			}
 		}
@@ -1052,7 +1050,6 @@ public class Action {
 //				onLoadDelay();
 				wait.until((ExpectedConditions.elementToBeClickable(((WebElement) elementAttr))));
 			} catch (Exception e) {
-				Assert.fail("Element is not clickable");
 				logger.info("Element Not Found:");
 				e.printStackTrace();
 			}
@@ -1072,7 +1069,6 @@ public class Action {
 				wait.until(ExpectedConditions.attributeContains(loc, "display", "none"));
 			} catch (Exception e) {
 				logger.info("Element still present:" + loc);
-				Assert.fail("Element is not clickable");
 				System.out.println(e.toString());
 			}
 		}
@@ -1081,7 +1077,6 @@ public class Action {
 			try {
 				wait.until((ExpectedConditions.attributeContains(((WebElement) elementAttr), "display", "none")));
 			} catch (Exception e) {
-				Assert.fail("Element is not clickable");
 				logger.info("Element Not Found:");
 				e.printStackTrace();
 			}
@@ -1097,7 +1092,6 @@ public class Action {
 			wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameName));
 		} catch (Exception e) {
 			logger.info("Frame is not present:" + frameName);
-			Assert.fail("Frame is not present");
 			System.out.println(e.toString());
 		}
 	}
@@ -1482,7 +1476,6 @@ public class Action {
 				String screenShotPath=getScreenShot(dateName);
 				node.pass("Successfully clicked on " +name,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 				logger.info("Clicked Element: "+ name);
-				Report.pass("Clicked Element: "+ name);
 			} else {
 				WebElement fluentElement = waitFluent((WebElement) elementAttr);
 				fluentElement.click();

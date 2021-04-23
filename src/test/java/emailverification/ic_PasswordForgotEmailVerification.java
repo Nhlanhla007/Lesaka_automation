@@ -102,7 +102,7 @@ public class ic_PasswordForgotEmailVerification {
 	        action.explicitWait(5000);
 	        driver.findElement(By.xpath("//input[@class='whsOnd zHQkBf']")).sendKeys(password);
 	        driver.findElement(By.xpath("//*[@id=\"passwordNext\"]/div/button/div[2]")).click();
-	        action.explicitWait(10000);
+	        action.explicitWait(5000);
 
 	    }
 }
