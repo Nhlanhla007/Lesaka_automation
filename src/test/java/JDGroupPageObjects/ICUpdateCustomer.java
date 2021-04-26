@@ -13,8 +13,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
-
-import io.qameta.allure.Step;
 import utils.Action;
 import utils.DataTable2;
 
@@ -143,7 +141,6 @@ public class ICUpdateCustomer {
 	     * 
 	     * @param test
 	     */
-	    @Step("after loging")
 		public void ic_NavigateToMyAccount(ExtentTest test) {
 			try {
 				action.click(ic_myAccountButton, "Navigate to accountTab",test);
@@ -154,9 +151,6 @@ public class ICUpdateCustomer {
 				e.printStackTrace();
 			}
 		}
-	    
-	    
-	    @Step("Account Information")
 	    public void updateAccount(ArrayList<HashMap<String, ArrayList<String>>> mySheets,ExtentTest test,int testcaseID){
 	    	int sheetRow1= findRowToRun(mySheets.get(0), 0, testcaseID);
 			int sheetRow2= findRowToRun(mySheets.get(1), 0, testcaseID);

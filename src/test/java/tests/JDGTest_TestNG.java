@@ -389,31 +389,21 @@ public class JDGTest_TestNG{
         if(driver == null){
             configFileReader = new ConfigFileReader();
             logger.info("Initializing the driver");
-
-
             browserName = System.getProperty("BrowserType");
             if(browserName==null){
                 logger.info("System property returned Null browser type. So getting data from Config file");
-
                 browserName=ConfigFileReader.getPropertyVal("BrowserType");
-
             }
-
             driver = TestCaseBase.initializeTestBaseSetup(browserName);
             driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-
             navigateURL = System.getProperty("URL");
             if(navigateURL==null){
                 logger.info("System property returned Null URL. So getting data from Config file");
-                Report.info("System property returned Null URL. So getting data from Config file");
                 navigateURL = ConfigFileReader.getPropertyVal("URL");
             }
-
             navigateURL = ConfigFileReader.getPropertyVal("URL");
         }
         logger.info("Navigate to URL");
-        Report.info("Navigating to URL: "+navigateURL);
-
         driver.navigate().to(navigateURL);
         driver.manage().window().maximize();
         driver.navigate().refresh();

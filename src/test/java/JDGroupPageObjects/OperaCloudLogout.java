@@ -4,8 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import io.qameta.allure.Step;
 import utils.Action;
 
 public class OperaCloudLogout {
@@ -35,7 +33,6 @@ public class OperaCloudLogout {
 	 * Page Methods *
 	 ****************/
 
-	@Step("Do Logout")
 	public void logOut() {
 //		action.javaScriptClick(UserOptions, "UserOptions");
 //		action.javaScriptClick(logOut, "Log Out");

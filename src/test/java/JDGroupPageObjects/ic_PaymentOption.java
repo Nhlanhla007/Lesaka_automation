@@ -11,8 +11,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
-
-import io.qameta.allure.Step;
 import utils.Action;
 import utils.DataTable2;
 
@@ -57,8 +55,7 @@ public class ic_PaymentOption {
 	WebElement Billingshipping;
 	@FindBy(xpath = "//span[contains(text(),'I agree to all the terms & conditions')]")
 	WebElement TermsCondition;
-	
-	@Step("To Select payment method")
+
 	public WebElement ic_SelectPaymentMethod(String Paytype){
 			Map<String,WebElement> PaymentMap=new HashMap<String,WebElement>();
 			PaymentMap.put("payUcreditcard", payUcreditcard);

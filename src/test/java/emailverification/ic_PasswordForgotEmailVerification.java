@@ -49,7 +49,6 @@ public class ic_PasswordForgotEmailVerification {
 	    
 	    public void icVerifyNewPasswordEmailSent(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException{
 	    	action.navigateToURL("https://mail.google.com/");
-	        navigateToGmail(dataTable2.getValueOnOtherModule("icGiftCardVerificationSender", "userName", 0),dataTable2.getValueOnOtherModule("icGiftCardVerificationSender", "password", 0),test);
 	        action.explicitWait(10000);
 	        List<WebElement> email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[9]/div/div[1]/div[3]/div/table//tr"));
 	        int waitTimeForBarcodeEmailInSec=Integer.parseInt(dataTable2.getValueOnOtherModule("icGiftCardVerificationSender", "waitTimeForBarcodeEmailInSec", 0));

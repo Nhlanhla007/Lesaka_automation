@@ -14,7 +14,6 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
 import Logger.Log;
-import io.qameta.allure.Attachment;
 import pageddef.PageDef;
 import utils.*;
 
@@ -45,13 +44,11 @@ public class TestNGListener implements IExecutionListener, ITestListener {
 	 */
 
 	// Text attachments for Allure
-	@Attachment(value = "{0}", type = "text/plain")
 	public static String saveTextLog(String message) {
 		return message;
 	}
 
 	// HTML attachments for Allure
-	@Attachment(value = "{0}", type = "text/html")
 	public static String attachHtml(String html) {
 		return html;
 	}

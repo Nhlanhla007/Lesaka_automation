@@ -23,7 +23,7 @@ public class ic_ResetPasswordEmailLink {
 		action = new Action(driver);
 		this.dataTable2=dataTable2;
 	}
-	@FindBy(xpath="/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div[2]/div/table/tr/td[1]/div[2]/div[2]/div/div[3]/div/div/div/div/div/div[1]/div[2]/div[3]/div[3]/div/div[1]/div[1]/table/tbody/tr/td/table/tbody/tr[2]/td/p[2]/a")
+	@FindBy(xpath="/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div[2]/div/table/tr/td[1]/div[2]/div[2]/div/div[3]/div/div/div/div/div/div[1]/div[2]/div[3]/div[3]/div/div[1]/div[1]/table/tbody/tr/td/table/tbody//a")
 	private WebElement resetLink;
 
 	@FindBy(xpath="//input[@ name=\"password\"]")

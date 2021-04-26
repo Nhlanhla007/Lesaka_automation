@@ -14,7 +14,6 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
-import io.qameta.allure.Step;
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
@@ -57,7 +56,6 @@ public class ic_Login {
 		public static String Username;
 		
 		//vv
-		@Step("Login to IC")
 		public List<String> Login_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 			driver.navigate().to(ConfigFileReader.getPropertyVal("URL"));
 //			action.waitForPageLoaded(10);

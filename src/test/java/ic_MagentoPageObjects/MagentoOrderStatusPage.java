@@ -13,7 +13,6 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import JDGroupPageObjects.ic_PayUPayment;
-import io.qameta.allure.Step;
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
@@ -112,7 +111,6 @@ public class MagentoOrderStatusPage {
 		action.CompareResult("Order Status", orderStatus, magentoOrderStatus.getText(), test);
 	}
 	
-	@Step("Navigates to the order page")
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException, InterruptedException {
 //		String POfetchFrom = dataTable2.getValueOnOtherModule("OrderStatusSearch", "Fetch PO number", 0);
 //		String idToSearch = dataTable2.getValueOnOtherModule("PayUPagePayment","OrderID",0);
