@@ -338,13 +338,14 @@ public class ExcelFunctions {
 			Row row = sheet.getRow(0);
 			int noOfColumns = row.getLastCellNum();
 			headers = new String[noOfColumns];
+			logger.info("numRows:" + numRows);
 			for (int j = 0; j < numRows; j++) {
 				row = sheet.getRow(j);
 				for (int z = 0; z < noOfColumns; z++) {
 					try {
 						Cell cell = row.getCell(z);
 						String value = getExcelDataBasedOnCellType(cell);
-						logger.info(z + ":" + value);
+//						logger.info(z + ":" + value);
 						if (j == 0) {
 							headers[z] = value;
 							mySheetMap.put(value, new ArrayList<>());
