@@ -13,6 +13,7 @@ import base.TestCaseBase;
 import emailverification.ICGiftCardVerification;
 import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ICWishlistverification;
+import emailverification.ic_ResetPasswordEmailLink;
 import ic_MagentoPageObjects.*;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.Magento_UserInfoVerification;
@@ -58,7 +59,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("UPDATEFINAL");
+		dataTable2.setPath("MAIN");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -76,6 +77,7 @@ public class JDTests extends BaseTest {
 
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException, InterruptedException {
+
 		int numberOfTestCases =singleSuiteData.get("Execute").size();
 		for(int i=0;i<numberOfTestCases;i++){
 			System.out.println("TestCaseNumber:"+i);
@@ -108,6 +110,7 @@ public class JDTests extends BaseTest {
 									occNum++;
 									occCount.put(currentKeyWord,occNum);
 								}
+								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								dataTable2.setModule(actionToRun);
 								runKeyWord(actionToRun,test);
@@ -159,6 +162,7 @@ public class JDTests extends BaseTest {
 		ic_forgotPasswordLink icforgottenPassLink = new ic_forgotPasswordLink(driver, dataTable2);
 		verifyForgotPassword icVerifyForgotPass = new verifyForgotPassword(driver, dataTable2);
 		ic_PasswordForgotEmailVerification icForgotEmailSent = new ic_PasswordForgotEmailVerification(driver, dataTable2);
+		ic_ResetPasswordEmailLink ResetPasswordLink = new ic_ResetPasswordEmailLink(driver, dataTable2);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver,dataTable2);
 		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2,dataTable2);
 		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver,dataTable2);
@@ -224,6 +228,11 @@ public class JDTests extends BaseTest {
 				break;
 			case "icEmailSentVerification":
 				icForgotEmailSent.icVerifyNewPasswordEmailSent(dataMap2.get("accountCreation++"),test1,rowNumber);
+				break;
+			case "icResetForgottenPassword":
+				ResetPasswordLink.clickLinkOnGmail(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				ResetPasswordLink.resetNewPassword(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				ResetPasswordLink.clickUsedResetLink(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 			case "Logout":
 				ic.logout(test1);
