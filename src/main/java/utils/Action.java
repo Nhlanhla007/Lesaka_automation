@@ -1482,7 +1482,6 @@ public class Action {
 				String screenShotPath=getScreenShot(dateName);
 				node.pass("Successfully clicked on " +name,MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 				logger.info("Clicked Element: "+ name);
-				Report.pass("Clicked Element: "+ name);
 			} else {
 				WebElement fluentElement = waitFluent((WebElement) elementAttr);
 				fluentElement.click();
