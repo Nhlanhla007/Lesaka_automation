@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 //@Listeners(listner.TestNGListener.class)
 
-public class JDGTest_TestNG{
+public class JDGTest_TestNG<moduleName> {
     public WebDriver driver;
     protected DataTable dataTable = null;
     protected ConfigFileReader configFileReader;
@@ -37,16 +37,17 @@ public class JDGTest_TestNG{
     int testcaseID;
     Logger logger = Log.getLogData(this.getClass().getSimpleName());
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
-
     @BeforeClass
-    public void once() throws Exception {
+    @Parameters({"moduleName"})
+    public void once(String moduleName) throws Exception {
         dataTable2= new DataTable2();
-        dataTable2.setPath("UPDATEFINAL");
+        dataTable2.setPath(moduleName);
         dataMap2=dataTable2.getExcelData();
     }
 
     @BeforeMethod
     public void setUp() throws Exception {
+        GenerateEmail.errorFlag=false;
         occCount=new HashMap<String, Integer>();
         startBrowserSession();
     }
@@ -87,7 +88,6 @@ public class JDGTest_TestNG{
         String testMethodName="Validating_the_minimum_search_characters";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
-        startBrowserSession();
         runner(TCIndex,test);
     }
 
@@ -95,6 +95,10 @@ public class JDGTest_TestNG{
         try {
             runAllKeys(TCIndex,test);
             endBrowserSession();
+            test.getStatus();
+            if(!test.getStatus().toString().toLowerCase().equals("pass")){
+                throw new Exception();
+            }
         } catch (Exception e) {
             endBrowserSession();
             e.printStackTrace();

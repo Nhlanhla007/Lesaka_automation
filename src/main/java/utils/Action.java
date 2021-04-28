@@ -69,8 +69,6 @@ public class Action {
 		return destination;
 	}
 	public void copyFile(File source,File dest){
-
-
 		try {
 //			File file1 = new File(source);
 //			File file2 = new File(dest);
@@ -1608,6 +1606,7 @@ public class Action {
 			node.pass("Successfully Verified : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual, MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
 		} else {
 			node.fail("Error found  : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual, MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
+			GenerateEmail.errorFlag=true;
 		}
 	}
 
@@ -1690,7 +1689,7 @@ public class Action {
 			node.fail(e.getMessage());
 		}
 	}
-
+	
 	public void scrollElementIntoView(WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		js.executeScript("arguments[0].scrollIntoView();", element);

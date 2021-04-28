@@ -98,7 +98,6 @@ import utils.hana;
 			String SAP_orderNo=dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber","OrderSAPnumber",0);
 			String ExpPurchaseOrderNo =dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);
 			String ExpGrandTotal =String.valueOf(cartSum);//comes from cart total
-			
 			List<String> ExpProductName =new ArrayList<>();
 			Map<String,List<String>> AllICprducts = Ic_Products.productData;
 			for(Map.Entry map : AllICprducts.entrySet()) {
