@@ -66,7 +66,7 @@ public class Magento_UserInfoVerification {
 	@FindBy(xpath = "//input[@id='_newslettersubscription']")
 	WebElement Cust_NewsLetter;
 	
-	@FindBy(xpath = "//*[@id=\"sales_order_view_tabs_order_info_content\"]/section[2]//a")
+	@FindBy(xpath = "//*[@id=\"sales_order_view_tabs_order_info_content\"]/section[2]/div[2]/div[1]//a")
 	WebElement guestEditBtn;
 	
 	@FindBy(xpath = "//*[@id=\"sales_order_view_tabs_order_info_content\"]/section[1]//table/tbody/tr[2]/td/a")
@@ -102,16 +102,18 @@ public class Magento_UserInfoVerification {
 	@FindBy(id = "identity_number")
 	WebElement guestID;
 	
-	/* MAGENTO ADDRESS INFORMATION
-	 * @FindBy(xpath="//*[@id=\"tab_address\"]/span[1]") private WebElement
-	 * admin_AddressBtn;
-	 * 
-	 * @FindBy(xpath = "//*[@id=\"container\"]//fieldset/div[1]/button") private
-	 * WebElement editAddressBtn;
-	 * 
-	 * @FindBy(xpath="//input[@name='street[0]']") private WebElement
-	 * admin_Billing_streetAddress;
-	 */
+	
+	//  MAGENTO ADDRESS INFORMATION
+	  
+	@FindBy(xpath = "//*[@id=\"tab_address\"]")
+	private WebElement admin_AddressBtn;
+
+	@FindBy(xpath = "//*[@class=\"edit-default-billing-address-button action-additional\"]/span")//button[@title='Add New Customer'] /html[1]/body[1]/div[6]/aside[1]/div[2]/header[1]/div[1]/div[1]/button[1]/span[1]/span[1]
+	private WebElement admin_billingEdit;	
+	   
+	  @FindBy(xpath="//input[@name='street[0]']") 
+	  WebElement admin_Billing_streetAddress;
+	 
 	
 	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException, ClassNotFoundException {
 		int TimetoLoadpage=11;
@@ -129,9 +131,9 @@ public class Magento_UserInfoVerification {
 		String typeOfVerificationFlag = dataTable2.getValueOnCurrentModule("Data Source");
 		
 		driver.navigate().refresh();
-		action.explicitWait(5000);
+		action.explicitWait(7000);
 		JavascriptExecutor js = (JavascriptExecutor)driver;
-		js.executeScript("window.scrollBy(0,0)");
+
 		//driver.manage().window().s
 		
 		//IF CONSTUCT FOR WHAT TYPE OF VALIDATION IS TAKING PLACE
@@ -139,6 +141,8 @@ public class Magento_UserInfoVerification {
 		//***************************************
 		if(typeOfVerificationFlag.equalsIgnoreCase("Create Account")) {	
 			//GETS DATA FROM ACCOUNT CREATION
+		js.executeScript("window.scrollBy(0,0)");
+		action.scrollElemetnToCenterOfView(Account_Information);
 		action.click(Account_Information, "Account Information", test);
 		ExpFirstname=input.get("firstName").get(rowNumber);//"Brian";
 		ExpLastname=input.get("lastName").get(rowNumber);//"Jones";
@@ -216,7 +220,8 @@ public class Magento_UserInfoVerification {
 		
 		}else if(typeOfVerificationFlag.equalsIgnoreCase("Create Account Magento Admin")) {
 			//GETS DATA FROM THE CREATE ACCOUNT BACKEND SHEET
-					//action.scrollElementIntoView(Account_Information);
+					js.executeScript("window.scrollBy(0,0)");
+					action.scrollElemetnToCenterOfView(Account_Information);					
 					action.click(Account_Information, "Account Information", test);
 					ExpFirstname= dataTable2.getValueOnOtherModule("CreateaccountBackend", "Firstname", 0);
 					ExpLastname = dataTable2.getValueOnOtherModule("CreateaccountBackend", "Lastname", 0);
@@ -240,8 +245,10 @@ public class Magento_UserInfoVerification {
 					
 			
 		}else if(typeOfVerificationFlag.equalsIgnoreCase("Update Account")) {
+			js.executeScript("window.scrollBy(0,0)");
 			//GETS DATA FROM THE icUpdateUser sheet
-			action.scrollElementIntoView(Account_Information);
+			//action.scrollElementIntoView(Account_Information);
+			action.scrollElemetnToCenterOfView(Account_Information);
 			action.click(Account_Information, "Account Information", test);
 			ExpFirstname = dataTable2.getValueOnOtherModule("ICUpdateUser", "firstName_output", 0);
 			ExpLastname = dataTable2.getValueOnOtherModule("ICUpdateUser", "lastName_output", 0);
@@ -249,8 +256,10 @@ public class Magento_UserInfoVerification {
 			ExpVATnumber = dataTable2.getValueOnOtherModule("ICUpdateUser", "taxVat_output", 0);
 			
 		}else if(typeOfVerificationFlag.equalsIgnoreCase("Update Account Magento Admin")) {	
+			js.executeScript("window.scrollBy(0,0)");
 			//GETS DATA FROM adminUserUpdates
 			//action.scrollElementIntoView(Account_Information);
+			action.scrollElemetnToCenterOfView(Account_Information);
 			action.click(Account_Information, "Account Information", test);
 			ExpFirstname=dataTable2.getValueOnOtherModule("adminUserUpdate", "adminFirstName_output", 0).trim();
 			ExpLastname =dataTable2.getValueOnOtherModule("adminUserUpdate", "adminLastName_output", 0).trim();
@@ -260,8 +269,18 @@ public class Magento_UserInfoVerification {
 			
 			//String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
 			String actualVat = action.getAttribute(Cust_VAT, "value");
-			action.CompareResult("Verify the VAT number in Magento backend : ", ExpVATnumber, actualVat, test);
+			action.CompareResult("VAT number in Magento backend : ", ExpVATnumber, actualVat, test);
 
+			String verifyBillingAddChange = dataTable2.getValueOnOtherModule("adminUserUpdate", "billingAddress", 0);
+			if(verifyBillingAddChange.equalsIgnoreCase("yes")) {
+				action.click(admin_AddressBtn, "Address Tab", test);
+				action.explicitWait(6000);
+				action.click(admin_billingEdit, "Billing Address Edit", test);
+				String updatedBillingAddress = dataTable2.getValueOnOtherModule("adminUserUpdate", "adminBilling_streetAddress_output", 0);
+				String actualBillingAdd = action.getAttribute(admin_Billing_streetAddress, "value");
+				action.CompareResult("Billing Address In Magento Backend", updatedBillingAddress, actualBillingAdd, test);
+			}
+					
 			
 		}else if(typeOfVerificationFlag.equalsIgnoreCase("Guest Customer Creation")) {
 			//GETS DATA FROM deliveryPopulation
@@ -280,7 +299,12 @@ public class Magento_UserInfoVerification {
 			String expTelephone =dataTable2.getValueOnOtherModule("deliveryPopulation", "telephone",0).trim();
 			String magentoGuestEmail = guestEmail.getText();
 			
-			guestEditBtn.click();
+			
+			//action.scrollElementIntoView(guestEditBtn);
+			action.scrollElemetnToCenterOfView(guestEditBtn);
+			//action.explicitWait(000);
+			action.click(guestEditBtn, "Guest Edit Button", test);
+			//guestEditBtn.click();
 			String magentoGuestID = action.getAttribute(guestID, "value");
 			String magentoGuestFirstName = action.getAttribute(guestFirstName, "value");
 			String magentoGuestLastName = action.getAttribute(guestLastName, "value");
@@ -320,6 +344,7 @@ public class Magento_UserInfoVerification {
 			 * =dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode",0);
 			 */
 		}else if(typeOfVerificationFlag.equalsIgnoreCase("Registered customer from sales order")) {
+			action.scrollElemetnToCenterOfView(Account_Information);	
 			action.click(Account_Information, "Account Information", test);
 			//NOTE DELIVERY POPULATION WITH REGISTERED new USER HAS TO RUN FOR THIS TO POPULATE ALSO EXISTING WITH EXISTING ADDRESS
 			//Map<String,String> customerDetails =ICDelivery.registeredUserDetails;

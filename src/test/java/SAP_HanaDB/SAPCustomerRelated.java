@@ -145,6 +145,7 @@ public class SAPCustomerRelated {
 		//if not checked it takes the original email
 		String updateEmailFlag =null;
 		String updateEmail= null;
+		//ADD FLAG FOR UPDATE MAGENTO BACK THAT NAVIGATES  
 		String customerMagentoEmail = null;
 		
 		String updatedMagentoBillingEmailFlag = null;
@@ -227,13 +228,11 @@ public class SAPCustomerRelated {
 		String SAPProvince = customerDetails.get("BEZEI");
 		String SAPbuildingDetails = customerDetails.get("STR_SUPPL3");
 		
-		if(sapVatnumber == null) {
-			sapVatnumber = "";
-		}
-		
-		if(SAPtelNumber == null){
-			SAPtelNumber = "";
-		}
+		/*
+		 * if(sapVatnumber == null) { sapVatnumber = ""; }
+		 * 
+		 * if(SAPtelNumber == null){ SAPtelNumber = ""; }
+		 */
 		switch (typeOfSAPValidation) {
 			//Customer details for relevant properties are taken and compared to details in SAP
 			case "Customer Update":
@@ -345,7 +344,9 @@ public class SAPCustomerRelated {
 				String 	emailUpdateFlag = mySheets.get(4).get("email").get(customerUpdateBackEndSheet);
 				if (emailUpdateFlag.equalsIgnoreCase("yes")) {
 					action.CompareResult("SAP Email", updatedMagentoBillingEmail, SAPEmail, test);
-					action.CompareResult("SAP email", customerMagentoEmail, SAPEmail, test);
+					//action.CompareResult("SAP email", customerMagentoEmail, SAPEmail, test);
+				}else {
+					action.CompareResult("SAP Email", currentCustomerMagentoBillingEmail, SAPEmail, test);
 				}
 				String billingAddressUpdateFlag = mySheets.get(4).get("billingAddress").get(customerUpdateBackEndSheet);
 				if (billingAddressUpdateFlag.equalsIgnoreCase("yes")) {
@@ -353,17 +354,26 @@ public class SAPCustomerRelated {
 					if(billingStreeAddressUpdateFlag.equalsIgnoreCase("yes")) {
 						String updatedBillingStreeAddress = mySheets.get(4).get("adminBilling_streetAddress_output").get(customerUpdateBackEndSheet);
 						action.CompareResult("SAP billing street", updatedBillingStreeAddress, SAPStreetAddress, test);
-					}
-					String updatedBillingBuilding = mySheets.get(4).get("billing_buildingDetails_output").get(customerUpdateBackEndSheet);
-					String updatedBillingProvince = mySheets.get(4).get("billing_provinceName_output").get(customerUpdateBackEndSheet);
-					String updatedBillingCity = mySheets.get(4).get("billing_city_output").get(customerUpdateBackEndSheet);
-					String updatedBillingSuburb = mySheets.get(4).get("billing_suburb_output").get(customerUpdateBackEndSheet);
-					String updatedBillingPostalCode = mySheets.get(4).get("billing_postalCode_output").get(customerUpdateBackEndSheet);
-					action.CompareResult("SAP Billing building", updatedBillingBuilding, SAPbuildingDetails, test);
-					action.CompareResult("SAP Province", updatedBillingProvince, SAPProvince, test);
-					action.CompareResult("SAP City", updatedBillingCity, SAPcity, test);
-					action.CompareResult("SAP Suburb", updatedBillingSuburb, SAPsuburb, test);
-					action.CompareResult("SAP Postal Code", updatedBillingPostalCode, SAPpostCode, test);
+					}					
+					/*
+					 * String updatedBillingBuilding =
+					 * mySheets.get(4).get("billing_buildingDetails_output").get(
+					 * customerUpdateBackEndSheet); String updatedBillingProvince =
+					 * mySheets.get(4).get("billing_provinceName_output").get(
+					 * customerUpdateBackEndSheet); String updatedBillingCity =
+					 * mySheets.get(4).get("billing_city_output").get(customerUpdateBackEndSheet);
+					 * String updatedBillingSuburb =
+					 * mySheets.get(4).get("billing_suburb_output").get(customerUpdateBackEndSheet);
+					 * String updatedBillingPostalCode =
+					 * mySheets.get(4).get("billing_postalCode_output").get(
+					 * customerUpdateBackEndSheet); action.CompareResult("SAP Billing building",
+					 * updatedBillingBuilding, SAPbuildingDetails, test);
+					 * action.CompareResult("SAP Province", updatedBillingProvince, SAPProvince,
+					 * test); action.CompareResult("SAP City", updatedBillingCity, SAPcity, test);
+					 * action.CompareResult("SAP Suburb", updatedBillingSuburb, SAPsuburb, test);
+					 * action.CompareResult("SAP Postal Code", updatedBillingPostalCode,
+					 * SAPpostCode, test);
+					 */
 				}
 				break;
 			case "Guest Customer Creation":
@@ -536,12 +546,12 @@ public class SAPCustomerRelated {
 			if(!d.isEmpty()) {
 				dataStore.put(but000.toString(), d.get(0));
 			}else {
-				dataStore.put(but000.toString(), null);
+				dataStore.put(but000.toString(), "");
 			}
 		}
 	}
 	public void adr6Data(String ADRCNumber) throws SQLException {
-		String query = "SELECT * FROM SAPEQ1.ADR6 WHERE ADDRNUMBER = '"+ADRCNumber+"' AND FLG_NOUSE = ''";
+		String query = "SELECT * FROM SAPEQ1.ADR6 WHERE ADDRNUMBER = '"+ADRCNumber+"' AND FLG_NOUSE = ''"; //NEED TO CHANGE SOMETHING IN THE QUERY
 		ResultSet set = hn.ExecuteQuery(query);
 		int rowsCountReturned = hn.GetRowsCount(set);
 		for(adrc6Columns but000 : adrc6Columns.values()) {
@@ -549,7 +559,7 @@ public class SAPCustomerRelated {
 			if(!d.isEmpty()) {
 				dataStore.put(but000.toString(), d.get(0));
 			}else {
-				dataStore.put(but000.toString(), null);
+				dataStore.put(but000.toString(), "");
 			}
 		}
 	}
@@ -563,7 +573,7 @@ public class SAPCustomerRelated {
 			if(!d.isEmpty()) {
 				dataStore.put(but000.toString(), d.get(0));
 			}else {
-				dataStore.put(but000.toString(), null);
+				dataStore.put(but000.toString(), "");
 			}
 		}
 	}
@@ -577,7 +587,7 @@ public class SAPCustomerRelated {
 			if(!d.isEmpty()) {
 				dataStore.put(but000.toString(), d.get(0));
 			}else {
-				dataStore.put(but000.toString(), null);
+				dataStore.put(but000.toString(), "");
 			}
 		}
 	}
@@ -591,7 +601,7 @@ public class SAPCustomerRelated {
 			if(!d.isEmpty()) {
 				dataStore.put(but000.toString(), d.get(0));
 			}else {
-				dataStore.put(but000.toString(), null);
+				dataStore.put(but000.toString(), "");
 			}
 		}
 	}
@@ -607,7 +617,7 @@ public class SAPCustomerRelated {
 			if(!d.isEmpty()) {
 				dataStore.put(adrc.toString(), d.get(0));
 			}else {
-				dataStore.put(adrc.toString(), null);
+				dataStore.put(adrc.toString(), "");
 			}
 		}
 		

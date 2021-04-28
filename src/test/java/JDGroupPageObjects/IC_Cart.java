@@ -49,11 +49,11 @@ public class IC_Cart {
 	    
 	    //@FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
 	    @FindBy(xpath = "//header/div[2]/div/div[3]/div[3]/a")
-	    public WebElement iCCartButton;
+	    private WebElement iCCartButton;
 	    
 	    //loop throUGH THIS HERE TO DETERMINE IF THE PRODUCT IS FOUND, IF FOUND VALIDATE QUANTITY AND PRICE
 	    @FindBy(xpath="//*[@id=\"mini-cart\"]/li")
-	     List<WebElement> icAllCartProducts;
+	    private List<WebElement> icAllCartProducts;
 	    
 	    @FindBy(xpath="//*[@id=\"minicart-content-wrapper\"]/div[2]/div[2]/div[1]/div/span/span")
 	    private WebElement icSubtotal;

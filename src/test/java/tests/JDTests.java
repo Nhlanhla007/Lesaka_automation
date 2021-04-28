@@ -385,6 +385,7 @@ public class JDTests extends BaseTest {
 				CreditApp_NavigateFilter.VerifyCreditAppSelection(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "CreditStatusVerification":
+				CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get("CreditStatusVerification++"), test1, rowNumber);
 				CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "icLogoHomepage":

@@ -138,7 +138,8 @@ public class ICDelivery {
     	Postalcode = input.get("postalCode").get(rowNumber);
     	String addressType = dataSheets.getValueOnCurrentModule("AddressType"); 
     	String userType = dataSheets.getValueOnCurrentModule("UserType");
-        Thread.sleep(1500);
+        //Thread.sleep(10000);
+    	action.explicitWait(15000);
         action.click(deliveryLink,"deliveryLink",test);
         String addressTypeICFont = ic_AddressType.getText();
         Thread.sleep(4000);
@@ -166,6 +167,7 @@ public class ICDelivery {
             action.writeText(firstName,dataSheets.getValueOnCurrentModule("firstName"),"firstName",test);
             action.writeText(lastname,dataSheets.getValueOnCurrentModule("lastname"),"lastname",test);
             action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
+
             action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
 
         }
@@ -175,6 +177,7 @@ public class ICDelivery {
         action.writeText(Suburb,dataSheets.getValueOnCurrentModule("Suburb"),"Suburb",test);
         action.writeText(postalCode,dataSheets.getValueOnCurrentModule("postalCode"),"postalCode",test);
         action.writeText(vatNumber,dataSheets.getValueOnCurrentModule("vatNumber"),"vatNumber",test);
+
         action.dropDownselectbyvisibletext(province,dataSheets.getValueOnCurrentModule("province"),"province",test);
         Thread.sleep(10000);
         }else if(addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")) {
