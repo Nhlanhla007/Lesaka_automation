@@ -351,6 +351,7 @@ public class JDTests extends BaseTest {
 				break;
 			case "icExistingAddress":
 				icExistingAddress.AddressThere(test1);
+				break;
 			case "icSearchMinimumCharacter":
 				icMinimumCharacter.icValidMinimumSearch(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;

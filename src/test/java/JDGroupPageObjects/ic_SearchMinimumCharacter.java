@@ -30,13 +30,13 @@ public class ic_SearchMinimumCharacter {
 	
    static Logger logger = Log.getLogData(Action.class.getSimpleName());
 	
-	@FindBy(xpath = "//input[@id='search']")
+	@FindBy(xpath = "//*[@name=\"q\"]")
 	WebElement icSearchBar;
 	
 	@FindBy(xpath = "//header/div[2]/div[1]/div[2]/div[1]/form[1]/div[3]/button[1]")
 	WebElement icSearchIcon;
 	
-	@FindBy(xpath = "//div[@role='region']")
+	@FindBy(xpath = "/html/body/div[4]")
 	WebElement icContinueTyping;
 	
 	

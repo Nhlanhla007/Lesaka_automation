@@ -33,10 +33,11 @@ public class ic_existingAddress {
     
     public void AddressThere(ExtentTest test) throws IOException, InterruptedException{
     	
-    	Thread.sleep(8000);
+    	action.explicitWait(8000);
     	action.click(ic_Deliver, "The address is already", test);
-    	Thread.sleep(8000);
+    	action.explicitWait(8000);
     	action.click(ic_continuePayment, "continue Payment", test);
+    	action.explicitWait(5000);
     }
 
 }

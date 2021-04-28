@@ -29,12 +29,13 @@ public class ic_validateDifferentPaymentOptions {
     }
     
     public void validatePaymentOption(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception{
-    	String typesOfPayments = dataTable2.getValueOnCurrentModule("Types_of_Payments");
-    	
-    	WebElement paymentMethod = byPayments(typesOfPayments);
-    	
-    	action.click(paymentMethod, "Select Payment type", test);
-   
+    	String paymentOptions = dataTable2.getValueOnCurrentModule("PaymentOptions");
+    	String [] paymentArray = paymentOptions.split("\\|");
+    	for(String singlePayment: paymentArray){
+    		WebElement paymentMethod = byPayments(singlePayment.trim());
+        	action.click(paymentMethod, singlePayment, test);		
+    	}
+    
     }
     
     public WebElement byPayments(String typesOfPayments) {
