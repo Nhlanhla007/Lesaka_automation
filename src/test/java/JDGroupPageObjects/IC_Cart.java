@@ -119,8 +119,8 @@ public class IC_Cart {
 				  }
 				action.CompareResult("Products Total", String.valueOf(sum), icSubtotal.getText().replace("R", "").replace(",", "").replace(".", "") , test);				
 				action.CompareResult("Cart Counter Verfication", String.valueOf(allProductsInCartQuantity), itemsCount, test);
-				action.clickEle(icCCheckout, "Secure Checkout", test);
-				dataTable2.setValueOnOtherModule("ClearCart", "CartTotal", String.valueOf(sum), 0);
+				action.clickEle(icCCheckout, "Secure Checkout", test);				
+				dataTable2.setValueOnOtherModule("ProductSearch", "CartTotal", String.valueOf(sum), 0);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				logger.info(e.getMessage());

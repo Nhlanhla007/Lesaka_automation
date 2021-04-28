@@ -141,7 +141,8 @@ public class Magento_UserInfoVerification {
 		//***************************************
 		if(typeOfVerificationFlag.equalsIgnoreCase("Create Account")) {	
 			//GETS DATA FROM ACCOUNT CREATION
-			js.executeScript("window.scrollBy(0,0)");
+		js.executeScript("window.scrollBy(0,0)");
+		action.scrollElemetnToCenterOfView(Account_Information);
 		action.click(Account_Information, "Account Information", test);
 		ExpFirstname=input.get("firstName").get(rowNumber);//"Brian";
 		ExpLastname=input.get("lastName").get(rowNumber);//"Jones";
@@ -343,6 +344,7 @@ public class Magento_UserInfoVerification {
 			 * =dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode",0);
 			 */
 		}else if(typeOfVerificationFlag.equalsIgnoreCase("Registered customer from sales order")) {
+			action.scrollElemetnToCenterOfView(Account_Information);	
 			action.click(Account_Information, "Account Information", test);
 			//NOTE DELIVERY POPULATION WITH REGISTERED new USER HAS TO RUN FOR THIS TO POPULATE ALSO EXISTING WITH EXISTING ADDRESS
 			//Map<String,String> customerDetails =ICDelivery.registeredUserDetails;

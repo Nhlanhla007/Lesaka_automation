@@ -94,7 +94,7 @@ import utils.hana;
 			 Primarykey key = Primarykey.VBELN;
 			 
 			//Expected al details to be validated--------------------------------------
-			String cartSum = dataTable2.getValueOnOtherModule("ClearCart", "CartTotal", 0);
+			String cartSum = dataTable2.getValueOnOtherModule("ProductSearch", "CartTotal", 0);
 			String SAP_orderNo=dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber","OrderSAPnumber",0);
 			String ExpPurchaseOrderNo =dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);
 			String ExpGrandTotal =String.valueOf(cartSum);//comes from cart total
