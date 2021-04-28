@@ -47,7 +47,6 @@ public class JDGTest_TestNG<moduleName> {
 
     @BeforeMethod
     public void setUp() throws Exception {
-        GenerateEmail.errorFlag=false;
         occCount=new HashMap<String, Integer>();
         startBrowserSession();
     }

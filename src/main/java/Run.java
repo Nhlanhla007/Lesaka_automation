@@ -61,7 +61,7 @@ public class Run {
             if(suiteIC.get("Execute").get(i).toLowerCase().equals("yes")){
                 Element include = document.createElement("include");
                 Attr includeName = document.createAttribute("name");
-                includeName.setValue(suiteIC.get("Test Case Name").get(i));
+                includeName.setValue(suiteIC.get("Test_Case_Name").get(i));
                 include.setAttributeNode(includeName);
                 methods.appendChild(include);
 //                System.out.println("include");
