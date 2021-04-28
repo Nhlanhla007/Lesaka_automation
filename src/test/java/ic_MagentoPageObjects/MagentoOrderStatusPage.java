@@ -105,14 +105,13 @@ public class MagentoOrderStatusPage {
 			action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
 		} else {
 			action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
-		}
+		} 
 	}
 	
 	public void orderStatusCheck(String orderStatus, ExtentTest test) throws IOException {
 		action.CompareResult("Order Status", orderStatus, magentoOrderStatus.getText(), test);
 	}
 	
-	@Step("Navigates to the order page")
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException, InterruptedException {
 //		String POfetchFrom = dataTable2.getValueOnOtherModule("OrderStatusSearch", "Fetch PO number", 0);
 //		String idToSearch = dataTable2.getValueOnOtherModule("PayUPagePayment","OrderID",0);

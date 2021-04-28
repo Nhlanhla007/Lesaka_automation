@@ -14,7 +14,6 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
-import io.qameta.allure.Step;
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
@@ -57,7 +56,6 @@ public class ic_Login {
 		public static String Username;
 		
 		//vv
-		@Step("Login to IC")
 		public List<String> Login_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 			driver.navigate().to(ConfigFileReader.getPropertyVal("URL"));
 //			action.waitForPageLoaded(10);
@@ -71,8 +69,8 @@ public class ic_Login {
 			String Password =dataTable2.getValueOnCurrentModule("Password");
 			userCred.add(Username);
 			userCred.add(Password);
-			action.writeText(ic_Username, Username, "Username Field", test);
-			action.writeText(ic_Password, Password, "Password Field", test);
+			action.writeText(ic_Username, Username, "Username field", test);
+			action.writeText(ic_Password, Password, "Password field", test);
 			action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
 				userCreds(userCred);
 				
@@ -89,7 +87,7 @@ public class ic_Login {
 		public List<String> userCreds(List<String> userCreds){
 			return userCreds;
 		}	
-
+		
 		public void logout(ExtentTest test,HashMap<String, ArrayList<String>> input,int rowNumber) throws Exception {
 			action.click(ic_myAccountButton, "My account", test);
 			//action.mouseover(logout, "logout");

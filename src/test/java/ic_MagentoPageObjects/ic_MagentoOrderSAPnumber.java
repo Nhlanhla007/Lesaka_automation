@@ -36,7 +36,7 @@ public class ic_MagentoOrderSAPnumber {
     Timer t = new Timer();
     public static String OrderSAPnumber;
     
-    public void GenerateOrderSAPnumber(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException {
+    public void GenerateOrderSAPnumber(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
     	boolean flagres = false;
     	int totalConunter=0;
     	String OrderSAPnumber = "";
@@ -85,6 +85,7 @@ public class ic_MagentoOrderSAPnumber {
     		action.CompareResult("Verify SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
     	}else{
     		action.CompareResult("Verify SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
+    		throw new Exception("SAP Order Number Is Not Generated");
     	}
     	System.out.println();
     }

@@ -13,6 +13,7 @@ import base.TestCaseBase;
 import emailverification.ICGiftCardVerification;
 import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ICWishlistverification;
+import emailverification.ic_ResetPasswordEmailLink;
 import ic_MagentoPageObjects.*;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.Magento_UserInfoVerification;
@@ -76,6 +77,7 @@ public class JDTests extends BaseTest {
 
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException, InterruptedException {
+
 		int numberOfTestCases =singleSuiteData.get("Execute").size();
 		for(int i=0;i<numberOfTestCases;i++){
 			System.out.println("TestCaseNumber:"+i);
@@ -154,11 +156,13 @@ public class JDTests extends BaseTest {
 		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver,dataTable2);
 		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver,dataTable2);
 		ic_Login ic_login = new ic_Login(driver,dataTable2);
+		ic_verifyDeliveryOptions icDeliveryOptionDisplay = new ic_verifyDeliveryOptions(driver,dataTable2);
 		ic_invalidLoginCreds ic_invalidCredslogin = new ic_invalidLoginCreds(driver, dataTable2);
 		ic_LoginPasswordIsSecured icPasswordSecured = new ic_LoginPasswordIsSecured(driver, dataTable2);
 		ic_forgotPasswordLink icforgottenPassLink = new ic_forgotPasswordLink(driver, dataTable2);
 		verifyForgotPassword icVerifyForgotPass = new verifyForgotPassword(driver, dataTable2);
 		ic_PasswordForgotEmailVerification icForgotEmailSent = new ic_PasswordForgotEmailVerification(driver, dataTable2);
+		ic_ResetPasswordEmailLink ResetPasswordLink = new ic_ResetPasswordEmailLink(driver, dataTable2);
 		ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver,dataTable2);
 		SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2,dataTable2);
 		ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver,dataTable2);
@@ -196,6 +200,7 @@ public class JDTests extends BaseTest {
 		ic_SendWishlistToEmail SendWishlistToEmail = new ic_SendWishlistToEmail(driver, dataTable2);
 		ICWishlistverification icEmailWishlistverification = new ICWishlistverification(driver, dataTable2);
 		RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
+		IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -224,6 +229,11 @@ public class JDTests extends BaseTest {
 				break;
 			case "icEmailSentVerification":
 				icForgotEmailSent.icVerifyNewPasswordEmailSent(dataMap2.get("accountCreation++"),test1,rowNumber);
+				break;
+			case "icResetForgottenPassword":
+				ResetPasswordLink.clickLinkOnGmail(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				ResetPasswordLink.resetNewPassword(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+				ResetPasswordLink.clickUsedResetLink(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
 			case "Logout":
 				ic.logout(test1);
@@ -375,6 +385,7 @@ public class JDTests extends BaseTest {
 				CreditApp_NavigateFilter.VerifyCreditAppSelection(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "CreditStatusVerification":
+				CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get("CreditStatusVerification++"), test1, rowNumber);
 				CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "icLogoHomepage":
@@ -436,6 +447,12 @@ public class JDTests extends BaseTest {
 			case"verifyCart":
 				icCart.verifyCart(test1);
 				break;
+			case "Pagination":
+				pagination.paginate(test1);
+				break;
+			case"verifyDeliveryOption":
+				icDeliveryOptionDisplay.validateDeliveryOptionsDisplays(test1, rowNumber);
+				break;
 		}
 	}
 
@@ -474,14 +491,11 @@ public class JDTests extends BaseTest {
 			navigateURL = System.getProperty("URL");
 			if(navigateURL==null){
 				logger.info("System property returned Null URL. So getting data from Config file");
-				Report.info("System property returned Null URL. So getting data from Config file");
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
-
-				navigateURL = ConfigFileReader.getPropertyVal("URL");
+			navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 			logger.info("Navigate to URL");
-			Report.info("Navigating to URL: "+navigateURL);
 
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();

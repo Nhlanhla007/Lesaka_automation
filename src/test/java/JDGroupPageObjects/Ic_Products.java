@@ -114,8 +114,10 @@ public class Ic_Products {
 	 * @return WebElement
 	 */
 	public WebElement returnNext() {
-		boolean clickN = action.attributeEnabled(ic_ClickNext);
-		if(clickN) {
+		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		boolean isPresent = driver.findElements(By.xpath( "//span[contains(text(),'Next')]" ) ).size() > 0;
+		//boolean clickN = action.attributeEnabled(ic_ClickNext);
+		if(isPresent) {
 			WebElement web = ic_ClickNext.findElement(By.xpath(".//parent::*"));
 			boolean status = action.attributeValidation(web,"aria-disabled","false",5);
 			if(status) {
@@ -299,7 +301,7 @@ public class Ic_Products {
 
 	void addToCartFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
 		if(quanity == 1) {
-			action.clickEle(productLink, "Navigate to product Details page", test);
+			action.click(productLink, "Navigate to product listing page", test);
 		}
 		//click on product name and enter listing page
 		//confirm that page has loaded
@@ -389,7 +391,6 @@ public class Ic_Products {
 									quantityExecu++;
 									switch(TypeOfOperation){
 									case "Add_To_Cart":
-										quantityExecu++;
 										addToCartFromProdDetailsPage(prod,waitTimeInSeconds,quantityExecu,test);
 										break;
 									case "Add_To_Wishlist":

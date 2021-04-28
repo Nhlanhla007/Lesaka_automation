@@ -3,11 +3,8 @@ package listner;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.mail.MessagingException;
+
 import org.apache.log4j.Logger;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.testng.IExecutionListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -17,12 +14,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 
 import Logger.Log;
-import customreports.Output;
-import customreports.Reporter;
-import extentReports.ExtentManager;
-import io.qameta.allure.Attachment;
 import pageddef.PageDef;
-import tests.BaseTest;
 import utils.*;
 
 public class TestNGListener implements IExecutionListener, ITestListener {
@@ -52,20 +44,18 @@ public class TestNGListener implements IExecutionListener, ITestListener {
 	 */
 
 	// Text attachments for Allure
-	@Attachment(value = "{0}", type = "text/plain")
 	public static String saveTextLog(String message) {
 		return message;
 	}
 
 	// HTML attachments for Allure
-	@Attachment(value = "{0}", type = "text/html")
 	public static String attachHtml(String html) {
 		return html;
 	}
 
 	@Override
 	public synchronized void onStart(ITestContext context) {
-		extent = ExtentManager.getReporter();
+
 
 		/*
 		 * ExtentTest parent =

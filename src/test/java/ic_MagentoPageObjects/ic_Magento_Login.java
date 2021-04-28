@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
-import io.qameta.allure.Step;
+
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
@@ -41,13 +41,11 @@ public class ic_Magento_Login {
 		WebElement Dashboard;
 		
 		//vv
-		@Step("Login to magento")
 		public void Login_magento(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 			String Username = input.get("Username").get(rowNumber);
 			String Password = input.get("Password").get(rowNumber);
 			LoginToMagento(test,Username,Password);
 	     }
-		@Step("Login  magento")
 		public void LoginToMagento(ExtentTest test,String Username, String Password) throws IOException{
 			driver.navigate().to(ConfigFileReader.getPropertyVal("MagentoURL"));
 			action.waitForPageLoaded(10);

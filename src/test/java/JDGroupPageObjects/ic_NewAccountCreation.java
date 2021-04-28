@@ -154,7 +154,6 @@ public class ic_NewAccountCreation {
 		}
 	}
 
-	@Step("Create account")
 	public  void accountCreation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException {
 		String navigateURL = ConfigFileReader.getPropertyVal("URL");
 		action.navigateToURL(navigateURL);
@@ -235,18 +234,21 @@ public class ic_NewAccountCreation {
 				confirmPassword = ic_VerifyPasswordcanDiffer(confirmPassword);
 				action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
 				action.click(CreateAccountBtn, "Create account", test);
-				action.elementExistsPopUpMessage(enterMatchingPassword, 4000, "Check password", test);
+				action.elementExistWelcome(enterMatchingPassword, 4000, "Check password", test);
 			}else {
 				action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
 				action.click(CreateAccountBtn, "Create account", test);
 			}
 			
 			if(existingAccountValidation.equalsIgnoreCase("yes")) {
-				action.elementExistsPopUpMessage(existingAccountError, 4000, existingAccountError.getText(), test);
+				action.elementExistWelcome(existingAccountError, 6, existingAccountError.getText(), test);
 			}
 			
+			if(!(saIDvalidateIncorrectID.equalsIgnoreCase("yes") | saIDvalidateIDWithLessDigits.equalsIgnoreCase("yes") | 
+					saIDvalidateIDWithMoreDigits.equalsIgnoreCase("yes")  | 
+					passwordValidation.equalsIgnoreCase("yes") | existingAccountValidation.equalsIgnoreCase("yes"))) {
 				Verify_Acount_Information(test, firstName, lastName, emailAddress, identityNumber,taxVatNumbe,tavVatNumberFlagStatus,identityType,selectNewsLetter);
-
+			}
 			/*
 			 * if(verifyMagentoDetails.equalsIgnoreCase("Yes")) {
 			 * Magento_VerifyCustomerDetails(test
@@ -293,16 +295,16 @@ public class ic_NewAccountCreation {
 			if (saID.length() < 13) {
 				action.click(CreateAccountBtn, "Create account", test);
 				Thread.sleep(15000);
-				action.elementExistsPopUpMessage(identityNumberError, 4000, identityNumberError.getText(), test);
+				action.elementExistWelcome(identityNumberError, 4000, identityNumberError.getText(), test);
 			} else if (saID.length() > 13) {
 				System.out.println("Enters more than 13 digits");
 				action.click(CreateAccountBtn, "Create account", test);
 				Thread.sleep(15000);
-				action.elementExistsPopUpMessage(identityNumberError, 4000, identityNumberError.getText(), test);
+				action.elementExistWelcome(identityNumberError, 4000, identityNumberError.getText(), test);
 			} else {
 				action.click(CreateAccountBtn, "Create account", test);
 				Thread.sleep(15000);
-				action.elementExistsPopUpMessage(identityNumberError, 4000, identityNumberError.getText(), test);
+				action.elementExistWelcome(identityNumberError, 4000, identityNumberError.getText(), test);
 			}
 		} catch (Exception e) {
 			logger.info(e.getMessage());
@@ -340,10 +342,10 @@ public class ic_NewAccountCreation {
 	@Step("To verify account information")
     public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID,String expVatNumber,String expVatNumberFlag,String expIdentityType,String expNewsletter) throws IOException{
         String ExpPage ="edit";
-        Boolean accInfoOpt = action.elementExists(Account_info_option, 11);
+        boolean accInfoOpt = action.elementExists(Account_info_option, 11);
         if(accInfoOpt==true){
             action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
-            action.clickEle(Account_info_option, "Account info link", test);
+            action.click(Account_info_option, "Account info link", test);
             action.waitExplicit(11);
             if(driver.getCurrentUrl().contains(ExpPage+"/")){
                 action.CompareResult("Verify Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);

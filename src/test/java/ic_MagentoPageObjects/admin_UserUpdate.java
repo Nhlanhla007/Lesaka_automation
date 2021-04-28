@@ -2,6 +2,7 @@ package ic_MagentoPageObjects;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -72,7 +73,7 @@ public class admin_UserUpdate {
 	@FindBy(xpath="//*[@id=\"tab_address\"]")
 	private WebElement admin_AddressBtn;
 					//*[@id="container"]/div/div/div[2]/div[2]/div/div[2]/fieldset/div[1]/button/span 
-	@FindBy(className ="edit-default-billing-address-button action-additional")//button[@title='Add New Customer'] /html[1]/body[1]/div[6]/aside[1]/div[2]/header[1]/div[1]/div[1]/button[1]/span[1]/span[1]
+	@FindBy(xpath = "//*[@class=\"edit-default-billing-address-button action-additional\"]/span")//button[@title='Add New Customer'] /html[1]/body[1]/div[6]/aside[1]/div[2]/header[1]/div[1]/div[1]/button[1]/span[1]/span[1]
 	private WebElement admin_billingEdit;	
 	
 	@FindBy(xpath="//*[@id=\"container\"]/div/div/div[2]/div[2]/div/div[2]/fieldset/div[3]/div/div[3]/table/tbody/tr[2]/td[10]/div/ul/li[1]/a")
@@ -97,6 +98,8 @@ public class admin_UserUpdate {
 	@FindBy(xpath="//*[@id=\"messages\"]/div/div/div ")
 	private WebElement admin_successSaved;
 	
+	List<String> streetAddresses;
+	
 	
 	//@Step("Edit Customer information")
     public void editCustomerDetails(ArrayList<HashMap<String, ArrayList<String>>> adminSheets,ExtentTest test,int testcaseID){
@@ -109,7 +112,7 @@ public class admin_UserUpdate {
 	    	String lastName = adminSheets.get(0).get("lastName").get(sheetRow1);
 	    	String taxVat = adminSheets.get(0).get("taxVat").get(sheetRow1);
 	    	String email = adminSheets.get(0).get("emailAddress_input").get(sheetRow1);
-	    	
+	    	String emailFlag = adminSheets.get(0).get("email").get(sheetRow1);
 	    	Random rand = new Random();
 			String id = String.format("%04d", rand.nextInt(10000));
 	    	
@@ -194,9 +197,9 @@ public class admin_UserUpdate {
 	    	
 	    	admin_AccountInfoCustomer.click();
 	    	String emailText = action.getAttribute(admin_email, "value");
-	    	if(email.equalsIgnoreCase("yes")){
+	    	if(emailFlag.equalsIgnoreCase("yes")){
 	    		
-	    		String emailTextUpdated = "Updated" + id+  emailText;
+	    		String emailTextUpdated = ""+id+emailText;
 	    		
 	    		action.clear(admin_email, "removing the email");
 	    		action.writeText(admin_email,emailTextUpdated ,"last Name", test);
@@ -216,21 +219,41 @@ public class admin_UserUpdate {
 	    	admin_AddressBtn.click();
 	    	action.explicitWait(5000);
 	    	//Billing Address
+	    	
+
+	    	
 	    	if(billingAddress.equalsIgnoreCase("Yes")){
 	    		admin_billingEdit.click();
-	    		action.click(admin_billingEdit, "Edit", test);
-	    		action.javaScriptClick(admin_billingEdit, "Billing edit clicked", test);
+	    		//action.click(admin_billingEdit, "Edit", test);
+	    		//action.javaScriptClick(admin_billingEdit, "Billing edit clicked", test);
 	    		
-	    		driver.findElement(By.xpath("//*[@id=\"container\"]/div/div/div[2]/div[3]/div/div[2]/fieldset/div[1]/button/span")).click();
+		    	Random r = new Random();
+	    		//String randomAddres = streetAddresses.get(randomitem);
+	    		
+	    		streetAddresses = new ArrayList<>();
+	    		streetAddresses.add("98 Van Riebeeck Avenue");
+	    		streetAddresses.add("28 Harrison Street");
+	    		streetAddresses.add("45 Zenith Drive");
+	    		streetAddresses.add("510 Mississippi Street");
+	    		streetAddresses.add("4 Loop Street");
+	    		streetAddresses.add("234 Glover Avenue");
+	    		streetAddresses.add("72 Ceramic Curve");
+	    		streetAddresses.add("15 Alice Lane");
+	    		streetAddresses.add("315 York Avenue");
+	    		streetAddresses.add("35 Ballyclare Drive");
+	    		streetAddresses.add("100 Northern Parkway");
+	    		int randomitem = r.nextInt(streetAddresses.size());
+	    		//driver.findElement(By.xpath("//*[@id=\"container\"]/div/div/div[2]/div[3]/div/div[2]/fieldset/div[1]/button/span")).click();
 	    		String streetAdressText = action.getAttribute(admin_BillingStreetAddress, "value");
 	    		if(billing_streetAddress.equalsIgnoreCase("yes")){
 		    		
-		    		String streetAdressTextUpdated = streetAdressText + "Updated" + id;
+		    		String streetAdressTextUpdated = streetAddresses.get(randomitem);
 		    		action.clear(admin_BillingStreetAddress, "Removing Street address");
 	    	
 		    		action.writeText(admin_BillingStreetAddress, streetAdressTextUpdated, "Street address", test);
 		    		adminSheets.get(0).get("adminBilling_streetAddress_output").set(sheetRow1, streetAdressTextUpdated);
 		    		
+		    		action.explicitWait(6000);
 		    		action.click(admin_SaveBillingBtn, "Save", test);
 		    	}else {
 		    		adminSheets.get(0).get("adminBilling_streetAddress_output").set(sheetRow1, streetAdressText);

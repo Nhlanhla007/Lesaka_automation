@@ -60,7 +60,7 @@ public class customerValidationUpdates {
 	
 	MagentoAccountInformation magAccInfo;
 	
-	public void VerifyCustomerinfoUpadtes(ArrayList<HashMap<String, ArrayList<String>>> adminSheets,ExtentTest test,int testcaseID) throws IOException {
+	public void VerifyCustomerinfoUpadtes(ArrayList<HashMap<String, ArrayList<String>>> adminSheets,ExtentTest test,int testcaseID) throws Exception {
 		 
 		//magRetri.retrieveCustomerDetails(adminSheets, test, rowNumber);
 		

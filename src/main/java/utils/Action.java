@@ -530,11 +530,11 @@ public class Action {
 		if (elementAttr.getClass().getName().contains("By")) {
 			if (!(driver.findElement((By) elementAttr).isEnabled()))
 				logger.info("Element not enabled");
-			Assert.fail("Element is not displayed");
+
 		} else {
 			if (!((WebElement) elementAttr).isEnabled())
 				logger.info("Element not enabled");
-			Assert.fail("Element is not displayed");
+
 
 		}
 		return true;
@@ -1691,11 +1691,19 @@ public class Action {
 			node.fail(e.getMessage());
 		}
 	}
-	
+
 	public void scrollElementIntoView(WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		js.executeScript("arguments[0].scrollIntoView();", element);
 		explicitWait(6000);
+	}
+
+	public void scrollElemetnToCenterOfView(WebElement element) {
+		String scrollElementIntoMiddle = "var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);"
+                + "var elementTop = arguments[0].getBoundingClientRect().top;"
+                + "window.scrollBy(0, elementTop-(viewPortHeight/2));";
+
+		((JavascriptExecutor) driver).executeScript(scrollElementIntoMiddle, element);
 	}
 
 }

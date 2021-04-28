@@ -49,19 +49,18 @@ public class verifyForgotPassword {
 
 	public void forgotPasswordPage(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 		String email = dataTable2.getValueOnOtherModule("accountCreation", "emailAddress", 0);
-		
-		action.explicitWait(10000);
+		ConfigFileReader configFileReader = new ConfigFileReader();
+		action.navigateToURL(ConfigFileReader.getPropertyVal("URL"));
+		action.explicitWait(5000);
 		action.click(ic_myAccountButton, "click on my account", test);
 		action.explicitWait(3000);
 		action.click(ic_myAccountlist, "list", test);
 		action.explicitWait(3000);
 		action.click(ic_forgotPassword, "click forgot link password", test);
 		action.CompareResult("Redirecting to forgot password page", "Forgot Your Password?", ic_forgotPassword.getText(), test);
-		
 		action.writeText(ic_forgotPasswordTxt, email, "enter existing email", test);
-		action.explicitWait(10000);
+		action.explicitWait(5000);
 		action.click(ic_submit, "click submit", test);
-		
 		action.CompareResult("Reset new email sent message", "If there is an account associated with "+email+" you will receive an email with a link to reset your password.", ic_confirmMessage.getText(), test);
 		
 	}

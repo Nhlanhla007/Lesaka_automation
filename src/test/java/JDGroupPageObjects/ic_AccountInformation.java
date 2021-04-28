@@ -5,16 +5,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import com.aventstack.extentreports.ExtentTest;
-
-import io.qameta.allure.Step;
 import utils.Action;
 
 public class ic_AccountInformation {
@@ -46,7 +42,6 @@ public class ic_AccountInformation {
 	    @FindBy(xpath = "//input[@id='identity_number']")
 		WebElement SAID;
 	    
-		@Step("To verify account information")
 	    public void Verify_Acount_Information(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException{
 			String ExpPage ="edit";
 			System.out.println();

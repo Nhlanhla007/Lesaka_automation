@@ -10,8 +10,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
-
-import io.qameta.allure.Step;
 import utils.Action;
 import utils.DataTable2;
 
@@ -123,7 +121,6 @@ public class ic_EnterBasicDetails {
 	    @FindBy(xpath="//*[@id=\"creditApplicationForm.basicDetails__fieldset\"]/div/div[20]/div[1]/button[1]")
 	    private WebElement ic_basicNext;
 	    
-	    @Step("Enter Basic details")
 	    public void enterBasicInfor(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception{
 	    	
 	    	String AreYouSubjectToAnAdministrationOrder = dataTable2.getValueOnCurrentModule("AreYouSubjectToAnAdministrationOrder?");

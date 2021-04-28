@@ -11,7 +11,6 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
-import io.qameta.allure.Step;
 import utils.Action;
 import utils.DataTable2;
 
@@ -62,7 +61,6 @@ public class ic_SpouseDetails {
 	    @FindBy(xpath="//body[1]/div[1]/main[1]//form[1]/fieldset[2]//div[1]/button/span[1]")
 	    private WebElement ic_SpouseNext;
 	    
-	    @Step("Account Information")
 	    public void enterSpouseDetails(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 	    	String spouseTitle = dataTable2.getValueOnCurrentModule("spouseTitle");
 	    	String spouseSurname = dataTable2.getValueOnCurrentModule("spouseSurname");
