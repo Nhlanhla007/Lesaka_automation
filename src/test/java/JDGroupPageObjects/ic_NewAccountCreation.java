@@ -1,12 +1,10 @@
 package JDGroupPageObjects;
 import com.aventstack.extentreports.ExtentTest;
-import io.qameta.allure.Step;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.apache.log4j.Logger;
 import com.aventstack.extentreports.ExtentTest;
-import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,7 +14,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import com.aventstack.extentreports.ExtentTest;
 import Logger.Log;
-import io.qameta.allure.Step;
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
@@ -141,7 +138,6 @@ public class ic_NewAccountCreation {
 	  @FindBy(xpath = "//input[@name='customer[identity_number]']")
 	  WebElement customerIdentityNumber;
 
-	@Step("Click on create account")
 	public void ic_NavigateToCreateAccount(ExtentTest test) {
 		try {
 			action.click(ic_myAccountButton, "Navigate to accountTab",test);
@@ -282,13 +278,11 @@ public class ic_NewAccountCreation {
 		 * } }
 		 */
 	}
-	@Step("Check duplicate usercreate is possible")
 	public  void ic_VerifyDuplicateUser_created(){
      // call ic_EnternewUserDetails proceed and check the pop-up
 	}
 	
 	//TA15 ID VALIDATION
-	@Step("Check SAID can be lesser than 13 digit")
 	public  void ic_VerifySAIDLimit(String saID,ExtentTest test){
 
 		try {
@@ -313,7 +307,6 @@ public class ic_NewAccountCreation {
 	}
 
 	//TA15 PASSWORD CHECK
-	@Step("Check Password can be different")
 	public  String ic_VerifyPasswordcanDiffer(String passwordToChange){
 		passwordToChange += "fail";
 		return passwordToChange;
@@ -339,7 +332,6 @@ public class ic_NewAccountCreation {
 	
 	//Sourav TA17
 	//TA27,28,29,30,31 CHECKS FLAG AND VALIDATES WHAT FLAG INDICATED COLUMN H IN accountCreation++
-	@Step("To verify account information")
     public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID,String expVatNumber,String expVatNumberFlag,String expIdentityType,String expNewsletter) throws IOException{
         String ExpPage ="edit";
         boolean accInfoOpt = action.elementExists(Account_info_option, 11);

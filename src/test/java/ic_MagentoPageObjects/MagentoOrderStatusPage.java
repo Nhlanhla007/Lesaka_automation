@@ -13,7 +13,6 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import JDGroupPageObjects.ic_PayUPayment;
-import io.qameta.allure.Step;
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
