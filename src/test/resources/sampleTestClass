@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 //@Listeners(listner.TestNGListener.class)
 
-public class JDGTest_TestNG<moduleName> {
+public class testTestClass<moduleName> {
     public WebDriver driver;
     protected DataTable dataTable = null;
     protected ConfigFileReader configFileReader;
@@ -51,46 +51,7 @@ public class JDGTest_TestNG<moduleName> {
         startBrowserSession();
     }
     //Start Tests-----------------------------------------------------------------------
-
-    @Test(testName ="31_Create_Customer_Account_from_Sales_Order" )
-    public void Create_Customer_Account_from_Sales_Order() throws Exception {
-        String testMethodName="Create_Customer_Account_from_Sales_Order";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
-    @Test(testName ="26_Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
-    public void Create_Sales_Order_Guest_User_Thorugh_Product_Search() throws Exception {
-        String testMethodName="Create_Sales_Order_Guest_User_Thorugh_Product_Search";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
-    @Test(testName ="2_Create_new_customer_in_IC_with_ID_Number" )
-    public void Create_new_customer_in_IC_with_ID_Number() throws Exception {
-        String testMethodName="Create_new_customer_in_IC_with_ID_Number";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
-    @Test(testName ="42_Click_the_IC_logo_to_go_home_page" )
-    public void Click_the_IC_logo_to_go_home_page() throws Exception {
-        String testMethodName="Click_the_IC_logo_to_go_home_page";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-    @Test(testName ="45_Validating_the_minimum_search_characters" )
-    public void Validating_the_minimum_search_characters() throws Exception {
-        String testMethodName="Validating_the_minimum_search_characters";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
+    ${AllTestMethods}
     //End Tests-------------------------------------------------------------------------
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {
@@ -109,10 +70,10 @@ public class JDGTest_TestNG<moduleName> {
     }
 
     public int getTestCaseIndex(String testMethodName){
-        int numTC=dataMap2.get("IC").get("Test Case Name").size();
+        int numTC=dataMap2.get("IC").get("Test_Case_Name").size();
         int index=0;
         for(int i=0;i<numTC;i++){
-            if(testMethodName.equals(dataMap2.get("IC").get("Test Case Name").get(i))){
+            if(testMethodName.equals(dataMap2.get("IC").get("Test_Case_Name").get(i))){
                 index=i;
                 testcaseID=Integer.parseInt(dataMap2.get("IC").get("TestCaseID").get(i));
                 dataTable2.setTestCaseID(testcaseID);

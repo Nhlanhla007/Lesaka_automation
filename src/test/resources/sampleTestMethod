@@ -1,0 +1,7 @@
+    @Test(testName ="${TCID}_${testCaseName}" )
+    public void ${testCaseName}() throws Exception {
+        String testMethodName="${testCaseName}";
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+        runner(TCIndex,test);
+    }
