@@ -23,7 +23,7 @@ public class GenerateScreenShot {
         try {
             copyFile(source,finalDestination);
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return destination2;
     }
