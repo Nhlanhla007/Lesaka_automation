@@ -28,7 +28,7 @@ public class Run {
         DataTable2 dataTable2;
         dataTable2= new DataTable2();
 
-        String moduleName="UPDATEFINAL";
+        String moduleName="MAIN";
 
         dataTable2.setPath(moduleName);
         LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
