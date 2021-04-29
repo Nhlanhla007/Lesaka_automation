@@ -74,10 +74,10 @@ public class testTestClass<moduleName> {
         }
 
         public int getTestCaseIndex(String testMethodName){
-            int numTC=dataMap2.get("IC").get("Test Case Name").size();
+            int numTC=dataMap2.get("IC").get("Test_Case_Name").size();
             int index=0;
             for(int i=0;i<numTC;i++){
-                if(testMethodName.equals(dataMap2.get("IC").get("Test Case Name").get(i))){
+                if(testMethodName.equals(dataMap2.get("IC").get("Test_Case_Name").get(i))){
                     index=i;
                     testcaseID=Integer.parseInt(dataMap2.get("IC").get("TestCaseID").get(i));
                     dataTable2.setTestCaseID(testcaseID);

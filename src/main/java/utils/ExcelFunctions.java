@@ -329,16 +329,13 @@ public class ExcelFunctions {
 		String[] headers = null;
 		dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 		for (int i = 0; i < numSheets; i++) {
-//			System.out.println("i:" + i);
 			sheet = workbook.getSheetAt(i);
 			String sheetName=workbook.getSheetName(i);
-//			logger.info("sheetName :"+sheetName);
 			int numRows = sheet.getLastRowNum() + 1;
 			mySheetMap = new LinkedHashMap<String, ArrayList<String>>();
 			Row row = sheet.getRow(0);
 			int noOfColumns = row.getLastCellNum();
 			headers = new String[noOfColumns];
-			logger.info("numRows:" + numRows);
 			for (int j = 0; j < numRows; j++) {
 				row = sheet.getRow(j);
 				for (int z = 0; z < noOfColumns; z++) {
