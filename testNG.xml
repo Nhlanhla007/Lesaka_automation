@@ -7,7 +7,7 @@
       <classes>
          <class name="tests.testTestClass">
             <methods>
-               <include name="Verify_Message_after_submit_email_on_Forgot_Password_Page"/>
+               <include name="Create_new_customer_in_Magento_admin_with_ID_Number"/>
             </methods>
          </class>
       </classes>

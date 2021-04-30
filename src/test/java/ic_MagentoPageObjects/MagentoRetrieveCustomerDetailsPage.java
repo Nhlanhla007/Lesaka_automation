@@ -59,7 +59,9 @@ public class MagentoRetrieveCustomerDetailsPage {
 	public void navigateToCustomer(ExtentTest test) {
 		try {
 			action.click(customerTab, "Customer Tab", test);
+			if(action.waitUntilElementIsDisplayed(allCustomerTab, 10000)) {
 			action.click(allCustomerTab, "All Customers Tab", test);
+			}
 			Thread.sleep(10000);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -70,7 +72,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 	public void searchForCustomer(String emailToSearchBy,ExtentTest test) throws IOException {
 		boolean testallFlag=true;
 		try {
-			if (action.isDisplayed(clearFilters)) {
+			if (action.waitUntilElementIsDisplayed(clearFilters, 15000)) {
 				Thread.sleep(6000);
 				action.click(clearFilters, "Cleared Filters", test);
 				Thread.sleep(6000);
@@ -103,7 +105,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 
 	}
 
-	public void retrieveCustomerDetails(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException, InterruptedException {
+	public void retrieveCustomerDetails(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
 		String typeOfOperation = dataTable2.getValueOnOtherModule("Magento_UserInfoVerification", "Data Source", 0);
 		//need to add distinction for
 		String customerEmail;
@@ -144,7 +146,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 	 */
 
 
-	public void tableData(String email,String webStore,ExtentTest test){
+	public void tableData(String email,String webStore,ExtentTest test) throws Exception{
 		int totalRows = customerTableRecords.size();
 		System.out.println(totalRows);
 		int totalColums = customerTableHeaders.size();
@@ -171,6 +173,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 				e.printStackTrace();
 			}
 		}else {
+			throw new Exception("No Records Returned");
 			//action.noRecordsReturnedFromTable(test, "No Records were returned");
 		}
 	}
