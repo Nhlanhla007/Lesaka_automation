@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
@@ -90,8 +91,8 @@ public class IC_ProductsSortBy {
 		}else if(typeOfValidation.equalsIgnoreCase("Price-Low To High")) {
 			action.selectFromDropDownUsingVisibleText(sortByFilter, "Price: Low to High", "Select filter by Price: Low to High");
 			action.explicitWait(8000);
-			action.selectFromDropDownUsingVisibleText(sortByFilter, "Price: Low to High", "Select filter by Price: Low to High");
-			action.explicitWait(8000);
+			//action.selectFromDropDownUsingVisibleText(sortByFilter, "Price: Low to High", "Select filter by Price: Low to High");
+			//action.explicitWait(8000);
 			ic_FindProduct(test, typeOfValidation);
 			sortByPrice(test,typeOfValidation);
 		}
@@ -155,8 +156,10 @@ public class IC_ProductsSortBy {
 	}
 	
 	public WebElement returnNext() {
-		boolean clickN = action.attributeEnabled(ic_ClickNext);
-		if(clickN) {
+		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		boolean isPresent = driver.findElements(By.xpath( "//span[contains(text(),'Next')]" ) ).size() > 0;
+		//boolean clickN = action.attributeEnabled(ic_ClickNext);
+		if(isPresent) {
 			WebElement web = ic_ClickNext.findElement(By.xpath(".//parent::*"));
 			boolean status = action.attributeValidation(web,"aria-disabled","false",5);
 			if(status) {
@@ -164,6 +167,6 @@ public class IC_ProductsSortBy {
 			}
 		}
 		return null;
-	}
+		}
 
 }

@@ -76,7 +76,7 @@ public class IC_Cart {
 	    @FindBy(xpath = "//*[@class=\"action-primary action-accept\"]")
 	    public WebElement okButtonRemoveAllItems;
 	    
-	    @FindBy(xpath = "//*[@id=\"maincontent\"]/div[2]//p[1]")
+	    @FindBy(xpath = "//*[@class=\"cart-empty\"]/p[1]")
 	    public WebElement emptyCartConfrimation;
 
 	    @FindBy(css = "a.go-back")
@@ -245,13 +245,16 @@ public class IC_Cart {
 	    	//action.click(removeAllCartItems, "Remove All items From Cart", test);
 	    	//action.javaScriptClick(removeAllCartItems, "Remove All items From Cart", test);
 	    	JavascriptExecutor executor = (JavascriptExecutor) driver;
-			executor.executeScript("arguments[0].click();", removeAllCartItems);		
+	    	if(action.waitUntilElementIsDisplayed(removeAllCartItems, 15000)) {
+			executor.executeScript("arguments[0].click();", removeAllCartItems);
+	    	}
 	    	boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4000, "Clear Shopping Cart Pop Up", test);
 	    	if(isRemovePopUpDisplayed) {	    		
 	    		action.click(okButtonRemoveAllItems, "Remove All Items Button", test);
-	    		action.explicitWait(4000);
+	    		if(action.waitUntilElementIsDisplayed(emptyCartConfrimation, 15000)) {
 	    		String emptyCartVerification = emptyCartConfrimation.getText();
 	    		action.CompareResult("Empty Cart Message Verification", "You have no items in your shopping cart.", emptyCartVerification.trim(), test);
+	    		}	    		
 	    		cartCounter = itemsInCartCounter(test);
 	    		action.CompareResult("Cart Count:Mini Cart Is Empty", "0", cartCounter	, test);
 	    	}
