@@ -47,7 +47,7 @@ public class ICGiftCardVerification {
         action.navigateToURL("https://mail.google.com/");
 //        navigateToGmail(input.get("userName").get(rowNumber),input.get("password").get(rowNumber),test);
         action.explicitWait(10000);
-        List<WebElement> email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[9]/div/div[1]/div[3]/div/table/tbody/tr"));
+        List<WebElement> email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[9]/div/div[1]/div[3]/div/table//tr"));
         int waitTimeForBarcodeEmailInSec=Integer.parseInt(input.get("waitTimeForBarcodeEmailInSec").get(rowNumber));
         int numberOfEmailsAfter=email.size();
         Date date1 =new Date();
@@ -91,7 +91,7 @@ public class ICGiftCardVerification {
             difference=(curTime2-curTime1)/1000;
             System.out.println("Time waiting for email(sec): "+difference);
             System.out.println("Number of emails: "+numberOfEmailsAfter);
-            email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[9]/div/div[1]/div[3]/div/table/tbody/tr"));
+            email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[9]/div/div[1]/div[3]/div/table//tr"));
 
             numberOfEmailsAfter=email.size();
         }
