@@ -27,7 +27,7 @@ public class Magento_CreditStatusVerification {
 	@FindBy(xpath = "/html/body/div[2]/main/div/div/div/div/div[3]/table/tbody/tr[1]/td[7]")
 	private WebElement CreditApp_Status;
 	public void VerifyCreditAppStatus(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-		String ExpcreditStatus = dataTable2.getValueOnOtherModule("CreditStatusVerification", "FinalExpectedStatus", 0);
+		String ExpcreditStatus = dataTable2.getValueOnCurrentModule("Final_ExpectedStatus");
 		int Timeout = Integer.parseInt(dataTable2.getValueOnCurrentModule("TimeOut_Inseconds"));
 		int WaitTime =Integer.parseInt(dataTable2.getValueOnCurrentModule("WaitTime"));
 		checkCreditAppStatus(test, ExpcreditStatus, Timeout, WaitTime);

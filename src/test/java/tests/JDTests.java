@@ -110,6 +110,7 @@ public class JDTests extends BaseTest {
 									occNum++;
 									occCount.put(currentKeyWord,occNum);
 								}
+								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								dataTable2.setModule(actionToRun);
 								runKeyWord(actionToRun,test);
@@ -150,6 +151,7 @@ public class JDTests extends BaseTest {
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver,dataTable2);
 		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
 		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver,dataTable2);
+		
 		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver,dataTable2);
 		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver,dataTable2);
 		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver,dataTable2);
@@ -201,6 +203,7 @@ public class JDTests extends BaseTest {
 		ICWishlistverification icEmailWishlistverification = new ICWishlistverification(driver, dataTable2);
 		RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
 		IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
+		ic_Subscriber_Newsletter_ValidEmailaddress ic_SubscribeNewsletter = new ic_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -453,6 +456,9 @@ public class JDTests extends BaseTest {
 			case"verifyDeliveryOption":
 				icDeliveryOptionDisplay.validateDeliveryOptionsDisplays(test1, rowNumber);
 				break;
+			case "ic_SubscribeNewsletter":
+				ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
 		}
 	}
 
@@ -491,11 +497,13 @@ public class JDTests extends BaseTest {
 			navigateURL = System.getProperty("URL");
 			if(navigateURL==null){
 				logger.info("System property returned Null URL. So getting data from Config file");
+				Report.info("System property returned Null URL. So getting data from Config file");
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 			navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 			logger.info("Navigate to URL");
+			Report.info("Navigating to URL: "+navigateURL);
 
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
