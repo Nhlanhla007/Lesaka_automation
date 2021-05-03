@@ -110,7 +110,7 @@ public class JDTests extends BaseTest {
 									occNum++;
 									occCount.put(currentKeyWord,occNum);
 								}
-								dataTable2.setTestCaseID(actionToRun);
+//								dataTable2.setTestCaseID(actionToRun);
 								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 								dataTable2.setModule(actionToRun);
 								runKeyWord(actionToRun,test);
@@ -497,14 +497,11 @@ public class JDTests extends BaseTest {
 			navigateURL = System.getProperty("URL");
 			if(navigateURL==null){
 				logger.info("System property returned Null URL. So getting data from Config file");
-				Report.info("System property returned Null URL. So getting data from Config file");
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 			navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 			logger.info("Navigate to URL");
-			Report.info("Navigating to URL: "+navigateURL);
-
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
@@ -515,7 +512,6 @@ public class JDTests extends BaseTest {
 				e.printStackTrace();
 			}
 			logger.info("Browser name is "+browserName);
-
 			logger.info("App URL: "+ navigateURL);
 			Values.app= navigateURL;
 			Values.browser=browserName;
