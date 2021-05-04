@@ -62,6 +62,7 @@ public class verifyForgotPassword {
 		action.explicitWait(5000);
 		action.click(ic_submit, "click submit", test);
 		action.CompareResult("Reset new email sent message", "If there is an account associated with "+email+" you will receive an email with a link to reset your password.", ic_confirmMessage.getText(), test);
+		action.explicitWait(9000);
 		
 	}
 }

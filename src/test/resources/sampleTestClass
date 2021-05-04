@@ -158,7 +158,9 @@ public class testTestClass<moduleName> {
         IC_CreditAppAddressDetails creditAppAddressDetails = new IC_CreditAppAddressDetails(driver, dataTable2);
         ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
         ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
+        ic_Subscriber_Newsletter_ValidEmailaddress ic_SubscribeNewsletter = new ic_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
         IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
+        
         int rowNumber=-1;
         if(dataMap2.containsKey(currentKeyWord+"++")) {
             rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
@@ -183,6 +185,9 @@ public class testTestClass<moduleName> {
             case "ProductSearch":
                 products.ic_SelectProductAndAddToCart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
+            case "ClearCart":
+				icCart.removeAllItemsInCart(test1);
+				break;    
             /*
              * case "iCcartVerification": icCart.iCcartVerification(test1); break;
              */
@@ -283,11 +288,12 @@ public class testTestClass<moduleName> {
             case "EnterContact":
                 icContactInfo.enterContactDetailsForLoan(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
-            case "icInvalidEmail":
+            case "icInvalidEmailNewsLetter":
                 icNewsletterEmail.ic_NewsLetterInvalidEmail(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
             case "icExistingAddress":
                 icExistingAddress.AddressThere(test1);
+                break;
             case "icSearchMinimumCharacter":
                 icMinimumCharacter.icValidMinimumSearch(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
@@ -334,9 +340,13 @@ public class testTestClass<moduleName> {
             case "ic_SubscribeNews_DupliEmailID":
                 ic_SubscribeNews_DupliEmailID.SubscribeNewsletter_DuplicateEmail(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
+            case "ic_SubscribeNewsletter":
+	            ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+	            break;
             case "IC_ProductsSortBy":
                 productsSortBy.sortBy(test1);
                 break;
+                
         }
     }
     public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){

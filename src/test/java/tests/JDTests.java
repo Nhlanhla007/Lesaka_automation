@@ -59,7 +59,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2= new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("UPDATEFINAL");
+		dataTable2.setPath("MAIN");
 		dataMap2=dataTable2.getExcelData();
 		LinkedHashMap<String, ArrayList<String>> suites=dataMap2.get("Suites");
 		int numberOfSuits=suites.get("Execute").size();
@@ -187,6 +187,7 @@ public class JDTests extends BaseTest {
 		IC_CreditAppAddressDetails creditAppAddressDetails = new IC_CreditAppAddressDetails(driver, dataTable2);
 		ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
 		ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
+		ic_Subscriber_Newsletter_ValidEmailaddress ic_SubscribeNewsletter = new ic_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
 		IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
 		ic_WishlistToCart IC_WishlistToCart =new ic_WishlistToCart(driver, dataTable2);
 		ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
@@ -201,6 +202,7 @@ public class JDTests extends BaseTest {
 		ICWishlistverification icEmailWishlistverification = new ICWishlistverification(driver, dataTable2);
 		RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
 		IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
+		ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
 		int rowNumber=-1;
 		if(dataMap2.containsKey(currentKeyWord+"++")) {
@@ -354,11 +356,12 @@ public class JDTests extends BaseTest {
 			case "EnterContact":
 				icContactInfo.enterContactDetailsForLoan(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
-			case "icInvalidEmail":
-				icNewsletterEmail.ic_NewsLetterInvalidEmail(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
-				break;
+			 case "icInvalidEmailNewsLetter":
+	            icNewsletterEmail.ic_NewsLetterInvalidEmail(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+	            break;
 			case "icExistingAddress":
 				icExistingAddress.AddressThere(test1);
+				break;
 			case "icSearchMinimumCharacter":
 				icMinimumCharacter.icValidMinimumSearch(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
@@ -429,6 +432,7 @@ public class JDTests extends BaseTest {
 				break;
 			case "RemoveArticleFromCart":
 				removeItemsFromCart.removeItemFromCart(test1);
+				break;
 			case "SendWishlistToEmail":
 				SendWishlistToEmail.ShareYourwishlist(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
@@ -453,6 +457,12 @@ public class JDTests extends BaseTest {
 			case"verifyDeliveryOption":
 				icDeliveryOptionDisplay.validateDeliveryOptionsDisplays(test1, rowNumber);
 				break;
+			 case "ic_SKUproduct":
+	            SKUproduct.displayProductSKU(test1, el);
+				break;
+	          case "ic_SubscribeNewsletter":
+	            ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+	            break;
 		}
 	}
 

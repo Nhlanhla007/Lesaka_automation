@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Before;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.*;
 import utils.*;
 import Logger.Log;
@@ -24,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 //@Listeners(listner.TestNGListener.class)
 
-public class JDGTest_TestNG<moduleName> {
+public class testTestClass<moduleName> {
     public WebDriver driver;
     protected DataTable dataTable = null;
     protected ConfigFileReader configFileReader;
@@ -52,54 +51,14 @@ public class JDGTest_TestNG<moduleName> {
         startBrowserSession();
     }
     //Start Tests-----------------------------------------------------------------------
-
-    @Test(testName ="31_Create_Customer_Account_from_Sales_Order" )
-    public void Create_Customer_Account_from_Sales_Order() throws Exception {
-        String testMethodName="Create_Customer_Account_from_Sales_Order";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
-    @Test(testName ="26_Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
-    public void Create_Sales_Order_Guest_User_Thorugh_Product_Search() throws Exception {
-        String testMethodName="Create_Sales_Order_Guest_User_Thorugh_Product_Search";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
-    @Test(testName ="2_Create_new_customer_in_IC_with_ID_Number" )
-    public void Create_new_customer_in_IC_with_ID_Number() throws Exception {
-        String testMethodName="Create_new_customer_in_IC_with_ID_Number";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
-    @Test(testName ="42_Click_the_IC_logo_to_go_home_page" )
-    public void Click_the_IC_logo_to_go_home_page() throws Exception {
-        String testMethodName="Click_the_IC_logo_to_go_home_page";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-    @Test(testName ="45_Validating_the_minimum_search_characters" )
-    public void Validating_the_minimum_search_characters() throws Exception {
-        String testMethodName="Validating_the_minimum_search_characters";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
     
-    @Test(testName ="Verify_Message_after_submit_email_on_Forgot_Password_Page" )
+    @Test(testName ="66_Verify_Message_after_submit_email_on_Forgot_Password_Page" )
     public void Verify_Message_after_submit_email_on_Forgot_Password_Page() throws Exception {
         String testMethodName="Verify_Message_after_submit_email_on_Forgot_Password_Page";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
     }
-
     //End Tests-------------------------------------------------------------------------
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {
@@ -118,10 +77,10 @@ public class JDGTest_TestNG<moduleName> {
     }
 
     public int getTestCaseIndex(String testMethodName){
-        int numTC=dataMap2.get("IC").get("Test Case Name").size();
+        int numTC=dataMap2.get("IC").get("Test_Case_Name").size();
         int index=0;
         for(int i=0;i<numTC;i++){
-            if(testMethodName.equals(dataMap2.get("IC").get("Test Case Name").get(i))){
+            if(testMethodName.equals(dataMap2.get("IC").get("Test_Case_Name").get(i))){
                 index=i;
                 testcaseID=Integer.parseInt(dataMap2.get("IC").get("TestCaseID").get(i));
                 dataTable2.setTestCaseID(testcaseID);
@@ -208,11 +167,8 @@ public class JDGTest_TestNG<moduleName> {
         ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
         ic_Subscriber_Newsletter_ValidEmailaddress ic_SubscribeNewsletter = new ic_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
         IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
-        verifyForgotPassword icVerifyForgotPass = new verifyForgotPassword(driver, dataTable2);
-        ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
         
         int rowNumber=-1;
-        WebElement el = null;
         if(dataMap2.containsKey(currentKeyWord+"++")) {
             rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
         }
@@ -238,8 +194,7 @@ public class JDGTest_TestNG<moduleName> {
                 break;
             case "ClearCart":
 				icCart.removeAllItemsInCart(test1);
-				break;
-                
+				break;    
             /*
              * case "iCcartVerification": icCart.iCcartVerification(test1); break;
              */
@@ -392,19 +347,13 @@ public class JDGTest_TestNG<moduleName> {
             case "ic_SubscribeNews_DupliEmailID":
                 ic_SubscribeNews_DupliEmailID.SubscribeNewsletter_DuplicateEmail(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
+            case "ic_SubscribeNewsletter":
+	            ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+	            break;
             case "IC_ProductsSortBy":
                 productsSortBy.sortBy(test1);
                 break;
-            case "icVerifyForgotPass":
-				icVerifyForgotPass.forgotPasswordPage(dataMap2.get("accountCreation++"),test1,rowNumber);
-				break;
-            case "ic_SKUproduct":
-            	SKUproduct.displayProductSKU(test1, el);
-				break;
-            case "ic_SubscribeNewsletter":
-                ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
-                break;
-				
+                
         }
     }
     public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
@@ -467,4 +416,4 @@ public class JDGTest_TestNG<moduleName> {
 
 
 
-}
+}
