@@ -151,7 +151,6 @@ public class JDTests extends BaseTest {
 		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver,dataTable2);
 		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
 		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver,dataTable2);
-		
 		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver,dataTable2);
 		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver,dataTable2);
 		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver,dataTable2);

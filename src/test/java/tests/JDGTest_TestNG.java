@@ -55,7 +55,7 @@ public class JDGTest_TestNG<moduleName> {
         startBrowserSession();
     }
     //Start Tests-----------------------------------------------------------------------
-
+    //${AllTestMethods}
     @Test(testName ="31_Create_Customer_Account_from_Sales_Order" )
     public void Create_Customer_Account_from_Sales_Order() throws Exception {
         String testMethodName="Create_Customer_Account_from_Sales_Order";
@@ -121,10 +121,10 @@ public class JDGTest_TestNG<moduleName> {
     }
 
     public int getTestCaseIndex(String testMethodName){
-        int numTC=dataMap2.get("IC").get("Test Case Name").size();
+        int numTC=dataMap2.get("IC").get("Test_Case_Name").size();
         int index=0;
         for(int i=0;i<numTC;i++){
-            if(testMethodName.equals(dataMap2.get("IC").get("Test Case Name").get(i))){
+            if(testMethodName.equals(dataMap2.get("IC").get("Test_Case_Name").get(i))){
                 index=i;
                 testcaseID=Integer.parseInt(dataMap2.get("IC").get("TestCaseID").get(i));
                 dataTable2.setTestCaseID(testcaseID);
@@ -163,7 +163,6 @@ public class JDGTest_TestNG<moduleName> {
 
     public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
         String moduleToRun=actionToRun;
-        ExtentTest test1=test.createNode(moduleToRun);
         IConnection ic=new IConnection(driver,dataTable2);
         Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
         ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);
@@ -231,9 +230,9 @@ public class JDGTest_TestNG<moduleName> {
         ICWishlistverification icEmailWishlistverification = new ICWishlistverification(driver, dataTable2);
         RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
         IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
+        ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
         ExtentTest test1=test.createNode(moduleToRun);
         int rowNumber=-1;
-        WebElement el = null;
         if(dataMap2.containsKey(currentKeyWord+"++")) {
             rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
         }
@@ -385,7 +384,7 @@ public class JDGTest_TestNG<moduleName> {
             case "EnterContact":
                 icContactInfo.enterContactDetailsForLoan(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
-            case "icInvalidEmail":
+            case "icInvalidEmailNewsLetter":
                 icNewsletterEmail.ic_NewsLetterInvalidEmail(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
             case "icExistingAddress":
@@ -461,6 +460,7 @@ public class JDGTest_TestNG<moduleName> {
                 break;
             case "RemoveArticleFromCart":
                 removeItemsFromCart.removeItemFromCart(test1);
+                break;
             case "SendWishlistToEmail":
                 SendWishlistToEmail.ShareYourwishlist(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
@@ -484,6 +484,12 @@ public class JDGTest_TestNG<moduleName> {
                 break;
             case"verifyDeliveryOption":
                 icDeliveryOptionDisplay.validateDeliveryOptionsDisplays(test1, rowNumber);
+                break;
+            case "ic_SKUproduct":
+                SKUproduct.displayProductSKU(test1, el);
+                break;
+            case "ic_SubscribeNewsletter":
+                ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
         }
     }
