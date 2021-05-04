@@ -72,6 +72,7 @@ public class testTestClass<moduleName> {
                 throw e;
             }
         }
+    }
 
         public int getTestCaseIndex(String testMethodName){
             int numTC=dataMap2.get("IC").get("Test_Case_Name").size();
@@ -492,6 +493,7 @@ public class testTestClass<moduleName> {
         public void endBrowserSession() throws IOException {
             driver.close();
         }
+        logger.info("Browser name is "+browserName);
 
         @AfterClass
         public void closeReport(){
@@ -502,3 +504,17 @@ public class testTestClass<moduleName> {
 
 
     }
+
+    public void endBrowserSession() throws IOException {
+        driver.close();
+    }
+
+    @AfterClass
+    public void closeReport(){
+        reportJD.endReport();
+    }
+
+
+
+
+}

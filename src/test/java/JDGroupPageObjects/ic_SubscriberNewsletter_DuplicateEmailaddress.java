@@ -38,7 +38,7 @@ public class ic_SubscriberNewsletter_DuplicateEmailaddress {
 		String ExpMessage =null;
 		boolean checkflag = false;
 		System.out.println("ExpEmailId : "+ExpEmailId);
-		action.writeText(Newsletter_EmailID, ExpEmailId, "Newsletter EmailID feild", test);
+		action.writeText(Newsletter_EmailID, ExpEmailId, "Newsletter EmailID field", test);
 		action.click(Newsletter_SubscribeBtn, "Subscribe button", test);
 		if(action.elementExists(Newsletter_SubscribeMsg, waitTime)){
 			ExpMessage = action.getText(Newsletter_SubscribeMsg, "Newsletter Subscribe Message");

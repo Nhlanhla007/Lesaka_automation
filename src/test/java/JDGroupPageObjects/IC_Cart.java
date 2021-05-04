@@ -237,6 +237,10 @@ public class IC_Cart {
 	    		backButton.click();
 	    	}
 	    	String cartCounter = itemsInCartCounter(test);
+	    	
+	    	if(cartCounter.equalsIgnoreCase("")) {
+                cartCounter = "0";
+            }
 	    	if(Integer.parseInt(cartCounter)>0) {
 	    	navigateToCart(test);
 	    	navigateToViewAndEditCart(test);
@@ -246,7 +250,7 @@ public class IC_Cart {
 	    	//action.javaScriptClick(removeAllCartItems, "Remove All items From Cart", test);
 	    	JavascriptExecutor executor = (JavascriptExecutor) driver;
 	    	if(action.waitUntilElementIsDisplayed(removeAllCartItems, 15000)) {
-			executor.executeScript("arguments[0].click();", removeAllCartItems);
+			executor.executeScript("arguments[0].click();", removeAllCartItems);		
 	    	}
 	    	boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4000, "Clear Shopping Cart Pop Up", test);
 	    	if(isRemovePopUpDisplayed) {	    		
