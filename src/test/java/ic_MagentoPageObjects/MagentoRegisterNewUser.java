@@ -60,7 +60,7 @@ public class MagentoRegisterNewUser {
 	@FindBy(xpath = "//input[@name='customer[partner_number]']")
 	WebElement BPnumber;
 
-	public void CreateAccount_validateInfo_Backend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException {
+	public void CreateAccount_validateInfo_Backend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
 		String AssociatedWebsite=input.get("Website").get(rowNumber);//"Incredible Connection";
 		String Firstname = input.get("Firstname").get(rowNumber);//"Backend_Fisrtname";
 		String Lastname = input.get("Lastname").get(rowNumber);//"Backend_Lastname";
@@ -146,7 +146,9 @@ public class MagentoRegisterNewUser {
 		ExtentTest node=test.createNode("Check User navigated to All customer section ");
 		try {
 			action.click(customerTab, "Customer Tab", test);
+			if(action.waitUntilElementIsDisplayed(allCustomerTab, 10000)) {
 			action.click(allCustomerTab, "All Customers Tab", test);
+			}
 			Thread.sleep(10000);
 			String screenShotPath=action.getScreenShot(dateName);
 			node.pass("User navigated to Allcustomer section"+ node.addScreenCaptureFromPath(screenShotPath));
