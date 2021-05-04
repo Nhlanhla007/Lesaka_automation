@@ -46,14 +46,14 @@ public class JDTests extends BaseTest {
 
 	public String currentSuite;
 	public String currentKeyWord;
-	HashMap<String, Integer> occCount=null;
+	HashMap<String, Integer> occCount = null;
 	int testcaseID;
 	
 	@BeforeClass(alwaysRun = true)
 	public void setUp() {
 
 	}
-	//Login to Opera Cloud
+	// Login to Opera Cloud
 
 	@Test
 	public void suiteExecutor() throws Exception {
@@ -77,55 +77,54 @@ public class JDTests extends BaseTest {
 
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException, InterruptedException {
-
-		int numberOfTestCases =singleSuiteData.get("Execute").size();
-		for(int i=0;i<numberOfTestCases;i++){
-			System.out.println("TestCaseNumber:"+i);
-			occCount=new HashMap<String, Integer>();
-			String execute=singleSuiteData.get("Execute").get(i);
-			if(execute.toLowerCase().equals("yes")){
-				String testCaseDescription=singleSuiteData.get("testCaseDescription").get(i);
-				testcaseID=Integer.parseInt(singleSuiteData.get("TestCaseID").get(i)) ;
+		int numberOfTestCases = singleSuiteData.get("Execute").size();
+		for (int i = 0; i < numberOfTestCases; i++) {
+			System.out.println("TestCaseNumber:" + i);
+			occCount = new HashMap<String, Integer>();
+			String execute = singleSuiteData.get("Execute").get(i);
+			if (execute.toLowerCase().equals("yes")) {
+				String testCaseDescription = singleSuiteData.get("testCaseDescription").get(i);
+				testcaseID = Integer.parseInt(singleSuiteData.get("TestCaseID").get(i));
 				dataTable2.setTestCaseID(testcaseID);
-				ExtentTest test=reportJD.createTest(testcaseID+" : "+testCaseDescription);
+				ExtentTest test = reportJD.createTest(testcaseID + " : " + testCaseDescription);
 				startBrowserSession();
-				configFileReader.setPropertyVal("sequence","true");
+				configFileReader.setPropertyVal("sequence", "true");
 				try {
-					for(int j=0;j<11;j++){
-						String actionToRunLable="Action"+(j+1);
-						String actionToRun= "";
+					for (int j = 0; j < 11; j++) {
+						String actionToRunLable = "Action" + (j + 1);
+						String actionToRun = "";
 						try {
 							actionToRun = singleSuiteData.get(actionToRunLable).get(i);
-						}catch (Exception e){
+						} catch (Exception e) {
 
 						}
-						currentKeyWord=actionToRun;
-						System.out.println("actionToRunLable:"+actionToRunLable);
-						System.out.println("currentKeyWord:"+currentKeyWord);
-							if(!currentKeyWord.equals("")){
-								if(!occCount.containsKey(currentKeyWord)){
-									occCount.put(currentKeyWord,0);
-								}else{
-									int occNum=occCount.get(currentKeyWord);
-									occNum++;
-									occCount.put(currentKeyWord,occNum);
-								}
-								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
-								dataTable2.setModule(actionToRun);
-								runKeyWord(actionToRun,test);
-//								writeToExcel(new File(dataTable2.filePath()));
-								writeToExcel(createFile());
-
+						currentKeyWord = actionToRun;
+						System.out.println("actionToRunLable:" + actionToRunLable);
+						System.out.println("currentKeyWord:" + currentKeyWord);
+						if (!currentKeyWord.equals("")) {
+							if (!occCount.containsKey(currentKeyWord)) {
+								occCount.put(currentKeyWord, 0);
+							} else {
+								int occNum = occCount.get(currentKeyWord);
+								occNum++;
+								occCount.put(currentKeyWord, occNum);
 							}
+							dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
+							dataTable2.setModule(actionToRun);
+							runKeyWord(actionToRun, test);
+							// writeToExcel(new File(dataTable2.filePath()));
+							writeToExcel(createFile());
+
+						}
 					}
 				} catch (Exception e) {
 					logger.info(e.getMessage());
 					e.printStackTrace();
 					e.getCause();
 					System.out.println(e.getMessage());
-					String screenShot=GenerateScreenShot.getScreenShot(driver);
+					String screenShot = GenerateScreenShot.getScreenShot(driver);
 					ExtentTest node = test.createNode("Exception");
-					node.fail(e.getMessage()+node.addScreenCaptureFromPath(screenShot));
+					node.fail(e.getMessage() + node.addScreenCaptureFromPath(screenShot));
 				}
 				endBrowserSession();
 			}
@@ -134,29 +133,29 @@ public class JDTests extends BaseTest {
 	}
 
 	public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
-		String moduleToRun=actionToRun;
-		IConnection ic=new IConnection(driver,dataTable2);
-		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
-		ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);
-		ic_PayUPayment  PayU = new ic_PayUPayment(driver,dataTable2);
-		Ic_Products products = new Ic_Products(driver,dataTable2);
-		IC_Cart icCart=new IC_Cart(driver,dataTable2);
-		ic_AccountConfirmation icAccountConfirmation = new ic_AccountConfirmation(driver,dataTable2);
-		ICDelivery icDelivery=new ICDelivery(driver,dataTable2);
-		ic_Magento_Login icMagento = new ic_Magento_Login(driver,dataTable2);
-		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver,dataTable2);
-		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver,dataTable2);
-		ic_AccountInformation verifyAcc = new ic_AccountInformation(driver,dataMap2);
-		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver,dataTable2);
-		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
-		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver,dataTable2);
-		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver,dataTable2);
-		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver,dataTable2);
-		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver,dataTable2);
-		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver,dataTable2);
-		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver,dataTable2);
-		ic_Login ic_login = new ic_Login(driver,dataTable2);
+		String moduleToRun = actionToRun;
 		ic_verifyDeliveryOptions icDeliveryOptionDisplay = new ic_verifyDeliveryOptions(driver,dataTable2);
+		IConnection ic = new IConnection(driver, dataTable2);
+		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver, dataTable2);
+		ic_PaymentOption Payopt = new ic_PaymentOption(driver, dataTable2);
+		ic_PayUPayment PayU = new ic_PayUPayment(driver, dataTable2);
+		Ic_Products products = new Ic_Products(driver, dataTable2);
+		IC_Cart icCart = new IC_Cart(driver, dataTable2);
+		ic_AccountConfirmation icAccountConfirmation = new ic_AccountConfirmation(driver, dataTable2);
+		ICDelivery icDelivery = new ICDelivery(driver, dataTable2);
+		ic_Magento_Login icMagento = new ic_Magento_Login(driver, dataTable2);
+		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver, dataTable2);
+		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver, dataTable2);
+		ic_AccountInformation verifyAcc = new ic_AccountInformation(driver, dataMap2);
+		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver, dataTable2);
+		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
+		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver, dataTable2);
+		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver, dataTable2);
+		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver, dataTable2);
+		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver, dataTable2);
+		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver, dataTable2);
+		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver, dataTable2);
+		ic_Login ic_login = new ic_Login(driver, dataTable2);
 		ic_invalidLoginCreds ic_invalidCredslogin = new ic_invalidLoginCreds(driver, dataTable2);
 		ic_LoginPasswordIsSecured icPasswordSecured = new ic_LoginPasswordIsSecured(driver, dataTable2);
 		ic_forgotPasswordLink icforgottenPassLink = new ic_forgotPasswordLink(driver, dataTable2);
@@ -170,31 +169,36 @@ public class JDTests extends BaseTest {
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver,dataTable2);
 		ic_SearchMinimumCharacter icMinimumCharacter = new ic_SearchMinimumCharacter(driver, dataTable2);
-		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
-		IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
-        admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
-        Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,dataTable2);
-        Magento_CancelSalesorderVerification CancelSalesorderVerification =new Magento_CancelSalesorderVerification(driver,dataTable2);
-        Magento_CreditApp_NavigateFilter CreditApp_NavigateFilter = new Magento_CreditApp_NavigateFilter(driver,dataTable2);
-        Magento_CreditStatusVerification CreditStatusVerification = new Magento_CreditStatusVerification(driver,dataTable2);
+		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver, dataMap2, dataTable2);
+		IC_RetriveOrderID ic_RetriveOrderID = new IC_RetriveOrderID(driver, dataTable2);
+		admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver, dataTable2);
+		Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,
+				dataTable2);
+		Magento_CancelSalesorderVerification CancelSalesorderVerification = new Magento_CancelSalesorderVerification(
+				driver, dataTable2);
+		Magento_CreditApp_NavigateFilter CreditApp_NavigateFilter = new Magento_CreditApp_NavigateFilter(driver,
+				dataTable2);
+		Magento_CreditStatusVerification CreditStatusVerification = new Magento_CreditStatusVerification(driver,
+				dataTable2);
 		ic_RefreshLogoHomepage icLogo = new ic_RefreshLogoHomepage(driver, dataTable2);
 		ic_EnterBasicDetails icEnterBasicDetails = new ic_EnterBasicDetails(driver, dataTable2);
 		ic_SpouseDetails icEnterSpouseInfo = new ic_SpouseDetails(driver, dataTable2);
 		ic_ContactDetailsLoan icContactInfo = new ic_ContactDetailsLoan(driver, dataTable2);
-		ic_PopularSearch PopularSearch =new ic_PopularSearch(driver,dataTable2);
+		ic_PopularSearch PopularSearch = new ic_PopularSearch(driver, dataTable2);
 		ic_SearchTextReturningNoResult icReturnNoResults = new ic_SearchTextReturningNoResult(driver, dataTable2);
 		IC_CreditAppEmploymentDetails creditAppEmployDetails = new IC_CreditAppEmploymentDetails(driver, dataTable2);
 		IC_CreditAppAddressDetails creditAppAddressDetails = new IC_CreditAppAddressDetails(driver, dataTable2);
-		ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
+		ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(
+				driver, dataTable2);
 		ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
 		IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
-		ic_WishlistToCart IC_WishlistToCart =new ic_WishlistToCart(driver, dataTable2);
+		ic_WishlistToCart IC_WishlistToCart = new ic_WishlistToCart(driver, dataTable2);
 		ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
 		ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
 		ic_WishList WishList = new ic_WishList(driver, dataTable2);
 		ic_CompareProducts productsCompared = new ic_CompareProducts(driver, dataTable2);
 		ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
-		IC_verifyLogin ic_verifyLogin =new IC_verifyLogin(driver, dataTable2);
+		IC_verifyLogin ic_verifyLogin = new IC_verifyLogin(driver, dataTable2);
 		IC_IncreaseQuanityInCart increQuantity = new IC_IncreaseQuanityInCart(driver, dataTable2);
 		IC_RemoveItemsFromCart removeItemsFromCart = new IC_RemoveItemsFromCart(driver, dataTable2);
 		ic_SendWishlistToEmail SendWishlistToEmail = new ic_SendWishlistToEmail(driver, dataTable2);
@@ -202,11 +206,12 @@ public class JDTests extends BaseTest {
 		RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
 		IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
 		ExtentTest test1=test.createNode(moduleToRun);
-		int rowNumber=-1;
-		if(dataMap2.containsKey(currentKeyWord+"++")) {
+        IC_Parallel_login parrallel_ic_Login = new IC_Parallel_login(driver, dataTable2);
+		ExtentTest test1 = test.createNode(moduleToRun);
+		int rowNumber = -1;
+		if (dataMap2.containsKey(currentKeyWord + "++")) {
 			rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
 		}
-		int i = 0;
 		WebElement el = null;
 		switch (moduleToRun) {
 			case "Login":
@@ -452,35 +457,37 @@ public class JDTests extends BaseTest {
 			case"verifyDeliveryOption":
 				icDeliveryOptionDisplay.validateDeliveryOptionsDisplays(test1, rowNumber);
 				break;
+			case "parrallel_ic_Login":
+			    parrallel_ic_Login.checkParallelExecution(dataMap2.get(currentKeyWord + "++"), test1, rowNumber);
+			break;
 		}
 	}
 
-	public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
-		int numberRows=input.get("TCID").size();
-		int rowNumber=-1;
-		occCount=occCount+1;
-		for(int i=0;i<numberRows;i++){
-			if(input.get("TCID").get(i).equals(Integer.toString(testcaseID))&&input.get("occurence").get(i).equals(Integer.toString(occCount))){
-				rowNumber=i;
+	public int findRowToRun(HashMap<String, ArrayList<String>> input, int occCount, int testcaseID) {
+		int numberRows = input.get("TCID").size();
+		int rowNumber = -1;
+		occCount = occCount + 1;
+		for (int i = 0; i < numberRows; i++) {
+			if (input.get("TCID").get(i).equals(Integer.toString(testcaseID))
+					&& input.get("occurence").get(i).equals(Integer.toString(occCount))) {
+				rowNumber = i;
 			}
 		}
 		return rowNumber;
 	}
 
-
-	public void startBrowserSession()
-	{
-		driver=null;
-		if(driver == null){
+	public void startBrowserSession() {
+		driver = null;
+		if (driver == null) {
 			configFileReader = new ConfigFileReader();
 			logger.info("Initializing the driver");
 
 
 			browserName = System.getProperty("BrowserType");
-			if(browserName==null){
+			if (browserName == null) {
 				logger.info("System property returned Null browser type. So getting data from Config file");
 
-				browserName=ConfigFileReader.getPropertyVal("BrowserType");
+				browserName = ConfigFileReader.getPropertyVal("BrowserType");
 
 			}
 
@@ -488,8 +495,8 @@ public class JDTests extends BaseTest {
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 
 			navigateURL = System.getProperty("URL");
-			if(navigateURL==null){
-				logger.info("System property returned Null URL. So getting data from Config file");
+			if (navigateURL == null) {
+				Report.info("System property returned Null URL. So getting data from Config file");
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 			navigateURL = ConfigFileReader.getPropertyVal("URL");
@@ -515,18 +522,19 @@ public class JDTests extends BaseTest {
 	public void endBrowserSession() throws IOException {
 		driver.close();
 	}
-	public void writeToSingleSheet(File filePath,String sheetToUpdate) throws IOException, InvalidFormatException {
+
+	public void writeToSingleSheet(File filePath, String sheetToUpdate) throws IOException, InvalidFormatException {
 		FileOutputStream outputStream = new FileOutputStream(filePath);
 		FileInputStream fis = new FileInputStream(filePath);
 		XSSFWorkbook workbook2 = new XSSFWorkbook(fis);
-		XSSFWorkbook workbook= new XSSFWorkbook();
+		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFSheet sheet;
-		for(int i=0;i<dataMap2.size() ;i++) {
+		for (int i = 0; i < dataMap2.size(); i++) {
 			Object[] keys = dataMap2.keySet().toArray();
 			if (!keys[i].toString().toLowerCase().equals("suits") && !keys[i].toString().toLowerCase().equals("ic")) {
-				if((sheetToUpdate+"++").equals(keys[i].toString())){
+				if ((sheetToUpdate + "++").equals(keys[i].toString())) {
 					sheet = workbook2.createSheet(sheetToUpdate);
-				}else{
+				} else {
 					sheet = workbook.getSheet(keys[i].toString());
 				}
 				int numCol = dataMap2.get(keys[i]).size();
@@ -552,26 +560,27 @@ public class JDTests extends BaseTest {
 		workbook.write(outputStream);
 		workbook.close();
 	}
+
 	public void writeToExcel(File filePath) throws IOException {
-		XSSFWorkbook myWorkBook = new XSSFWorkbook ();
-		int numberSheets=dataMap2.size();
+		XSSFWorkbook myWorkBook = new XSSFWorkbook();
+		int numberSheets = dataMap2.size();
 		Object[] keys = dataMap2.keySet().toArray();
-		for(int i=0;i<numberSheets;i++) {
+		for (int i = 0; i < numberSheets; i++) {
 			Sheet sheet1 = myWorkBook.createSheet(keys[i].toString());
 			int numCell = dataMap2.get(keys[i].toString()).size();
 			Object[] colList = dataMap2.get(keys[i].toString()).keySet().toArray();
 			int rownum = dataMap2.get(keys[i].toString()).get(colList[0].toString()).size();
-			for (int j=0;j<=rownum;j++) {
+			for (int j = 0; j <= rownum; j++) {
 				Row row = sheet1.createRow(j);
-				if(j==0) {
+				if (j == 0) {
 					for (int z = 0; z < numCell; z++) {
 						Cell cell = row.createCell(z);
-						cell.setCellValue((String)colList[z]);
+						cell.setCellValue((String) colList[z]);
 					}
-				}else {
+				} else {
 					for (int z = 0; z < numCell; z++) {
 						Cell cell = row.createCell(z);
-						cell.setCellValue((String) dataMap2.get(keys[i].toString()).get(colList[z]).get(j-1));
+						cell.setCellValue((String) dataMap2.get(keys[i].toString()).get(colList[z]).get(j - 1));
 					}
 				}
 			}
@@ -584,7 +593,7 @@ public class JDTests extends BaseTest {
 	}
 
 	public File createFile() throws IOException {
-		File myObj = new File(System.getProperty("user.dir")+"\\reports\\Datasheet.xlsx");
+		File myObj = new File(System.getProperty("user.dir") + "\\reports\\Datasheet.xlsx");
 		return myObj;
 	}
 
