@@ -257,7 +257,8 @@ public class IC_Cart {
 	    		if(action.waitUntilElementIsDisplayed(emptyCartConfrimation, 15000)) {
 	    		String emptyCartVerification = emptyCartConfrimation.getText();
 	    		action.CompareResult("Empty Cart Message Verification", "You have no items in your shopping cart.", emptyCartVerification.trim(), test);
-	    		}	    		
+	    		}	 
+	    		action.explicitWait(5000);
 	    		cartCounter = itemsInCartCounter(test);
 	    		action.CompareResult("Cart Count:Mini Cart Is Empty", "0", cartCounter	, test);
 	    	}
