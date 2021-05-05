@@ -105,10 +105,10 @@ public class ICGiftCardVerification {
         action.explicitWait(5000);
         driver.findElement(By.id("identifierId")).sendKeys(userName);
         driver.findElement(By.xpath("//*[@id=\"identifierNext\"]/div/button/div[2]")).click();
-        action.explicitWait(5000);
+        action.explicitWait(2000);
         driver.findElement(By.xpath("//input[@class='whsOnd zHQkBf']")).sendKeys(password);
         driver.findElement(By.xpath("//*[@id=\"passwordNext\"]/div/button/div[2]")).click();
-        action.explicitWait(10000);
+        action.explicitWait(5000);
 //        action.writeText(userNameText,userName,"userName",test);
 //        action.click(nextButton,"nextButton",test);
 //        action.explicitWait(5000);
@@ -118,9 +118,9 @@ public class ICGiftCardVerification {
     }
     public void clearEmail(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException {
         navigateToGmail(input.get("userName").get(rowNumber),input.get("password").get(rowNumber),test);
-        action.explicitWait(10000);
-        List<WebElement> email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div/div[9]/div/div[1]/div[3]/div/table/tbody/tr"));
-        input.get("emailCountbeforeGiftCardBuy").set(rowNumber,String.valueOf(email.size()));
+        action.explicitWait(5000);
+        List<WebElement> email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div//div/div[1]/div[3]/div/table//tr"));
+        System.out.println("email.size():"+email.size());
         if(email.size()>0){
             driver.findElement(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[1]/div/div[1]/div[1]/div/div/div[1]/div/div[1]/span")).click();
             action.explicitWait(2000);
