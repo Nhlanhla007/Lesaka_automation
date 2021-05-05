@@ -412,7 +412,7 @@ public class JDTests extends BaseTest {
 			case "ic_NavigetoWishlist":
 				NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
 				break;
-			case "ic_verifyWishlistItem":
+			case "IC_ClearWishList":
 				verifyWishlistItem.handleWishlistItem(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "ic_RemoveFromcart":
@@ -429,6 +429,7 @@ public class JDTests extends BaseTest {
 				break;
 			case "RemoveArticleFromCart":
 				removeItemsFromCart.removeItemFromCart(test1);
+				break;
 			case "SendWishlistToEmail":
 				SendWishlistToEmail.ShareYourwishlist(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
@@ -452,6 +453,9 @@ public class JDTests extends BaseTest {
 				break;
 			case"verifyDeliveryOption":
 				icDeliveryOptionDisplay.validateDeliveryOptionsDisplays(test1, rowNumber);
+				break;
+			case "NavigateToWishlist_VerifyLoginPageAppear":
+				NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
 				break;
 		}
 	}

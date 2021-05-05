@@ -319,12 +319,14 @@ public class Ic_Products {
 	}
 	void addToWishlistFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
 		if(quanity == 1) {
-			action.clickEle(productLink, "Navigate to product Details page", test);
+			action.click(productLink, "Navigate to product Details page", test);
 		}
 		//click on product name and enter listing page
 		//confirm that page has loaded
-		productDetailsPageAddToWishlistButton.click();
+		if(action.waitUntilElementIsDisplayed(productDetailsPageAddToWishlistButton, 15000)) {
+		action.click(productDetailsPageAddToWishlistButton,"Add to wish list button",test);
 		action.explicitWait(Integer.parseInt(waitTimeInSeconds));
+		}
 		//click add to wish list
 		
 	}

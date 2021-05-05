@@ -97,4 +97,12 @@ public class ic_NavigetoWishlist {
 			}
 			return msg_flag;
 		}
+		
+		public void NavigateToWishlist_verifyLoginPageAppears(ExtentTest test) throws Exception{
+				navigateWishlist(15000,test);
+				String titleOfPage = driver.getTitle();
+				String expectedTitle = "Incredible Connection Customer Login";
+				action.CompareResult("Verify Title of page", expectedTitle, titleOfPage, test);
+		}
+		
 }

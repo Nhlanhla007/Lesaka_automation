@@ -237,6 +237,9 @@ public class IC_Cart {
 	    		backButton.click();
 	    	}
 	    	String cartCounter = itemsInCartCounter(test);
+	    	if(cartCounter.equalsIgnoreCase("")) {
+	    		cartCounter = "0";
+	    	}
 	    	if(Integer.parseInt(cartCounter)>0) {
 	    	navigateToCart(test);
 	    	navigateToViewAndEditCart(test);

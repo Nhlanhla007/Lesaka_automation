@@ -37,7 +37,10 @@ public class IC_IncreaseQuanityInCart {
 
 	public void increaseQuantity(ExtentTest test) throws Exception {
 		//navigate back
-		backButton.click();		
+		boolean buttonAvail = action.waitUntilElementIsDisplayed(backButton, 15000);
+		if(buttonAvail) {
+		backButton.click();
+		}
 		//navigate to cart
 		//cart.navigateToCart(test);
 		//navigate to view cart

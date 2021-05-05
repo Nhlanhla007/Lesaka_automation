@@ -42,7 +42,7 @@ public class ic_WishlistToCart {
 	@FindBy(xpath="//*[@id=\"mini-cart\"]/li")
     List<WebElement> icAllCartProducts;
 	public static Map<String,List<String>> productWishlistTocart;
-	public void verifyProducts_wishlistTocart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+	public void verifyProducts_wishlistTocart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception{
 		String ProductSelectionType = dataTable2.getValueOnCurrentModule("ProductSelectionType");//"All_product";//"Specific_product"
 		
 		Map<String,List<String>>AllProductsWishlist = ic_Products.productData;
@@ -87,9 +87,10 @@ public class ic_WishlistToCart {
 	    	 String WishlistproductName = prodele.getText();
 	    	 if(eachproductname.equalsIgnoreCase(WishlistproductName)){
 	    		 cartButton = getCartButton_Wishlist(prodele); 
-	    		 ic_Products.addToCart(cartButton,waitTimeInSeconds, test);
+	    		 //ic_Products.addToCart(cartButton,waitTimeInSeconds, test);
+	    		 action.click(cartButton, "Add Product", test);
 	    		 productWishlistTocart.put(eachproductname, Val);
-	    		 action.CompareResult("Name : " + eachproductname+" Added from Wishlist to Cart " , eachproductname, WishlistproductName, test);
+	    		 //action.CompareResult("Name : " + eachproductname+" Added from Wishlist to Cart " , eachproductname, WishlistproductName, test);
 	    	 }
 	    		 
 	     }
@@ -127,9 +128,10 @@ public class ic_WishlistToCart {
 		}
 		return null;	
 	}
-	public void iCcartVerification_AsperWishlist(Map<String, List<String>> products,ExtentTest test) {
+	public void iCcartVerification_AsperWishlist(Map<String, List<String>> products,ExtentTest test) throws Exception {
 		  //Find all elements from the list
-		 iCCartButton_wishlist.click();
+		action.explicitWait(15000);
+		 action.click(iCCartButton_wishlist, "View Cart", test);		 
 		  try {
 			for(WebElement productsInCart : icAllCartProducts) {
 				  String nameOfProduct = productsInCart.findElement(By.xpath(".//strong/a")).getText();
@@ -138,8 +140,9 @@ public class ic_WishlistToCart {
 				  for(Map.Entry selectedProducts : products.entrySet()) {
 					  //@SuppressWarnings("unchecked")
 					//List<String> data = (List<String>)selectedProducts.getValue();
-					if(selectedProducts.getKey().equals(nameOfProduct)) {
-					  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
+					  String ab = (String)selectedProducts.getKey();
+					if(ab.equalsIgnoreCase(nameOfProduct)) {						
+					  action.CompareResult("Name : " + nameOfProduct , ab, nameOfProduct, test);
 					  //action.CompareResult("Price : " +price +" for " +nameOfProduct, data.get(0), price, test);
 					  //action.CompareResult("Quantity : " + quantity +" for " + nameOfProduct, data.get(1), quantity, test);						  
 					}

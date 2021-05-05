@@ -51,7 +51,14 @@ public class testTestClass<moduleName> {
         startBrowserSession();
     }
     //Start Tests-----------------------------------------------------------------------
-    ${AllTestMethods}
+    
+    @Test(testName ="73_WishList_Verifiy_Login_Screen_Before_Accessing_WishList" )
+    public void WishList_Verifiy_Login_Screen_Before_Accessing_WishList() throws Exception {
+        String testMethodName="WishList_Verifiy_Login_Screen_Before_Accessing_WishList";
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+        runner(TCIndex,test);
+    }
     //End Tests-------------------------------------------------------------------------
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {
@@ -160,6 +167,10 @@ public class testTestClass<moduleName> {
         ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
         IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
         IC_RemoveItemsFromCart removeItemsFromCart = new IC_RemoveItemsFromCart(driver, dataTable2);
+        ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
+        ic_WishlistToCart IC_WishlistToCart =new ic_WishlistToCart(driver, dataTable2);
+        ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
+        ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
         int rowNumber=-1;
         if(dataMap2.containsKey(currentKeyWord+"++")) {
             rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
@@ -341,6 +352,18 @@ public class testTestClass<moduleName> {
             case "RemoveArticleFromCart":
 				removeItemsFromCart.removeItemFromCart(test1);
 				break;
+			case "NavigateToWishlist_VerifyLoginPageAppear":
+				NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
+				break;
+			case "IC_WishlistToCart":
+				IC_WishlistToCart.verifyProducts_wishlistTocart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+            case "IC_ClearWishList":
+				verifyWishlistItem.handleWishlistItem(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+				break;
+			case "ic_RemoveFromcart":
+				RemoveFromcart.Clear_miniCart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
         }
     }
     public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
@@ -403,4 +426,4 @@ public class testTestClass<moduleName> {
 
 
 
-}
+}

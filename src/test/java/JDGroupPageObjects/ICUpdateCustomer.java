@@ -313,7 +313,7 @@ public class ICUpdateCustomer {
 		    		dataTable2.setValueOnCurrentModule("billing_postalCode_output",postalCodeText);
 		    		
 		    		action.click(SaveButton, "Save", test);
-		    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSaved, "Billing address updated"), test);
+		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, "Billing address updated"), test);
 		    	
 		    	}else {
 		    		dataTable2.setValueOnCurrentModule("billing_streetAddress_output",streetAdressText);
