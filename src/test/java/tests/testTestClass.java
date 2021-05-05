@@ -192,19 +192,15 @@ public class testTestClass<moduleName> {
         ic_WishlistToCart IC_WishlistToCart =new ic_WishlistToCart(driver, dataTable2);
         ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
         ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
-        ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
         ic_WishList WishList = new ic_WishList(driver, dataTable2);
         ic_CompareProducts productsCompared = new ic_CompareProducts(driver, dataTable2);
-        ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
         IC_verifyLogin ic_verifyLogin =new IC_verifyLogin(driver, dataTable2);
         IC_IncreaseQuanityInCart increQuantity = new IC_IncreaseQuanityInCart(driver, dataTable2);
-        IC_RemoveItemsFromCart removeItemsFromCart = new IC_RemoveItemsFromCart(driver, dataTable2);
         ic_SendWishlistToEmail SendWishlistToEmail = new ic_SendWishlistToEmail(driver, dataTable2);
         ICWishlistverification icEmailWishlistverification = new ICWishlistverification(driver, dataTable2);
         RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
         IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
         ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
-        ExtentTest test1=test.createNode(moduleToRun);
         int rowNumber=-1;
         if(dataMap2.containsKey(currentKeyWord+"++")) {
             rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);

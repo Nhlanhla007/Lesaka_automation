@@ -443,7 +443,7 @@ public class JDGTest_TestNG<moduleName> {
             case "ic_NavigetoWishlist":
                 NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
                 break;
-            case "ic_verifyWishlistItem":
+            case "IC_ClearWishList":
                 verifyWishlistItem.handleWishlistItem(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
             case "ic_RemoveFromcart":
@@ -490,6 +490,9 @@ public class JDGTest_TestNG<moduleName> {
                 break;
             case "ic_SubscribeNewsletter":
                 ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+            case "NavigateToWishlist_VerifyLoginPageAppear":
+                NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
                 break;
         }
     }

@@ -56,7 +56,6 @@ public class testTestClass<moduleName> {
     }
     //Start Tests-----------------------------------------------------------------------
     ${AllTestMethods}
-
     //End Tests-------------------------------------------------------------------------
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {
@@ -117,7 +116,6 @@ public class testTestClass<moduleName> {
 
     public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
         String moduleToRun=actionToRun;
-        ExtentTest test1=test.createNode(moduleToRun);
         IConnection ic=new IConnection(driver,dataTable2);
         Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
         ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);
@@ -398,7 +396,7 @@ public class testTestClass<moduleName> {
             case "ic_NavigetoWishlist":
                 NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
                 break;
-            case "ic_verifyWishlistItem":
+            case "IC_ClearWishList":
                 verifyWishlistItem.handleWishlistItem(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
             case "ic_RemoveFromcart":
@@ -445,6 +443,9 @@ public class testTestClass<moduleName> {
                 break;
             case "ic_SubscribeNewsletter":
                 ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+            case "NavigateToWishlist_VerifyLoginPageAppear":
+                NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
                 break;
         }
     }

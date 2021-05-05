@@ -56,24 +56,18 @@ public class MagentoRetrieveCustomerDetailsPage {
 	@FindBy(xpath = "//tbody/tr[2]/td[17]/a")
 	WebElement viewCustomerDetails;
 
-	public void navigateToCustomer(ExtentTest test) {
-		try {
+	public void navigateToCustomer(ExtentTest test) throws IOException, InterruptedException {
 			action.click(customerTab, "Customer Tab", test);
 			if(action.waitUntilElementIsDisplayed(allCustomerTab, 10000)) {
-			action.click(allCustomerTab, "All Customers Tab", test);
+				action.click(allCustomerTab, "All Customers Tab", test);
 			}
 			Thread.sleep(10000);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public void searchForCustomer(String emailToSearchBy,ExtentTest test) throws IOException {
 		boolean testallFlag=true;
 		try {
 			if (action.waitUntilElementIsDisplayed(clearFilters, 15000)) {
-				Thread.sleep(6000);
 				action.click(clearFilters, "Cleared Filters", test);
 				Thread.sleep(6000);
 			}
@@ -152,26 +146,20 @@ public class MagentoRetrieveCustomerDetailsPage {
 		int totalColums = customerTableHeaders.size();
 		System.out.println(totalColums);
 		if(totalRows>=2) {
-			try {
 //				outerloop:
 //				for(int i =2;i<=totalRows;i++) {
 //					for(int j = 1;j<totalColums;j++) {
 //						String emailColumn = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[4]/div")).getText();
 //						String webSite = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[11]/div")).getText();
 						WebElement clickEdit = driver.findElement(By.xpath("//tbody/tr[2]/td[17]/a"));
-
 //						if(emailColumn.equalsIgnoreCase(email) & webSite.equalsIgnoreCase(webStore)) {
 							//clickEdit.click();
 							viewCustomerDetails(clickEdit, test);
 //							break outerloop;
 //						}
 
-
 //					}
 //				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		}else {
 			throw new Exception("No Records Returned");
 			//action.noRecordsReturnedFromTable(test, "No Records were returned");
