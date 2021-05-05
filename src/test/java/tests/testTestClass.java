@@ -132,6 +132,7 @@ public class testTestClass<moduleName> {
 
     public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
         String moduleToRun=actionToRun;
+        ExtentTest test1=test.createNode(moduleToRun);
         IConnection ic=new IConnection(driver,dataTable2);
         Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
         ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);
@@ -186,7 +187,10 @@ public class testTestClass<moduleName> {
         ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
         ic_Subscriber_Newsletter_ValidEmailaddress ic_SubscribeNewsletter = new ic_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
         IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
+        IC_RemoveItemsFromCart removeItemsFromCart = new IC_RemoveItemsFromCart(driver, dataTable2);
+        ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
         ic_WishlistToCart IC_WishlistToCart =new ic_WishlistToCart(driver, dataTable2);
+        ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
         ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
         ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
         ic_WishList WishList = new ic_WishList(driver, dataTable2);

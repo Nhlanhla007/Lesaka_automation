@@ -117,6 +117,7 @@ public class testTestClass<moduleName> {
 
     public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
         String moduleToRun=actionToRun;
+        ExtentTest test1=test.createNode(moduleToRun);
         IConnection ic=new IConnection(driver,dataTable2);
         Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
         ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);

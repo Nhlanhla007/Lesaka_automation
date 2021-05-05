@@ -52,7 +52,10 @@ public class IC_RemoveItemsFromCart {
 	 */
     
     public void removeItemFromCart(ExtentTest test) throws Exception {
-    	backButton.click();
+    	boolean buttonAvail = action.waitUntilElementIsDisplayed(backButton, 15000);
+		if(buttonAvail) {
+		backButton.click();
+		}
     	action.click(decreaseCartButton, "Decrease Item In Cart",test);
     	boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4000, "Clear Shopping Cart Pop Up", test);
     	if(isRemovePopUpDisplayed) {	    		
