@@ -463,8 +463,8 @@ public class SAPCustomerRelated {
 		 * "225505"; String Password = "Welc0me@2021"; String name = "DBconnect"; String
 		 * DBType ="ECC_QA";
 		 */
-
-		hn =new hana(TypeOfDB,Server,Port,Username,Password); 
+		ExtentTest test=null;
+		hn =new hana(TypeOfDB,Server,Port,Username,Password,test);
 		String typeValidation = dataTable2.getValueOnOtherModule("SapCustomer", "typeOfSapValidation", 0);
 		String newBpNumber = "";
 		if(typeValidation.equalsIgnoreCase("Guest Customer Creation")) {

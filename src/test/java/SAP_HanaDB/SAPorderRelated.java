@@ -121,7 +121,7 @@ import utils.hana;
 			String Query= "Select * from "+Schema+"."+Table1+" FULL OUTER JOIN "+Schema+"."+Table2+" ON "+Schema+"."+Table1+"."+key+" = "+Schema+"."+Table2+"."+key+" WHERE "+Schema+"."+Table1+"."+key+" = '"+SAP_orderNo+"' ";
 //			String Query= "SELECT * FROM SAPEQ1."+Table1+" WHERE "+key+" = '"+SAP_orderNo+"'";
 			System.out.println("Query:"+Query);
-			hana hn =new hana(TypeOfDB,Server,Port,Username,Password);
+			hana hn =new hana(TypeOfDB,Server,Port,Username,Password,test);
 			ResultSet rs = hn.ExecuteQuery(Query);
 			
 			int ExpRowcount=1;

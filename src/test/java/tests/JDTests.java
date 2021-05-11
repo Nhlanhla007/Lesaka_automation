@@ -100,9 +100,10 @@ public class JDTests extends BaseTest {
 
 						}
 						currentKeyWord = actionToRun;
-						System.out.println("actionToRunLable:" + actionToRunLable);
-						System.out.println("currentKeyWord:" + currentKeyWord);
+
 						if (!currentKeyWord.equals("")) {
+							System.out.println("actionToRunLable:" + actionToRunLable);
+							System.out.println("currentKeyWord:" + currentKeyWord);
 							if (!occCount.containsKey(currentKeyWord)) {
 								occCount.put(currentKeyWord, 0);
 							} else {
