@@ -15,11 +15,9 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import base.TestCaseBase;
-import io.qameta.allure.Step;
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
-import utils.Report;
 
 public class IC_Parallel_login {
 

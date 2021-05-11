@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import SAP_HanaDB.SAPCustomerRelated;
+import SAP_HanaDB.SapRSI;
 import base.TestCaseBase;
 import emailverification.ICGiftCardVerification;
 import emailverification.ic_PasswordForgotEmailVerification;
@@ -205,8 +206,8 @@ public class JDTests extends BaseTest {
 		ICWishlistverification icEmailWishlistverification = new ICWishlistverification(driver, dataTable2);
 		RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
 		IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
-		ExtentTest test1=test.createNode(moduleToRun);
         IC_Parallel_login parrallel_ic_Login = new IC_Parallel_login(driver, dataTable2);
+		SapRSI sapRSI= new SapRSI(driver, dataTable2);
 		ExtentTest test1 = test.createNode(moduleToRun);
 		int rowNumber = -1;
 		if (dataMap2.containsKey(currentKeyWord + "++")) {
@@ -460,6 +461,12 @@ public class JDTests extends BaseTest {
 			case "parrallel_ic_Login":
 			    parrallel_ic_Login.checkParallelExecution(dataMap2.get(currentKeyWord + "++"), test1, rowNumber);
 			break;
+			case "SapRSIGetDataFromSAPDB":
+				sapRSI.getDataFromSAPDB(test1);
+				break;
+			case "getRSIItemInMagento":
+				sapRSI.getRSIItemInMagento(test1);
+				break;
 		}
 	}
 
@@ -496,7 +503,6 @@ public class JDTests extends BaseTest {
 
 			navigateURL = System.getProperty("URL");
 			if (navigateURL == null) {
-				Report.info("System property returned Null URL. So getting data from Config file");
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 			navigateURL = ConfigFileReader.getPropertyVal("URL");
