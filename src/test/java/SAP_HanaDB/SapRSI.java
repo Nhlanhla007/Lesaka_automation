@@ -28,34 +28,17 @@ public class SapRSI {
         action = new Action(driver);
         this.dataTable2 = dataTable2;
     }
-    public int getConnectionRow(String Instance){
-        LinkedHashMap<String, ArrayList<String>> connectiondetailSheet = dataTable2.dataMap2.get("DB_connection_master++");
-        int finalrow=-1;
-        int noofRows = connectiondetailSheet.get("DB_Instance").size();
-        for(int con =0;con<noofRows;con++){
-            if(Instance == connectiondetailSheet.get("DB_Instance").get(con)){
-                finalrow=con;
-
-
-            }
-        }
-        return finalrow;
-    }
     public void getDataFromSAPDB(ExtentTest test) throws IOException, SQLException {
         String DBinstance = dataTable2.getValueOnCurrentModule("DB_Instance");
         //ECCQA
-        int irow = getConnectionRow(DBinstance);
-//        String Server = dataTable2.getValueOnOtherModule("DB_connection_master++","Host",0);//"11.19.2.172";
-//        String Port =  dataTable2.getValueOnOtherModule("DB_connection_master++","port",0);
-//        String Username =  dataTable2.getValueOnOtherModule("DB_connection_master++","Username",0);
-//        String Password =  dataTable2.getValueOnOtherModule("DB_connection_master++","Password",0);
-//        String TypeOfDB = dataTable2.getValueOnOtherModule("DB_connection_master++","TypeOfDB",0);
 
-        String Server = dataTable2.dataMap2.get("DB_connection_master++").get("Host").get(irow);//"11.19.2.172";
-        String Port =  dataTable2.dataMap2.get("DB_connection_master++").get("port").get(irow);
-        String Username =  dataTable2.dataMap2.get("DB_connection_master++").get("Username").get(irow);
-        String Password =  dataTable2.dataMap2.get("DB_connection_master++").get("Password").get(irow);
-        String TypeOfDB = dataTable2.dataMap2.get("DB_connection_master++").get("TypeOfDB").get(irow);
+        String primaryKey="DB_Instance";
+        String conSheet="DB_connection_master";
+        String Server =dataTable2.getRowUsingReferenceAndKey(conSheet,primaryKey,DBinstance,"Host");
+        String Port =  dataTable2.getRowUsingReferenceAndKey(conSheet,primaryKey,DBinstance,"port");
+        String Username =  dataTable2.getRowUsingReferenceAndKey(conSheet,primaryKey,DBinstance,"Username");
+        String Password =  dataTable2.getRowUsingReferenceAndKey(conSheet,primaryKey,DBinstance,"Password");
+        String TypeOfDB = dataTable2.getRowUsingReferenceAndKey(conSheet,primaryKey,DBinstance,"TypeOfDB");
 
         String channelID=dataTable2.getValueOnCurrentModule("channelID");
         String rough_stock_value=dataTable2.getValueOnCurrentModule("rough_stock_value");

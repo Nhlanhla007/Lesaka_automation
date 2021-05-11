@@ -79,12 +79,6 @@ public class DataTable2 {
     public String getValueOnCurrentModule(String colName){
         return dataMap2.get(currentModule+"++").get(colName).get(findRowToRun(currentModule+"++",occCount,testCaseID));
     }
-/*
-    public String getValueOnOtherModule(String sheetName,String colName,int occCount){
-        //occCount = 0 refers occurence 1 in the excelsheet and so on.
-        return dataMap2.get(sheetName+"++").get(colName).get(findRowToRun(sheetName+"++",occCount,testCaseID));
-    }
-   */
     public String setValueOnCurrentModule(String colName,String colValue){
         return dataMap2.get(currentModule+"++").get(colName).set(findRowToRun(currentModule+"++",occCount,testCaseID),colValue);
     }
@@ -92,37 +86,24 @@ public class DataTable2 {
         //occCount = 0 refers occurence 1 in the excelsheet and so on.
         return dataMap2.get(sheetName+"++").get(colName).set(findRowToRun(sheetName+"++",occCount,testCaseID),colValue);
     }
-        public Object[][] getTestData(String sheetName, String testCaseName) {
-        Object[][] obj = null ;
-        int sheetNumber=excelFunc.getSheetNumber(sheetName);
-        String startRowNumber=excelFunc.locateTestCaseRow(testCaseName, sheetNumber);
-        if(startRowNumber == "")
-        {
-            logger.error("not able to locate test case in the test data sheet");
-        }
-        else
-        {
 
+    /*
+        SheetName:name of sheet to get data from
+        keyColumnName: primary key column to search for valueInColumn
+        valueInColumn: primary value to use and get row
+        columnValueToGet: value in row to get
+     */
 
-            int endRowNumber = excelFunc.findEndRow(sheetNumber, Integer.parseInt(startRowNumber));
-            logger.info("startRowNumber"+startRowNumber);
-            logger.info("endRow"+endRowNumber);
-            int endColumNumber=excelFunc.findLastColumn( Integer.parseInt(startRowNumber), sheetNumber);
-            logger.info("endColumNumber"+endColumNumber);
-
-            obj= new Object[(endRowNumber-1)-Integer.parseInt(startRowNumber)][1];
-
-            int k=0;
-            for (int i= Integer.parseInt(startRowNumber)+1 ; i < endRowNumber; i++) {
-                Map<Object, Object> datamap = new HashMap<>();
-                for (int j=1; j < endColumNumber; j++) {
-                    datamap.putAll(excelFunc.getRowData(Integer.parseInt(startRowNumber),i ,j, sheetNumber));
-                }
-                obj[k][0] = datamap;
-                k++;
+    public String getRowUsingReferenceAndKey(String SheetName,String keyColumnName,String valueInColumn,String columnValueToGet){
+        LinkedHashMap<String, ArrayList<String>> sheetData =dataMap2.get(SheetName+"++");
+        int finalrow=-1;
+        int noOfRows = sheetData.get(keyColumnName).size();
+        for(int i =0;i<noOfRows;i++){
+            if(valueInColumn.equals(sheetData.get(keyColumnName).get(i))){
+                finalrow=i;
+                break;
             }
         }
-
-        return obj;
+        return dataMap2.get(SheetName+"++").get(columnValueToGet).get(finalrow);
     }
 }
