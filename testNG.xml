@@ -7,7 +7,7 @@
       <classes>
          <class name="tests.testTestClass">
             <methods>
-               <include name="Click_the_IC_logo_to_go_home_page"/>
+               <include name="Gift_Card_Redeem_Registered_user"/>
             </methods>
          </class>
       </classes>

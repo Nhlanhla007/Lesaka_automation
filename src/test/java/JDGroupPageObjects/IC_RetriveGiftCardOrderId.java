@@ -1,32 +1,32 @@
 package JDGroupPageObjects;
 
-import com.aventstack.extentreports.ExtentTest;
-import ic_MagentoPageObjects.MagentoOrderStatusPage;
-import ic_MagentoPageObjects.ic_Magento_Login;
+import java.io.IOException;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import com.aventstack.extentreports.ExtentTest;
+
 import utils.Action;
 import utils.DataTable2;
 
-import java.io.IOException;
-
-public class IC_RetriveOrderID {
-    WebDriver driver;
+public class IC_RetriveGiftCardOrderId {
+	WebDriver driver;
     Action action;
     DataTable2 dataTable2;
-    public IC_RetriveOrderID(WebDriver driver, DataTable2 dataTable2) {
+    
+    public IC_RetriveGiftCardOrderId(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
         this.dataTable2=dataTable2;
     }
-
-//    @FindBy(xpath = "//p[contains(text(),'Your order # is')]")
+    
     @FindBy(xpath = "//span[@class='number']")
     WebElement OderID;
-
+    
     public void RetriveOrderID(ExtentTest test) throws IOException {
         String Oderid = null;
         action.explicitWait(10000);
@@ -38,3 +38,5 @@ public class IC_RetriveOrderID {
     }
 
 }
+    
+

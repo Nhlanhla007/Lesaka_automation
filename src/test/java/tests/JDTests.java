@@ -324,6 +324,7 @@ public class JDTests extends BaseTest {
 				RequiredSheets.add(dataMap2.get(currentKeyWord+"++"));
 				RequiredSheets.add(dataMap2.get("Login_magento++"));
 				ic_cashDepositPayment.InvoiceCashDeposit(RequiredSheets,test1,testcaseID);
+				break;
 			case "icGiftCardPurchase":
 				icGiftCardPurchase.purchaseGiftCard(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);	
 				break;
