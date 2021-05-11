@@ -595,7 +595,6 @@ public class JDTests extends BaseTest {
 		myWorkBook.write(os);
 		os.close();
 		myWorkBook.close();
-		System.out.println("Writing on XLSX file Finished ...");
 	}
 
 	public File createFile() throws IOException {

@@ -45,7 +45,7 @@ public class SapRSI {
 
         String Query= "select * from SAPABAP1.\"/OAA/RSI_SNP\" where channel_id = '"+channelID+"' and ROUGH_STOCK_DATE >=to_date(now()) and AGGR_AVAIL_QTY>0 and rough_stock_value = '"+rough_stock_value+"' order by rand() limit 1";
         System.out.println("Query:"+Query);
-        hana hn =new hana(TypeOfDB,Server,Port,Username,Password);
+        hana hn =new hana(TypeOfDB,Server,Port,Username,Password,test);
         ResultSet rs = hn.ExecuteQuery(Query);
         int rowsCountReturned = hn.GetRowsCount(rs);
         System.out.println("rowsCountReturned: "+rowsCountReturned);
@@ -81,6 +81,14 @@ public class SapRSI {
     @FindBy(xpath = "//span[contains(text(),'SAP Data')]")
     public WebElement sapDataTab;
 
+    @FindBy(xpath = "//a[contains(text(),'Edit')]")
+    public WebElement clickEdit;
+
+    @FindBy(xpath = "//button[contains(text(),'Clear all')]")
+    public WebElement Clearbutton;
+
+
+
     @FindBy(name = "product[rough_stock_indicator]")
     public WebElement roughStockIndicatorAct;
 
@@ -88,14 +96,15 @@ public class SapRSI {
         action.click(catalogTab,"catalogTab",test);
         action.click(productsTab,"productsTab",test);
         action.explicitWait(5000);
+        action.click(Clearbutton,"Clearbutton",test);
+        action.explicitWait(5000);
         action.click(magentoFilterTab,"magentoFilterTab",test);
         action.writeText(sku,dataTable2.getValueOnOtherModule ("SapRSIGetDataFromSAPDB","SKUCode",0),"skuInputTest",test);
         action.click(magentoApplyFilterTab,"magentoApplyFilterTab",test);
-        WebElement clickEdit = driver.findElement(By.xpath("//tbody/tr[2]/td[17]/a"));
         action.explicitWait(5000);
         action.javaScriptClick(clickEdit, "clickEdit", test);
-        //
+        action.explicitWait(5000);
         action.click(sapDataTab,"sapDataTab",test);
-        action.getText(roughStockIndicatorAct,"roughStockIndicator");
+        System.out.println(action.getText(roughStockIndicatorAct,"roughStockIndicator"));
     }
 }

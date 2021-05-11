@@ -23,19 +23,19 @@ public class hana {
 	WebDriver driver;
 	static Connection hanaconnet = null;
 	 //ResultSet resultSet=null;
-	public hana( String TypeOfDB,String Server, String Port,String Username,String Password) throws SQLException, IOException {
+	public hana( String TypeOfDB,String Server, String Port,String Username,String Password,ExtentTest test) throws SQLException, IOException {
 		
 		//String name = "DBconnect";
-		 hanaconnet = hanaDBconnect(TypeOfDB,Server, Port, Username, Password);
+		 hanaconnet = hanaDBconnect(TypeOfDB,Server, Port, Username, Password,test);
 		 
 	}
 	Action action =new Action(driver);
 	
-	public Connection hanaDBconnect(String TypeOfDB, String Server, String Port, String Username,String Password) throws SQLException, IOException{
+	public Connection hanaDBconnect(String TypeOfDB, String Server, String Port, String Username,String Password,ExtentTest test) throws SQLException, IOException{
 		boolean connectFlag=false;
 		Connection connection = null;
 		
-		//ExtentTest node=test.createNode("Hana DB connect");
+		ExtentTest node=test.createNode("Hana DB connect");
 		try {
 			
 			switch (TypeOfDB){
@@ -46,23 +46,10 @@ public class hana {
 				connection = DriverManager.getConnection("jdbc:"+Server+"://"+Port+";user="+Username+";password="+Password);
 				break;
 			}
-				
-				
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			//logger.info("Unable Connect to Hana DB: "+ e.getMessage());
-			e.printStackTrace();
+			node.fail("Unable Connect to Hana DB: "+ e.getMessage());
+			throw e;
 		}
-		if (connection != null) {
-			connectFlag =true;
-			System.out.println("Connected");
-			//node.pass("DB -connected sucessfully");
-		}else{
-			System.out.println("NOT Connected");
-			//node.fail("Error:DB -connection not sucessfull");
-		}
-		
 		return connection;
 		
 	}
