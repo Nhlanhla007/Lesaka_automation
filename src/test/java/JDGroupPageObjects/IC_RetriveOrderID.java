@@ -24,7 +24,7 @@ public class IC_RetriveOrderID {
     }
 
 //    @FindBy(xpath = "//p[contains(text(),'Your order # is')]")
-    @FindBy(xpath = "//span[@class='number']")
+    @FindBy(xpath = "//*[@class='checkout-success']/p/span")
     WebElement OderID;
 
     public void RetriveOrderID(ExtentTest test) throws IOException {
