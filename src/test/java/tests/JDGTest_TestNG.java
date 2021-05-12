@@ -121,6 +121,8 @@ public class JDGTest_TestNG<moduleName> {
     }
 
     public int getTestCaseIndex(String testMethodName){
+        System.out.println("------------------------------------------------------------");
+        System.out.println("Test_Case_Name:"+testMethodName);
         int numTC=dataMap2.get("IC").get("Test_Case_Name").size();
         int index=0;
         for(int i=0;i<numTC;i++){
@@ -351,6 +353,7 @@ public class JDGTest_TestNG<moduleName> {
                 RequiredSheets.add(dataMap2.get(currentKeyWord+"++"));
                 RequiredSheets.add(dataMap2.get("Login_magento++"));
                 ic_cashDepositPayment.InvoiceCashDeposit(RequiredSheets,test1,testcaseID);
+                break;
             case "icGiftCardPurchase":
                 icGiftCardPurchase.purchaseGiftCard(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
