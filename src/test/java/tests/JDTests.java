@@ -173,6 +173,7 @@ public class JDTests extends BaseTest {
 		ic_SearchMinimumCharacter icMinimumCharacter = new ic_SearchMinimumCharacter(driver, dataTable2);
 		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
 		IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
+		IC_RetriveGiftCardOrderId ic_RetriveGiftCardOrderID = new IC_RetriveGiftCardOrderId(driver, dataTable2);
         admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
         Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,dataTable2);
         Magento_CancelSalesorderVerification CancelSalesorderVerification =new Magento_CancelSalesorderVerification(driver,dataTable2);
@@ -369,6 +370,9 @@ public class JDTests extends BaseTest {
 				break;
 			case "ic_RetriveOrderID":
 				ic_RetriveOrderID.RetriveOrderID(test1);
+				break;
+			case "ic_RetriveGiftCardOrderID":
+				ic_RetriveGiftCardOrderID.RetriveOrderID(test1);
 				break;
 			case "SapCustomer":
 				ArrayList<HashMap<String, ArrayList<String>>> sheets = new ArrayList<HashMap<String, ArrayList<String>>>();
