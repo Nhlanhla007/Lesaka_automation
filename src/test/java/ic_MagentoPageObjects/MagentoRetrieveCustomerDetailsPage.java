@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,6 +15,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
+
+import Logger.Log;
 import utils.Action;
 import utils.DataTable2;
 
@@ -29,6 +32,8 @@ public class MagentoRetrieveCustomerDetailsPage {
 		action = new Action(driver);
 		this.dataTable2 = dataTable2;
 	}
+	
+	Logger logger = Log.getLogData(this.getClass().getSimpleName());
 
 	@FindBy(xpath = "//*[@class=\"admin__menu\"]/ul[@id='nav']/li[@id=\"menu-magento-customer-customer\"]/a/span[contains(text(),\"Customers\")]")
 	WebElement customerTab;
@@ -72,38 +77,26 @@ public class MagentoRetrieveCustomerDetailsPage {
 	public void searchForCustomer(String emailToSearchBy,ExtentTest test) throws Exception {
 		boolean testallFlag=true;
 		
-	//	if(isMagentoSearchPageLoaded(10)) {
-		//	action.explicitWait(10000);
+		//if(isMagentoSearchPageLoaded(10)) {		
+			
 		try {
 			if (action.waitUntilElementIsDisplayed(clearFilters, 8000)) {
 				action.click(clearFilters, "Cleared Filters", test);
-				Thread.sleep(6000);
+				action.explicitWait(6000);
 			}
-
+		}catch(Exception e){
+			logger.info("Clear filter is not clickable");
+		}
 			action.click(magentoFilterTab, "Filter tab", test);
 			action.explicitWait(2000);
 			action.clear(emailSearchField, "Email ID");
 			action.explicitWait(2000);
-			action.writeText(emailSearchField,"watlevi41@gmail.com","Email search field" , test);
+			action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
 			action.explicitWait(2000);
 			action.click(magentoApplyFilterTab, "Apply to filters", test);
 			testallFlag=false;
 			action.explicitWait(5000);
 
-
-		} catch (Exception e) {
-
-			/*
-			 * if(testallFlag==true){
-			 * 
-			 * action.click(magentoFilterTab, "Filter tab", test);
-			 * action.clear(emailSearchField, "Email ID");
-			 * action.writeText(emailSearchField,emailToSearchBy,"Email search field" ,
-			 * test); action.click(magentoApplyFilterTab, "Apply to filters", test);
-			 * 
-			 * }else{ test.fail(e.getMessage()); }
-			 */
-		}
 		//}
 	}
 
@@ -190,18 +183,18 @@ public class MagentoRetrieveCustomerDetailsPage {
 	}
 	
 	public boolean isMagentoSearchPageLoaded(int timeoutInSec) throws Exception {
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);		
 		int timer = 0;
 		boolean status = false;
 		boolean run = true;
 		while (run) {
 			if (timer <= timeoutInSec) {
-				System.out.println("Running inside timer " + timer);
-				boolean isNoRecordsDisplayed = driver.findElements(By.xpath("//*[@class=\"data-grid-tr-no-data\"]")).size() > 0;
-				boolean isRecordsAvail = driver.findElements(By.xpath("//*[@class=\"data-row\"]")).size() > 0;
+				System.out.println("Running inside timer " + timer);				
+				boolean isNoRecordsDisplayed = driver.findElements(By.xpath("//*[@class=\"data-grid-tr-no-datas\"]")).size() > 0;
+				boolean isRecordsAvail = driver.findElements(By.xpath("//*[@class=\"data-rows\"]")).size() > 0;
 				if (isNoRecordsDisplayed | isRecordsAvail) {
 					status = true;
-					run = false;
+					run = false;					
 				} else {
 					timer += 1;
 				}
