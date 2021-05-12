@@ -236,6 +236,7 @@ public class IC_Cart {
 	    	if(isPresent) {
 	    		backButton.click();
 	    	}
+	    	action.explicitWait(5000);
 	    	String cartCounter = itemsInCartCounter(test);
 
 	    	if(cartCounter.equalsIgnoreCase("")) {
@@ -248,6 +249,7 @@ public class IC_Cart {
 	    	//action.explicitWait(7000);
 	    	//action.click(removeAllCartItems, "Remove All items From Cart", test);
 	    	//action.javaScriptClick(removeAllCartItems, "Remove All items From Cart", test);
+	    	action.explicitWait(5000);
 	    	JavascriptExecutor executor = (JavascriptExecutor) driver;
 	    	if(action.waitUntilElementIsDisplayed(removeAllCartItems, 15000)) {
 			executor.executeScript("arguments[0].click();", removeAllCartItems);

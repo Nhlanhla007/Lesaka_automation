@@ -50,6 +50,9 @@ public class MagentoRegisterNewUser {
 	WebElement Cust_Email;
 	@FindBy(xpath = "//input[@name='customer[identity_number]']")
 	WebElement Cust_ID;
+	
+	@FindBy(name = "customer[passport_number]")
+	WebElement passport;
 
 	//save new customer
 	@FindBy(xpath = "//span[contains(text(),'Save Customer')]")
@@ -67,6 +70,7 @@ public class MagentoRegisterNewUser {
 		String Email = input.get("Email").get(rowNumber);//"TestAutomation1@gmail.com";
 		String IDType = input.get("Identitynumber/passport").get(rowNumber);
 		String IDNumber = input.get("SAID").get(rowNumber);//"7503226018089";
+		String expPassport = input.get("Passport").get(rowNumber);
 		int waitforelement =Integer.parseInt(input.get("DelayforElements").get(rowNumber));
 		String resBPnumber = null;
 		boolean ExpCustomerCreateSuccess = true;
@@ -84,9 +88,9 @@ public class MagentoRegisterNewUser {
 			//Mandatory step to give id number or passport number for BP generation
 			switch (IDType){
 				case "SAID":
-					action.writeText(Cust_ID, IDNumber, "Customer Number", test);
+					action.writeText(Cust_ID, IDNumber, "Customer ID Number", test);
 				case "Passport":
-					//implemented in future test scenario
+					action.writeText(passport, expPassport, "Customer Passport", test);
 			}
 
 
