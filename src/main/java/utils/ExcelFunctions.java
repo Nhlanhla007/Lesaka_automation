@@ -27,7 +27,7 @@ import Logger.Log;
  * transmission in whole or in part, in any form or by any means, electronic,
  * mechanical or otherwise, is prohibited without the prior written permission
  * of the copyright owner. </copyright>
- * 
+ *
  */
 
 public class ExcelFunctions {
@@ -90,7 +90,7 @@ public class ExcelFunctions {
 	 * @param testcaseName
 	 *            Name of the configuration to be executed.
 	 * @return Row number corresponding to the configuration name
-	 * 
+	 *
 	 */
 
 	public  String locateTestCaseRow(String testcaseName,int sheetNumber) {
@@ -114,7 +114,7 @@ public class ExcelFunctions {
 	 * @param value
 	 *            Value to be searched
 	 * @return Returns start row number based on the value
-	 * 
+	 *
 	 */
 
 
@@ -126,7 +126,7 @@ public class ExcelFunctions {
 	 * @param startRowNumber
 	 *            Value to be searched
 	 * @return Returns last row number based on the value
-	 * 
+	 *
 	 */
 
 	public  int findEndRow(int sheetNumber, int startRowNumber) {
@@ -154,7 +154,7 @@ public class ExcelFunctions {
 	 * @param sheetNumber
 	 *            Sheet number of the configuration
 	 * @return Returns last row number of a particular sheet
-	 * 
+	 *
 	 */
 
 	public  int findLastRow(int sheetNumber) {
@@ -169,7 +169,7 @@ public class ExcelFunctions {
 	 * @param rowNumber
 	 *            Value to be searched
 	 * @return Returns last row number of a particular sheet
-	 * 
+	 *
 	 */
 
 	public  int findLastColumn(int rowNumber,int sheetNumber) {
@@ -182,7 +182,7 @@ public class ExcelFunctions {
 	 * @param sheetNumber
 	 *            number sheet number of the configuration
 	 * @return Returns the operation type (Insert/Update/Delete)
-	 * 
+	 *
 	 */
 
 	public  String getCellData(int RowNo, int columnNumber,int sheetNumber) {
@@ -205,7 +205,7 @@ public class ExcelFunctions {
 	 * @param sheetNumber
 	 *            sheet number of the configuration
 	 * @return Returns cell data for the corresponding row and columns number
-	 * 
+	 *
 	 */
 	public  String getCellData(int keyRowNo, int valueRowNo,
 							   String columnName, int sheetNumber) {
@@ -229,7 +229,7 @@ public class ExcelFunctions {
 	 * @param sheetNumber
 	 *            Sheet number of the configuration
 	 * @return Returns number of the iterations
-	 * 
+	 *
 	 */
 
 	public  int getNumberofIterations(int sheetNumber) {
@@ -242,10 +242,10 @@ public class ExcelFunctions {
 	/**
 	 * @param cell
 	 *            cell of the excel sheet
-	 * 
+	 *
 	 * @return Returns the String value of each cell irrespective of its data
 	 *         type
-	 * 
+	 *
 	 */
 	public static  String getExcelDataBasedOnCellType(Cell cell) {
 		String value = "";
@@ -329,10 +329,8 @@ public class ExcelFunctions {
 		String[] headers = null;
 		dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 		for (int i = 0; i < numSheets; i++) {
-//			System.out.println("i:" + i);
 			sheet = workbook.getSheetAt(i);
 			String sheetName=workbook.getSheetName(i);
-//			logger.info("sheetName :"+sheetName);
 			int numRows = sheet.getLastRowNum() + 1;
 			mySheetMap = new LinkedHashMap<String, ArrayList<String>>();
 			Row row = sheet.getRow(0);

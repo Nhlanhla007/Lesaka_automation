@@ -78,14 +78,15 @@ public class JDTests extends BaseTest {
 
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws IOException, InterruptedException {
-		int numberOfTestCases = singleSuiteData.get("Execute").size();
-		for (int i = 0; i < numberOfTestCases; i++) {
-			System.out.println("TestCaseNumber:" + i);
-			occCount = new HashMap<String, Integer>();
-			String execute = singleSuiteData.get("Execute").get(i);
-			if (execute.toLowerCase().equals("yes")) {
-				String testCaseDescription = singleSuiteData.get("testCaseDescription").get(i);
-				testcaseID = Integer.parseInt(singleSuiteData.get("TestCaseID").get(i));
+
+		int numberOfTestCases =singleSuiteData.get("Execute").size();
+		for(int i=0;i<numberOfTestCases;i++){
+			System.out.println("TestCaseNumber:"+i);
+			occCount=new HashMap<String, Integer>();
+			String execute=singleSuiteData.get("Execute").get(i);
+			if(execute.toLowerCase().equals("yes")){
+				String testCaseDescription=singleSuiteData.get("testCaseDescription").get(i);
+				testcaseID=Integer.parseInt(singleSuiteData.get("TestCaseID").get(i)) ;
 				dataTable2.setTestCaseID(testcaseID);
 				ExtentTest test = reportJD.createTest(testcaseID + " : " + testCaseDescription);
 				startBrowserSession();
@@ -99,7 +100,23 @@ public class JDTests extends BaseTest {
 						} catch (Exception e) {
 
 						}
-						currentKeyWord = actionToRun;
+						currentKeyWord=actionToRun;
+						System.out.println("actionToRunLable:"+actionToRunLable);
+						System.out.println("currentKeyWord:"+currentKeyWord);
+							if(!currentKeyWord.equals("")){
+								if(!occCount.containsKey(currentKeyWord)){
+									occCount.put(currentKeyWord,0);
+								}else{
+									int occNum=occCount.get(currentKeyWord);
+									occNum++;
+									occCount.put(currentKeyWord,occNum);
+								}
+//								dataTable2.setTestCaseID(actionToRun);
+								dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
+								dataTable2.setModule(actionToRun);
+								runKeyWord(actionToRun,test);
+//								writeToExcel(new File(dataTable2.filePath()));
+								writeToExcel(createFile());
 
 						if (!currentKeyWord.equals("")) {
 							System.out.println("actionToRunLable:" + actionToRunLable);
@@ -135,29 +152,29 @@ public class JDTests extends BaseTest {
 	}
 
 	public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
-		String moduleToRun = actionToRun;
+		String moduleToRun=actionToRun;
+		IConnection ic=new IConnection(driver,dataTable2);
+		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
+		ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);
+		ic_PayUPayment  PayU = new ic_PayUPayment(driver,dataTable2);
+		Ic_Products products = new Ic_Products(driver,dataTable2);
+		IC_Cart icCart=new IC_Cart(driver,dataTable2);
+		ic_AccountConfirmation icAccountConfirmation = new ic_AccountConfirmation(driver,dataTable2);
+		ICDelivery icDelivery=new ICDelivery(driver,dataTable2);
+		ic_Magento_Login icMagento = new ic_Magento_Login(driver,dataTable2);
+		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver,dataTable2);
+		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver,dataTable2);
+		ic_AccountInformation verifyAcc = new ic_AccountInformation(driver,dataMap2);
+		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver,dataTable2);
+		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
+		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver,dataTable2);
+		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver,dataTable2);
+		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver,dataTable2);
+		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver,dataTable2);
+		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver,dataTable2);
+		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver,dataTable2);
+		ic_Login ic_login = new ic_Login(driver,dataTable2);
 		ic_verifyDeliveryOptions icDeliveryOptionDisplay = new ic_verifyDeliveryOptions(driver,dataTable2);
-		IConnection ic = new IConnection(driver, dataTable2);
-		Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver, dataTable2);
-		ic_PaymentOption Payopt = new ic_PaymentOption(driver, dataTable2);
-		ic_PayUPayment PayU = new ic_PayUPayment(driver, dataTable2);
-		Ic_Products products = new Ic_Products(driver, dataTable2);
-		IC_Cart icCart = new IC_Cart(driver, dataTable2);
-		ic_AccountConfirmation icAccountConfirmation = new ic_AccountConfirmation(driver, dataTable2);
-		ICDelivery icDelivery = new ICDelivery(driver, dataTable2);
-		ic_Magento_Login icMagento = new ic_Magento_Login(driver, dataTable2);
-		MagentoOrderStatusPage orderStatus = new MagentoOrderStatusPage(driver, dataTable2);
-		ic_MagentoOrderSAPnumber icOrderSAPnumber = new ic_MagentoOrderSAPnumber(driver, dataTable2);
-		ic_AccountInformation verifyAcc = new ic_AccountInformation(driver, dataMap2);
-		ic_NewAccountCreation newAcc = new ic_NewAccountCreation(driver, dataTable2);
-		MagentoRetrieveCustomerDetailsPage custDetails = new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
-		MagentoAccountInformation MagentoCustDetail = new MagentoAccountInformation(driver, dataTable2);
-		MagentoRegisterNewUser MagentonewUser = new MagentoRegisterNewUser(driver, dataTable2);
-		ICUpdateCustomer icUpdateUser = new ICUpdateCustomer(driver, dataTable2);
-		ic_GiftCardPurchase icGiftCardPurchase = new ic_GiftCardPurchase(driver, dataTable2);
-		admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver, dataTable2);
-		customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver, dataTable2);
-		ic_Login ic_login = new ic_Login(driver, dataTable2);
 		ic_invalidLoginCreds ic_invalidCredslogin = new ic_invalidLoginCreds(driver, dataTable2);
 		ic_LoginPasswordIsSecured icPasswordSecured = new ic_LoginPasswordIsSecured(driver, dataTable2);
 		ic_forgotPasswordLink icforgottenPassLink = new ic_forgotPasswordLink(driver, dataTable2);
@@ -171,17 +188,14 @@ public class JDTests extends BaseTest {
 		ic_existingAddress icExistingAddress = new ic_existingAddress(driver,dataTable2);
 		ic_RedeemGiftCard icRedeemGiftCard = new ic_RedeemGiftCard(driver,dataTable2);
 		ic_SearchMinimumCharacter icMinimumCharacter = new ic_SearchMinimumCharacter(driver, dataTable2);
-		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver, dataMap2, dataTable2);
-		IC_RetriveOrderID ic_RetriveOrderID = new IC_RetriveOrderID(driver, dataTable2);
-		admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver, dataTable2);
-		Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,
-				dataTable2);
-		Magento_CancelSalesorderVerification CancelSalesorderVerification = new Magento_CancelSalesorderVerification(
-				driver, dataTable2);
-		Magento_CreditApp_NavigateFilter CreditApp_NavigateFilter = new Magento_CreditApp_NavigateFilter(driver,
-				dataTable2);
-		Magento_CreditStatusVerification CreditStatusVerification = new Magento_CreditStatusVerification(driver,
-				dataTable2);
+		SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
+		IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
+		IC_RetriveGiftCardOrderId ic_RetriveGiftCardOrderID = new IC_RetriveGiftCardOrderId(driver, dataTable2);
+        admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
+        Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,dataTable2);
+        Magento_CancelSalesorderVerification CancelSalesorderVerification =new Magento_CancelSalesorderVerification(driver,dataTable2);
+        Magento_CreditApp_NavigateFilter CreditApp_NavigateFilter = new Magento_CreditApp_NavigateFilter(driver,dataTable2);
+        Magento_CreditStatusVerification CreditStatusVerification = new Magento_CreditStatusVerification(driver,dataTable2);
 		ic_RefreshLogoHomepage icLogo = new ic_RefreshLogoHomepage(driver, dataTable2);
 		ic_EnterBasicDetails icEnterBasicDetails = new ic_EnterBasicDetails(driver, dataTable2);
 		ic_SpouseDetails icEnterSpouseInfo = new ic_SpouseDetails(driver, dataTable2);
@@ -193,6 +207,7 @@ public class JDTests extends BaseTest {
 		ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(
 				driver, dataTable2);
 		ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
+		ic_Subscriber_Newsletter_ValidEmailaddress ic_SubscribeNewsletter = new ic_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
 		IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
 		ic_WishlistToCart IC_WishlistToCart = new ic_WishlistToCart(driver, dataTable2);
 		ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
@@ -209,11 +224,13 @@ public class JDTests extends BaseTest {
 		IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
         IC_Parallel_login parrallel_ic_Login = new IC_Parallel_login(driver, dataTable2);
 		SapRSI sapRSI= new SapRSI(driver, dataTable2);
-		ExtentTest test1 = test.createNode(moduleToRun);
-		int rowNumber = -1;
-		if (dataMap2.containsKey(currentKeyWord + "++")) {
+		ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
+		ExtentTest test1=test.createNode(moduleToRun);
+		int rowNumber=-1;
+		if(dataMap2.containsKey(currentKeyWord+"++")) {
 			rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
 		}
+		int i = 0;
 		WebElement el = null;
 		switch (moduleToRun) {
 			case "Login":
@@ -328,6 +345,7 @@ public class JDTests extends BaseTest {
 				RequiredSheets.add(dataMap2.get(currentKeyWord+"++"));
 				RequiredSheets.add(dataMap2.get("Login_magento++"));
 				ic_cashDepositPayment.InvoiceCashDeposit(RequiredSheets,test1,testcaseID);
+				break;
 			case "icGiftCardPurchase":
 				icGiftCardPurchase.purchaseGiftCard(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);	
 				break;
@@ -361,16 +379,20 @@ public class JDTests extends BaseTest {
 			case "EnterContact":
 				icContactInfo.enterContactDetailsForLoan(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
-			case "icInvalidEmail":
-				icNewsletterEmail.ic_NewsLetterInvalidEmail(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
-				break;
+			 case "icInvalidEmailNewsLetter":
+	            icNewsletterEmail.ic_NewsLetterInvalidEmail(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+	            break;
 			case "icExistingAddress":
 				icExistingAddress.AddressThere(test1);
+				break;
 			case "icSearchMinimumCharacter":
 				icMinimumCharacter.icValidMinimumSearch(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "ic_RetriveOrderID":
 				ic_RetriveOrderID.RetriveOrderID(test1);
+				break;
+			case "ic_RetriveGiftCardOrderID":
+				ic_RetriveGiftCardOrderID.RetriveOrderID(test1);
 				break;
 			case "SapCustomer":
 				ArrayList<HashMap<String, ArrayList<String>>> sheets = new ArrayList<HashMap<String, ArrayList<String>>>();
@@ -392,6 +414,7 @@ public class JDTests extends BaseTest {
 				CreditApp_NavigateFilter.VerifyCreditAppSelection(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "CreditStatusVerification":
+				CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get("CreditStatusVerification++"), test1, rowNumber);
 				CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "icLogoHomepage":
@@ -418,7 +441,7 @@ public class JDTests extends BaseTest {
 			case "ic_NavigetoWishlist":
 				NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
 				break;
-			case "ic_verifyWishlistItem":
+			case "IC_ClearWishList":
 				verifyWishlistItem.handleWishlistItem(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "ic_RemoveFromcart":
@@ -435,6 +458,7 @@ public class JDTests extends BaseTest {
 				break;
 			case "RemoveArticleFromCart":
 				removeItemsFromCart.removeItemFromCart(test1);
+				break;
 			case "SendWishlistToEmail":
 				SendWishlistToEmail.ShareYourwishlist(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
@@ -467,6 +491,15 @@ public class JDTests extends BaseTest {
 				break;
 			case "getRSIItemInMagento":
 				sapRSI.getRSIItemInMagento(test1);
+				break;
+			 case "ic_SKUproduct":
+	            SKUproduct.displayProductSKU(test1, el);
+				break;
+	          case "ic_SubscribeNewsletter":
+	            ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+	            break;
+			case "NavigateToWishlist_VerifyLoginPageAppear":
+				NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
 				break;
 		}
 	}
@@ -503,7 +536,8 @@ public class JDTests extends BaseTest {
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 
 			navigateURL = System.getProperty("URL");
-			if (navigateURL == null) {
+			if(navigateURL==null){
+				logger.info("System property returned Null URL. So getting data from Config file");
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 			navigateURL = ConfigFileReader.getPropertyVal("URL");

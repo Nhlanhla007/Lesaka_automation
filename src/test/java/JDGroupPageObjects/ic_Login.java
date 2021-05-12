@@ -45,7 +45,7 @@ public class ic_Login {
 		@FindBy(xpath = "//*[@id=\"send2\"]/span")
 		
 		WebElement ic_SigninBtn;
-		
+
 		//div[contains(text(),'Your account sign-in was incorrect. Please try again.')]Your account sign-in was incorrect. Please try again.
 		@FindBy(xpath = "//html/body/div[1]/header/div[3]/div[2]/div/div")
 		WebElement ic_InvalidCreds;
@@ -87,7 +87,7 @@ public class ic_Login {
 		public List<String> userCreds(List<String> userCreds){
 			return userCreds;
 		}	
-		
+
 		public void logout(ExtentTest test,HashMap<String, ArrayList<String>> input,int rowNumber) throws Exception {
 			action.click(ic_myAccountButton, "My account", test);
 			//action.mouseover(logout, "logout");

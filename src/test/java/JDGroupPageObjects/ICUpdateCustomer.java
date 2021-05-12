@@ -58,7 +58,7 @@ public class ICUpdateCustomer {
 	    @FindBy(xpath="//*[@id=\"taxvat\"]")
 	    private WebElement ic_taxVat;
 	  
-	    @FindBy(xpath="//*[@id=\"form-validate\"]/fieldset[1]/div[4]/label ")
+	    @FindBy(xpath="//*[@id=\"change-email\"]/following-sibling::*/span")
 	    private WebElement emailCheckBox;
 	    
 	    @FindBy(xpath="//*[@id=\"email\"]")
@@ -135,7 +135,7 @@ public class ICUpdateCustomer {
 	    @FindBy(xpath="//*[@id=\"top-cart-btn-checkout\"]/span")
 	    private WebElement icCCheckout;
 	    
-	    
+	    List<String> streetAddresses;
 	    
 	    /**
 	     * 
@@ -237,8 +237,8 @@ public class ICUpdateCustomer {
 	    		action.writeText(ic_email, emailTextUpdated ,"email", test);
 				dataTable2.setValueOnCurrentModule("email_output",emailTextUpdated);
 				dataTable2.setValueOnOtherModule("ic_login","Username",emailTextUpdated,0);
-//	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
-//	    		action.writeText(passCurrent, currentPassWordText, "Current password", test);
+	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
+	    		action.writeText(passCurrent, currentPassWordText, "Current password", test);
 	    		action.click(SaveButton, "Save", test);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
@@ -266,13 +266,32 @@ public class ICUpdateCustomer {
 	    	
 	    	//Billing Address
 	    	if(billingAddress.equalsIgnoreCase("Yes")){
+	    		
+	    		Random r = new Random();
+	    		//String randomAddres = streetAddresses.get(randomitem);
+	    		
+	    		streetAddresses = new ArrayList<>();
+	    		streetAddresses.add("98 Van Riebeeck Avenue");
+	    		streetAddresses.add("28 Harrison Street");
+	    		streetAddresses.add("45 Zenith Drive");
+	    		streetAddresses.add("510 Mississippi Street");
+	    		streetAddresses.add("4 Loop Street");
+	    		streetAddresses.add("234 Glover Avenue");
+	    		streetAddresses.add("72 Ceramic Curve");
+	    		streetAddresses.add("15 Alice Lane");
+	    		streetAddresses.add("315 York Avenue");
+	    		streetAddresses.add("35 Ballyclare Drive");
+	    		streetAddresses.add("100 Northern Parkway");
+	    		int randomitem = r.nextInt(streetAddresses.size());
+	    		
+	    		
 	    		//action.click(ic_BillingAddress, "Change Billing address", test);
 	    		//ic_BillingAddress.click();
 	    		action.javaScriptClick(ic_BillingAddress, "Change Billing address", test);
 	    		String streetAdressText = action.getAttribute(ic_streetAddress, "value");	    		
 	    		if(billing_streetAddress.equalsIgnoreCase("yes")){
 	    			//ADD random data from list here for addresses
-		    		String streetAdressTextUpdated = streetAdressText + "Updated" + id;
+	    			String streetAdressTextUpdated = streetAddresses.get(randomitem);
 		    		action.clear(ic_streetAddress, "Removing Streeta address");
 	    	
 		    		action.writeText(ic_streetAddress, streetAdressTextUpdated, "Street address", test);
@@ -294,7 +313,7 @@ public class ICUpdateCustomer {
 		    		dataTable2.setValueOnCurrentModule("billing_postalCode_output",postalCodeText);
 		    		
 		    		action.click(SaveButton, "Save", test);
-		    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSaved, "Billing address updated"), test);
+		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, "Billing address updated"), test);
 		    	
 		    	}else {
 		    		dataTable2.setValueOnCurrentModule("billing_streetAddress_output",streetAdressText);

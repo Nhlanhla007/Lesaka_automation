@@ -138,7 +138,8 @@ public class ICDelivery {
     	Postalcode = input.get("postalCode").get(rowNumber);
     	String addressType = dataSheets.getValueOnCurrentModule("AddressType"); 
     	String userType = dataSheets.getValueOnCurrentModule("UserType");
-        Thread.sleep(1500);
+        //Thread.sleep(10000);
+    	action.explicitWait(15000);
         action.click(deliveryLink,"deliveryLink",test);
         String addressTypeICFont = ic_AddressType.getText();
         Thread.sleep(4000);
@@ -167,7 +168,7 @@ public class ICDelivery {
             action.writeText(lastname,dataSheets.getValueOnCurrentModule("lastname"),"lastname",test);
             action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
             action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
-
+        	
         }
         action.writeText(streetName,dataSheets.getValueOnCurrentModule("streetName"),"streetName",test);
         action.writeText(telephone,dataSheets.getValueOnCurrentModule("telephone"),"telephone",test);

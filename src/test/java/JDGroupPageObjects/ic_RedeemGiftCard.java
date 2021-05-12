@@ -77,6 +77,12 @@ public class ic_RedeemGiftCard {
 	 @FindBy(xpath="//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
 	    private WebElement ic_Deliver;
 	 
+	 ///html/body/div[1]/header/div[3]/div[2]/div/div/div
+	 ///html/body/div[1]/header/div[3]/div[2]/div/div/div/text()
+	//div[contains(text(),'Please correct the gift card code.')]
+	 @FindBy(xpath="//div[contains(text(),'Please correct the gift card code.')]")
+	    private WebElement ic_giftCardError;
+	 
 	 @FindBy(xpath="//*[@id=\"opc-sidebar\"]/div[1]/div[1]/button/span")
 	    private WebElement ic_continuePayment;
 	 
@@ -88,10 +94,13 @@ public class ic_RedeemGiftCard {
 	 public void redeemGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 		 String giftCardCode = input.get("giftCardCode").get(rowNumber);
 		 String scratchCode = input.get("scratchCode").get(rowNumber);
+		 String UsageType = dataTable2.getValueOnCurrentModule("UsageType");
 		 
+		 action.explicitWait(9000);
 		 action.click(ic_Back, "view and Edit your cart", test);
 		 action.click(ic_RedeemGiftCardSelect, "Before you enter the gift card details", test);
 		 //Enter the field
+		 if(UsageType.equalsIgnoreCase("Redeem")){
 		 action.writeText(ic_GiftCardCode, giftCardCode, "Gift Card code", test);
 		 action.writeText(ic_GiftCardScratchCode, scratchCode, "Scratch Code", test);
 		 //click apply
@@ -116,7 +125,22 @@ public class ic_RedeemGiftCard {
 		 //validate
 		 action.click(ic_secure, "Checkout Secure clicked", test);
 		 
+		 }
 		 
+		 if(UsageType.equalsIgnoreCase("Reuse")){
+			 
+			 action.writeText(ic_GiftCardCode, giftCardCode, "Gift Card code", test);
+			 action.writeText(ic_GiftCardScratchCode, scratchCode, "Scratch Code", test);
+			 
+			 action.click(ic_Apply, "apply the the gift card", test);
+			 String giftCarddValidate = null;
+			 if(action.elementExistWelcome(ic_giftCardError, 4, "Please correct the gift card code.", test)){
+				 giftCarddValidate = action.getText(ic_giftCardError, "Please correct the gift card code.");
+				 
+				 action.explicitWait(5000);
+			 }
+			 
+		 }
 		 
 	 }
 

@@ -3,7 +3,9 @@ package JDGroupPageObjects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -80,7 +82,9 @@ public class ic_verifyWishlistItem {
 			String statusMsg ="Item is present";
 			String expmsg= "You have no items in your wish list.";
 			try {
-				if(action.elementExists(mywishlist_statusMsg, TimeOut)){
+				driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);  
+				boolean isPresent = driver.findElements(By.xpath("//form[@id='wishlist-view-form']//span[contains(text(),'You have no items in your wish list.')]") ).size() > 0;
+				if(isPresent){
 					 statusMsg = action.getText(mywishlist_statusMsg, "Wishlist empty message");
 				
 					if(statusMsg.equalsIgnoreCase(expmsg)){

@@ -49,11 +49,11 @@ public class IC_Cart {
 	    
 	    //@FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
 	    @FindBy(xpath = "//header/div[2]/div/div[3]/div[3]/a")
-	    public WebElement iCCartButton;
+	    private WebElement iCCartButton;
 	    
 	    //loop throUGH THIS HERE TO DETERMINE IF THE PRODUCT IS FOUND, IF FOUND VALIDATE QUANTITY AND PRICE
 	    @FindBy(xpath="//*[@id=\"mini-cart\"]/li")
-	     List<WebElement> icAllCartProducts;
+	    private List<WebElement> icAllCartProducts;
 	    
 	    @FindBy(xpath="//*[@id=\"minicart-content-wrapper\"]/div[2]/div[2]/div[1]/div/span/span")
 	    private WebElement icSubtotal;
@@ -76,7 +76,7 @@ public class IC_Cart {
 	    @FindBy(xpath = "//*[@class=\"action-primary action-accept\"]")
 	    public WebElement okButtonRemoveAllItems;
 	    
-	    @FindBy(xpath = "//*[@id=\"maincontent\"]/div[2]//p[1]")
+	    @FindBy(xpath = "//*[@class=\"cart-empty\"]/p[1]")
 	    public WebElement emptyCartConfrimation;
 
 	    @FindBy(css = "a.go-back")
@@ -90,7 +90,7 @@ public class IC_Cart {
 			}
 	    }
 	    
-	    public int sum;
+	    public static int sum;
 		  public void iCcartVerification2(Map<String, List<String>> products,ExtentTest test) {
 			  //Verifies if all the products have been added in the cart
 			  String itemsCount = itemsInCartCounter(test);
@@ -236,7 +236,12 @@ public class IC_Cart {
 	    	if(isPresent) {
 	    		backButton.click();
 	    	}
+	    	action.explicitWait(5000);
 	    	String cartCounter = itemsInCartCounter(test);
+
+	    	if(cartCounter.equalsIgnoreCase("")) {
+	    		cartCounter = "0";
+	    	}
 	    	if(Integer.parseInt(cartCounter)>0) {
 	    	navigateToCart(test);
 	    	navigateToViewAndEditCart(test);
@@ -244,14 +249,19 @@ public class IC_Cart {
 	    	//action.explicitWait(7000);
 	    	//action.click(removeAllCartItems, "Remove All items From Cart", test);
 	    	//action.javaScriptClick(removeAllCartItems, "Remove All items From Cart", test);
+	    	action.explicitWait(5000);
 	    	JavascriptExecutor executor = (JavascriptExecutor) driver;
+	    	if(action.waitUntilElementIsDisplayed(removeAllCartItems, 15000)) {
 			executor.executeScript("arguments[0].click();", removeAllCartItems);		
+	    	}
 	    	boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4000, "Clear Shopping Cart Pop Up", test);
 	    	if(isRemovePopUpDisplayed) {	    		
 	    		action.click(okButtonRemoveAllItems, "Remove All Items Button", test);
-	    		action.explicitWait(4000);
+	    		if(action.waitUntilElementIsDisplayed(emptyCartConfrimation, 15000)) {
 	    		String emptyCartVerification = emptyCartConfrimation.getText();
 	    		action.CompareResult("Empty Cart Message Verification", "You have no items in your shopping cart.", emptyCartVerification.trim(), test);
+	    		}	    		
+	    		action.explicitWait(5000);
 	    		cartCounter = itemsInCartCounter(test);
 	    		action.CompareResult("Cart Count:Mini Cart Is Empty", "0", cartCounter	, test);
 	    	}

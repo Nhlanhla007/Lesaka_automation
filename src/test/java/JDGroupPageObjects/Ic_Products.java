@@ -207,9 +207,9 @@ public class Ic_Products {
 				break;
 			case "Validate_Out_Of_Stock":
 				break;
-			default:
+			/*default:
 				cartValidation.iCcartVerification2(productsInCart, test);
-				break;
+				break;*/
 			}
 
 		} catch (Exception e) {
@@ -301,7 +301,7 @@ public class Ic_Products {
 
 	void addToCartFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
 		if(quanity == 1) {
-			action.clickEle(productLink, "Navigate to product Details page", test);
+			action.click(productLink, "Navigate to product listing page", test);
 		}
 		//click on product name and enter listing page
 		//confirm that page has loaded
@@ -319,12 +319,14 @@ public class Ic_Products {
 	}
 	void addToWishlistFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
 		if(quanity == 1) {
-			action.clickEle(productLink, "Navigate to product Details page", test);
+			action.click(productLink, "Navigate to product Details page", test);
 		}
 		//click on product name and enter listing page
 		//confirm that page has loaded
-		productDetailsPageAddToWishlistButton.click();
+		if(action.waitUntilElementIsDisplayed(productDetailsPageAddToWishlistButton, 15000)) {
+		action.click(productDetailsPageAddToWishlistButton,"Add to wish list button",test);
 		action.explicitWait(Integer.parseInt(waitTimeInSeconds));
+		}
 		//click add to wish list
 		
 	}
@@ -391,7 +393,6 @@ public class Ic_Products {
 									quantityExecu++;
 									switch(TypeOfOperation){
 									case "Add_To_Cart":
-										quantityExecu++;
 										addToCartFromProdDetailsPage(prod,waitTimeInSeconds,quantityExecu,test);
 										break;
 									case "Add_To_Wishlist":

@@ -47,9 +47,9 @@ public class ICWishlistverification {
     }
     public void icWishlistVerificationSender (HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException, ParseException {
         action.navigateToURL("https://mail.google.com/");
-        navigateToGmail(dataTable2.getValueOnCurrentModule("userName"),dataTable2.getValueOnCurrentModule("password"),test);
+        //navigateToGmail(dataTable2.getValueOnCurrentModule("userName"),dataTable2.getValueOnCurrentModule("password"),test);
         action.explicitWait(10000);
-        List<WebElement> email = driver.findElements(By.xpath("//html/body//table[@id=':2c']//tr"));
+        List<WebElement> email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div//div/div[1]/div[3]/div/table//tr"));
         int waitTimeForBarcodeEmailInSec=Integer.parseInt(dataTable2.getValueOnCurrentModule("waitTimeForEmailInSec"));
         int numberOfEmailsAfter=email.size();
         Date date1 =new Date();
@@ -88,7 +88,7 @@ public class ICWishlistverification {
             difference=(curTime2-curTime1)/1000;
             System.out.println("Time waiting for email(sec): "+difference);
             System.out.println("Number of emails: "+numberOfEmailsAfter);
-            email = driver.findElements(By.xpath("//html/body//table[@id=':2c']//tr"));
+            email = driver.findElements(By.xpath("/html/body/div[7]/div[3]/div/div[2]/div[1]/div[2]/div/div/div/div/div[2]/div/div[1]/div/div//div/div[1]/div[3]/div/table//tr"));
 
             numberOfEmailsAfter=email.size();
         }

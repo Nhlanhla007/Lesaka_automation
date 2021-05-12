@@ -69,8 +69,6 @@ public class Action {
 		return destination;
 	}
 	public void copyFile(File source,File dest){
-
-
 		try {
 //			File file1 = new File(source);
 //			File file2 = new File(dest);
@@ -608,6 +606,7 @@ public class Action {
 	 * @return
 	 */
 	public<T> boolean waitUntilElementIsDisplayed(T elementAttr, int secs) throws InterruptedException {
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		boolean flag = isDisplayed(elementAttr);
 		int count = 0;
 		while (flag == false && count < secs){
@@ -1690,7 +1689,7 @@ public class Action {
 			node.fail(e.getMessage());
 		}
 	}
-
+	
 	public void scrollElementIntoView(WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		js.executeScript("arguments[0].scrollIntoView();", element);

@@ -6,11 +6,15 @@ import SAP_HanaDB.SAPorderRelated;
 import base.TestCaseBase;
 import com.aventstack.extentreports.ExtentTest;
 import emailverification.ICGiftCardVerification;
+import emailverification.ICWishlistverification;
+import emailverification.ic_PasswordForgotEmailVerification;
+import emailverification.ic_ResetPasswordEmailLink;
 import ic_MagentoPageObjects.*;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Before;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.*;
 import utils.*;
 import Logger.Log;
@@ -23,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 //@Listeners(listner.TestNGListener.class)
 
-public class JDGTest_TestNG{
+public class JDGTest_TestNG<moduleName> {
     public WebDriver driver;
     protected DataTable dataTable = null;
     protected ConfigFileReader configFileReader;
@@ -39,9 +43,10 @@ public class JDGTest_TestNG{
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 
     @BeforeClass
-    public void once() throws Exception {
+    @Parameters({"moduleName"})
+    public void once(String moduleName) throws Exception {
         dataTable2= new DataTable2();
-        dataTable2.setPath("UPDATEFINAL");
+        dataTable2.setPath(moduleName);
         dataMap2=dataTable2.getExcelData();
     }
 
@@ -50,59 +55,65 @@ public class JDGTest_TestNG{
         occCount=new HashMap<String, Integer>();
         startBrowserSession();
     }
-
-    @Test(testName ="71_Validate_Parallel_Login_to_IC" )
-    public void Validate_Parallel_Login_to_IC() throws Exception {
-        String testMethodName="Validate_Parallel_Login_to_IC";
+    //Start Tests-----------------------------------------------------------------------
+    //${AllTestMethods}
+    @Test(testName ="31_Create_Customer_Account_from_Sales_Order" )
+    public void Create_Customer_Account_from_Sales_Order() throws Exception {
+        String testMethodName="Create_Customer_Account_from_Sales_Order";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
     }
 
-//    @Test(testName ="31_Create_Customer_Account_from_Sales_Order" )
-//    public void Create_Customer_Account_from_Sales_Order() throws Exception {
-//        String testMethodName="Create_Customer_Account_from_Sales_Order";
-//        ExtentTest test =reportJD.createTest(testMethodName);
-//        int TCIndex=getTestCaseIndex(testMethodName);
-//        runner(TCIndex,test);
-//    }
-//
-//    @Test(testName ="26_Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
-//    public void Create_Sales_Order_Guest_User_Thorugh_Product_Search() throws Exception {
-//        String testMethodName="Create_Sales_Order_Guest_User_Thorugh_Product_Search";
-//        ExtentTest test =reportJD.createTest(testMethodName);
-//        int TCIndex=getTestCaseIndex(testMethodName);
-//        runner(TCIndex,test);
-//    }
-//
-//    @Test(testName ="2_Create_new_customer_in_IC_with_ID_Number" )
-//    public void Create_new_customer_in_IC_with_ID_Number() throws Exception {
-//        String testMethodName="Create_new_customer_in_IC_with_ID_Number";
-//        ExtentTest test =reportJD.createTest(testMethodName);
-//        int TCIndex=getTestCaseIndex(testMethodName);
-//        runner(TCIndex,test);
-//    }
-//
-//    @Test(testName ="42_Click_the_IC_logo_to_go_home_page" )
-//    public void Click_the_IC_logo_to_go_home_page() throws Exception {
-//        String testMethodName="Click_the_IC_logo_to_go_home_page";
-//        ExtentTest test =reportJD.createTest(testMethodName);
-//        int TCIndex=getTestCaseIndex(testMethodName);
-//        runner(TCIndex,test);
-//    }
-//    @Test(testName ="45_Validating_the_minimum_search_characters" )
-//    public void Validating_the_minimum_search_characters() throws Exception {
-//        String testMethodName="Validating_the_minimum_search_characters";
-//        ExtentTest test =reportJD.createTest(testMethodName);
-//        int TCIndex=getTestCaseIndex(testMethodName);
-//        startBrowserSession();
-//        runner(TCIndex,test);
-//    }
+    @Test(testName ="26_Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
+    public void Create_Sales_Order_Guest_User_Thorugh_Product_Search() throws Exception {
+        String testMethodName="Create_Sales_Order_Guest_User_Thorugh_Product_Search";
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+        runner(TCIndex,test);
+    }
+
+    @Test(testName ="2_Create_new_customer_in_IC_with_ID_Number" )
+    public void Create_new_customer_in_IC_with_ID_Number() throws Exception {
+        String testMethodName="Create_new_customer_in_IC_with_ID_Number";
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+        runner(TCIndex,test);
+    }
+
+    @Test(testName ="42_Click_the_IC_logo_to_go_home_page" )
+    public void Click_the_IC_logo_to_go_home_page() throws Exception {
+        String testMethodName="Click_the_IC_logo_to_go_home_page";
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+        runner(TCIndex,test);
+    }
+    @Test(testName ="45_Validating_the_minimum_search_characters" )
+    public void Validating_the_minimum_search_characters() throws Exception {
+        String testMethodName="Validating_the_minimum_search_characters";
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+        runner(TCIndex,test);
+    }
+
+    @Test(testName ="Verify_Message_after_submit_email_on_Forgot_Password_Page" )
+    public void Verify_Message_after_submit_email_on_Forgot_Password_Page() throws Exception {
+        String testMethodName="Verify_Message_after_submit_email_on_Forgot_Password_Page";
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+        runner(TCIndex,test);
+    }
+
+    //End Tests-------------------------------------------------------------------------
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {
         try {
             runAllKeys(TCIndex,test);
             endBrowserSession();
+            test.getStatus();
+            if(!test.getStatus().toString().toLowerCase().equals("pass")){
+                throw new Exception();
+            }
         } catch (Exception e) {
             endBrowserSession();
             e.printStackTrace();
@@ -111,10 +122,12 @@ public class JDGTest_TestNG{
     }
 
     public int getTestCaseIndex(String testMethodName){
-        int numTC=dataMap2.get("IC").get("Test Case Name").size();
+        System.out.println("------------------------------------------------------------");
+        System.out.println("Test_Case_Name:"+testMethodName);
+        int numTC=dataMap2.get("IC").get("Test_Case_Name").size();
         int index=0;
         for(int i=0;i<numTC;i++){
-            if(testMethodName.equals(dataMap2.get("IC").get("Test Case Name").get(i))){
+            if(testMethodName.equals(dataMap2.get("IC").get("Test_Case_Name").get(i))){
                 index=i;
                 testcaseID=Integer.parseInt(dataMap2.get("IC").get("TestCaseID").get(i));
                 dataTable2.setTestCaseID(testcaseID);
@@ -151,13 +164,13 @@ public class JDGTest_TestNG{
         }
     }
 
-    public void runKeyWord(String actionToRun, ExtentTest test) throws Exception {
+    public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
         String moduleToRun=actionToRun;
         ExtentTest test1=test.createNode(moduleToRun);
         IConnection ic=new IConnection(driver,dataTable2);
         Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
         ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);
-        ic_PayUPayment PayU = new ic_PayUPayment(driver,dataTable2);
+        ic_PayUPayment  PayU = new ic_PayUPayment(driver,dataTable2);
         Ic_Products products = new Ic_Products(driver,dataTable2);
         IC_Cart icCart=new IC_Cart(driver,dataTable2);
         ic_AccountConfirmation icAccountConfirmation = new ic_AccountConfirmation(driver,dataTable2);
@@ -175,6 +188,13 @@ public class JDGTest_TestNG{
         admin_UserUpdate adminUserUpdate = new admin_UserUpdate(driver,dataTable2);
         customerValidationUpdates customerVerifyEdits = new customerValidationUpdates(driver,dataTable2);
         ic_Login ic_login = new ic_Login(driver,dataTable2);
+        ic_verifyDeliveryOptions icDeliveryOptionDisplay = new ic_verifyDeliveryOptions(driver,dataTable2);
+        ic_invalidLoginCreds ic_invalidCredslogin = new ic_invalidLoginCreds(driver, dataTable2);
+        ic_LoginPasswordIsSecured icPasswordSecured = new ic_LoginPasswordIsSecured(driver, dataTable2);
+        ic_forgotPasswordLink icforgottenPassLink = new ic_forgotPasswordLink(driver, dataTable2);
+        verifyForgotPassword icVerifyForgotPass = new verifyForgotPassword(driver, dataTable2);
+        ic_PasswordForgotEmailVerification icForgotEmailSent = new ic_PasswordForgotEmailVerification(driver, dataTable2);
+        ic_ResetPasswordEmailLink ResetPasswordLink = new ic_ResetPasswordEmailLink(driver, dataTable2);
         ic_CashDepositPayment ic_cashDepositPayment =new ic_CashDepositPayment(driver,dataTable2);
         SAPorderRelated SaporderRelated = new SAPorderRelated(driver,dataMap2,dataTable2);
         ICGiftCardVerification icGiftCardVerification = new ICGiftCardVerification(driver,dataTable2);
@@ -184,6 +204,7 @@ public class JDGTest_TestNG{
         ic_SearchMinimumCharacter icMinimumCharacter = new ic_SearchMinimumCharacter(driver, dataTable2);
         SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
         IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
+        IC_RetriveGiftCardOrderId ic_RetriveGiftCardOrderID = new IC_RetriveGiftCardOrderId(driver, dataTable2);
         admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
         Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,dataTable2);
         Magento_CancelSalesorderVerification CancelSalesorderVerification =new Magento_CancelSalesorderVerification(driver,dataTable2);
@@ -199,18 +220,55 @@ public class JDGTest_TestNG{
         IC_CreditAppAddressDetails creditAppAddressDetails = new IC_CreditAppAddressDetails(driver, dataTable2);
         ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
         ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
+        ic_Subscriber_Newsletter_ValidEmailaddress ic_SubscribeNewsletter = new ic_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
         IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
+        ic_WishlistToCart IC_WishlistToCart =new ic_WishlistToCart(driver, dataTable2);
+        ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
+        ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
+        ic_WishList WishList = new ic_WishList(driver, dataTable2);
+        ic_CompareProducts productsCompared = new ic_CompareProducts(driver, dataTable2);
+        ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
+        IC_verifyLogin ic_verifyLogin =new IC_verifyLogin(driver, dataTable2);
+        IC_IncreaseQuanityInCart increQuantity = new IC_IncreaseQuanityInCart(driver, dataTable2);
+        IC_RemoveItemsFromCart removeItemsFromCart = new IC_RemoveItemsFromCart(driver, dataTable2);
+        ic_SendWishlistToEmail SendWishlistToEmail = new ic_SendWishlistToEmail(driver, dataTable2);
+        ICWishlistverification icEmailWishlistverification = new ICWishlistverification(driver, dataTable2);
+        RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
+        IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
+        ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
+        ExtentTest test1=test.createNode(moduleToRun);
         int rowNumber=-1;
         if(dataMap2.containsKey(currentKeyWord+"++")) {
             rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
         }
         int i = 0;
+        WebElement el = null;
         switch (moduleToRun) {
             case "Login":
                 ic.login(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
                 break;
             case "ic_login":
                 ic_login.Login_ic(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+                break;
+            case "ic_invalidCredslogin":
+                ic_invalidCredslogin.invalidLogin_ic(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+            case "icPasswordSecured":
+                icPasswordSecured.loginPasswordSafe(dataMap2.get("ic_login++"), test1, rowNumber);
+                break;
+            case "icForgotPasswordLink":
+                icforgottenPassLink.forgotPasswordLink(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+                break;
+            case "icVerifyForgotPass":
+                icVerifyForgotPass.forgotPasswordPage(dataMap2.get("accountCreation++"),test1,rowNumber);
+                break;
+            case "icEmailSentVerification":
+                icForgotEmailSent.icVerifyNewPasswordEmailSent(dataMap2.get("accountCreation++"),test1,rowNumber);
+                break;
+            case "icResetForgottenPassword":
+                ResetPasswordLink.clickLinkOnGmail(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+                ResetPasswordLink.resetNewPassword(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
+                ResetPasswordLink.clickUsedResetLink(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
                 break;
             case "Logout":
                 ic.logout(test1);
@@ -223,6 +281,13 @@ public class JDGTest_TestNG{
                 break;
             case "ProductSearch":
                 products.ic_SelectProductAndAddToCart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+            case "ClearCart":
+                icCart.removeAllItemsInCart(test1);
+                break;
+            case "CompareProducts":
+                productsCompared.validateAddedProductsCompare(test1,el );
+                productsCompared.clearAllProduct(test1, el);
                 break;
             /*
              * case "iCcartVerification": icCart.iCcartVerification(test1); break;
@@ -291,6 +356,7 @@ public class JDGTest_TestNG{
                 RequiredSheets.add(dataMap2.get(currentKeyWord+"++"));
                 RequiredSheets.add(dataMap2.get("Login_magento++"));
                 ic_cashDepositPayment.InvoiceCashDeposit(RequiredSheets,test1,testcaseID);
+                break;
             case "icGiftCardPurchase":
                 icGiftCardPurchase.purchaseGiftCard(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
@@ -324,17 +390,21 @@ public class JDGTest_TestNG{
             case "EnterContact":
                 icContactInfo.enterContactDetailsForLoan(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
-            case "icInvalidEmail":
+            case "icInvalidEmailNewsLetter":
                 icNewsletterEmail.ic_NewsLetterInvalidEmail(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
             case "icExistingAddress":
                 icExistingAddress.AddressThere(test1);
+                break;
             case "icSearchMinimumCharacter":
                 icMinimumCharacter.icValidMinimumSearch(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
             case "ic_RetriveOrderID":
                 ic_RetriveOrderID.RetriveOrderID(test1);
                 break;
+            case "ic_RetriveGiftCardOrderID":
+				ic_RetriveGiftCardOrderID.RetriveOrderID(test1);
+				break;
             case "SapCustomer":
                 ArrayList<HashMap<String, ArrayList<String>>> sheets = new ArrayList<HashMap<String, ArrayList<String>>>();
                 sheets.add(dataMap2.get("accountCreation++"));
@@ -355,6 +425,7 @@ public class JDGTest_TestNG{
                 CreditApp_NavigateFilter.VerifyCreditAppSelection(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
             case "CreditStatusVerification":
+                CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get("CreditStatusVerification++"), test1, rowNumber);
                 CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
             case "icLogoHomepage":
@@ -377,6 +448,60 @@ public class JDGTest_TestNG{
                 break;
             case "IC_ProductsSortBy":
                 productsSortBy.sortBy(test1);
+                break;
+            case "ic_NavigetoWishlist":
+                NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
+                break;
+            case "IC_ClearWishList":
+                verifyWishlistItem.handleWishlistItem(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+            case "ic_RemoveFromcart":
+                RemoveFromcart.Clear_miniCart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+            case "ic_verifyLogin":
+                ic_verifyLogin.IC_verifyLogin_addingProductTowishlist(test1, rowNumber);
+                break;
+            case "IC_WishlistToCart":
+                IC_WishlistToCart.verifyProducts_wishlistTocart(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+            case "IncreaseQuanityInCart":
+                increQuantity.increaseQuantity(test1);
+                break;
+            case "RemoveArticleFromCart":
+                removeItemsFromCart.removeItemFromCart(test1);
+                break;
+            case "SendWishlistToEmail":
+                SendWishlistToEmail.ShareYourwishlist(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+            case "icEmailWishlistverification":
+                icEmailWishlistverification.icWishlistVerificationSender(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+            case "RedirectToProdDetailPageFromCart":
+                redirectAndVerify.verifyNavigationToProductDetailPageFromCart(test1);
+                break;
+            case "giftCardWithInvalidCouponCode":
+                icRedeemGiftCard.giftCardWithInvalidCouponCode(test1);
+                break;
+            case "ic_logout":
+                ic_login.logout(test1,dataMap2.get("ic_login++"),rowNumber);
+                break;
+            case"verifyCart":
+                icCart.verifyCart(test1);
+                break;
+            case "Pagination":
+                pagination.paginate(test1);
+                break;
+            case"verifyDeliveryOption":
+                icDeliveryOptionDisplay.validateDeliveryOptionsDisplays(test1, rowNumber);
+                break;
+            case "ic_SKUproduct":
+                SKUproduct.displayProductSKU(test1, el);
+                break;
+            case "ic_SubscribeNewsletter":
+                ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+            case "NavigateToWishlist_VerifyLoginPageAppear":
+                NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
                 break;
         }
     }

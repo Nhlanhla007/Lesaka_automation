@@ -12,6 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
+import utils.ConfigFileReader;
 import utils.DataTable2;
 
 public class ic_NavigetoWishlist {
@@ -46,6 +47,9 @@ public class ic_NavigetoWishlist {
 		@FindBy(xpath = "//div[@class='message info empty']/span[contains(text(),'You have no items in your wish list.')]")
 		WebElement mywishlist_msg;
 		public void NavigateToWishlist_verifymsg(ExtentTest test) throws IOException{
+			ConfigFileReader configFileReader = new ConfigFileReader();
+			action.navigateToURL(ConfigFileReader.getPropertyVal("URL"));
+			action.explicitWait(5000);
 			String ExpLoginType =dataTable2.getValueOnCurrentModule("Login_type");//"ExistingUser";// logedOn_user or ExistingUser
 			String Username =dataTable2.getValueOnCurrentModule("Username");
 			String password = dataTable2.getValueOnCurrentModule("Password");
@@ -90,11 +94,19 @@ public class ic_NavigetoWishlist {
 		public boolean checkWishlist_message(int waitTime, ExtentTest test) throws IOException{
 			boolean msg_flag = false;
 			if(action.elementExists(mywishlist_msg, waitTime)){
-				action.CompareResult("Wishlist contains no item verification message", "true", "true", test);
+				//action.CompareResult("Wishlist contains no item verification message", "true", "true", test);
 				msg_flag=true;
 			}else{
 				action.CompareResult("Wishlist contains no item verification message", "true", "flase", test);
 			}
 			return msg_flag;
 		}
+		
+		public void NavigateToWishlist_verifyLoginPageAppears(ExtentTest test) throws Exception{
+				navigateWishlist(15000,test);
+				String titleOfPage = driver.getTitle();
+				String expectedTitle = "Incredible Connection Customer Login";
+				action.CompareResult("Verify Title of page", expectedTitle, titleOfPage, test);
+		}
+		
 }
