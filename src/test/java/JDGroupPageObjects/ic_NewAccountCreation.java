@@ -237,6 +237,7 @@ public class ic_NewAccountCreation {
 			}
 			
 			if(existingAccountValidation.equalsIgnoreCase("yes")) {
+				action.explicitWait(8000);
 				action.elementExistWelcome(existingAccountError, 6, existingAccountError.getText(), test);
 			}
 			

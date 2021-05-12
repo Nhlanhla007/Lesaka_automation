@@ -55,23 +55,14 @@ public class testTestClass<moduleName> {
         startBrowserSession();
     }
     //Start Tests-----------------------------------------------------------------------
-    //
-    @Test(testName ="42_Click_the_IC_logo_to_go_home_page" )
-    public void Click_the_IC_logo_to_go_home_page() throws Exception {
-        String testMethodName="Click_the_IC_logo_to_go_home_page";
+    
+    @Test(testName ="52_Wish_List_Clear_Wish_List" )
+    public void Wish_List_Clear_Wish_List() throws Exception {
+        String testMethodName="Wish_List_Clear_Wish_List";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
-    }
-
-    @Test(testName ="45_Validating_the_minimum_search_characters" )
-    public void Validating_the_minimum_search_characters() throws Exception {
-        String testMethodName="Validating_the_minimum_search_characters";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
+    }
     //End Tests-------------------------------------------------------------------------
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {
@@ -132,7 +123,6 @@ public class testTestClass<moduleName> {
 
     public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
         String moduleToRun=actionToRun;
-        ExtentTest test1=test.createNode(moduleToRun);
         IConnection ic=new IConnection(driver,dataTable2);
         Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
         ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);
@@ -187,20 +177,21 @@ public class testTestClass<moduleName> {
         ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
         ic_Subscriber_Newsletter_ValidEmailaddress ic_SubscribeNewsletter = new ic_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
         IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
-        IC_RemoveItemsFromCart removeItemsFromCart = new IC_RemoveItemsFromCart(driver, dataTable2);
-        ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
         ic_WishlistToCart IC_WishlistToCart =new ic_WishlistToCart(driver, dataTable2);
-        ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
         ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
+        ic_RemoveFromcart RemoveFromcart = new ic_RemoveFromcart(driver, dataTable2);
         ic_WishList WishList = new ic_WishList(driver, dataTable2);
         ic_CompareProducts productsCompared = new ic_CompareProducts(driver, dataTable2);
+        ic_NavigetoWishlist NavigetoWishlist = new ic_NavigetoWishlist(driver, dataTable2);
         IC_verifyLogin ic_verifyLogin =new IC_verifyLogin(driver, dataTable2);
         IC_IncreaseQuanityInCart increQuantity = new IC_IncreaseQuanityInCart(driver, dataTable2);
+        IC_RemoveItemsFromCart removeItemsFromCart = new IC_RemoveItemsFromCart(driver, dataTable2);
         ic_SendWishlistToEmail SendWishlistToEmail = new ic_SendWishlistToEmail(driver, dataTable2);
         ICWishlistverification icEmailWishlistverification = new ICWishlistverification(driver, dataTable2);
         RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
         IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
         ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
+        ExtentTest test1=test.createNode(moduleToRun);
         int rowNumber=-1;
         if(dataMap2.containsKey(currentKeyWord+"++")) {
             rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
@@ -412,7 +403,7 @@ public class testTestClass<moduleName> {
             case "ic_NavigetoWishlist":
                 NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
                 break;
-            case "ic_verifyWishlistItem":
+            case "IC_ClearWishList":
                 verifyWishlistItem.handleWishlistItem(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
             case "ic_RemoveFromcart":
@@ -459,6 +450,9 @@ public class testTestClass<moduleName> {
                 break;
             case "ic_SubscribeNewsletter":
                 ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
+                break;
+            case "NavigateToWishlist_VerifyLoginPageAppear":
+                NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
                 break;
         }
     }
@@ -522,4 +516,4 @@ public class testTestClass<moduleName> {
 
 
 
-}
+}

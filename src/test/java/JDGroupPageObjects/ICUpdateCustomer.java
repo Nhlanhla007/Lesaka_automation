@@ -58,7 +58,7 @@ public class ICUpdateCustomer {
 	    @FindBy(xpath="//*[@id=\"taxvat\"]")
 	    private WebElement ic_taxVat;
 	  
-	    @FindBy(xpath="//*[@id=\"form-validate\"]/fieldset[1]/div[4]/label ")
+	    @FindBy(xpath="//*[@id=\"change-email\"]/following-sibling::*/span")
 	    private WebElement emailCheckBox;
 	    
 	    @FindBy(xpath="//*[@id=\"email\"]")
@@ -237,8 +237,8 @@ public class ICUpdateCustomer {
 	    		action.writeText(ic_email, emailTextUpdated ,"email", test);
 				dataTable2.setValueOnCurrentModule("email_output",emailTextUpdated);
 				dataTable2.setValueOnOtherModule("ic_login","Username",emailTextUpdated,0);
-//	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
-//	    		action.writeText(passCurrent, currentPassWordText, "Current password", test);
+	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
+	    		action.writeText(passCurrent, currentPassWordText, "Current password", test);
 	    		action.click(SaveButton, "Save", test);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
