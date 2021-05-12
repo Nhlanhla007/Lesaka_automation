@@ -56,9 +56,9 @@ public class testTestClass<moduleName> {
     }
     //Start Tests-----------------------------------------------------------------------
     
-    @Test(testName ="36_Gift_Card_Redeem_Registered_user" )
-    public void Gift_Card_Redeem_Registered_user() throws Exception {
-        String testMethodName="Gift_Card_Redeem_Registered_user";
+    @Test(testName ="33_Gift_Card_Purchase_Registered_user" )
+    public void Gift_Card_Purchase_Registered_user() throws Exception {
+        String testMethodName="Gift_Card_Purchase_Registered_user";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
@@ -516,4 +516,4 @@ public class testTestClass<moduleName> {
 
 
 
-}
+}
