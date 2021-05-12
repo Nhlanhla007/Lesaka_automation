@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +15,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
+
+import Logger.Log;
 import utils.Action;
 import utils.DataTable2;
 
@@ -28,6 +32,8 @@ public class MagentoRetrieveCustomerDetailsPage {
 		action = new Action(driver);
 		this.dataTable2 = dataTable2;
 	}
+	
+	Logger logger = Log.getLogData(this.getClass().getSimpleName());
 
 	@FindBy(xpath = "//*[@class=\"admin__menu\"]/ul[@id='nav']/li[@id=\"menu-magento-customer-customer\"]/a/span[contains(text(),\"Customers\")]")
 	WebElement customerTab;
@@ -48,7 +54,11 @@ public class MagentoRetrieveCustomerDetailsPage {
 	public WebElement magentoApplyFilterTab;
 
 	@FindBy(xpath = "//div/div[4]/table/tbody/tr")
+	//@FindBy(className = "data-row")
 	List<WebElement> customerTableRecords;
+	
+	//@FindBy(className = "data-row")
+	//List<WebElement> customerTable;
 
 	@FindBy(xpath = "//div/div[3]/div/div[3]/table/thead/tr/th")
 	List<WebElement> customerTableHeaders;
@@ -64,14 +74,19 @@ public class MagentoRetrieveCustomerDetailsPage {
 			Thread.sleep(10000);
 	}
 
-	public void searchForCustomer(String emailToSearchBy,ExtentTest test) throws IOException {
+	public void searchForCustomer(String emailToSearchBy,ExtentTest test) throws Exception {
 		boolean testallFlag=true;
+		
+		//if(isMagentoSearchPageLoaded(10)) {		
+			
 		try {
-			if (action.waitUntilElementIsDisplayed(clearFilters, 15000)) {
+			if (action.waitUntilElementIsDisplayed(clearFilters, 8000)) {
 				action.click(clearFilters, "Cleared Filters", test);
-				Thread.sleep(6000);
+				action.explicitWait(6000);
 			}
-
+		}catch(Exception e){
+			logger.info("Clear filter is not clickable");
+		}
 			action.click(magentoFilterTab, "Filter tab", test);
 			action.explicitWait(2000);
 			action.clear(emailSearchField, "Email ID");
@@ -80,23 +95,9 @@ public class MagentoRetrieveCustomerDetailsPage {
 			action.explicitWait(2000);
 			action.click(magentoApplyFilterTab, "Apply to filters", test);
 			testallFlag=false;
+			action.explicitWait(5000);
 
-
-
-		} catch (Exception e) {
-
-			if(testallFlag==true){
-
-				action.click(magentoFilterTab, "Filter tab", test);
-				action.clear(emailSearchField, "Email ID");
-				action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
-				action.click(magentoApplyFilterTab, "Apply to filters", test);
-
-			}else{
-				test.fail(e.getMessage());
-			}
-		}
-
+		//}
 	}
 
 	public void retrieveCustomerDetails(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
@@ -180,4 +181,37 @@ public class MagentoRetrieveCustomerDetailsPage {
 			e.printStackTrace();
 		}
 	}
+	
+	public boolean isMagentoSearchPageLoaded(int timeoutInSec) throws Exception {
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);		
+		int timer = 0;
+		boolean status = false;
+		boolean run = true;
+		while (run) {
+			if (timer <= timeoutInSec) {
+				System.out.println("Running inside timer " + timer);				
+				boolean isNoRecordsDisplayed = driver.findElements(By.xpath("//*[@class=\"data-grid-tr-no-datas\"]")).size() > 0;
+				boolean isRecordsAvail = driver.findElements(By.xpath("//*[@class=\"data-rows\"]")).size() > 0;
+				if (isNoRecordsDisplayed | isRecordsAvail) {
+					status = true;
+					run = false;					
+				} else {
+					timer += 1;
+				}
+			} else {
+				run = false;
+				throw new Exception("Time Exceeded for search");
+			}
+		}
+		return status;
+	}
+ 
+	/*
+	 * public boolean isMagentoSearchPageLoaded(int timeoutInSec) throws Exception {
+	 * boolean status = false;
+	 * if(action.attributeValidation(driver.findElement(By.xpath(
+	 * "//*[@class=\"spinner\"]")), "style", "display: none;", 4000)) { return
+	 * status = true; } return status; }
+	 */
+	
 }

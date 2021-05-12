@@ -94,7 +94,7 @@ public class ic_NavigetoWishlist {
 		public boolean checkWishlist_message(int waitTime, ExtentTest test) throws IOException{
 			boolean msg_flag = false;
 			if(action.elementExists(mywishlist_msg, waitTime)){
-				action.CompareResult("Wishlist contains no item verification message", "true", "true", test);
+				//action.CompareResult("Wishlist contains no item verification message", "true", "true", test);
 				msg_flag=true;
 			}else{
 				action.CompareResult("Wishlist contains no item verification message", "true", "flase", test);
