@@ -236,7 +236,6 @@ public class JDGTest_TestNG<moduleName> {
         RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
         IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
         ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
-        ExtentTest test1=test.createNode(moduleToRun);
         int rowNumber=-1;
         if(dataMap2.containsKey(currentKeyWord+"++")) {
             rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);

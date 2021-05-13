@@ -41,6 +41,7 @@ public class testTestClass<moduleName> {
     int testcaseID;
     Logger logger = Log.getLogData(this.getClass().getSimpleName());
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
+
     @BeforeClass
     @Parameters({"moduleName"})
     public void once(String moduleName) throws Exception {
@@ -119,6 +120,7 @@ public class testTestClass<moduleName> {
 
     public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
         String moduleToRun=actionToRun;
+        ExtentTest test1=test.createNode(moduleToRun);
         IConnection ic=new IConnection(driver,dataTable2);
         Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
         ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);
@@ -188,7 +190,6 @@ public class testTestClass<moduleName> {
         RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
         IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
         ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
-        ExtentTest test1=test.createNode(moduleToRun);
         int rowNumber=-1;
         if(dataMap2.containsKey(currentKeyWord+"++")) {
             rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
