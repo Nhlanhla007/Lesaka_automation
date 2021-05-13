@@ -116,8 +116,10 @@ public class Action {
 				JavascriptExecutor jse = (JavascriptExecutor) driver;
 				jse.executeScript("arguments[0].style.border='2px solid red'", (WebElement) elementAttr);
 				WebDriverWait wait = new WebDriverWait(driver, 10);
-				WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated((By)elementAttr));
-				((WebElement) element).click();
+				List<WebElement> elements= new ArrayList<WebElement>();
+				elements.add((WebElement) elementAttr);
+				List<WebElement> elements2 = wait.until(ExpectedConditions.visibilityOfAllElements(elements));
+				((WebElement) elementAttr).click();
 			}
 			if(name != null){
 				logger.info("Clicked Element: "+ name);
