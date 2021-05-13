@@ -115,8 +115,9 @@ public class Action {
 			} else {
 				JavascriptExecutor jse = (JavascriptExecutor) driver;
 				jse.executeScript("arguments[0].style.border='2px solid red'", (WebElement) elementAttr);
-
-				((WebElement) elementAttr).click();
+				WebDriverWait wait = new WebDriverWait(driver, 10);
+				WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated((By)elementAttr));
+				((WebElement) element).click();
 			}
 			if(name != null){
 				logger.info("Clicked Element: "+ name);
