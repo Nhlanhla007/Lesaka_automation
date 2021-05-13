@@ -115,7 +115,7 @@ public class Action {
 			} else {
 				JavascriptExecutor jse = (JavascriptExecutor) driver;
 				jse.executeScript("arguments[0].style.border='2px solid red'", (WebElement) elementAttr);
-				WebDriverWait wait = new WebDriverWait(driver, 10);
+				WebDriverWait wait = new WebDriverWait(driver, 50);
 				List<WebElement> elements= new ArrayList<WebElement>();
 				elements.add((WebElement) elementAttr);
 				List<WebElement> elements2 = wait.until(ExpectedConditions.visibilityOfAllElements(elements));
