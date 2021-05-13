@@ -148,14 +148,14 @@ public class ICDelivery {
             action.writeText(firstName,dataSheets.getValueOnCurrentModule("firstName"),"firstName",test);
             action.writeText(lastname,dataSheets.getValueOnCurrentModule("lastname"),"lastname",test);
             action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
-            action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
+           // action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
         }else if(userType.equalsIgnoreCase("Registered")) {
         	customerAddressDetails.navigateBackToCustomerDetails(userType,addressTypeICFont);
         	registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType,addressTypeICFont);
         	dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
         	dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
         	dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
-        	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
+        //	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
 			/*
 			 * registeredUserDetails.put("Street Address", value);
 			 * registeredUserDetails.put("City", value);
@@ -167,7 +167,7 @@ public class ICDelivery {
             action.writeText(firstName,dataSheets.getValueOnCurrentModule("firstName"),"firstName",test);
             action.writeText(lastname,dataSheets.getValueOnCurrentModule("lastname"),"lastname",test);
             action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
-            action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
+         //   action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
         	
         }
         action.writeText(streetName,dataSheets.getValueOnCurrentModule("streetName"),"streetName",test);
@@ -193,7 +193,7 @@ public class ICDelivery {
         	dataSheets.setValueOnCurrentModule("postalCode", registeredUserDetails.get("Post Code"));
         	dataSheets.setValueOnCurrentModule("vatNumber", registeredUserDetails.get("Vat number"));
         	dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
-        	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
+        //	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
         	action.explicitWait(12000);
         	
         }else if(addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")){
@@ -213,7 +213,7 @@ public class ICDelivery {
     	dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
     	dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
     	dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
-    	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
+    //	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
        	newAddressButton.click();
        	//action.writeText(popUpFirstName, dataSheets.getValueOnCurrentModule(""), "New First name", test);
     	action.writeText(popUpStreetName, dataSheets.getValueOnCurrentModule("streetName"), "New Address Street name", test);
