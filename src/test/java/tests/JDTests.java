@@ -85,12 +85,13 @@ public class JDTests extends BaseTest {
 			String execute = singleSuiteData.get("Execute").get(i);
 			if (execute.toLowerCase().equals("yes")) {
 				String testCaseDescription = singleSuiteData.get("testCaseDescription").get(i);
-				testcaseID = Integer.parseInt(singleSuiteData.get("TestCaseID").get(i));
-				dataTable2.setTestCaseID(testcaseID);
 				ExtentTest test = reportJD.createTest(testcaseID + " : " + testCaseDescription);
-				startBrowserSession();
-				configFileReader.setPropertyVal("sequence", "true");
 				try {
+					testcaseID = Integer.parseInt(singleSuiteData.get("TestCaseID").get(i));
+					dataTable2.setTestCaseID(testcaseID);
+					System.out.println("-------------------------------------------------------");
+					System.out.println("testCaseDescription: "+testcaseID+"_"+testCaseDescription);
+					startBrowserSession();
 					for (int j = 0; j < 11; j++) {
 						String actionToRunLable = "Action" + (j + 1);
 						String actionToRun = "";
@@ -100,9 +101,9 @@ public class JDTests extends BaseTest {
 
 						}
 						currentKeyWord = actionToRun;
-						System.out.println("actionToRunLable:" + actionToRunLable);
-						System.out.println("currentKeyWord:" + currentKeyWord);
 						if (!currentKeyWord.equals("")) {
+							System.out.println("actionToRunLable:" + actionToRunLable);
+							System.out.println("currentKeyWord:" + currentKeyWord);
 							if (!occCount.containsKey(currentKeyWord)) {
 								occCount.put(currentKeyWord, 0);
 							} else {
@@ -110,13 +111,10 @@ public class JDTests extends BaseTest {
 								occNum++;
 								occCount.put(currentKeyWord, occNum);
 							}
-//								dataTable2.setTestCaseID(actionToRun);
 							dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 							dataTable2.setModule(actionToRun);
 							runKeyWord(actionToRun, test);
-//								writeToExcel(new File(dataTable2.filePath()));
 							writeToExcel(createFile());
-
 							if (!currentKeyWord.equals("")) {
 								System.out.println("actionToRunLable:" + actionToRunLable);
 								System.out.println("currentKeyWord:" + currentKeyWord);

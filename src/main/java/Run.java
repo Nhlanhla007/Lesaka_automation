@@ -80,7 +80,7 @@ public class Run {
         DOMSource domSource = new DOMSource(document);
         StreamResult streamResult = new StreamResult(new File("testNG.xml"));
         transformer.transform(domSource, streamResult);
-        System.out.println("Done creating XML File");
+//        System.out.println("Done creating XML File");
     }
     public static String FileToString(String fileName) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
@@ -101,9 +101,9 @@ public class Run {
         try {
             File myObj = new File(fileName);
             if (myObj.createNewFile()) {
-                System.out.println("File created: " + myObj.getName());
+//                System.out.println("File created: " + myObj.getName());
             } else {
-                System.out.println("File already exists.");
+//                System.out.println("File already exists.");
             }
             FileWriter myWriter = new FileWriter(myObj);
             myWriter.write(content);
