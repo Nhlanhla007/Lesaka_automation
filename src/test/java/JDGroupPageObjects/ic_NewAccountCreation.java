@@ -150,7 +150,7 @@ public class ic_NewAccountCreation {
 		}
 	}
 
-	public  void accountCreation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException {
+	public  void accountCreation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
 		String navigateURL = ConfigFileReader.getPropertyVal("URL");
 		action.navigateToURL(navigateURL);
 		action.explicitWait(3000);
@@ -333,13 +333,13 @@ public class ic_NewAccountCreation {
 	
 	//Sourav TA17
 	//TA27,28,29,30,31 CHECKS FLAG AND VALIDATES WHAT FLAG INDICATED COLUMN H IN accountCreation++
-    public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID,String expVatNumber,String expVatNumberFlag,String expIdentityType,String expNewsletter) throws IOException{
+    public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID,String expVatNumber,String expVatNumberFlag,String expIdentityType,String expNewsletter) throws IOException, Exception{
         String ExpPage ="edit";
-        boolean accInfoOpt = action.elementExists(Account_info_option, 11);
+        boolean accInfoOpt = action.waitUntilElementIsDisplayed(Account_info_option, 20000);//action.elementExists(Account_info_option, 11);
         if(accInfoOpt==true){
             action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
             action.click(Account_info_option, "Account info link", test);
-            action.waitExplicit(11);
+            action.explicitWait(11000);
             if(driver.getCurrentUrl().contains(ExpPage+"/")){
                 action.CompareResult("Verify Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
                
@@ -348,7 +348,7 @@ public class ic_NewAccountCreation {
                 String ActualLastname = action.getAttribute(Lastname, "value");
                
                 action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
-                action.waitExplicit(5);
+                action.explicitWait(5000);
                 String ActualEmail = action.getAttribute(Email, "value");
                 action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
                
@@ -413,7 +413,7 @@ public class ic_NewAccountCreation {
 			String expBPnumber =null;
 			
 			//Starts from Account information tab.
-			action.waitExplicit(loadtime);
+			action.explicitWait(loadtime);
 			String ActualFirstname = action.getAttribute(customerFirstname, "value");
 			String ActualLastname = action.getAttribute(customerLastname, "value");
 			String ActualEmail = action.getAttribute(customerEmail, "value");

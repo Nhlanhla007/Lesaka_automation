@@ -129,8 +129,12 @@ public class MagentoOrderStatusPage {
 		viewOrderDetails(test);
 	}
 	public void NavigateOdersPage(ExtentTest test) throws IOException, InterruptedException{
+		if(action.waitUntilElementIsDisplayed(magentoSalesTab, 10000)) {
 		action.click(magentoSalesTab, "Sales tab", test);
+		}
+		if(action.waitUntilElementIsDisplayed(magentoOrderTab, 10000)) {
 		action.click(magentoOrderTab, "Order tab", test);
+		}
 		driver.navigate().refresh();
 		Thread.sleep(5000);
 	}

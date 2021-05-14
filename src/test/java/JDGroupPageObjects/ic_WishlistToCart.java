@@ -102,10 +102,10 @@ public class ic_WishlistToCart {
 	}
 	public void addToCart(WebElement addToCartButton,String waitTimeInSeconds,ExtentTest test) throws InterruptedException {
 		action.mouseover(addToCartButton, "Scroll to add to cart");
-		Thread.sleep(2000);
+		action.explicitWait(2000);
 		addToCartButton.click();
 		//ic_Cart.cartButtonValidation(addToCartButton, Integer.parseInt(waitTimeInSeconds), test);
-		Thread.sleep(7000);
+		action.explicitWait(7000);
 	}
 	public WebElement ic_FindProduct_wishlist(ExtentTest test,String product) throws IOException {
 		boolean status= true;

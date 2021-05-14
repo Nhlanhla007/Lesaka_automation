@@ -41,6 +41,7 @@ public class testTestClass<moduleName> {
     int testcaseID;
     Logger logger = Log.getLogData(this.getClass().getSimpleName());
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
+
     @BeforeClass
     @Parameters({"moduleName"})
     public void once(String moduleName) throws Exception {
@@ -56,13 +57,14 @@ public class testTestClass<moduleName> {
     }
     //Start Tests-----------------------------------------------------------------------
     
-    @Test(testName ="33_Gift_Card_Purchase_Registered_user" )
-    public void Gift_Card_Purchase_Registered_user() throws Exception {
-        String testMethodName="Gift_Card_Purchase_Registered_user";
+    @Test(testName ="39_Sales_order_with_registered_user_without_default_address_adding_new_address" )
+    public void Sales_order_with_registered_user_without_default_address_adding_new_address() throws Exception {
+        String testMethodName="Sales_order_with_registered_user_without_default_address_adding_new_address";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
-    }
+    }
+
     //End Tests-------------------------------------------------------------------------
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {
@@ -81,6 +83,8 @@ public class testTestClass<moduleName> {
     }
 
     public int getTestCaseIndex(String testMethodName){
+        System.out.println("------------------------------------------------------------");
+        System.out.println("Test_Case_Name:"+testMethodName);
         int numTC=dataMap2.get("IC").get("Test_Case_Name").size();
         int index=0;
         for(int i=0;i<numTC;i++){
@@ -123,6 +127,7 @@ public class testTestClass<moduleName> {
 
     public void runKeyWord(String actionToRun,ExtentTest test) throws Exception {
         String moduleToRun=actionToRun;
+        ExtentTest test1=test.createNode(moduleToRun);
         IConnection ic=new IConnection(driver,dataTable2);
         Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver,dataTable2);
         ic_PaymentOption Payopt=new ic_PaymentOption(driver,dataTable2);
@@ -160,6 +165,7 @@ public class testTestClass<moduleName> {
         ic_SearchMinimumCharacter icMinimumCharacter = new ic_SearchMinimumCharacter(driver, dataTable2);
         SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
         IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
+        IC_RetriveGiftCardOrderId ic_RetriveGiftCardOrderID = new IC_RetriveGiftCardOrderId(driver, dataTable2);
         admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
         Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,dataTable2);
         Magento_CancelSalesorderVerification CancelSalesorderVerification =new Magento_CancelSalesorderVerification(driver,dataTable2);
@@ -191,7 +197,6 @@ public class testTestClass<moduleName> {
         RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
         IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
         ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
-        ExtentTest test1=test.createNode(moduleToRun);
         int rowNumber=-1;
         if(dataMap2.containsKey(currentKeyWord+"++")) {
             rowNumber = findRowToRun(dataMap2.get(currentKeyWord + "++"), occCount.get(currentKeyWord), testcaseID);
@@ -311,6 +316,7 @@ public class testTestClass<moduleName> {
                 RequiredSheets.add(dataMap2.get(currentKeyWord+"++"));
                 RequiredSheets.add(dataMap2.get("Login_magento++"));
                 ic_cashDepositPayment.InvoiceCashDeposit(RequiredSheets,test1,testcaseID);
+                break;
             case "icGiftCardPurchase":
                 icGiftCardPurchase.purchaseGiftCard(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
                 break;
@@ -356,6 +362,9 @@ public class testTestClass<moduleName> {
             case "ic_RetriveOrderID":
                 ic_RetriveOrderID.RetriveOrderID(test1);
                 break;
+            case "ic_RetriveGiftCardOrderID":
+				ic_RetriveGiftCardOrderID.RetriveOrderID(test1);
+				break;
             case "SapCustomer":
                 ArrayList<HashMap<String, ArrayList<String>>> sheets = new ArrayList<HashMap<String, ArrayList<String>>>();
                 sheets.add(dataMap2.get("accountCreation++"));

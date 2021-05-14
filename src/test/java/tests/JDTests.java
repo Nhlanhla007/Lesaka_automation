@@ -85,7 +85,11 @@ public class JDTests extends BaseTest {
 			String execute = singleSuiteData.get("Execute").get(i);
 			if (execute.toLowerCase().equals("yes")) {
 				String testCaseDescription = singleSuiteData.get("testCaseDescription").get(i);
+				testcaseID = Integer.parseInt(singleSuiteData.get("TestCaseID").get(i));
+				dataTable2.setTestCaseID(testcaseID);
 				ExtentTest test = reportJD.createTest(testcaseID + " : " + testCaseDescription);
+				startBrowserSession();
+				configFileReader.setPropertyVal("sequence", "true");
 				try {
 					testcaseID = Integer.parseInt(singleSuiteData.get("TestCaseID").get(i));
 					dataTable2.setTestCaseID(testcaseID);
