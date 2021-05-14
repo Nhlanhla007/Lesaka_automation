@@ -107,9 +107,9 @@ import utils.hana;
 				ExpProductName.add(produts);
 			}
 			
-			String ExpCITY=ICDelivery.Cityname;//"Pietersburg";
-			String ExpSTREET=ICDelivery.Streetname;//"Gemsbok Street";
-			String ExpPostalcode =ICDelivery.Postalcode;
+			String ExpCITY=ICDelivery.Cityname.toLowerCase().trim();//"Pietersburg";
+			String ExpSTREET=ICDelivery.Streetname.toLowerCase().trim();//"Gemsbok Street";
+			String ExpPostalcode =ICDelivery.Postalcode.trim();
 			
 			
 			//--------------------------------------------------------------------------
@@ -215,12 +215,12 @@ import utils.hana;
 			
 			List<String> alldataSTREET = hn.GetRowdataByColumnName(rs1, "STREET");
 			System.out.println("STREET is  : "+alldataSTREET);
-			String ActualStreet =String.join(" ", alldataSTREET);
+			String ActualStreet =String.join(" ", alldataSTREET).toLowerCase();
 			action.CompareResult(" Street name from SAP DB ", ExpSTREET, ActualStreet, test);
 			
 			List<String> alldataCITY = hn.GetRowdataByColumnName(rs1, "CITY1");
 			System.out.println("CITY is  : "+alldataCITY);
-			String ActualCity = String.join(",", alldataCITY);
+			String ActualCity = String.join(",", alldataCITY).toLowerCase();
 			action.CompareResult(" CITY name from SAP DB ", ExpCITY, ActualCity, test);
 			
 			List<String> alldataPOST_CODE = hn.GetRowdataByColumnName(rs1, "POST_CODE1");
@@ -228,6 +228,8 @@ import utils.hana;
 			String ActualPostalCode = String.join(" ", alldataPOST_CODE);
 			action.CompareResult(" Postal code from SAP DB ", ExpPostalcode, ActualPostalCode, test);
 			
+			hn.closeDB();
+			System.out.println("Closing database");
 		}
 		
 

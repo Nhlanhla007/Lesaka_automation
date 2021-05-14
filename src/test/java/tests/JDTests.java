@@ -91,7 +91,7 @@ public class JDTests extends BaseTest {
 				startBrowserSession();
 				configFileReader.setPropertyVal("sequence", "true");
 				try {
-					for (int j = 0; j < 11; j++) {
+					for (int j = 0; j < 20; j++) {
 						String actionToRunLable = "Action" + (j + 1);
 						String actionToRun = "";
 						try {
@@ -99,24 +99,7 @@ public class JDTests extends BaseTest {
 						} catch (Exception e) {
 
 						}
-						currentKeyWord = actionToRun;
-						System.out.println("actionToRunLable:" + actionToRunLable);
-						System.out.println("currentKeyWord:" + currentKeyWord);
-						if (!currentKeyWord.equals("")) {
-							if (!occCount.containsKey(currentKeyWord)) {
-								occCount.put(currentKeyWord, 0);
-							} else {
-								int occNum = occCount.get(currentKeyWord);
-								occNum++;
-								occCount.put(currentKeyWord, occNum);
-							}
-//								dataTable2.setTestCaseID(actionToRun);
-							dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
-							dataTable2.setModule(actionToRun);
-							runKeyWord(actionToRun, test);
-//								writeToExcel(new File(dataTable2.filePath()));
-							writeToExcel(createFile());
-
+						currentKeyWord = actionToRun;						
 							if (!currentKeyWord.equals("")) {
 								System.out.println("actionToRunLable:" + actionToRunLable);
 								System.out.println("currentKeyWord:" + currentKeyWord);
@@ -135,7 +118,7 @@ public class JDTests extends BaseTest {
 
 							}
 						}
-					}
+					
 					} catch(Exception e){
 						logger.info(e.getMessage());
 						e.printStackTrace();

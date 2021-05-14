@@ -55,7 +55,7 @@ public class ic_Magento_Login {
 				action.writeText(Magento_Username, Username, "Username feild", test);
 				action.writeText(Magento_Password, Password, "Password feild", test);
 				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
-				action.waitExplicit(15);
+				action.explicitWait(10000);
 				String resWelcomescreen = action.getText(Dashboard, "Dashboard");
 				//System.out.println(resWelcomescreen);
 			}else{

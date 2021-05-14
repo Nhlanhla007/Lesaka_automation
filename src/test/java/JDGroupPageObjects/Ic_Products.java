@@ -90,15 +90,10 @@ public class Ic_Products {
 	 * PAGE METHODS
 	 */
 
-	public void clickNext(ExtentTest test) {
-		action.mouseover(ic_ClickNext, "scroll to element");
-		try {
-			Thread.sleep(10000);
-			action.click(ic_ClickNext, "Clicked Next", test);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.info(e.getMessage());
-		}
+	public void clickNext(ExtentTest test) throws Exception {
+		action.mouseover(ic_ClickNext, "scroll to element");					
+			action.explicitWait(10000);
+			action.click(ic_ClickNext, "Clicked Next", test);			
 	}
 
 	/**
@@ -336,7 +331,7 @@ public class Ic_Products {
 		return price;
 	}
 
-	public WebElement ic_FindProduct(ExtentTest test,String product) throws IOException {
+	public WebElement ic_FindProduct(ExtentTest test,String product) throws Exception {
 		boolean status= true;
 		while(status) {
 			List<WebElement> allProducts = ic_products;

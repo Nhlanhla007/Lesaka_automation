@@ -90,7 +90,7 @@ public class IC_Cart {
 			}
 	    }
 	    
-	    public static int sum;
+	    public int sum;
 		  public void iCcartVerification2(Map<String, List<String>> products,ExtentTest test) {
 			  //Verifies if all the products have been added in the cart
 			  String itemsCount = itemsInCartCounter(test);

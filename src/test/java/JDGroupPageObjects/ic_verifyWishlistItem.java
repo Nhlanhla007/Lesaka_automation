@@ -80,8 +80,7 @@ public class ic_verifyWishlistItem {
 		public boolean verifyitemWishlistMsg(int TimeOut,ExtentTest test) throws IOException{
 			boolean checkflag=false;
 			String statusMsg ="Item is present";
-			String expmsg= "You have no items in your wish list.";
-			try {
+			String expmsg= "You have no items in your wish list.";		
 				driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);  
 				boolean isPresent = driver.findElements(By.xpath("//form[@id='wishlist-view-form']//span[contains(text(),'You have no items in your wish list.')]") ).size() > 0;
 				if(isPresent){
@@ -91,10 +90,6 @@ public class ic_verifyWishlistItem {
 						action.CompareResult("Status of wishlist ", expmsg, statusMsg, test);
 						checkflag=true;
 					}
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-			
 			}
 			return checkflag;
 		}

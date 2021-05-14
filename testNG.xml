@@ -7,7 +7,7 @@
       <classes>
          <class name="tests.testTestClass">
             <methods>
-               <include name="Gift_Card_Purchase_Registered_user"/>
+               <include name="Sales_order_with_registered_user_without_default_address_adding_new_address"/>
             </methods>
          </class>
       </classes>

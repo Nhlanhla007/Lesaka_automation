@@ -203,6 +203,8 @@ public class SAPCustomerRelated {
 			taxVatNumberFlag = "yes";
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Update Magento Admin")) {
 			taxVatNumberFlag = dataTable2.getValueOnOtherModule("adminUserUpdate", "taxVat", 0);
+		}else if(typeOfSAPValidation.equalsIgnoreCase("Registered customer from sales order")) {
+			taxVatNumberFlag = "yes";
 		}
 		else {
 			taxVatNumberFlag = "No";
@@ -210,7 +212,7 @@ public class SAPCustomerRelated {
 		//SAPorderNumber=SAPorderNumber.replace("[RabbitMQ] Order SAP Number: ", ""); 
 		vatNumberFlag = mySheets.get(0).get("vatNumberFlag").get(sheetRow1);
 		Map<String, String> customerDetails = null;
-		customerDetails = customerSAPDetails(bpNumber1);
+		customerDetails = customerSAPDetails(bpNumber1,test);
 
 		//GET DETAILS FROM SAP
 		String SAPFirstName = customerDetails.get("NAME_FIRST");
@@ -411,7 +413,7 @@ public class SAPCustomerRelated {
 				String registLastname = dataTable2.getValueOnOtherModule("deliveryPopulation", "lastname", 0).trim();
 				String registEmail = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0).trim();
 				String registIDnumber = dataTable2.getValueOnOtherModule("deliveryPopulation", "idNumber", 0).trim();
-				String registVATnumber = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber", 0).trim();
+				String registVATnumber = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber", 0);
 
 				String registTelephone = dataTable2.getValueOnOtherModule("deliveryPopulation", "telephone", 0);
 				String registStreetAddress = dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName", 0).trim();
@@ -440,7 +442,9 @@ public class SAPCustomerRelated {
 				action.CompareResult("SAP Last name", registLastname, SAPLastName, test);
 				action.CompareResult("SAP Email", registEmail, SAPEmail, test);
 				action.CompareResult("SAP SA ID", registIDnumber, SAID, test);
+				if(registVATnumber != null) {
 				action.CompareResult("SAP Vat number", registVATnumber, sapVatnumber, test);
+				}
 //				String addressTypeInIC = ICDelivery.addressTypeICFont;
 //				String typeOfAddressUsage = dataTable2.getValueOnOtherModule("deliveryPopulation", "AddressType", 0);
 //
@@ -456,6 +460,8 @@ public class SAPCustomerRelated {
 			default:
 				break;
 		}
+		hn.closeDB();
+		System.out.println("Closing Database");
 
 	}
 	
@@ -467,13 +473,13 @@ public class SAPCustomerRelated {
 
 	//The map below stores all customer data from DB
 	static Map<String, String> custData ;
-	public Map<String, String> customerSAPDetails(String bpNumber) throws Exception {
+	public Map<String, String> customerSAPDetails(String bpNumber,ExtentTest test1) throws Exception {
 		/*
 		 * String Server = "11.19.2.172"; String Port = "30215"; String Username =
 		 * "225505"; String Password = "Welc0me@2021"; String name = "DBconnect"; String
 		 * DBType ="ECC_QA";
 		 */
-		ExtentTest test=null;
+		ExtentTest test=test1;
 		hn =new hana(TypeOfDB,Server,Port,Username,Password,test);
 		String typeValidation = dataTable2.getValueOnOtherModule("SapCustomer", "typeOfSapValidation", 0);
 		String newBpNumber = "";

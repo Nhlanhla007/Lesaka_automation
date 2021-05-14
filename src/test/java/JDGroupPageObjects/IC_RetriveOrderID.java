@@ -24,17 +24,31 @@ public class IC_RetriveOrderID {
     }
 
 //    @FindBy(xpath = "//p[contains(text(),'Your order # is')]")
+    @FindBy(xpath = "//*[@class='order-number']/span")
+    WebElement OderIDRegisteredUser;
+    
     @FindBy(xpath = "//*[@class='checkout-success']/p/span")
-    WebElement OderID;
+    WebElement OderIDGuestUser;
+    
+    
 
     public void RetriveOrderID(ExtentTest test) throws IOException {
+    	String typeOfUser = dataTable2.getValueOnOtherModule("deliveryPopulation", "UserType", 0).trim();
         String Oderid = null;
         action.explicitWait(10000);
-        action.isElementOnNextPage(OderID, (long) 11,test);
-        Oderid = action.getText(OderID, "Order ID");
-        Oderid = Oderid.replace("Your order # is: ","").replace(".","");
-        dataTable2.setValueOnCurrentModule ("orderID",Oderid);
-        dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);
+        if(typeOfUser.equalsIgnoreCase("Registered")) {
+        	action.isElementOnNextPage(OderIDRegisteredUser, (long) 11,test);
+            Oderid = action.getText(OderIDRegisteredUser, "Order ID");
+            Oderid = Oderid.replace("Your order # is: ","").replace(".","");
+            dataTable2.setValueOnCurrentModule ("orderID",Oderid);
+            dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);	
+        }else if(typeOfUser.equalsIgnoreCase("Guest")) {
+        	action.isElementOnNextPage(OderIDGuestUser, (long) 11,test);
+            Oderid = action.getText(OderIDGuestUser, "Order ID");
+            Oderid = Oderid.replace("Your order # is: ","").replace(".","");
+            dataTable2.setValueOnCurrentModule ("orderID",Oderid);
+            dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);
+        }        
     }
 
 }
