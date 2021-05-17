@@ -189,7 +189,7 @@ public class admin_UserUpdate {
 	    		
 	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
 	    		action.explicitWait(5000);
-	    		//admin_AccountInfoCustomer.click();
+	    		
 	    		action.click(admin_AccountInfoCustomer, "account infor", test);
 	    		
 	    	}else {
