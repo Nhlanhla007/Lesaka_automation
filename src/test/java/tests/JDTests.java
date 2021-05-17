@@ -135,8 +135,8 @@ public class JDTests extends BaseTest {
 
 			}
 
-		}
 	}
+
 
 
 		public void runKeyWord (String actionToRun, ExtentTest test) throws Exception {
@@ -493,9 +493,8 @@ public class JDTests extends BaseTest {
 				case "CheckoutpaymentOptionGiftCard":
                     Payopt.CheckoutpaymentOptionGiftCard(dataMap2.get("deliveryPopulation++"),test1,rowNumber);
                     break;
-				}
+
 		}
-		return rowNumber;
 	}
 
 		public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){
@@ -536,8 +535,7 @@ public class JDTests extends BaseTest {
 				}
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
-			navigateURL = ConfigFileReader.getPropertyVal("URL");
-			}
+
 			logger.info("Navigate to URL");
 
 			driver.navigate().to(navigateURL);
@@ -633,16 +631,4 @@ public class JDTests extends BaseTest {
 			File myObj = new File(System.getProperty("user.dir") + "\\reports\\Datasheet.xlsx");
 			return myObj;
 		}
-
-
-	}
-
-	public File createFile() throws IOException {
-		File myObj = new File(System.getProperty("user.dir")+"\\reports\\Datasheet.xlsx");
-		return myObj;
-	}
-
-
-
-
 }
