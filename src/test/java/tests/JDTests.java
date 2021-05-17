@@ -91,7 +91,7 @@ public class JDTests extends BaseTest {
 				startBrowserSession();
 				configFileReader.setPropertyVal("sequence","true");
 				try {
-					for(int j=0;j<11;j++){
+					for(int j=0;j<20;j++){
 						String actionToRunLable="Action"+(j+1);
 						String actionToRun= "";
 						try {
@@ -245,6 +245,10 @@ public class JDTests extends BaseTest {
 			case "CheckoutpaymentOption":
 				Payopt.CheckoutpaymentOption(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
+				
+			case "CheckoutpaymentOptionGiftCard":
+				Payopt.CheckoutpaymentOptionGiftCard(dataMap2.get("deliveryPopulation++"),test1,rowNumber);
+				break;
 			case "PayUPagePayment":
 				PayU.PayUPagePayment(dataMap2.get(currentKeyWord+"++"),test1,rowNumber);
 				break;
@@ -394,7 +398,7 @@ public class JDTests extends BaseTest {
 				CreditApp_NavigateFilter.VerifyCreditAppSelection(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "CreditStatusVerification":
-				CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get("CreditStatusVerification++"), test1, rowNumber);
+				//CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get("CreditStatusVerification++"), test1, rowNumber);
 				CreditStatusVerification.VerifyCreditAppStatus(dataMap2.get(currentKeyWord+"++"), test1, rowNumber);
 				break;
 			case "icLogoHomepage":

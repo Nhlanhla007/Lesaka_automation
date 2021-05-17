@@ -86,6 +86,9 @@ public class ICDelivery {
 
     @FindBy(name= "postcode")
     WebElement postalCodeGift;
+    
+    @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
+    WebElement cardDeliver_btn;
 
     @FindBy(xpath = "//*[@id=\"opc-sidebar\"]/div[1]/div[1]/button/span")
     WebElement placeOrder;
@@ -230,9 +233,18 @@ public class ICDelivery {
         Streetname =input.get("streetName").get(rowNumber);
         Cityname =input.get("city").get(rowNumber);
         Postalcode = input.get("postalCode").get(rowNumber);
+        String firstNameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "firstName", 0);
+        String lastnameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "lastname", 0);
+        String emailGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "email", 0);
+        String streetNameG = dataSheets.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
+        
         driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
-        streetNameGift.sendKeys("text");
-//        action.writeText(streetNameGift,"Indian Drive, Keysborough VIC, Australia","streetName",test);
+        action.click(cardDeliver_btn, "click Deliver", test);
+  
+        action.writeText(firstName, firstNameGift,"First name", test);
+        action.writeText(lastname, lastnameGift, "Last name", test);
+        action.writeText(email, emailGift,"Email", test);
+        action.writeText(streetNameGift, streetNameG, "Street name", test);
         action.writeText(telephoneGift,input.get("telephone").get(rowNumber),"telephone",test);
         action.writeText(cityGift,input.get("city").get(rowNumber),"city",test);
         action.writeText(SuburbGift,input.get("Suburb").get(rowNumber),"Suburb",test);

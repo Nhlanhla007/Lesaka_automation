@@ -199,8 +199,7 @@ public class admin_UserUpdate {
 	    	action.click(admin_AccountInfoCustomer, "account infor", test);
 	    	String emailText = action.getAttribute(admin_email, "value");
 	    	if(emailFlag.equalsIgnoreCase("yes")){
-	    		
-	    		String emailTextUpdated = id+"@jdg.co.za";
+	    		String emailTextUpdated = id+"updated@jdg.co.za";
 	    		
 	    		action.clear(admin_email, "removing the email");
 	    		action.writeText(admin_email,emailTextUpdated ,"last Name", test);

@@ -56,13 +56,6 @@ public class testTestClass<moduleName> {
     }
     //Start Tests-----------------------------------------------------------------------
     
-    @Test(testName ="33_Gift_Card_Purchase_Registered_user" )
-    public void Gift_Card_Purchase_Registered_user() throws Exception {
-        String testMethodName="Gift_Card_Purchase_Registered_user";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
     //End Tests-------------------------------------------------------------------------
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {
@@ -160,6 +153,7 @@ public class testTestClass<moduleName> {
         ic_SearchMinimumCharacter icMinimumCharacter = new ic_SearchMinimumCharacter(driver, dataTable2);
         SAPCustomerRelated customerDB = new SAPCustomerRelated(driver,dataMap2,dataTable2);
         IC_RetriveOrderID ic_RetriveOrderID= new IC_RetriveOrderID(driver,dataTable2);
+        IC_RetriveGiftCardOrderId ic_RetriveGiftCardOrderID = new IC_RetriveGiftCardOrderId(driver, dataTable2);
         admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver,dataTable2);
         Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,dataTable2);
         Magento_CancelSalesorderVerification CancelSalesorderVerification =new Magento_CancelSalesorderVerification(driver,dataTable2);
@@ -356,6 +350,9 @@ public class testTestClass<moduleName> {
             case "ic_RetriveOrderID":
                 ic_RetriveOrderID.RetriveOrderID(test1);
                 break;
+            case "ic_RetriveGiftCardOrderID":
+				ic_RetriveGiftCardOrderID.RetriveOrderID(test1);
+				break;
             case "SapCustomer":
                 ArrayList<HashMap<String, ArrayList<String>>> sheets = new ArrayList<HashMap<String, ArrayList<String>>>();
                 sheets.add(dataMap2.get("accountCreation++"));
