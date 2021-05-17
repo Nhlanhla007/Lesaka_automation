@@ -49,7 +49,7 @@ public class JDTests extends BaseTest {
 	public String currentKeyWord;
 	HashMap<String, Integer> occCount = null;
 	int testcaseID;
-
+	
 	@BeforeClass(alwaysRun = true)
 	public void setUp() {
 
@@ -96,9 +96,9 @@ public class JDTests extends BaseTest {
 					System.out.println("-------------------------------------------------------");
 					System.out.println("testCaseDescription: "+testcaseID+"_"+testCaseDescription);
 					startBrowserSession();
-					for (int j = 0; j < 11; j++) {
-						String actionToRunLable = "Action" + (j + 1);
-						String actionToRun = "";
+					for(int j=0;j<20;j++){
+						String actionToRunLable="Action"+(j+1);
+						String actionToRun= "";
 						try {
 							actionToRun = singleSuiteData.get(actionToRunLable).get(i);
 						} catch (Exception e) {
@@ -134,7 +134,9 @@ public class JDTests extends BaseTest {
 				}
 
 			}
+
 		}
+	}
 
 
 		public void runKeyWord (String actionToRun, ExtentTest test) throws Exception {
@@ -291,6 +293,7 @@ public class JDTests extends BaseTest {
 //				break;
 				case "accountCreation":
 					newAcc.accountCreation(dataMap2.get(currentKeyWord + "++"), test1, rowNumber);
+
 					break;
 				case "icAccountConfirmation":
 					icAccountConfirmation.AccountCreationConfirmation(dataMap2.get(currentKeyWord + "++"), test1, rowNumber);
@@ -487,8 +490,13 @@ public class JDTests extends BaseTest {
 				case "NavigateToWishlist_VerifyLoginPageAppear":
 					NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
 					break;
-			}
+				case "CheckoutpaymentOptionGiftCard":
+                    Payopt.CheckoutpaymentOptionGiftCard(dataMap2.get("deliveryPopulation++"),test1,rowNumber);
+                    break;
+				}
 		}
+		return rowNumber;
+	}
 
 		public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){
 			int numberRows = input.get("TCID").size();
@@ -527,6 +535,8 @@ public class JDTests extends BaseTest {
 					navigateURL = ConfigFileReader.getPropertyVal("URL");
 				}
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
+			}
+			navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
 			logger.info("Navigate to URL");
 
@@ -627,3 +637,12 @@ public class JDTests extends BaseTest {
 
 	}
 
+	public File createFile() throws IOException {
+		File myObj = new File(System.getProperty("user.dir")+"\\reports\\Datasheet.xlsx");
+		return myObj;
+	}
+
+
+
+
+}
