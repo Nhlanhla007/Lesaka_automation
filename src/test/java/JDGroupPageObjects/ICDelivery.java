@@ -232,7 +232,7 @@ public class ICDelivery {
     	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
     	if(action.waitUntilElementIsDisplayed(newAddressButton, 15000)) {
     		action.explicitWait(8000);
-       	    action..click(newAddressButton,"newAddressButton",test);
+       	    action.click(newAddressButton,"newAddressButton",test);
     	}
        	//action.writeText(popUpFirstName, dataSheets.getValueOnCurrentModule(""), "New First name", test);
     	action.writeText(popUpStreetName, dataSheets.getValueOnCurrentModule("streetName"), "New Address Street name", test);
