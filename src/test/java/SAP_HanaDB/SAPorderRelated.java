@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
@@ -18,6 +19,7 @@ import JDGroupPageObjects.ICDelivery;
 import JDGroupPageObjects.IC_Cart;
 import JDGroupPageObjects.Ic_Products;
 import JDGroupPageObjects.ic_PayUPayment;
+import Logger.Log;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 import utils.Action;
 import utils.DataTable2;
@@ -39,6 +41,9 @@ import utils.hana;
 	        this.dataMap2=dataMap2;
 	        this.dataTable2 = dataTable2;
 	    }
+	    
+	    static Logger logger = Log.getLogData(Action.class.getSimpleName());
+	    
 	    //refer this-------------------------
 	    public static String BPnumber;
 	    //------------------------------------
@@ -120,13 +125,13 @@ import utils.hana;
 			//"Select * from SAPEQ1.VBAK FULL OUTER JOIN SAPEQ1.VBAP ON SAPEQ1.VBAK.VBELN=SAPEQ1.VBAP.VBELN WHERE SAPEQ1.VBAK.VBELN ='0005231326' ";
 			String Query= "Select * from "+Schema+"."+Table1+" FULL OUTER JOIN "+Schema+"."+Table2+" ON "+Schema+"."+Table1+"."+key+" = "+Schema+"."+Table2+"."+key+" WHERE "+Schema+"."+Table1+"."+key+" = '"+SAP_orderNo+"' ";
 //			String Query= "SELECT * FROM SAPEQ1."+Table1+" WHERE "+key+" = '"+SAP_orderNo+"'";
-			System.out.println("Query:"+Query);
+			//System.out.println("Query:"+Query);
 			hana hn =new hana(TypeOfDB,Server,Port,Username,Password,test);
 			ResultSet rs = hn.ExecuteQuery(Query);
 			
 			int ExpRowcount=1;
 			int rowsCountReturned = hn.GetRowsCount(rs);
-			System.out.println("rowsCountReturned: "+rowsCountReturned);
+			//System.out.println("rowsCountReturned: "+rowsCountReturned);
 			//check a single record is found for the SAP order no.
 			if( rowsCountReturned>=0){
 				action.CompareResult(" SAP #Order :"+SAP_orderNo+" SAP hana DB record count is greater than O, Populated rows:"+rowsCountReturned, "True", "True", test);
@@ -138,7 +143,8 @@ import utils.hana;
 			if(allcheckpoint){
 				//Purchase order verification ---------------------------------------------
 				List<String> alldataPurchaseorder = hn.GetRowdataByColumnName(rs, "BSTNK");
-				System.out.println("Purchase order number is  : "+alldataPurchaseorder);
+				//System.out.println("Purchase order number is  : "+alldataPurchaseorder);
+				logger.info("Purchase order number is  : "+alldataPurchaseorder);
 				String ActPurchaseOrderNo = String.join("", alldataPurchaseorder);
 				
 				action.CompareResult("Purchase Order Number in SAP DB ", ExpPurchaseOrderNo, ActPurchaseOrderNo, test);
@@ -149,10 +155,10 @@ import utils.hana;
 				List<String> alldataPrice = hn.GetRowdataByColumnName(rs, "CMPRE");
 				String ActualPrice ="";
 				float Totalsum=0;
-				System.out.println("alldataOrderQuantity.size()  : "+alldataOrderQuantity.size());
+				//System.out.println("alldataOrderQuantity.size()  : "+alldataOrderQuantity.size());
 				
 				for(int i=0;i<alldataOrderQuantity.size();i++){
-					System.out.println("counter is : "+i);
+					//System.out.println("counter is : "+i);
 					float eachOrder = Float.parseFloat(alldataOrderQuantity.get(i));
 					float eachPrice = Float.parseFloat(alldataPrice.get(i));
 					
@@ -170,18 +176,19 @@ import utils.hana;
 				
 				//Verify all product description----------------------------------------------
 				List<String> alldataProductdesc= hn.GetRowdataByColumnName(rs, "ARKTX");
-				System.out.println("Product name is  : "+alldataProductdesc);
+				//System.out.println("Product name is  : "+alldataProductdesc);
+				logger.info("Product name is  : "+alldataProductdesc);
 				 for(int k=0;k<ExpProductName.size();k++){
 					 String eachProduct = ExpProductName.get(k);
 					 String AllProductsNameDB =String.join("", alldataProductdesc);
-					 System.out.println("ExpeachProduct "+eachProduct+" Actual "+AllProductsNameDB);
+					// System.out.println("ExpeachProduct "+eachProduct+" Actual "+AllProductsNameDB);
 					 action.CompareResult(" Products Purchased Description in SAP DB", eachProduct.trim().toUpperCase(), AllProductsNameDB.trim().toUpperCase(), test);
 				
 				 }
 				 
 				// verify Delivery Block ----------------------------------------------------
 				 List<String> alldataDelivery_block= hn.GetRowdataByColumnName(rs, "LIFSK");
-			     System.out.println("Delivery Block is  : "+alldataDelivery_block);
+			   //  System.out.println("Delivery Block is  : "+alldataDelivery_block);
 			     String ActualDeliveryBlock = String.join(",", alldataDelivery_block).replace(" ","").replace(",", "");
 			   
 			     if(ActualDeliveryBlock.length()<=1){
@@ -191,7 +198,8 @@ import utils.hana;
 			     }
 			     //Collect the BP number for validating Customer details details -------------------------------
 			     List<String> allBPnumber= hn.GetRowdataByColumnName(rs, "KUNNR");
-			     System.out.println("BP number is  : "+allBPnumber);
+			    // System.out.println("BP number is  : "+allBPnumber);
+			     logger.info("BP number is  : "+allBPnumber);
 			     BPnumber = String.join("", allBPnumber).trim();
 			     BPnumber=BPnumber.replace(" ", "");			     
 			     //commenting this line but will check for other testcase dependencies
@@ -204,32 +212,34 @@ import utils.hana;
 			
 			ResultSet rs1 = hn.ExecuteQuery(Query1);
 			int Rowcount = hn.GetRowsCount(rs1);
-			System.out.println("TotalRowcount"+Rowcount);
+		//	System.out.println("TotalRowcount"+Rowcount);
 			List<String> allcolsdata =  hn.Getallcolumns(rs1);
-			System.out.println("ALL COLS DATA : "+allcolsdata);
+		//	System.out.println("ALL COLS DATA : "+allcolsdata);
 			//Verify the address---------------------------------------------------------
 			
 			
 			List<String> alldataADRNR = hn.GetRowdataByColumnName(rs1, "ADDRNUMBER");
-			System.out.println("ADDRESS number is  : "+alldataADRNR);
+			//System.out.println("ADDRESS number is  : "+alldataADRNR);
+			logger.info("ADDRESS number is  : "+alldataADRNR);
 			
 			List<String> alldataSTREET = hn.GetRowdataByColumnName(rs1, "STREET");
-			System.out.println("STREET is  : "+alldataSTREET);
+		//	System.out.println("STREET is  : "+alldataSTREET);
 			String ActualStreet =String.join(" ", alldataSTREET).toLowerCase();
 			action.CompareResult(" Street name from SAP DB ", ExpSTREET, ActualStreet, test);
 			
 			List<String> alldataCITY = hn.GetRowdataByColumnName(rs1, "CITY1");
-			System.out.println("CITY is  : "+alldataCITY);
+		//	System.out.println("CITY is  : "+alldataCITY);
 			String ActualCity = String.join(",", alldataCITY).toLowerCase();
 			action.CompareResult(" CITY name from SAP DB ", ExpCITY, ActualCity, test);
 			
 			List<String> alldataPOST_CODE = hn.GetRowdataByColumnName(rs1, "POST_CODE1");
-			System.out.println("POST_CODE number is  : "+alldataPOST_CODE);
+		//	System.out.println("POST_CODE number is  : "+alldataPOST_CODE);
 			String ActualPostalCode = String.join(" ", alldataPOST_CODE);
 			action.CompareResult(" Postal code from SAP DB ", ExpPostalcode, ActualPostalCode, test);
 			
 			hn.closeDB();
-			System.out.println("Closing database");
+			//System.out.println("Closing database");
+			logger.info("Closing Database");
 		}
 		
 

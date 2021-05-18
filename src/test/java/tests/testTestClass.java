@@ -57,9 +57,9 @@ public class testTestClass<moduleName> {
     }
     //Start Tests-----------------------------------------------------------------------
     
-    @Test(testName ="39_Sales_order_with_registered_user_without_default_address_adding_new_address" )
-    public void Sales_order_with_registered_user_without_default_address_adding_new_address() throws Exception {
-        String testMethodName="Sales_order_with_registered_user_without_default_address_adding_new_address";
+    @Test(testName ="72_Subscriber_Newsletter_Valid_Email_address" )
+    public void Subscriber_Newsletter_Valid_Email_address() throws Exception {
+        String testMethodName="Subscriber_Newsletter_Valid_Email_address";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);

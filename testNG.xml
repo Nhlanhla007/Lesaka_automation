@@ -7,7 +7,7 @@
       <classes>
          <class name="tests.testTestClass">
             <methods>
-               <include name="Create_new_customer_in_IC_with_VAT_Number"/>
+               <include name="Subscriber_Newsletter_Valid_Email_address"/>
             </methods>
          </class>
       </classes>
