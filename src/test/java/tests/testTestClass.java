@@ -57,14 +57,8 @@ public class testTestClass<moduleName> {
         startBrowserSession();
     }
     //Start Tests-----------------------------------------------------------------------
+
     
-    @Test(testName ="15_Update_customer_information_on_IC" )
-    public void Update_customer_information_on_IC() throws Exception {
-        String testMethodName="Update_customer_information_on_IC";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
     @Test(testName ="32_Gift_Card_Purchase_Guest_User" )
     public void Gift_Card_Purchase_Guest_User() throws Exception {
         String testMethodName="Gift_Card_Purchase_Guest_User";
@@ -246,6 +240,9 @@ public class testTestClass<moduleName> {
                 break;
             case "CheckoutpaymentOption":
                 Payopt.CheckoutpaymentOption(dataMap2.get(currentKeyWord + "++"), test1, rowNumber);
+                break;
+            case "CheckoutpaymentOptionGiftCard":
+                Payopt.CheckoutpaymentOptionGiftCard(dataMap2.get("deliveryPopulation++"),test1,rowNumber);
                 break;
             case "PayUPagePayment":
                 PayU.PayUPagePayment(dataMap2.get(currentKeyWord + "++"), test1, rowNumber);
@@ -484,9 +481,7 @@ public class testTestClass<moduleName> {
             case "NavigateToWishlist_VerifyLoginPageAppear":
                 NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
                 break;
-            case "CheckoutpaymentOptionGiftCard":
-                Payopt.CheckoutpaymentOptionGiftCard(dataMap2.get("deliveryPopulation++"),test1,rowNumber);
-                break;
+
 
         }
     }
