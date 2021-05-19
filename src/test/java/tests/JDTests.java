@@ -250,6 +250,9 @@ public class JDTests extends BaseTest {
 				case "CheckoutpaymentOption":
 					Payopt.CheckoutpaymentOption(dataMap2.get(currentKeyWord + "++"), test1, rowNumber);
 					break;
+				case "CheckoutpaymentOptionGiftCard":
+                    Payopt.CheckoutpaymentOptionGiftCard(dataMap2.get("deliveryPopulation++"),test1,rowNumber);
+                    break;
 				case "PayUPagePayment":
 					PayU.PayUPagePayment(dataMap2.get(currentKeyWord + "++"), test1, rowNumber);
 					break;
@@ -487,9 +490,7 @@ public class JDTests extends BaseTest {
 				case "NavigateToWishlist_VerifyLoginPageAppear":
 					NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
 					break;
-				case "CheckoutpaymentOptionGiftCard":
-                    Payopt.CheckoutpaymentOptionGiftCard(dataMap2.get("deliveryPopulation++"),test1,rowNumber);
-                    break;
+				
 
 		}
 	}

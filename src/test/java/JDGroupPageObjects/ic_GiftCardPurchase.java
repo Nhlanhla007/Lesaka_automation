@@ -60,7 +60,8 @@ public class ic_GiftCardPurchase {
 	@FindBy(xpath="//*[@id=\"product_addtocart_form\"]/div[4]/div/div/div[2]")
     private WebElement ic_AddToCart;
 	
-	@FindBy(xpath="/html/body/div[2]/header/div[2]/div/div[3]/div[3]/a")
+	//@FindBy(xpath="/html/body/div[2]/header/div[2]/div/div[3]/div[3]/a")
+	@FindBy(xpath="//*[@class=\"action showcart\"]")
     private WebElement ic_Cart;
 	
 	@FindBy(xpath="//*[@id=\"maincontent\"]/div/div[1]/div[2]/div[2]/ol/li[1]/div/div[2]/div[3]/div/div[1]/form/button/span")
@@ -81,7 +82,8 @@ public class ic_GiftCardPurchase {
 		String recipientName = input.get("recipientName").get(rowNumber);
 		String recipientEmail = input.get("recipientEmail").get(rowNumber);
 		String cardMessage = input.get("cardMessage").get(rowNumber);
-		ic_products.loadProductListingPage("SearchUsingSearchBar", "Gift Card", test);
+		String giftC = dataTable2.getValueOnCurrentModule("GiftCardSKU");
+		ic_products.loadProductListingPage("SearchUsingSearchBar", giftC, test);
 		action.click(ic_MoreInfo, "more information", test);
 		if(selectAmountFlag.equalsIgnoreCase("Yes")){
 		action.writeText(ic_Amount, selectAmount, "Select the Amount", test);
