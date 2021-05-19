@@ -80,22 +80,19 @@ public class JDTests extends BaseTest {
 
 		int numberOfTestCases = singleSuiteData.get("Execute").size();
 		for (int i = 0; i < numberOfTestCases; i++) {
-			System.out.println("TestCaseNumber:" + i);
+
 			occCount = new HashMap<String, Integer>();
 			String execute = singleSuiteData.get("Execute").get(i);
 			if (execute.toLowerCase().equals("yes")) {
+				System.out.println("TestCaseNumber:" + i);
 				String testCaseDescription = singleSuiteData.get("testCaseDescription").get(i);
 				testcaseID = Integer.parseInt(singleSuiteData.get("TestCaseID").get(i));
 				dataTable2.setTestCaseID(testcaseID);
 				ExtentTest test = reportJD.createTest(testcaseID + " : " + testCaseDescription);
 				startBrowserSession();
-				configFileReader.setPropertyVal("sequence", "true");
 				try {
-					testcaseID = Integer.parseInt(singleSuiteData.get("TestCaseID").get(i));
-					dataTable2.setTestCaseID(testcaseID);
 					System.out.println("-------------------------------------------------------");
 					System.out.println("testCaseDescription: "+testcaseID+"_"+testCaseDescription);
-					startBrowserSession();
 					for(int j=0;j<20;j++){
 						String actionToRunLable="Action"+(j+1);
 						String actionToRun= "";
@@ -107,7 +104,7 @@ public class JDTests extends BaseTest {
 						currentKeyWord = actionToRun;
 						if (!currentKeyWord.equals("")) {
 							System.out.println("actionToRunLable:" + actionToRunLable);
-							System.out.println("currentKeyWord:" + currentKeyWord);
+							System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxx:currentKeyWord:" + currentKeyWord);
 							if (!occCount.containsKey(currentKeyWord)) {
 								occCount.put(currentKeyWord, 0);
 							} else {
@@ -515,8 +512,6 @@ public class JDTests extends BaseTest {
 			if (driver == null) {
 				configFileReader = new ConfigFileReader();
 				logger.info("Initializing the driver");
-
-
 				browserName = System.getProperty("BrowserType");
 				if (browserName == null) {
 					logger.info("System property returned Null browser type. So getting data from Config file");
