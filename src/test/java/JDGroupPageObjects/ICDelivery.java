@@ -129,8 +129,8 @@ public class ICDelivery {
     @FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
     WebElement popUpSave;
     
-    @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
-    WebElement cardDeliver_btn;
+//    @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
+//    WebElement cardDeliver_btn;
     
     public static String Streetname;
     public static String Cityname;

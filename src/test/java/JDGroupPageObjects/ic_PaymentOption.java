@@ -56,7 +56,7 @@ public class ic_PaymentOption {
 	
 	@FindBy(xpath = "//*[@id=\"customer-email\"]")
 	WebElement emaiL;
-	
+
 	@FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[4]/div/input")
 	WebElement firstnamE;
 	
@@ -117,62 +117,7 @@ public class ic_PaymentOption {
 	@FindBy(xpath = "//span[contains(text(),'I agree to all the terms & conditions')]")
 	WebElement TermsCondition;
 
-//gift card checkout
-    
-    @FindBy(xpath = "//*[@id=\"customer-email\"]")
-    WebElement emaiL;
-    
-    @FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[4]/div/input")
-    WebElement firstnamE;
-    
-    /*@FindBy(name = "firstname")
-    WebElement firstName;*/
-    
-    /*@FindBy(xpath = "//input[@name="lastname"]")
-    WebElement lastnamE;*/
-    
-    @FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[5]/div/input")
-    WebElement lastname;
-    
-    /*@FindBy(xpath = "//input[@name=\"telephone\"]")
-    WebElement phonenumbeR;*/
-    
-    @FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[13]/div/input")
-    WebElement telephone;
-    
-    /*@FindBy(xpath = "//input[@name=\"custom_attributes[suburb]\"]")
-    WebElement suburB;*/
-    
-    @FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[8]/div/input")
-    WebElement Suburb;
-    
-    @FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/fieldset/div/div[1]/div/input")
-    WebElement streetnamE;
-    
-    /*@FindBy(xpath = "//select[@name=\"region_id\"]")
-    WebElement provincE;*/
-    
-    @FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[9]/div/select")
-    WebElement province;
-    
-    /*@FindBy(xpath = "//input[@name=\"city\"]")
-    WebElement citY;*/
-    
-    @FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[7]/div/input")
-    WebElement city;
-    
-    /*@FindBy(xpath = "//input[@name=\"postcode\"]")
-    WebElement postalcodE;*/
-    
-    @FindBy(xpath= "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[11]/div/input")
-    WebElement postalCode;
-    
-    @FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[14]/div/input")
-    WebElement vatNumber;
 
-    @FindBy(name = "custom_attributes[identity_number]")
-    WebElement idNumber;
-	
 	
 	public WebElement ic_SelectPaymentMethod(String Paytype){
 			Map<String,WebElement> PaymentMap=new HashMap<String,WebElement>();
