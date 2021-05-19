@@ -44,7 +44,8 @@ public class verifyForgotPassword {
 	@FindBy(xpath = "//span[contains(text(),'Submit')]")
 	WebElement ic_submit;
 	
-	@FindBy(xpath = "/html/body/div[1]/header/div[3]/div[2]/div/div/div")
+	//@FindBy(xpath = "/html/body/div[1]/header/div[3]/div[2]/div/div/div")
+	@FindBy(xpath = "//div[@class =\"message-success success message\"]/div")
 	WebElement ic_confirmMessage;
 
 	public void forgotPasswordPage(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{

@@ -129,6 +129,9 @@ public class ICDelivery {
     @FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
     WebElement popUpSave;
     
+    @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
+    WebElement cardDeliver_btn;
+    
     public static String Streetname;
     public static String Cityname;
     public static String Postalcode;
@@ -169,6 +172,7 @@ public class ICDelivery {
 			 * registeredUserDetails.put("Post Code", value);
 			 * registeredUserDetails.put("Telephone", value);
 			 */
+
             //action.writeText(firstName,dataSheets.getValueOnCurrentModule("firstName"),"firstName",test);
             //action.writeText(lastname,dataSheets.getValueOnCurrentModule("lastname"),"lastname",test);
             //action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
@@ -232,7 +236,8 @@ public class ICDelivery {
     	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
     	if(action.waitUntilElementIsDisplayed(newAddressButton, 15000)) {
     		action.explicitWait(8000);
-       	    action.click(newAddressButton,"newAddressButton",test);
+       	    //newAddressButton.click();
+       	    action.click(newAddressButton, "New Address", test);
     	}
        	//action.writeText(popUpFirstName, dataSheets.getValueOnCurrentModule(""), "New First name", test);
     	action.writeText(popUpStreetName, dataSheets.getValueOnCurrentModule("streetName"), "New Address Street name", test);
@@ -248,11 +253,12 @@ public class ICDelivery {
     	//popUpProvince.clear();
     	action.selectFromDropDownUsingVisibleText(popUpProvince, dataSheets.getValueOnCurrentModule("province"), "New Address Province");
     	action.explicitWait(4000);
-    	popUpSave.click();
+    	//popUpSave.click();
+    	action.click(popUpSave, "Save", test);
     }
     
     public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws InterruptedException, IOException {
-        Streetname =input.get("streetName").get(rowNumber);
+    	Streetname =input.get("streetName").get(rowNumber);
         Cityname =input.get("city").get(rowNumber);
         Postalcode = input.get("postalCode").get(rowNumber);
         String firstNameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "firstName", 0);
@@ -271,8 +277,10 @@ public class ICDelivery {
         action.writeText(cityGift,input.get("city").get(rowNumber),"city",test);
         action.writeText(SuburbGift,input.get("Suburb").get(rowNumber),"Suburb",test);
         action.writeText(postalCodeGift,input.get("postalCode").get(rowNumber),"postalCode",test);
+        //Thread.sleep(12000);
         action.explicitWait(12000);
         action.dropDownselectbyvisibletext(provinceGift,input.get("province").get(rowNumber),"province",test);
+        //Thread.sleep(10000);
         action.explicitWait(10000);
         action.click(placeOrder,"placeOrder",test);
     }

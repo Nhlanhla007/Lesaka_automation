@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -16,6 +17,7 @@ import com.aventstack.extentreports.ExtentTest;
 
 import JDGroupPageObjects.ICDelivery;
 import JDGroupPageObjects.ic_Login;
+import Logger.Log;
 import ic_MagentoPageObjects.MagentoAccountInformation;
 import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
@@ -36,6 +38,8 @@ public class SAPCustomerRelated {
 	MagentoAccountInformation magentoVerification;
 	static Map<String, String> dataStore;
 	DataTable2 dataTable2;
+	
+	static Logger logger = Log.getLogData(Action.class.getSimpleName());
 	public SAPCustomerRelated(WebDriver driver,LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2,DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -461,7 +465,8 @@ public class SAPCustomerRelated {
 				break;
 		}
 		hn.closeDB();
-		System.out.println("Closing Database");
+		//System.out.println("Closing Database");
+		logger.info("Closing Database");
 
 	}
 	
@@ -486,7 +491,7 @@ public class SAPCustomerRelated {
 		if(typeValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			String sapOrderNumeber = dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber", "OrderSAPnumber", 0);
 			String Query = "select KUNNR from SAPEQ1.VBAK where VBELN = '"+sapOrderNumeber+"'";
-			System.out.println("Query:"+Query);
+		//	System.out.println("Query:"+Query);
 			ResultSet rs1 = hn.ExecuteQuery(Query);
 			hn.GetRowsCount(rs1);
 			newBpNumber = hn.GetRowdataByColumnName(rs1, "KUNNR").get(0);
