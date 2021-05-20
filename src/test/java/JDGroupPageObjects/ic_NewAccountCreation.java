@@ -193,7 +193,7 @@ public class ic_NewAccountCreation {
 			
 			if(identityType.equalsIgnoreCase("ID")) {
 				System.out.println("Inside ID");
-			action.click(User_SAIDbtn, "Identity type: ID", test);
+//			action.click(User_SAIDbtn, "Identity type: ID", test);
 			action.writeText(User_SAID, identityNumber, "ID/Passport number", test);
 			}else if(identityType.equalsIgnoreCase("Passport")){
 				System.out.println("Inside passport");
