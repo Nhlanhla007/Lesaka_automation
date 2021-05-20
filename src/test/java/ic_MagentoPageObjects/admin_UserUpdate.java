@@ -176,7 +176,7 @@ public class admin_UserUpdate {
 	    		adminSheets.get(0).get("adminLastName_output").set(sheetRow1, lastNameText);
 	    	}
 
-	    	admin_AccountInfoCustomer.click();
+	    	action.click(admin_AccountInfoCustomer, "account infor", test);
 	    	String taxVatText = action.getAttribute(admin_taxVat, "value");
 	    	if(taxVat.equalsIgnoreCase("yes")){
 	    		String taxVatTextUpdated = "Updated" + id;
@@ -189,18 +189,17 @@ public class admin_UserUpdate {
 	    		
 	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
 	    		action.explicitWait(5000);
-	    		admin_AccountInfoCustomer.click();
+	    		//admin_AccountInfoCustomer.click();
+	    		action.click(admin_AccountInfoCustomer, "account infor", test);
 	    		
 	    	}else {
 	    		adminSheets.get(0).get("adminTaxVat_output").set(sheetRow1, taxVatText);
 	    	}
 	    	
-	    	admin_AccountInfoCustomer.click();
+	    	action.click(admin_AccountInfoCustomer, "account infor", test);
 	    	String emailText = action.getAttribute(admin_email, "value");
 	    	if(emailFlag.equalsIgnoreCase("yes")){
-	    		
-	    		String emailTextUpdated = ""+id+emailText;
-	    		
+	    		String emailTextUpdated = id+"updated@jdg.co.za";
 	    		action.clear(admin_email, "removing the email");
 	    		action.writeText(admin_email,emailTextUpdated ,"last Name", test);
 	    		adminSheets.get(0).get("adminEmail_output").set(sheetRow1, emailTextUpdated);
@@ -210,22 +209,22 @@ public class admin_UserUpdate {
 	    		
 	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
 	    		action.explicitWait(5000);
-	    		admin_AccountInfoCustomer.click();
+	    		//admin_AccountInfoCustomer.click();
+	    		action.click(admin_AccountInfoCustomer, "customer infor", test);
 	    	}else {
 	    		adminSheets.get(0).get("adminEmail_output").set(sheetRow1, emailText);
 	    	}
 	    	
 	    	//action.click(admin_AddressBtn, "Change addresses", test);
-	    	admin_AddressBtn.click();
+	    	//admin_AddressBtn.click();// update it
+	    	action.click(admin_AddressBtn, "Address button", test);
 	    	action.explicitWait(5000);
 	    	//Billing Address
 	    	
 
 	    	
 	    	if(billingAddress.equalsIgnoreCase("Yes")){
-	    		admin_billingEdit.click();
-	    		//action.click(admin_billingEdit, "Edit", test);
-	    		//action.javaScriptClick(admin_billingEdit, "Billing edit clicked", test);
+	    		action.click(admin_billingEdit, "Edit", test);
 	    		
 		    	Random r = new Random();
 	    		//String randomAddres = streetAddresses.get(randomitem);
@@ -243,7 +242,7 @@ public class admin_UserUpdate {
 	    		streetAddresses.add("35 Ballyclare Drive");
 	    		streetAddresses.add("100 Northern Parkway");
 	    		int randomitem = r.nextInt(streetAddresses.size());
-	    		//driver.findElement(By.xpath("//*[@id=\"container\"]/div/div/div[2]/div[3]/div/div[2]/fieldset/div[1]/button/span")).click();
+	    		
 	    		String streetAdressText = action.getAttribute(admin_BillingStreetAddress, "value");
 	    		if(billing_streetAddress.equalsIgnoreCase("yes")){
 		    		

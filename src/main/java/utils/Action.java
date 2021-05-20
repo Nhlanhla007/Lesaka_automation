@@ -115,7 +115,10 @@ public class Action {
 			} else {
 				JavascriptExecutor jse = (JavascriptExecutor) driver;
 				jse.executeScript("arguments[0].style.border='2px solid red'", (WebElement) elementAttr);
-
+				WebDriverWait wait = new WebDriverWait(driver, 15);
+				List<WebElement> elements= new ArrayList<WebElement>();
+				elements.add((WebElement) elementAttr);
+				List<WebElement> elements2 = wait.until(ExpectedConditions.visibilityOfAllElements(elements));
 				((WebElement) elementAttr).click();
 			}
 			if(name != null){
@@ -607,10 +610,11 @@ public class Action {
 	 */
 	public<T> boolean waitUntilElementIsDisplayed(T elementAttr, int secs) throws InterruptedException {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		boolean flag = isDisplayed(elementAttr);
+		boolean flag = isDisplayed(elementAttr);		
 		int count = 0;
-		while (flag == false && count < secs){
-//			refresh();
+		secs = secs/1000;
+		while (flag == false & count < secs){
+//			refresh();			
 			Thread.sleep(1000);
 			flag = isDisplayed(elementAttr);
 			count++;

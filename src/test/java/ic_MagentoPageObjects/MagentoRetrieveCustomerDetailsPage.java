@@ -69,9 +69,10 @@ public class MagentoRetrieveCustomerDetailsPage {
 	public void navigateToCustomer(ExtentTest test) throws IOException, InterruptedException {
 			action.click(customerTab, "Customer Tab", test);
 			if(action.waitUntilElementIsDisplayed(allCustomerTab, 10000)) {
+				action.explicitWait(5000);
 				action.click(allCustomerTab, "All Customers Tab", test);
 			}
-			Thread.sleep(10000);
+			action.explicitWait(10000);
 	}
 
 	public void searchForCustomer(String emailToSearchBy,ExtentTest test) throws Exception {
@@ -172,7 +173,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 			//confirmRows(customerTableRecords, test);
 			if (customerTableRecords.size() >= 1) {
 				action.javaScriptClick(clickElement, "Customer Details", test);
-				Thread.sleep(5000);
+				action.explicitWait(50000);
 				action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
 			} else {
 				action.checkIfPageIsLoadedByURL("/customer/index/edit/", "Customer not found", test);

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.log4j.Logger;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -16,6 +17,7 @@ import com.aventstack.extentreports.ExtentTest;
 
 import JDGroupPageObjects.ICDelivery;
 import JDGroupPageObjects.ic_Login;
+import Logger.Log;
 import ic_MagentoPageObjects.MagentoAccountInformation;
 import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
@@ -36,6 +38,8 @@ public class SAPCustomerRelated {
 	MagentoAccountInformation magentoVerification;
 	static Map<String, String> dataStore;
 	DataTable2 dataTable2;
+	
+	static Logger logger = Log.getLogData(Action.class.getSimpleName());
 	public SAPCustomerRelated(WebDriver driver,LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2,DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -203,6 +207,8 @@ public class SAPCustomerRelated {
 			taxVatNumberFlag = "yes";
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Update Magento Admin")) {
 			taxVatNumberFlag = dataTable2.getValueOnOtherModule("adminUserUpdate", "taxVat", 0);
+		}else if(typeOfSAPValidation.equalsIgnoreCase("Registered customer from sales order")) {
+			taxVatNumberFlag = "yes";
 		}
 		else {
 			taxVatNumberFlag = "No";
@@ -210,7 +216,7 @@ public class SAPCustomerRelated {
 		//SAPorderNumber=SAPorderNumber.replace("[RabbitMQ] Order SAP Number: ", ""); 
 		vatNumberFlag = mySheets.get(0).get("vatNumberFlag").get(sheetRow1);
 		Map<String, String> customerDetails = null;
-		customerDetails = customerSAPDetails(bpNumber1);
+		customerDetails = customerSAPDetails(bpNumber1,test);
 
 		//GET DETAILS FROM SAP
 		String SAPFirstName = customerDetails.get("NAME_FIRST");
@@ -411,7 +417,7 @@ public class SAPCustomerRelated {
 				String registLastname = dataTable2.getValueOnOtherModule("deliveryPopulation", "lastname", 0).trim();
 				String registEmail = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0).trim();
 				String registIDnumber = dataTable2.getValueOnOtherModule("deliveryPopulation", "idNumber", 0).trim();
-				String registVATnumber = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber", 0).trim();
+				String registVATnumber = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber", 0);
 
 				String registTelephone = dataTable2.getValueOnOtherModule("deliveryPopulation", "telephone", 0);
 				String registStreetAddress = dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName", 0).trim();
@@ -440,7 +446,9 @@ public class SAPCustomerRelated {
 				action.CompareResult("SAP Last name", registLastname, SAPLastName, test);
 				action.CompareResult("SAP Email", registEmail, SAPEmail, test);
 				action.CompareResult("SAP SA ID", registIDnumber, SAID, test);
+				if(registVATnumber != null) {
 				action.CompareResult("SAP Vat number", registVATnumber, sapVatnumber, test);
+				}
 //				String addressTypeInIC = ICDelivery.addressTypeICFont;
 //				String typeOfAddressUsage = dataTable2.getValueOnOtherModule("deliveryPopulation", "AddressType", 0);
 //
@@ -456,6 +464,9 @@ public class SAPCustomerRelated {
 			default:
 				break;
 		}
+		hn.closeDB();
+		//System.out.println("Closing Database");
+		logger.info("Closing Database");
 
 	}
 	
@@ -467,20 +478,20 @@ public class SAPCustomerRelated {
 
 	//The map below stores all customer data from DB
 	static Map<String, String> custData ;
-	public Map<String, String> customerSAPDetails(String bpNumber) throws Exception {
+	public Map<String, String> customerSAPDetails(String bpNumber,ExtentTest test1) throws Exception {
 		/*
 		 * String Server = "11.19.2.172"; String Port = "30215"; String Username =
 		 * "225505"; String Password = "Welc0me@2021"; String name = "DBconnect"; String
 		 * DBType ="ECC_QA";
 		 */
-		ExtentTest test=null;
+		ExtentTest test=test1;
 		hn =new hana(TypeOfDB,Server,Port,Username,Password,test);
 		String typeValidation = dataTable2.getValueOnOtherModule("SapCustomer", "typeOfSapValidation", 0);
 		String newBpNumber = "";
 		if(typeValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			String sapOrderNumeber = dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber", "OrderSAPnumber", 0);
 			String Query = "select KUNNR from SAPEQ1.VBAK where VBELN = '"+sapOrderNumeber+"'";
-			System.out.println("Query:"+Query);
+		//	System.out.println("Query:"+Query);
 			ResultSet rs1 = hn.ExecuteQuery(Query);
 			hn.GetRowsCount(rs1);
 			newBpNumber = hn.GetRowdataByColumnName(rs1, "KUNNR").get(0);

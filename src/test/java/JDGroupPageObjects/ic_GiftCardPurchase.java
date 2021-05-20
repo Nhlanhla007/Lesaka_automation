@@ -2,6 +2,8 @@ package JDGroupPageObjects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,6 +18,7 @@ import utils.DataTable2;
 public class ic_GiftCardPurchase {
 	WebDriver driver;
     Action action;
+    DataTable2 dataTable2;
     
     Ic_Products ic_products;
     ic_PayUPayment ic_payU;
@@ -23,6 +26,7 @@ public class ic_GiftCardPurchase {
 	public ic_GiftCardPurchase(WebDriver driver, DataTable2 dataTable2){
 		
 		this.driver = driver;
+		this.dataTable2 = dataTable2;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
         ic_products = new Ic_Products(driver, dataTable2);
@@ -56,7 +60,8 @@ public class ic_GiftCardPurchase {
 	@FindBy(xpath="//*[@id=\"product_addtocart_form\"]/div[4]/div/div/div[2]")
     private WebElement ic_AddToCart;
 	
-	@FindBy(xpath="/html/body/div[2]/header/div[2]/div/div[3]/div[3]/a")
+	//@FindBy(xpath="/html/body/div[2]/header/div[2]/div/div[3]/div[3]/a")
+	@FindBy(xpath="//*[@class=\"action showcart\"]")
     private WebElement ic_Cart;
 	
 	@FindBy(xpath="//*[@id=\"maincontent\"]/div/div[1]/div[2]/div[2]/ol/li[1]/div/div[2]/div[3]/div/div[1]/form/button/span")
@@ -65,7 +70,10 @@ public class ic_GiftCardPurchase {
 	@FindBy(xpath="//*[@id=\"top-cart-btn-checkout\"]/span")
     private WebElement ic_secure;
 	
-	public void purchaseGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+    @FindBy(xpath="//*[@id=\"minicart-content-wrapper\"]/div[2]/div[2]/div[1]/div/span/span")
+    private WebElement icSubtotal;
+	
+	public void purchaseGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, Exception{
 		String selectAmountFlag = input.get("selectAmountFlag").get(rowNumber);
 		String selectAmount = input.get("selectAmount").get(rowNumber);
 		String inputAmount = input.get("inputAmount").get(rowNumber);
@@ -74,7 +82,8 @@ public class ic_GiftCardPurchase {
 		String recipientName = input.get("recipientName").get(rowNumber);
 		String recipientEmail = input.get("recipientEmail").get(rowNumber);
 		String cardMessage = input.get("cardMessage").get(rowNumber);
-		ic_products.loadProductListingPage("SearchUsingSearchBar", "Gift Card", test);
+		String giftC = dataTable2.getValueOnCurrentModule("GiftCardSKU");
+		ic_products.loadProductListingPage("SearchUsingSearchBar", giftC, test);
 		action.click(ic_MoreInfo, "more information", test);
 		if(selectAmountFlag.equalsIgnoreCase("Yes")){
 		action.writeText(ic_Amount, selectAmount, "Select the Amount", test);
@@ -88,11 +97,33 @@ public class ic_GiftCardPurchase {
 		action.writeText(ic_CardMessage, cardMessage, "card message", test);
 		action.explicitWait(9000);
 		action.click(ic_AddToCart, "add to cart", test);
-		action.explicitWait(9000);
+		action.explicitWait(12000);
 		action.click(ic_Cart, "cart clicked", test);
+		
+		//GetCartTotal and set to ProductSearch cart total
+		if(action.waitUntilElementIsDisplayed(icSubtotal, 15000)) {
+			action.explicitWait(5000);
+		String cartTots = action.getText(icSubtotal, "IC SubTotal");
+		dataTable2.setValueOnOtherModule("ProductSearch", "CartTotal", cartTots, 0);
+		}
+		
 		action.click(ic_secure, "Checkout Secure clicked", test);
+		//["Gift Card",[R899,1]]
+		String giftCardAmountFlag = dataTable2.getValueOnOtherModule("icGiftCardPurchase", "selectAmountFlag", 0);
+		String giftCardAmount;
+		if(giftCardAmountFlag.equalsIgnoreCase("yes")) {
+			giftCardAmount = dataTable2.getValueOnOtherModule("icGiftCardPurchase", "selectAmount", 0);
+			giftCardAmount.replace("R", "");
+		}else {
+			giftCardAmount = dataTable2.getValueOnOtherModule("icGiftCardPurchase", "inputAmount", 0);
+		}
+		List<String> giftCardData =new ArrayList<>();
+		giftCardData.add(giftCardAmount);
+		giftCardData.add("1");		
+		Ic_Products.productData =new LinkedHashMap<>();
+		Ic_Products.productData.put("CH Gift Card IC SA", giftCardData);
 	}
-	
+
 }
 
 

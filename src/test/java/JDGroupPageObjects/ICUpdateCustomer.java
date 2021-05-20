@@ -229,9 +229,10 @@ public class ICUpdateCustomer {
 				dataTable2.setValueOnCurrentModule("taxVat_output",taxVatText);
 	    	}
 	    	
-	    	action.click(emailCheckBox, "EmailCheckBox", test);
+	    	
 	    	String emailText = action.getAttribute(ic_email, "value");
 	    	if(email.equalsIgnoreCase("yes")){
+	    		action.click(emailCheckBox, "EmailCheckBox", test);
 	    		String emailTextUpdated = id+"Updated@updated.com";
 	    		ic_email.clear();
 	    		action.writeText(ic_email, emailTextUpdated ,"email", test);
