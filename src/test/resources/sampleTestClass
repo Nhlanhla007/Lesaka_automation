@@ -57,9 +57,7 @@ public class testTestClass<moduleName> {
         startBrowserSession();
     }
     //Start Tests-----------------------------------------------------------------------
-
     ${AllTestMethods}
-
     //End Tests-------------------------------------------------------------------------
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {

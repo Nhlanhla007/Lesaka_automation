@@ -135,8 +135,8 @@ public class JDTests extends BaseTest {
 
 			}
 
-		}
 	}
+
 
 
 
@@ -511,8 +511,6 @@ public class JDTests extends BaseTest {
 			}
 			return rowNumber;
 		}
-		return rowNumber;
-	}
 
 		public void startBrowserSession () {
 			driver = null;
@@ -627,19 +625,6 @@ public class JDTests extends BaseTest {
 			myWorkBook.write(os);
 			os.close();
 			myWorkBook.close();
-		}
-		workbook.write(outputStream);
-		workbook.close();
-	}
-
-		public File createFile () throws IOException {
-			File myObj = new File(System.getProperty("user.dir") + "\\reports\\Datasheet.xlsx");
-			return myObj;
-		}
-		FileOutputStream os = new FileOutputStream(createFile());
-		myWorkBook.write(os);
-		os.close();
-		myWorkBook.close();
 	}
 
 	public File createFile() throws IOException {
