@@ -129,7 +129,7 @@ public class ICUpdateCustomer {
 	    @FindBy(css = "a.go-back")
 	    private WebElement backButton;
 	    
-	    @FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
+	    @FindBy(xpath="//*[@class=\"action showcart\"]")
 	    private WebElement iCCartButton;
 	    
 	    @FindBy(xpath="//*[@id=\"top-cart-btn-checkout\"]/span")

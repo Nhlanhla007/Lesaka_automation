@@ -149,6 +149,7 @@ public class ic_PaymentOption {
 			action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 			WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
 			action.waitExplicit(10);
+			action.scrollElemetnToCenterOfView(paymenttype);
 			action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
 			action.waitExplicit(15);
 			action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);

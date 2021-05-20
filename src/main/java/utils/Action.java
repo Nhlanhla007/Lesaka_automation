@@ -614,8 +614,7 @@ public class Action {
 		int count = 0;
 		secs = secs/1000;
 		while (flag == false & count < secs){
-//			refresh();			
-			Thread.sleep(1000);
+//			refresh();						
 			flag = isDisplayed(elementAttr);
 			count++;
 		}

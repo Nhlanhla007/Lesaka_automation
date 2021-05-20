@@ -14,6 +14,7 @@ import ic_MagentoPageObjects.*;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Before;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.*;
@@ -43,6 +44,8 @@ public class JDGTest_TestNG<moduleName> {
     Logger logger = Log.getLogData(this.getClass().getSimpleName());
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 
+    Action action = new Action(driver);
+    
     @BeforeClass
     @Parameters({"moduleName"})
     public void once(String moduleName) throws Exception {
@@ -569,6 +572,21 @@ public class JDGTest_TestNG<moduleName> {
         logger.info("App URL: "+ navigateURL);
         Values.app= navigateURL;
         Values.browser=browserName;
+        
+        action.explicitWait(5000);
+		boolean clearCookiesAvailability = driver.findElements(By.xpath("//*[@class=\"cookie-notice-content\"]")).size() > 0;
+		System.out.println("Availablility " + clearCookiesAvailability);
+		if(clearCookiesAvailability) {
+		//	boolean cookieA = action.waitUntilElementIsDisplayed(clearCookies, 10000);
+			//if(cookieA) {
+				//action.click(clearCookies, "Close Clear Cookies Pop UP", test);
+				System.out.println("Entered Close Cookie");
+				WebElement closeCookie = driver.findElement(By.xpath("//*[@id=\"btn-cookie-allow\"]"));
+				closeCookie.click();
+			//}
+			
+		}
+        
     }
 
     public void endBrowserSession() throws IOException {
