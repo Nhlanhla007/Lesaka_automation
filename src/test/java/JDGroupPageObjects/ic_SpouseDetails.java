@@ -58,7 +58,8 @@ public class ic_SpouseDetails {
 	    @FindBy(xpath="//input[@ name=\"spouse_gross_salary\"]")
 	    private WebElement ic_SpouseGrossSalary;
 	    
-	    @FindBy(xpath="//body[1]/div[1]/main[1]//form[1]/fieldset[2]//div[1]/button/span[1]")
+	   // @FindBy(xpath="//body[1]/div[1]/main[1]//form[1]/fieldset[2]//div[1]/button/span[1]")
+	    @FindBy(xpath="//*[@id=\"creditApplicationForm.spouseDetails__fieldset\"]/div/div[11]/div[1]/button[1]/span")
 	    private WebElement ic_SpouseNext;
 	    
 	    public void enterSpouseDetails(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
@@ -85,6 +86,11 @@ public class ic_SpouseDetails {
 	    	action.writeText(ic_SpouseGrossSalary,spouseGrossSalary , "Spouse Grossary salary", test);
 	    	
 	    	action.click(ic_SpouseNext, "Next", test);
+	    /*	if(action.waitUntilElementIsDisplayed(ic_SpouseNext, 15000)) {
+				action.explicitWait(5000);
+			
+				action.click(ic_SpouseNext, "Next", test);
+			}*/
 	    	
 	    }
 	    
