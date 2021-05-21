@@ -11,6 +11,8 @@ import utils.DataTable2;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -258,9 +260,12 @@ public class ICDelivery {
     }
     
     public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws InterruptedException, IOException {
-    	Streetname =input.get("streetName").get(rowNumber);
-        Cityname =input.get("city").get(rowNumber);
-        Postalcode = input.get("postalCode").get(rowNumber);
+    	//Streetname =input.get("streetName").get(rowNumber);
+    	String Streetname = dataSheets.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
+        //Cityname =input.get("city").get(rowNumber);
+        String Cityname = dataSheets.getValueOnOtherModule("deliveryPopulation", "city", 0);
+        //Postalcode = input.get("postalCode").get(rowNumber);
+        String Postalcode = dataSheets.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
         String firstNameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "firstName", 0);
         String lastnameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "lastname", 0);
         String emailGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "email", 0);
@@ -283,5 +288,6 @@ public class ICDelivery {
         //Thread.sleep(10000);
         action.explicitWait(10000);
         action.click(placeOrder,"placeOrder",test);
+       
     }
 }

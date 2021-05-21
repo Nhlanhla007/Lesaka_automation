@@ -101,9 +101,11 @@ public class ic_GiftCardPurchase {
 		action.click(ic_Cart, "cart clicked", test);
 		
 		//GetCartTotal and set to ProductSearch cart total
+		String cartTots = action.getText(icSubtotal, "IC SubTotal");
+		cartTots= cartTots.replace("R", "").replace(",", "").replace(".00", "");
 		if(action.waitUntilElementIsDisplayed(icSubtotal, 15000)) {
 			action.explicitWait(5000);
-		String cartTots = action.getText(icSubtotal, "IC SubTotal");
+		//cartTots.replace("R", "").replace(",", "").replace(".", "");
 		dataTable2.setValueOnOtherModule("ProductSearch", "CartTotal", cartTots, 0);
 		}
 		
@@ -116,12 +118,18 @@ public class ic_GiftCardPurchase {
 			giftCardAmount.replace("R", "");
 		}else {
 			giftCardAmount = dataTable2.getValueOnOtherModule("icGiftCardPurchase", "inputAmount", 0);
+			giftCardAmount.replace("R", "");
 		}
 		List<String> giftCardData =new ArrayList<>();
 		giftCardData.add(giftCardAmount);
-		giftCardData.add("1");		
+		giftCardData.add("1");
+		giftCardData.add(cartTots);
 		Ic_Products.productData =new LinkedHashMap<>();
 		Ic_Products.productData.put("CH Gift Card IC SA", giftCardData);
+		
+		ICDelivery.Streetname = dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
+		ICDelivery.Cityname = dataTable2.getValueOnOtherModule("deliveryPopulation", "city", 0);
+		ICDelivery.Postalcode = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
 	}
 
 }

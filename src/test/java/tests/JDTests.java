@@ -140,6 +140,7 @@ public class JDTests extends BaseTest {
 
 
 
+
 		public void runKeyWord (String actionToRun, ExtentTest test) throws Exception {
 			String moduleToRun = actionToRun;
 			IConnection ic = new IConnection(driver, dataTable2);
@@ -512,6 +513,7 @@ public class JDTests extends BaseTest {
 			return rowNumber;
 		}
 
+
 		public void startBrowserSession () {
 			driver = null;
 			if (driver == null) {
@@ -625,12 +627,14 @@ public class JDTests extends BaseTest {
 			myWorkBook.write(os);
 			os.close();
 			myWorkBook.close();
+
 	}
 
 	public File createFile() throws IOException {
 		File myObj = new File(System.getProperty("user.dir") + "\\reports\\Datasheet.xlsx");
 		return myObj;
 	}
+
 
 
 

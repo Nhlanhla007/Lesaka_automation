@@ -191,7 +191,14 @@ public class ic_PaymentOption {
 	    action.writeText(Suburb, suburdGift,"Suburb", test);
 	    action.writeText(vatNumber, vatnumberGift,"Vat number", test);
 	    action.explicitWait(14000);
+	    
+	    ICDelivery.Streetname = dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
+		ICDelivery.Cityname = dataTable2.getValueOnOtherModule("deliveryPopulation", "city", 0);
+		ICDelivery.Postalcode = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
+	    
 		action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+		
+		
 
 	}
 
