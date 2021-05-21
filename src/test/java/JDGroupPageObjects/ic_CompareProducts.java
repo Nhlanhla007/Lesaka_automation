@@ -39,7 +39,8 @@ public class ic_CompareProducts {
 	@FindBy(xpath = "//*[@id=\"product-comparison\"]/tbody[1]/tr/td[2]/a/span/span/img")
 	public WebElement ic_SecondCompareProduct;
 	
-	@FindBy(xpath = "//body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[3]/nav[1]/ul[1]/li[1]/a[1]/span[1]")
+	//@FindBy(xpath = "//body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[3]/nav[1]/ul[1]/li[1]/a[1]/span[1]")
+	@FindBy(xpath = "//span[contains(text(),'Products')]")
 	public WebElement ic_ProductsCompared;
 	
 	@FindBy(xpath = "//span[contains(text(),'Clear All')]")

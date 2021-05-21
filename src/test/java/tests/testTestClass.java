@@ -14,6 +14,7 @@ import ic_MagentoPageObjects.*;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Before;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.*;
@@ -43,6 +44,8 @@ public class testTestClass<moduleName> {
     Logger logger = Log.getLogData(this.getClass().getSimpleName());
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 
+    Action action = new Action(driver);
+    
     @BeforeClass
     @Parameters({"moduleName"})
     public void once(String moduleName) throws Exception {
@@ -57,16 +60,15 @@ public class testTestClass<moduleName> {
         startBrowserSession();
     }
     //Start Tests-----------------------------------------------------------------------
-
     
-    @Test(testName ="32_Gift_Card_Purchase_Guest_User" )
-    public void Gift_Card_Purchase_Guest_User() throws Exception {
-        String testMethodName="Gift_Card_Purchase_Guest_User";
+    @Test(testName ="30_Create_Sales_Order_Guest_User_Payment_Cash_Deposit" )
+    public void Create_Sales_Order_Guest_User_Payment_Cash_Deposit() throws Exception {
+        String testMethodName="Create_Sales_Order_Guest_User_Payment_Cash_Deposit";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
     }
-
+   
     //End Tests-------------------------------------------------------------------------
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {
@@ -531,6 +533,21 @@ public class testTestClass<moduleName> {
         logger.info("App URL: "+ navigateURL);
         Values.app= navigateURL;
         Values.browser=browserName;
+        
+        action.explicitWait(5000);
+		boolean clearCookiesAvailability = driver.findElements(By.xpath("//*[@class=\"cookie-notice-content\"]")).size() > 0;
+		System.out.println("Availablility " + clearCookiesAvailability);
+		if(clearCookiesAvailability) {
+		//	boolean cookieA = action.waitUntilElementIsDisplayed(clearCookies, 10000);
+			//if(cookieA) {
+				//action.click(clearCookies, "Close Clear Cookies Pop UP", test);
+				System.out.println("Entered Close Cookie");
+				WebElement closeCookie = driver.findElement(By.xpath("//*[@id=\"btn-cookie-allow\"]"));
+				closeCookie.click();
+			//}
+			
+		}
+        
     }
 
     public void endBrowserSession() throws IOException {

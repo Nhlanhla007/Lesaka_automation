@@ -31,6 +31,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
@@ -49,6 +50,7 @@ public class JDTests extends BaseTest {
 	public String currentKeyWord;
 	HashMap<String, Integer> occCount = null;
 	int testcaseID;
+	Action action = new Action(driver);
 	
 	@BeforeClass(alwaysRun = true)
 	public void setUp() {
@@ -514,7 +516,7 @@ public class JDTests extends BaseTest {
 		}
 
 
-		public void startBrowserSession () {
+		public void startBrowserSession () throws Exception {
 			driver = null;
 			if (driver == null) {
 				configFileReader = new ConfigFileReader();
@@ -554,6 +556,19 @@ public class JDTests extends BaseTest {
 			logger.info("App URL: " + navigateURL);
 			Values.app = navigateURL;
 			Values.browser = browserName;
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			action.explicitWait(5000);
+			boolean clearCookiesAvailability = driver.findElements(By.xpath("//*[@class=\"cookie-notice-content\"]")).size() > 0;			
+			if(clearCookiesAvailability) {
+			//	boolean cookieA = action.waitUntilElementIsDisplayed(clearCookies, 10000);
+				//if(cookieA) {
+					//action.click(clearCookies, "Close Clear Cookies Pop UP", test);
+					WebElement closeCookie = driver.findElement(By.xpath("//*[@id=\"btn-cookie-allow\"]"));
+					closeCookie.click();
+				//}
+				
+			}
+			
 		}
 
 		public void endBrowserSession () throws IOException {
@@ -627,6 +642,7 @@ public class JDTests extends BaseTest {
 			myWorkBook.write(os);
 			os.close();
 			myWorkBook.close();
+		}
 
 	}
 

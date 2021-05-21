@@ -609,13 +609,12 @@ public class Action {
 	 * @return
 	 */
 	public<T> boolean waitUntilElementIsDisplayed(T elementAttr, int secs) throws InterruptedException {
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		boolean flag = isDisplayed(elementAttr);		
-		int count = 0;
 		secs = secs/1000;
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		boolean flag = isDisplayed(elementAttr);		
+		int count = 0;		
 		while (flag == false & count < secs){
-//			refresh();			
-			Thread.sleep(1000);
+//			refresh();						
 			flag = isDisplayed(elementAttr);
 			count++;
 		}

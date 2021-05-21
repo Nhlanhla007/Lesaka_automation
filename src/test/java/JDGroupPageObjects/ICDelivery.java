@@ -128,7 +128,8 @@ public class ICDelivery {
     @FindBy(xpath = "//span[contains(text(),'New Address')]")
     WebElement newAddressButton;
     
-    @FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
+   // @FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
+    @FindBy(xpath = "//*[@class=\"modal-footer\"]/button[1]")    
     WebElement popUpSave;
     
 //    @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
