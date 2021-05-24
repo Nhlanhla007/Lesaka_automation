@@ -42,18 +42,11 @@ import utils.*;
 
 public class JDTests extends BaseTest {
 	ExtentReportJD reportJD;
-
 	public String currentSuite;
 	public String currentKeyWord;
 	HashMap<String, Integer> occCount = null;
 	int testcaseID;
 	JDGKeyManager km=null;
-	
-	@BeforeClass(alwaysRun = true)
-	public void setUp() {
-
-	}
-	// Login to Opera Cloud
 
 	@Test
 	public void suiteExecutor() throws Exception {
@@ -74,7 +67,6 @@ public class JDTests extends BaseTest {
 			}
 		}
 	}
-
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws Exception {
 
@@ -135,7 +127,7 @@ public class JDTests extends BaseTest {
 
 			}
 
-		}
+	}
 	public void startBrowserSession () {
 			driver = null;
 			if (driver == null) {
@@ -174,46 +166,6 @@ public class JDTests extends BaseTest {
 	public void endBrowserSession () throws IOException {
 		driver.close();
 	}
-
-	public void writeToSingleSheet (File filePath, String sheetToUpdate) throws IOException, InvalidFormatException
-	{
-		FileOutputStream outputStream = new FileOutputStream(filePath);
-		FileInputStream fis = new FileInputStream(filePath);
-		XSSFWorkbook workbook2 = new XSSFWorkbook(fis);
-		XSSFWorkbook workbook = new XSSFWorkbook();
-		XSSFSheet sheet;
-		for (int i = 0; i < dataMap2.size(); i++) {
-			Object[] keys = dataMap2.keySet().toArray();
-			if (!keys[i].toString().toLowerCase().equals("suits") && !keys[i].toString().toLowerCase().equals("ic")) {
-				if ((sheetToUpdate + "++").equals(keys[i].toString())) {
-					sheet = workbook2.createSheet(sheetToUpdate);
-				} else {
-					sheet = workbook.getSheet(keys[i].toString());
-				}
-				int numCol = dataMap2.get(keys[i]).size();
-				Object[] colArray = dataMap2.get(keys[i]).keySet().toArray();
-				int rowNum = dataMap2.get(keys[i]).get(colArray[0]).size();
-				for (int j = 0; j <= rowNum; j++) {
-					Row row = sheet.createRow(j);
-					if (j == 0) {
-						for (int z = 0; z < numCol; z++) {
-							Cell cell = row.createCell(z);
-							cell.setCellValue(colArray[z].toString());
-						}
-					} else {
-
-						for (int z = 0; z < numCol; z++) {
-							Cell cell = row.createCell(z);
-							cell.setCellValue((String) dataMap2.get(keys[i]).get(colArray[z]).get(j - 1));
-						}
-					}
-				}
-			}
-		}
-		workbook.write(outputStream);
-		workbook.close();
-	}
-
 	public void writeToExcel (File filePath) throws IOException {
 			XSSFWorkbook myWorkBook = new XSSFWorkbook();
 			int numberSheets = dataMap2.size();
@@ -244,14 +196,8 @@ public class JDTests extends BaseTest {
 			myWorkBook.close();
 
 	}
-
 	public File createFile() throws IOException {
 		File myObj = new File(System.getProperty("user.dir") + "\\reports\\Datasheet.xlsx");
 		return myObj;
 	}
-
-
-
-
-
 }
