@@ -91,9 +91,13 @@ public class Ic_Products {
 	 */
 
 	public void clickNext(ExtentTest test) throws Exception {
-		action.mouseover(ic_ClickNext, "scroll to element");					
+		action.mouseover(ic_ClickNext, "scroll to element");
 			action.explicitWait(10000);
-			action.click(ic_ClickNext, "Clicked Next", test);			
+			action.click(ic_ClickNext, "Clicked Next", test);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.info(e.getMessage());
+		}
 	}
 
 	/**
@@ -296,7 +300,7 @@ public class Ic_Products {
 
 	void addToCartFromProdDetailsPage(WebElement productLink,String waitTimeInSeconds,int quanity,ExtentTest test) throws Exception {
 		if(quanity == 1) {
-			action.click(productLink, "Navigate to product listing page", test);
+			action.click(productLink, "Navigate to product Details page", test);
 		}
 		//click on product name and enter listing page
 		//confirm that page has loaded

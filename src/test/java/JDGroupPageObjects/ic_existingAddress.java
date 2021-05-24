@@ -32,11 +32,14 @@ public class ic_existingAddress {
     private WebElement ic_continuePayment;
     
     public void AddressThere(ExtentTest test) throws IOException, InterruptedException{
-    	
-    	action.explicitWait(5000);                 
+
+    	action.explicitWait(8000);
+
     	action.click(ic_Deliver, "The address is already", test);
-    	action.explicitWait(5000); 
+    	action.explicitWait(8000);
+
     	action.click(ic_continuePayment, "continue Payment", test);
+    	action.explicitWait(5000);
     }
 
 }
