@@ -94,10 +94,6 @@ public class Ic_Products {
 		action.mouseover(ic_ClickNext, "scroll to element");
 			action.explicitWait(10000);
 			action.click(ic_ClickNext, "Clicked Next", test);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.info(e.getMessage());
-		}
 	}
 
 	/**

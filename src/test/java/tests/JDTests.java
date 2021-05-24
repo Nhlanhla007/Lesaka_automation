@@ -1,13 +1,13 @@
 package tests;
 
 import java.io.*;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
+import EVSPageOblects.EVS_Login;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SapRSI;
 import base.TestCaseBase;
@@ -21,9 +21,7 @@ import ic_MagentoPageObjects.Magento_UserInfoVerification;
 import ic_MagentoPageObjects.MagentoRegisterNewUser;
 import ic_MagentoPageObjects.admin_UserUpdate;
 import ic_MagentoPageObjects.ic_Magento_Login;
-import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
-import ic_MagentoPageObjects.ic_Magento_Login;
 import com.aventstack.extentreports.ExtentTest;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -31,14 +29,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
 import JDGroupPageObjects.*;
-import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
 import utils.*;
 
@@ -136,7 +132,7 @@ public class JDTests extends BaseTest {
 			}
 
 		}
-	}
+
 
 
 
@@ -144,6 +140,7 @@ public class JDTests extends BaseTest {
 
 		public void runKeyWord (String actionToRun, ExtentTest test) throws Exception {
 			String moduleToRun = actionToRun;
+			//IC classes below
 			IConnection ic = new IConnection(driver, dataTable2);
 			Magento_UserInfoVerification Magentoverify = new Magento_UserInfoVerification(driver, dataTable2);
 			ic_PaymentOption Payopt = new ic_PaymentOption(driver, dataTable2);
@@ -216,6 +213,8 @@ public class JDTests extends BaseTest {
 			IC_Parallel_login parrallel_ic_Login = new IC_Parallel_login(driver, dataTable2);
 			SapRSI sapRSI = new SapRSI(driver, dataTable2);
 			ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
+			//evs classes below
+			EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
 			ExtentTest test1 = test.createNode(moduleToRun);
 			int rowNumber = -1;
 			if (dataMap2.containsKey(currentKeyWord + "++")) {
@@ -496,6 +495,10 @@ public class JDTests extends BaseTest {
 				case "NavigateToWishlist_VerifyLoginPageAppear":
 					NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
 					break;
+				case "evs_Login":
+					evs_Login.Login(test1);
+					break;
+
 				
 
 		}
@@ -513,8 +516,6 @@ public class JDTests extends BaseTest {
 			}
 			return rowNumber;
 		}
-		return rowNumber;
-	}
 
 
 		public void startBrowserSession () {
@@ -533,34 +534,32 @@ public class JDTests extends BaseTest {
 				driver = TestCaseBase.initializeTestBaseSetup(browserName);
 				driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 
-				navigateURL = System.getProperty("URL");
-				if (navigateURL == null) {
-					logger.info("System property returned Null URL. So getting data from Config file");
-					navigateURL = ConfigFileReader.getPropertyVal("URL");
+//				navigateURL = System.getProperty("EVS_URL");
+//				if (navigateURL == null) {
+//					logger.info("System property returned Null URL. So getting data from Config file");
+//					navigateURL = ConfigFileReader.getPropertyVal("URL");
+//				}
+				navigateURL = ConfigFileReader.getPropertyVal("URL");
+
+				logger.info("Navigate to URL");
+
+				driver.navigate().to(navigateURL);
+				driver.manage().window().maximize();
+				driver.navigate().refresh();
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				navigateURL = ConfigFileReader.getPropertyVal("URL");
-			}
+				logger.info("Browser name is " + browserName);
 
-				navigateURL = ConfigFileReader.getPropertyVal("URL");
+				logger.info("App URL: " + navigateURL);
+				Values.app = navigateURL;
+				Values.browser = browserName;
 			}
-			logger.info("Navigate to URL");
-			Report.info("Navigating to URL: "+navigateURL);
+	}
 
-			driver.navigate().to(navigateURL);
-			driver.manage().window().maximize();
-			driver.navigate().refresh();
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			logger.info("Browser name is " + browserName);
-
-			logger.info("App URL: " + navigateURL);
-			Values.app = navigateURL;
-			Values.browser = browserName;
-		}
 
 		public void endBrowserSession () throws IOException {
 			driver.close();
