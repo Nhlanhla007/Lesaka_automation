@@ -47,7 +47,7 @@ public class Action {
 	public final int WAIT_IN_SECONDS_MIN = 2;
 	public final int WAIT_IN_SECONDS_MED = 4;
 	public final int WAIT_IN_SECONDS_MAX = 6;
-	ConfigFileReader configFileReader = new ConfigFileReader();
+
 
 	WebElement newElement = null;
 
@@ -510,7 +510,7 @@ public class Action {
 				String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
 				String screenShot=GenerateScreenShot.getScreenShot(driver);
 				node.fail("Element is not on next page"+node.addScreenCaptureFromPath(screenShot));
-				configFileReader.setPropertyVal("sequence","false");
+
 			}
 		}catch(Exception e){
 			node.fail("issue with getting element"+e.getMessage());
@@ -677,7 +677,7 @@ public class Action {
 			}
 		}catch(Throwable e){
 //			e.printStackTrace();
-			configFileReader.setPropertyVal("sequence","false");
+
 
 		}
 	}
