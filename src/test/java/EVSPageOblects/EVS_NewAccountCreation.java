@@ -81,6 +81,7 @@ public class EVS_NewAccountCreation {
 	
 	@FindBy(xpath = "//input[@id='password']")
 	WebElement User_Password;
+	
 	@FindBy(xpath = "//input[@id='password-confirmation']")
 	WebElement User_ConfirmPassword;
 	
@@ -94,10 +95,9 @@ public class EVS_NewAccountCreation {
 	@FindBy(id = "identity_number-error")
 	WebElement identityNumberError;
 	
-	@FindBy(xpath = "//header/div[3]/div[2]/div[1]/div[1]/div[1]")
+	@FindBy(xpath = "//body/div[2]/main[1]/div[1]/div[2]/div[1]/div[1]/div[1]")
 	WebElement existingAccountError;
 
-	//Sourav TA17
     @FindBy(xpath = "//*[@id='account-nav']/ul[@class='nav items']/li/a[contains(text(),'Account Information')]")
     WebElement Account_info_option;
    
@@ -116,6 +116,7 @@ public class EVS_NewAccountCreation {
    
     @FindBy(xpath = "//*[@class='field choice']/label[@for='change-email']")
     WebElement Change_Emailcheckbox;
+    
     @FindBy(xpath = "//input[@id='email']")
     WebElement Email;
     @FindBy(xpath = "//input[@id='identity_number']")
