@@ -28,10 +28,12 @@ import java.util.HashMap;
 public class ic_NewAccountCreation {
 	WebDriver driver;
 	Action action;
+	DataTable2 dataTable2;
 	public ic_NewAccountCreation(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
+		this.dataTable2=dataTable2;
 		
 	}
 	
@@ -151,26 +153,26 @@ public class ic_NewAccountCreation {
 	}
 
 	public  void accountCreation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
-		String navigateURL = ConfigFileReader.getPropertyVal("URL");
-		action.navigateToURL(navigateURL);
+		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
+		action.navigateToURL(url);
 		action.explicitWait(3000);
-		String firstName = input.get("firstName").get(rowNumber);
-		String lastName = input.get("lastName").get(rowNumber);
-		String emailAddress = input.get("emailAddress").get(rowNumber);
-		String password = input.get("password").get(rowNumber);
-		String confirmPassword = input.get("passwordConfirmation").get(rowNumber);
-		String identityType = input.get("identityType").get(rowNumber);
-		String identityNumber = input.get("identityNumber/passport").get(rowNumber);
-		String selectNewsLetter = input.get("newsletter").get(rowNumber);
-		String taxVatNumbe = input.get("vatNumber").get(rowNumber);
-		String telephone = input.get("Telephone").get(rowNumber);
+		String firstName = dataTable2.getValueOnCurrentModule("firstName");
+		String lastName = dataTable2.getValueOnCurrentModule("lastName");
+		String emailAddress = dataTable2.getValueOnCurrentModule("emailAddress");
+		String password = dataTable2.getValueOnCurrentModule("password");
+		String confirmPassword = dataTable2.getValueOnCurrentModule("passwordConfirmation");
+		String identityType = dataTable2.getValueOnCurrentModule("identityType");
+		String identityNumber = dataTable2.getValueOnCurrentModule("identityNumber/passport");
+		String selectNewsLetter = dataTable2.getValueOnCurrentModule("newsletter");
+		String taxVatNumbe = dataTable2.getValueOnCurrentModule("vatNumber");
+		String telephone = dataTable2.getValueOnCurrentModule("Telephone");
 		//Added flag for VAT number status check TA31
-		String tavVatNumberFlagStatus = input.get("vatNumberFlag").get(rowNumber);
-		String passwordValidation = input.get("validatePassword").get(rowNumber);
-		String saIDvalidateIncorrectID = input.get("validateIncorrectID").get(rowNumber);
-		String saIDvalidateIDWithLessDigits = input.get("validateIDWithLessDigits").get(rowNumber);
-		String saIDvalidateIDWithMoreDigits = input.get("validateIDWithMoreDigits").get(rowNumber);
-		String existingAccountValidation =input.get("validateExistingAccount").get(rowNumber);		
+		String tavVatNumberFlagStatus = dataTable2.getValueOnCurrentModule("vatNumberFlag");
+		String passwordValidation = dataTable2.getValueOnCurrentModule("validatePassword");
+		String saIDvalidateIncorrectID = dataTable2.getValueOnCurrentModule("validateIncorrectID");
+		String saIDvalidateIDWithLessDigits = dataTable2.getValueOnCurrentModule("validateIDWithLessDigits");
+		String saIDvalidateIDWithMoreDigits = dataTable2.getValueOnCurrentModule("validateIDWithMoreDigits");
+		String existingAccountValidation =dataTable2.getValueOnCurrentModule("validateExistingAccount");
 
 //		try {
 			ic_NavigateToCreateAccount(test);

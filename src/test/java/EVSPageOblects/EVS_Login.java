@@ -54,15 +54,16 @@ public class EVS_Login {
 		
 		//vv
 		public List<String> Login(ExtentTest test) throws IOException{
-			driver.navigate().to(ConfigFileReader.getPropertyVal("EVS_URL"));
+			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
+			String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
+			String Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
+			driver.navigate().to(url);
 //			action.waitForPageLoaded(10);
 			action.explicitWait(10000);
 			action.click(ic_myAccountButton,"ic_myAccountButton",test);
 			action.explicitWait(3000);
 			action.click(ic_myAccountlist,"ic_myAccountlist",test);
 			List<String> userCred = new ArrayList<>();
-			String Username =dataTable2.getValueOnCurrentModule("Username");
-			String Password =dataTable2.getValueOnCurrentModule("Password");
 			userCred.add(Username);
 			userCred.add(Password);
 			action.writeText(ic_Username, Username, "Username field", test);

@@ -36,7 +36,8 @@ public class ic_forgotPasswordLink {
 	WebElement ic_forgotPassword;
 	
 	 public void forgotPasswordLink(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-		 driver.navigate().to(ConfigFileReader.getPropertyVal("URL"));
+		 String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("ic_login","loginDetails",0),"url");
+		 driver.navigate().to(url);
 
 			action.explicitWait(10000);
 			action.click(ic_myAccountButton, "click on my account", test);

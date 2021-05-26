@@ -397,7 +397,7 @@ public class dataproviderTest extends BaseTest {
             navigateURL = ConfigFileReader.getPropertyVal("URL");
         }
         logger.info("Navigate to URL");
-        driver.navigate().to(navigateURL);
+//        driver.navigate().to(navigateURL);
         driver.manage().window().maximize();
         driver.navigate().refresh();
         try {

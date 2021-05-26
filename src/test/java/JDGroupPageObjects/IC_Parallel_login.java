@@ -77,31 +77,20 @@ public class IC_Parallel_login {
 	}
 
 	public void login(Action action, ExtentTest test) throws IOException {
-
-		ConfigFileReader configFileReader = new ConfigFileReader();
-
-		String navigateURL = ConfigFileReader.getPropertyVal("URL");
-
-		action.navigateToURL(navigateURL);
-
+		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
+		action.navigateToURL(url);
 		action.waitForElementClickable(ic_myAccountButton, 5);
 		action.click(ic_myAccountButton, "My Account", test);
-
 		action.waitForElementClickable(LoginBtn, 5);
 		action.click(LoginBtn, "Login In", test);
-
 		action.waitForElementVisibility(ic_email, 5);
 		action.writeText(ic_email, email, "email field", test);
-
 		action.waitForElementVisibility(ic_Password, 5);
 		action.writeText(ic_Password, Password, "Password field", test);
-
 		action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
 		action.explicitWait(10000);
-
 		action.waitForElementClickable(ic_myAccountButton, 10);
 		action.click(ic_myAccountButton, "Click My Account Button", test);
-
 		String expMsg = "Hello, " + FirstName + "!";
 		action.waitForElementVisibility(ic_HelloMsg, 10);
 		String wlc_msg = action.getText(ic_HelloMsg, "Welcome Messsage for the User",test);

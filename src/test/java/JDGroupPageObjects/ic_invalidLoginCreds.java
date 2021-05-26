@@ -55,20 +55,23 @@ public class ic_invalidLoginCreds {
 			//*[@id="email-error"]
 			
 			public List<String> invalidLogin_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-				driver.navigate().to(ConfigFileReader.getPropertyVal("URL"));
+				String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
+				String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
+				String Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
+				driver.navigate().to(url);
 //				action.waitForPageLoaded(10);
 				action.explicitWait(10000);
-				ic_myAccountButton.click();
+//				ic_myAccountButton.click();
+				action.click(ic_myAccountButton,"ic_myAccountButton",test);
 				action.explicitWait(3000);
-				ic_myAccountlist.click();
+//				ic_myAccountlist.click();
+				action.click(ic_myAccountlist,"ic_myAccountlist",test);
 				
 				List<String> userCred = new ArrayList<>();
 				String UsernameFLag = dataTable2.getValueOnCurrentModule("UsernameFlag");
-				String Username =dataTable2.getValueOnCurrentModule("Username");
 				//String Username =dataTable2.getValueOnOtherModule("ic_login", "Username", 0);
 				
 				String PasswordFLag = dataTable2.getValueOnCurrentModule("PasswordFlag");
-				String Password =dataTable2.getValueOnCurrentModule("Password");
 				//String Password =dataTable2.getValueOnOtherModule("ic_login", "Password", 0);
 				userCred.add(Username);
 				userCred.add(Password);
@@ -82,7 +85,8 @@ public class ic_invalidLoginCreds {
 				
 				} 
 				if(PasswordFLag.equalsIgnoreCase("Yes")){
-				action.CompareResult("Login with invalid creds", "Your account sign-in was incorrect. Please try again.", ic_InvalidCreds.getText(), test);
+					String errorpopup=action.getText(ic_InvalidCreds,"ic_InvalidCreds",test);
+				action.CompareResult("Login with invalid creds", "Your account sign-in was incorrect. Please try again.", errorpopup, test);
 				}
 					userCreds(userCred);
 					

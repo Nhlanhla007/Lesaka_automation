@@ -57,7 +57,11 @@ public class ic_Login {
 		
 		//vv
 		public List<String> Login_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-			driver.navigate().to(ConfigFileReader.getPropertyVal("URL"));
+
+			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
+			String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
+			String Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
+			driver.navigate().to(url);
 //			action.waitForPageLoaded(10);
 			action.explicitWait(10000);
 			ic_myAccountButton.click();
@@ -65,8 +69,7 @@ public class ic_Login {
 			ic_myAccountlist.click();
 			
 			List<String> userCred = new ArrayList<>();
-			String Username =dataTable2.getValueOnCurrentModule("Username");
-			String Password =dataTable2.getValueOnCurrentModule("Password");
+
 			userCred.add(Username);
 			userCred.add(Password);
 			action.writeText(ic_Username, Username, "Username field", test);

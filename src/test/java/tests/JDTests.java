@@ -145,7 +145,7 @@ public class JDTests extends BaseTest {
 				driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
 				logger.info("Navigate to URL");
-				driver.navigate().to(navigateURL);
+//				driver.navigate().to(navigateURL);
 				driver.manage().window().maximize();
 				driver.navigate().refresh();
 				try {

@@ -106,4 +106,15 @@ public class DataTable2 {
         }
         return dataMap2.get(SheetName+"++").get(columnValueToGet).get(finalrow);
     }
+    public String getCurrentModule(){
+        return currentModule;
+    }
+
+    public int getCurrentOccCount(){
+        return occCount;
+    }
+    public int getCurrentTestCaseID(){
+        return testCaseID;
+    }
+
 }

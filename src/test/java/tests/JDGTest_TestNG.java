@@ -92,6 +92,9 @@ public class JDGTest_TestNG<moduleName> {
                 throw new Exception();
             }
         } catch (Exception e) {
+            String screenShot = GenerateScreenShot.getScreenShot(driver);
+            ExtentTest node = test.createNode("Exception");
+            node.fail(e.getMessage() + node.addScreenCaptureFromPath(screenShot));
             endBrowserSession();
             e.printStackTrace();
             throw e;
@@ -162,7 +165,7 @@ public class JDGTest_TestNG<moduleName> {
             navigateURL = ConfigFileReader.getPropertyVal("URL");
         }
         logger.info("Navigate to URL");
-        driver.navigate().to(navigateURL);
+//        driver.navigate().to(navigateURL);
         driver.manage().window().maximize();
         driver.navigate().refresh();
         try {

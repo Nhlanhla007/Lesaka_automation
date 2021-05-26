@@ -18,13 +18,15 @@ import utils.DataTable2;
 
 public class ic_Magento_Login {
 
-		WebDriver driver;
-		Action action;
+	WebDriver driver;
+	Action action;
+	DataTable2 dataTable2;
 		
 		public ic_Magento_Login(WebDriver driver, DataTable2 dataTable2) {
 			this.driver = driver;
 			PageFactory.initElements(driver, this);
 			action = new Action(driver);
+			this.dataTable2=dataTable2;
 			
 		}
 		
@@ -42,12 +44,15 @@ public class ic_Magento_Login {
 		
 		//vv
 		public void Login_magento(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-			String Username = input.get("Username").get(rowNumber);
-			String Password = input.get("Password").get(rowNumber);
+			String Username = "";
+			String Password = "";
 			LoginToMagento(test,Username,Password);
 	     }
 		public void LoginToMagento(ExtentTest test,String Username, String Password) throws IOException{
-			driver.navigate().to(ConfigFileReader.getPropertyVal("MagentoURL"));
+			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
+			Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
+			Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
+			driver.navigate().to(url);
 			action.waitForPageLoaded(10);
 			String ResPage = driver.getTitle();
 			if(ResPage.equalsIgnoreCase("Magento Admin")){
