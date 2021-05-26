@@ -61,14 +61,13 @@ public class testTestClass<moduleName> {
     }
     //Start Tests-----------------------------------------------------------------------
     
-    @Test(testName ="30_Create_Sales_Order_Guest_User_Payment_Cash_Deposit" )
-    public void Create_Sales_Order_Guest_User_Payment_Cash_Deposit() throws Exception {
-        String testMethodName="Create_Sales_Order_Guest_User_Payment_Cash_Deposit";
+    @Test(testName ="17_Updating_customer_last_name_on_IC" )
+    public void Updating_customer_last_name_on_IC() throws Exception {
+        String testMethodName="Updating_customer_last_name_on_IC";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
     }
-   
     //End Tests-------------------------------------------------------------------------
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {

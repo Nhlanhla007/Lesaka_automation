@@ -2,6 +2,7 @@ package ic_MagentoPageObjects;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -77,7 +78,7 @@ public class MagentoRegisterNewUser {
 		//Navigate to all customer
 		navigateToCustomer(test);
 
-		action.clickEle(Add_Customer, "Add new Customer", test);
+		action.click(Add_Customer, "Add new Customer", test);
 		boolean resAccountinfo = action.elementExists(Account_Information, waitforelement);
 		if(resAccountinfo==true){
 			action.dropDownselectbyvisibletext(AssociatedWebsite_ele, AssociatedWebsite, "Website", test);
@@ -94,7 +95,7 @@ public class MagentoRegisterNewUser {
 			}
 
 
-			action.clickEle(Save_Customer, "Save_Customer", test);
+			action.click(Save_Customer, "Save_Customer", test);
 			boolean resSavedcustomer = action.elementExists(Save_Customer_success, waitforelement);
 			if(resSavedcustomer==true){
 				action.CompareResult("verify New customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
@@ -103,18 +104,21 @@ public class MagentoRegisterNewUser {
 				RetriveCust.searchForCustomer(Email, test);
 				action.waitExplicit(waitforelement);
 				RetriveCust.tableData(Email, AssociatedWebsite, test);
-				action.clickEle(Account_Information, "Account Information", test);
+				action.click(Account_Information, "Account Information", test);
 				if(action.waitUntilElementIsDisplayed(BPnumber, waitforelement)){
-					resBPnumber = FetchDataFromCustInfo_MagentoBackend(BPnumber, "BP number", waitforelement, 5, test);
+					resBPnumber = FetchDataFromCustInfo_MagentoBackend(BPnumber, "BP number", waitforelement, 15, test);
 					 input.get("BPnumber").set(rowNumber,resBPnumber);
 				}
 
-				if(resBPnumber!=null){
-					action.scrollToElement(BPnumber, "BP Number");
-					action.CompareResult("verify BP number is  fetched : "+resBPnumber, String.valueOf("True"), String.valueOf("True"), test);
-				}else{
-					action.CompareResult("verify BP number is fetched : "+resBPnumber, String.valueOf("True"), String.valueOf("False"), test);
-				}
+				/*
+				 * if(resBPnumber!=null | resBPnumber!="" | !resBPnumber.isEmpty() ){
+				 * action.scrollToElement(BPnumber, "BP Number");
+				 * action.CompareResult("verify BP number is  fetched : "+resBPnumber,
+				 * String.valueOf("True"), String.valueOf("True"), test); }else{
+				 * action.scrollToElement(BPnumber, "BP Number");
+				 * action.CompareResult("verify BP number is fetched : "+resBPnumber,
+				 * String.valueOf("True"), String.valueOf("False"), test); }
+				 */
 
 			}else{
 				action.CompareResult("verify New customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
@@ -122,25 +126,39 @@ public class MagentoRegisterNewUser {
 		}
 	}
 
-	public String FetchDataFromCustInfo_MagentoBackend(WebElement element,String elename,int TimetoLoadpage,int TotalTrycount,ExtentTest test) throws IOException{
+	public String FetchDataFromCustInfo_MagentoBackend(WebElement element,String elename,int TimetoLoadpage,int TimeOutinSecond,ExtentTest test) throws Exception {
 		int trycount=1;
 		String resData="";
-		while(trycount<=TotalTrycount & resData.length()<1){
+		long startTime = System.currentTimeMillis(); // ... long finish = System.currentTimeMillis(); long timeElapsed = finish - start
+		Instant start = Instant.now();
+		int elapsedTime = 0;
+		System.out.println(".....................................");
+		System.out.println("elementName: "+elename);
+		System.out.println(".....................................");
+		while(elapsedTime<=TimeOutinSecond & resData.length()<1){
 			action.refresh();
-			action.explicitWait(2000);
+			action.waitForPageLoaded(TimetoLoadpage);
 			action.click(Account_Information, "Account_Information", test);
 			if(action.elementExists(element, TimetoLoadpage)==true){
 				resData = action.getAttribute(element, "value");
 			}
-
-			trycount++;
+			
+//			trycount++;
+			Thread.sleep(TimetoLoadpage * 1000);
+			long endTime = System.currentTimeMillis();
+			long elapsedTimeInMils = endTime-startTime;
+			elapsedTime = ((int) elapsedTimeInMils)/1000;
+			System.out.println("elapsedTime: "+elapsedTime);
+//			Instant finish = Instant.now();
+//			long timeElapsed = Duration.between(start,finish).toSeconds();
 		}
-		if(!resData.isEmpty() ||resData!=null){
-
-			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "True", test);
+		if(resData.isEmpty() | resData==null | resData == ""){
+			action.scrollElemetnToCenterOfView(element);
+			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "False", test);			
 			return resData;
 		}else{
-			action.CompareResult("Verify "+elename+" is not fetched sucessfully :"+resData,"True", "False", test);
+			action.scrollElemetnToCenterOfView(element);
+			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "True", test);
 			return resData;
 		}
 	}

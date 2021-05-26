@@ -79,8 +79,9 @@ public class ICUpdateCustomer {
 	    @FindBy(xpath="//*[@id=\"password-confirmation\"]")
 	    private WebElement passConfirmation;
 	    
-	    @FindBy(xpath="/html/body/div[1]/header/div[3]/div[2]/div/div/div")
-	    private WebElement successSaved;
+	   // @FindBy(xpath="/html/body/div[1]/header/div[3]/div[2]/div/div/div")
+        @FindBy(xpath="//div[contains(text(),'You saved the account information.')]")
+        private WebElement successSaved;
 	    
 	    //still need to add the xpath
 	  //*[@id="account-nav"]/ul/li[5]/a

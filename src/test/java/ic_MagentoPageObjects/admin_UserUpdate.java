@@ -145,7 +145,10 @@ public class admin_UserUpdate {
 	    		action.click(admin_SaveCustomerBtn, "Save", test);
 	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, ""), test);
 	    		
+	    		if(action.waitUntilElementIsDisplayed(admin_EditBtn, 10000)) {
+	    			action.explicitWait(4000);
 	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
+	    		}
 	    		action.click(admin_AccountInfoCustomer, "clicking to account infor", test);
 	    		
 	    		String firstNameTextSaved = action.getAttribute(admin_firstUpdated, "value");

@@ -643,9 +643,7 @@ public class JDTests extends BaseTest {
 			os.close();
 			myWorkBook.close();
 		}
-
-	}
-
+	
 	public File createFile() throws IOException {
 		File myObj = new File(System.getProperty("user.dir") + "\\reports\\Datasheet.xlsx");
 		return myObj;

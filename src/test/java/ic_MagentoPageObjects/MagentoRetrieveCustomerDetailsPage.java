@@ -173,7 +173,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 			//confirmRows(customerTableRecords, test);
 			if (customerTableRecords.size() >= 1) {
 				action.javaScriptClick(clickElement, "Customer Details", test);
-				action.explicitWait(50000);
+				action.explicitWait(15000);
 				action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
 			} else {
 				action.checkIfPageIsLoadedByURL("/customer/index/edit/", "Customer not found", test);

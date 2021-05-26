@@ -7,7 +7,7 @@
       <classes>
          <class name="tests.testTestClass">
             <methods>
-               <include name="Create_Sales_Order_Guest_User_Payment_Cash_Deposit"/>
+               <include name="Updating_customer_last_name_on_IC"/>
             </methods>
          </class>
       </classes>
