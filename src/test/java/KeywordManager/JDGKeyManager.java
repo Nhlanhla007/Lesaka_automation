@@ -10,6 +10,7 @@ import emailverification.ICGiftCardVerification;
 import emailverification.ICWishlistverification;
 import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ic_ResetPasswordEmailLink;
+import evs_MagentoPageObjects.Evs_MagentoOrderSAPnumber;
 import ic_MagentoPageObjects.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -113,6 +114,7 @@ public class JDGKeyManager {
         ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
+        Evs_MagentoOrderSAPnumber evs_magentoSAPNumber = new Evs_MagentoOrderSAPnumber(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -395,6 +397,9 @@ public class JDGKeyManager {
                 break;
             case "evs_Login":
                 evs_Login.Login(test1);
+                break;
+            case "evs_GenerateOrderSAPnumber":
+            	evs_magentoSAPNumber.GenerateOrderSAPnumber(dataMap2.get(moduleToRun+ "++"), test1, rowNumber);
                 break;
 
         }
