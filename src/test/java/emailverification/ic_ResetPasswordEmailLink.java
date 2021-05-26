@@ -46,7 +46,7 @@ public class ic_ResetPasswordEmailLink {
 //		ele
 		action.mouseover(resetLink,"Move to the link");
 //		action.click(resetLink,"Click the link on emails", test);
-		String passLink = action.getText(resetLink,"get the link");
+		String passLink = action.getText(resetLink,"get the link",test);
 		dataTable2.setValueOnCurrentModule("PasswordResetlink",passLink);
 		action.explicitWait(10000);
 	}

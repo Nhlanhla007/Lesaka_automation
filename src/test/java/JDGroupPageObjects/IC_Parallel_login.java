@@ -104,7 +104,7 @@ public class IC_Parallel_login {
 
 		String expMsg = "Hello, " + FirstName + "!";
 		action.waitForElementVisibility(ic_HelloMsg, 10);
-		String wlc_msg = action.getText(ic_HelloMsg, "Welcome Messsage for the User");
+		String wlc_msg = action.getText(ic_HelloMsg, "Welcome Messsage for the User",test);
 		action.CompareResult("Signup Validation", expMsg, wlc_msg, test);
 
 	}

@@ -38,13 +38,13 @@ public class IC_RetriveOrderID {
         action.explicitWait(10000);
         if(typeOfUser.equalsIgnoreCase("Registered")) {
         	action.isElementOnNextPage(OderIDRegisteredUser, (long) 11,test);
-            Oderid = action.getText(OderIDRegisteredUser, "Order ID");
+            Oderid = action.getText(OderIDRegisteredUser, "Order ID",test);
             Oderid = Oderid.replace("Your order # is: ","").replace(".","");
             dataTable2.setValueOnCurrentModule ("orderID",Oderid);
             dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);	
         }else if(typeOfUser.equalsIgnoreCase("Guest")) {
         	action.isElementOnNextPage(OderIDGuestUser, (long) 11,test);
-            Oderid = action.getText(OderIDGuestUser, "Order ID");
+            Oderid = action.getText(OderIDGuestUser, "Order ID",test);
             Oderid = Oderid.replace("Your order # is: ","").replace(".","");
             dataTable2.setValueOnCurrentModule ("orderID",Oderid);
             dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);

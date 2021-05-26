@@ -101,7 +101,7 @@ public class ic_GiftCardPurchase {
 		action.click(ic_Cart, "cart clicked", test);
 		
 		//GetCartTotal and set to ProductSearch cart total
-		String cartTots = action.getText(icSubtotal, "IC SubTotal");
+		String cartTots = action.getText(icSubtotal, "IC SubTotal",test);
 		cartTots= cartTots.replace("R", "").replace(",", "").replace(".00", "");
 		if(action.waitUntilElementIsDisplayed(icSubtotal, 15000)) {
 			action.explicitWait(5000);

@@ -143,7 +143,7 @@ public class admin_UserUpdate {
 	    		adminSheets.get(0).get("adminFirstName_output").set(sheetRow1, firstNameTextUpdated);
 	    		
 	    		action.click(admin_SaveCustomerBtn, "Save", test);
-	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, ""), test);
+	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, "",test), test);
 	    		
 	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
 	    		action.click(admin_AccountInfoCustomer, "clicking to account infor", test);
@@ -164,7 +164,7 @@ public class admin_UserUpdate {
 	    		adminSheets.get(0).get("adminLastName_output").set(sheetRow1, lastNameTextUpdated);
 	    		
 	    		action.click(admin_SaveCustomerBtn, "Save", test);
-	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, ""), test);
+	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, "",test), test);
 	    		
 	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
 	    		action.explicitWait(5000);
@@ -185,7 +185,7 @@ public class admin_UserUpdate {
 	    		adminSheets.get(0).get("adminTaxVat_output").set(sheetRow1, taxVatTextUpdated);
 	    		
 	    		action.click(admin_SaveCustomerBtn, "Save", test);
-	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, ""), test);
+	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, "",test), test);
 	    		
 	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
 	    		action.explicitWait(5000);
@@ -205,7 +205,7 @@ public class admin_UserUpdate {
 	    		adminSheets.get(0).get("adminEmail_output").set(sheetRow1, emailTextUpdated);
 	    		
 	    		action.click(admin_SaveCustomerBtn, "Save", test);	
-	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, ""), test);
+	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, "",test), test);
 	    		
 	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
 	    		action.explicitWait(5000);

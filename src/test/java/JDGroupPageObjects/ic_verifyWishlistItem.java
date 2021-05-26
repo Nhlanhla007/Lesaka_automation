@@ -84,7 +84,7 @@ public class ic_verifyWishlistItem {
 				driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);  
 				boolean isPresent = driver.findElements(By.xpath("//form[@id='wishlist-view-form']//span[contains(text(),'You have no items in your wish list.')]") ).size() > 0;
 				if(isPresent){
-					 statusMsg = action.getText(mywishlist_statusMsg, "Wishlist empty message");
+					 statusMsg = action.getText(mywishlist_statusMsg, "Wishlist empty message",test);
 				
 					if(statusMsg.equalsIgnoreCase(expmsg)){
 						action.CompareResult("Status of wishlist ", expmsg, statusMsg, test);

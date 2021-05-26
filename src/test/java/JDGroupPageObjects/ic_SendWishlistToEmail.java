@@ -45,14 +45,14 @@ public class ic_SendWishlistToEmail {
 		String EmailID = dataTable2.getValueOnCurrentModule("Email_To_Share");
 		action.click(ShareWishlist, "Share Wish list", test);
 		if(action.elementExists(PageTittleWishlist_sharing, waitTime)){
-			action.CompareResult("Page loaded ", "Wish List Sharing", action.getText(PageTittleWishlist_sharing, "Page Tittle Wishlist sharing").trim(), test);
+			action.CompareResult("Page loaded ", "Wish List Sharing", action.getText(PageTittleWishlist_sharing, "Page Tittle Wishlist sharing",test).trim(), test);
 			action.writeText(EmailID_feild, EmailID, "EmailID feild", test);
 			action.click(ShareWishlist_feild, "ShareWishlist_feild", test);
 			action.explicitWait(waitTime);
 			if(action.elementExists(Hdr_Txt, waitTime)){
-				action.CompareResult("Page loaded ", "Your wish list has been shared.", action.getText(Hdr_Txt, "Your wish list has been shared").trim(), test);
+				action.CompareResult("Page loaded ", "Your wish list has been shared.", action.getText(Hdr_Txt, "Your wish list has been shared",test).trim(), test);
 			}else{
-				action.CompareResult("Page loaded ", "Your wish list has been shared.", action.getText(Hdr_Txt, "Your wish list has been shared").trim(), test);
+				action.CompareResult("Page loaded ", "Your wish list has been shared.", action.getText(Hdr_Txt, "Your wish list has been shared",test).trim(), test);
 			}
 		}else{
 			

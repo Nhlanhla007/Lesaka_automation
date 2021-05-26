@@ -62,16 +62,16 @@ public class ic_GiftCardUsability {
 			action.elementExists(Giftcard_Scratchcode, WaitTime);
 			action.writeText(Giftcard_Scratchcode, ScratchCode, "Giftcard_Scratchcode", test);
 		}
-		String ExpAmoutBeforegiftcard = action.getText(GrandTotal, " Total price before applying for gift card ");
+		String ExpAmoutBeforegiftcard = action.getText(GrandTotal, " Total price before applying for gift card ",test);
 		action.elementExists(Giftcard_Apply, WaitTime);
 		action.clickEle(Giftcard_Apply, "Giftcard_Apply", test);
 		Thread.sleep(8000);
 		action.elementExists(Giftcard_BalanceCheck, WaitTime);
 		action.clickEle(Giftcard_BalanceCheck, "Giftcard_BalanceCheck", test);
 		Thread.sleep(8000);
-		String ActualBalance = action.getText(Giftcard_Balance, "Giftcard_Balance");
+		String ActualBalance = action.getText(Giftcard_Balance, "Giftcard_Balance",test);
 		action.CompareResult(" Total Balance Left on Re-Using Gift card ", ExpBalance, ActualBalance, test);
-		String AmountAfterGiftcard = action.getText(GrandTotal, " Total price before applying for gift card ");
+		String AmountAfterGiftcard = action.getText(GrandTotal, " Total price before applying for gift card ",test);
 		action.CompareResult(" Total Value of product remains constant, No balance in giftcard", ExpAmoutBeforegiftcard, AmountAfterGiftcard, test);
 	}
 	

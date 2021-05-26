@@ -36,21 +36,25 @@ public class JDGTest_TestNG<moduleName> {
     protected String browserName;
     protected String navigateURL;
     protected DataTable2 dataTable2;
-    ExtentReportJD reportJD=new ExtentReportJD("IC");
+
     public String currentSuite;
     public String currentKeyWord;
     HashMap<String, Integer> occCount=null;
     int testcaseID;
     JDGKeyManager km=null;
+    ExtentReportJD reportJD=null;
     Logger logger = Log.getLogData(this.getClass().getSimpleName());
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 
     @BeforeClass
-    @Parameters({"moduleName"})
-    public void once(String moduleName) throws Exception {
+    @Parameters({"moduleName","CurSuite"})
+    public void once(String moduleName,String CurSuite) throws Exception {
+
         dataTable2= new DataTable2();
         dataTable2.setPath(moduleName);
         dataMap2=dataTable2.getExcelData();
+        currentSuite=CurSuite;
+        reportJD=new ExtentReportJD(currentSuite);
         km=new JDGKeyManager(driver,dataTable2,dataMap2);
     }
 
@@ -61,48 +65,17 @@ public class JDGTest_TestNG<moduleName> {
     }
     //Start Tests-----------------------------------------------------------------------
     //${AllTestMethods}
-    @Test(testName ="31_Create_Customer_Account_from_Sales_Order" )
-    public void Create_Customer_Account_from_Sales_Order() throws Exception {
-        String testMethodName="Create_Customer_Account_from_Sales_Order";
+    @Test(testName ="2_Create_new_customer_in_IC_with_ID_Number_IC" )
+    public void Create_new_customer_in_IC_with_ID_Number_IC() throws Exception {
+        String testMethodName="Create_new_customer_in_IC_with_ID_Number_IC";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
     }
 
-    @Test(testName ="26_Create_Sales_Order_Guest_User_Thorugh_Product_Search" )
-    public void Create_Sales_Order_Guest_User_Thorugh_Product_Search() throws Exception {
-        String testMethodName="Create_Sales_Order_Guest_User_Thorugh_Product_Search";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
-    @Test(testName ="2_Create_new_customer_in_IC_with_ID_Number" )
-    public void Create_new_customer_in_IC_with_ID_Number() throws Exception {
-        String testMethodName="Create_new_customer_in_IC_with_ID_Number";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
-    @Test(testName ="42_Click_the_IC_logo_to_go_home_page" )
-    public void Click_the_IC_logo_to_go_home_page() throws Exception {
-        String testMethodName="Click_the_IC_logo_to_go_home_page";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-    @Test(testName ="45_Validating_the_minimum_search_characters" )
-    public void Validating_the_minimum_search_characters() throws Exception {
-        String testMethodName="Validating_the_minimum_search_characters";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
-
-    @Test(testName ="Verify_Message_after_submit_email_on_Forgot_Password_Page" )
-    public void Verify_Message_after_submit_email_on_Forgot_Password_Page() throws Exception {
-        String testMethodName="Verify_Message_after_submit_email_on_Forgot_Password_Page";
+    @Test(testName ="1_Create_new_customer_in_IC_with_VAT_Number_EVS" )
+    public void Create_new_customer_in_IC_with_VAT_Number_EVS() throws Exception {
+        String testMethodName="Create_new_customer_in_IC_with_VAT_Number_EVS";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
@@ -128,12 +101,12 @@ public class JDGTest_TestNG<moduleName> {
     public int getTestCaseIndex(String testMethodName){
         System.out.println("------------------------------------------------------------");
         System.out.println("Test_Case_Name:"+testMethodName);
-        int numTC=dataMap2.get("IC").get("Test_Case_Name").size();
+        int numTC=dataMap2.get(currentSuite).get("Test_Case_Name").size();
         int index=0;
         for(int i=0;i<numTC;i++){
-            if(testMethodName.equals(dataMap2.get("IC").get("Test_Case_Name").get(i))){
+            if(testMethodName.equals(dataMap2.get(currentSuite).get("Test_Case_Name").get(i)+"_"+currentSuite)){
                 index=i;
-                testcaseID=Integer.parseInt(dataMap2.get("IC").get("TestCaseID").get(i));
+                testcaseID=Integer.parseInt(dataMap2.get(currentSuite).get("TestCaseID").get(i));
                 dataTable2.setTestCaseID(testcaseID);
             }
         }
@@ -146,7 +119,7 @@ public class JDGTest_TestNG<moduleName> {
             String actionToRunLable = "Action" + (j + 1);
             String actionToRun = "";
             try {
-                actionToRun = dataMap2.get("IC").get(actionToRunLable).get(index);
+                actionToRun = dataMap2.get(currentSuite).get(actionToRunLable).get(index);
             } catch (Exception e) {
 
             }

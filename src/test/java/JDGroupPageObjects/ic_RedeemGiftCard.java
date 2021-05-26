@@ -107,13 +107,13 @@ public class ic_RedeemGiftCard {
 		 action.click(ic_Apply, "apply the the gift card", test);
 		 String giftCarddValidate = null;
 		 if(action.elementExistWelcome(ic_SuccessfullyApplied, 4, "Gift card added", test)){
-			 giftCarddValidate = action.getText(ic_SuccessfullyApplied, "gift card added");
+			 giftCarddValidate = action.getText(ic_SuccessfullyApplied, "gift card added",test);
 		 }
 
 		 action.CompareResult("Gift card added", "Gift Card \""+giftCardCode.trim()+"\" was added.",giftCarddValidate , test);
-		 String subTotal = action.getText(ic_miniCartSubtotal, "Subtotal");
-		 String cardAmount = action.getText(ic_GiftcardAmount, "CardAmount");
-		 String finalOrder = action.getText(ic_orderNumber, "value");
+		 String subTotal = action.getText(ic_miniCartSubtotal, "Subtotal",test);
+		 String cardAmount = action.getText(ic_GiftcardAmount, "CardAmount",test);
+		 String finalOrder = action.getText(ic_orderNumber, "value",test);
 			
 		 finalAmount = (Integer.parseInt(subTotal.replace("R", "")) - Integer.parseInt(cardAmount.replace("-", "").replace("R", "")));
 		 
@@ -135,7 +135,7 @@ public class ic_RedeemGiftCard {
 			 action.click(ic_Apply, "apply the the gift card", test);
 			 String giftCarddValidate = null;
 			 if(action.elementExistWelcome(ic_giftCardError, 4, "Please correct the gift card code.", test)){
-				 giftCarddValidate = action.getText(ic_giftCardError, "Please correct the gift card code.");
+				 giftCarddValidate = action.getText(ic_giftCardError, "Please correct the gift card code.",test);
 				 
 				 action.explicitWait(5000);
 			 }

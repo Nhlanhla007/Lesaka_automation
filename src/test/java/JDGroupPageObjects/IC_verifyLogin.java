@@ -35,7 +35,7 @@ public class IC_verifyLogin {
     	int waitTime =11;
     	boolean CheckPagetitle = verifyLoginPageTitle(waitTime, test);
     	if(CheckPagetitle){
-    		String LoginMsg = action.getText(LoginWarning_Msg, "Login Warning Msg");
+    		String LoginMsg = action.getText(LoginWarning_Msg, "Login Warning Msg",test);
     		action.CompareResult("Login to proceed for wishlist", "You must login or register to add items to your wishlist.", LoginMsg, test);
     	}else{
     		action.CompareResult("Customer login is Required to continue", "true", String.valueOf(CheckPagetitle), test);
@@ -45,7 +45,7 @@ public class IC_verifyLogin {
     	boolean checkflg = false;
     	String ExpHeadermsg = "Customer Login";
     	if(action.elementExists(Header_customerLoginMsg, Timeout)){
-    		String ActLoginPageHdr = action.getText(Header_customerLoginMsg, "customer Login");
+    		String ActLoginPageHdr = action.getText(Header_customerLoginMsg, "customer Login",test);
     		if(ActLoginPageHdr.equalsIgnoreCase(ExpHeadermsg)){
     			checkflg=true;
     			action.CompareResult("Customer login page is loaded ", "true", String.valueOf(checkflg), test);

@@ -34,7 +34,7 @@ public class ic_validateProductSKU {
 	public void displayProductSKU(ExtentTest test, WebElement el) throws IOException{
 		
 		action.click(el, "click product", test);
-		String productSKU = action.getText(ic_ProductCode, "");
+		String productSKU = action.getText(ic_ProductCode, "",test);
 		
 		if(productSKU != null| productSKU != ""){
 			action.CompareResult("The product SKU is "+ productSKU, "true", "true", test);

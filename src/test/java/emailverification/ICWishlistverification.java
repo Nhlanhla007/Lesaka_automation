@@ -62,11 +62,12 @@ public class ICWishlistverification {
                 for (WebElement emailsub : email) {
 
 	                    if ((emailsub.getText().contains("Take a look at 's wishlist"))&&!foundSubject&&!foundSender) {
-	                        emailsub.click();
+//	                        emailsub.click();
+	                        action.click(emailsub,"emailsub",test);
 	                        action.explicitWait(5000);
 	                        foundSubject=true;
 	                        String SenderEmail ="";
-	                        SenderEmail = action.getText(EmailSender, "EmailSender");
+	                        SenderEmail = action.getText(EmailSender, "EmailSender",test);
 	                    
 	                    if ((SenderEmail.contains("websiteorders@incredible.com"))&&!foundSender) {
 	                    	foundSender=true;

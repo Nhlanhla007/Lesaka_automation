@@ -63,7 +63,7 @@ public class ICGiftCardVerification {
                     if ((emailsub.getText().contains("been sent a gift from Incredible Connection"))&&!foundGiftCard) {
                         emailsub.click();
                         action.explicitWait(5000);
-                        String emailText = action.getText(singleEmailText,"emailText");
+                        String emailText = action.getText(singleEmailText,"emailText",test);
                         int barcodeIndex = emailText.indexOf("Barcode for");
                         int serialNumberIndex = emailText.indexOf("Serial Number");
                         int scratchCodeIndex = emailText.indexOf("Scratch Code");

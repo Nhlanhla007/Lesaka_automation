@@ -56,8 +56,7 @@ public class ic_Magento_Login {
 				action.writeText(Magento_Password, Password, "Password feild", test);
 				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
 				action.explicitWait(10000);
-				String resWelcomescreen = action.getText(Dashboard, "Dashboard");
-				//System.out.println(resWelcomescreen);
+				String resWelcomescreen = action.getText(Dashboard, "Dashboard", test);
 			}else{
 				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
 			

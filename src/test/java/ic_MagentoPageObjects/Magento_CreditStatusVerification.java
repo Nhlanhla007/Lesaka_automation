@@ -51,7 +51,7 @@ public class Magento_CreditStatusVerification {
 				try {
 					if(action.elementExists(CreditApp_Status, RefreshInterval))
 					{
-							ActOrderStatus = action.getText(CreditApp_Status, "Credit app status");
+							ActOrderStatus = action.getText(CreditApp_Status, "Credit app status",test);
 							action.scrollToElement(CreditApp_Status,"Credit app status");
 							System.out.println("Credit status is  : "+ActOrderStatus);
 							if(ActOrderStatus.equalsIgnoreCase(ExporderStatus)){

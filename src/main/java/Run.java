@@ -17,59 +17,87 @@ import java.util.List;
 
 public class Run {
     public static void main(String[]args) throws Exception {
-        DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-        Document document = documentBuilder.newDocument();
 
-        Element root = document.createElement("suite");
-        Attr suiteNameAttr = document.createAttribute("name");
-        suiteNameAttr.setValue("JDGTestIC");
-        root.setAttributeNode(suiteNameAttr);
-        document.appendChild(root);
         DataTable2 dataTable2;
         dataTable2= new DataTable2();
-
         String moduleName="MAIN";
-
         dataTable2.setPath(moduleName);
         LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
         dataMap2=dataTable2.getExcelData();
-        LinkedHashMap<String, ArrayList<String>> suiteIC = dataMap2.get("IC");
-        int numberOfRows=suiteIC.get("Execute").size();
-        Element test = document.createElement("test");
-        Attr testNameAttr = document.createAttribute("name");
-        testNameAttr.setValue("JDGTestIC");
-        test.setAttributeNode(testNameAttr);
-        root.appendChild(test);
-        Element parameter1 = document.createElement("parameter");
-        Attr parameter1Attr1 = document.createAttribute("name");
-        Attr parameter1Attr2 = document.createAttribute("value");
-        parameter1Attr1.setValue("moduleName");
-        parameter1.setAttributeNode(parameter1Attr1);
-        parameter1Attr2.setValue(moduleName);
-        parameter1.setAttributeNode(parameter1Attr2);
-        test.appendChild(parameter1);
-        Element classes = document.createElement("classes");
-        test.appendChild(classes);
-        Element className = document.createElement("class");
-        classes.appendChild(className);
-        Element methods = document.createElement("methods");
-        Attr classNameAttr = document.createAttribute("name");
-//        classNameAttr.setValue("tests.JDGTest_TestNG");
-        classNameAttr.setValue("tests.testTestClass");
-        className.setAttributeNode(classNameAttr);
-        className.appendChild(methods);
+
+        LinkedHashMap<String, ArrayList<String>> suites = dataMap2.get("Suites");
+        int numberOfRowsInSuites=suites.get("Execute").size();
+
+        int numberOfRows=0;
+
+        DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+        Document document = documentBuilder.newDocument();
+        Element root = document.createElement("suite");
+        Attr suiteNameAttr = document.createAttribute("name");
+        suiteNameAttr.setValue("JDGTest");
+        root.setAttributeNode(suiteNameAttr);
+        document.appendChild(root);
+
+
         String sampleTestMethod=FileToString("src/test/resources/sampleTestMethod");
         String sampleTestClass=FileToString("src/test/resources/sampleTestClass");
         String allTestMethods="";
-        for(int i=0;i<numberOfRows;i++){
-            if(suiteIC.get("Execute").get(i).toLowerCase().equals("yes")){
-                Element include = document.createElement("include");
-                Attr includeName = document.createAttribute("name");
-                includeName.setValue(suiteIC.get("Test_Case_Name").get(i));
-                allTestMethods=allTestMethods+System.getProperty("line.separator")+sampleTestMethod.replaceAll("\\$\\{testCaseName}",suiteIC.get("Test_Case_Name").get(i)).replace("${TCID}",suiteIC.get("TestCaseID").get(i));
-                include.setAttributeNode(includeName);
-                methods.appendChild(include);
+        for(int z = 0; z < numberOfRowsInSuites; z++) {
+            if(suites.get("Execute").get(z).toLowerCase().equals("yes")) {
+                String testSuitname=suites.get("testSuitName").get(z);
+                LinkedHashMap<String, ArrayList<String>> suiteCur=dataMap2.get(testSuitname);
+                numberOfRows=suiteCur.get("Execute").size();
+
+                ////////////////////////////////////////////////////////////////
+
+                Element test = document.createElement("test");
+                Attr testNameAttr = document.createAttribute("name");
+                testNameAttr.setValue(testSuitname);
+                test.setAttributeNode(testNameAttr);
+                root.appendChild(test);
+                Element parameter1 = document.createElement("parameter");
+                Attr parameter1Attr1 = document.createAttribute("name");
+                Attr parameter1Attr2 = document.createAttribute("value");
+                parameter1Attr1.setValue("moduleName");
+                parameter1.setAttributeNode(parameter1Attr1);
+                parameter1Attr2.setValue(moduleName);
+                parameter1.setAttributeNode(parameter1Attr2);
+
+                Element parameter2 = document.createElement("parameter");
+                Attr parameter2Attr1 = document.createAttribute("name");
+                Attr parameter2Attr2 = document.createAttribute("value");
+                parameter2Attr1.setValue("CurSuite");
+                parameter2.setAttributeNode(parameter2Attr1);
+                parameter2Attr2.setValue(testSuitname);
+                parameter2.setAttributeNode(parameter2Attr2);
+
+                test.appendChild(parameter1);
+                test.appendChild(parameter2);
+                Element classes = document.createElement("classes");
+                test.appendChild(classes);
+                Element className = document.createElement("class");
+                classes.appendChild(className);
+                Element methods = document.createElement("methods");
+                Attr classNameAttr = document.createAttribute("name");
+//        classNameAttr.setValue("tests.JDGTest_TestNG");
+                classNameAttr.setValue("tests.testTestClass");
+                className.setAttributeNode(classNameAttr);
+                className.appendChild(methods);
+                /////////////////////////////////////////////////////////////////
+
+
+                for (int i = 0; i < numberOfRows; i++) {
+                    if (suiteCur.get("Execute").get(i).toLowerCase().equals("yes")) {
+                        Element include = document.createElement("include");
+                        Attr includeName = document.createAttribute("name");
+                        String testCasename=suiteCur.get("Test_Case_Name").get(i)+"_"+testSuitname;
+                        includeName.setValue(testCasename);
+                        allTestMethods = allTestMethods + System.getProperty("line.separator") + sampleTestMethod.replaceAll("\\$\\{testCaseName}", testCasename).replace("${TCID}", suiteCur.get("TestCaseID").get(i));
+                        include.setAttributeNode(includeName);
+                        methods.appendChild(include);
+                    }
+                }
             }
         }
         sampleTestClass=sampleTestClass.replace("${AllTestMethods}",allTestMethods);

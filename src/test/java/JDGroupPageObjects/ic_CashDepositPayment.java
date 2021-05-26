@@ -81,7 +81,7 @@ public class ic_CashDepositPayment {
 		
 		try {
 			action.scrollToElement(OrderStatus, "OrderStatus");
-			String ActorderStatus = action.getText(OrderStatus,"OrderStatus");
+			String ActorderStatus = action.getText(OrderStatus,"OrderStatus",test);
 			if(ActorderStatus.equalsIgnoreCase(ExpOrderstatus)){
 				action.CompareResult("verify Order ID status ", ExpOrderstatus, ActorderStatus, test);
 			}else{
@@ -101,7 +101,7 @@ public class ic_CashDepositPayment {
 			action.scrollToElement(SubmitInvoice,"SubmitInvoice");
 			action.click(SubmitInvoice, "SubmitInvoice", test);
 			action.waitForElementPresent(CreateInvoiceSuccessMsg, 21);
-			String createInvoicemsg = action.getText(CreateInvoiceSuccessMsg, "Create Invoice Success Message");
+			String createInvoicemsg = action.getText(CreateInvoiceSuccessMsg, "Create Invoice Success Message",test);
 			if(createInvoicemsg.contains("invoice has been created")){
 				action.CompareResult("Verify Invoicing Done successfully : ", "true", "true", test);
 			}else{

@@ -43,7 +43,7 @@ public class ic_PopularSearch{
 		boolean checkFlag = false;
 		String Alldata=null;
 		if(action.elementExists(PopularSearch, 11)){
-			String actPuopularSearch = action.getText(PopularSearch, "PopularSearch");
+			String actPuopularSearch = action.getText(PopularSearch, "PopularSearch",test);
 			action.CompareResult(" popular search is populated ", Expdata.toUpperCase().trim(), actPuopularSearch.toUpperCase().trim(), test);
 			List<WebElement> allData  = PopularSearchlist;
 			for(WebElement el: allData){

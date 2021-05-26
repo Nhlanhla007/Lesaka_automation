@@ -105,6 +105,6 @@ public class SapRSI {
         action.javaScriptClick(clickEdit, "clickEdit", test);
         action.explicitWait(5000);
         action.click(sapDataTab,"sapDataTab",test);
-        System.out.println(action.getText(roughStockIndicatorAct,"roughStockIndicator"));
+        System.out.println(action.getText(roughStockIndicatorAct,"roughStockIndicator",test));
     }
 }

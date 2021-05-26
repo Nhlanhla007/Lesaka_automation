@@ -60,9 +60,9 @@ public class ic_RemoveFromcart {
 				action.CompareResult("All the products are removed from minicart", 0+" Quantity in cart", checkQty+" Quantity in cart", test);
 			}
 		}
-		public int retriveCartQuantity(int Timeout, ExtentTest test){
+		public int retriveCartQuantity(int Timeout, ExtentTest test) throws IOException {
 			action.explicitWait(Timeout);
-			int Quantity = Integer.parseInt(action.getText(ic_CartQuantity, "ic mini Cart Quantity"));
+			int Quantity = Integer.parseInt(action.getText(ic_CartQuantity, "ic mini Cart Quantity",test));
 			return Quantity;
 		}
 		public void NavigateToviewEditcart(int TimeOut, ExtentTest test) throws IOException{
@@ -71,7 +71,7 @@ public class ic_RemoveFromcart {
 			if(action.elementExists(ViewandEditcart, TimeOut)){
 				action.click(ViewandEditcart, "View and Edit cart", test);
 				if(action.elementExists(ShoppingCart_Hdr, TimeOut)){
-					String shoppingcartPg = action.getText(ShoppingCart_Hdr, "ShoppingCart Header");
+					String shoppingcartPg = action.getText(ShoppingCart_Hdr, "ShoppingCart Header",test);
 					if(shoppingcartPg.equalsIgnoreCase("ExpPageHdr")){
 						action.CompareResult("Navigate to shopping cart page from mini cart", ExpPageHdr, shoppingcartPg, test);
 					}else{

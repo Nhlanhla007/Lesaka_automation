@@ -67,7 +67,7 @@ public class ic_PasswordForgotEmailVerification {
 	                        action.explicitWait(5000);
 	                        foundSubject=true;
 	                        String SenderEmail ="";
-	                        SenderEmail = action.getText(EmailSender, "EmailSender");
+	                        SenderEmail = action.getText(EmailSender, "EmailSender",test);
 	                    
 	                    if ((SenderEmail.contains("websiteorders@incredible.com"))&&!foundSender) {
 	                    	foundSender=true;

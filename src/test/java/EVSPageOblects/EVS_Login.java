@@ -57,10 +57,9 @@ public class EVS_Login {
 			driver.navigate().to(ConfigFileReader.getPropertyVal("EVS_URL"));
 //			action.waitForPageLoaded(10);
 			action.explicitWait(10000);
-			ic_myAccountButton.click();
+			action.click(ic_myAccountButton,"ic_myAccountButton",test);
 			action.explicitWait(3000);
-			ic_myAccountlist.click();
-			
+			action.click(ic_myAccountlist,"ic_myAccountlist",test);
 			List<String> userCred = new ArrayList<>();
 			String Username =dataTable2.getValueOnCurrentModule("Username");
 			String Password =dataTable2.getValueOnCurrentModule("Password");

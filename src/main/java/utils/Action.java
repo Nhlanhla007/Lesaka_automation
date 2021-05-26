@@ -398,22 +398,33 @@ public class Action {
 	 * @return returns the inner text of the web element
 	 */
 
-	public <T> String getText(T elementAttr, String name) {
+	public <T> String getText(T elementAttr, String name,ExtentTest test) throws IOException {
+		ExtentTest node = test.createNode("get Text from element: "+name);
 		waitExplicit(WAIT_IN_SECONDS_MED);
 		String text ="";
-		if (elementAttr.getClass().getName().contains("By")) {
-			text = driver.findElement((By) elementAttr).getText();
-		} else {
-			WebElement fluentElement = waitFluent((WebElement) elementAttr);
-			text = fluentElement.getText();
-			//text = ((WebElement) elementAttr).getText();
-		}
-		if(name != null){
-			logger.info("Getting text from: "+ name);
+		try{
+			if (elementAttr.getClass().getName().contains("By")) {
+				text = driver.findElement((By) elementAttr).getText();
+				String screenShot=GenerateScreenShot.getScreenShot(driver);
+				node.pass("get Text from element:"+ node.addScreenCaptureFromPath(screenShot));
+			} else {
+				WebElement fluentElement = waitFluent((WebElement) elementAttr);
+				text = fluentElement.getText();
+				String screenShot=GenerateScreenShot.getScreenShot(driver);
+				node.pass("get Text from element:"+ node.addScreenCaptureFromPath(screenShot));
+				//text = ((WebElement) elementAttr).getText();
+			}
+			if(name != null){
+				logger.info("Getting text from: "+ name);
 
-		}
+			}
 
-		return text;
+			return text;
+		} catch (Exception e) {
+			String screenShot=GenerateScreenShot.getScreenShot(driver);
+			node.fail("unable to get Text from element:"+ name+node.addScreenCaptureFromPath(screenShot));
+			throw e;
+		}
 	}
 
 

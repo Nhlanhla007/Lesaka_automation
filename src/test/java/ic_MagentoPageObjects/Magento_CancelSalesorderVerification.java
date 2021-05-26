@@ -38,17 +38,17 @@ public class Magento_CancelSalesorderVerification {
 		
 			action.click(CommentHistoryTab, "CommentHistory Tab", test);
 			if(action.elementExists(OrderStatusMsg, timeout)){
-				String OderstatusOnCommentHistory = action.getText(OrderStatusMsg, "Order Status on comment history");
+				String OderstatusOnCommentHistory = action.getText(OrderStatusMsg, "Order Status on comment history",test);
 				action.CompareResult("Order status message on Comment History Tab", "Closed", OderstatusOnCommentHistory, test);
 				
 			
 			
 				if(action.elementExists(CreditmemoMsg, timeout)){
-					String CreditmemoMsgOnCommentHistory = action.getText(CreditmemoMsg, "CreditmemoMsg on comment history");
+					String CreditmemoMsgOnCommentHistory = action.getText(CreditmemoMsg, "CreditmemoMsg on comment history",test);
 					action.CompareResult("Credit memo message on Comment History Tab", "Credit memo", CreditmemoMsgOnCommentHistory, test);
 					
 					if(action.elementExists(RefundValueMsg, timeout)){
-						String RefundAmtMsgOnCommentHistory = action.getText(RefundValueMsg, "RefundValueMsg on comment history");
+						String RefundAmtMsgOnCommentHistory = action.getText(RefundValueMsg, "RefundValueMsg on comment history",test);
 						action.CompareResult("Refund amount message on Comment History Tab", "We refunded", RefundAmtMsgOnCommentHistory, test);
 						checkFinalstatus =true;
 					}

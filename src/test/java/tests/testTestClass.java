@@ -57,16 +57,21 @@ public class testTestClass<moduleName> {
         startBrowserSession();
     }
     //Start Tests-----------------------------------------------------------------------
-
     
-    @Test(testName ="32_Gift_Card_Purchase_Guest_User" )
-    public void Gift_Card_Purchase_Guest_User() throws Exception {
-        String testMethodName="Gift_Card_Purchase_Guest_User";
+    @Test(testName ="2_Create_new_customer_in_IC_with_ID_Number_IC" )
+    public void Create_new_customer_in_IC_with_ID_Number_IC() throws Exception {
+        String testMethodName="Create_new_customer_in_IC_with_ID_Number_IC";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
     }
-
+    @Test(testName ="1_Create_new_customer_in_IC_with_VAT_Number_EVS" )
+    public void Create_new_customer_in_IC_with_VAT_Number_EVS() throws Exception {
+        String testMethodName="Create_new_customer_in_IC_with_VAT_Number_EVS";
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+        runner(TCIndex,test);
+    }
     //End Tests-------------------------------------------------------------------------
 
     public void runner(int TCIndex,ExtentTest test) throws Exception {

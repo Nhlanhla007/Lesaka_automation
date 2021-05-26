@@ -61,7 +61,7 @@ public class ic_LoginPasswordIsSecured {
 		action.writeText(ic_Password, Password, "Password field", test);
 		action.explicitWait(3000);
 		
-		String safePass = action.getText(ic_Password, "Get password Encrypted ");
+		String safePass = action.getText(ic_Password, "Get password Encrypted ",test);
 		
 		if(safePass != null | safePass !=""){
 			action.CompareResult("The password is "+safePass, "true", "true", test);

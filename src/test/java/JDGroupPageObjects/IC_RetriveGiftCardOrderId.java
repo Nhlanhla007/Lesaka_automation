@@ -31,7 +31,7 @@ public class IC_RetriveGiftCardOrderId {
         String Oderid = null;
         action.explicitWait(10000);
         action.elementExistWelcome(OderID, 10, "order number", test);
-        Oderid = action.getText(OderID, "Order ID");
+        Oderid = action.getText(OderID, "Order ID",test);
         dataTable2.setValueOnOtherModule("ic_RetriveOrderID", "orderID", Oderid, 0);
         dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);
     }

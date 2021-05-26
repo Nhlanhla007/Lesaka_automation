@@ -189,7 +189,7 @@ public class ICUpdateCustomer {
 	    		action.writeText(ic_firstname, firstNameTextUpdated,"first Name", test);
 				dataTable2.setValueOnCurrentModule("firstName_output",firstNameTextUpdated);
 	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
+	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    		action.explicitWait(5000);
 	    		String firstNameTextSaved = action.getAttribute(firstUpdated, "value");
@@ -207,7 +207,7 @@ public class ICUpdateCustomer {
 				dataTable2.setValueOnCurrentModule("lastName_output",lastNameTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
+	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    		action.explicitWait(5000);
 	    		String lastNameTextSaved = action.getAttribute(lastNameUpdated, "value");
@@ -241,7 +241,7 @@ public class ICUpdateCustomer {
 	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
 	    		action.writeText(passCurrent, currentPassWordText, "Current password", test);
 	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
+	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    	}else {
 				dataTable2.setValueOnCurrentModule("email_output",emailText);
@@ -257,7 +257,7 @@ public class ICUpdateCustomer {
 				dataTable2.setValueOnOtherModule("ic_login","Password",passWTextUpdated,0);
 	    		action.writeText(passConfirmation, passWTextUpdated, "Confirm new Password", test);
 	    		action.click(SaveButton, "Save", test);	
-	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, ""), test);
+	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    	}
 	    	
@@ -314,7 +314,7 @@ public class ICUpdateCustomer {
 		    		dataTable2.setValueOnCurrentModule("billing_postalCode_output",postalCodeText);
 		    		
 		    		action.click(SaveButton, "Save", test);
-		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, "Billing address updated"), test);
+		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, "Billing address updated",test), test);
 		    	
 		    	}else {
 		    		dataTable2.setValueOnCurrentModule("billing_streetAddress_output",streetAdressText);
@@ -352,7 +352,7 @@ public class ICUpdateCustomer {
 	    		dataTable2.setValueOnCurrentModule("shipping_postalCode_output",postalCodeText);
 	    		
 	    		action.click(SaveButton, "Save", test);
-	    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSaved, "Shipping address updated"), test);
+	    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSaved, "Shipping address updated",test), test);
 	    		
 	    	}
 	    	}
@@ -378,6 +378,7 @@ public class ICUpdateCustomer {
 	public void navigateBackToCustomerDetails(String userType,String addressExist) {
 		action.explicitWait(4000);
 		backButton.click();
+//		action.click(backButton,"backButton",test);
 		action.explicitWait(4000);
 		ic_myAccountButton.click();
 		action.explicitWait(4000);

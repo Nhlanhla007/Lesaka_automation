@@ -41,7 +41,7 @@ public class ic_SubscriberNewsletter_DuplicateEmailaddress {
 		action.writeText(Newsletter_EmailID, ExpEmailId, "Newsletter EmailID field", test);
 		action.click(Newsletter_SubscribeBtn, "Subscribe button", test);
 		if(action.elementExists(Newsletter_SubscribeMsg, waitTime)){
-			ExpMessage = action.getText(Newsletter_SubscribeMsg, "Newsletter Subscribe Message");
+			ExpMessage = action.getText(Newsletter_SubscribeMsg, "Newsletter Subscribe Message",test);
 			checkflag=true;
 		}
 		if(ExpMessage!=null){
