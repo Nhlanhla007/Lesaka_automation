@@ -20,6 +20,7 @@ public class Run {
         DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
         Document document = documentBuilder.newDocument();
+
         Element root = document.createElement("suite");
         Attr suiteNameAttr = document.createAttribute("name");
         suiteNameAttr.setValue("JDGTestIC");
