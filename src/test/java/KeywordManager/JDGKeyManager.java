@@ -1,8 +1,5 @@
 package KeywordManager;
 
-import EVSPageOblects.EVS_Delivery;
-import EVSPageOblects.EVS_Login;
-import EVSPageOblects.EVS_NewAccountCreation;
 import JDGroupPageObjects.*;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
@@ -12,6 +9,9 @@ import emailverification.ICGiftCardVerification;
 import emailverification.ICWishlistverification;
 import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ic_ResetPasswordEmailLink;
+import evs_PageObjects.EVS_Delivery;
+import evs_PageObjects.EVS_Login;
+import evs_PageObjects.EVS_NewAccountCreation;
 import ic_MagentoPageObjects.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

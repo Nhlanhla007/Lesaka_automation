@@ -1,4 +1,4 @@
-package EVSPageOblects;
+package evs_PageObjects;
 import com.aventstack.extentreports.ExtentTest;
 import java.io.IOException;
 import java.util.ArrayList;

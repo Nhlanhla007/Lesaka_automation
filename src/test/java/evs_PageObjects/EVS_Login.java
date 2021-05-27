@@ -1,4 +1,4 @@
-package EVSPageOblects;
+package evs_PageObjects;
 
 import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.JavascriptExecutor;
