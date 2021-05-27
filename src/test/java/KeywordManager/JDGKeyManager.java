@@ -1,6 +1,7 @@
 package KeywordManager;
 
 import EVSPageOblects.EVS_Login;
+import EVSPageOblects.EVS_ProductSearch;
 import JDGroupPageObjects.*;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
@@ -113,6 +114,7 @@ public class JDGKeyManager {
         ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
+        EVS_ProductSearch evs_productSearch = new EVS_ProductSearch(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -395,6 +397,9 @@ public class JDGKeyManager {
                 break;
             case "evs_Login":
                 evs_Login.Login(test1);
+                break;
+            case "evs_ProductSearch":
+            	evs_productSearch.evs_SelectProductAndAddToCart(test1);
                 break;
 
         }
