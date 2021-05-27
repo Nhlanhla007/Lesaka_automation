@@ -1,5 +1,6 @@
 package KeywordManager;
 
+
 import EVSPageOblects.EVS_Login;
 import EVSPageOblects.EVS_ProductSearch;
 import JDGroupPageObjects.*;
@@ -12,6 +13,9 @@ import emailverification.ICWishlistverification;
 import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ic_ResetPasswordEmailLink;
 import evs_MagentoPageObjects.Evs_MagentoOrderSAPnumber;
+import evs_PageObjects.EVS_Delivery;
+import evs_PageObjects.EVS_Login;
+import evs_PageObjects.EVS_NewAccountCreation;
 import ic_MagentoPageObjects.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -117,6 +121,8 @@ public class JDGKeyManager {
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
         EVS_ProductSearch evs_productSearch = new EVS_ProductSearch(driver, dataTable2);
         Evs_MagentoOrderSAPnumber evs_magentoSAPNumber = new Evs_MagentoOrderSAPnumber(driver, dataTable2);
+        EVS_Delivery evs_delivery = new EVS_Delivery(driver, dataTable2);
+        EVS_NewAccountCreation evs_NewAccountCreation = new EVS_NewAccountCreation(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -402,8 +408,15 @@ public class JDGKeyManager {
                 break;
             case "evs_ProductSearch":
             	evs_productSearch.evs_SelectProductAndAddToCart(test1);
+            	break;
             case "evs_GenerateOrderSAPnumber":
             	evs_magentoSAPNumber.GenerateOrderSAPnumber(dataMap2.get(moduleToRun+ "++"), test1, rowNumber);
+            	break;
+            case "evs_DeliveryPopulation":
+            	evs_delivery.deliveryPopulation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_AccountCreation":
+            	evs_NewAccountCreation.accountCreation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
 
         }
