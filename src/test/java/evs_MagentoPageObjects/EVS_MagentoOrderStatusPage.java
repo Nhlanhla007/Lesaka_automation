@@ -1,4 +1,4 @@
-package evs_PageObjects;
+package evs_MagentoPageObjects;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -115,12 +115,8 @@ public class EVS_MagentoOrderStatusPage {
 
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
 			throws Exception {
-
-		driver.navigate().to(ConfigFileReader.getPropertyVal("EVS_MagentoURL"));
-		action.explicitWait(3000);
-
-		String idToSearch = "66200000628";
-
+		
+		String idToSearch = dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);
 		String orderStatus = input.get("orderStatus").get(rowNumber);
 		System.out.println("orderStatus :" + orderStatus);
 		action.explicitWait(15000);
