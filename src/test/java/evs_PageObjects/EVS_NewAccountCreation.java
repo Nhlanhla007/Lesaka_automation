@@ -1,4 +1,5 @@
 package evs_PageObjects;
+
 import com.aventstack.extentreports.ExtentTest;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ import java.util.HashMap;
 public class EVS_NewAccountCreation {
 	WebDriver driver;
 	Action action;
+
 	public EVS_NewAccountCreation(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -314,6 +316,7 @@ public class EVS_NewAccountCreation {
 		passwordToChange += "fail";
 		return passwordToChange;
 	}
+
 	/*
 	 * public String alterId(String saId) { saId = saId. return; }
 	 * 
