@@ -53,6 +53,7 @@ public class JDTests extends BaseTest {
 		dataTable2 = new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
 		dataTable2.setPath("TA403");
+		dataTable2.setPath("TA409");
 		dataMap2 = dataTable2.getExcelData();
 		km=new JDGKeyManager(driver,dataTable2,dataMap2);
 		LinkedHashMap<String, ArrayList<String>> suites = dataMap2.get("Suites");
