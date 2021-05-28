@@ -99,22 +99,26 @@ import utils.hana;
 			 Primarykey key = Primarykey.VBELN;
 			 
 			//Expected al details to be validated--------------------------------------
-			String cartSum = dataTable2.getValueOnOtherModule("ProductSearch", "CartTotal", 0);
-			String SAP_orderNo=dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber","OrderSAPnumber",0);
-			String ExpPurchaseOrderNo =dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);
+			String cartSum = dataTable2.getValueOnOtherModule("ProductSearch", "CartTotal", 0);  //"1595.0"; 
+			String SAP_orderNo= dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber","OrderSAPnumber",0); //"0005233897"; 
+			String ExpPurchaseOrderNo =  dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0); // "66200000585";
 			String ExpGrandTotal =String.valueOf(cartSum);//comes from cart total
 			
-			List<String> ExpProductName =new ArrayList<>();
-			Map<String,List<String>> AllICprducts = Ic_Products.productData;
+			List<String> ExpSku =new ArrayList<>();
+			/*String produts = "";
+			Map<String,List<String>> AllICprducts = EVS_ProductSearch.productData;
 			for(Map.Entry map : AllICprducts.entrySet()) {
-				String produts = (String)map.getKey();
+				List<String> getSku = (List<String>)map.getValue();
+				String SKU = getSku.get(1);				
+				produts = (String)map.getKey();
 				//sum += (Integer.parseInt(quantity)*Integer.parseInt(price.replace("R", "").replace(",", "")));
-				ExpProductName.add(produts);
-			}
+				ExpSku.add(SKU);*/
+				ExpSku.add("000000000010119332");//to be removed
+		  //}
 			
-			String ExpCITY=ICDelivery.Cityname.toLowerCase().trim();//"Pietersburg";
-			String ExpSTREET=ICDelivery.Streetname.toLowerCase().trim();//"Gemsbok Street";
-			String ExpPostalcode =ICDelivery.Postalcode.trim();
+			String ExpCITY=  ICDelivery.Cityname.toLowerCase().trim();//"johannesburg";
+			String ExpSTREET= ICDelivery.Streetname.toLowerCase().trim();//"33 baker street"; 
+			String ExpPostalcode = ICDelivery.Postalcode.trim();//"2196";
 			
 			
 			//--------------------------------------------------------------------------
@@ -123,8 +127,9 @@ import utils.hana;
 			Tablename Table2=Tablename.VBAP;
 			schemas Schema =schemas.SAPEQ1;
 			//"Select * from SAPEQ1.VBAK FULL OUTER JOIN SAPEQ1.VBAP ON SAPEQ1.VBAK.VBELN=SAPEQ1.VBAP.VBELN WHERE SAPEQ1.VBAK.VBELN ='0005231326' ";
-			String Query= "Select * from "+Schema+"."+Table1+" FULL OUTER JOIN "+Schema+"."+Table2+" ON "+Schema+"."+Table1+"."+key+" = "+Schema+"."+Table2+"."+key+" WHERE "+Schema+"."+Table1+"."+key+" = '"+SAP_orderNo+"' ";
-//			String Query= "SELECT * FROM SAPEQ1."+Table1+" WHERE "+key+" = '"+SAP_orderNo+"'";
+			String Query= "Select * from "+Schema+"."+Table1+" FULL OUTER JOIN "+Schema+"."+Table2+" ON "+Schema+"."+Table1+"."+key+" = "+Schema+"."+Table2+"."+key+" WHERE "+Schema+"."+Table1+"."+key+" = '"+SAP_orderNo+"' AND "+Schema+"."+Table2+".ARKTX !='ONLINE COURIER FEE'";
+			//String Query= "Select * from "+Schema+"."+Table1+" FULL OUTER JOIN "+Schema+"."+Table2+" ON "+Schema+"."+Table1+"."+key+" = "+Schema+"."+Table2+"."+key+" WHERE "+Schema+"."+Table1+"."+key+" = '"+SAP_orderNo+"' AND "+Schema+"."+Table2+".ARKTX =\""+produts+"\" ";
+			//			String Query= "SELECT * FROM SAPEQ1."+Table1+" WHERE "+key+" = '"+SAP_orderNo+"'";
 			//System.out.println("Query:"+Query);
 			hana hn =new hana(TypeOfDB,Server,Port,Username,Password,test);
 			ResultSet rs = hn.ExecuteQuery(Query);
@@ -175,16 +180,34 @@ import utils.hana;
 				
 				
 				//Verify all product description----------------------------------------------
-				List<String> alldataProductdesc= hn.GetRowdataByColumnName(rs, "ARKTX");
+				List<String> alldataProductdesc= hn.GetRowdataByColumnName(rs, "MATNR");
 				//System.out.println("Product name is  : "+alldataProductdesc);
-				logger.info("Product name is  : "+alldataProductdesc);
-				 for(int k=0;k<ExpProductName.size();k++){
-					 String eachProduct = ExpProductName.get(k);
-					 String AllProductsNameDB =String.join("", alldataProductdesc);
-					// System.out.println("ExpeachProduct "+eachProduct+" Actual "+AllProductsNameDB);
-					 action.CompareResult(" Products Purchased Description in SAP DB", eachProduct.trim().toUpperCase(), AllProductsNameDB.trim().toUpperCase(), test);
-				
+				logger.info("Product SKU is  : "+alldataProductdesc);
+				int counter = 0;
+				for(int k=0;k<ExpSku.size();k++){
+					String eachProduct = ExpSku.get(k).trim();
+					boolean isMatching = false;
+					innerloop:
+					for(int i= 0; i< alldataProductdesc.size(); i++){
+						 String DBproduct = alldataProductdesc.get(i).trim();
+						 System.out.println("DBproduct"+DBproduct);
+						 boolean matchResult =  DBproduct.equalsIgnoreCase(eachProduct) ;
+						 if(matchResult){
+							 isMatching = true;	
+							 counter++;
+							 //action.CompareResult("Validte SKU" +ExpSku.get(k)+ "is present on the Sales Order item", "true",  String.valueOf(isMatching), test);				
+							 action.CompareResult("SKU" +ExpSku.get(k)+ "is present on the Sales Order item", ExpSku.get(k).trim(), alldataProductdesc.get(i).trim() , test);	
+							 break innerloop; 							 
+						 } 							
+					 }	
+					
 				 }
+				if(counter ==ExpSku.size()){
+					action.CompareResult("All the items on the cart are present DB", "true", "true", test);
+				} else{
+					int cartItemnotpresent = ExpSku.size() - counter;
+					action.CompareResult("if all items are present on DB? "+cartItemnotpresent+ " item is not present is DB", "true", "false", test);
+				}
 				 
 				// verify Delivery Block ----------------------------------------------------
 				 List<String> alldataDelivery_block= hn.GetRowdataByColumnName(rs, "LIFSK");
