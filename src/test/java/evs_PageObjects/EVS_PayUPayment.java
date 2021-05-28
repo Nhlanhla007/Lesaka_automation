@@ -59,7 +59,7 @@ public class EVS_PayUPayment {
 			action.writeText(cardNumber, cardnumber, "card number", test);
 			action.writeText(nameOnCard, cardholdername, "name on card", test);
 			action.dropDownselectbyvisibletext(expMonth, Expiremonth, "Select Expirey Month on Card", test);
-			action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Month on Card", test);
+			action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Year on Card", test);
 			action.writeText(cvvNumber, cvv, "cvv number", test);
 			action.clickEle(PayBtn, "Payment submission button", test);
 			action.explicitWait(10);
