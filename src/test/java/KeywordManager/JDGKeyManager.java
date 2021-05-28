@@ -1,8 +1,5 @@
 package KeywordManager;
 
-import EVSPageOblects.EVS_Delivery;
-import EVSPageOblects.EVS_Login;
-import EVSPageOblects.EVS_NewAccountCreation;
 import JDGroupPageObjects.*;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
@@ -425,6 +422,7 @@ public class JDGKeyManager {
 		case "NavigateToWishlist_VerifyLoginPageAppear":
 			NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
 			break;
+			//EVS CODE BELOW
 		case "evs_Login":
 			evs_Login.Login(test1);
 			break;

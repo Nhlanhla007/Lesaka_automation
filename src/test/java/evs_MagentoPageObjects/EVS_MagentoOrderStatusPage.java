@@ -116,7 +116,7 @@ public class EVS_MagentoOrderStatusPage {
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
 			throws Exception {
 		
-		String idToSearch = dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);
+		String idToSearch = dataTable2.getValueOnOtherModule("evs_OrderStatusSearch","orderID",0);
 		String orderStatus = input.get("orderStatus").get(rowNumber);
 		System.out.println("orderStatus :" + orderStatus);
 		action.explicitWait(15000);

@@ -20,6 +20,7 @@ import JDGroupPageObjects.IC_Cart;
 import JDGroupPageObjects.Ic_Products;
 import JDGroupPageObjects.ic_PayUPayment;
 import Logger.Log;
+import evs_PageObjects.EVS_ProductSearch;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 import utils.Action;
 import utils.DataTable2;
@@ -99,21 +100,21 @@ import utils.hana;
 			 Primarykey key = Primarykey.VBELN;
 			 
 			//Expected al details to be validated--------------------------------------
-			String cartSum = dataTable2.getValueOnOtherModule("ProductSearch", "CartTotal", 0);  //"1595.0"; 
-			String SAP_orderNo= dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber","OrderSAPnumber",0); //"0005233897"; 
-			String ExpPurchaseOrderNo =  dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0); // "66200000585";
+			String cartSum = dataTable2.getValueOnOtherModule("evs_ProductSearch", "CartTotal", 0);  //"1595.0"; 
+			String SAP_orderNo= dataTable2.getValueOnOtherModule("evs_GenerateOrderSAPnumber","OrderSAPnumber",0); //"0005233897"; 
+			String ExpPurchaseOrderNo =  dataTable2.getValueOnOtherModule("evs_RetriveOrderID","orderID",0); // "66200000585";
 			String ExpGrandTotal =String.valueOf(cartSum);//comes from cart total
 			
 			List<String> ExpSku =new ArrayList<>();
-			/*String produts = "";
+			String produts = "";
 			Map<String,List<String>> AllICprducts = EVS_ProductSearch.productData;
 			for(Map.Entry map : AllICprducts.entrySet()) {
 				List<String> getSku = (List<String>)map.getValue();
 				String SKU = getSku.get(1);				
 				produts = (String)map.getKey();
 				//sum += (Integer.parseInt(quantity)*Integer.parseInt(price.replace("R", "").replace(",", "")));
-				ExpSku.add(SKU);*/
-				ExpSku.add("000000000010119332");//to be removed
+				ExpSku.add(SKU);
+				//ExpSku.add("000000000010119332");//to be removed
 		  //}
 			
 			String ExpCITY=  ICDelivery.Cityname.toLowerCase().trim();//"johannesburg";
@@ -268,3 +269,4 @@ import utils.hana;
 
 }
 
+}
