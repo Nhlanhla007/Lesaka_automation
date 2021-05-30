@@ -16,7 +16,6 @@ import emailverification.ICGiftCardVerification;
 import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ICWishlistverification;
 import emailverification.ic_ResetPasswordEmailLink;
-import evs_PageObjects.EVS_Login;
 import ic_MagentoPageObjects.*;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.Magento_UserInfoVerification;
