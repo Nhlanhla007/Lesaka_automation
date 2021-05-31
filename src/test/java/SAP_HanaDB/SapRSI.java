@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utils.Action;
+import utils.Base64Decoding;
 import utils.DataTable2;
 import utils.hana;
 
@@ -21,14 +22,16 @@ public class SapRSI {
     WebDriver driver;
     Action action;
     DataTable2 dataTable2;
+    Base64Decoding decodePassword;
     LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
     public SapRSI(WebDriver driver,DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
         this.dataTable2 = dataTable2;
+        decodePassword = new Base64Decoding();
     }
-    public void getDataFromSAPDB(ExtentTest test) throws IOException, SQLException {
+    public void getDataFromSAPDB(ExtentTest test) throws Exception {
         String DBinstance = dataTable2.getValueOnCurrentModule("DB_Instance");
         //ECCQA
 
@@ -38,6 +41,7 @@ public class SapRSI {
         String Port =  dataTable2.getRowUsingReferenceAndKey(conSheet,primaryKey,DBinstance,"port");
         String Username =  dataTable2.getRowUsingReferenceAndKey(conSheet,primaryKey,DBinstance,"Username");
         String Password =  dataTable2.getRowUsingReferenceAndKey(conSheet,primaryKey,DBinstance,"Password");
+        Password = decodePassword.decode(Password);
         String TypeOfDB = dataTable2.getRowUsingReferenceAndKey(conSheet,primaryKey,DBinstance,"TypeOfDB");
 
         String channelID=dataTable2.getValueOnCurrentModule("channelID");
