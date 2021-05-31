@@ -55,7 +55,7 @@ public class IC_Pagination {
 	//Main method
 	public void paginate(ExtentTest test) throws Exception {
 		productFunc.loadProductListingPage("All Products", "", test);
-		action.scrollElemetnToCenterOfView(ic_ClickNext);
+		action.scrollElemetnToCenterOfView(ic_ClickNext,"ic_ClickNext",test);
 		
 		String allProductsInPage = String.valueOf(ic_products.size());
 		if(allProductsInPage != null | allProductsInPage != "") {
@@ -76,7 +76,7 @@ public class IC_Pagination {
 			throw new Exception("Next Button is not enabled or visible");
 		}
 		
-		action.scrollElemetnToCenterOfView(ic_ClickNext);
+		action.scrollElemetnToCenterOfView(ic_ClickNext,"ic_ClickNext",test);
 		
 		String allProductsInPage2 = String.valueOf(ic_products.size());
 		if( allProductsInPage2 != null | allProductsInPage2 != "") {
@@ -94,7 +94,7 @@ public class IC_Pagination {
 			throw new Exception("Back Button is not enabled or visible");
 		}
 		
-		action.scrollElemetnToCenterOfView(ic_ClickNext);
+		action.scrollElemetnToCenterOfView(ic_ClickNext,"ic_ClickNext",test);
 		
 		String allProductsInPage1 = String.valueOf(ic_products.size());
 		if(allProductsInPage1 != null | allProductsInPage1 != "") {

@@ -1,9 +1,5 @@
 package KeywordManager;
 
-import EVSPageOblects.EVS_Delivery;
-import EVSPageOblects.EVS_Login;
-import EVSPageOblects.EVS_ProductSearch;
-import EVSPageOblects.EVS_NewAccountCreation;
 import JDGroupPageObjects.*;
 import SAP_HanaDB.EVS_SAPorderRelated;
 import SAP_HanaDB.SAPCustomerRelated;
@@ -14,7 +10,10 @@ import emailverification.ICGiftCardVerification;
 import emailverification.ICWishlistverification;
 import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ic_ResetPasswordEmailLink;
-import evs_MagentoPageObjects.Evs_MagentoOrderSAPnumber;
+import evs_MagentoPageObjects.EVS_MagentoOrderSAPnumber;
+import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
+import evs_MagentoPageObjects.EVS_Magento_Login;
+import evs_PageObjects.*;
 import ic_MagentoPageObjects.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -119,9 +118,15 @@ public class JDGKeyManager {
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
         EVS_ProductSearch evs_productSearch = new EVS_ProductSearch(driver, dataTable2);
-        Evs_MagentoOrderSAPnumber evs_magentoSAPNumber = new Evs_MagentoOrderSAPnumber(driver, dataTable2);
+        EVS_MagentoOrderSAPnumber evs_magentoSAPNumber = new EVS_MagentoOrderSAPnumber(driver, dataTable2);
         EVS_Delivery evs_delivery = new EVS_Delivery(driver, dataTable2);
         EVS_NewAccountCreation evs_NewAccountCreation = new EVS_NewAccountCreation(driver, dataTable2);
+        EVS_PaymentOption evs_PaymentOption = new EVS_PaymentOption(driver, dataTable2);
+        EVS_PayUPayment evs_PayUPayment = new EVS_PayUPayment(driver, dataTable2);
+        EVS_RetriveOrderID evs_RetriveOrderID = new EVS_RetriveOrderID(driver, dataTable2);
+        EVS_MagentoOrderStatusPage evs_orderStatus = new EVS_MagentoOrderStatusPage(driver, dataTable2);
+        EVS_Magento_Login evs_Login_magento=new EVS_Magento_Login(driver, dataTable2);
+        EVS_SAPorderRelated evs_SAPorderRelated = new EVS_SAPorderRelated(driver,dataMap2, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -402,21 +407,41 @@ public class JDGKeyManager {
             case "NavigateToWishlist_VerifyLoginPageAppear":
                 NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
                 break;
+            //EVS CODE BELOW
             case "evs_Login":
                 evs_Login.Login(test1);
                 break;
             case "evs_ProductSearch":
-            	evs_productSearch.evs_SelectProductAndAddToCart(test1);
-            	break;
+                evs_productSearch.evs_SelectProductAndAddToCart(test1);
+                break;
             case "evs_GenerateOrderSAPnumber":
-            	evs_magentoSAPNumber.GenerateOrderSAPnumber(dataMap2.get(moduleToRun+ "++"), test1, rowNumber);
-            	break;
+                evs_magentoSAPNumber.GenerateOrderSAPnumber(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
             case "evs_DeliveryPopulation":
-            	evs_delivery.deliveryPopulation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                evs_delivery.deliveryPopulation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
             case "evs_AccountCreation":
-            	evs_NewAccountCreation.accountCreation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                evs_NewAccountCreation.accountCreation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
+            case "evs_CheckoutpaymentOption":
+                evs_PaymentOption.CheckoutpaymentOption(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_PayUPagePayment":
+                evs_PayUPayment.PayUPagePayment(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_RetriveOrderID":
+                evs_RetriveOrderID.RetriveOrderID(test1);
+                break;
+            case "evs_OrderStatusSearch":
+                evs_orderStatus.navigateToOrderPage(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "EVS_Login_magento":
+                evs_Login_magento.Login_magento(test1);
+                break;
+            case "evs_SAP_OrderRelated":
+                evs_SAPorderRelated.SAP_OrderDetailVadidation(test1);
+                break;
+
 
         }
     }

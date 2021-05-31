@@ -82,10 +82,10 @@ import utils.hana;
 	    	return finalrow;
 	    }
 	  
-		public void SAP_OrderDetailVadidation(LinkedHashMap<String, ArrayList<String>> input, ExtentTest test,int rowNumber) throws SQLException, IOException{
+		public void SAP_OrderDetailVadidation(ExtentTest test) throws SQLException, IOException{
 			boolean allcheckpoint =true;
 			
-			String DBinstance = input.get("DB_Instance").get(rowNumber);
+			String DBinstance = dataTable2.getValueOnCurrentModule ("DB_Instance");
 			//ECCQA
 			int irow = getConnectionRow(DBinstance);
 			

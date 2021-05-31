@@ -56,6 +56,21 @@ public class Action {
 	public Action(WebDriver driver) {
 		this.driver = driver;
 	}
+
+	public String getPageTitle(ExtentTest test) throws IOException {
+		ExtentTest node=test.createNode("PageTitle");
+		String title="";
+		try{
+			title=driver.getTitle();
+			String screenShot=GenerateScreenShot.getScreenShot(driver);
+			node.pass("success get page title: "+title+node.addScreenCaptureFromPath(screenShot));
+		}catch (Exception e){
+			String screenShot=GenerateScreenShot.getScreenShot(driver);
+			node.pass("failed to get page title: "+node.addScreenCaptureFromPath(screenShot));
+			throw e;
+		}
+		return title;
+	}
 	public String getScreenShot(String screenshotName) throws IOException {
 		File currentDirFile = new File(".");
 		String helper = currentDirFile.getAbsolutePath();
@@ -119,7 +134,7 @@ public class Action {
 				List<WebElement> elements= new ArrayList<WebElement>();
 				elements.add((WebElement) elementAttr);
 				List<WebElement> elements2 = wait.until(ExpectedConditions.visibilityOfAllElements(elements));
-				((WebElement) elementAttr).click();
+				((WebElement) elements2.get(0)).click();
 			}
 			if(name != null){
 				logger.info("Clicked Element: "+ name);
@@ -1711,12 +1726,21 @@ public class Action {
 		explicitWait(6000);
 	}
 
-	public void scrollElemetnToCenterOfView(WebElement element) {
-		String scrollElementIntoMiddle = "var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);"
-                + "var elementTop = arguments[0].getBoundingClientRect().top;"
-                + "window.scrollBy(0, elementTop-(viewPortHeight/2));";
+	public void scrollElemetnToCenterOfView(WebElement element,String name,ExtentTest test) throws IOException {
+		ExtentTest node=test.createNode("Clicked Element: "+ name);
+		try {
+			String scrollElementIntoMiddle = "var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);"
+					+ "var elementTop = arguments[0].getBoundingClientRect().top;"
+					+ "window.scrollBy(0, elementTop-(viewPortHeight/2));";
 
-		((JavascriptExecutor) driver).executeScript(scrollElementIntoMiddle, element);
+			((JavascriptExecutor) driver).executeScript(scrollElementIntoMiddle, element);
+			String screenShot = GenerateScreenShot.getScreenShot(driver);
+			node.pass("scroll to element"+name +node.addScreenCaptureFromPath(screenShot));
+		}catch (Exception e){
+			String screenShot = GenerateScreenShot.getScreenShot(driver);
+			node.fail("unable to scroll to element"+name +node.addScreenCaptureFromPath(screenShot));
+			throw e;
+		}
 	}
 
 }

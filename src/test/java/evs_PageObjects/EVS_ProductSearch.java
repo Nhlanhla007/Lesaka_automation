@@ -73,7 +73,7 @@ import utils.Action;
 		@FindBy(xpath = "//body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[3]/nav[1]/ul[1]/li[1]/ul[1]/li[1]/ul[1]/li[9]/a[1]/span[1]")
 		WebElement software;
 
-		@FindBy(xpath = "//span[contains(text(),'Furniture & Décor')]")
+		@FindBy(xpath = "//span[contains(text(),'Furniture & Dï¿½cor')]")
 		WebElement furnitureAndDecor;
 
 		@FindBy(xpath = "//*[@class=\"box-tocart\"]/div/span")
@@ -274,7 +274,7 @@ import utils.Action;
 					if (isPresent) {
 						action.click(shopByDeptLink, "Shop By Department", test);
 						WebElement typeOfSearch = byCategory(category);
-						action.scrollElemetnToCenterOfView(typeOfSearch);
+						action.scrollElemetnToCenterOfView(typeOfSearch,"typeOfSearch",test);
 						action.scrollElementIntoView(typeOfSearch);
 						action.click(typeOfSearch, typeOfSearch.getText(), test);
 					}
@@ -337,7 +337,7 @@ import utils.Action;
 	        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);        
 	        boolean isPresent = driver.findElements(By.id("product-addtocart-button")).size() > 0;
 	        if(isPresent) {
-	        	action.scrollElemetnToCenterOfView(productDetailsPageAddToCartButton);
+	        	action.scrollElemetnToCenterOfView(productDetailsPageAddToCartButton,"productDetailsPageAddToCartButton",test);
 			//action.click(productDetailsPageAddToCartButton, "Add To Cart", test);
 			productDetailsPageAddToCartButton.click();
 			cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds), test);

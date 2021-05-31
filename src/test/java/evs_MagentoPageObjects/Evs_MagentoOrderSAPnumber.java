@@ -19,11 +19,11 @@ import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
 
-public class Evs_MagentoOrderSAPnumber {
+public class EVS_MagentoOrderSAPnumber {
 	WebDriver driver;
     Action action;
     
-    public Evs_MagentoOrderSAPnumber(WebDriver driver, DataTable2 dataTable2) {
+    public EVS_MagentoOrderSAPnumber(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
@@ -51,8 +51,9 @@ public class Evs_MagentoOrderSAPnumber {
 			
 			try {
 				if(action.elementExists(OrderDetailSAPNumber, 10)){
-						OrderSAPnumber = action.getText(OrderDetailSAPNumber, "SAP Number",test);
-						action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
+						action.scrollElemetnToCenterOfView(OrderDetailSAPNumber,"OrderDetailSAPNumber",test);
+						OrderSAPnumber = OrderDetailSAPNumber.getText();//action.getText(OrderDetailSAPNumber, "SAP Number",test);
+						//action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
 						System.out.println(OrderSAPnumber);
 					if(OrderSAPnumber.isEmpty()){
 			    		action.explicitWait(TimeOutinSecond);
@@ -82,9 +83,9 @@ public class Evs_MagentoOrderSAPnumber {
 			totalConunter++;
 		}
     	if(flagres){
-    		action.CompareResult("Verify SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
+    		action.CompareResult("SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
     	}else{
-    		action.CompareResult("Verify SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
+    		action.CompareResult("SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
     		throw new Exception("SAP Order Number Is Not Generated");
     	}
     	System.out.println();

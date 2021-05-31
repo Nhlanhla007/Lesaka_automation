@@ -38,15 +38,14 @@ public class EVS_RetriveOrderID {
         String orderID = null;
         action.explicitWait(10000);
         if(typeOfUser.equalsIgnoreCase("Registered")) {
-            orderID = action.getText(OrderIDRegisteredUser, "Order ID");
+            orderID = action.getText(OrderIDRegisteredUser, "Order ID",test);
             orderID = orderID.replace("Your order # is: ","").replace(".","");
             action.CompareResult("Order Id "+orderID+" has been retrieved ", "true", "true", test);
             dataTable2.setValueOnCurrentModule ("orderID",orderID);
             dataTable2.setValueOnOtherModule("evs_OrderStatusSearch","orderID",orderID,0);	
         }else if(typeOfUser.equalsIgnoreCase("Guest")) {
-            orderID = action.getText(OrderIDGuestUser, "Order ID");
-        	orderID = OrderIDGuestUser.getText();
-            orderID = orderID.replace("Your order # is: ","").replace(".","");
+            orderID = action.getText(OrderIDGuestUser, "Order ID",test);
+             orderID = orderID.replace("Your order # is: ","").replace(".","");
             action.CompareResult("Order Id "+orderID+" has been retrieved ", "true", "true", test);
             dataTable2.setValueOnCurrentModule ("orderID",orderID);
             dataTable2.setValueOnOtherModule("evs_OrderStatusSearch","orderID",orderID,0);

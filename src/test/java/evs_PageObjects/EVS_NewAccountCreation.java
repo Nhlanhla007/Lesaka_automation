@@ -242,7 +242,8 @@ public class EVS_NewAccountCreation {
 			
 			if(existingAccountValidation.equalsIgnoreCase("yes")) {
 				action.explicitWait(8000);
-				action.elementExistWelcome(existingAccountError, 6, existingAccountError.getText(), test);
+				String error= action.getText(existingAccountError,"existingAccountError",test);
+				action.elementExistWelcome(existingAccountError, 6, error, test);
 			}
 			
 			if(!(saIDvalidateIncorrectID.equalsIgnoreCase("yes") | saIDvalidateIDWithLessDigits.equalsIgnoreCase("yes") | 

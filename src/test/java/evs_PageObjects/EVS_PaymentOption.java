@@ -92,7 +92,7 @@ public class EVS_PaymentOption {
 	public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
 			throws IOException {
 		try {
-			ystem.out.println("##############START Execution###############");
+			System.out.println("##############START Execution###############");
 			action.explicitWait(15000);
 			String Paytype = input.get("Paytype_Option").get(rowNumber);
 			action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);

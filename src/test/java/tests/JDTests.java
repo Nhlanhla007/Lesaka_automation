@@ -58,7 +58,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2 = new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("TAMain2705");
+		dataTable2.setPath("Main");
 		dataMap2 = dataTable2.getExcelData();
 		km=new JDGKeyManager(driver,dataTable2,dataMap2);
 		LinkedHashMap<String, ArrayList<String>> suites = dataMap2.get("Suites");
@@ -117,6 +117,8 @@ public class JDTests extends BaseTest {
 							dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 							dataTable2.setModule(actionToRun);
 //							runKeyWord(actionToRun, test);
+//							if(!test.getStatus().toString().toLowerCase().equals("pass"))
+//								throw new Exception("failing");
 							km.runKeyWord(actionToRun,testcaseID,occCount,test);
 							writeToExcel(createFile());
 						}

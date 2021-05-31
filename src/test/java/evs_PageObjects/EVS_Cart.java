@@ -91,7 +91,7 @@ public class EVS_Cart {
 	    }
 	    
 	    public double sum;
-		  public void iCcartVerification2(Map<String, List<String>> products,ExtentTest test) {
+		  public void iCcartVerification2(Map<String, List<String>> products,ExtentTest test) throws IOException {
 			  //Verifies if all the products have been added in the cart
 			  String itemsCount = itemsInCartCounter(test);
 			  //need to compare that the quantity in the list matches the itemsCount
@@ -120,6 +120,7 @@ public class EVS_Cart {
 				  }
 				action.CompareResult("Products Total", String.valueOf(sum), icSubtotal.getText().replace("R", "").replace(",", "") , test);
 				action.CompareResult("Cart Counter Verfication", String.valueOf(allProductsInCartQuantity), itemsCount, test);
+
 				action.click(icCCheckout, "Secure Checkout", test);
 				dataTable2.setValueOnOtherModule("evs_ProductSearch", "CartTotal", String.valueOf(sum), 0);
 			} catch (Exception e) {
@@ -213,8 +214,8 @@ public class EVS_Cart {
 	    }
 	    
 	    
-	    public String itemsInCartCounter(ExtentTest test) {
-	    	String counterValue = cartCounterIcon.getText();
+	    public String itemsInCartCounter(ExtentTest test) throws IOException {
+			String counterValue =  action.getText(cartCounterIcon,"cartCounterIcon",test);
 	    	if(counterValue == ""|counterValue==null|counterValue.equals("0")) {
 	    		counterValue = "0";
 	    	}
