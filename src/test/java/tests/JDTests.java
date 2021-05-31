@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import EVSPageOblects.EVS_Login;
 import KeywordManager.JDGKeyManager;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SapRSI;
@@ -18,6 +17,7 @@ import emailverification.ICGiftCardVerification;
 import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ICWishlistverification;
 import emailverification.ic_ResetPasswordEmailLink;
+import evs_PageObjects.EVS_Login;
 import ic_MagentoPageObjects.*;
 import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.Magento_UserInfoVerification;
@@ -58,7 +58,7 @@ public class JDTests extends BaseTest {
 	public void suiteExecutor() throws Exception {
 		dataTable2 = new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("MAIN");
+		dataTable2.setPath("TAMain2705");
 		dataMap2 = dataTable2.getExcelData();
 		km=new JDGKeyManager(driver,dataTable2,dataMap2);
 		LinkedHashMap<String, ArrayList<String>> suites = dataMap2.get("Suites");

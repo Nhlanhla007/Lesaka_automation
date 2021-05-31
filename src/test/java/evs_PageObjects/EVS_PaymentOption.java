@@ -92,11 +92,8 @@ public class EVS_PaymentOption {
 	public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
 			throws IOException {
 		try {
-			driver.navigate().to(ConfigFileReader.getPropertyVal("EVS_URL"));
-			action.explicitWait(3000);
-			action.explicitWait(14000);
-			System.out.println("##############START Execution###############");
-			action.explicitWait(8000);
+			ystem.out.println("##############START Execution###############");
+			action.explicitWait(15000);
 			String Paytype = input.get("Paytype_Option").get(rowNumber);
 			action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 			WebElement paymenttype = evs_SelectPaymentMethod(Paytype);
@@ -104,6 +101,7 @@ public class EVS_PaymentOption {
 			action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
 			action.explicitWait(10000);
 			action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

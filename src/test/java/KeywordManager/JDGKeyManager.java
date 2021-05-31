@@ -5,6 +5,7 @@ import EVSPageOblects.EVS_Login;
 import EVSPageOblects.EVS_ProductSearch;
 import EVSPageOblects.EVS_NewAccountCreation;
 import JDGroupPageObjects.*;
+import SAP_HanaDB.EVS_SAPorderRelated;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
 import SAP_HanaDB.SapRSI;

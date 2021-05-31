@@ -48,20 +48,19 @@ public class EVS_PayUPayment {
 			throws IOException {
 
 		try {
-			driver.navigate().to(ConfigFileReader.getPropertyVal("EVS_URL"));
 			action.explicitWait(5000);
 			String cardnumber = dataTable2.getValueOnCurrentModule("cardnumber");
 			String cardholdername = dataTable2.getValueOnCurrentModule("cardholdername");
 			String Expiremonth = dataTable2.getValueOnCurrentModule("Expiremonth");
 			String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
 			String cvv = dataTable2.getValueOnCurrentModule("cvv");
-			action.explicitWait(5000);
+			action.explicitWait(10000);
 			action.clickEle(PayU_Card, " Card option in PayU", test);
 			// Enter card details
 			action.writeText(cardNumber, cardnumber, "card number", test);
 			action.writeText(nameOnCard, cardholdername, "name on card", test);
 			action.dropDownselectbyvisibletext(expMonth, Expiremonth, "Select Expirey Month on Card", test);
-			action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Month on Card", test);
+			action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Year on Card", test);
 			action.writeText(cvvNumber, cvv, "cvv number", test);
 			action.clickEle(PayBtn, "Payment submission button", test);
 			action.explicitWait(10);
