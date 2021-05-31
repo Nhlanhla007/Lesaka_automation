@@ -40,14 +40,14 @@ public class EVS_RetriveOrderID {
         	//action.isElementOnNextPage(OrderIDRegisteredUser, (long) 11,test);
         	orderID = OrderIDRegisteredUser.getText();
             orderID = orderID.replace("Your order # is: ","").replace(".","");
-            action.CompareResult("Order Id "+orderID+" has been retrieved ", "true", "true", test);
+            action.CompareResult("PO is generated with number: "+orderID, "true", "true", test);
             dataTable2.setValueOnCurrentModule ("orderID",orderID);
             dataTable2.setValueOnOtherModule("evs_OrderStatusSearch","orderID",orderID,0);	
         }else if(typeOfUser.equalsIgnoreCase("Guest")) {
         	//action.isElementOnNextPage(OrderIDGuestUser, (long) 11,test);
         	orderID = OrderIDGuestUser.getText();
             orderID = orderID.replace("Your order # is: ","").replace(".","");
-            action.CompareResult("Order Id "+orderID+" has been retrieved ", "true", "true", test);
+            action.CompareResult("PO is generated with number: "+orderID, "true", "true", test);
             dataTable2.setValueOnCurrentModule ("orderID",orderID);
             dataTable2.setValueOnOtherModule("evs_OrderStatusSearch","orderID",orderID,0);
         }        
