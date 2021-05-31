@@ -1,6 +1,7 @@
 package KeywordManager;
 
 import JDGroupPageObjects.*;
+import SAP_HanaDB.EVS_SAPorderRelated;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
 import SAP_HanaDB.SapRSI;
@@ -138,6 +139,7 @@ public class JDGKeyManager {
 		EVS_PayUPayment evs_PayUPayment = new EVS_PayUPayment(driver, dataTable2);
 		EVS_RetriveOrderID evs_RetriveOrderID = new EVS_RetriveOrderID(driver, dataTable2);
 		EVS_MagentoOrderStatusPage evs_orderStatus = new EVS_MagentoOrderStatusPage(driver, dataTable2);
+		EVS_SAPorderRelated evs_SAPorderRelated = new EVS_SAPorderRelated(driver, dataMap2, dataTable2);
 		ExtentTest test1 = test.createNode(moduleToRun);
 		int rowNumber = -1;
 		if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -449,6 +451,9 @@ public class JDGKeyManager {
 			break;
 		case "evs_OrderStatusSearch":
 			evs_orderStatus.navigateToOrderPage(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+			break;
+		case "evs_SAP_OrderRelated":
+			evs_SAPorderRelated.SAP_OrderDetailVadidation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
 			break;
 
 		}
