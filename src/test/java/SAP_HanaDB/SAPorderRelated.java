@@ -16,6 +16,7 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import JDGroupPageObjects.ICDelivery;
+import evs_PageObjects.EVS_Delivery;
 import JDGroupPageObjects.IC_Cart;
 import JDGroupPageObjects.Ic_Products;
 import JDGroupPageObjects.ic_PayUPayment;
@@ -116,10 +117,13 @@ import utils.hana;
 				ExpSku.add(SKU);
 				//ExpSku.add("000000000010119332");//to be removed
 		  //}
-			
-			String ExpCITY=  ICDelivery.Cityname.toLowerCase().trim();//"johannesburg";
-			String ExpSTREET= ICDelivery.Streetname.toLowerCase().trim();//"33 baker street"; 
-			String ExpPostalcode = ICDelivery.Postalcode.trim();//"2196";
+				
+			//String ExpCITY=  ICDelivery.Cityname.toLowerCase().trim();//"johannesburg";		
+			String ExpCITY= EVS_Delivery.Cityname.toLowerCase().trim();
+			//String ExpSTREET= ICDelivery.Streetname.toLowerCase().trim();//"33 baker street"; 
+			String ExpSTREET = EVS_Delivery.Streetname.toLowerCase().trim();
+			//String ExpPostalcode = ICDelivery.Postalcode.trim();//"2196";
+			String ExpPostalcode = EVS_Delivery.Postalcode.trim();
 			
 			
 			//--------------------------------------------------------------------------
