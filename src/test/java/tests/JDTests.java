@@ -135,7 +135,7 @@ public class JDTests extends BaseTest {
 
 			}
 
-		}
+
 	}
 
 
@@ -513,9 +513,6 @@ public class JDTests extends BaseTest {
 			}
 			return rowNumber;
 		}
-		return rowNumber;
-	}
-
 
 		public void startBrowserSession () {
 			driver = null;
@@ -540,11 +537,8 @@ public class JDTests extends BaseTest {
 				}
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
 			}
-
-				navigateURL = ConfigFileReader.getPropertyVal("URL");
-			}
 			logger.info("Navigate to URL");
-			Report.info("Navigating to URL: "+navigateURL);
+
 
 			driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
