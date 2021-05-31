@@ -23,6 +23,7 @@ import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 import net.bytebuddy.implementation.bytecode.Throw;
 import utils.Action;
+import utils.Base64Decoding;
 import utils.DataTable2;
 import utils.hana;
 
@@ -38,6 +39,7 @@ public class SAPCustomerRelated {
 	MagentoAccountInformation magentoVerification;
 	static Map<String, String> dataStore;
 	DataTable2 dataTable2;
+	Base64Decoding decodePassword;
 	
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());
 	public SAPCustomerRelated(WebDriver driver,LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2,DataTable2 dataTable2) {
@@ -49,6 +51,7 @@ public class SAPCustomerRelated {
 		this.dataTable2 = dataTable2;
 		magentoRetrieve = new MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
 		magentoVerification = new MagentoAccountInformation(driver,dataTable2);
+		decodePassword = new Base64Decoding();
 	}
 
 	public int getConnectionRow(String Instance){
@@ -135,6 +138,7 @@ public class SAPCustomerRelated {
 		Port = dataMap2.get("DB_connection_master++").get("port").get(irow);
 		Username = dataMap2.get("DB_connection_master++").get("Username").get(irow);
 		Password = dataMap2.get("DB_connection_master++").get("Password").get(irow);
+		Password = decodePassword.decode(Password);
 		TypeOfDB = dataMap2.get("DB_connection_master++").get("TypeOfDB").get(irow);
 		  
 		 

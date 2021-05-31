@@ -22,6 +22,7 @@ import JDGroupPageObjects.ic_PayUPayment;
 import Logger.Log;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 import utils.Action;
+import utils.Base64Decoding;
 import utils.DataTable2;
 import utils.hana;
 
@@ -33,6 +34,7 @@ import utils.hana;
 		WebDriver driver;
 	    Action action;
 	    DataTable2 dataTable2;
+	    Base64Decoding decodePassword;
 	     LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
 	    public SAPorderRelated(WebDriver driver,LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2,DataTable2 dataTable2) {
 	        this.driver = driver;
@@ -40,6 +42,7 @@ import utils.hana;
 	        action = new Action(driver);
 	        this.dataMap2=dataMap2;
 	        this.dataTable2 = dataTable2;
+	        decodePassword = new Base64Decoding();
 	    }
 	    
 	    static Logger logger = Log.getLogData(Action.class.getSimpleName());
@@ -80,7 +83,7 @@ import utils.hana;
 	    	return finalrow;
 	    }
 	  
-		public void SAP_OrderDetailVadidation(LinkedHashMap<String, ArrayList<String>> input, ExtentTest test,int rowNumber) throws SQLException, IOException{
+		public void SAP_OrderDetailVadidation(LinkedHashMap<String, ArrayList<String>> input, ExtentTest test,int rowNumber) throws Exception{
 			boolean allcheckpoint =true;
 			
 			String DBinstance = input.get("DB_Instance").get(rowNumber);
@@ -91,6 +94,7 @@ import utils.hana;
 			String Port =  dataMap2.get("DB_connection_master++").get("port").get(irow);
 			String Username =  dataMap2.get("DB_connection_master++").get("Username").get(irow);
 			String Password =  dataMap2.get("DB_connection_master++").get("Password").get(irow);
+			Password = decodePassword.decode(Password);
 			String TypeOfDB = dataMap2.get("DB_connection_master++").get("TypeOfDB").get(irow);
 			//String name = "DBconnect";
 			//String DBType ="ECC_QA";

@@ -51,7 +51,7 @@ public class EVS_MagentoOrderSAPnumber {
 			
 			try {
 				if(action.elementExists(OrderDetailSAPNumber, 10)){
-						action.scrollElemetnToCenterOfView(OrderDetailSAPNumber);
+						action.scrollElemetnToCenterOfView(OrderDetailSAPNumber,"OrderSapNumber",test);
 						OrderSAPnumber = OrderDetailSAPNumber.getText();//action.getText(OrderDetailSAPNumber, "SAP Number",test);
 						//action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
 						System.out.println(OrderSAPnumber);
