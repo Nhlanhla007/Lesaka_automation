@@ -155,7 +155,7 @@ public class EVS_Delivery {
     	if(action.waitUntilElementIsDisplayed(deliveryLink, 10000)) {
         action.click(deliveryLink,"deliveryLink",test);
     	}
-        String addressTypeICFont = action.getText(ic_AddressType, "Get Address Type");//ic_AddressType.getText();        
+        String addressTypeICFont = action.getText(ic_AddressType, "Get Address Type",test);//ic_AddressType.getText();
         action.explicitWait(4000);
         if(addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Enter your delivery address & contact details:")) {
         if(userType.equalsIgnoreCase("Guest")) {

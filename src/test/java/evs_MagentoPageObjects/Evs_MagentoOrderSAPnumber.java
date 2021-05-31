@@ -51,7 +51,7 @@ public class Evs_MagentoOrderSAPnumber {
 			
 			try {
 				if(action.elementExists(OrderDetailSAPNumber, 10)){
-						OrderSAPnumber = action.getText(OrderDetailSAPNumber, "SAP Number");
+						OrderSAPnumber = action.getText(OrderDetailSAPNumber, "SAP Number",test);
 						action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
 						System.out.println(OrderSAPnumber);
 					if(OrderSAPnumber.isEmpty()){
