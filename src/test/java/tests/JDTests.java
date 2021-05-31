@@ -1,6 +1,8 @@
 package tests;
 
 import java.io.*;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,7 +24,9 @@ import ic_MagentoPageObjects.Magento_UserInfoVerification;
 import ic_MagentoPageObjects.MagentoRegisterNewUser;
 import ic_MagentoPageObjects.admin_UserUpdate;
 import ic_MagentoPageObjects.ic_Magento_Login;
+import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
+import ic_MagentoPageObjects.ic_Magento_Login;
 import com.aventstack.extentreports.ExtentTest;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -37,11 +41,13 @@ import org.testng.annotations.Test;
 
 
 import JDGroupPageObjects.*;
+import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
 import utils.*;
 
 public class JDTests extends BaseTest {
 	ExtentReportJD reportJD;
+
 	public String currentSuite;
 	public String currentKeyWord;
 	HashMap<String, Integer> occCount = null;
@@ -67,6 +73,7 @@ public class JDTests extends BaseTest {
 			}
 		}
 	}
+
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws Exception {
 
@@ -106,6 +113,7 @@ public class JDTests extends BaseTest {
 								occNum++;
 								occCount.put(currentKeyWord, occNum);
 							}
+//								dataTable2.setTestCaseID(actionToRun);
 							dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
 							dataTable2.setModule(actionToRun);
 //							runKeyWord(actionToRun, test);
@@ -127,6 +135,7 @@ public class JDTests extends BaseTest {
 
 			}
 
+
 	}
 	public void startBrowserSession () {
 			driver = null;
@@ -143,6 +152,12 @@ public class JDTests extends BaseTest {
 
 				driver = TestCaseBase.initializeTestBaseSetup(browserName);
 				driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+
+				navigateURL = System.getProperty("URL");
+				if (navigateURL == null) {
+					logger.info("System property returned Null URL. So getting data from Config file");
+					navigateURL = ConfigFileReader.getPropertyVal("URL");
+				}
 				navigateURL = ConfigFileReader.getPropertyVal("URL");
 				logger.info("Navigate to URL");
 //				driver.navigate().to(navigateURL);
@@ -196,8 +211,14 @@ public class JDTests extends BaseTest {
 			myWorkBook.close();
 
 	}
+
 	public File createFile() throws IOException {
 		File myObj = new File(System.getProperty("user.dir") + "\\reports\\Datasheet.xlsx");
 		return myObj;
 	}
+
+
+
+
+
 }
