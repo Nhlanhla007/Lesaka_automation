@@ -41,7 +41,8 @@ public class ic_RedeemGiftCard {
 	 @FindBy(xpath = "//span[contains(text(),'Products')]")
 	 WebElement icProductLink;
 	 
-	 @FindBy(xpath = "//html/body/div[1]/header/div/div/a/span[2]")
+	 //@FindBy(xpath = "//html/body/div[1]/header/div/div/a/span[2]")
+	 @FindBy(css = "a.go-back")
 	 WebElement ic_Back;
 	 
 	 @FindBy(xpath = "//*[@id=\"block-giftcard-heading\"]")
@@ -91,14 +92,18 @@ public class ic_RedeemGiftCard {
 	 
 	 int finalAmount = 0;
 	 int finalOrder = 0;
-	 public void redeemGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+	 public void redeemGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, Exception{
 		 String giftCardCode = input.get("giftCardCode").get(rowNumber);
 		 String scratchCode = input.get("scratchCode").get(rowNumber);
 		 String UsageType = dataTable2.getValueOnCurrentModule("UsageType");
 		 
-		 action.explicitWait(9000);
-		 action.click(ic_Back, "view and Edit your cart", test);
+		 if(action.waitUntilElementIsDisplayed(ic_Back, 10000)) {
+		 action.explicitWait(5000);
+		 action.click(ic_Back, "Navigate back to cart screen", test);
+		 }
+		 if(action.waitUntilElementIsDisplayed(ic_RedeemGiftCardSelect, 10000)) {
 		 action.click(ic_RedeemGiftCardSelect, "Before you enter the gift card details", test);
+		 }
 		 //Enter the field
 		 if(UsageType.equalsIgnoreCase("Redeem")){
 		 action.writeText(ic_GiftCardCode, giftCardCode, "Gift Card code", test);

@@ -49,7 +49,7 @@ public class ic_invalidLoginCreds {
 			@FindBy(xpath = "//*[@id=\"email-error\"]")
 			WebElement ic_InvalidUsername;
 			//div[contains(text(),'Your account sign-in was incorrect. Please try again.')]Your account sign-in was incorrect. Please try again.
-			@FindBy(xpath = "//html/body/div[1]/header/div[3]/div[2]/div/div")
+			@FindBy(xpath = "//*[@class= \"message-error error message\"]/div")
 			WebElement ic_InvalidCreds;
 			
 			//*[@id="email-error"]

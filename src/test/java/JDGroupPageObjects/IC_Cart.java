@@ -48,7 +48,7 @@ public class IC_Cart {
 	    static Logger logger = Log.getLogData(Action.class.getSimpleName());
 	    
 	    //@FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
-	    @FindBy(xpath = "//header/div[2]/div/div[3]/div[3]/a")
+	    @FindBy(xpath="//*[@class=\"action showcart\"]")
 	    private WebElement iCCartButton;
 	    
 	    //loop throUGH THIS HERE TO DETERMINE IF THE PRODUCT IS FOUND, IF FOUND VALIDATE QUANTITY AND PRICE

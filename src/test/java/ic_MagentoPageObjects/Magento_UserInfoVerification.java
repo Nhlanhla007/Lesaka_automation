@@ -115,7 +115,7 @@ public class Magento_UserInfoVerification {
 	  WebElement admin_Billing_streetAddress;
 	 
 	
-	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException, ClassNotFoundException {
+	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
 		int TimetoLoadpage=11;	
 		String ExpFirstname = null;
 		String ExpLastname = null;
@@ -382,6 +382,7 @@ public class Magento_UserInfoVerification {
 		String actualEmail = action.getAttribute(Cust_Email, "value");
 		action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, actualEmail, test);
 
+		
 		String ActualBPnumber =FetchDataFromCustInfo_MagentoBackend(customerBPnnumber,"customerBPnnumber",TimetoLoadpage,40,test);
 		System.out.println("ActualBPnumber:"+ActualBPnumber);
 		//hana han = new hana();
@@ -433,7 +434,7 @@ public class Magento_UserInfoVerification {
 		}*/
 		
 	}
-	public String FetchDataFromCustInfo_MagentoBackend(WebElement element,String elename,int TimetoLoadpage,int TimeOutinSecond,ExtentTest test) throws IOException, InterruptedException {
+	public String FetchDataFromCustInfo_MagentoBackend(WebElement element,String elename,int TimetoLoadpage,int TimeOutinSecond,ExtentTest test) throws Exception {
 		int trycount=1;
 		String resData="";
 		long startTime = System.currentTimeMillis(); // ... long finish = System.currentTimeMillis(); long timeElapsed = finish - start
@@ -459,10 +460,11 @@ public class Magento_UserInfoVerification {
 //			Instant finish = Instant.now();
 //			long timeElapsed = Duration.between(start,finish).toSeconds();
 		}
-		if(resData.isEmpty() ||resData==null){
+		if(resData.isEmpty() | resData==null | resData == ""){
 
 			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "False", test);
-			return resData;
+			throw new Exception("Partner Number Is Not Generated");
+			//return resData;
 		}else{
 			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "True", test);
 			return resData;

@@ -79,8 +79,9 @@ public class ICUpdateCustomer {
 	    @FindBy(xpath="//*[@id=\"password-confirmation\"]")
 	    private WebElement passConfirmation;
 	    
-	    @FindBy(xpath="/html/body/div[1]/header/div[3]/div[2]/div/div/div")
-	    private WebElement successSaved;
+	   // @FindBy(xpath="/html/body/div[1]/header/div[3]/div[2]/div/div/div")
+        @FindBy(xpath="//div[contains(text(),'You saved the account information.')]")
+        private WebElement successSaved;
 	    
 	    //still need to add the xpath
 	  //*[@id="account-nav"]/ul/li[5]/a
@@ -129,7 +130,7 @@ public class ICUpdateCustomer {
 	    @FindBy(css = "a.go-back")
 	    private WebElement backButton;
 	    
-	    @FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
+	    @FindBy(xpath="//*[@class=\"action showcart\"]")
 	    private WebElement iCCartButton;
 	    
 	    @FindBy(xpath="//*[@id=\"top-cart-btn-checkout\"]/span")
