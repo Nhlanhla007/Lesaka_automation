@@ -464,7 +464,7 @@ public class JDGKeyManager {
             	evs_RemoveItemsFromCart.removeItemFromCart(test1);
                     break;
             case "evs_PasswordSecured":
-                evs_PasswordSecured.loginPasswordSafe(dataMap2.get("ic_login++"), test1, rowNumber);
+                evs_PasswordSecured.loginPasswordSafe(dataMap2.get("evs_login++"), test1, rowNumber);
 
 
         }
