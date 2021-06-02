@@ -423,11 +423,11 @@ public class Action {
 				String screenShot=GenerateScreenShot.getScreenShot(driver);
 				node.pass("get Text from element:"+ node.addScreenCaptureFromPath(screenShot));
 			} else {
-				WebElement fluentElement = waitFluent((WebElement) elementAttr);
-				text = fluentElement.getText();
+				//WebElement fluentElement = waitFluent((WebElement) elementAttr);
+				//text = elementAttr.getText();
 				String screenShot=GenerateScreenShot.getScreenShot(driver);
 				node.pass("get Text from element:"+ node.addScreenCaptureFromPath(screenShot));
-				//text = ((WebElement) elementAttr).getText();
+				text = ((WebElement) elementAttr).getText();
 			}
 			if(name != null){
 				logger.info("Getting text from: "+ name);

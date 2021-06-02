@@ -215,7 +215,7 @@ public class EVS_Cart {
 	    
 	    
 	    public String itemsInCartCounter(ExtentTest test) throws IOException {
-			String counterValue =  cartCounterIcon.getText();// DO NOT CHANGE TO ---> action.getText(cartCounterIcon,"cartCounterIcon",test);
+			String counterValue = action.getText(cartCounterIcon,"cartCounterIcon",test);
 	    	if(counterValue == ""|counterValue==null|counterValue.equals("0")) {
 	    		counterValue = "0";
 	    	}
