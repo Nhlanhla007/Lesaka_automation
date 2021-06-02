@@ -94,8 +94,7 @@ public class JDGKeyManager {
         ic_SearchTextReturningNoResult icReturnNoResults = new ic_SearchTextReturningNoResult(driver, dataTable2);
         IC_CreditAppEmploymentDetails creditAppEmployDetails = new IC_CreditAppEmploymentDetails(driver, dataTable2);
         IC_CreditAppAddressDetails creditAppAddressDetails = new IC_CreditAppAddressDetails(driver, dataTable2);
-        ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(
-                driver, dataTable2);
+        ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
         ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
         ic_Subscriber_Newsletter_ValidEmailaddress ic_SubscribeNewsletter = new ic_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
         IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
@@ -128,6 +127,7 @@ public class JDGKeyManager {
         EVS_MagentoOrderStatusPage evs_orderStatus = new EVS_MagentoOrderStatusPage(driver, dataTable2);
         EVS_Magento_Login evs_Login_magento=new EVS_Magento_Login(driver, dataTable2);
         EVS_SAPorderRelated evs_SAPorderRelated = new EVS_SAPorderRelated(driver,dataMap2, dataTable2);
+        EVS_Cart evs_cart = new EVS_Cart(driver, dataTable2) ;
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -450,6 +450,9 @@ public class JDGKeyManager {
                 break;
             case "evs_SAP_OrderRelated":
                 evs_SAPorderRelated.SAP_OrderDetailVadidation(test1);
+                break;
+            case "evs_ClearCart":
+            	evs_cart.removeAllItemsInCart(test1);
                 break;
 
 

@@ -215,7 +215,7 @@ public class EVS_Cart {
 	    
 	    
 	    public String itemsInCartCounter(ExtentTest test) throws IOException {
-			String counterValue =  action.getText(cartCounterIcon,"cartCounterIcon",test);
+			String counterValue = action.getText(cartCounterIcon,"cartCounterIcon",test);
 	    	if(counterValue == ""|counterValue==null|counterValue.equals("0")) {
 	    		counterValue = "0";
 	    	}
@@ -223,18 +223,18 @@ public class EVS_Cart {
 	    }
 	    
 	    public void navigateToViewAndEditCart(ExtentTest test) throws Exception {
-	    	action.clickEle(viewAndEditCart, "View And Edit Cart", test);
+	    	action.click(viewAndEditCart, "View And Edit Cart", test);
 	    }
 	    
-	    public void removeAllItemsInCart(ExtentTest test) throws Exception {
-	    	driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-	    	//WebDriverWait wait=new WebDriverWait(driver,3);
-	    	//wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[1]/header/div/div/a/span[2]")));
-	    	//(new WebDriverWait(driver, 5)).until(ExpectedConditions.visibilityOf(backButton));
-	    	boolean isPresent = driver.findElements(By.cssSelector("a.go-back")).size() > 0;
-	    	action.explicitWait(5000);
+	    public void removeAllItemsInCart(ExtentTest test) throws Exception {			
+	    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	    	boolean isPresent = driver.findElements(By.cssSelector("a.go-back")).size() > 0;	    	
 	    	if(isPresent) {
-	    		backButton.click();
+	    		
+	    		if(action.waitUntilElementIsDisplayed(backButton, 15000)) {
+	    			action.explicitWait(3000);
+	    			backButton.click();
+	    		}	    		
 	    	}
 	    	action.explicitWait(5000);
 	    	String cartCounter = itemsInCartCounter(test);
@@ -245,10 +245,6 @@ public class EVS_Cart {
 	    	if(Integer.parseInt(cartCounter)>0) {
 	    	navigateToCart(test);
 	    	navigateToViewAndEditCart(test);
-	    	//action.mouseover(removeAllCartItems, "However over cart element");
-	    	//action.explicitWait(7000);
-	    	//action.click(removeAllCartItems, "Remove All items From Cart", test);
-	    	//action.javaScriptClick(removeAllCartItems, "Remove All items From Cart", test);
 	    	action.explicitWait(5000);
 	    	JavascriptExecutor executor = (JavascriptExecutor) driver;
 	    	if(action.waitUntilElementIsDisplayed(removeAllCartItems, 15000)) {
