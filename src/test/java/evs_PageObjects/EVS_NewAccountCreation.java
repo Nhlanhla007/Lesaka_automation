@@ -107,8 +107,8 @@ public class EVS_NewAccountCreation {
     //TA31 Added the My Account click in evs AccountDetails
     @FindBy(xpath = "//*[@id=\"account-nav\"]/ul/li[1]/a")
     WebElement myAccountOption;
-   
-    @FindBy(xpath = "//*[@id=\"maincontent\"]/div/div[2]/div[2]/div[2]/div[2]/div[1]/p")
+    				//old //*[@id=\"maincontent\"]/div/div[2]/div[2]/div[2]/div[2]/div[1]/p
+    @FindBy(xpath = "//*[@id=\"maincontent\"]/div[2]/div[2]/div[5]/div[2]/div[2]/div[1]/p")
     WebElement findNewsLetterStatus;
     
     @FindBy(xpath = "//input[@id='firstname']")
@@ -166,10 +166,10 @@ public class EVS_NewAccountCreation {
 		String identityType = input.get("identityType").get(rowNumber);
 		String identityNumber = input.get("identityNumber/passport").get(rowNumber);
 		String selectNewsLetter = input.get("newsletter").get(rowNumber);
-		String taxVatNumbe = input.get("vatNumber").get(rowNumber);
+		//String taxVatNumbe = input.get("vatNumber").get(rowNumber);
 		String telephone = input.get("Telephone").get(rowNumber);
 		//Added flag for VAT number status check TA31
-		String tavVatNumberFlagStatus = input.get("vatNumberFlag").get(rowNumber);
+		//String tavVatNumberFlagStatus = input.get("vatNumberFlag").get(rowNumber);
 		String passwordValidation = input.get("validatePassword").get(rowNumber);
 		String saIDvalidateIncorrectID = input.get("validateIncorrectID").get(rowNumber);
 		String saIDvalidateIDWithLessDigits = input.get("validateIDWithLessDigits").get(rowNumber);
@@ -249,7 +249,7 @@ public class EVS_NewAccountCreation {
 			if(!(saIDvalidateIncorrectID.equalsIgnoreCase("yes") | saIDvalidateIDWithLessDigits.equalsIgnoreCase("yes") | 
 					saIDvalidateIDWithMoreDigits.equalsIgnoreCase("yes")  | 
 					passwordValidation.equalsIgnoreCase("yes") | existingAccountValidation.equalsIgnoreCase("yes"))) {
-				Verify_Acount_Information(test, firstName, lastName, emailAddress, identityNumber,taxVatNumbe,tavVatNumberFlagStatus,identityType,selectNewsLetter);
+				Verify_Acount_Information(test, firstName, lastName, emailAddress, identityNumber,identityType,selectNewsLetter);//,taxVatNumbe,tavVatNumberFlagStatus
 			}
 			/*
 			 * if(verifyMagentoDetails.equalsIgnoreCase("Yes")) {
@@ -338,8 +338,8 @@ public class EVS_NewAccountCreation {
 	
 	
 	//Sourav TA17
-	//TA27,28,29,30,31 CHECKS FLAG AND VALIDATES WHAT FLAG INDICATED COLUMN H IN accountCreation++
-    public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID,String expVatNumber,String expVatNumberFlag,String expIdentityType,String expNewsletter) throws IOException, Exception{
+	//TA27,28,29,30,31 CHECKS FLAG AND VALIDATES WHAT FLAG INDICATED COLUMN H IN accountCreation++ //,String expVatNumber,String expVatNumberFlag
+    public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID,String expIdentityType,String expNewsletter) throws IOException, Exception{
         String ExpPage ="edit";
         boolean accInfoOpt = action.waitUntilElementIsDisplayed(Account_info_option, 20000);//action.elementExists(Account_info_option, 11);
         if(accInfoOpt==true){
@@ -353,14 +353,14 @@ public class EVS_NewAccountCreation {
                
                 String ActualLastname = action.getAttribute(Lastname, "value");
                
-                action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
+                action.click(Change_Emailcheckbox, "Enable click email checkbox ", test);
                 action.explicitWait(5000);
                 String ActualEmail = action.getAttribute(Email, "value");
-                action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
+                action.click(Change_Emailcheckbox, "Enable click email checkbox ", test);
                
                 String ActualSAID = action.getAttribute(SAID, "value");
                 //TA31
-                String ActualTaxVatNumber =action.getAttribute(taxVatNumber, "value");
+                //String ActualTaxVatNumber =action.getAttribute(taxVatNumber, "value");
                 String ActualPassport = action.getAttribute(passport, "value");
 
                 action.CompareResult("Verify First Name ", expFirstName,ActualFirstname, test);
@@ -395,9 +395,9 @@ public class EVS_NewAccountCreation {
 					
                 }
                 //TA31
-                if(expVatNumberFlag.equalsIgnoreCase("yes")) {
+                /*if(expVatNumberFlag.equalsIgnoreCase("yes")) {
                 action.CompareResult("Verify Tax Vat Number", expVatNumber, ActualTaxVatNumber, test);
-                }
+                }*/
             }else{
                 action.CompareResult("Verify Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
                
