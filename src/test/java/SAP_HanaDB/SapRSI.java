@@ -111,4 +111,36 @@ public class SapRSI {
         action.click(sapDataTab,"sapDataTab",test);
         System.out.println(action.getText(roughStockIndicatorAct,"roughStockIndicator",test));
     }
+    public void getArticleQuantity(ExtentTest test) throws IOException {
+        action.click(catalogTab,"catalogTab",test);
+        action.click(productsTab,"productsTab",test);
+        action.explicitWait(5000);
+        action.click(Clearbutton,"Clearbutton",test);
+        action.explicitWait(5000);
+        action.click(magentoFilterTab,"magentoFilterTab",test);
+        action.writeText(sku,dataTable2.getValueOnOtherModule ("SapRSIGetDataFromSAPDB","SKUCode",0),"skuInputTest",test);
+        action.click(magentoApplyFilterTab,"magentoApplyFilterTab",test);
+        action.explicitWait(5000);
+        action.javaScriptClick(clickEdit, "clickEdit", test);
+        action.explicitWait(5000);
+        action.click(sapDataTab,"sapDataTab",test);
+        System.out.println(action.getText(roughStockIndicatorAct,"roughStockIndicator",test));
+    }
+
+
+    public void getSalableArticle(ExtentTest test) throws IOException {
+        action.click(catalogTab,"catalogTab",test);
+        action.click(productsTab,"productsTab",test);
+        action.explicitWait(5000);
+        action.click(Clearbutton,"Clearbutton",test);
+        action.explicitWait(5000);
+        action.click(magentoFilterTab,"magentoFilterTab",test);
+        action.writeText(sku,dataTable2.getValueOnOtherModule ("SapRSIGetDataFromSAPDB","SKUCode",0),"skuInputTest",test);
+        action.click(magentoApplyFilterTab,"magentoApplyFilterTab",test);
+        action.explicitWait(5000);
+        action.javaScriptClick(clickEdit, "clickEdit", test);
+        action.explicitWait(5000);
+        action.click(sapDataTab,"sapDataTab",test);
+        System.out.println(action.getText(roughStockIndicatorAct,"roughStockIndicator",test));
+    }
 }

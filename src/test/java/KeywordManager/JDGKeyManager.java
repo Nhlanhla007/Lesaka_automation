@@ -408,10 +408,15 @@ public class JDGKeyManager {
             case "NavigateToWishlist_VerifyLoginPageAppear":
                 NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
                 break;
+            case "skuProduct":
+                products.skuProduct(test1);
+                break;
+
+
             case"validatePaymentOption":
 				icPaymentOptions.validatePaymentOption(dataMap2.get(moduleToRun + "++"),test1, rowNumber);
 				break;
-				
+
             //EVS CODE BELOW
             case "evs_Login":
                 evs_Login.Login(test1);
@@ -446,7 +451,7 @@ public class JDGKeyManager {
             case "evs_SAP_OrderRelated":
                 evs_SAPorderRelated.SAP_OrderDetailVadidation(test1);
                 break;
-           
+
 
         }
     }
