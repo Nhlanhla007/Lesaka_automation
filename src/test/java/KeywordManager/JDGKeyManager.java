@@ -128,6 +128,7 @@ public class JDGKeyManager {
         EVS_Magento_Login evs_Login_magento=new EVS_Magento_Login(driver, dataTable2);
         EVS_SAPorderRelated evs_SAPorderRelated = new EVS_SAPorderRelated(driver,dataMap2, dataTable2);
         EVS_Cart evs_cart = new EVS_Cart(driver, dataTable2) ;
+        EVS_IncreaseQuanityInCart evs_increaseQuantityInCart = new EVS_IncreaseQuanityInCart(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -453,6 +454,9 @@ public class JDGKeyManager {
                 break;
             case "evs_ClearCart":
             	evs_cart.removeAllItemsInCart(test1);
+                break;
+            case "evs_IncreaseQuanityInCart":
+            	evs_increaseQuantityInCart.increaseQuantity(test1);
                 break;
 
 

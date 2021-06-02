@@ -226,9 +226,10 @@ public class EVS_Cart {
 	    	action.click(viewAndEditCart, "View And Edit Cart", test);
 	    }
 	    
-	    public void removeAllItemsInCart(ExtentTest test) throws Exception {			
+	    public void removeAllItemsInCart(ExtentTest test) throws Exception {
 	    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-	    	boolean isPresent = driver.findElements(By.cssSelector("a.go-back")).size() > 0;	    	
+	    	boolean isPresent = driver.findElements(By.cssSelector("a.go-back")).size() > 0;
+	    	action.explicitWait(5000);
 	    	if(isPresent) {
 	    		
 	    		if(action.waitUntilElementIsDisplayed(backButton, 15000)) {
@@ -245,6 +246,10 @@ public class EVS_Cart {
 	    	if(Integer.parseInt(cartCounter)>0) {
 	    	navigateToCart(test);
 	    	navigateToViewAndEditCart(test);
+	    	//action.mouseover(removeAllCartItems, "However over cart element");
+	    	//action.explicitWait(7000);
+	    	//action.click(removeAllCartItems, "Remove All items From Cart", test);
+	    	//action.javaScriptClick(removeAllCartItems, "Remove All items From Cart", test);
 	    	action.explicitWait(5000);
 	    	JavascriptExecutor executor = (JavascriptExecutor) driver;
 	    	if(action.waitUntilElementIsDisplayed(removeAllCartItems, 15000)) {
