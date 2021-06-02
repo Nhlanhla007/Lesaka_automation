@@ -58,7 +58,7 @@ public class ic_invalidLoginCreds {
 				String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
 				String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 				String Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
-				driver.navigate().to(url);
+				action.navigateToURL(url);
 //				action.waitForPageLoaded(10);
 				action.explicitWait(10000);
 //				ic_myAccountButton.click();

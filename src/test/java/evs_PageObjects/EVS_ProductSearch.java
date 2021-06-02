@@ -317,8 +317,8 @@ import utils.Action;
 				//action.scrollElemetnToCenterOfView(addToCartButton);
 				//action.mouseover(addToCartButton, "Scroll to add to cart");
 				action.explicitWait(2000);
-				//action.click(addToCartButton, "Add To Cart", test);
-				addToCartButton.click();
+				action.click(addToCartButton, "Add To Cart", test);
+//				addToCartButton.click();
 				cartValidation.cartButtonValidation(addToCartButton, Integer.parseInt(waitTimeInSeconds), test);
 				action.explicitWait(7000);
 			} catch (Exception e) {

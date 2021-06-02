@@ -52,7 +52,7 @@ public class ic_Magento_Login {
 			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
 			Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 			Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
-			driver.navigate().to(url);
+			action.navigateToURL(url);
 			action.waitForPageLoaded(10);
 			String ResPage = driver.getTitle();
 			if(ResPage.equalsIgnoreCase("Magento Admin")){
