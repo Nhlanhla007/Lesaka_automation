@@ -153,11 +153,11 @@ public class MagentoRegisterNewUser {
 //			long timeElapsed = Duration.between(start,finish).toSeconds();
 		}
 		if(resData.isEmpty() | resData==null | resData == ""){
-			action.scrollElemetnToCenterOfView(element);
+			action.scrollElemetnToCenterOfView(element,"element",test);
 			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "False", test);			
 			return resData;
 		}else{
-			action.scrollElemetnToCenterOfView(element);
+			action.scrollElemetnToCenterOfView(element,"element",test);
 			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "True", test);
 			return resData;
 		}

@@ -198,6 +198,15 @@ public class Action {
 	public void navigateToURL(String url){
 		driver.navigate().to(url);
 		driver.manage().window().maximize();
+		if(url.contains("incredibleconnection")){
+			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			explicitWait(5000);
+			boolean clearCookiesAvailability = driver.findElements(By.xpath("//*[@class=\"cookie-notice-content\"]")).size() > 0;
+			if(clearCookiesAvailability) {
+				WebElement closeCookie = driver.findElement(By.xpath("//*[@id=\"btn-cookie-allow\"]"));
+				closeCookie.click();
+			}
+		}
 	}
 
 	public String getCurrentURL() {
