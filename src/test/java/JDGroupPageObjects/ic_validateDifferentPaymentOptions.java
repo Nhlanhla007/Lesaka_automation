@@ -31,8 +31,10 @@ public class ic_validateDifferentPaymentOptions {
     public void validatePaymentOption(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception{
     	String paymentOptions = dataTable2.getValueOnCurrentModule("PaymentOptions");
     	String [] paymentArray = paymentOptions.split("\\|");
+    	action.explicitWait(9000);
     	for(String singlePayment: paymentArray){
     		WebElement paymentMethod = byPayments(singlePayment.trim());
+    		action.explicitWait(5000);
         	action.click(paymentMethod, singlePayment, test);		
     	}
     

@@ -115,6 +115,7 @@ public class JDGKeyManager {
         IC_Parallel_login parrallel_ic_Login = new IC_Parallel_login(driver, dataTable2);
         SapRSI sapRSI = new SapRSI(driver, dataTable2);
         ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
+        ic_validateDifferentPaymentOptions icPaymentOptions = new ic_validateDifferentPaymentOptions(driver, dataTable2);
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
         EVS_ProductSearch evs_productSearch = new EVS_ProductSearch(driver, dataTable2);
@@ -407,6 +408,10 @@ public class JDGKeyManager {
             case "NavigateToWishlist_VerifyLoginPageAppear":
                 NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
                 break;
+            case"validatePaymentOption":
+				icPaymentOptions.validatePaymentOption(dataMap2.get(moduleToRun + "++"),test1, rowNumber);
+				break;
+				
             //EVS CODE BELOW
             case "evs_Login":
                 evs_Login.Login(test1);
@@ -441,7 +446,7 @@ public class JDGKeyManager {
             case "evs_SAP_OrderRelated":
                 evs_SAPorderRelated.SAP_OrderDetailVadidation(test1);
                 break;
-
+           
 
         }
     }
