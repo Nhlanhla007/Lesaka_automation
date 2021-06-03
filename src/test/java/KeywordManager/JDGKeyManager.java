@@ -139,6 +139,7 @@ public class JDGKeyManager {
         EVS_MagentoRetrieveCustomerDetailsPage evs_custDetails = new EVS_MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
         EVS_Magento_UserInfoVerification evs_Magentoverify = new EVS_Magento_UserInfoVerification(driver, dataTable2);
         EVS_SAPCustomerRelated evs_customerDB = new EVS_SAPCustomerRelated(driver, dataMap2, dataTable2);
+        EVS_RedeemGiftCard evs_RedeemGiftCard = new EVS_RedeemGiftCard(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -497,6 +498,10 @@ public class JDGKeyManager {
                 rowNumber = findRowToRun(dataMap2.get("evs_AccountCreation++"), 0, testcaseID);
                 evs_Magentoverify.Validate_UserInfobackend(dataMap2.get("evs_AccountCreation" + "++"), test1, rowNumber);
                 break;
+            case "evs_RedeemGiftCard":
+            	evs_RedeemGiftCard.redeemGiftCard(test1);
+                    break;
+
 
         }
     }
