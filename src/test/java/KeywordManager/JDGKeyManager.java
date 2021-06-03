@@ -132,6 +132,7 @@ public class JDGKeyManager {
         EVS_RemoveItemsFromCart evs_RemoveItemsFromCart = new EVS_RemoveItemsFromCart(driver, dataTable2);
         EVS_Parallel_login parallel_evs_Login = new EVS_Parallel_login(driver, dataTable2);
         EVS_invalidLoginCreds evs_invalidCredslogin = new EVS_invalidLoginCreds(driver, dataTable2);	
+        EVS_LoginPasswordIsSecured evs_PasswordSecured = new EVS_LoginPasswordIsSecured(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -470,7 +471,9 @@ public class JDGKeyManager {
             case "evs_invalidCredslogin":
     			evs_invalidCredslogin.invalidLogin_evs(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
     			break;
-
+            case "evs_PasswordSecured":
+                evs_PasswordSecured.loginPasswordSafe(dataMap2.get("evs_login++"), test1, rowNumber);
+                break;
 
         }
     }
