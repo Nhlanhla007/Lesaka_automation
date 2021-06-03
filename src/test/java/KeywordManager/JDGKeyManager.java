@@ -1,6 +1,7 @@
 package KeywordManager;
 
 import JDGroupPageObjects.*;
+import SAP_HanaDB.EVS_SAPCustomerRelated;
 import SAP_HanaDB.EVS_SAPorderRelated;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
@@ -12,7 +13,9 @@ import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ic_ResetPasswordEmailLink;
 import evs_MagentoPageObjects.EVS_MagentoOrderSAPnumber;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
+import evs_MagentoPageObjects.EVS_MagentoRetrieveCustomerDetailsPage;
 import evs_MagentoPageObjects.EVS_Magento_Login;
+import evs_MagentoPageObjects.EVS_Magento_UserInfoVerification;
 import evs_PageObjects.*;
 import ic_MagentoPageObjects.*;
 import org.openqa.selenium.WebDriver;
@@ -133,6 +136,9 @@ public class JDGKeyManager {
         EVS_Parallel_login parallel_evs_Login = new EVS_Parallel_login(driver, dataTable2);
         EVS_invalidLoginCreds evs_invalidCredslogin = new EVS_invalidLoginCreds(driver, dataTable2);	
         EVS_LoginPasswordIsSecured evs_PasswordSecured = new EVS_LoginPasswordIsSecured(driver, dataTable2);
+        EVS_MagentoRetrieveCustomerDetailsPage evs_custDetails = new EVS_MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
+        EVS_Magento_UserInfoVerification evs_Magentoverify = new EVS_Magento_UserInfoVerification(driver, dataTable2);
+        EVS_SAPCustomerRelated evs_customerDB = new EVS_SAPCustomerRelated(driver, dataMap2, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -473,6 +479,23 @@ public class JDGKeyManager {
     			break;
             case "evs_PasswordSecured":
                 evs_PasswordSecured.loginPasswordSafe(dataMap2.get("evs_login++"), test1, rowNumber);
+                break;
+            case "evs_RetrieveCustomerDetails":
+            	evs_custDetails.retrieveCustomerDetails(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_SapCustomer":
+                ArrayList<HashMap<String, ArrayList<String>>> sheetss = new ArrayList<HashMap<String, ArrayList<String>>>();
+                sheetss.add(dataMap2.get("evs_AccountCreation++"));
+                sheetss.add(dataMap2.get("evs_DeliveryPopulation++"));
+                //sheets.add(dataMap2.get("SapCustomer++"));//Falls away
+                sheetss.add(dataMap2.get("ICUpdateUser++"));
+                sheetss.add(dataMap2.get("CreateaccountBackend++"));
+                sheetss.add(dataMap2.get("adminUserUpdate++"));
+                evs_customerDB.sapDbTests(dataMap2.get(moduleToRun + "++"), sheetss, test1, testcaseID, rowNumber);
+                break; 
+            case "evs_Magento_UserInfoVerify":
+                rowNumber = findRowToRun(dataMap2.get("evs_AccountCreation++"), 0, testcaseID);
+                evs_Magentoverify.Validate_UserInfobackend(dataMap2.get("evs_AccountCreation" + "++"), test1, rowNumber);
                 break;
 
         }
