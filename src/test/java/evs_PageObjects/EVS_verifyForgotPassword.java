@@ -48,23 +48,21 @@ public class EVS_verifyForgotPassword {
 
 	public void forgotPasswordPage(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 		
-		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",
-				dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
-		String Username = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",
-				dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "username");
+		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
+		String Username = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "username");
 	
 		action.navigateToURL(url);
-		action.waitForElementVisibility(myAccountButton, 10);
+		action.waitForElementVisibility(myAccountButton,"myAccountButton", 10);
 		action.clickEle(myAccountButton, "click on my account", test);
-		action.waitForElementVisibility(myAccountButton, 3);
+		action.waitForElementVisibility(myAccountButton,"myAccountButton", 3);
 		action.clickEle(LoginBtn, "Login Button", test);
-		action.waitForElementVisibility(forgotPasswordLink, 10);
+		action.waitForElementVisibility(forgotPasswordLink,"forgotPasswordLink", 10);
 		action.CompareResult("Redirecting to forgot password page", "Forgot Your Password?", forgotPasswordLink.getText(), test);
 		action.clickEle(forgotPasswordLink, "Forgot Password Link", test);
-		action.waitForElementVisibility(emailAddressTextBox, 10);
+		action.waitForElementVisibility(emailAddressTextBox,"emailAddressTextBox", 10);
 		action.writeText(emailAddressTextBox, Username, "enter existing email", test);
 		action.clickEle(resetPasswordButton, "Reset Password Button", test);
-		action.waitForElementVisibility(confirmationMessage, 10);
+		action.waitForElementVisibility(confirmationMessage,"confirmationMessage", 10);
 		
 		String resetNewEmailTest=action.getText(confirmationMessage,"confirmMessage",test);
 		action.CompareResult("Reset new email sent message", "If there is an account associated with "+Username+" you will receive an email with a link to reset your password.", resetNewEmailTest, test);
