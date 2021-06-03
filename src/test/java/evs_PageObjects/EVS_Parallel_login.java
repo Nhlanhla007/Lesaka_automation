@@ -82,17 +82,17 @@ public class EVS_Parallel_login {
 				dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
 
 		action.navigateToURL(url);
-		action.waitForElementClickable(evs_myAccountButton, 5);
+		action.waitForElementClickable(evs_myAccountButton,"evs_myAccountButton", 5);
 		action.click(evs_myAccountButton, "My Account", test);
-		action.waitForElementClickable(LoginBtn, 5);
+		action.waitForElementClickable(LoginBtn,"LoginBtn", 5);
 		action.click(LoginBtn, "Login In", test);
-		action.waitForElementVisibility(evs_email, 10);
+		action.waitForElementVisibility(evs_email,"evs_email", 10);
 		action.writeText(evs_email, email, "email field", test);
-		action.waitForElementVisibility(evs_Password, 5);
+		action.waitForElementVisibility(evs_Password,"evs_Password", 5);
 		action.writeText(evs_Password, Password, "Password field", test);
 		action.clickEle(evs_SigninBtn, "click ic_SigninBtn", test);
 		action.explicitWait(15000);
-		action.waitForElementVisibility(userName_display, 15000);
+		action.waitForElementVisibility(userName_display,"userName_display", 15000);
 		String expMsg = "Hi, " + FirstName;
 		String wlc_msg = action.getText(userName_display, "Welcome Messsage for the User", test);
 		action.CompareResult("Signup Validation", expMsg, wlc_msg, test);

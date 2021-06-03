@@ -1053,52 +1053,38 @@ public class Action {
 		driver.switchTo().defaultContent();
 	}
 
-	public <T> void waitForElementVisibility(T elementAttr, long time) {
+	public <T> void waitForElementVisibility(T elementAttr,String name, long time) {
 		WebDriverWait wait = new WebDriverWait(driver, time);
-		if (elementAttr.getClass().getName().contains("By")) {
-			By loc = (By) elementAttr;
-			try {
-//				onLoadDelay();
+		try {
+			if (elementAttr.getClass().getName().contains("By")) {
+				By loc = (By) elementAttr;
 				wait.until(ExpectedConditions.visibilityOfElementLocated(loc));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			try {
-//				onLoadDelay();
+				logger.info(name+ "is visible");
+			} else {
 				wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
-			} catch (Exception e) {
-
-				e.printStackTrace();
+				logger.info(name+ "is visible");
 			}
+		} catch (Exception e) {
+			logger.info(name+ "is not visible");
+			throw e;
+
 		}
 	}
 
-	public <T> void waitForElementClickable(T elementAttr, long time) {
-
+	public <T> void waitForElementClickable(T elementAttr,String name, long time) {
 		WebDriverWait wait = new WebDriverWait(driver, time);
-		if (elementAttr.getClass().getName().contains("By")) {
-			By loc = (By) elementAttr;
-			try {
-//				onLoadDelay();
-				wait.until(ExpectedConditions.elementToBeClickable(loc));
-			} catch (Exception e) {
-				logger.info("Element still present:" + loc);
-				Assert.fail("Element is not clickable");
-				System.out.println(e.toString());
+		try {
+			if (elementAttr.getClass().getName().contains("By")) {
+					wait.until(ExpectedConditions.elementToBeClickable(driver.findElement((By) elementAttr)));
+					logger.info("find element:"+name);
 			}
-		}
-
-		else {
-			try {
-//				onLoadDelay();
-				wait.until((ExpectedConditions.elementToBeClickable(((WebElement) elementAttr))));
-			} catch (Exception e) {
-				Assert.fail("Element is not clickable");
-				logger.info("Element Not Found:");
-				e.printStackTrace();
+			else {
+					wait.until((ExpectedConditions.elementToBeClickable(((WebElement) elementAttr))));
+					logger.info("find element:"+name);
 			}
-
+		} catch (Exception e) {
+			logger.info("can't find element:"+name);
+			throw e;
 		}
 	}
 
