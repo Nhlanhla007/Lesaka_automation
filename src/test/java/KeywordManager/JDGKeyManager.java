@@ -13,6 +13,7 @@ import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ic_ResetPasswordEmailLink;
 import evs_MagentoPageObjects.EVS_MagentoOrderSAPnumber;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
+import evs_MagentoPageObjects.EVS_MagentoRegisterNewUser;
 import evs_MagentoPageObjects.EVS_MagentoRetrieveCustomerDetailsPage;
 import evs_MagentoPageObjects.EVS_Magento_Login;
 import evs_MagentoPageObjects.EVS_Magento_UserInfoVerification;
@@ -133,6 +134,7 @@ public class JDGKeyManager {
         EVS_MagentoRetrieveCustomerDetailsPage evs_custDetails = new EVS_MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
         EVS_Magento_UserInfoVerification evs_Magentoverify = new EVS_Magento_UserInfoVerification(driver, dataTable2);
         EVS_SAPCustomerRelated evs_customerDB = new EVS_SAPCustomerRelated(driver, dataMap2, dataTable2);
+        EVS_MagentoRegisterNewUser evs_MagentonewUser = new EVS_MagentoRegisterNewUser(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -456,13 +458,16 @@ public class JDGKeyManager {
                 sheetss.add(dataMap2.get("evs_DeliveryPopulation++"));
                 //sheets.add(dataMap2.get("SapCustomer++"));//Falls away
                 sheetss.add(dataMap2.get("ICUpdateUser++"));
-                sheetss.add(dataMap2.get("CreateaccountBackend++"));
+                sheetss.add(dataMap2.get("evs_CreateaccountBackend++"));
                 sheetss.add(dataMap2.get("adminUserUpdate++"));
                 evs_customerDB.sapDbTests(dataMap2.get(moduleToRun + "++"), sheetss, test1, testcaseID, rowNumber);
                 break; 
             case "evs_Magento_UserInfoVerify":
                 rowNumber = findRowToRun(dataMap2.get("evs_AccountCreation++"), 0, testcaseID);
                 evs_Magentoverify.Validate_UserInfobackend(dataMap2.get("evs_AccountCreation" + "++"), test1, rowNumber);
+                break;
+            case "evs_CreateaccountBackend":
+            	evs_MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
 
 
