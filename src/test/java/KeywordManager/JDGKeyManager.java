@@ -140,6 +140,7 @@ public class JDGKeyManager {
         EVS_Magento_UserInfoVerification evs_Magentoverify = new EVS_Magento_UserInfoVerification(driver, dataTable2);
         EVS_SAPCustomerRelated evs_customerDB = new EVS_SAPCustomerRelated(driver, dataMap2, dataTable2);
         EVS_RedeemGiftCard evs_RedeemGiftCard = new EVS_RedeemGiftCard(driver, dataTable2);
+        EVS_verifyForgotPassword evs_VerifyForgotPass = new EVS_verifyForgotPassword(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -501,6 +502,8 @@ public class JDGKeyManager {
             case "evs_RedeemGiftCard":
             	evs_RedeemGiftCard.redeemGiftCard(test1);
                     break;
+            case "evs_ForgotPassword":
+                evs_VerifyForgotPass.forgotPasswordPage(dataMap2.get("evs_login++"), test1, rowNumber);
 
 
         }
