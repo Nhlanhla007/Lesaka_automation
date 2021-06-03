@@ -131,6 +131,7 @@ public class JDGKeyManager {
         EVS_IncreaseQuanityInCart evs_increaseQuantityInCart = new EVS_IncreaseQuanityInCart(driver, dataTable2);
         EVS_RemoveItemsFromCart evs_RemoveItemsFromCart = new EVS_RemoveItemsFromCart(driver, dataTable2);
         EVS_Parallel_login parallel_evs_Login = new EVS_Parallel_login(driver, dataTable2);
+        EVS_invalidLoginCreds evs_invalidCredslogin = new EVS_invalidLoginCreds(driver, dataTable2);	
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -465,6 +466,9 @@ public class JDGKeyManager {
                     break;
             case "parallel_evs_Login":
     			parallel_evs_Login.checkParallelExecution(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+    			break;
+            case "evs_invalidCredslogin":
+    			evs_invalidCredslogin.invalidLogin_evs(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
     			break;
 
 
