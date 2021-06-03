@@ -56,18 +56,16 @@ public class EVS_invalidLoginCreds {
 	public void invalidLogin_evs(LinkedHashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
 			throws IOException {
 
-		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",
-				dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
+		String keyvalue=dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0);
+		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",keyvalue, "url");
 
 		Username = dataTable2.getValueOnCurrentModule("Username");
 		Password = dataTable2.getValueOnCurrentModule("Password");
-
-		driver.navigate().to(url);
+		action.navigateToURL(url);
 		action.explicitWait(10000);
 		action.click(evs_myAccountButton, "evs_myAccountButton", test);
 		action.explicitWait(3000);
 		action.click(LoginBtn, "evs_Login Button", test);
-
 		List<String> userCred = new ArrayList<>();
 		String UsernameFLag = dataTable2.getValueOnCurrentModule("UsernameFlag");
 		String PasswordFLag = dataTable2.getValueOnCurrentModule("PasswordFlag");
