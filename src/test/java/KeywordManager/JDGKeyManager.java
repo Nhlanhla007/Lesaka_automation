@@ -130,6 +130,7 @@ public class JDGKeyManager {
         EVS_Cart evs_cart = new EVS_Cart(driver, dataTable2) ;
         EVS_IncreaseQuanityInCart evs_increaseQuantityInCart = new EVS_IncreaseQuanityInCart(driver, dataTable2);
         EVS_RemoveItemsFromCart evs_RemoveItemsFromCart = new EVS_RemoveItemsFromCart(driver, dataTable2);
+        EVS_RedeemGiftCard evs_RedeemGiftCard = new EVS_RedeemGiftCard(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -461,6 +462,9 @@ public class JDGKeyManager {
                 break;
             case "evs_RemoveItemsFromCart":
             	evs_RemoveItemsFromCart.removeItemFromCart(test1);
+                    break;
+            case "evs_RedeemGiftCard":
+            	evs_RedeemGiftCard.redeemGiftCard(test1);
                     break;
 
 
