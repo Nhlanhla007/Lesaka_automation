@@ -58,7 +58,6 @@ public class EVS_invalidLoginCreds {
 
 		String keyvalue=dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0);
 		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",keyvalue, "url");
-
 		Username = dataTable2.getValueOnCurrentModule("Username");
 		Password = dataTable2.getValueOnCurrentModule("Password");
 		action.navigateToURL(url);

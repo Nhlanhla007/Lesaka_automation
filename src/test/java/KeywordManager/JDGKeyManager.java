@@ -513,6 +513,18 @@ public class JDGKeyManager {
 			case "evs_RedirectToProdDetailPageFromCart":
 				evs_RedirectToProdDetailPageFromCart.verifyNavigationToProductDetailPageFromCart(test1);
 				break;
+            case "parallel_evs_Login":
+    			parallel_evs_Login.checkParallelExecution(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+    			break;
+            case "evs_invalidCredslogin":
+    			evs_invalidCredslogin.invalidLogin_evs(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+    			break;           
+            case "evs_VerifyCart":
+                evs_cart.verifyCart(test1);
+                break;
+            case "evs_logout":
+                evs_Login.logout(test1);
+                break;
 
 
         }

@@ -314,8 +314,8 @@ public class EVS_Cart {
 	    	//check cart
 	    	action.explicitWait(5000);
 	    	String itemsInCart = itemsInCartCounter(test);
-	    	String productQuantity = dataTable2.getValueOnOtherModule("ProductSearch", "Quantity", 0);
-	    	String productFromExcel = dataTable2.getValueOnOtherModule("ProductSearch","specificProduct", 0);
+	    	String productQuantity = dataTable2.getValueOnOtherModule("evs_ProductSearch", "Quantity", 0);
+	    	String productFromExcel = dataTable2.getValueOnOtherModule("evs_ProductSearch","specificProduct", 0);
 	    	action.CompareResult("Items in cart", productQuantity, itemsInCart, test);
 	    	
 	    	action.click(iCCartButton, "Cart button", test);
