@@ -469,7 +469,13 @@ public class JDGKeyManager {
     			break;
             case "evs_invalidCredslogin":
     			evs_invalidCredslogin.invalidLogin_evs(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
-    			break;
+    			break;           
+            case "evs_VerifyCart":
+                evs_cart.verifyCart(test1);
+                break;
+            case "evs_logout":
+                evs_Login.logout(test1);
+                break;
 
 
         }
