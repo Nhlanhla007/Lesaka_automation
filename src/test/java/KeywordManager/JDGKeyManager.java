@@ -13,6 +13,7 @@ import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ic_ResetPasswordEmailLink;
 import evs_MagentoPageObjects.EVS_MagentoOrderSAPnumber;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
+import evs_MagentoPageObjects.EVS_MagentoRegisterNewUser;
 import evs_MagentoPageObjects.EVS_MagentoRetrieveCustomerDetailsPage;
 import evs_MagentoPageObjects.EVS_Magento_Login;
 import evs_MagentoPageObjects.EVS_Magento_UserInfoVerification;
@@ -143,6 +144,7 @@ public class JDGKeyManager {
         EVS_verifyForgotPassword evs_VerifyForgotPass = new EVS_verifyForgotPassword(driver, dataTable2);
         EVS_forgotPasswordLink evs_forgottenPassLink = new EVS_forgotPasswordLink(driver, dataTable2);
         EVS_RedirectToProdDetailPageFromCart evs_RedirectToProdDetailPageFromCart = new EVS_RedirectToProdDetailPageFromCart(driver, dataTable2);
+        EVS_MagentoRegisterNewUser evs_MagentonewUser = new EVS_MagentoRegisterNewUser(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -484,7 +486,7 @@ public class JDGKeyManager {
                 sheetss.add(dataMap2.get("evs_DeliveryPopulation++"));
                 //sheets.add(dataMap2.get("SapCustomer++"));//Falls away
                 sheetss.add(dataMap2.get("ICUpdateUser++"));
-                sheetss.add(dataMap2.get("CreateaccountBackend++"));
+                sheetss.add(dataMap2.get("evs_CreateaccountBackend++"));
                 sheetss.add(dataMap2.get("adminUserUpdate++"));
                 evs_customerDB.sapDbTests(dataMap2.get(moduleToRun + "++"), sheetss, test1, testcaseID, rowNumber);
                 break; 
@@ -519,6 +521,10 @@ public class JDGKeyManager {
             case "evs_logout":
                 evs_Login.logout(test1);
                 break;
+            case "evs_CreateaccountBackend":
+            	evs_MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+
 
 
         }
