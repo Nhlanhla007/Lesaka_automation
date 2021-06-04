@@ -42,18 +42,17 @@ public class EVS_forgotPasswordLink {
 	public void forgotPasswordLink(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
 			throws IOException {
 
-		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",
-				dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
+		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
 
 		action.navigateToURL(url);
 
-		action.waitForElementVisibility(myAccountButton, 15);
+		action.waitForElementVisibility(myAccountButton,"myAccountButton", 15);
 		action.clickEle(myAccountButton, "click on my account", test);
 		
-		action.waitForElementVisibility(LoginBtn, 3);
+		action.waitForElementVisibility(LoginBtn,"LoginBtn", 3);
 		action.clickEle(LoginBtn, "click on Login Button", test);
 		
-		action.waitForElementVisibility(forgotPasswordLink, 10);
+		action.waitForElementVisibility(forgotPasswordLink,"forgotPasswordLink", 10);
 		action.clickEle(forgotPasswordLink, "Click on Forgot Password Link", test);
 		
 		action.CompareResult("Redirecting to forgot password page", "Forgot your password?",

@@ -472,9 +472,6 @@ public class JDGKeyManager {
             case "evs_IncreaseQuanityInCart":
             	evs_increaseQuantityInCart.increaseQuantity(test1);
                 break;
-            case "evs_RemoveItemsFromCart":
-            	evs_RemoveItemsFromCart.removeItemFromCart(test1);
-                    break;
             case "parallel_evs_Login":
     			parallel_evs_Login.checkParallelExecution(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
     			break;
