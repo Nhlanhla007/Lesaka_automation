@@ -472,12 +472,6 @@ public class JDGKeyManager {
             case "evs_IncreaseQuanityInCart":
             	evs_increaseQuantityInCart.increaseQuantity(test1);
                 break;
-            case "parallel_evs_Login":
-    			parallel_evs_Login.checkParallelExecution(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
-    			break;
-            case "evs_invalidCredslogin":
-    			evs_invalidCredslogin.invalidLogin_evs(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
-    			break;
             case "evs_PasswordSecured":
                 evs_PasswordSecured.loginPasswordSafe(dataMap2.get("evs_login++"), test1, rowNumber);
                 break;
