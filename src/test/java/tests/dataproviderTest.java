@@ -87,7 +87,7 @@ public class dataproviderTest extends BaseTest {
          dataTable2.setTestCaseID(testcaseID);
          ExtentTest test=reportJD.createTest(testcaseID+" : "+testCaseDescription);
          startBrowserSession();
-         configFileReader.setPropertyVal("sequence","true");
+
 //         try {
              for(int j=0;j<1;j++){
                  String actionToRunLable="Action"+(j+1);

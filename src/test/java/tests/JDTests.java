@@ -90,7 +90,6 @@ public class JDTests extends BaseTest {
 				dataTable2.setTestCaseID(testcaseID);
 				ExtentTest test = reportJD.createTest(testcaseID + " : " + testCaseDescription);
 				startBrowserSession();
-				configFileReader.setPropertyVal("sequence", "true");
 				try {
 					System.out.println("-------------------------------------------------------");
 					System.out.println("testCaseDescription: "+testcaseID+"_"+testCaseDescription);
