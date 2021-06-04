@@ -1,4 +1,4 @@
-package JDGroupPageObjects;
+package evs_PageObjects;
 
 import Logger.Log;
 import com.aventstack.extentreports.ExtentTest;
@@ -14,11 +14,11 @@ import Logger.Log;
 import utils.Action;
 import utils.DataTable2;
 
-public class RedirectToProdDetailPageFromCart {
+public class EVS_RedirectToProdDetailPageFromCart {
 	 WebDriver driver;
 	    Action action;
 	    DataTable2 dataTable2;
-	    IC_Cart cart;
+	    EVS_Cart cart;
 	    
 		/*
 		 * @FindBy(xpath = "//*[@class=\"product-item-name\"]/a") private
@@ -31,19 +31,28 @@ public class RedirectToProdDetailPageFromCart {
 	    @FindBy(xpath = "//*[@class=\"base\"]")
 	    private WebElement productNavigatedTo;
 	    
-	    public RedirectToProdDetailPageFromCart(WebDriver driver, DataTable2 dataTable2) {
+	    @FindBy(css = "a.go-back")
+	    private WebElement backButton;
+	    
+	    public EVS_RedirectToProdDetailPageFromCart(WebDriver driver, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
 	        this.dataTable2 = dataTable2;
-	        cart = new IC_Cart(driver, dataTable2);
+	        cart = new EVS_Cart(driver, dataTable2);
 	    }
 	    static Logger logger = Log.getLogData(Action.class.getSimpleName());
 	    
 	    public void verifyNavigationToProductDetailPageFromCart(ExtentTest test) throws Exception {
+	    	boolean buttonAvail = action.waitUntilElementIsDisplayed(backButton, 15000);
+			action.explicitWait(4000);
+			if(buttonAvail) {
+				backButton.click();
+			}
+			action.explicitWait(5000);
 	    	cart.navigateToCart(test);
 	    	String firstElementInCArt = productInCart.getText();
-	    	action.click(productInCart, "Navigate To cart details page", test);
+	    	action.click(productInCart, "Product Link In Cart", test);
 	    	String currentUrl =driver.getTitle();
 	    	currentUrl = currentUrl.replace("-", " ");
 	    	if(currentUrl.toLowerCase().contains(firstElementInCArt.toLowerCase())) {

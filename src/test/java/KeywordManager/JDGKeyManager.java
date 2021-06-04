@@ -142,6 +142,7 @@ public class JDGKeyManager {
         EVS_RedeemGiftCard evs_RedeemGiftCard = new EVS_RedeemGiftCard(driver, dataTable2);
         EVS_verifyForgotPassword evs_VerifyForgotPass = new EVS_verifyForgotPassword(driver, dataTable2);
         EVS_forgotPasswordLink evs_forgottenPassLink = new EVS_forgotPasswordLink(driver, dataTable2);
+        EVS_RedirectToProdDetailPageFromCart evs_RedirectToProdDetailPageFromCart = new EVS_RedirectToProdDetailPageFromCart(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -509,6 +510,13 @@ public class JDGKeyManager {
             case "evs_ForgotPasswordLink":
                 evs_forgottenPassLink.forgotPasswordLink(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
+			case "evs_RemoveItemsFromCart":
+				evs_RemoveItemsFromCart.removeItemFromCart(test1);
+				break;
+			case "evs_RedirectToProdDetailPageFromCart":
+				evs_RedirectToProdDetailPageFromCart.verifyNavigationToProductDetailPageFromCart(test1);
+				break;
+
 
         }
     }
