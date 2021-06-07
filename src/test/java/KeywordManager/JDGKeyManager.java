@@ -145,6 +145,10 @@ public class JDGKeyManager {
         EVS_forgotPasswordLink evs_forgottenPassLink = new EVS_forgotPasswordLink(driver, dataTable2);
         EVS_RedirectToProdDetailPageFromCart evs_RedirectToProdDetailPageFromCart = new EVS_RedirectToProdDetailPageFromCart(driver, dataTable2);
         EVS_MagentoRegisterNewUser evs_MagentonewUser = new EVS_MagentoRegisterNewUser(driver, dataTable2);
+        EVS_NavigetoWishlist evs_NavigetoWishlist = new EVS_NavigetoWishlist(driver, dataTable2);
+        EVS_clearWishList evs_verifyWishlistItem = new EVS_clearWishList(driver, dataTable2);
+        EVS_RemoveFromcart evs_RemoveFromcart = new EVS_RemoveFromcart(driver, dataTable2);
+        EVS_WishlistToCart evs_WishlistToCart = new EVS_WishlistToCart(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -523,6 +527,18 @@ public class JDGKeyManager {
                 break;
             case "evs_CreateaccountBackend":
             	evs_MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_NavigetoWishlist":
+            	evs_NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
+                break;
+            case "evs_ClearWishList":
+                evs_verifyWishlistItem.handleWishlistItem(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_RemoveFromcart":
+                evs_RemoveFromcart.Clear_miniCart(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+           case "evs_WishlistToCart":
+                evs_WishlistToCart.verifyProducts_wishlistTocart(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
 
 
