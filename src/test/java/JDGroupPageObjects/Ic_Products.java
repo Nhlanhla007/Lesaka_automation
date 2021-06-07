@@ -223,7 +223,7 @@ public class Ic_Products {
 	 */
 	public void ic_SelectProductAndAddToCart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException {
 		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
-		action.navigateToURL(url);
+//		action.navigateToURL(url);
 		String typeSearch = input.get("typeSearch").get(rowNumber);
 		String productsToSearch = input.get("specificProduct").get(rowNumber);
 		String quantityOfSearchProducts = input.get("Quantity").get(rowNumber);

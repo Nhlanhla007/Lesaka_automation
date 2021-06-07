@@ -33,17 +33,11 @@ public class EVS_WishlistToCart {
 		this.dataTable2 = dataTable2;
 	}
 
-	EVS_Products ic_Products = new EVS_Products(driver, dataTable2);
+	EVS_ProductSearch ic_Products = new EVS_ProductSearch(driver, dataTable2);
 	EVS_Cart ic_Cart = new EVS_Cart(driver, dataTable2);
 
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());
 
-	@FindBy(xpath = "//ol[@class='product-items wishlist']/li")
-	private List<WebElement> ic_AllMywishlistProducts;
-
-//	@FindBy(xpath = "//ol[@class='product-items']/li//strong[@class='product-item-name']/a")
-//	public List<WebElement> ic_allproducts_wishlist;
-	
 	@FindBy(xpath = "//ol[@class='product-items wishlist']/li")
 	List<WebElement> ic_allproducts_wishlist;
 
@@ -57,13 +51,8 @@ public class EVS_WishlistToCart {
 
 	public void verifyProducts_wishlistTocart(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
 			throws Exception {
-		
-//		String navigateURL = ConfigFileReader.getPropertyVal("EVS_URL");
-//		 action.navigateToURL(navigateURL);
-		 
+
 		String ProductSelectionType = dataTable2.getValueOnCurrentModule("ProductSelectionType");
-		
-		
 
 		Map<String, List<String>> AllProductsWishlist = ic_Products.productData;
 		String waitTime = dataTable2.getValueOnCurrentModule("TimeOut_seconds");
@@ -106,13 +95,17 @@ public class EVS_WishlistToCart {
 		for (Map.Entry eachProducts : AllProductslist.entrySet()) {
 			String eachproductname = (String) eachProducts.getKey();
 			WebElement prodele = ic_FindProduct_wishlist(test, eachproductname);
-			
+
 			WebElement nameOfProduct = prodele.findElement(By.xpath(".//div/a[2]"));
 			String WishlistproductName = action.getAttribute(nameOfProduct, "title");
-	
+
 			if (eachproductname.equalsIgnoreCase(WishlistproductName)) {
-				cartButton = getCartButton_Wishlist(nameOfProduct);
+				cartButton = getCartButton_Wishlist(prodele);
+				action.scrollElementIntoView(prodele);
+				action.mouseover(prodele, "Mouse Over element");
+				action.clickEle(cartButton, "Add Product", test);
 				productWishlistTocart.put(eachproductname, Val);
+
 			}
 
 		}
@@ -120,8 +113,8 @@ public class EVS_WishlistToCart {
 	}
 
 	WebElement getCartButton_Wishlist(WebElement product) {
-		WebElement cartButton = product
-				.findElement(By.xpath("//parent::*/parent::*/parent::*//button[@title='Add to Cart']"));
+
+		WebElement cartButton = product.findElement(By.xpath(".//div/div/fieldset/div/div/button"));
 		return cartButton;
 	}
 
@@ -141,7 +134,7 @@ public class EVS_WishlistToCart {
 			for (WebElement el : allProducts) {
 				WebElement nameOfProduct = el.findElement(By.xpath(".//div/a[2]"));
 				String item = action.getAttribute(nameOfProduct, "title");
-				
+
 				if (item.trim().toLowerCase().equalsIgnoreCase(product)) {
 					status = false;
 					return el;
@@ -153,22 +146,20 @@ public class EVS_WishlistToCart {
 	}
 
 	public void iCcartVerification_AsperWishlist(Map<String, List<String>> products, ExtentTest test) throws Exception {
-		// Find all elements from the list
 		action.explicitWait(10000);
 		action.click(iCCartButton_wishlist, "View Cart", test);
 		for (WebElement productsInCart : icAllCartProducts) {
 			WebElement nameOfProduct = productsInCart.findElement(By.xpath(".//div/a"));
 			String item = action.getAttribute(nameOfProduct, "title");
-			
+
 			for (Map.Entry selectedProducts : products.entrySet()) {
 				String productsName = (String) selectedProducts.getKey();
 				if (productsName.equalsIgnoreCase(item)) {
 					action.CompareResult("Name : " + item, productsName, item, test);
-					
+
 				}
 			}
 		}
-	
 
 	}
 }
