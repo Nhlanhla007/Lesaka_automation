@@ -145,6 +145,7 @@ public class JDGKeyManager {
         EVS_forgotPasswordLink evs_forgottenPassLink = new EVS_forgotPasswordLink(driver, dataTable2);
         EVS_RedirectToProdDetailPageFromCart evs_RedirectToProdDetailPageFromCart = new EVS_RedirectToProdDetailPageFromCart(driver, dataTable2);
         EVS_MagentoRegisterNewUser evs_MagentonewUser = new EVS_MagentoRegisterNewUser(driver, dataTable2);
+        EVS_UpdateCustomer evs_UpdateUser = new EVS_UpdateCustomer(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -428,8 +429,6 @@ public class JDGKeyManager {
             case "skuProduct":
                 products.skuProduct(test1);
                 break;
-
-
             case"validatePaymentOption":
 				icPaymentOptions.validatePaymentOption(dataMap2.get(moduleToRun + "++"),test1, rowNumber);
 				break;
@@ -485,9 +484,9 @@ public class JDGKeyManager {
                 sheetss.add(dataMap2.get("evs_AccountCreation++"));
                 sheetss.add(dataMap2.get("evs_DeliveryPopulation++"));
                 //sheets.add(dataMap2.get("SapCustomer++"));//Falls away
-                sheetss.add(dataMap2.get("ICUpdateUser++"));
+                sheetss.add(dataMap2.get("evs_UpdateUser++"));
                 sheetss.add(dataMap2.get("evs_CreateaccountBackend++"));
-                sheetss.add(dataMap2.get("adminUserUpdate++"));
+                sheetss.add(dataMap2.get("evs_adminUserUpdate++"));
                 evs_customerDB.sapDbTests(dataMap2.get(moduleToRun + "++"), sheetss, test1, testcaseID, rowNumber);
                 break; 
             case "evs_Magento_UserInfoVerify":
@@ -523,6 +522,12 @@ public class JDGKeyManager {
                 break;
             case "evs_CreateaccountBackend":
             	evs_MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_UpdateUser":
+                ArrayList<HashMap<String, ArrayList<String>>> mySheet1 = new ArrayList<HashMap<String, ArrayList<String>>>();
+                mySheet1.add(dataMap2.get("evs_UpdateUser"+ "++"));
+                mySheet1.add(dataMap2.get("evs_Login++"));
+                evs_UpdateUser.updateAccount(mySheet1, test1, testcaseID);
                 break;
 
 
