@@ -1,21 +1,15 @@
 package utils;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -363,27 +357,36 @@ public class ExcelFunctions {
 		return dataMap2;
 	}
 	public void updateSheet(String sheetName,String fileLocation) throws IOException {
-		initializeExcelSheetForWriting(fileLocation);
-		sheet = workbook.getSheet(sheetName);
-		int numCol=dataMap2.get(sheetName).size();
-		Object[] colArray = dataMap2.get(sheetName).keySet().toArray();
-		int rowNum = dataMap2.get(sheetName).get(colArray[0]).size();
-		for(int j=0;j<=rowNum;j++){
-			Row row = sheet.createRow(j);
-			if (j==0){
-				for(int z=0;z<numCol;z++){
-					Cell cell = row.createCell(z);
-					cell.setCellValue(colArray[z].toString());
-				}
-			}else{
-				for(int z=0;z<numCol;z++){
-					Cell cell = row.createCell(z);
-					cell.setCellValue((String) dataMap2.get(sheetName).get(colArray[z]).get(j-1));
+
+		FileInputStream inputStream = new FileInputStream(new File(fileLocation));
+		Workbook workbook = WorkbookFactory.create(inputStream);
+
+		Sheet sheet = workbook.getSheet(sheetName);
+		Object [] columnNames=dataMap2.get(sheetName).keySet().toArray();
+
+		int numberOfColumn=columnNames.length;
+		int numberOfRows=dataMap2.get(sheetName).get(columnNames[0]).size();
+
+		for(int i=0;i<=numberOfRows;i++) {
+			Row row = sheet.createRow(i);
+			for(int j=0;j<numberOfColumn;j++) {
+				if(i==0) {
+					Cell cell = row.createCell(j);
+					cell.setCellValue((String) columnNames[j]);
+				}else{
+					Cell cell = row.createCell(j);
+					cell.setCellValue( dataMap2.get(sheetName).get(columnNames[j]).get(i-1));
 				}
 			}
-		}
-		workbook.write(outputStream);
 
+		}
+
+		inputStream.close();
+
+		FileOutputStream outputStream = new FileOutputStream("JavaBooks.xls");
+		workbook.write(outputStream);
+		workbook.close();
+		outputStream.close();
 	}
 	public   Map<Object, Object> getRowData(int keytRowNumber,
 											int valueRowNumber, int columnNumber,int sheetNumber) {

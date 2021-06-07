@@ -1,6 +1,7 @@
 package utils;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -105,6 +106,21 @@ public class DataTable2 {
             }
         }
         return dataMap2.get(SheetName+"++").get(columnValueToGet).get(finalrow);
+    }
+
+    public void setRowUsingReferenceAndKey(String SheetName,String keyColumnName,String valueInColumn,String columnValueToSet,String ValueToSet) throws IOException {
+        LinkedHashMap<String, ArrayList<String>> sheetData =dataMap2.get(SheetName+"++");
+        int finalrow=-1;
+        int noOfRows = sheetData.get(keyColumnName).size();
+        for(int i =0;i<noOfRows;i++){
+            if(valueInColumn.equals(sheetData.get(keyColumnName).get(i))){
+                finalrow=i;
+                break;
+            }
+        }
+
+        dataMap2.get(SheetName+"++").get(columnValueToSet).set(finalrow,ValueToSet);
+        excelFunc.updateSheet(SheetName+"++",TESTDATA_FILENAME);
     }
     public String getCurrentModule(){
         return currentModule;
