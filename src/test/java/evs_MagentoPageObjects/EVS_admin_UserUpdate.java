@@ -105,7 +105,7 @@ public class EVS_admin_UserUpdate {
 	
 	
 	//@Step("Edit Customer information")
-    public void editCustomerDetails(ArrayList<HashMap<String, ArrayList<String>>> adminSheets,ExtentTest test,int testcaseID){
+    public void editCustomerDetails(ArrayList<HashMap<String, ArrayList<String>>> adminSheets,ExtentTest test,int testcaseID) throws Exception {
     	int sheetRow1= findRowToRun(adminSheets.get(0), 0, testcaseID);
 		//int sheetRow2= findRowToRun(adminSheets.get(1), 0, testcaseID);
     	
@@ -294,6 +294,7 @@ public class EVS_admin_UserUpdate {
 	    	
     	} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 	
     }

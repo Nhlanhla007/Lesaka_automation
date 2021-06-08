@@ -165,6 +165,7 @@ public class EVS_MagentoRetrieveCustomerDetailsPage {
 		}else {
 			throw new Exception("No Records Returned");
 			//action.noRecordsReturnedFromTable(test, "No Records were returned");
+
 		}
 	}
 
