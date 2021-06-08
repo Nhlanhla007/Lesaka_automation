@@ -154,7 +154,7 @@ public class TestCaseBase {
 		 options.addArguments("--dns-prefetch-disable"); */
 		options.addArguments("--disable-features=VizDisplayCompositor");
 		//	options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-		options.setHeadless(true);
+		options.setHeadless(false);
 		options.merge(capabilities);
 		setPropertyByOS("chrome");
 		return options;
