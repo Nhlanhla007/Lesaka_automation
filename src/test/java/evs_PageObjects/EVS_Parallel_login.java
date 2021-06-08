@@ -78,10 +78,10 @@ public class EVS_Parallel_login {
 
 	public void login(Action action, ExtentTest test) throws IOException {
 
-		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",
-				dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
-
-		action.navigateToURL(url);
+//		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",
+//				dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
+//
+//		action.navigateToURL(url);
 		action.waitForElementClickable(evs_myAccountButton,"evs_myAccountButton", 5);
 		action.click(evs_myAccountButton, "My Account", test);
 		action.waitForElementClickable(LoginBtn,"LoginBtn", 5);

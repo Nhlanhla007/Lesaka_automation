@@ -47,11 +47,11 @@ public class ic_NavigetoWishlist {
 		@FindBy(xpath = "//div[@class='message info empty']/span[contains(text(),'You have no items in your wish list.')]")
 		WebElement mywishlist_msg;
 		public void NavigateToWishlist_verifymsg(ExtentTest test) throws IOException{
-			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
+//			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
 			String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 			String password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
 			ConfigFileReader configFileReader = new ConfigFileReader();
-			action.navigateToURL(url);
+//			action.navigateToURL(url);
 			action.explicitWait(5000);
 			String ExpLoginType =dataTable2.getValueOnCurrentModule("Login_type");//"ExistingUser";// logedOn_user or ExistingUser
 			int waitTime = Integer.parseInt(dataTable2.getValueOnCurrentModule("TimeOut_seconds"));

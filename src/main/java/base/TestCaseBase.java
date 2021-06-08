@@ -144,7 +144,7 @@ public class TestCaseBase {
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--disable-notifications");
 		options.addArguments("disable-infobars");
-		options.addArguments("--disable-gpu");
+//		options.addArguments("--disable-gpu");
 		options.addArguments("--disable-dev-shm-usage");
 		//new
 		/*	options.addArguments("enable-automation"); 
@@ -154,6 +154,7 @@ public class TestCaseBase {
 		 options.addArguments("--dns-prefetch-disable"); */
 		options.addArguments("--disable-features=VizDisplayCompositor");
 		//	options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+		options.setHeadless(true);
 		options.merge(capabilities);
 		setPropertyByOS("chrome");
 		return options;

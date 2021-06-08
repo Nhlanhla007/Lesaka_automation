@@ -142,8 +142,8 @@ public class Ic_Products {
 	}
 
 	public void skuProduct(ExtentTest test) throws IOException, AWTException {
-		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("ProductSearch","loginDetails",0),"url");
-		action.navigateToURL(url);
+//		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("ProductSearch","loginDetails",0),"url");
+//		action.navigateToURL(url);
 		String typeSearch = dataTable2.getValueOnOtherModule("ProductSearch","typeSearch",0);
 		String productsToSearch = dataTable2.getValueOnOtherModule("ProductSearch","specificProduct",0);
 		String quantityOfSearchProducts = dataTable2.getValueOnOtherModule("ProductSearch","Quantity",0);
@@ -222,8 +222,11 @@ public class Ic_Products {
 	 * @param rowNumber
 	 */
 	public void ic_SelectProductAndAddToCart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException {
-		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
-		action.navigateToURL(url);
+//		String urlControl=dataTable2.getValueOnCurrentModule("loginDetails");
+////		if(urlControl.equals("")){
+//			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",urlControl,"url");
+//			action.navigateToURL(url);
+////		}
 		String typeSearch = input.get("typeSearch").get(rowNumber);
 		String productsToSearch = input.get("specificProduct").get(rowNumber);
 		String quantityOfSearchProducts = input.get("Quantity").get(rowNumber);

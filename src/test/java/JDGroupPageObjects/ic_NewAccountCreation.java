@@ -153,8 +153,8 @@ public class ic_NewAccountCreation {
 	}
 
 	public  void accountCreation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
-		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
-		action.navigateToURL(url);
+//		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
+//		action.navigateToURL(url);
 		action.explicitWait(3000);
 		String firstName = dataTable2.getValueOnCurrentModule("firstName");
 		String lastName = dataTable2.getValueOnCurrentModule("lastName");

@@ -36,8 +36,8 @@ public class ic_forgotPasswordLink {
 	WebElement ic_forgotPassword;
 	
 	 public void forgotPasswordLink(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-		 String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("ic_login","loginDetails",0),"url");
-		 action.navigateToURL(url);
+//		 String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("ic_login","loginDetails",0),"url");
+//		 action.navigateToURL(url);
 
 			action.explicitWait(10000);
 			action.click(ic_myAccountButton, "click on my account", test);

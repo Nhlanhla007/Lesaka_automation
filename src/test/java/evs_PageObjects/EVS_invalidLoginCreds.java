@@ -57,10 +57,10 @@ public class EVS_invalidLoginCreds {
 			throws IOException {
 
 		String keyvalue=dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0);
-		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",keyvalue, "url");
+//		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",keyvalue, "url");
 		Username = dataTable2.getValueOnCurrentModule("Username");
 		Password = dataTable2.getValueOnCurrentModule("Password");
-		action.navigateToURL(url);
+//		action.navigateToURL(url);
 		action.explicitWait(10000);
 		action.click(evs_myAccountButton, "evs_myAccountButton", test);
 		action.explicitWait(3000);

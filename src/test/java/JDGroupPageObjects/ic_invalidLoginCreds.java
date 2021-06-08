@@ -55,10 +55,10 @@ public class ic_invalidLoginCreds {
 			//*[@id="email-error"]
 			
 			public List<String> invalidLogin_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-				String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
+//				String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
 				String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 				String Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
-				action.navigateToURL(url);
+//				action.navigateToURL(url);
 //				action.waitForPageLoaded(10);
 				action.explicitWait(10000);
 //				ic_myAccountButton.click();

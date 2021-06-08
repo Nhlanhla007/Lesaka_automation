@@ -48,10 +48,10 @@ public class EVS_verifyForgotPassword {
 
 	public void forgotPasswordPage(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 		
-		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
+//		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
 		String Username = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "username");
 	
-		action.navigateToURL(url);
+//		action.navigateToURL(url);
 		action.waitForElementVisibility(myAccountButton,"myAccountButton", 10);
 		action.clickEle(myAccountButton, "click on my account", test);
 		action.waitForElementVisibility(myAccountButton,"myAccountButton", 3);

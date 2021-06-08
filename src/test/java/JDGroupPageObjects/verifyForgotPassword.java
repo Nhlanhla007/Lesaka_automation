@@ -50,8 +50,8 @@ public class verifyForgotPassword {
 
 	public void forgotPasswordPage(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 		String email = dataTable2.getValueOnOtherModule("accountCreation", "emailAddress", 0);
-		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("accountCreation","loginDetails",0),"url");
-		action.navigateToURL(url);
+//		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("accountCreation","loginDetails",0),"url");
+//		action.navigateToURL(url);
 		action.explicitWait(5000);
 		action.click(ic_myAccountButton, "click on my account", test);
 		action.explicitWait(3000);

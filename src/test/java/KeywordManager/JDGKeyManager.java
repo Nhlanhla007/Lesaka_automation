@@ -152,6 +152,7 @@ public class JDGKeyManager {
         EVS_clearWishList evs_verifyWishlistItem = new EVS_clearWishList(driver, dataTable2);
         EVS_RemoveFromcart evs_RemoveFromcart = new EVS_RemoveFromcart(driver, dataTable2);
         EVS_WishlistToCart evs_WishlistToCart = new EVS_WishlistToCart(driver, dataTable2);
+        LaunchPortal lp= new LaunchPortal(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -554,8 +555,9 @@ public class JDGKeyManager {
             case "evs_WishlistToCart":
                 evs_WishlistToCart.verifyProducts_wishlistTocart(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
-
-
+            case "LaunchPortal":
+                lp.launchPortal (test1);
+                break;
 
         }
     }

@@ -45,10 +45,10 @@ public class EVS_Magento_Login {
 			LoginToMagento(test,Username,Password);
 	     }
 		public void LoginToMagento(ExtentTest test,String Username, String Password) throws IOException{
-			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
+//			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
 			Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 			Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
-			action.navigateToURL(url);
+//			action.navigateToURL(url);
 			action.waitForPageLoaded(10);
 			String ResPage = action.getPageTitle(test);
 			if(ResPage.equalsIgnoreCase("Magento Admin - DEFAULT STORE VIEW")){
