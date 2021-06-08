@@ -145,6 +145,9 @@ public class JDGKeyManager {
         EVS_forgotPasswordLink evs_forgottenPassLink = new EVS_forgotPasswordLink(driver, dataTable2);
         EVS_RedirectToProdDetailPageFromCart evs_RedirectToProdDetailPageFromCart = new EVS_RedirectToProdDetailPageFromCart(driver, dataTable2);
         EVS_MagentoRegisterNewUser evs_MagentonewUser = new EVS_MagentoRegisterNewUser(driver, dataTable2);
+        EVS_NavigetoWishlist evs_NavigetoWishlist = new EVS_NavigetoWishlist(driver, dataTable2);
+        EVS_RemoveFromcart evs_RemoveFromcart = new EVS_RemoveFromcart(driver, dataTable2);
+        EVS_SendWishlistToEmail evs_SendWishlistToEmail = new EVS_SendWishlistToEmail(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -524,8 +527,15 @@ public class JDGKeyManager {
             case "evs_CreateaccountBackend":
             	evs_MagentonewUser.CreateAccount_validateInfo_Backend(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
-
-
+            case "EVS_NavigetoWishlist":
+                evs_NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
+                break;
+            case "EVS_RemoveFromcart":
+                evs_RemoveFromcart.Clear_miniCart(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "EVS_SendWishlistToEmail":
+                evs_SendWishlistToEmail.ShareYourwishlist(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
 
         }
     }
