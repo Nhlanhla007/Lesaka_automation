@@ -212,7 +212,7 @@ public class EVS_SAPCustomerRelated {
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			taxVatNumberFlag = "yes";
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Update Magento Admin")) {
-			taxVatNumberFlag = dataTable2.getValueOnOtherModule("adminUserUpdate", "taxVat", 0);
+			taxVatNumberFlag = dataTable2.getValueOnOtherModule("evs_adminUserUpdate", "taxVat", 0);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Registered customer from sales order")) {
 			taxVatNumberFlag = "yes";
 		}
@@ -492,7 +492,7 @@ public class EVS_SAPCustomerRelated {
 		 */
 		ExtentTest test=test1;
 		hn =new hana(TypeOfDB,Server,Port,Username,Password,test);
-		String typeValidation = dataTable2.getValueOnOtherModule("SapCustomer", "typeOfSapValidation", 0);
+		String typeValidation = dataTable2.getValueOnOtherModule("evs_SapCustomer", "typeOfSapValidation", 0);
 		String newBpNumber = "";
 		if(typeValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			String sapOrderNumeber = dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber", "OrderSAPnumber", 0);

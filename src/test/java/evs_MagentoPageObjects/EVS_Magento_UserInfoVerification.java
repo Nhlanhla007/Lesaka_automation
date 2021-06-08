@@ -260,21 +260,21 @@ public class EVS_Magento_UserInfoVerification {
 			//action.scrollElementIntoView(Account_Information);
 			action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
 			action.click(Account_Information, "Account Information", test);
-			ExpFirstname=dataTable2.getValueOnOtherModule("adminUserUpdate", "adminFirstName_output", 0).trim();
-			ExpLastname =dataTable2.getValueOnOtherModule("adminUserUpdate", "adminLastName_output", 0).trim();
-			ExpEmail =dataTable2.getValueOnOtherModule("adminUserUpdate", "adminEmail_output", 0).trim();
+			ExpFirstname=dataTable2.getValueOnOtherModule("evs_adminUserUpdate", "adminFirstName_output", 0).trim();
+			ExpLastname =dataTable2.getValueOnOtherModule("evs_adminUserUpdate", "adminLastName_output", 0).trim();
+			ExpEmail =dataTable2.getValueOnOtherModule("evs_adminUserUpdate", "adminEmail_output", 0).trim();
 			//ExpSAIDnumber =dataTable2.getValueOnOtherModule("adminUserUpdate++", "", 0);
-			ExpVATnumber = dataTable2.getValueOnOtherModule("adminUserUpdate", "adminTaxVat_output", 0);
+			ExpVATnumber = dataTable2.getValueOnOtherModule("evs_adminUserUpdate", "adminTaxVat_output", 0);
 			
 			//String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
 			String actualVat = action.getAttribute(Cust_VAT, "value");
 			action.CompareResult("VAT number in Magento backend : ", ExpVATnumber, actualVat, test);
-			String verifyBillingAddChange = dataTable2.getValueOnOtherModule("adminUserUpdate", "billingAddress", 0);
+			String verifyBillingAddChange = dataTable2.getValueOnOtherModule("evs_adminUserUpdate", "billingAddress", 0);
 			if(verifyBillingAddChange.equalsIgnoreCase("yes")) {
 				action.click(admin_AddressBtn, "Address Tab", test);
 				action.explicitWait(6000);
 				action.click(admin_billingEdit, "Billing Address Edit", test);
-				String updatedBillingAddress = dataTable2.getValueOnOtherModule("adminUserUpdate", "adminBilling_streetAddress_output", 0);
+				String updatedBillingAddress = dataTable2.getValueOnOtherModule("evs_adminUserUpdate", "adminBilling_streetAddress_output", 0);
 				String actualBillingAdd = action.getAttribute(admin_Billing_streetAddress, "value");
 				action.CompareResult("Billing Address In Magento Backend", updatedBillingAddress, actualBillingAdd, test);
 			}
