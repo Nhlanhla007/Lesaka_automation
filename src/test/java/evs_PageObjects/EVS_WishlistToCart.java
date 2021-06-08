@@ -33,7 +33,7 @@ public class EVS_WishlistToCart {
 		this.dataTable2 = dataTable2;
 	}
 
-	EVS_Products ic_Products = new EVS_Products(driver, dataTable2);
+	EVS_ProductSearch ic_Products = new EVS_ProductSearch(driver, dataTable2);
 	EVS_Cart ic_Cart = new EVS_Cart(driver, dataTable2);
 
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());

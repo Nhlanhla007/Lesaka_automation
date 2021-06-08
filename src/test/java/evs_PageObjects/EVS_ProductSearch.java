@@ -434,7 +434,9 @@ public class EVS_ProductSearch {
 		while (status) {
 			List<WebElement> allProducts = ic_products;
 			for (WebElement el : allProducts) {
-				if (el.getText().trim().toLowerCase().equalsIgnoreCase(product)) {
+				action.explicitWait(8000);
+				String eltext=action.getText(el,"element",test);
+				if (eltext.trim().toLowerCase().equalsIgnoreCase(product)) {
 					status = false;
 					action.mouseover(el, "On Product");
 					return el;
@@ -461,7 +463,7 @@ public class EVS_ProductSearch {
 	public static Map<String, List<String>> productData;
 
 	Map<String, List<String>> ic_CreateCartFromProductListing(String productsList, String quantityOfProducts,
-			String searchCategory, String waitTimeInSeconds, ExtentTest test) {
+			String searchCategory, String waitTimeInSeconds, ExtentTest test) throws Exception {
 		productData = new LinkedHashMap<>();
 		String cartAdditionMethod = dataTable2.getValueOnCurrentModule("CartAdditionMethod");
 		String TypeOfOperation = dataTable2.getValueOnCurrentModule("TypeOfOperation");// "Add_To_Cart";//Add_To_Wishlist
@@ -531,6 +533,7 @@ public class EVS_ProductSearch {
 		} catch (Exception e) {
 			logger.info(e.getMessage());
 			e.printStackTrace();
+			throw e;
 		}
 		return productData;
 
