@@ -23,7 +23,7 @@ import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
 
-public class EVS_ProductSearch {
+public class EVS_WishList_Login {
 
 	WebDriver driver;
 	Action action;
@@ -33,7 +33,7 @@ public class EVS_ProductSearch {
 
 	// ic_validateProductSKU validateProductSKU;
 	// ic_CompareProducts compareProducts;
-	public EVS_ProductSearch(WebDriver driver, DataTable2 dataTable2) {
+	public EVS_WishList_Login(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
@@ -212,8 +212,6 @@ public class EVS_ProductSearch {
 	 * @param rowNumber
 	 */
 	public void evs_SelectProductAndAddToCart(ExtentTest test) throws IOException {
-		
-//		if(!action.isElementPresent(loginMsg))
 		 String navigateURL = ConfigFileReader.getPropertyVal("EVS_URL");
 		 action.navigateToURL(navigateURL);
 
@@ -457,7 +455,6 @@ public class EVS_ProductSearch {
 		return null;
 	}
 
-	
 	public static Map<String, List<String>> productData;
 
 	Map<String, List<String>> ic_CreateCartFromProductListing(String productsList, String quantityOfProducts,
@@ -519,12 +516,10 @@ public class EVS_ProductSearch {
 							}
 						}
 					}
-					if(!(TypeOfOperation.equalsIgnoreCase("Add_To_Wishlist"))){
-						String skuCode = getSKUCode(cartAdditionMethod, prod, test);
-					
+					String skuCode = getSKUCode(cartAdditionMethod, prod, test);
 					productPrice_Quantity_SKU.add(skuCode);
 					String productPrice = productFinalPrice.getText();
-					productPrice_Quantity_SKU.add(productPrice);}
+					productPrice_Quantity_SKU.add(productPrice);
 				}
 				productData.put(productName, productPrice_Quantity_SKU);
 			}
