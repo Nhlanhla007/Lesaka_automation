@@ -383,7 +383,7 @@ public class ExcelFunctions {
 
 		inputStream.close();
 
-		FileOutputStream outputStream = new FileOutputStream("JavaBooks.xls");
+		FileOutputStream outputStream = new FileOutputStream(fileLocation);
 		workbook.write(outputStream);
 		workbook.close();
 		outputStream.close();

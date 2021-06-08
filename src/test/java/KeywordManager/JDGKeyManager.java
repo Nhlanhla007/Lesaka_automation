@@ -147,6 +147,7 @@ public class JDGKeyManager {
         EVS_RedirectToProdDetailPageFromCart evs_RedirectToProdDetailPageFromCart = new EVS_RedirectToProdDetailPageFromCart(driver, dataTable2);
         EVS_MagentoRegisterNewUser evs_MagentonewUser = new EVS_MagentoRegisterNewUser(driver, dataTable2);
         EVS_admin_UserUpdate evs_adminUserUpdate = new EVS_admin_UserUpdate(driver, dataTable2);
+        EVS_UpdateCustomer evs_UpdateUser = new EVS_UpdateCustomer(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -530,6 +531,12 @@ public class JDGKeyManager {
                 ArrayList<HashMap<String, ArrayList<String>>> adminSheets2 = new ArrayList<HashMap<String, ArrayList<String>>>();
                 adminSheets2.add(dataMap2.get(moduleToRun + "++"));
                 evs_adminUserUpdate.editCustomerDetails(adminSheets2, test1, testcaseID);
+                break;
+            case "evs_UpdateUser":
+                ArrayList<HashMap<String, ArrayList<String>>> mySheet1 = new ArrayList<HashMap<String, ArrayList<String>>>();
+                mySheet1.add(dataMap2.get("evs_UpdateUser"+ "++"));
+                mySheet1.add(dataMap2.get("evs_Login++"));
+                evs_UpdateUser.updateAccount(mySheet1, test1, testcaseID);
                 break;
 
 

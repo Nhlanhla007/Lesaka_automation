@@ -249,10 +249,10 @@ public class EVS_Magento_UserInfoVerification {
 			//action.scrollElementIntoView(Account_Information);
 			action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
 			action.click(Account_Information, "Account Information", test);
-			ExpFirstname = dataTable2.getValueOnOtherModule("ICUpdateUser", "firstName_output", 0);
-			ExpLastname = dataTable2.getValueOnOtherModule("ICUpdateUser", "lastName_output", 0);
-			ExpEmail = dataTable2.getValueOnOtherModule("ICUpdateUser", "email_output", 0);
-			ExpVATnumber = dataTable2.getValueOnOtherModule("ICUpdateUser", "taxVat_output", 0);
+			ExpFirstname = dataTable2.getValueOnOtherModule("evs_UpdateUser", "firstName_output", 0);
+			ExpLastname = dataTable2.getValueOnOtherModule("evs_UpdateUser", "lastName_output", 0);
+			ExpEmail = dataTable2.getValueOnOtherModule("evs_UpdateUser", "email_output", 0);
+			ExpVATnumber = dataTable2.getValueOnOtherModule("evs_UpdateUser", "taxVat_output", 0);
 			
 		}else if(typeOfVerificationFlag.equalsIgnoreCase("Update Account Magento Admin")) {	
 			js.executeScript("window.scrollBy(0,0)");

@@ -110,9 +110,9 @@ public class EVS_MagentoRetrieveCustomerDetailsPage {
 		}//else if(typeOfOperation.equalsIgnoreCase("Create Account Magento Admin")) {
 			//customerEmail = dataTable2.getValueOnOtherModule("CreateaccountBackend", "Email", 0);
 		else if(typeOfOperation.equalsIgnoreCase("Update Account")) {
-			customerEmail = dataTable2.getValueOnOtherModule("ICUpdateUser", "email_output", 0);
+			customerEmail = dataTable2.getValueOnOtherModule("evs_UpdateUser", "email_output", 0);
 		}else if(typeOfOperation.equalsIgnoreCase("Registered customer from sales order")){
-			customerEmail = dataTable2.getValueOnOtherModule("ic_login", "Username", 0);
+			customerEmail = dataTable2.getValueOnOtherModule("EVS_Login", "Username", 0);
 		}else if(typeOfOperation.equalsIgnoreCase("Guest Customer Creation")){
 			customerEmail = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0);
 		}else {
