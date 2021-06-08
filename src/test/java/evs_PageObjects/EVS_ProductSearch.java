@@ -50,19 +50,19 @@ public class EVS_ProductSearch {
 	 * PAGE OBJECTS
 	 */
 	@FindBy(xpath = "//span[contains(text(),'Products')]")
-	WebElement icProductLink;
+	WebElement productLink;
 
 	@FindBy(xpath = "//input[@id='search']")
-	WebElement icSearchBar;
+	WebElement searchBar;
 
 	@FindBy(xpath = "//button[@type='submit' and @title='Search']")
-	WebElement icSearchIcon;
+	WebElement searchIcon;
 
 	@FindBy(css = "a.product-item-link")
-	public List<WebElement> ic_products;
+	public List<WebElement> products;
 
 	@FindBy(xpath = "//span[contains(text(),'Next')]")
-	public WebElement ic_ClickNext;
+	public WebElement clickNext;
 
 	@FindBy(xpath = "//a[@class=\"icon__movie-projector\"]")
 	WebElement entertainmentProdLink;
@@ -121,9 +121,9 @@ public class EVS_ProductSearch {
 	 */
 
 	public void clickNext(ExtentTest test) throws Exception {
-		action.mouseover(ic_ClickNext, "scroll to element");
+		action.mouseover(clickNext, "scroll to element");
 		action.explicitWait(10000);
-		action.click(ic_ClickNext, "Clicked Next", test);
+		action.click(clickNext, "Clicked Next", test);
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class EVS_ProductSearch {
 	 * @return List<WebElement>
 	 */
 	public List<WebElement> returnList() {
-		return ic_products;
+		return products;
 	}
 
 	/**
@@ -143,12 +143,12 @@ public class EVS_ProductSearch {
 	public WebElement returnNext() {
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		boolean isPresent = driver.findElements(By.xpath("//span[contains(text(),'Next')]")).size() > 0;
-		// boolean clickN = action.attributeEnabled(ic_ClickNext);
+		// boolean clickN = action.attributeEnabled(clickNext);
 		if (isPresent) {
-			WebElement web = ic_ClickNext.findElement(By.xpath(".//parent::*"));
+			WebElement web = clickNext.findElement(By.xpath(".//parent::*"));
 			boolean status = action.attributeValidation(web, "aria-disabled", "false", 5);
 			if (status) {
-				return ic_ClickNext.findElement(By.xpath(".//parent::*"));
+				return clickNext.findElement(By.xpath(".//parent::*"));
 			}
 		}
 		return null;
@@ -156,8 +156,8 @@ public class EVS_ProductSearch {
 
 	public void ic_ClickProductLink(ExtentTest test) {
 		try {
-			if (ic_ElementVisable(icProductLink)) {
-				action.click(icProductLink, "Click product link", test);
+			if (ic_ElementVisable(productLink)) {
+				action.click(productLink, "Click product link", test);
 				Thread.sleep(10000);
 			}
 
@@ -169,10 +169,10 @@ public class EVS_ProductSearch {
 
 	public void ic_EnterTextToSearchBar(String productToFind, ExtentTest test) {
 		try {
-			ic_ElementVisable(icSearchBar);
-			action.clear(icSearchBar, "SearchBar");
-			action.writeText(icSearchBar, productToFind, "SearchBar", test);
-			action.click(icSearchIcon, "Click on search", test);
+			ic_ElementVisable(searchBar);
+			action.clear(searchBar, "SearchBar");
+			action.writeText(searchBar, productToFind, "SearchBar", test);
+			action.click(searchIcon, "Click on search", test);
 			action.explicitWait(6);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -213,7 +213,6 @@ public class EVS_ProductSearch {
 	 */
 	public void evs_SelectProductAndAddToCart(ExtentTest test) throws IOException {
 		
-//		if(!action.isElementPresent(loginMsg))
 		 String navigateURL = ConfigFileReader.getPropertyVal("EVS_URL");
 		 action.navigateToURL(navigateURL);
 
@@ -226,7 +225,7 @@ public class EVS_ProductSearch {
 		List<String> theProducts = filterProducts(productsToSearch);
 
 		try {
-			Map<String, List<String>> productsInCart = ic_CreateCartFromProductListing(productsToSearch,
+			Map<String, List<String>> productsInCart = evs_CreateCartFromProductListing(productsToSearch,
 					quantityOfSearchProducts, typeSearch, waitTimeInSeconds, test);
 			switch (TypeOfOperation) {
 			case "Add_To_Wishlist":
@@ -432,7 +431,7 @@ public class EVS_ProductSearch {
 	public WebElement ic_FindProduct(ExtentTest test, String product) throws Exception {
 		boolean status = true;
 		while (status) {
-			List<WebElement> allProducts = ic_products;
+			List<WebElement> allProducts = products;
 			for (WebElement el : allProducts) {
 				if (el.getText().trim().toLowerCase().equalsIgnoreCase(product)) {
 					status = false;
@@ -460,7 +459,7 @@ public class EVS_ProductSearch {
 	
 	public static Map<String, List<String>> productData;
 
-	Map<String, List<String>> ic_CreateCartFromProductListing(String productsList, String quantityOfProducts,
+	Map<String, List<String>> evs_CreateCartFromProductListing(String productsList, String quantityOfProducts,
 			String searchCategory, String waitTimeInSeconds, ExtentTest test) {
 		productData = new LinkedHashMap<>();
 		String cartAdditionMethod = dataTable2.getValueOnCurrentModule("CartAdditionMethod");
