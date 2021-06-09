@@ -19,22 +19,12 @@ public class ic_NavigetoWishlist {
 	WebDriver driver;
 	Action action;
 	DataTable2 dataTable2;
-		public ic_NavigetoWishlist(WebDriver driver, DataTable2 dataTable2) {
-			this.driver = driver;
-			PageFactory.initElements(driver, this);
-			action = new Action(driver);
-			this.dataTable2=dataTable2;
-		}
-		@FindBy(className = "my-account")
-		WebElement ic_myAccountButton;
-		
 	public ic_NavigetoWishlist(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
-		this.dataTable2 = dataTable2;
+		this.dataTable2=dataTable2;
 	}
-		
 	@FindBy(className = "my-account")
 	WebElement ic_myAccountButton;
 		
@@ -54,8 +44,6 @@ public class ic_NavigetoWishlist {
 	@FindBy(xpath = "//div[@class='message info empty']/span[contains(text(),'You have no items in your wish list.')]")
 	WebElement mywishlist_msg;
 		
-		@FindBy(xpath = "//div[@class='message info empty']/span[contains(text(),'You have no items in your wish list.')]")
-		WebElement mywishlist_msg;
 		public void NavigateToWishlist_verifymsg(ExtentTest test) throws IOException{
 			String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 			String password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
@@ -78,17 +66,7 @@ public class ic_NavigetoWishlist {
 				break;
 			}
         }
-	
-		public void navigateWishlist(int waitTime,ExtentTest test) throws IOException{
-			action.click(ic_myAccountButton, "My account", test);
-			action.click(myWishlist_link, " navigate myWishlist link", test);
-			action.explicitWait(waitTime);
-		}
-		public boolean loginUser(String Uname, String Passwrd,int waitTime,ExtentTest test) throws IOException{
-			boolean check =false;
-			
-	}
-		
+
 	public void navigateWishlist(int waitTime, ExtentTest test) throws IOException {
 		action.click(ic_myAccountButton, "My account", test);
 		action.click(myWishlist_link, " navigate myWishlist link", test);

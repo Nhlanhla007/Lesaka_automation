@@ -456,7 +456,7 @@ public class EVS_ProductSearch {
 	public static Map<String, List<String>> productData;
 											
 	Map<String, List<String>> evs_CreateCartFromProductListing(String productsList, String quantityOfProducts,
-		String searchCategory, String waitTimeInSeconds, ExtentTest test) {
+		String searchCategory, String waitTimeInSeconds, ExtentTest test) throws Exception {
 		productData = new LinkedHashMap<>();
 		String cartAdditionMethod = dataTable2.getValueOnCurrentModule("CartAdditionMethod");
 		String TypeOfOperation = dataTable2.getValueOnCurrentModule("TypeOfOperation");// "Add_To_Cart";//Add_To_Wishlist
