@@ -21,10 +21,11 @@ public class EVS_NavigetoWishlist {
 			action = new Action(driver);
 			this.dataTable2=dataTable2;
 		}
-		@FindBy(xpath = "/html/body/div[3]/header/div[2]/div/div[3]/div[5]")
+		//@FindBy(xpath = "/html/body/div[3]/header/div[2]/div/div[3]/div[5]")
+		@FindBy(xpath = "/html/body/div[2]/header/div[2]/div/div[3]/div[5]")
 		WebElement evs_myAccountButton;
 		
-		@FindBy(xpath = "//*[@id=\"header-slideout--0\"]/li[4]/a")
+		@FindBy(xpath = "//*[@id=\"header-slideout--0\"]/li[6]/a")
 		WebElement myWishlist_link;
 		@FindBy(xpath = "//*[@id='email']")
 		WebElement evs_Username;

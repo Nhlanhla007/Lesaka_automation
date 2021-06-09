@@ -25,17 +25,17 @@ public class EVS_SendWishlistToEmail {
 	
 	}
 	
-	
-	@FindBy(xpath = "/html/body/div[3]/main/div[2]/div[2]/form[1]/div[3]/div[1]/button[2]/span")
+	                 //html/body/div[3]/main/div[2]/div[2]/form[1]/div[3]/div[1]/button[2]/span
+	@FindBy(xpath = "//*[@title=\"Share Wish List\"]")
 	WebElement ShareWishlist;
 	@FindBy(xpath = "//h1//span[contains(text(),'Wish List Sharing')]")
 	WebElement PageTittleWishlist_sharing;
 	@FindBy(xpath = "//textarea[@id='email_address']")
 	WebElement EmailID_feild;
 	
-	@FindBy(xpath = "//span[contains(text(),'Share Wish List')]")
+	@FindBy(xpath = "//*[@title=\"Share Wish List\"]")
 	WebElement ShareWishlist_feild;
-	@FindBy(xpath ="//header//div[contains(text(),'Your wish list has been shared.')]")
+	@FindBy(xpath ="//div[contains(text(),'Your wish list has been shared.')]")
 	WebElement Hdr_Txt;	
 	
 	public void ShareYourwishlist(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{

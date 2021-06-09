@@ -147,6 +147,7 @@ public class JDGKeyManager {
         EVS_MagentoRegisterNewUser evs_MagentonewUser = new EVS_MagentoRegisterNewUser(driver, dataTable2);
         EVS_NavigetoWishlist evs_NavigetoWishlist = new EVS_NavigetoWishlist(driver, dataTable2);
         EVS_RemoveFromcart evs_RemoveFromcart = new EVS_RemoveFromcart(driver, dataTable2);
+        ic_verifyWishlistItem evs_verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
         EVS_SendWishlistToEmail evs_SendWishlistToEmail = new EVS_SendWishlistToEmail(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
@@ -535,6 +536,9 @@ public class JDGKeyManager {
                 break;
             case "EVS_SendWishlistToEmail":
                 evs_SendWishlistToEmail.ShareYourwishlist(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_ClearWishList":
+                verifyWishlistItem.handleWishlistItem(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
 
         }
