@@ -54,13 +54,8 @@ public class EVS_NavigetoWishlist {
 	WebElement mywishlist_msg;
 
 	public void NavigateToWishlist_verifymsg(ExtentTest test) throws IOException {
-
-//		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
-
 		String Username = dataTable2.getValueOnCurrentModule("Username");
 		String Password = dataTable2.getValueOnCurrentModule("Password");
-
-//		action.navigateToURL(url);
 		// action.explicitWait(4000);
 		String ExpLoginType = dataTable2.getValueOnCurrentModule("Login_type");
 

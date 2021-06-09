@@ -222,11 +222,6 @@ public class Ic_Products {
 	 * @param rowNumber
 	 */
 	public void ic_SelectProductAndAddToCart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException {
-//		String urlControl=dataTable2.getValueOnCurrentModule("loginDetails");
-////		if(urlControl.equals("")){
-//			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",urlControl,"url");
-//			action.navigateToURL(url);
-////		}
 		String typeSearch = input.get("typeSearch").get(rowNumber);
 		String productsToSearch = input.get("specificProduct").get(rowNumber);
 		String quantityOfSearchProducts = input.get("Quantity").get(rowNumber);

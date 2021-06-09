@@ -148,11 +148,11 @@ public class JDGKeyManager {
         EVS_MagentoRegisterNewUser evs_MagentonewUser = new EVS_MagentoRegisterNewUser(driver, dataTable2);
         EVS_admin_UserUpdate evs_adminUserUpdate = new EVS_admin_UserUpdate(driver, dataTable2);
         EVS_UpdateCustomer evs_UpdateUser = new EVS_UpdateCustomer(driver, dataTable2);
-        EVS_NavigetoWishlist evs_NavigetoWishlist = new EVS_NavigetoWishlist(driver, dataTable2);
         EVS_clearWishList evs_verifyWishlistItem = new EVS_clearWishList(driver, dataTable2);
-        EVS_RemoveFromcart evs_RemoveFromcart = new EVS_RemoveFromcart(driver, dataTable2);
         EVS_WishlistToCart evs_WishlistToCart = new EVS_WishlistToCart(driver, dataTable2);
         LaunchPortal lp= new LaunchPortal(driver, dataTable2);
+        EVS_NavigetoWishlist evs_NavigetoWishlist = new EVS_NavigetoWishlist(driver, dataTable2);
+        EVS_RemoveFromcart evs_RemoveFromcart = new EVS_RemoveFromcart(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {

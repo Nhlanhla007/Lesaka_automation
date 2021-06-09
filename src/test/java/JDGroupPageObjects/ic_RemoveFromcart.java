@@ -29,6 +29,7 @@ public class ic_RemoveFromcart {
 		
 		@FindBy(xpath = "//div[@class='minicart-wrapper']//span[@class='counter-number']")
 	    private WebElement ic_CartQuantity;
+		
 		@FindBy(xpath = "//div[@class='actions']//span[contains(text(),'View and Edit Your Cart')]")
 	    private WebElement ViewandEditcart;
 		
@@ -44,7 +45,7 @@ public class ic_RemoveFromcart {
 		
 				
 		public void Clear_miniCart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-			int waitTime = 11;
+			int waitTime = 6;
 			int checkQty;
 			checkQty = retriveCartQuantity(waitTime,test);
 			if(checkQty>0){
@@ -60,9 +61,24 @@ public class ic_RemoveFromcart {
 				action.CompareResult("All the products are removed from minicart", 0+" Quantity in cart", checkQty+" Quantity in cart", test);
 			}
 		}
+//		public int retriveCartQuantity(int Timeout, ExtentTest test) throws IOException {
+//			action.explicitWait(Timeout);
+//			int Quantity = Integer.parseInt(action.getText(ic_CartQuantity, "ic mini Cart Quantity",test));
+//			return Quantity;
+//		}
+		
 		public int retriveCartQuantity(int Timeout, ExtentTest test) throws IOException {
 			action.explicitWait(Timeout);
-			int Quantity = Integer.parseInt(action.getText(ic_CartQuantity, "ic mini Cart Quantity",test));
+			String quantInCart=ic_CartQuantity.getText();
+			
+			if(quantInCart.equalsIgnoreCase("")) {
+				quantInCart = "0";
+				
+			}
+			int Quantity = Integer.parseInt(quantInCart);
+			
+			
+			System.out.println("Cart Quantity is: "+Quantity);
 			return Quantity;
 		}
 		public void NavigateToviewEditcart(int TimeOut, ExtentTest test) throws IOException{

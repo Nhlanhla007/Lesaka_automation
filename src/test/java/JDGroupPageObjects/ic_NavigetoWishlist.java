@@ -28,30 +28,38 @@ public class ic_NavigetoWishlist {
 		@FindBy(className = "my-account")
 		WebElement ic_myAccountButton;
 		
-		@FindBy(xpath = "//ul[@id='header-slideout--0']//li//a[contains(text(),'My Wish List')]")
-		WebElement myWishlist_link;
-		@FindBy(xpath = "//*[@id='email']")
-		WebElement ic_Username;
+	public ic_NavigetoWishlist(WebDriver driver, DataTable2 dataTable2) {
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+		action = new Action(driver);
+		this.dataTable2 = dataTable2;
+	}
 		
-		@FindBy(xpath = "//*[@id='pass']")
-		WebElement ic_Password;
-		@FindBy(xpath = "//*[@id=\"send2\"]/span")
-		WebElement ic_SigninBtn;
+	@FindBy(className = "my-account")
+	WebElement ic_myAccountButton;
 		
+	@FindBy(xpath = "//ul[@id='header-slideout--0']//li//a[contains(text(),'My Wish List')]")
+	WebElement myWishlist_link;
+	@FindBy(xpath = "//*[@id='email']")
+	WebElement ic_Username;
 		
-		@FindBy(xpath = "//h1[@class='page-title']/span[contains(text(),'My Wish List')]")
-		WebElement mywishlist_page;
+	@FindBy(xpath = "//*[@id='pass']")
+	WebElement ic_Password;
+	@FindBy(xpath = "//*[@id=\"send2\"]/span")
+	WebElement ic_SigninBtn;
 		
+	@FindBy(xpath = "//h1[@class='page-title']/span[contains(text(),'My Wish List')]")
+	WebElement mywishlist_page;
 		
+	@FindBy(xpath = "//div[@class='message info empty']/span[contains(text(),'You have no items in your wish list.')]")
+	WebElement mywishlist_msg;
 		
 		@FindBy(xpath = "//div[@class='message info empty']/span[contains(text(),'You have no items in your wish list.')]")
 		WebElement mywishlist_msg;
 		public void NavigateToWishlist_verifymsg(ExtentTest test) throws IOException{
-//			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
 			String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 			String password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
 			ConfigFileReader configFileReader = new ConfigFileReader();
-//			action.navigateToURL(url);
 			action.explicitWait(5000);
 			String ExpLoginType =dataTable2.getValueOnCurrentModule("Login_type");//"ExistingUser";// logedOn_user or ExistingUser
 			int waitTime = Integer.parseInt(dataTable2.getValueOnCurrentModule("TimeOut_seconds"));
@@ -66,13 +74,11 @@ public class ic_NavigetoWishlist {
 				boolean checkLogin = loginUser(Username,password,waitTime,test);
 				if(checkLogin){
 					checkmsg = checkWishlist_message(waitTime,test);
-					
 				}
 				break;
-				
 			}
-			
-		}
+        }
+	
 		public void navigateWishlist(int waitTime,ExtentTest test) throws IOException{
 			action.click(ic_myAccountButton, "My account", test);
 			action.click(myWishlist_link, " navigate myWishlist link", test);
@@ -81,33 +87,46 @@ public class ic_NavigetoWishlist {
 		public boolean loginUser(String Uname, String Passwrd,int waitTime,ExtentTest test) throws IOException{
 			boolean check =false;
 			
-			action.writeText(ic_Username, Uname, "Username feild", test);
-			action.writeText(ic_Password, Passwrd, "Password feild", test);
-			action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
-			if(action.elementExists(mywishlist_page, waitTime)){
-				check=true;
-				action.CompareResult("Login to account in ic is sucessfull", "True", "True", test);
-			}else{
-				action.CompareResult("Login to account in ic is sucessfull", "True", "False", test);
-			}
-			return check;
-		}	
-		public boolean checkWishlist_message(int waitTime, ExtentTest test) throws IOException{
-			boolean msg_flag = false;
-			if(action.elementExists(mywishlist_msg, waitTime)){
-				//action.CompareResult("Wishlist contains no item verification message", "true", "true", test);
-				msg_flag=true;
-			}else{
-				action.CompareResult("Wishlist contains no item verification message", "true", "flase", test);
-			}
-			return msg_flag;
-		}
+	}
 		
-		public void NavigateToWishlist_verifyLoginPageAppears(ExtentTest test) throws Exception{
-				navigateWishlist(15000,test);
-				String titleOfPage = driver.getTitle();
-				String expectedTitle = "Incredible Connection Customer Login";
-				action.CompareResult("Verify Title of page", expectedTitle, titleOfPage, test);
+	public void navigateWishlist(int waitTime, ExtentTest test) throws IOException {
+		action.click(ic_myAccountButton, "My account", test);
+		action.click(myWishlist_link, " navigate myWishlist link", test);
+		action.explicitWait(waitTime);
+	}
+
+	public boolean loginUser(String Uname, String Passwrd, int waitTime, ExtentTest test) throws IOException {
+		boolean check = false;
+
+		action.writeText(ic_Username, Uname, "Username feild", test);
+		action.writeText(ic_Password, Passwrd, "Password feild", test);
+		action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
+		if (action.elementExists(mywishlist_page, waitTime)) {
+			check = true;
+			action.CompareResult("Login to account in ic is sucessfull", "True", "True", test);
+		} else {
+			action.CompareResult("Login to account in ic is sucessfull", "True", "False", test);
 		}
+		return check;
+	}
+
+	public boolean checkWishlist_message(int waitTime, ExtentTest test) throws IOException {
+		boolean msg_flag = false;
+		if (action.elementExists(mywishlist_msg, waitTime)) {
+			// action.CompareResult("Wishlist contains no item verification
+			// message", "true", "true", test);
+			msg_flag = true;
+		} else {
+			action.CompareResult("Wishlist contains no item verification message", "true", "flase", test);
+		}
+		return msg_flag;
+	}
+
+	public void NavigateToWishlist_verifyLoginPageAppears(ExtentTest test) throws Exception {
+		navigateWishlist(15000, test);
+		String titleOfPage = driver.getTitle();
+		String expectedTitle = "Incredible Connection Customer Login";
+		action.CompareResult("Verify Title of page", expectedTitle, titleOfPage, test);
+	}
 		
 }

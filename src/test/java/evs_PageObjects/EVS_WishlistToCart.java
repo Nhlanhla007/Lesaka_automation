@@ -33,50 +33,40 @@ public class EVS_WishlistToCart {
 		this.dataTable2 = dataTable2;
 	}
 
-	EVS_ProductSearch ic_Products = new EVS_ProductSearch(driver, dataTable2);
-	EVS_Cart ic_Cart = new EVS_Cart(driver, dataTable2);
+	EVS_ProductSearch evs_Products = new EVS_ProductSearch(driver, dataTable2);
+	EVS_Cart evs_Cart = new EVS_Cart(driver, dataTable2);
 
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());
 
 	@FindBy(xpath = "//ol[@class='product-items wishlist']/li")
-	private List<WebElement> ic_AllMywishlistProducts;
-
-//	@FindBy(xpath = "//ol[@class='product-items']/li//strong[@class='product-item-name']/a")
-//	public List<WebElement> ic_allproducts_wishlist;
-	
-	@FindBy(xpath = "//ol[@class='product-items wishlist']/li")
-	List<WebElement> ic_allproducts_wishlist;
+	List<WebElement> evs_allproducts_wishlist;
 
 	@FindBy(xpath = "//div[@data-block='minicart']")
-	public WebElement iCCartButton_wishlist;
+	public WebElement evs_CartButton_wishlist;
 
 	@FindBy(xpath = "//ol[@class='minicart-items']/li")
-	List<WebElement> icAllCartProducts;
+	List<WebElement> evsAllCartProducts;
 
 	public static Map<String, List<String>> productWishlistTocart;
 
 	public void verifyProducts_wishlistTocart(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
 			throws Exception {
-		
-//		String navigateURL = ConfigFileReader.getPropertyVal("EVS_URL");
-//		 action.navigateToURL(navigateURL);
-		 
-		String ProductSelectionType = dataTable2.getValueOnCurrentModule("ProductSelectionType");
-		
-		
 
-		Map<String, List<String>> AllProductsWishlist = ic_Products.productData;
+		String ProductSelectionType = dataTable2.getValueOnCurrentModule("ProductSelectionType");
+
+
+		Map<String, List<String>> AllProductsWishlist = evs_Products.productData;
 		String waitTime = dataTable2.getValueOnCurrentModule("TimeOut_seconds");
 		switch (ProductSelectionType) {
 		case "All_product":
 			checkProductwishlist_AddtoCart(AllProductsWishlist, waitTime, test);
-			iCcartVerification_AsperWishlist(AllProductsWishlist, test);
+			evs_cartVerification_AsperWishlist(AllProductsWishlist, test);
 			break;
 		case "Specific_product":
 			String SelectiveProductsToadd = dataTable2.getValueOnCurrentModule("SelectiveProductsToadd");
 			Map<String, List<String>> FilterProductsWishlist = FilterMap(AllProductsWishlist, SelectiveProductsToadd);
 			checkProductwishlist_AddtoCart(FilterProductsWishlist, waitTime, test);
-			iCcartVerification_AsperWishlist(FilterProductsWishlist, test);
+			evs_cartVerification_AsperWishlist(FilterProductsWishlist, test);
 			break;
 		}
 
@@ -86,7 +76,7 @@ public class EVS_WishlistToCart {
 		Map<String, List<String>> Filteredlist;
 		Filteredlist = new LinkedHashMap<>();
 		List<String> Val = null;
-		List<String> CriteriaList = ic_Products.filterProducts(Filtercriteria);
+		List<String> CriteriaList = evs_Products.filterProducts(Filtercriteria);
 		for (Map.Entry eachitems : AllProductsWishlist.entrySet()) {
 			String eachkeys = (String) eachitems.getKey();
 			if (CriteriaList.contains(eachkeys)) {
@@ -105,13 +95,15 @@ public class EVS_WishlistToCart {
 		List<String> Val = null;
 		for (Map.Entry eachProducts : AllProductslist.entrySet()) {
 			String eachproductname = (String) eachProducts.getKey();
-			WebElement prodele = ic_FindProduct_wishlist(test, eachproductname);
-			
+			WebElement prodele = evs_FindProduct_wishlist(test, eachproductname);
+
 			WebElement nameOfProduct = prodele.findElement(By.xpath(".//div/a[2]"));
 			String WishlistproductName = action.getAttribute(nameOfProduct, "title");
-	
 			if (eachproductname.equalsIgnoreCase(WishlistproductName)) {
-				cartButton = getCartButton_Wishlist(nameOfProduct);
+				cartButton = getCartButton_Wishlist(prodele);
+				action.scrollElementIntoView(prodele);
+				action.mouseover(prodele, "Mouse Over element");
+				action.clickEle(cartButton, "Add Product", test);
 				productWishlistTocart.put(eachproductname, Val);
 			}
 
@@ -120,8 +112,8 @@ public class EVS_WishlistToCart {
 	}
 
 	WebElement getCartButton_Wishlist(WebElement product) {
-		WebElement cartButton = product
-				.findElement(By.xpath("//parent::*/parent::*/parent::*//button[@title='Add to Cart']"));
+
+		WebElement cartButton = product.findElement(By.xpath(".//div/div/fieldset/div/div/button"));
 		return cartButton;
 	}
 
@@ -133,15 +125,14 @@ public class EVS_WishlistToCart {
 		action.explicitWait(7000);
 	}
 
-	public WebElement ic_FindProduct_wishlist(ExtentTest test, String product) throws IOException {
+	public WebElement evs_FindProduct_wishlist(ExtentTest test, String product) throws IOException {
 		boolean status = true;
 
 		while (status) {
-			List<WebElement> allProducts = ic_allproducts_wishlist;
+			List<WebElement> allProducts = evs_allproducts_wishlist;
 			for (WebElement el : allProducts) {
 				WebElement nameOfProduct = el.findElement(By.xpath(".//div/a[2]"));
 				String item = action.getAttribute(nameOfProduct, "title");
-				
 				if (item.trim().toLowerCase().equalsIgnoreCase(product)) {
 					status = false;
 					return el;
@@ -152,23 +143,20 @@ public class EVS_WishlistToCart {
 		return null;
 	}
 
-	public void iCcartVerification_AsperWishlist(Map<String, List<String>> products, ExtentTest test) throws Exception {
-		// Find all elements from the list
+	public void evs_cartVerification_AsperWishlist(Map<String, List<String>> products, ExtentTest test) throws Exception {
 		action.explicitWait(10000);
-		action.click(iCCartButton_wishlist, "View Cart", test);
-		for (WebElement productsInCart : icAllCartProducts) {
+		action.click(evs_CartButton_wishlist, "View Cart", test);
+		for (WebElement productsInCart : evsAllCartProducts) {
 			WebElement nameOfProduct = productsInCart.findElement(By.xpath(".//div/a"));
 			String item = action.getAttribute(nameOfProduct, "title");
-			
 			for (Map.Entry selectedProducts : products.entrySet()) {
 				String productsName = (String) selectedProducts.getKey();
 				if (productsName.equalsIgnoreCase(item)) {
 					action.CompareResult("Name : " + item, productsName, item, test);
-					
+
 				}
 			}
 		}
-	
 
 	}
 }
