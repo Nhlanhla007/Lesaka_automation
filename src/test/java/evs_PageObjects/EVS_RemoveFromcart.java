@@ -16,6 +16,10 @@ import com.aventstack.extentreports.ExtentTest;
 import utils.Action;
 import utils.DataTable2;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class EVS_RemoveFromcart {
 	WebDriver driver;
 	Action action;

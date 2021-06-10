@@ -17,6 +17,8 @@ import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
 
+import java.io.IOException;
+
 public class EVS_NavigetoWishlist {
 	WebDriver driver;
 	Action action;

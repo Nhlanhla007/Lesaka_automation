@@ -24,16 +24,17 @@ public class ic_RemoveFromcart {
 			action = new Action(driver);
 			this.dataTable2=dataTable2;
 		}
-		@FindBy(xpath = "//header/div[2]/div/div[3]/div[3]/a")
+//		@FindBy(xpath = "//header/div[2]/div/div[3]/div[3]/a")
+		@FindBy(xpath = "/html/body/div[3]/header/div[2]/div/div[3]/div[4]/a")
 	    private WebElement ic_CartButton;
 		
-		@FindBy(xpath = "//div[@class='minicart-wrapper']//span[@class='counter-number']")
+		@FindBy(xpath = "//span[@class='counter-number']")
 	    private WebElement ic_CartQuantity;
 		
-		@FindBy(xpath = "//div[@class='actions']//span[contains(text(),'View and Edit Your Cart')]")
+		@FindBy(xpath = "//*[@id=\"minicart-content-wrapper\"]/div[3]/div[2]/div[3]/div/a/span")
 	    private WebElement ViewandEditcart;
 		
-		@FindBy(xpath = "//*[@id='maincontent']/div[1]/h1//span[text()='Shopping Cart']")
+		@FindBy(xpath = "//span[text()='Shopping Cart']")
 	    private WebElement ShoppingCart_Hdr;
 		@FindBy(xpath = "//*[@id='form-validate']//div[@class='custom-clear']//span[text()='Remove All']")
 	    private WebElement Remove_all;
@@ -69,23 +70,19 @@ public class ic_RemoveFromcart {
 		
 		public int retriveCartQuantity(int Timeout, ExtentTest test) throws IOException {
 			action.explicitWait(Timeout);
-			String quantInCart=ic_CartQuantity.getText();
-			
-			if(quantInCart.equalsIgnoreCase("")) {
-				quantInCart = "0";
-				
+			String qty=action.getText(ic_CartQuantity, "ic mini Cart Quantity",test);
+			int Quantity=0;
+			if(!qty.equals("")) {
+				Quantity = Integer.parseInt(action.getText(ic_CartQuantity, "ic mini Cart Quantity", test));
 			}
-			int Quantity = Integer.parseInt(quantInCart);
-			
-			
-			System.out.println("Cart Quantity is: "+Quantity);
 			return Quantity;
 		}
 		public void NavigateToviewEditcart(int TimeOut, ExtentTest test) throws IOException{
 			String ExpPageHdr = "Shopping Cart";
 			action.click(ic_CartButton, "click mini cart icon", test);
 			if(action.elementExists(ViewandEditcart, TimeOut)){
-				action.click(ViewandEditcart, "View and Edit cart", test);
+				ViewandEditcart.click();
+//				action.click(ViewandEditcart, "View and Edit cart", test);
 				if(action.elementExists(ShoppingCart_Hdr, TimeOut)){
 					String shoppingcartPg = action.getText(ShoppingCart_Hdr, "ShoppingCart Header",test);
 					if(shoppingcartPg.equalsIgnoreCase("ExpPageHdr")){

@@ -104,10 +104,10 @@ public class ICGiftCardVerification {
         action.navigateToURL("https://mail.google.com/");
         action.explicitWait(5000);
         driver.findElement(By.id("identifierId")).sendKeys(userName);
-        driver.findElement(By.xpath("//*[@id=\"identifierNext\"]/div/button/div[2]")).click();
+        driver.findElement(By.xpath("//span[contains(text(),'Next')]")).click();
         action.explicitWait(2000);
         driver.findElement(By.xpath("//input[@class='whsOnd zHQkBf']")).sendKeys(password);
-        driver.findElement(By.xpath("//*[@id=\"passwordNext\"]/div/button/div[2]")).click();
+        driver.findElement(By.xpath("//span[contains(text(),'Next')]")).click();
         action.explicitWait(5000);
 //        action.writeText(userNameText,userName,"userName",test);
 //        action.click(nextButton,"nextButton",test);
