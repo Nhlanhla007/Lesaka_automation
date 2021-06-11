@@ -166,7 +166,6 @@ public class JDGKeyManager {
         LaunchPortal lp= new LaunchPortal(driver, dataTable2);
         EVS_NavigetoWishlist evs_NavigetoWishlist = new EVS_NavigetoWishlist(driver, dataTable2);
         EVS_RemoveFromcart evs_RemoveFromcart = new EVS_RemoveFromcart(driver, dataTable2);
-        ic_verifyWishlistItem evs_verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
         EVS_SendWishlistToEmail evs_SendWishlistToEmail = new EVS_SendWishlistToEmail(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;

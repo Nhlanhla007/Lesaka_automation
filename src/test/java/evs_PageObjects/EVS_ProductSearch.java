@@ -207,9 +207,7 @@ public class EVS_ProductSearch {
 	 * Gathers data from excel. Determines search type inserted from excel and
 	 * selects appropriate construct for execution
 	 * 
-	 * @param input
 	 * @param test
-	 * @param rowNumber
 	 */
 	public void evs_SelectProductAndAddToCart(ExtentTest test) throws IOException {
 		String typeSearch = dataTable2.getValueOnCurrentModule("typeSearch");// input.get("typeSearch").get(rowNumber);
