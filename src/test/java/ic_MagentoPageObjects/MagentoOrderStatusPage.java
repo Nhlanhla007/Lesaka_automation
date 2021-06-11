@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -55,6 +57,13 @@ public class MagentoOrderStatusPage {
 	
 	@FindBy(xpath = "//tbody/tr[1]/td[9]/div")
 	public WebElement magentoOrderStatus;
+	
+	//Bundle Article Info below
+    @FindBy(xpath = "//table[@class='admin__table-secondary order-information-table']/tbody/tr/td//span[@id='order_status']")
+    public WebElement OrderStatus_orderDetailPage;
+    
+    @FindBy(xpath = "/html/body/div[2]/main/div[2]/div[1]/div/div[1]/div[1]/section[4]/div[2]/table/tbody/tr[1]/td[1]/div[2]")
+    public WebElement listSKU;
 	
 	public void click(WebElement elementAttr, ExtentTest test) {
 		try {
@@ -111,10 +120,13 @@ public class MagentoOrderStatusPage {
 		action.CompareResult("Order Status", orderStatus, magentoOrderStatus.getText(), test);
 	}
 	
+	
+    public static List<String> AllSKU;
+    public static Boolean isSKUPresent ;
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException, InterruptedException {
 //		String POfetchFrom = dataTable2.getValueOnOtherModule("OrderStatusSearch", "Fetch PO number", 0);
 //		String idToSearch = dataTable2.getValueOnOtherModule("PayUPagePayment","OrderID",0);
-		String idToSearch = dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);
+		String idToSearch = dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);//"3100002010";
 //		if(POfetchFrom.equalsIgnoreCase("IC")) {
 //			idToSearch= ic_PayUPayment.Oderid;
 //		}else {
@@ -127,7 +139,43 @@ public class MagentoOrderStatusPage {
 		searchForOrder(idToSearch,test);
 		orderStatusCheck(orderStatus, test);
 		viewOrderDetails(test);
+		
+		//Validate SKU for bundle article
+		//Thread.sleep(30000);
+		//NavigateTo_OrderdetailsPage(test);		
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		isSKUPresent = driver.findElements(By.xpath("/html/body/div[2]/main/div[2]/div[1]/div/div[1]/div[1]/section[4]/div[2]/table/tbody/tr[1]/td[1]/div[2]")).size()>0;
+		if(isSKUPresent) {
+		VerifyOrderStatus(test, orderStatus, 10, 5);
+		action.scrollElemetnToCenterOfView(listSKU, "SKU", test);
+		String skudata = action.getText(listSKU, "listSKU",test);
+		if (skudata.contains("SKU:")) {
+			String[] arraySKU = skudata.replace("-", "").split("\n");
+			System.out.println(arraySKU.length);
+			AllSKU = new ArrayList<String>();
+			for (int i = 0; i < arraySKU.length; i++) {
+				int SKUsize = arraySKU[i].toString().trim().length();
+				String SKUValue = arraySKU[i].toString().trim();
+				int spitSKU= SKUValue.indexOf("000");
+				SKUValue = SKUValue.substring(spitSKU);
+				/*
+				 * for(String value : spitSKU) { SKUValue = value; }
+				 */
+				AllSKU.add(SKUValue);
+				if (SKUsize == 18 & i == 1) {								
+					action.CompareResult("SKU Code was found in Magento", "true", "true", test);
+					}
+				}
+			}
+		} //else {
+			//action.CompareResult("SKU code not found", "True", "False", test);		
+		//input.get("SKU").set(rowNumber, "".join(",", AllSKU));
+		//dataTable2.setValueOnCurrentModule("BundleArticleSKU", AllSKU);
+		//}
 	}
+
+
+	
 	public void NavigateOdersPage(ExtentTest test) throws IOException, InterruptedException{
 		if(action.waitUntilElementIsDisplayed(magentoSalesTab, 10000)) {
 		action.click(magentoSalesTab, "Sales tab", test);
@@ -138,4 +186,63 @@ public class MagentoOrderStatusPage {
 		driver.navigate().refresh();
 		Thread.sleep(5000);
 	}
+	
+    public void VerifyOrderStatus(ExtentTest test, String ExporderStatus, int TimeOutInseconds, int RefreshInterval) throws IOException{
+
+
+
+        boolean flagres = false;
+
+        long startTime = System.currentTimeMillis();
+        int TimeOutinSecond =TimeOutInseconds;
+
+
+
+        int trycount =RefreshInterval;
+
+        int elapsedTime = 0;
+
+
+
+        String ActOrderStatus="";
+
+
+
+        //--------------code---------
+
+
+
+        while(elapsedTime<=TimeOutinSecond && flagres==false){
+            action.refresh();
+            action.waitForPageLoaded(TimeOutinSecond);
+                try {
+                    if(action.elementExists(OrderStatus_orderDetailPage, RefreshInterval))
+                    {
+                            ActOrderStatus = action.getText(OrderStatus_orderDetailPage, "OrderStatus_orderDetailPage",test);
+                            action.scrollToElement(OrderStatus_orderDetailPage,"OrderStatus_orderDetailPage");
+                            System.out.println("ActOrderStatus is  : "+ActOrderStatus);
+                            if(ActOrderStatus.equalsIgnoreCase(ExporderStatus)){
+                                flagres = true;
+                                break;
+                            }
+                    }
+                } catch (Exception e) {
+
+                }
+                long endTime = System.currentTimeMillis();
+                long elapsedTimeInMils = endTime-startTime;
+                elapsedTime = ((int) elapsedTimeInMils)/1000;
+                System.out.println("elapsedTime: "+elapsedTime);        
+             
+        }
+        if(flagres==true){
+            action.CompareResult(" Order Status on Order Details Page in MagentoAdmin", ExporderStatus, ActOrderStatus, test);
+        }else{
+            action.CompareResult(" Order Status on Order Details Page in MagentoAdmin", ExporderStatus, ActOrderStatus, test);
+
+        }
+
+    }
+
+	
 }

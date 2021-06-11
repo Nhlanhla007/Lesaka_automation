@@ -203,11 +203,19 @@ public class Action {
 			explicitWait(5000);
 			boolean clearCookiesAvailability = driver.findElements(By.xpath("//*[@class=\"cookie-notice-content\"]")).size() > 0;
 			if(clearCookiesAvailability) {
-				WebElement closeCookie = driver.findElement(By.xpath("//*[@id=\"btn-cookie-allow\"]"));
-				closeCookie.click();
+				try {
+					WebElement closeCookie = driver.findElement(By.xpath("//*[@id=\"btn-cookie-allow\"]"));
+					if(waitUntilElementIsDisplayed(closeCookie, 10)) {
+						closeCookie.click();
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
+
 
 	public String getCurrentURL() {
 		return driver.getCurrentUrl();
