@@ -121,8 +121,9 @@ public class MagentoOrderStatusPage {
 	}
 	
 	
-    public static List<String> AllSKU;
-    public static Boolean isSKUPresent ;
+    //public List<String> AllSKU;
+    public Boolean isSKUPresent ;
+    public String AllSKU = "";
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException, InterruptedException {
 //		String POfetchFrom = dataTable2.getValueOnOtherModule("OrderStatusSearch", "Fetch PO number", 0);
 //		String idToSearch = dataTable2.getValueOnOtherModule("PayUPagePayment","OrderID",0);
@@ -145,6 +146,7 @@ public class MagentoOrderStatusPage {
 		//NavigateTo_OrderdetailsPage(test);		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		isSKUPresent = driver.findElements(By.xpath("/html/body/div[2]/main/div[2]/div[1]/div/div[1]/div[1]/section[4]/div[2]/table/tbody/tr[1]/td[1]/div[2]")).size()>0;
+		dataTable2.setValueOnCurrentModule("IsBundleArticleSKUPresent", String.valueOf(isSKUPresent));
 		if(isSKUPresent) {
 		VerifyOrderStatus(test, orderStatus, 10, 5);
 		action.scrollElemetnToCenterOfView(listSKU, "SKU", test);
@@ -152,7 +154,7 @@ public class MagentoOrderStatusPage {
 		if (skudata.contains("SKU:")) {
 			String[] arraySKU = skudata.replace("-", "").split("\n");
 			System.out.println(arraySKU.length);
-			AllSKU = new ArrayList<String>();
+			//AllSKU = new ArrayList<String>();
 			for (int i = 0; i < arraySKU.length; i++) {
 				int SKUsize = arraySKU[i].toString().trim().length();
 				String SKUValue = arraySKU[i].toString().trim();
@@ -161,13 +163,16 @@ public class MagentoOrderStatusPage {
 				/*
 				 * for(String value : spitSKU) { SKUValue = value; }
 				 */
-				AllSKU.add(SKUValue);
+				//AllSKU.add(SKUValue);
+				AllSKU += SKUValue + "#";
 				if (SKUsize == 18 & i == 1) {								
 					action.CompareResult("SKU Code was found in Magento", "true", "true", test);
 					}
 				}
 			}
-		} //else {
+		}
+		dataTable2.setValueOnCurrentModule("BundleArticleSKU", AllSKU);
+		//else {
 			//action.CompareResult("SKU code not found", "True", "False", test);		
 		//input.get("SKU").set(rowNumber, "".join(",", AllSKU));
 		//dataTable2.setValueOnCurrentModule("BundleArticleSKU", AllSKU);

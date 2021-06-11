@@ -194,15 +194,23 @@ import utils.hana;
 				 * 
 				 * }
 				 */ 
-				 if(MagentoOrderStatusPage.isSKUPresent != false) {
-					 List<String> bundleArticleSKU= MagentoOrderStatusPage.AllSKU;
+				String isSkuPresent = dataTable2.getValueOnOtherModule("OrderStatusSearch", "IsBundleArticleSKUPresent", 0);
+				 if(isSkuPresent != "false") {
+					 //List<String> bundleArticleSKU= MagentoOrderStatusPage.AllSKU;
+					List<String> bundleArticleSKU =Arrays.asList(dataTable2.getValueOnOtherModule("OrderStatusSearch", "BundleArticleSKU", 0).split("#"));
 					List<String> alldataSKU= hn.GetRowdataByColumnName(rs, "MATNR");
 					//logger.info("Product name is  : "+alldataProductdesc);
 					 for(int k=0;k<bundleArticleSKU.size();k++){
+						 boolean skuPresent = false;
 						 for(int i=0;i<alldataSKU.size();i++) {
 							 if(alldataSKU.get(i).equalsIgnoreCase(bundleArticleSKU.get(k))) {
+								 skuPresent = true;
 								 action.CompareResult("Magento SKU Is Present In SAP Database", alldataSKU.get(i), bundleArticleSKU.get(k), test);
 							 }
+						 }
+						 
+						 if(skuPresent == false) {
+							 action.CompareResult("Magento SKU for "+ bundleArticleSKU.get(k)+" Is Not Present In SAP Database", "true", "false", test);
 						 }
 						 //String eachProduct = ExpProductName.get(k);
 						 //String AllProductsNameDB =String.join("", alldataProductdesc);
