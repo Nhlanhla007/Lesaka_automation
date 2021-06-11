@@ -167,6 +167,9 @@ public class JDGKeyManager {
         EVS_NavigetoWishlist evs_NavigetoWishlist = new EVS_NavigetoWishlist(driver, dataTable2);
         EVS_RemoveFromcart evs_RemoveFromcart = new EVS_RemoveFromcart(driver, dataTable2);
         EVS_SendWishlistToEmail evs_SendWishlistToEmail = new EVS_SendWishlistToEmail(driver, dataTable2);
+        EVS_newLetterInvalidEmail evs_NewsletterEmail = new EVS_newLetterInvalidEmail(driver, dataTable2);
+        EVS_SubscriberNewsletter_DuplicateEmailaddress evs_SubscribeNews_DupliEmailID = new EVS_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
+        EVS_Subscriber_Newsletter_ValidEmailaddress evs_SubscribeNewsletter = new EVS_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -592,11 +595,18 @@ public class JDGKeyManager {
             case "EVS_NavigetoWishlist":
                 evs_NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
                 break;
-            case "EVS_RemoveFromcart":
-                evs_RemoveFromcart.Clear_miniCart(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
-                break;
             case "EVS_SendWishlistToEmail":
                 evs_SendWishlistToEmail.ShareYourwishlist(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_InvalidEmailNewsLetter":
+                evs_NewsletterEmail.evs_NewsLetterInvalidEmail(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_SubscribeNews_DupEmailID":
+                evs_SubscribeNews_DupliEmailID.SubscribeNewsletter_DuplicateEmail(dataMap2.get(moduleToRun + "++"), test1,
+                        rowNumber);
+                break;
+            case "evs_SubscribeNewsletter":
+                evs_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
         }
     }
