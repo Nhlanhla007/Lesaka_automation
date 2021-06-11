@@ -35,8 +35,7 @@ public class JDGKeyManager {
 	Action action;
 	LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 
-	public JDGKeyManager(WebDriver driver, DataTable2 dataTable2,
-			LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2) {
+	public JDGKeyManager(WebDriver driver, DataTable2 dataTable2,LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2) {
 		this.driver = driver;
 		this.dataTable2 = dataTable2;
 		this.dataMap2 = dataMap2;
@@ -77,8 +76,7 @@ public class JDGKeyManager {
 		ic_LoginPasswordIsSecured icPasswordSecured = new ic_LoginPasswordIsSecured(driver, dataTable2);
 		ic_forgotPasswordLink icforgottenPassLink = new ic_forgotPasswordLink(driver, dataTable2);
 		verifyForgotPassword icVerifyForgotPass = new verifyForgotPassword(driver, dataTable2);
-		ic_PasswordForgotEmailVerification icForgotEmailSent = new ic_PasswordForgotEmailVerification(driver,
-				dataTable2);
+		ic_PasswordForgotEmailVerification icForgotEmailSent = new ic_PasswordForgotEmailVerification(driver,dataTable2);
 		ic_ResetPasswordEmailLink ResetPasswordLink = new ic_ResetPasswordEmailLink(driver, dataTable2);
 		ic_CashDepositPayment ic_cashDepositPayment = new ic_CashDepositPayment(driver, dataTable2);
 		SAPorderRelated SaporderRelated = new SAPorderRelated(driver, dataMap2, dataTable2);
@@ -91,14 +89,10 @@ public class JDGKeyManager {
 		IC_RetriveOrderID ic_RetriveOrderID = new IC_RetriveOrderID(driver, dataTable2);
 		IC_RetriveGiftCardOrderId ic_RetriveGiftCardOrderID = new IC_RetriveGiftCardOrderId(driver, dataTable2);
 		admin_GiftCardReport giftCardReport = new admin_GiftCardReport(driver, dataTable2);
-		Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,
-				dataTable2);
-		Magento_CancelSalesorderVerification CancelSalesorderVerification = new Magento_CancelSalesorderVerification(
-				driver, dataTable2);
-		Magento_CreditApp_NavigateFilter CreditApp_NavigateFilter = new Magento_CreditApp_NavigateFilter(driver,
-				dataTable2);
-		Magento_CreditStatusVerification CreditStatusVerification = new Magento_CreditStatusVerification(driver,
-				dataTable2);
+		Magento_CancelSalerOrderCreditMemo CancelSalerOrderCreditMemo = new Magento_CancelSalerOrderCreditMemo(driver,dataTable2);
+		Magento_CancelSalesorderVerification CancelSalesorderVerification = new Magento_CancelSalesorderVerification(driver, dataTable2);
+		Magento_CreditApp_NavigateFilter CreditApp_NavigateFilter = new Magento_CreditApp_NavigateFilter(driver,dataTable2);
+		Magento_CreditStatusVerification CreditStatusVerification = new Magento_CreditStatusVerification(driver,dataTable2);
 		ic_RefreshLogoHomepage icLogo = new ic_RefreshLogoHomepage(driver, dataTable2);
 		ic_EnterBasicDetails icEnterBasicDetails = new ic_EnterBasicDetails(driver, dataTable2);
 		ic_SpouseDetails icEnterSpouseInfo = new ic_SpouseDetails(driver, dataTable2);
@@ -107,11 +101,9 @@ public class JDGKeyManager {
 		ic_SearchTextReturningNoResult icReturnNoResults = new ic_SearchTextReturningNoResult(driver, dataTable2);
 		IC_CreditAppEmploymentDetails creditAppEmployDetails = new IC_CreditAppEmploymentDetails(driver, dataTable2);
 		IC_CreditAppAddressDetails creditAppAddressDetails = new IC_CreditAppAddressDetails(driver, dataTable2);
-		ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(
-				driver, dataTable2);
+		ic_SubscriberNewsletter_DuplicateEmailaddress ic_SubscribeNews_DupliEmailID = new ic_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
 		ic_newLetterInvalidEmail icNewsletterEmail = new ic_newLetterInvalidEmail(driver, dataTable2);
-		ic_Subscriber_Newsletter_ValidEmailaddress ic_SubscribeNewsletter = new ic_Subscriber_Newsletter_ValidEmailaddress(
-				driver, dataTable2);
+		ic_Subscriber_Newsletter_ValidEmailaddress ic_SubscribeNewsletter = new ic_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
 		IC_ProductsSortBy productsSortBy = new IC_ProductsSortBy(driver, dataTable2);
 		ic_WishlistToCart IC_WishlistToCart = new ic_WishlistToCart(driver, dataTable2);
 		ic_verifyWishlistItem verifyWishlistItem = new ic_verifyWishlistItem(driver, dataTable2);
@@ -129,8 +121,7 @@ public class JDGKeyManager {
 		IC_Parallel_login parrallel_ic_Login = new IC_Parallel_login(driver, dataTable2);
 		SapRSI sapRSI = new SapRSI(driver, dataTable2);
 		ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
-		ic_validateDifferentPaymentOptions icPaymentOptions = new ic_validateDifferentPaymentOptions(driver,
-				dataTable2);
+		ic_validateDifferentPaymentOptions icPaymentOptions = new ic_validateDifferentPaymentOptions(driver,dataTable2);
 		// evs classes below
 		EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
 		EVS_ProductSearch evs_productSearch = new EVS_ProductSearch(driver, dataTable2);
@@ -149,15 +140,13 @@ public class JDGKeyManager {
 		EVS_Parallel_login parallel_evs_Login = new EVS_Parallel_login(driver, dataTable2);
 		EVS_invalidLoginCreds evs_invalidCredslogin = new EVS_invalidLoginCreds(driver, dataTable2);
 		EVS_LoginPasswordIsSecured evs_PasswordSecured = new EVS_LoginPasswordIsSecured(driver, dataTable2);
-		EVS_MagentoRetrieveCustomerDetailsPage evs_custDetails = new EVS_MagentoRetrieveCustomerDetailsPage(driver,
-				dataTable2);
+		EVS_MagentoRetrieveCustomerDetailsPage evs_custDetails = new EVS_MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
 		EVS_Magento_UserInfoVerification evs_Magentoverify = new EVS_Magento_UserInfoVerification(driver, dataTable2);
 		EVS_SAPCustomerRelated evs_customerDB = new EVS_SAPCustomerRelated(driver, dataMap2, dataTable2);
 		EVS_RedeemGiftCard evs_RedeemGiftCard = new EVS_RedeemGiftCard(driver, dataTable2);
 		EVS_verifyForgotPassword evs_VerifyForgotPass = new EVS_verifyForgotPassword(driver, dataTable2);
 		EVS_forgotPasswordLink evs_forgottenPassLink = new EVS_forgotPasswordLink(driver, dataTable2);
-		EVS_RedirectToProdDetailPageFromCart evs_RedirectToProdDetailPageFromCart = new EVS_RedirectToProdDetailPageFromCart(
-				driver, dataTable2);
+		EVS_RedirectToProdDetailPageFromCart evs_RedirectToProdDetailPageFromCart = new EVS_RedirectToProdDetailPageFromCart(driver, dataTable2);
 		EVS_MagentoRegisterNewUser evs_MagentonewUser = new EVS_MagentoRegisterNewUser(driver, dataTable2);
 		EVS_admin_UserUpdate evs_adminUserUpdate = new EVS_admin_UserUpdate(driver, dataTable2);
 		EVS_UpdateCustomer evs_UpdateUser = new EVS_UpdateCustomer(driver, dataTable2);
@@ -167,10 +156,8 @@ public class JDGKeyManager {
 		EVS_NavigetoWishlist evs_NavigetoWishlist = new EVS_NavigetoWishlist(driver, dataTable2);
 		EVS_RemoveFromcart evs_RemoveFromcart = new EVS_RemoveFromcart(driver, dataTable2);
 		EVS_newLetterInvalidEmail evs_NewsletterEmail = new EVS_newLetterInvalidEmail(driver, dataTable2);
-		EVS_SubscriberNewsletter_DuplicateEmailaddress evs_SubscribeNews_DupliEmailID = new EVS_SubscriberNewsletter_DuplicateEmailaddress(
-				driver, dataTable2);
-		EVS_Subscriber_Newsletter_ValidEmailaddress evs_SubscribeNewsletter = new EVS_Subscriber_Newsletter_ValidEmailaddress(
-				driver, dataTable2);
+		EVS_SubscriberNewsletter_DuplicateEmailaddress evs_SubscribeNews_DupliEmailID = new EVS_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
+		EVS_Subscriber_Newsletter_ValidEmailaddress evs_SubscribeNewsletter = new EVS_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
 		EVS_SendWishlistToEmail evs_SendWishlistToEmail = new EVS_SendWishlistToEmail(driver, dataTable2);
 		ExtentTest test1 = test.createNode(moduleToRun);
 		int rowNumber = -1;
