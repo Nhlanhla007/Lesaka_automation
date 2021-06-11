@@ -1,5 +1,11 @@
 package utils;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -203,8 +209,15 @@ public class Action {
 			explicitWait(5000);
 			boolean clearCookiesAvailability = driver.findElements(By.xpath("//*[@class=\"cookie-notice-content\"]")).size() > 0;
 			if(clearCookiesAvailability) {
-				WebElement closeCookie = driver.findElement(By.xpath("//*[@id=\"btn-cookie-allow\"]"));
-				closeCookie.click();
+				try {
+					WebElement closeCookie = driver.findElement(By.xpath("//*[@id=\"btn-cookie-allow\"]"));
+					if(waitUntilElementIsDisplayed(closeCookie, 10)) {
+						closeCookie.click();
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -1736,5 +1749,23 @@ public class Action {
 			throw e;
 		}
 	}
+	
+	public void Robot_WriteText(String Input) throws AWTException{
+		 Robot robot = new Robot();
+ 	  Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+ 	  StringSelection stringSelection = new StringSelection(Input);
+ 	  clipboard.setContents(stringSelection, null);
+ 	  //Use Robot class instance to simulate CTRL+C and CTRL+V key events :
+ 	  
+ 		  robot.keyPress(KeyEvent.VK_CONTROL);
+ 		  robot.keyPress(KeyEvent.VK_V);
+ 		  robot.keyRelease(KeyEvent.VK_V);
+ 		  robot.keyRelease(KeyEvent.VK_CONTROL);
+
+ 		//Simulate Enter key event
+ 		robot.keyPress(KeyEvent.VK_ENTER);
+ 		robot.keyRelease(KeyEvent.VK_ENTER);
+	}
+
 
 }
