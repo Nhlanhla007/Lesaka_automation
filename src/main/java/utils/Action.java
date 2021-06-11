@@ -1,5 +1,11 @@
 package utils;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -47,6 +53,7 @@ public class Action {
 	public final int WAIT_IN_SECONDS_MIN = 2;
 	public final int WAIT_IN_SECONDS_MED = 4;
 	public final int WAIT_IN_SECONDS_MAX = 6;
+
 
 	WebElement newElement = null;
 
@@ -149,6 +156,7 @@ public class Action {
 		}
 	}
 
+
 	/**
 	 * This method accepts the browser alerts.
 	 */
@@ -166,6 +174,7 @@ public class Action {
 		driver.switchTo().frame(index);
 	}
 
+
 	public void switchToFrameUsingName(String framName) {
 		driver.switchTo().frame(framName);
 	}
@@ -175,6 +184,7 @@ public class Action {
 
 		driver.switchTo().frame(webElementName);
 	}
+
 
 	/**
 	 * This method can switch back to default frame
@@ -198,11 +208,17 @@ public class Action {
 		if (url.contains("incredibleconnection")) {
 			driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 			explicitWait(5000);
-			boolean clearCookiesAvailability = driver.findElements(By.xpath("//*[@class=\"cookie-notice-content\"]"))
-					.size() > 0;
-			if (clearCookiesAvailability) {
-				WebElement closeCookie = driver.findElement(By.xpath("//*[@id=\"btn-cookie-allow\"]"));
-				closeCookie.click();
+			boolean clearCookiesAvailability = driver.findElements(By.xpath("//*[@class=\"cookie-notice-content\"]")).size() > 0;
+			if(clearCookiesAvailability) {
+				try {
+					WebElement closeCookie = driver.findElement(By.xpath("//*[@id=\"btn-cookie-allow\"]"));
+					if(waitUntilElementIsDisplayed(closeCookie, 10)) {
+						closeCookie.click();
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -230,6 +246,7 @@ public class Action {
 		if (b)
 			driver.switchTo().alert().dismiss();
 	}
+
 
 	public void waitTillAlertIsPresent(long time) {
 		WebDriverWait wait = new WebDriverWait(driver, time);
@@ -450,6 +467,7 @@ public class Action {
 		}
 	}
 
+
 	public <T> void setAttribute(String attribute) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("document.getElementById('identifierId').setAttribute('data-initial-value', '10')");
@@ -579,6 +597,7 @@ public class Action {
 			if (!((WebElement) elementAttr).isEnabled())
 				logger.info("Element not enabled");
 
+
 		}
 		return true;
 
@@ -653,7 +672,7 @@ public class Action {
 	public <T> boolean waitUntilElementIsDisplayed(T elementAttr, int secs) throws InterruptedException {
 		secs = secs / 1000;
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-		boolean flag = isDisplayed(elementAttr);
+		boolean flag = isDisplayed(elementAttr);		
 		int count = 0;
 		while (flag == false & count < secs) {
 			// refresh();
@@ -778,6 +797,7 @@ public class Action {
 
 		}
 	}
+
 
 	public <T> String getSelectedOptionFromDropDown(T elementAttr) {
 		if (elementAttr.getClass().getName().contains("By")) {
@@ -929,6 +949,7 @@ public class Action {
 		}
 	}
 
+
 	public <T> void selectExactValueFromListUsingTex(T elementAttr, String value) {
 
 		if (elementAttr.getClass().getName().contains("By")) {
@@ -955,6 +976,9 @@ public class Action {
 			}
 		}
 	}
+
+
+
 
 	@SuppressWarnings("unchecked")
 	public <T> void selectExactValueFromListUsingText(T elementAttr, String value) {
@@ -1042,6 +1066,7 @@ public class Action {
 
 	}
 
+
 	public <T> void switchFrameTo(String frameName) {
 		driver.switchTo().frame(frameName);
 	}
@@ -1087,6 +1112,9 @@ public class Action {
 			throw e;
 		}
 	}
+
+
+
 
 	public <T> void waitUntilAttributeContains(T elementAttr, long time) {
 
@@ -1164,6 +1192,7 @@ public class Action {
 		wait.until(function);
 
 	}
+
 
 	@SuppressWarnings("deprecation")
 	public <T> void waitForElementAttributeEqualsString(String javaScript, String value, long time) {
@@ -1265,6 +1294,8 @@ public class Action {
 		};
 		fWait.until(func);
 	}
+
+
 
 	public void waitTillReleaseClicked(By by, long time) {
 		FluentWait<WebDriver> fWait = new FluentWait<WebDriver>(driver);
@@ -1381,6 +1412,7 @@ public class Action {
 			}
 		}
 	}
+
 
 	public void waitUntilAngularReady() throws Exception {
 
@@ -1622,6 +1654,8 @@ public class Action {
 
 	}
 
+
+
 	public void checkIfPageIsLoadedByURL(String urlFragment, String name, ExtentTest test) {
 		ExtentTest node = test.createNode("Has next Page louded? " + name);
 		try {
@@ -1740,7 +1774,7 @@ public class Action {
 			node.fail(e.getMessage());
 		}
 	}
-
+	
 	public void scrollElementIntoView(WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView();", element);
@@ -1763,5 +1797,23 @@ public class Action {
 			throw e;
 		}
 	}
+
+	public void Robot_WriteText(String Input) throws AWTException{
+		 Robot robot = new Robot();
+ 	  Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+ 	  StringSelection stringSelection = new StringSelection(Input);
+ 	  clipboard.setContents(stringSelection, null);
+ 	  //Use Robot class instance to simulate CTRL+C and CTRL+V key events :
+ 	  
+ 		  robot.keyPress(KeyEvent.VK_CONTROL);
+ 		  robot.keyPress(KeyEvent.VK_V);
+ 		  robot.keyRelease(KeyEvent.VK_V);
+ 		  robot.keyRelease(KeyEvent.VK_CONTROL);
+
+ 		//Simulate Enter key event
+ 		robot.keyPress(KeyEvent.VK_ENTER);
+ 		robot.keyRelease(KeyEvent.VK_ENTER);
+	}
+
 
 }

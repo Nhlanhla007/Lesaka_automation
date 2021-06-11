@@ -6,6 +6,10 @@ import SAP_HanaDB.EVS_SAPorderRelated;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
 import SAP_HanaDB.SapRSI;
+import SRS.srs_Login;
+import SRS.srs_LogonStoreByOrderPayload;
+import SRS.srs_salesOrder_DeliverStatus;
+
 import com.aventstack.extentreports.ExtentTest;
 import emailverification.ICGiftCardVerification;
 import emailverification.ICWishlistverification;
@@ -120,6 +124,15 @@ public class JDGKeyManager {
         SapRSI sapRSI = new SapRSI(driver, dataTable2);
         ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
         ic_validateDifferentPaymentOptions icPaymentOptions = new ic_validateDifferentPaymentOptions(driver, dataTable2);
+        
+        //New functionality for backlog in IC
+        ic_ClickAndCollect ClickAndCollect = new ic_ClickAndCollect(driver, dataTable2);
+		IC_RetivedLoggedUserBillingAddress LoggedUserBillingAddress =new IC_RetivedLoggedUserBillingAddress(driver, dataTable2);
+		srs_Login SRSLogin =new srs_Login(driver, dataTable2);
+		srs_LogonStoreByOrderPayload SRSLogonStore = new srs_LogonStoreByOrderPayload(driver,dataTable2);
+		srs_salesOrder_DeliverStatus SRSDeliverStatus = new srs_salesOrder_DeliverStatus(driver, dataTable2);
+		Magento_FetchOrderpayload MagentoFetchOrderpayload = new Magento_FetchOrderpayload(driver, dataTable2);
+        
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
         EVS_ProductSearch evs_productSearch = new EVS_ProductSearch(driver, dataTable2);
@@ -438,10 +451,27 @@ public class JDGKeyManager {
             case "skuProduct":
                 products.skuProduct(test1);
                 break;
-
-
             case"validatePaymentOption":
 				icPaymentOptions.validatePaymentOption(dataMap2.get(moduleToRun + "++"),test1, rowNumber);
+				break;
+				//New functionality from backlog IC
+            case "icClickandCollect":
+				ClickAndCollect.ClickandCollectDeliveryoption(test1);
+				break;
+			case "IC_RetivedLoggedUserBillingAddress":
+				LoggedUserBillingAddress.retriveLoggedUserBillingAddress(test1);
+				break;
+			case "srs_Login":
+				SRSLogin.SRS_Login(dataMap2.get(moduleToRun+"++"), test1, rowNumber);
+				break;
+			case "SRSLogonStore":	
+				SRSLogonStore.srsLogonByAptStore(dataMap2.get(moduleToRun+"++"), test1, rowNumber);
+				break;
+			case "srs_salesOrder_DeliverStatus":
+				SRSDeliverStatus.verifySalesDeliverStatus(dataMap2.get(moduleToRun+"++"), test1, rowNumber);
+				break;
+			case "MagentoFetchOrderpayload":
+				MagentoFetchOrderpayload.FetchOrderPayload(test1);
 				break;
 
             //EVS CODE BELOW
