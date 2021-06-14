@@ -51,7 +51,7 @@ public class ic_MagentoOrderSAPnumber {
 			
 			try {
 				if(action.elementExists(OrderDetailSAPNumber, 10)){
-						OrderSAPnumber = OrderDetailSAPNumber.getText();//action.getText(OrderDetailSAPNumber, "SAP Number",test);
+						OrderSAPnumber = OrderDetailSAPNumber.getText(); // DO NOT USE CREATE MANY FAIL STEPS IF NOT FOUND--> action.getText(OrderDetailSAPNumber, "SAP Number",test);
 						action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
 						System.out.println(OrderSAPnumber);
 					if(OrderSAPnumber.isEmpty()){

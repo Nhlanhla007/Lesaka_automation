@@ -20,13 +20,14 @@ import JDGroupPageObjects.IC_Cart;
 import JDGroupPageObjects.Ic_Products;
 import JDGroupPageObjects.ic_PayUPayment;
 import Logger.Log;
+import ic_MagentoPageObjects.MagentoOrderStatusPage;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 import utils.Action;
 import utils.Base64Decoding;
 import utils.DataTable2;
 import utils.hana;
 
-
+//CHANGES MADE ON LINE 110, ProductData,ICDelivery
 
 
 
@@ -109,12 +110,13 @@ import utils.hana;
 			String ExpGrandTotal =String.valueOf(cartSum);//comes from cart total
 			
 			List<String> ExpProductName =new ArrayList<>();
+			
 			Map<String,List<String>> AllICprducts = Ic_Products.productData;
 			for(Map.Entry map : AllICprducts.entrySet()) {
 				String produts = (String)map.getKey();
 				//sum += (Integer.parseInt(quantity)*Integer.parseInt(price.replace("R", "").replace(",", "")));
 				ExpProductName.add(produts);
-			}
+			} 
 			
 			String ExpCITY=ICDelivery.Cityname.toLowerCase().trim();//"Pietersburg";
 			String ExpSTREET=ICDelivery.Streetname.toLowerCase().trim();//"Gemsbok Street";
@@ -179,17 +181,44 @@ import utils.hana;
 				
 				
 				//Verify all product description----------------------------------------------
-				List<String> alldataProductdesc= hn.GetRowdataByColumnName(rs, "ARKTX");
-				//System.out.println("Product name is  : "+alldataProductdesc);
-				logger.info("Product name is  : "+alldataProductdesc);
-				 for(int k=0;k<ExpProductName.size();k++){
-					 String eachProduct = ExpProductName.get(k);
-					 String AllProductsNameDB =String.join("", alldataProductdesc);
-					// System.out.println("ExpeachProduct "+eachProduct+" Actual "+AllProductsNameDB);
-					 action.CompareResult(" Products Purchased Description in SAP DB", eachProduct.trim().toUpperCase(), AllProductsNameDB.trim().toUpperCase(), test);
-				
+				/*
+				 * List<String> alldataProductdesc= hn.GetRowdataByColumnName(rs, "ARKTX");
+				 * //System.out.println("Product name is  : "+alldataProductdesc);
+				 * logger.info("Product name is  : "+alldataProductdesc); for(int
+				 * k=0;k<ExpProductName.size();k++){ String eachProduct = ExpProductName.get(k);
+				 * String AllProductsNameDB =String.join("", alldataProductdesc); //
+				 * System.out.println("ExpeachProduct "+eachProduct+" Actual "+AllProductsNameDB
+				 * ); action.CompareResult(" Products Purchased Description in SAP DB",
+				 * eachProduct.trim().toUpperCase(), AllProductsNameDB.trim().toUpperCase(),
+				 * test);
+				 * 
+				 * }
+				 */ 
+				String isSkuPresent = dataTable2.getValueOnOtherModule("OrderStatusSearch", "IsBundleArticleSKUPresent", 0);
+				 if(isSkuPresent != "false") {
+					 //List<String> bundleArticleSKU= MagentoOrderStatusPage.AllSKU;
+					List<String> bundleArticleSKU =Arrays.asList(dataTable2.getValueOnOtherModule("OrderStatusSearch", "BundleArticleSKU", 0).split("#"));
+					List<String> alldataSKU= hn.GetRowdataByColumnName(rs, "MATNR");
+					//logger.info("Product name is  : "+alldataProductdesc);
+					 for(int k=0;k<bundleArticleSKU.size();k++){
+						 boolean skuPresent = false;
+						 for(int i=0;i<alldataSKU.size();i++) {
+							 if(alldataSKU.get(i).equalsIgnoreCase(bundleArticleSKU.get(k))) {
+								 skuPresent = true;
+								 action.CompareResult("Magento SKU Is Present In SAP Database", alldataSKU.get(i), bundleArticleSKU.get(k), test);
+							 }
+						 }
+						 
+						 if(skuPresent == false) {
+							 action.CompareResult("Magento SKU for "+ bundleArticleSKU.get(k)+" Is Not Present In SAP Database", "true", "false", test);
+						 }
+						 //String eachProduct = ExpProductName.get(k);
+						 //String AllProductsNameDB =String.join("", alldataProductdesc);
+						 //System.out.println("ExpeachProduct "+eachProduct+" Actual "+AllProductsNameDB);
+						 //action.CompareResult(" Products Purchased Description in SAP DB", eachProduct.trim().toUpperCase(), AllProductsNameDB.trim().toUpperCase(), test);
+					
+					 }
 				 }
-				 
 				// verify Delivery Block ----------------------------------------------------
 				 List<String> alldataDelivery_block= hn.GetRowdataByColumnName(rs, "LIFSK");
 			   //  System.out.println("Delivery Block is  : "+alldataDelivery_block);
