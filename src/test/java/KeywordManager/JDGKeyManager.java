@@ -163,13 +163,16 @@ public class JDGKeyManager {
         EVS_UpdateCustomer evs_UpdateUser = new EVS_UpdateCustomer(driver, dataTable2);
         EVS_clearWishList evs_verifyWishlistItem = new EVS_clearWishList(driver, dataTable2);
         EVS_WishlistToCart evs_WishlistToCart = new EVS_WishlistToCart(driver, dataTable2);
-        LaunchPortal lp= new LaunchPortal(driver, dataTable2);
+        IC_LaunchPortal lp= new IC_LaunchPortal(driver, dataTable2);
         EVS_NavigetoWishlist evs_NavigetoWishlist = new EVS_NavigetoWishlist(driver, dataTable2);
         EVS_RemoveFromcart evs_RemoveFromcart = new EVS_RemoveFromcart(driver, dataTable2);
         EVS_SendWishlistToEmail evs_SendWishlistToEmail = new EVS_SendWishlistToEmail(driver, dataTable2);
         EVS_newLetterInvalidEmail evs_NewsletterEmail = new EVS_newLetterInvalidEmail(driver, dataTable2);
         EVS_SubscriberNewsletter_DuplicateEmailaddress evs_SubscribeNews_DupliEmailID = new EVS_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
+        EVS_LaunchPortal evs_lp= new EVS_LaunchPortal(driver, dataTable2);
         EVS_Subscriber_Newsletter_ValidEmailaddress evs_SubscribeNewsletter = new EVS_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
+        EVS_PopularSearch evs_PopularSearch = new EVS_PopularSearch(driver, dataTable2);
+        EVS_SearchTextReturningNoResult evs_ReturnNoResults = new EVS_SearchTextReturningNoResult(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -475,6 +478,9 @@ public class JDGKeyManager {
 			case "MagentoFetchOrderpayload":
 				MagentoFetchOrderpayload.FetchOrderPayload(test1);
 				break;
+			 case "LaunchPortal":
+	                lp.launchPortal (test1);
+	                break;
 
             //EVS CODE BELOW
             case "evs_Login":
@@ -589,8 +595,8 @@ public class JDGKeyManager {
             case "evs_WishlistToCart":
                 evs_WishlistToCart.verifyProducts_wishlistTocart(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
-            case "LaunchPortal":
-                lp.launchPortal (test1);
+            case "evs_LaunchPortal":
+                evs_lp.launchPortal (test1);
                 break;
             case "EVS_NavigetoWishlist":
                 evs_NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
@@ -607,6 +613,12 @@ public class JDGKeyManager {
                 break;
             case "evs_SubscribeNewsletter":
                 evs_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_PopularSearch":
+                evs_PopularSearch.VerifyPopularSearch(test1, rowNumber);
+                break;
+            case "evs_SearchNoResultsReturned":
+                evs_ReturnNoResults.evs_DoesNotExtistSearch(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
         }
     }
