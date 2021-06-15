@@ -170,6 +170,8 @@ public class JDGKeyManager {
         EVS_newLetterInvalidEmail evs_NewsletterEmail = new EVS_newLetterInvalidEmail(driver, dataTable2);
         EVS_SubscriberNewsletter_DuplicateEmailaddress evs_SubscribeNews_DupliEmailID = new EVS_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
         EVS_Subscriber_Newsletter_ValidEmailaddress evs_SubscribeNewsletter = new EVS_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
+        EVS_validateDifferentPaymentOptions evs_PaymentOptions = new EVS_validateDifferentPaymentOptions(driver, dataTable2);
+        EVS_existingAddress evs_ExistingAddress = new EVS_existingAddress(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -589,7 +591,7 @@ public class JDGKeyManager {
             case "evs_WishlistToCart":
                 evs_WishlistToCart.verifyProducts_wishlistTocart(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
-            case "LaunchPortal":
+            case "evs_LaunchPortal":
                 lp.launchPortal (test1);
                 break;
             case "EVS_NavigetoWishlist":
@@ -607,6 +609,12 @@ public class JDGKeyManager {
                 break;
             case "evs_SubscribeNewsletter":
                 evs_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case"evs_validatePaymentOption":
+            	evs_PaymentOptions.validatePaymentOption(dataMap2.get(moduleToRun + "++"),test1, rowNumber);
+				break;
+            case "evs_ExistingAddress":
+            	evs_ExistingAddress.AddressThere(test1);
                 break;
         }
     }
