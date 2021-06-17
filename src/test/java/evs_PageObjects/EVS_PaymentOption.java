@@ -97,7 +97,7 @@ public class EVS_PaymentOption {
 			String Paytype = input.get("Paytype_Option").get(rowNumber);
 			action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 			WebElement paymenttype = evs_SelectPaymentMethod(Paytype);
-			action.waitExplicit(10);
+			action.explicitWait(10000);
 			action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
 			action.explicitWait(10000);
 			action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);

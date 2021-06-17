@@ -43,15 +43,14 @@ public class EVS_MagentoOrderSAPnumber {
     	long startTime = System.currentTimeMillis();
     	int TimeOutinSecond =Integer.parseInt(input.get("TimeOutinSecond").get(rowNumber));
     	int trycount =Integer.parseInt(input.get("totalCounter").get(rowNumber));
-    	int elapsedTime = 0;
+    	int elapsedTime = 0;    	
     	while(elapsedTime<=TimeOutinSecond && flagres==false)
     	{
 			action.refresh();
 			action.waitForPageLoaded(TimeOutinSecond);
 			
 			try {
-				if(action.elementExists(OrderDetailSAPNumber, 10)){
-						action.scrollElemetnToCenterOfView(OrderDetailSAPNumber,"OrderDetailSAPNumber",test);
+				if(action.waitUntilElementIsDisplayed(OrderDetailSAPNumber, 2000)){						
 						OrderSAPnumber = OrderDetailSAPNumber.getText();//action.getText(OrderDetailSAPNumber, "SAP Number",test);
 						//action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
 						System.out.println(OrderSAPnumber);
@@ -60,7 +59,7 @@ public class EVS_MagentoOrderSAPnumber {
 			    		action.refresh();
 						System.out.println("not found on count:" + totalConunter);
 			    	}else{
-			    		flagres = true;
+			    		flagres = true;			    		
 						System.out.println("OrderSAPnumber :" + OrderSAPnumber);
 						input.get("OrderSAPnumber").set(rowNumber,OrderSAPnumber.replace("[RabbitMQ] Order SAP Number: ",""));
 			    	}
@@ -70,9 +69,9 @@ public class EVS_MagentoOrderSAPnumber {
 					
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				if(trycount==totalConunter){
-					e.printStackTrace();
-				}
+				/*
+				 * if(trycount==totalConunter){ e.printStackTrace(); }
+				 */
 			}
 
 			//Thread.sleep(TimeOutinSecond * 1000);
@@ -83,6 +82,7 @@ public class EVS_MagentoOrderSAPnumber {
 			totalConunter++;
 		}
     	if(flagres){
+    		action.scrollElemetnToCenterOfView(OrderDetailSAPNumber,"OrderDetailSAPNumber",test);
     		action.CompareResult("SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
     	}else{
     		action.CompareResult("SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
