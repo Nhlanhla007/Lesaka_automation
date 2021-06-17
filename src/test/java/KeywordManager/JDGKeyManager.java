@@ -1,11 +1,7 @@
 package KeywordManager;
 
 import JDGroupPageObjects.*;
-import SAP_HanaDB.EVS_SAPCustomerRelated;
-import SAP_HanaDB.EVS_SAPorderRelated;
-import SAP_HanaDB.SAPCustomerRelated;
-import SAP_HanaDB.SAPorderRelated;
-import SAP_HanaDB.SapRSI;
+import SAP_HanaDB.*;
 import SRS.srs_Login;
 import SRS.srs_LogonStoreByOrderPayload;
 import SRS.srs_salesOrder_DeliverStatus;
@@ -170,6 +166,8 @@ public class JDGKeyManager {
         EVS_newLetterInvalidEmail evs_NewsletterEmail = new EVS_newLetterInvalidEmail(driver, dataTable2);
         EVS_SubscriberNewsletter_DuplicateEmailaddress evs_SubscribeNews_DupliEmailID = new EVS_SubscriberNewsletter_DuplicateEmailaddress(driver, dataTable2);
         EVS_Subscriber_Newsletter_ValidEmailaddress evs_SubscribeNewsletter = new EVS_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
+        EVS_SapRSI evs_sapRSI = new EVS_SapRSI(driver, dataTable2);
+        EVS_LaunchPortal evs_lp= new EVS_LaunchPortal(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -441,6 +439,12 @@ public class JDGKeyManager {
             case "getRSIItemInMagento":
                 sapRSI.getRSIItemInMagento(test1);
                 break;
+            case "getDataFromSAPDBAfterCheckout":
+                sapRSI.getDataFromSAPDBAfterCheckout(test1);
+                break;
+            case "skuProduct":
+                products.skuProduct(test1);
+                break;
             case "ic_SKUproduct":
                 SKUproduct.displayProductSKU(test1, el);
                 break;
@@ -449,9 +453,6 @@ public class JDGKeyManager {
                 break;
             case "NavigateToWishlist_VerifyLoginPageAppear":
                 NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
-                break;
-            case "skuProduct":
-                products.skuProduct(test1);
                 break;
             case"validatePaymentOption":
 				icPaymentOptions.validatePaymentOption(dataMap2.get(moduleToRun + "++"),test1, rowNumber);
@@ -607,6 +608,24 @@ public class JDGKeyManager {
                 break;
             case "evs_SubscribeNewsletter":
                 evs_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "EVS_SapRSIGetDataFromSAPDB":
+                evs_sapRSI.getDataFromSAPDB(test1);
+                break;
+            case "EVS_SapRSIGetDataFromSAPDBWithQTY":
+                evs_sapRSI.getDataFromSAPDBWithQty(test1);
+                break;
+            case "EVS_getRSIItemInMagento":
+                evs_sapRSI.getRSIItemInMagento(test1);
+                break;
+            case "EVS_getDataFromSAPDBAfterCheckout":
+                evs_sapRSI.getDataFromSAPDBAfterCheckout(test1);
+                break;
+            case "EVS_skuProduct":
+                evs_productSearch.skuProduct(test1);
+                break;
+            case "EVS_LaunchPortal":
+                evs_lp.launchPortal(test1);
                 break;
         }
     }

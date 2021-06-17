@@ -1,5 +1,7 @@
 package evs_PageObjects;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -165,6 +167,43 @@ public class EVS_ProductSearch {
 			e.printStackTrace();
 			logger.info(e.getMessage());
 		}
+	}
+
+	public void skuProduct(ExtentTest test) throws IOException, AWTException {
+		String typeSearch = dataTable2.getValueOnOtherModule("evs_ProductSearch","typeSearch",0);
+		String productsToSearch = dataTable2.getValueOnOtherModule("evs_ProductSearch","specificProduct",0);
+		String quantityOfSearchProducts = dataTable2.getValueOnOtherModule("evs_ProductSearch","Quantity",0);
+		String waitTimeInSeconds = dataTable2.getValueOnOtherModule("evs_ProductSearch","cartButtonWaitTimeInSeconds",0);
+		String TypeOfOperation = dataTable2.getValueOnOtherModule("evs_ProductSearch","TypeOfOperation",0);
+		String validationRequired = dataTable2.getValueOnOtherModule("evs_ProductSearch","validationRequired",0);
+		List<String> theProducts = filterProducts(productsToSearch);
+		ic_EnterTextToSearchBar(theProducts.get(0),test);
+		action.explicitWait(5000);
+
+		WebElement addToCart= driver.findElement(By.xpath("//*[@id=\"maincontent\"]//form/button/span"));
+		action.scrollElementIntoView(addToCart);
+		action.click(addToCart,"addToCart",test);
+		action.explicitWait(5000);
+		WebElement miniCart= driver.findElement(By.xpath("/html/body/div[2]/header/div[2]/div/div[3]/div[3]/a/span[1]"));
+		action.click(miniCart,"miniCart",test);
+		WebElement miniCartItemQty= driver.findElement(By.xpath("/html/body/div[2]/header/div[2]/div/div[3]/div[3]/div/div/div[2]/div[1]/ol/li/div/div/div[1]/div[2]/input"));
+		action.clear(miniCartItemQty,"miniCartItemQty");
+		action.writeText(miniCartItemQty,"99999999999999999999999999999999999","miniCartItemQty",test);
+
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_ENTER);
+		robot.keyRelease(KeyEvent.VK_ENTER);
+
+		WebElement QtyToMuchPopUp= driver.findElement(By.xpath("//*[@id=\"modal-content-15\"]/div"));
+		action.getText(QtyToMuchPopUp,"QtyToMuchPopUp",test);
+		action.explicitWait(5000);
+		WebElement QtyToMuchPopUpOKButton= driver.findElement(By.xpath("/html/body/div[8]/aside/div[2]/footer/button/span"));
+		action.click(QtyToMuchPopUpOKButton,"QtyToMuchPopUp",test);
+		action.explicitWait(5000);
+		WebElement miniCartcheckoutButton= driver.findElement(By.xpath("//*[@id=\"top-cart-btn-checkout\"]/span"));
+		action.click(miniCartcheckoutButton,"miniCartcheckoutButton",test);
+
+
 	}
 
 	public void ic_EnterTextToSearchBar(String productToFind, ExtentTest test) {

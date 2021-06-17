@@ -17,12 +17,12 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class SapRSI {
+public class EVS_SapRSI {
     WebDriver driver;
     Action action;
     DataTable2 dataTable2;
     LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
-    public SapRSI(WebDriver driver,DataTable2 dataTable2) {
+    public EVS_SapRSI(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
@@ -57,8 +57,8 @@ public class SapRSI {
 
     public void getDataFromSAPDBWithQty(ExtentTest test) throws IOException, SQLException {
         hana hn =connectToSap(test) ;
-        String channelID=dataTable2.getValueOnOtherModule ("SapRSIGetDataFromSAPDB","channelID",0);
-        String rough_stock_value=dataTable2.getValueOnOtherModule ("SapRSIGetDataFromSAPDB","rough_stock_value",0);
+        String channelID=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","channelID",0);
+        String rough_stock_value=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","rough_stock_value",0);
         String Query= "select * from SAPABAP1.\"/OAA/RSI_SNP\" " +
                 "where channel_id = '"+channelID+"' " +
                 "and ROUGH_STOCK_DATE >=to_date(now()) " +
@@ -77,18 +77,18 @@ public class SapRSI {
         String AGGR_AVAIL_QTY=AGGR_AVAIL_QTY_1.split("\\.")[0];
         System.out.println("AGGR_AVAIL_QTY: "+AGGR_AVAIL_QTY);
 
-        dataTable2.setValueOnOtherModule ("SapRSIGetDataFromSAPDB","SKUCode",SKUCode,0);
-        dataTable2.setValueOnOtherModule ("SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",AGGR_AVAIL_QTY,0);
-        dataTable2.setValueOnOtherModule ("ProductSearch","specificProduct",SKUCode,0);
+        dataTable2.setValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","SKUCode",SKUCode,0);
+        dataTable2.setValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",AGGR_AVAIL_QTY,0);
+        dataTable2.setValueOnOtherModule ("evs_ProductSearch","specificProduct",SKUCode,0);
 
     }
 
     public void getDataFromSAPDBAfterCheckout(ExtentTest test) throws IOException, SQLException {
         hana hn =connectToSap(test) ;
-        String channelID=dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB","channelID",0);
-        String ARTICLE_ID=dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB","SKUCode",0);
-        String AGGR_AVAIL_QTY=dataTable2.getValueOnOtherModule ("SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0);
-        String rough_stock_value=dataTable2.getValueOnOtherModule ("SapRSIGetDataFromSAPDB","rough_stock_value",0);
+        String channelID=dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","channelID",0);
+        String ARTICLE_ID=dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","SKUCode",0);
+        String AGGR_AVAIL_QTY=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0);
+        String rough_stock_value=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","rough_stock_value",0);
         String Query= "select * from SAPABAP1.\"/OAA/RSI_SNP\" " +
                 "where channel_id = '"+channelID+"' " +
                 "and ROUGH_STOCK_DATE >=to_date(now()) " +
@@ -106,8 +106,8 @@ public class SapRSI {
         String AGGR_AVAIL_QTYAfterOneCheckout=AGGR_AVAIL_QTY_1.split("\\.")[0];
         System.out.println("AGGR_AVAIL_QTYAfterOneCheckout: "+AGGR_AVAIL_QTYAfterOneCheckout);
         AGGR_AVAIL_QTY = String.valueOf((Integer.parseInt(AGGR_AVAIL_QTY)-1));
-        dataTable2.setValueOnOtherModule ("SapRSIGetDataFromSAPDB","SKUCode",SKUCode,0);
-        dataTable2.setValueOnOtherModule("SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTYAfterOneCheckout",AGGR_AVAIL_QTYAfterOneCheckout,0);
+        dataTable2.setValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","SKUCode",SKUCode,0);
+        dataTable2.setValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTYAfterOneCheckout",AGGR_AVAIL_QTYAfterOneCheckout,0);
         action.CompareResult("AGGR_AVAIL_QTY has reduce by 1 after buying",AGGR_AVAIL_QTY,AGGR_AVAIL_QTYAfterOneCheckout,test);
     }
 
