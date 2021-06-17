@@ -169,6 +169,7 @@ public class JDGKeyManager {
         EVS_SapRSI evs_sapRSI = new EVS_SapRSI(driver, dataTable2);
         EVS_LaunchPortal evs_lp= new EVS_LaunchPortal(driver, dataTable2);
         EVS_CashDepositPayment evs_cashDeposit = new EVS_CashDepositPayment(driver, dataTable2);
+        EVS_RefreshLogoHomepage evs_Logo = new EVS_RefreshLogoHomepage(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -455,9 +456,6 @@ public class JDGKeyManager {
             case "NavigateToWishlist_VerifyLoginPageAppear":
                 NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
                 break;
-            case "skuProduct":
-                products.skuProduct(test1);
-                break;
             case"validatePaymentOption":
 				icPaymentOptions.validatePaymentOption(dataMap2.get(moduleToRun + "++"),test1, rowNumber);
 				break;
@@ -633,6 +631,9 @@ public class JDGKeyManager {
             case "evs_cashDeposit":
             	evs_cashDeposit.InvoiceCashDeposit(test1);
             	break;
+            case "evs_LogoHomepage":
+            	evs_Logo.homepageLogo(test1);
+                break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){
