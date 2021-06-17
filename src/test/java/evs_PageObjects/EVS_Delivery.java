@@ -22,11 +22,13 @@ public class EVS_Delivery {
     Action action;
     DataTable2 dataSheets;
 
+    EVS_UpdateCustomer customerAddressDetails;
     public EVS_Delivery(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
         dataSheets=dataTable2;
+        customerAddressDetails = new EVS_UpdateCustomer(driver, dataTable2);
  
     }
 
@@ -164,8 +166,8 @@ public class EVS_Delivery {
             action.writeText(email,dataSheets.getValueOnCurrentModule("email"),"email",test);
            // action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
         }else if(userType.equalsIgnoreCase("Registered")) {
-        	//customerAddressDetails.navigateBackToCustomerDetails(userType,addressTypeICFont);
-        	//registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType,addressTypeICFont);
+        	customerAddressDetails.navigateBackToCustomerDetails(userType,addressTypeICFont);
+        	registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType,addressTypeICFont);
         	dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
         	dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
         	dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
@@ -197,11 +199,9 @@ public class EVS_Delivery {
         action.dropDownselectbyvisibletext(province,dataSheets.getValueOnCurrentModule("province"),"province",test);
         action.explicitWait(10000);
         }
-        }else if(addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")) {
-        	//details returned from this map will be written to excel --DONE NEED THOKOZANI'S INPUT AS TO DOES IT REALLY ADD AND THE TCID AND OCCURENCE
-        	//customerAddressDetails.navigateBackToCustomerDetails(userType,addressTypeICFont);
-        	//registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType,addressTypeICFont);  
-        	//SHOULD BE TESTED THOKOZANI
+        }else if(addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Choose your address or add a new one:")) {
+        	customerAddressDetails.navigateBackToCustomerDetails(userType,addressTypeICFont);
+        	registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType,addressTypeICFont);          	
         	
         	Streetname = registeredUserDetails.get("Street Address");
             Cityname = registeredUserDetails.get("City");

@@ -45,16 +45,16 @@ public class EVS_Magento_Login {
 			LoginToMagento(test,Username,Password);
 	     }
 		public void LoginToMagento(ExtentTest test,String Username, String Password) throws IOException{
-//			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
+			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
 			Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 			Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
-//			action.navigateToURL(url);
+			action.navigateToURL(url);
 			action.waitForPageLoaded(10);
 			String ResPage = action.getPageTitle(test);
 			if(ResPage.equalsIgnoreCase("Magento Admin - DEFAULT STORE VIEW")){
 				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin - DEFAULT STORE VIEW", test);
-				action.writeText(Magento_Username, Username, "Username feild", test);
-				action.writeText(Magento_Password, Password, "Password feild", test);
+				action.writeText(Magento_Username, Username, "Username field", test);
+				action.writeText(Magento_Password, Password, "Password field", test);
 				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
 				action.explicitWait(10000);
 				String resWelcomescreen = action.getText(Dashboard, "Dashboard", test);

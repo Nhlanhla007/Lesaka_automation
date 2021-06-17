@@ -168,6 +168,7 @@ public class JDGKeyManager {
         EVS_Subscriber_Newsletter_ValidEmailaddress evs_SubscribeNewsletter = new EVS_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
         EVS_SapRSI evs_sapRSI = new EVS_SapRSI(driver, dataTable2);
         EVS_LaunchPortal evs_lp= new EVS_LaunchPortal(driver, dataTable2);
+        EVS_CashDepositPayment evs_cashDeposit = new EVS_CashDepositPayment(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -454,6 +455,9 @@ public class JDGKeyManager {
             case "NavigateToWishlist_VerifyLoginPageAppear":
                 NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
                 break;
+            case "skuProduct":
+                products.skuProduct(test1);
+                break;
             case"validatePaymentOption":
 				icPaymentOptions.validatePaymentOption(dataMap2.get(moduleToRun + "++"),test1, rowNumber);
 				break;
@@ -603,8 +607,7 @@ public class JDGKeyManager {
                 evs_NewsletterEmail.evs_NewsLetterInvalidEmail(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
             case "evs_SubscribeNews_DupEmailID":
-                evs_SubscribeNews_DupliEmailID.SubscribeNewsletter_DuplicateEmail(dataMap2.get(moduleToRun + "++"), test1,
-                        rowNumber);
+                evs_SubscribeNews_DupliEmailID.SubscribeNewsletter_DuplicateEmail(dataMap2.get(moduleToRun + "++"), test1,rowNumber);
                 break;
             case "evs_SubscribeNewsletter":
                 evs_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
@@ -627,6 +630,9 @@ public class JDGKeyManager {
             case "EVS_LaunchPortal":
                 evs_lp.launchPortal(test1);
                 break;
+            case "evs_cashDeposit":
+            	evs_cashDeposit.InvoiceCashDeposit(test1);
+            	break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){
