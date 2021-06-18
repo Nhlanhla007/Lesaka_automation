@@ -26,10 +26,10 @@ public class EVS_existingAddress {
 	 }
 	 
     @FindBy(xpath="//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
-    private WebElement ic_Deliver;
+    private WebElement evs_Deliver;
  
     @FindBy(xpath="//*[@id=\"opc-sidebar\"]/div[1]/div[1]/button/span")
-    private WebElement ic_continuePayment;
+    private WebElement evs_continuePayment;
     
     public void AddressThere(ExtentTest test) throws IOException, InterruptedException{
 
@@ -38,7 +38,7 @@ public class EVS_existingAddress {
     	/*action.click(ic_Deliver, "The address is already", test);
     	action.explicitWait(8000);*/
 
-    	action.click(ic_continuePayment, "continue Payment", test);
+    	action.click(evs_continuePayment, "continue Payment", test);
     	action.explicitWait(5000);
     }
 
