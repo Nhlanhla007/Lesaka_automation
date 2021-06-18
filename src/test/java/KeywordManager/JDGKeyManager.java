@@ -168,9 +168,11 @@ public class JDGKeyManager {
         EVS_LaunchPortal evs_lp= new EVS_LaunchPortal(driver, dataTable2);
         EVS_Subscriber_Newsletter_ValidEmailaddress evs_SubscribeNewsletter = new EVS_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
         EVS_SapRSI evs_sapRSI = new EVS_SapRSI(driver, dataTable2);
+        EVS_LaunchPortal evs_lp= new EVS_LaunchPortal(driver, dataTable2);
         EVS_CashDepositPayment evs_cashDeposit = new EVS_CashDepositPayment(driver, dataTable2);
         EVS_PopularSearch evs_PopularSearch = new EVS_PopularSearch(driver, dataTable2);
         EVS_SearchTextReturningNoResult evs_ReturnNoResults = new EVS_SearchTextReturningNoResult(driver, dataTable2);
+        EVS_RefreshLogoHomepage evs_Logo = new EVS_RefreshLogoHomepage(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -640,6 +642,9 @@ public class JDGKeyManager {
                 break;
             case "evs_SearchNoResultsReturned":
                 evs_ReturnNoResults.evs_DoesNotExtistSearch(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_LogoHomepage":
+            	evs_Logo.homepageLogo(test1);
                 break;
         }
     }
