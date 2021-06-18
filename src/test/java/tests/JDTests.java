@@ -57,10 +57,11 @@ public class JDTests extends BaseTest {
 	@Test
 	public void suiteExecutor() throws Exception {
 		dataTable2 = new DataTable2();
-		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
+		// Please update you module name here and copy jdgroupMAIN.xlsx to
+		// jdgroupTA104.xlsx
 		dataTable2.setPath("TA635");
 		dataMap2 = dataTable2.getExcelData();
-		km=new JDGKeyManager(driver,dataTable2,dataMap2);
+		km = new JDGKeyManager(driver, dataTable2, dataMap2);
 		LinkedHashMap<String, ArrayList<String>> suites = dataMap2.get("Suites");
 		int numberOfSuits = suites.get("Execute").size();
 		for (int i = 0; i < numberOfSuits; i++) {

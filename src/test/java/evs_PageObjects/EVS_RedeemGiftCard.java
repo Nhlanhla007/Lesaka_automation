@@ -97,7 +97,7 @@ public class EVS_RedeemGiftCard {
 		String UsageType = dataTable2.getValueOnCurrentModule("UsageType");
 
 		action.explicitWait(10000);
-		action.clickEle(evs_ContinuePayment, "Click on Continue",test);
+		action.clickEle(evs_ContinuePayment, "Click on Continue", test);
 
 		if (action.waitUntilElementIsDisplayed(evs_RedeemGiftCardSelect, 15000)) {
 			action.scrollElemetnToCenterOfView(evs_RedeemGiftCardSelect, "Redeem Gift Card Tab", test);
@@ -141,12 +141,12 @@ public class EVS_RedeemGiftCard {
 			action.explicitWait(3000);
 
 			String cardBalance = action.getText(card_currentBalance, "Gift Card Current Balance", test);
-			action.CompareResult("Check gift card Balance", "R"+"0", cardBalance, test);
+			action.CompareResult("Check gift card Balance", "R" + "0", cardBalance, test);
 
 			action.click(evs_Apply, "apply the the gift card", test);
 			action.explicitWait(5000, test);
 			String giftCarddValidate = null;
-			
+
 			if (action.elementExistWelcome(evs_GiftCardError, 4, "Please enter correct gift card code.", test)) {
 				action.scrollElementIntoView(evs_GiftCardError);
 				giftCarddValidate = action.getText(evs_GiftCardError, "Please correct the gift card code.", test);
