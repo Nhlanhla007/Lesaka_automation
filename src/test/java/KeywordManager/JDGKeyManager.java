@@ -460,9 +460,6 @@ public class JDGKeyManager {
             case "NavigateToWishlist_VerifyLoginPageAppear":
                 NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
                 break;
-            case "skuProduct":
-                products.skuProduct(test1);
-                break;
             case"validatePaymentOption":
 				icPaymentOptions.validatePaymentOption(dataMap2.get(moduleToRun + "++"),test1, rowNumber);
 				break;
@@ -549,8 +546,8 @@ public class JDGKeyManager {
                 rowNumber = findRowToRun(dataMap2.get("evs_AccountCreation++"), 0, testcaseID);
                 evs_Magentoverify.Validate_UserInfobackend(dataMap2.get("evs_AccountCreation" + "++"), test1, rowNumber);
                 break;
-            case "evs_RedeemGiftCard":
-            	evs_RedeemGiftCard.redeemGiftCard(test1);
+            case "evs_RedeemGiftCard":         	
+            	evs_RedeemGiftCard.redeemGiftCard(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
             case "evs_ForgotPassword":
                 evs_VerifyForgotPass.forgotPasswordPage(dataMap2.get("evs_login++"), test1, rowNumber);
