@@ -168,7 +168,6 @@ public class JDGKeyManager {
         EVS_LaunchPortal evs_lp= new EVS_LaunchPortal(driver, dataTable2);
         EVS_Subscriber_Newsletter_ValidEmailaddress evs_SubscribeNewsletter = new EVS_Subscriber_Newsletter_ValidEmailaddress(driver, dataTable2);
         EVS_SapRSI evs_sapRSI = new EVS_SapRSI(driver, dataTable2);
-        EVS_LaunchPortal evs_lp= new EVS_LaunchPortal(driver, dataTable2);
         EVS_CashDepositPayment evs_cashDeposit = new EVS_CashDepositPayment(driver, dataTable2);
         EVS_PopularSearch evs_PopularSearch = new EVS_PopularSearch(driver, dataTable2);
         EVS_SearchTextReturningNoResult evs_ReturnNoResults = new EVS_SearchTextReturningNoResult(driver, dataTable2);
