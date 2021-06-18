@@ -448,9 +448,6 @@ public class JDGKeyManager {
             case "getDataFromSAPDBAfterCheckout":
                 sapRSI.getDataFromSAPDBAfterCheckout(test1);
                 break;
-            case "skuProduct":
-                products.skuProduct(test1);
-                break;
             case "ic_SKUproduct":
                 SKUproduct.displayProductSKU(test1, el);
                 break;
