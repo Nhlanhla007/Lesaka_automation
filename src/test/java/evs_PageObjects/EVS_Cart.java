@@ -227,7 +227,7 @@ public class EVS_Cart {
 	    }
 	    
 	    public void removeAllItemsInCart(ExtentTest test) throws Exception {
-	    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	    	driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 	    	boolean isPresent = driver.findElements(By.cssSelector("a.go-back")).size() > 0;
 	    	action.explicitWait(5000);
 	    	if(isPresent) {
@@ -235,9 +235,9 @@ public class EVS_Cart {
 	    		if(action.waitUntilElementIsDisplayed(backButton, 15000)) {
 	    			action.explicitWait(3000);
 	    			backButton.click();
+	    			action.explicitWait(5000);
 	    		}	    		
-	    	}
-	    	action.explicitWait(5000);
+	    	}	    	
 	    	String cartCounter = itemsInCartCounter(test);
 
 	    	if(cartCounter.equalsIgnoreCase("")) {

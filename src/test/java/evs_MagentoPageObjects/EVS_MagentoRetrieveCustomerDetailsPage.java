@@ -112,13 +112,13 @@ public class EVS_MagentoRetrieveCustomerDetailsPage {
 		else if(typeOfOperation.equalsIgnoreCase("Update Account")) {
 			customerEmail = dataTable2.getValueOnOtherModule("evs_UpdateUser", "email_output", 0);
 		}else if(typeOfOperation.equalsIgnoreCase("Registered customer from sales order")){
-			customerEmail = dataTable2.getValueOnOtherModule("EVS_Login", "Username", 0);
+			customerEmail = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "username");
 		}else if(typeOfOperation.equalsIgnoreCase("Guest Customer Creation")){
 			customerEmail = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0);
 		}else {
 			customerEmail = "";
 		}
-		String webSite = dataTable2.getValueOnOtherModule("evs_AccountCreation", "WebSite", 0);//input.get("WebSite").get(rowNumber);
+		String webSite = "Main Website";//dataTable2.getValueOnOtherModule("evs_AccountCreation", "WebSite", 0);//input.get("WebSite").get(rowNumber);
 		System.out.println(customerEmail);
 		navigateToCustomer(test);
 		System.out.println("Hello from " + customerEmail);
