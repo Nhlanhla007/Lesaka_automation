@@ -15,12 +15,12 @@ import Logger.Log;
 import utils.Action;
 import utils.DataTable2;
 
-public class EVS_SearchTextReturningNoResult {
+public class EVS_SearchTextResult {
 	WebDriver driver;
 	Action action;
 	DataTable2 dataTable2;
 	
-	public EVS_SearchTextReturningNoResult (WebDriver driver,DataTable2 dataTable2) {
+	public EVS_SearchTextResult (WebDriver driver,DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
@@ -35,24 +35,32 @@ public class EVS_SearchTextReturningNoResult {
 	@FindBy(xpath = "//button[@class='action search primary']")
 	WebElement evs_SearchIcon;
 	
-	@FindBy(xpath = "//div[contains(text(),'Please try another search term...')]")
-	WebElement evs_InvalidMessage;
+	@FindBy(xpath = "//a[contains(text(),'View all')]")
+	WebElement viewAll;
 	
-	@FindBy(xpath = "//div[contains(text(),\"We can't find products matching the selection.\")]")
-	WebElement noProductsMsg;
-
+	@FindBy(xpath = "//span[contains(text(),\"Search results for\")]")
+	WebElement productSearchMessage;
 	
-	public void evs_DoesNotExtistSearch(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) {
+	@FindBy(xpath = "//p[@id='toolbar-amount']/span")
+	WebElement itemCount;
+	
+	
+	public void searchResultValidation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber){
 		String searchWord =dataTable2.getValueOnCurrentModule("searchWord");
-
+		
 		try {
 			
 			action.clear(evs_SearchBar,"SearchBar");
-			action.writeText(evs_SearchBar, searchWord,"SearchBar",test);
-			action.CompareResult("Search items ", "Please try another search term...", evs_InvalidMessage.getText(), test);
-			action.click(evs_SearchIcon, "Click on search", test);
-			action.CompareResult("Search Result", "We can't find products matching the selection.",noProductsMsg.getText(), test);
-
+			action.writeText(evs_SearchBar, searchWord,"Search Bar",test);
+			action.clickEle(viewAll, "View All", test);
+			action.waitExplicit(4);
+			String expMsg="Search results for: '"+searchWord+"'";
+			action.CompareResult("Product Suggested", expMsg, productSearchMessage.getText(), test);			
+			String productCount=action.getText(itemCount, "Item Count", test);
+			int prodCount=Integer.parseInt(productCount);
+			logger.info("Product could is: "+prodCount);
+			boolean checkProd=prodCount>0;
+			action.CompareResult("Suggested Product Count","true", String.valueOf(checkProd), test);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

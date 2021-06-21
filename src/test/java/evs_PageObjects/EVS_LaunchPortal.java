@@ -7,19 +7,22 @@ import utils.Action;
 import utils.DataTable2;
 
 public class EVS_LaunchPortal {
-    WebDriver driver;
-    Action action;
-    DataTable2 dataTable2;
+	WebDriver driver;
+	Action action;
+	DataTable2 dataTable2;
 
-    public EVS_LaunchPortal(WebDriver driver, DataTable2 dataTable2){
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-        action = new Action(driver);
-        this.dataTable2 = dataTable2;
+	public EVS_LaunchPortal(WebDriver driver, DataTable2 dataTable2) {
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+		action = new Action(driver);
+		this.dataTable2 = dataTable2;
 
-    }
-    public void launchPortal(ExtentTest test){
-        String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("urlKey"),"url");
-        action.navigateToURL(url);
-    }
+	}
+
+	public void launchPortal(ExtentTest test) {
+//		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnCurrentModule("urlKey"), "url");
+		String url="https://staging-everyshop.vaimo.net/";
+		action.navigateToURL(url);
+	}
+
 }

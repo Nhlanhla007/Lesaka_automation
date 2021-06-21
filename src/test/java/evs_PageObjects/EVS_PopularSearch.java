@@ -38,7 +38,7 @@ public class EVS_PopularSearch{
 	public void VerifyPopularSearch(ExtentTest test,int rowNumber) throws IOException{
 
 		action.click(evs_SearchBar, "EVS SearchBar", test);
-		boolean chkPopsearch = checkForPopularSearch(test,"Popular Searches:");
+		boolean chkPopsearch = checkForPopularSearch(test,"Popular Searches");
 		action.CompareResult(" popular search is successfully displayed", "true", String.valueOf(chkPopsearch), test);
 	}
 	public boolean checkForPopularSearch(ExtentTest test, String Expdata) throws IOException{
@@ -47,7 +47,7 @@ public class EVS_PopularSearch{
 		
 		if(action.isElementPresent(PopularSearch)){
 			String actPuopularSearch = action.getText(PopularSearch, "PopularSearch",test);
-			action.CompareResult(" popular search is populated ", Expdata.toUpperCase().trim(), actPuopularSearch.toUpperCase().trim(), test);
+			action.CompareResult("Polular Search ", Expdata.toUpperCase().trim(), actPuopularSearch.toUpperCase().trim(), test);
 			List<WebElement> allData  = PopularSearchlist;
 			for(WebElement el: allData){
 				String eachitem = el.getText().trim();							

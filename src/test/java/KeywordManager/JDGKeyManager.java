@@ -171,6 +171,7 @@ public class JDGKeyManager {
         EVS_CashDepositPayment evs_cashDeposit = new EVS_CashDepositPayment(driver, dataTable2);
         EVS_PopularSearch evs_PopularSearch = new EVS_PopularSearch(driver, dataTable2);
         EVS_SearchTextReturningNoResult evs_ReturnNoResults = new EVS_SearchTextReturningNoResult(driver, dataTable2);
+        EVS_SearchTextResult evs_SearchText = new EVS_SearchTextResult(driver, dataTable2);		
         EVS_RefreshLogoHomepage evs_Logo = new EVS_RefreshLogoHomepage(driver, dataTable2);
         EVS_validateDifferentPaymentOptions evs_PaymentOptions = new EVS_validateDifferentPaymentOptions(driver, dataTable2);
         EVS_existingAddress evs_ExistingAddress = new EVS_existingAddress(driver, dataTable2);
@@ -632,9 +633,6 @@ public class JDGKeyManager {
             case "EVS_skuProduct":
                 evs_productSearch.skuProduct(test1);
                 break;
-            case "EVS_LaunchPortal":
-                evs_lp.launchPortal(test1);
-                break;
             case "evs_cashDeposit":
             	evs_cashDeposit.InvoiceCashDeposit(test1);
             	break;
@@ -644,6 +642,9 @@ public class JDGKeyManager {
             case "evs_SearchNoResultsReturned":
                 evs_ReturnNoResults.evs_DoesNotExtistSearch(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
+            case "evs_SearchTextResults":
+    			evs_SearchText.searchResultValidation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+    			break;
             case "evs_LogoHomepage":
             	evs_Logo.homepageLogo(test1);
             case"evs_validatePaymentOption":
