@@ -1,5 +1,6 @@
 package evs_PageObjects;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -42,22 +43,15 @@ public class EVS_SearchTextReturningNoResult {
 	WebElement noProductsMsg;
 
 	
-	public void evs_DoesNotExtistSearch(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) {
+	public void evs_DoesNotExtistSearch(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException {
 		String searchWord =dataTable2.getValueOnCurrentModule("searchWord");
-
-		try {
-			
-			action.clear(evs_SearchBar,"SearchBar");
-			action.writeText(evs_SearchBar, searchWord,"SearchBar",test);
-			action.CompareResult("Search items ", "Please try another search term...", evs_InvalidMessage.getText(), test);
-			action.click(evs_SearchIcon, "Click on search", test);
-			action.CompareResult("Search Result", "We can't find products matching the selection.",noProductsMsg.getText(), test);
-
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.info(e.getMessage());
-		}
+		action.clear(evs_SearchBar,"SearchBar");
+		action.writeText(evs_SearchBar, searchWord,"SearchBar",test);
+		action.explicitWait(2000);
+		action.CompareResult("Search items ", "Please try another search term...", evs_InvalidMessage.getText(), test);
+		action.click(evs_SearchIcon, "Click on search", test);
+		action.explicitWait(5000);
+		action.CompareResult("Search Result", "We can't find products matching the selection.",noProductsMsg.getText(), test);
 	}
 
 }

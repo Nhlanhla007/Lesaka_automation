@@ -600,7 +600,7 @@ public class JDGKeyManager {
             case "evs_WishlistToCart":
                 evs_WishlistToCart.verifyProducts_wishlistTocart(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
-            case "evs_LaunchPortal":
+            case "EVS_LaunchPortal":
                 evs_lp.launchPortal (test1);
                 break;
             case "EVS_NavigetoWishlist":
