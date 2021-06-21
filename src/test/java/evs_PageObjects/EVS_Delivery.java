@@ -130,7 +130,7 @@ public class EVS_Delivery {
     @FindBy(name = "telephone")
     WebElement popUpPhone;
     
-    @FindBy(xpath = "//span[contains(text(),'New Address')]")
+    @FindBy(xpath = "//span[contains(text(),'Add Address')]")
     WebElement newAddressButton;
     
     @FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
@@ -171,7 +171,7 @@ public class EVS_Delivery {
         	dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
         	dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
         	dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
-        //	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
+        	//dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
 			/*
 			 * registeredUserDetails.put("Street Address", value);
 			 * registeredUserDetails.put("City", value);
@@ -220,7 +220,7 @@ public class EVS_Delivery {
         //	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
         	action.explicitWait(12000);
         	
-        }else if(addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")){
+        }else if(addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Choose your address or add a new one:")){
         	//Enters a new address with an existing address
         	enterNewAddressWithAnExistingAddress(test);
 		} /*
@@ -235,14 +235,14 @@ public class EVS_Delivery {
     }
     
     public void enterNewAddressWithAnExistingAddress(ExtentTest test) throws Exception {
-    	//customerAddressDetails.navigateBackToCustomerDetails("New","Select a saved address or add a new address:");
-    	//registeredUserDetails = customerAddressDetails.getExistingAddressInformation("New","Select a saved address or add a new address:");
+    	customerAddressDetails.navigateBackToCustomerDetails("New","Select a saved address or add a new address:");
+    	registeredUserDetails = customerAddressDetails.getExistingAddressInformation("New","Choose your address or add a new one:");
     	dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
     	dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
     	dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
     	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
     	if(action.waitUntilElementIsDisplayed(newAddressButton, 15000)) {
-    		action.explicitWait(8000);
+    		action.explicitWait(5000);
        	    //newAddressButton.click();
        	    action.click(newAddressButton, "New Address", test);
     	}

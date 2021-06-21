@@ -31,19 +31,22 @@ public class EVS_RetriveOrderID {
     
     
 
-    public void RetriveOrderID(ExtentTest test) throws IOException {
+    public void RetriveOrderID(ExtentTest test) throws IOException, Exception {
     	String typeOfUser = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "UserType", 0).trim();
 	
 
         String orderID = null;
         action.explicitWait(10000);
+        
         if(typeOfUser.equalsIgnoreCase("Registered")) {
+        	action.waitUntilElementIsDisplayed(OrderIDRegisteredUser, 15000);
             orderID = action.getText(OrderIDRegisteredUser, "Order ID",test);
             orderID = orderID.replace("Your order # is: ","").replace(".","");
             action.CompareResult("Order Id "+orderID+" has been retrieved ", "true", "true", test);
             dataTable2.setValueOnCurrentModule ("orderID",orderID);
             dataTable2.setValueOnOtherModule("evs_OrderStatusSearch","orderID",orderID,0);	
         }else if(typeOfUser.equalsIgnoreCase("Guest")) {
+        	action.waitUntilElementIsDisplayed(OrderIDGuestUser, 15000);
             orderID = action.getText(OrderIDGuestUser, "Order ID",test);
              orderID = orderID.replace("Your order # is: ","").replace(".","");
             action.CompareResult("Order Id "+orderID+" has been retrieved ", "true", "true", test);

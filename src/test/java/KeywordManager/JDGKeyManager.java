@@ -451,6 +451,9 @@ public class JDGKeyManager {
             case "getDataFromSAPDBAfterCheckout":
                 sapRSI.getDataFromSAPDBAfterCheckout(test1);
                 break;
+            case "skuProduct":
+                products.skuProduct(test1);
+                break;
             case "ic_SKUproduct":
                 SKUproduct.displayProductSKU(test1, el);
                 break;
@@ -459,6 +462,9 @@ public class JDGKeyManager {
                 break;
             case "NavigateToWishlist_VerifyLoginPageAppear":
                 NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
+                break;
+            case "skuProduct":
+                products.skuProduct(test1);
                 break;
             case"validatePaymentOption":
 				icPaymentOptions.validatePaymentOption(dataMap2.get(moduleToRun + "++"),test1, rowNumber);

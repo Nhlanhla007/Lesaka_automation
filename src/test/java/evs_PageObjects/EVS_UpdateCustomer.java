@@ -55,7 +55,7 @@ public class EVS_UpdateCustomer {
 	    @FindBy(xpath="//*[@id=\"lastname\"]")
 	    private WebElement lastNameUpdated;
 	    
-	    @FindBy(xpath="//*[@id=\"taxvat\"]")
+	    @FindBy(xpath="//*[@title = \"VAT Number\"]")
 	    private WebElement ic_taxVat;
 	  
 	    @FindBy(xpath="//*[@id=\"change-email\"]/following-sibling::*/span")
@@ -82,7 +82,7 @@ public class EVS_UpdateCustomer {
 	   // @FindBy(xpath="/html/body/div[1]/header/div[3]/div[2]/div/div/div")
         @FindBy(xpath="//div[contains(text(),'You saved the account information.')]")
         private WebElement successSaved;
-        
+	    
         @FindBy(xpath="//div[contains(text(),'You saved the address.')]")
         private WebElement successSavedAddress;
 	    
@@ -111,10 +111,8 @@ public class EVS_UpdateCustomer {
 	    
 	    @FindBy(xpath="//*[@id=\"form-validate\"]/div/div[1]/button/span")
 	    private WebElement SaveButton ;
-	    			
-	    		//*[@id=\"maincontent\"]/div/div[2]/div[2]/div[2]/div[1]/div[2]/a/span
-	    		//*[@id=\"maincontent\"]/div[2]/div[2]/div[5]/div[2]/div[1]/div[2]/a/span
-	    @FindBy(xpath="//span[contains(text(),'Change Billing Address')]")
+	    
+	    @FindBy(xpath="//*[@class=\"action edit\"]/span[contains(text(),'Change Billing Address')]")
 	    private WebElement ic_BillingAddress;
 	    
 	    @FindBy(xpath="//*[@id=\"maincontent\"]/div/div[2]/div[2]/div[2]/div[2]/div[2]/a/span")
@@ -387,16 +385,19 @@ public class EVS_UpdateCustomer {
 		return rowNumber;
 	}
 	
-	public void navigateBackToCustomerDetails(String userType,String addressExist) {
+	public void navigateBackToCustomerDetails(String userType,String addressExist) throws Exception {
 		action.explicitWait(4000);
-		backButton.click();
+		if (action.waitUntilElementIsDisplayed(backButton, 10000)) {
+			backButton.click();
+		}
 //		action.click(backButton,"backButton",test);
-		action.explicitWait(4000);
+		if(action.waitUntilElementIsDisplayed(ic_myAccountButton,10000)) {
 		ic_myAccountButton.click();
+		}
 		action.explicitWait(4000);
 		MyAccountButton2.click();
 		action.explicitWait(4000);
-		if(userType.equalsIgnoreCase("Registered") & addressExist.equalsIgnoreCase("Select a saved address or add a new address:")) {
+		if(userType.equalsIgnoreCase("Registered") & addressExist.equalsIgnoreCase("Choose your address or add a new one:")) {
 		AddressBookEdit.click();
 		ic_BillingAddress.click();
 		}
@@ -404,7 +405,7 @@ public class EVS_UpdateCustomer {
 	
 	public Map<String,String> getExistingAddressInformation(String userType,String addressExist ) {
 		Map<String, String> addressInfo = new LinkedHashMap<>();
-		if(userType.equalsIgnoreCase("Registered") & addressExist.equalsIgnoreCase("Select a saved address or add a new address:") ){
+		if(userType.equalsIgnoreCase("Registered") & addressExist.equalsIgnoreCase("Choose your address or add a new one:") ){
 		String streetAdd = action.getAttribute(ic_streetAddress, "value");
 		addressInfo.put("Street Address", streetAdd);
 		String city =action.getAttribute(ic_city, "value");
@@ -417,6 +418,8 @@ public class EVS_UpdateCustomer {
 		addressInfo.put("Post Code", postal);
 		String tele =action.getAttribute(telephone, "value");
 		addressInfo.put("Telephone", tele);
+		String taxVat = action.getAttribute(ic_taxVat, "value");
+		addressInfo.put("Vat number", taxVat);
 		}
 		AccountInfoEdit.click();
 		action.explicitWait(5000);
@@ -424,18 +427,16 @@ public class EVS_UpdateCustomer {
 		addressInfo.put("firstName", firstName);
 		String lastNAme = action.getAttribute(ic_lastname, "value");
 		addressInfo.put("Last name", lastNAme);
-		String taxVat = action.getAttribute(ic_taxVat, "value");
-		addressInfo.put("Vat number", taxVat);
-		emailCheckBox.click();
-		action.explicitWait(4000);
+		//emailCheckBox.click();
+		//action.explicitWait(4000);
 		String email = action.getAttribute(ic_email, "value");
 		addressInfo.put("email", email);
-		emailCheckBox.click();
-		if(idRadioButton.isSelected()) {
-			addressInfo.put("ID", action.getAttribute(identityNumber, "value")) ;
-		}else {
-			addressInfo.put("ID", action.getAttribute(passportNumber, "value"));
-		}
+		//emailCheckBox.click();
+		//if(idRadioButton.isSelected()) {
+			//addressInfo.put("ID", action.getAttribute(identityNumber, "value")) ;
+		//}else {
+			//addressInfo.put("ID", action.getAttribute(passportNumber, "value"));
+		//}
 		action.explicitWait(5000);
 		iCCartButton.click();
 		icCCheckout.click();

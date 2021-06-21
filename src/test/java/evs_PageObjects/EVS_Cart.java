@@ -46,7 +46,7 @@ public class EVS_Cart {
 	        //login =  new ic_Login(driver, dataTable2);
 	    }
 	    static Logger logger = Log.getLogData(Action.class.getSimpleName());
-
+	    
 	    @FindBy(xpath = "//*[@class = \"minicart-wrapper\"]/a")
 	    private WebElement iCCartButton;
 	    
@@ -225,7 +225,7 @@ public class EVS_Cart {
 	    }
 	    
 	    public void removeAllItemsInCart(ExtentTest test) throws Exception {
-	    	driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+	    	driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 	    	boolean isPresent = driver.findElements(By.cssSelector("a.go-back")).size() > 0;
 	    	action.explicitWait(5000);
 	    	if(isPresent) {
@@ -233,9 +233,9 @@ public class EVS_Cart {
 	    		if(action.waitUntilElementIsDisplayed(backButton, 15000)) {
 	    			action.explicitWait(3000);
 	    			backButton.click();
+	    			action.explicitWait(5000);
 	    		}	    		
 	    	}
-	    	action.explicitWait(5000);
 	    	String cartCounter = itemsInCartCounter(test);
 
 	    	if(cartCounter.equalsIgnoreCase("")) {
@@ -296,7 +296,7 @@ public class EVS_Cart {
 	    	//driver.navigate().to("https://JDGroup:JDGr0up2021@staging-incredibleconnection-m23.vaimo.net/");
 			//driver.manage().window().maximize();
 			//driver.navigate().refresh();
-	    	//verify cart   	
+	    	//verify cart
 	    }	    	  
 	    
 	    public void verifyCart(ExtentTest test) throws Exception {

@@ -63,7 +63,7 @@ public class EVS_PaymentOption {
 
 	@FindBy(xpath = "(//span[contains(text(),'PayFlex')])[1]")
 	WebElement PayFlex;
-	
+
 	
 	//-------------------------------------------------------------------------------------------------------------------
 		//gift card checkout
@@ -170,7 +170,7 @@ public class EVS_PaymentOption {
 		}
 
 	}
-	
+
 	public void CheckoutpaymentOptionGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 		String firstNameGift = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "firstName", 0);
         String lastnameGift = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "lastname", 0);

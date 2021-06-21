@@ -16,7 +16,6 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import JDGroupPageObjects.ICDelivery;
-import JDGroupPageObjects.ic_Login;
 import Logger.Log;
 import evs_MagentoPageObjects.EVS_MagentoAccountInformation;
 import evs_MagentoPageObjects.EVS_MagentoRetrieveCustomerDetailsPage;
@@ -124,13 +123,13 @@ public class EVS_SAPCustomerRelated {
 	String bpPartnerBumber;
 	public void sapDbTests(HashMap<String, ArrayList<String>> input,ArrayList<HashMap<String, ArrayList<String>>> mySheets,ExtentTest test,int testcaseID,int rowNumber) throws Exception {
 		int sheetRow1= findRowToRun(mySheets.get(0), 0, testcaseID); //accountCreation
-		int sheetRow2= findRowToRun(mySheets.get(1), 0, testcaseID); //deliverypopulation
+		int sheetRow2= findRowToRun(mySheets.get(1), 0, testcaseID); //evs_DeliveryPopulation
 		//int sheetRow3= findRowToRun(mySheets.get(2), 0, testcaseID); //typeOf sap validation //uses input.get("Value").get(rowNumber)
 		int sheetRow4= findRowToRun(mySheets.get(2), 0, testcaseID); //updatesheet
 		int createCustomerBackEndSheet = findRowToRun(mySheets.get(3), 0, testcaseID); //magentoCreate back end sheet
 		int customerUpdateBackEndSheet = findRowToRun(mySheets.get(4), 0, testcaseID); //magentoCreate back end sheet
-//		HashMap<String,ArrayList<String>> loginSheet =dataMap2.get("ic_Login++");
-//		int ic_LoginRow = findRowToRun(loginSheet, 0, testcaseID);
+//		HashMap<String,ArrayList<String>> loginSheet =dataMap2.get("evs_login++");
+//		int evs_loginRow = findRowToRun(loginSheet, 0, testcaseID);
 		
 		String DBinstance = input.get("DB_Instance").get(rowNumber);
 		int irow= getConnectionRow(DBinstance);
@@ -147,9 +146,9 @@ public class EVS_SAPCustomerRelated {
 		
 		String typeOfSAPValidation = input.get("typeOfSapValidation").get(rowNumber); 
 		//System.out.println(mySheets.get(2).get("firstName_output").get(sheetRow4));
-		email = mySheets.get(0).get("emailAddress").get(sheetRow1);
+		//email = mySheets.get(0).get("emailAddress").get(sheetRow1);
 //		email="fake856088001957589@automationjdg.co.za";
-		website = mySheets.get(0).get("WebSite").get(sheetRow1);
+		website = "Everyshop";//mySheets.get(0).get("WebSite").get(sheetRow1);
 //		website="";
 		//If the update flag is checked it takes the latest updated email, 
 		//if not checked it takes the original email
@@ -179,6 +178,7 @@ public class EVS_SAPCustomerRelated {
 			navigateToCustomerBpNumber(customerMagentoEmail, website, test);
 			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Creation")) {
+			email = mySheets.get(0).get("emailAddress").get(sheetRow1);
 			navigateToCustomerBpNumber(email, website, test);
 			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Update Magento Admin")) {
@@ -193,8 +193,8 @@ public class EVS_SAPCustomerRelated {
 			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 				
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Registered customer from sales order")) {
-			String registeredUserEmail = dataTable2.getValueOnOtherModule("ic_login", "Username", 0);
-			navigateToCustomerBpNumber(registeredUserEmail, "Incredible Connection", test);
+			String registeredUserEmail = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "username");
+			navigateToCustomerBpNumber(registeredUserEmail, website, test);
 			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			bpPartnerBumber = " ";
@@ -221,7 +221,6 @@ public class EVS_SAPCustomerRelated {
 			taxVatNumberFlag = "No";
 		}
 		//SAPorderNumber=SAPorderNumber.replace("[RabbitMQ] Order SAP Number: ", ""); 
-		vatNumberFlag = mySheets.get(0).get("vatNumberFlag").get(sheetRow1);
 		Map<String, String> customerDetails = null;
 		customerDetails = customerSAPDetails(bpNumber1,test);
 
@@ -302,8 +301,8 @@ public class EVS_SAPCustomerRelated {
 				action.CompareResult("SAP First name", customerCreationname, SAPFirstName, test);
 				action.CompareResult("SAP Last name", customerCreationlastName, SAPLastName, test);
 				action.CompareResult("SAP Email", email, SAPEmail, test);
-
-				if (vatNumberFlag.equalsIgnoreCase("Yes")) {
+				taxVatNumberFlag = mySheets.get(0).get("vatNumberFlag").get(sheetRow1);
+				if (taxVatNumberFlag.equalsIgnoreCase("Yes")) {
 					vatNumber = mySheets.get(0).get("vatNumber").get(sheetRow1);
 
 					action.CompareResult("SAP Vat number", vatNumber, sapVatnumber, test);
@@ -420,19 +419,19 @@ public class EVS_SAPCustomerRelated {
 			case "Registered customer from sales order":
 				//GETS DATA FROM THE FRONT END
 				//	Map<String,String> registeredCustomerDetails =ICDelivery.registeredUserDetails;
-				String registFirstname = dataTable2.getValueOnOtherModule("deliveryPopulation", "firstName", 0).trim();
-				String registLastname = dataTable2.getValueOnOtherModule("deliveryPopulation", "lastname", 0).trim();
-				String registEmail = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0).trim();
-				String registIDnumber = dataTable2.getValueOnOtherModule("deliveryPopulation", "idNumber", 0).trim();
-				String registVATnumber = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber", 0);
+				String registFirstname = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "firstName", 0).trim();
+				String registLastname = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "lastname", 0).trim();
+				String registEmail = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "email", 0).trim();
+				//String registIDnumber = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "idNumber", 0).trim();
+				String registVATnumber = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "vatNumber", 0);
 
-				String registTelephone = dataTable2.getValueOnOtherModule("deliveryPopulation", "telephone", 0);
-				String registStreetAddress = dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName", 0).trim();
+				String registTelephone = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "telephone", 0);
+				String registStreetAddress = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "streetName", 0).trim();
 				//	String registBuildingDetails = registeredCustomerDetails.get("");
-				String registProvince = dataTable2.getValueOnOtherModule("deliveryPopulation", "province", 0).trim();
-				String registCity = dataTable2.getValueOnOtherModule("deliveryPopulation", "city", 0).trim();
-				String registSuburb = dataTable2.getValueOnOtherModule("deliveryPopulation", "Suburb", 0).trim();
-				String registPostalCode = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode", 0).trim();
+				String registProvince = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "province", 0).trim();
+				String registCity = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "city", 0).trim();
+				String registSuburb = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "Suburb", 0).trim();
+				String registPostalCode = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "postalCode", 0).trim();
 
 				/*
 				 * String registFirstname = registeredCustomerDetails.get("firstName"); String
@@ -452,12 +451,12 @@ public class EVS_SAPCustomerRelated {
 				action.CompareResult("SAP First name", registFirstname, SAPFirstName, test);
 				action.CompareResult("SAP Last name", registLastname, SAPLastName, test);
 				action.CompareResult("SAP Email", registEmail, SAPEmail, test);
-				action.CompareResult("SAP SA ID", registIDnumber, SAID, test);
+				//action.CompareResult("SAP SA ID", registIDnumber, SAID, test);
 				if(registVATnumber != null) {
 				action.CompareResult("SAP Vat number", registVATnumber, sapVatnumber, test);
 				}
 //				String addressTypeInIC = ICDelivery.addressTypeICFont;
-//				String typeOfAddressUsage = dataTable2.getValueOnOtherModule("deliveryPopulation", "AddressType", 0);
+//				String typeOfAddressUsage = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "AddressType", 0);
 //
 //				if(!(addressTypeInIC.equalsIgnoreCase("Select a saved address or add a new address:") & typeOfAddressUsage.equalsIgnoreCase("New"))) {
 //					action.CompareResult("SAP Updated postal code", registPostalCode, SAPpostCode, test);
@@ -535,7 +534,7 @@ public class EVS_SAPCustomerRelated {
 			}
 		}
 		but0ID(bpNumber);
-		if(vatNumberFlag.equalsIgnoreCase("yes") | taxVatNumberFlag.equalsIgnoreCase("yes")) {
+		if(taxVatNumberFlag.equalsIgnoreCase("yes")) {
 			vatNumber(bpNumber);
 		}
 		adrcWithprovince(bpNumber);
