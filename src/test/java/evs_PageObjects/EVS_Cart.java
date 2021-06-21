@@ -46,12 +46,10 @@ public class EVS_Cart {
 	        //login =  new ic_Login(driver, dataTable2);
 	    }
 	    static Logger logger = Log.getLogData(Action.class.getSimpleName());
-	    
-	    //@FindBy(xpath="/html/body/div[1]/header/div[2]/div/div[3]/div[3]/a")
+
 	    @FindBy(xpath = "//*[@class = \"minicart-wrapper\"]/a")
 	    private WebElement iCCartButton;
 	    
-	    //loop throUGH THIS HERE TO DETERMINE IF THE PRODUCT IS FOUND, IF FOUND VALIDATE QUANTITY AND PRICE
 	    @FindBy(xpath="//*[@id=\"mini-cart\"]/li")
 	    private List<WebElement> icAllCartProducts;
 	    
@@ -275,14 +273,6 @@ public class EVS_Cart {
 	    	//check cart quantity
 	    	String itemsInCart = itemsInCartCounter(test);
 	    	action.CompareResult("items in cart", "1", itemsInCart, test);
-	    	//startBrowserSession
-	    	//close browser
-	    	//driver.quit();
-	    	
-	    	//driver = null;
-	    	//WebDriver driver1 = new ChromeDriver();
-	    	//navigate to login again
-	    	//startBrowserSession(driver1);
 	    	
 			/*
 			 * ic_Login login = new ic_Login(driver1, dataTable2); WebElement myAccount =
@@ -306,8 +296,7 @@ public class EVS_Cart {
 	    	//driver.navigate().to("https://JDGroup:JDGr0up2021@staging-incredibleconnection-m23.vaimo.net/");
 			//driver.manage().window().maximize();
 			//driver.navigate().refresh();
-	    	//verify cart
-	    	
+	    	//verify cart   	
 	    }	    	  
 	    
 	    public void verifyCart(ExtentTest test) throws Exception {
