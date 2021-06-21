@@ -90,8 +90,7 @@ public class EVS_RedeemGiftCard {
 	int finalAmount = 0;
 	int finalOrder = 0;
 
-	public void redeemGiftCard(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
-			throws IOException, Exception {
+	public void redeemGiftCard(ExtentTest test) throws IOException, Exception {
 		String giftCardCode = dataTable2.getValueOnCurrentModule("giftCardCode");
 		String scratchCode = dataTable2.getValueOnCurrentModule("scratchCode");
 		String UsageType = dataTable2.getValueOnCurrentModule("UsageType");
@@ -101,7 +100,7 @@ public class EVS_RedeemGiftCard {
 
 		if (action.waitUntilElementIsDisplayed(evs_RedeemGiftCardSelect, 15000)) {
 			action.scrollElemetnToCenterOfView(evs_RedeemGiftCardSelect, "Redeem Gift Card Tab", test);
-			action.explicitWait(3000, test);
+			action.explicitWait(6000, test);
 			action.click(evs_RedeemGiftCardSelect, "Want to redeem a gift card?", test);
 
 		}
@@ -117,14 +116,12 @@ public class EVS_RedeemGiftCard {
 				giftCarddValidate = action.getText(evs_SuccessfullyApplied, "gift card added", test);
 			}
 
-			action.CompareResult("Gift card added", "Gift Card \"" + giftCardCode.trim() + "\" was added.",
-					giftCarddValidate, test);
+			action.CompareResult("Gift card added", "Gift Card \"" + giftCardCode.trim() + "\" was added.",giftCarddValidate, test);
 			String subTotal = action.getText(evs_miniCartSubtotal, "Subtotal", test);
 			String cardAmount = action.getText(evs_GiftcardAmount, "CardAmount", test);
 			String finalOrder = action.getText(evs_totalOrderAmount, "value", test);
 
-			finalAmount = (Integer.parseInt(subTotal.replace("R", ""))
-					- Integer.parseInt(cardAmount.replace("-", "").replace("R", "")));
+			finalAmount = (Integer.parseInt(subTotal.replace("R", "")) - Integer.parseInt(cardAmount.replace("-", "").replace("R", "")));
 
 			String s = String.valueOf(finalAmount);
 
@@ -142,7 +139,6 @@ public class EVS_RedeemGiftCard {
 
 			String cardBalance = action.getText(card_currentBalance, "Gift Card Current Balance", test);
 			action.CompareResult("Check gift card Balance", "R" + "0", cardBalance, test);
-
 			action.click(evs_Apply, "apply the the gift card", test);
 			action.explicitWait(5000, test);
 			String giftCarddValidate = null;
@@ -163,8 +159,6 @@ public class EVS_RedeemGiftCard {
 	}
 
 	public void giftCardWithInvalidCouponCode(ExtentTest test) throws Exception {
-		// cart.navigateToCart(test);
-		// cart.navigateToViewAndEditCart(test);
 		action.click(evs_RedeemGiftCardSelect, "Redeem gift cart", test);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollBy(0,1000)");
