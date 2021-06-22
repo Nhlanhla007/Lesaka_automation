@@ -82,8 +82,8 @@ public class EVS_GiftCardPurchase {
 		String cardMessage = input.get("cardMessage").get(rowNumber);
 		String giftC = dataTable2.getValueOnCurrentModule("GiftCardSKU");
 		evs_products.loadProductListingPage("SearchUsingSearchBar", giftC, test);
-		action.mouseover(evs_detail, "");
-		action.click(evs_viewItem, "more information", test);
+		/*action.mouseover(evs_detail, "");
+		action.click(evs_viewItem, "more information", test);*/
 		/*if(selectAmountFlag.equalsIgnoreCase("Yes")){
 		action.writeText(ic_Amount, selectAmount, "Select the Amount", test);
 		}else {
