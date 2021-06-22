@@ -95,65 +95,63 @@ public class EVS_RedeemGiftCard {
 		String scratchCode = dataTable2.getValueOnCurrentModule("scratchCode");
 		String UsageType = dataTable2.getValueOnCurrentModule("UsageType");
 
-		action.explicitWait(10000);
-		action.clickEle(evs_ContinuePayment, "Click on Continue", test);
+		action.explicitWait(15000);
+		if (action.waitUntilElementIsDisplayed(evs_ContinuePayment, 15000)) {
+			action.click(evs_ContinuePayment, "Click on Continue", test);
 
-		if (action.waitUntilElementIsDisplayed(evs_RedeemGiftCardSelect, 15000)) {
-			action.scrollElemetnToCenterOfView(evs_RedeemGiftCardSelect, "Redeem Gift Card Tab", test);
-			action.explicitWait(6000, test);
-			action.click(evs_RedeemGiftCardSelect, "Want to redeem a gift card?", test);
+			if (action.waitUntilElementIsDisplayed(evs_RedeemGiftCardSelect, 15000)) {
+				action.waitForElementClickable(evs_RedeemGiftCardSelect, "Want to redeem a gift card?", 10);
+				action.scrollElemetnToCenterOfView(evs_RedeemGiftCardSelect, "Redeem Gift Card Tab", test);
+				action.explicitWait(10000);
+				action.click(evs_RedeemGiftCardSelect, "Want to redeem a gift card?", test);
 
-		}
+				if (UsageType.equalsIgnoreCase("Redeem")) {
+					action.writeText(evs_GiftCardCode, giftCardCode, "Gift Card code", test);
+					action.writeText(evs_GiftCardScratchCode, scratchCode, "Scratch Code", test);
+					action.click(evs_Apply, "apply the the gift card", test);
+					action.explicitWait(5000);
+					String giftCarddValidate = null;
+					if (action.elementExistWelcome(evs_SuccessfullyApplied, 5, "Gift card added", test)) {
+						giftCarddValidate = action.getText(evs_SuccessfullyApplied, "gift card added", test);
+					}
 
-		if (UsageType.equalsIgnoreCase("Redeem")) {
-			action.writeText(evs_GiftCardCode, giftCardCode, "Gift Card code", test);
-			action.writeText(evs_GiftCardScratchCode, scratchCode, "Scratch Code", test);
-			// click apply
-			action.click(evs_Apply, "apply the the gift card", test);
-			action.explicitWait(5000);
-			String giftCarddValidate = null;
-			if (action.elementExistWelcome(evs_SuccessfullyApplied, 5, "Gift card added", test)) {
-				giftCarddValidate = action.getText(evs_SuccessfullyApplied, "gift card added", test);
+					action.CompareResult("Gift card added", "Gift Card \"" + giftCardCode.trim() + "\" was added.",giftCarddValidate, test);
+					String subTotal = action.getText(evs_miniCartSubtotal, "Subtotal", test);
+					String cardAmount = action.getText(evs_GiftcardAmount, "CardAmount", test);
+					String finalOrder = action.getText(evs_totalOrderAmount, "value", test);
+
+					finalAmount = (Integer.parseInt(subTotal.replace("R", ""))- Integer.parseInt(cardAmount.replace("-", "").replace("R", "")));
+
+					String s = String.valueOf(finalAmount);
+
+					action.CompareResult("Final order finalized ", "R" + s, finalOrder, test);
+
+					action.click(evs_Secure, "Checkout Secure clicked", test);
+
+				} else if (UsageType.equalsIgnoreCase("Reuse")) {
+
+					action.scrollElemetnToCenterOfView(evs_totalOrderAmount, "Total amount", test);
+					String before_totalOrderPrize = action.getText(evs_totalOrderAmount, "Total Amount before applying gift card", test);
+					action.scrollElemetnToCenterOfView(evs_GiftCardCode, "Gift card code", test);
+					action.writeText(evs_GiftCardCode, giftCardCode, "Gift Card code", test);
+					action.clickEle(evs_Checkstatus, "Check balance", test);
+					action.explicitWait(6000);
+
+					String cardBalance = action.getText(card_currentBalance, "Gift Card Current Balance", test);
+					action.CompareResult("Check gift card Balance", "R" + "0", cardBalance, test);
+					action.click(evs_Apply, "apply the the gift card", test);
+					action.explicitWait(6000);
+					action.waitForElementVisibility(evs_GiftCardError, "Gift card error", 5);				
+					String giftCarddValidate = null;
+					action.scrollElemetnToCenterOfView(evs_GiftCardError, "gift card error", test);
+					giftCarddValidate = action.getText(evs_GiftCardError, "Gift card error",test);
+					action.CompareResult("Incorrect gift Code", "Could not add gift card code", giftCarddValidate,test);
+					action.scrollElemetnToCenterOfView(evs_totalOrderAmount, "Order Amount after gift card applied",test);
+					String after_totalOrderPrize = action.getText(evs_totalOrderAmount, "value", test);
+					action.CompareResult("Validate Updated Total order amount", after_totalOrderPrize,before_totalOrderPrize, test);
+
+				}
 			}
-
-			action.CompareResult("Gift card added", "Gift Card \"" + giftCardCode.trim() + "\" was added.",giftCarddValidate, test);
-			String subTotal = action.getText(evs_miniCartSubtotal, "Subtotal", test);
-			String cardAmount = action.getText(evs_GiftcardAmount, "CardAmount", test);
-			String finalOrder = action.getText(evs_totalOrderAmount, "value", test);
-
-			finalAmount = (Integer.parseInt(subTotal.replace("R", "")) - Integer.parseInt(cardAmount.replace("-", "").replace("R", "")));
-
-			String s = String.valueOf(finalAmount);
-
-			action.CompareResult("Final order finalized ", "R" + s, finalOrder, test);
-
-			action.click(evs_Secure, "Checkout Secure clicked", test);
-
-		} else if (UsageType.equalsIgnoreCase("Reuse")) {
-
-			String before_totalOrderPrize = action.getText(evs_totalOrderAmount, "value", test);
-			action.scrollElemetnToCenterOfView(evs_GiftCardCode, "Gift card code", test);
-			action.writeText(evs_GiftCardCode, giftCardCode, "Gift Card code", test);
-			action.clickEle(evs_Checkstatus, "Check balance", test);
-			action.explicitWait(3000);
-
-			String cardBalance = action.getText(card_currentBalance, "Gift Card Current Balance", test);
-			action.CompareResult("Check gift card Balance", "R" + "0", cardBalance, test);
-			action.click(evs_Apply, "apply the the gift card", test);
-			action.explicitWait(5000, test);
-			String giftCarddValidate = null;
-
-			if (action.elementExistWelcome(evs_GiftCardError, 4, "Please enter correct gift card code.", test)) {
-				action.scrollElementIntoView(evs_GiftCardError);
-				giftCarddValidate = action.getText(evs_GiftCardError, "Please correct the gift card code.", test);
-				action.CompareResult("Incorrect gift Code", "Could not add gift card code", giftCarddValidate, test);
-			}
-
-			action.scrollElemetnToCenterOfView(evs_totalOrderAmount, "Order Amount after gift card applied", test);
-			String after_totalOrderPrize = action.getText(evs_totalOrderAmount, "value", test);
-			action.CompareResult("Validate Updated Total order amount", after_totalOrderPrize, before_totalOrderPrize,
-					test);
-
 		}
 
 	}
