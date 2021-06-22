@@ -98,11 +98,11 @@ public class EVS_RedeemGiftCard {
 		action.explicitWait(15000);
 		if (action.waitUntilElementIsDisplayed(evs_ContinuePayment, 15000)) {
 			action.click(evs_ContinuePayment, "Click on Continue", test);
-
+			action.explicitWait(20000);
 			if (action.waitUntilElementIsDisplayed(evs_RedeemGiftCardSelect, 15000)) {
 				action.waitForElementClickable(evs_RedeemGiftCardSelect, "Want to redeem a gift card?", 10);
 				action.scrollElemetnToCenterOfView(evs_RedeemGiftCardSelect, "Redeem Gift Card Tab", test);
-				action.explicitWait(10000);
+				action.explicitWait(5000);
 				action.click(evs_RedeemGiftCardSelect, "Want to redeem a gift card?", test);
 
 				if (UsageType.equalsIgnoreCase("Redeem")) {

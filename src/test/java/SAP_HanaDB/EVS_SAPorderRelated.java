@@ -123,11 +123,11 @@ import utils.hana;
 		  //}
 				
 			//String ExpCITY=  ICDelivery.Cityname.toLowerCase().trim();//"johannesburg";		
-			String ExpCITY= EVS_Delivery.Cityname.toLowerCase().trim();
+			String ExpCITY= dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "city", 0).toLowerCase().trim();
 			//String ExpSTREET= ICDelivery.Streetname.toLowerCase().trim();//"33 baker street"; 
-			String ExpSTREET = EVS_Delivery.Streetname.toLowerCase().trim();
+			String ExpSTREET = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "streetName", 0).trim();
 			//String ExpPostalcode = ICDelivery.Postalcode.trim();//"2196";
-			String ExpPostalcode = EVS_Delivery.Postalcode.trim();
+			String ExpPostalcode = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "postalCode", 0).trim();
 			
 			
 			//--------------------------------------------------------------------------

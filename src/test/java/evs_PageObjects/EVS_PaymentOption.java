@@ -205,11 +205,7 @@ public class EVS_PaymentOption {
 	    action.writeText(Suburb, suburdGift,"Suburb", test);
 	    action.writeText(vatNumber, vatnumberGift,"Vat number", test);
 	    action.explicitWait(14000);
-	    
-	    EVS_Delivery.Streetname = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "streetName", 0);
-		EVS_Delivery.Cityname = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "city", 0);
-		EVS_Delivery.Postalcode = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "postalCode", 0);
-	    
+
 		action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
 
 	}

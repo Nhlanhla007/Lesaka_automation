@@ -124,9 +124,6 @@ public class EVS_GiftCardPurchase {
 		evs_products.productData =new LinkedHashMap<>();
 		evs_products.productData.put("CH Gift Card IC SA", giftCardData);
 		
-		EVS_Delivery.Streetname = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "streetName", 0);
-		EVS_Delivery.Cityname = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "city", 0);
-		EVS_Delivery.Postalcode = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "postalCode", 0);
 	}
 
 }

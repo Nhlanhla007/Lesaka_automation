@@ -139,17 +139,17 @@ public class EVS_Delivery {
 //    @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
 //    WebElement cardDeliver_btn;
     
-    public static String Streetname;
-    public static String Cityname;
-    public static String Postalcode;
+//    public static String Streetname;
+//    public static String Cityname;
+//    public static String Postalcode;
 
     public static Map<String,String> registeredUserDetails;
     
     public void deliveryPopulation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
     	//driver.navigate().to(ConfigFileReader.getPropertyVal("EVS_URL"));
-    	Streetname =input.get("streetName").get(rowNumber);
-    	Cityname =input.get("city").get(rowNumber);
-    	Postalcode = input.get("postalCode").get(rowNumber);
+        String Streetname =input.get("streetName").get(rowNumber);
+        String Cityname =input.get("city").get(rowNumber);
+        String Postalcode = input.get("postalCode").get(rowNumber);
     	String addressType = dataSheets.getValueOnCurrentModule("AddressType"); 
     	String userType = dataSheets.getValueOnCurrentModule("UserType");
         //Thread.sleep(10000);
