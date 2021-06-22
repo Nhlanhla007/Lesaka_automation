@@ -439,20 +439,20 @@ public class Action {
 	 */
 
 	public <T> String getText(T elementAttr, String name, ExtentTest test) throws IOException {
-		ExtentTest node = test.createNode("get Text from element: " + name);
+		ExtentTest node = test.createNode("Get Text from element: " + name);
 		waitExplicit(WAIT_IN_SECONDS_MED);
 		String text = "";
 		try {
 			if (elementAttr.getClass().getName().contains("By")) {
 				text = driver.findElement((By) elementAttr).getText();
 				String screenShot = GenerateScreenShot.getScreenShot(driver);
-				node.pass("get Text from element:" + node.addScreenCaptureFromPath(screenShot));
+				node.pass("Getting text from element:" + node.addScreenCaptureFromPath(screenShot));
 			} else {
 				// WebElement fluentElement = waitFluent((WebElement)
 				// elementAttr);
 				// text = elementAttr.getText();
 				String screenShot = GenerateScreenShot.getScreenShot(driver);
-				node.pass("get Text from element:" + node.addScreenCaptureFromPath(screenShot));
+				node.pass("Getting text from element:" + node.addScreenCaptureFromPath(screenShot));
 				text = ((WebElement) elementAttr).getText();
 			}
 			if (name != null) {

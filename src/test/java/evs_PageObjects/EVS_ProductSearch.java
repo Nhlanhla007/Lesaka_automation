@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -78,8 +79,8 @@ public class EVS_ProductSearch {
 	@FindBy(xpath = "//span[contains(text(),'Furniture & D�cor')]")
 	WebElement furnitureAndDecor;
 
-	@FindBy(xpath = "//*[@class=\"box-tocart\"]/div/span")
-	WebElement productOutOfStock;
+	@FindBy(xpath = "//*[@title=\"Availability\"]/span")
+	WebElement verifyAvailability;
 
 	@FindBy(xpath = "//span[@class = \"sr-only\"]")
 	WebElement shopByDeptLink;
@@ -115,6 +116,12 @@ public class EVS_ProductSearch {
 	
 	@FindBy(xpath = "//span[contains(text(),'Add to Wish List(s)')]")
 	WebElement addToWishLists;
+	
+	@FindBy(xpath = "//*[@class=\"message-error error message\"]")
+	WebElement productOfStockErrorMessage;
+	
+	@FindBy(xpath = "//*[@title=\"Notify me when available\"]")
+	WebElement notifyWhenProductIsAvailable;
 
 
 
@@ -395,8 +402,9 @@ public class EVS_ProductSearch {
 			action.click(prodC, "Navigate to product Details page", test);
 		}
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-		boolean isPresent = driver.findElements(By.id("product-addtocart-button")).size() > 0;
-		if (isPresent) {
+		boolean isPresent = driver.findElements(By.id("product-addtocart-button")).size() > 0;		
+		String availabilityStatus = action.getText(verifyAvailability, "Availability Of Product", test);
+		if (isPresent & availabilityStatus.equalsIgnoreCase("In stock")) {
 			action.scrollElemetnToCenterOfView(productDetailsPageAddToCartButton, "productDetailsPageAddToCartButton",
 					test);
 			// action.click(productDetailsPageAddToCartButton, "Add To Cart",
@@ -405,10 +413,22 @@ public class EVS_ProductSearch {
 			cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds),
 					test);
 			action.explicitWait(8000);
-		} else {
-			String outOfStockMessage = productOutOfStock.getText();
-			action.CompareResult("Product is out of stock", "Currently Out of Stock", outOfStockMessage, test);
+		}else {
+			if(action.waitUntilElementIsDisplayed(notifyWhenProductIsAvailable, 15000)) {
+				action.CompareResult("\"Notify Me When Available Is Present\"", "True", "True", test);
+			}
+			action.scrollElemetnToCenterOfView(productDetailsPageAddToCartButton, "productDetailsPageAddToCartButton",test);
+			productDetailsPageAddToCartButton.click();
+			//driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+			//boolean waitForOutOfStockMessage = driver.findElements(By.xpath("//div[contains(text(),'This product is out of stock.')]")).size() > 0;
+			//action.CompareResult("Out Of Stock Message", "True", String.valueOf(action.elementExistWelcome(productOfStockErrorMessage, 20, "Out Of Stock Pop Up", test)),test);
+			JavascriptExecutor js = (JavascriptExecutor)driver;
+			js.executeScript("window.scrollTo(0,0)");
+			
+			action.elementExistWelcome(productOfStockErrorMessage, 20, "Out Of Stock Pop Up", test);			
+			action.CompareResult("Product Out Of Stock", "This product is out of stock.", driver.findElement(By.xpath("//div[contains(text(),'This product is out of stock.')]")).getText(), test);			
 		}
+
 	}
 
 	void addToWishlistFromProdDetailsPage(WebElement productLink, String waitTimeInSeconds, int quanity,
