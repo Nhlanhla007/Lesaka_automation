@@ -360,6 +360,7 @@ public class EVS_Magento_UserInfoVerification {
 			//action.CompareResult("SAID number in Magento backend : ", ExpSAIDnumber, actualID, test);
 			
 			//String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
+			action.waitUntilElementIsDisplayed(Cust_VAT, 15000);
 			String actualVat = action.getAttribute(Cust_VAT, "value");
 			action.scrollElemetnToCenterOfView(Cust_VAT, "Customer VAT number", test);
 			action.CompareResult("VAT number in Magento backend : ", ExpVATnumber, actualVat, test);
