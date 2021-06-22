@@ -111,21 +111,16 @@ public class EVS_Cart {
 					// @SuppressWarnings("unchecked")
 					List<String> data = (List<String>) selectedProducts.getValue();
 					if (selectedProducts.getKey().equals(nameOfProduct)) {
-						action.CompareResult("Name : " + nameOfProduct, (String) selectedProducts.getKey(),
-								nameOfProduct, test);
-						sum = sum + (Double.parseDouble(quantity)
-								* Double.parseDouble(price.replace("R", "").replace(",", "")));
+						action.CompareResult("Name : " + nameOfProduct, (String) selectedProducts.getKey(),nameOfProduct, test);
+						sum = sum + (Double.parseDouble(quantity)* Double.parseDouble(price.replace("R", "").replace(",", "")));
 						action.CompareResult("Price : " + price + " for " + nameOfProduct, data.get(2), price, test);
 						allProductsInCartQuantity += Integer.parseInt(data.get(0));
-						action.CompareResult("Quantity : " + quantity + " for " + nameOfProduct, data.get(0), quantity,
-								test);
+						action.CompareResult("Quantity : " + quantity + " for " + nameOfProduct, data.get(0), quantity,test);
 					}
 				}
 			}
-			action.CompareResult("Products Total", String.valueOf(sum),
-					icSubtotal.getText().replace("R", "").replace(",", ""), test);
-			action.CompareResult("Cart Counter Verfication", String.valueOf(allProductsInCartQuantity), itemsCount,
-					test);
+			action.CompareResult("Products Total", String.valueOf(sum),icSubtotal.getText().replace("R", "").replace(",", ""), test);
+			action.CompareResult("Cart Counter Verfication", String.valueOf(allProductsInCartQuantity), itemsCount,test);
 
 			action.click(icCCheckout, "Secure Checkout", test);
 			dataTable2.setValueOnOtherModule("evs_ProductSearch", "CartTotal", String.valueOf(sum), 0);

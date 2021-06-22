@@ -103,7 +103,6 @@ public class EVS_RedeemGiftCard {
 				action.waitForElementClickable(evs_RedeemGiftCardSelect, "Want to redeem a gift card?", 10);
 				action.scrollElemetnToCenterOfView(evs_RedeemGiftCardSelect, "Redeem Gift Card Tab", test);
 				action.explicitWait(10000);
-//				action.scrollElemetnToCenterOfView(evs_RedeemGiftCardSelect, "Redeem Gift Card Tab", test);
 				action.click(evs_RedeemGiftCardSelect, "Want to redeem a gift card?", test);
 
 				if (UsageType.equalsIgnoreCase("Redeem")) {
@@ -116,14 +115,12 @@ public class EVS_RedeemGiftCard {
 						giftCarddValidate = action.getText(evs_SuccessfullyApplied, "gift card added", test);
 					}
 
-					action.CompareResult("Gift card added", "Gift Card \"" + giftCardCode.trim() + "\" was added.",
-							giftCarddValidate, test);
+					action.CompareResult("Gift card added", "Gift Card \"" + giftCardCode.trim() + "\" was added.",giftCarddValidate, test);
 					String subTotal = action.getText(evs_miniCartSubtotal, "Subtotal", test);
 					String cardAmount = action.getText(evs_GiftcardAmount, "CardAmount", test);
 					String finalOrder = action.getText(evs_totalOrderAmount, "value", test);
 
-					finalAmount = (Integer.parseInt(subTotal.replace("R", ""))
-							- Integer.parseInt(cardAmount.replace("-", "").replace("R", "")));
+					finalAmount = (Integer.parseInt(subTotal.replace("R", ""))- Integer.parseInt(cardAmount.replace("-", "").replace("R", "")));
 
 					String s = String.valueOf(finalAmount);
 
