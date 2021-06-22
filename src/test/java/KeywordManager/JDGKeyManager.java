@@ -174,6 +174,7 @@ public class JDGKeyManager {
         EVS_SearchTextResult evs_SearchText = new EVS_SearchTextResult(driver, dataTable2);		
         EVS_RefreshLogoHomepage evs_Logo = new EVS_RefreshLogoHomepage(driver, dataTable2);
         EVS_validateDifferentPaymentOptions evs_PaymentOptions = new EVS_validateDifferentPaymentOptions(driver, dataTable2);
+        EVS_RetriveGiftCardOrderId evs_RetriveGiftCardOrderID = new EVS_RetriveGiftCardOrderId(driver, dataTable2);
         EVS_existingAddress evs_ExistingAddress = new EVS_existingAddress(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
@@ -500,6 +501,10 @@ public class JDGKeyManager {
             case "evs_DeliveryPopulation":
                 evs_delivery.deliveryPopulation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
+            case "evs_deliveryPopulationGiftCard":
+                rowNumber = findRowToRun(dataMap2.get("deliveryPopulation++"), 0, testcaseID);
+                evs_delivery.deliveryPopulationGiftCard(dataMap2.get("deliveryPopulation++"), test1, rowNumber);
+                break;
             case "evs_AccountCreation":
                 evs_NewAccountCreation.accountCreation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
@@ -600,7 +605,7 @@ public class JDGKeyManager {
             case "evs_WishlistToCart":
                 evs_WishlistToCart.verifyProducts_wishlistTocart(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
-            case "evs_LaunchPortal":
+            case "EVS_LaunchPortal":
                 evs_lp.launchPortal (test1);
                 break;
             case "EVS_NavigetoWishlist":
@@ -647,12 +652,17 @@ public class JDGKeyManager {
     			break;
             case "evs_LogoHomepage":
             	evs_Logo.homepageLogo(test1);
+            	break;
             case"evs_validatePaymentOption":
             	evs_PaymentOptions.validatePaymentOption(dataMap2.get(moduleToRun + "++"),test1, rowNumber);
 				break;
             case "evs_ExistingAddress":
             	evs_ExistingAddress.AddressThere(test1);
                 break;
+            case "evs_RetriveGiftCardOrderID":
+                evs_RetriveGiftCardOrderID.RetriveOrderID(test1);
+                break;
+        
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){

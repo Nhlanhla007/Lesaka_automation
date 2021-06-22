@@ -266,30 +266,32 @@ public class EVS_Delivery {
     
     public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws InterruptedException, IOException {
     	//Streetname =input.get("streetName").get(rowNumber);
-    	String Streetname = dataSheets.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
+    	String Streetname = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "streetName", 0);
         //Cityname =input.get("city").get(rowNumber);
-        String Cityname = dataSheets.getValueOnOtherModule("deliveryPopulation", "city", 0);
+        String Cityname = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "city", 0);
         //Postalcode = input.get("postalCode").get(rowNumber);
-        String Postalcode = dataSheets.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
-        String firstNameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "firstName", 0);
-        String lastnameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "lastname", 0);
-        String emailGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "email", 0);
-        String streetNameG = dataSheets.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
+        String Postalcode = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "postalCode", 0);
+        String firstNameGift = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "firstName", 0);
+        String phoneGift = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "telephone", 0);
+        String lastnameGift = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "lastname", 0);
+        String emailGift = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "email", 0);
+        String SuburbG = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "Suburb", 0);
+        String provinceG = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "province", 0);
         
         driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
-        action.click(cardDeliver_btn, "click Deliver", test);
+        //action.click(cardDeliver_btn, "click Deliver", test);
   
         action.writeText(firstName, firstNameGift,"First name", test);
         action.writeText(lastname, lastnameGift, "Last name", test);
         action.writeText(email, emailGift,"Email", test);
-        action.writeText(streetNameGift, streetNameG, "Street name", test);
-        action.writeText(telephoneGift,input.get("telephone").get(rowNumber),"telephone",test);
-        action.writeText(cityGift,input.get("city").get(rowNumber),"city",test);
-        action.writeText(SuburbGift,input.get("Suburb").get(rowNumber),"Suburb",test);
-        action.writeText(postalCodeGift,input.get("postalCode").get(rowNumber),"postalCode",test);
+        action.writeText(streetNameGift, Streetname, "Street name", test);
+        action.writeText(telephoneGift, phoneGift, "telephone",test);
+        action.writeText(cityGift, Cityname,"city", test);
+        action.writeText(SuburbGift,SuburbG,"Suburb",test);
+        action.writeText(postalCodeGift,Postalcode,"postalCode",test);
         //Thread.sleep(12000);
         action.explicitWait(12000);
-        action.dropDownselectbyvisibletext(provinceGift,input.get("province").get(rowNumber),"province",test);
+        action.dropDownselectbyvisibletext(provinceGift,provinceG,"province",test);
         //Thread.sleep(10000);
         action.explicitWait(10000);
         action.click(placeOrder,"placeOrder",test);

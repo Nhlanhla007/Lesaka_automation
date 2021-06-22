@@ -60,7 +60,7 @@ public class EVS_RedeemGiftCard {
 	 @FindBy(xpath = "//*[@id=\"giftcard-form\"]/div/div[3]/div[1]/button/span")
 	 WebElement evs_Apply;
 	 
-	 @FindBy(xpath = "//html/body/div[1]/header/div[3]/div[2]/div/div/div")
+	 @FindBy(xpath = "//*[@id=\"maincontent\"]/div[1]/div[2]/div/div/div")
 	 WebElement evs_SuccessfullyApplied;
 	 
 	 @FindBy(xpath = "//*[@id=\"cart-totals\"]/div/table/tbody/tr[1]/td/span")
@@ -71,8 +71,8 @@ public class EVS_RedeemGiftCard {
 	 
 	 @FindBy(xpath = "//*[@id=\"cart-totals\"]/div/table/tbody/tr[5]/td/strong/span")
 	 WebElement evs_orderNumber;
-	 				
-	 @FindBy(xpath="//*[@id=\"maincontent\"]/div[2]/div/div/div[1]/div[1]/ul/li/button")
+	 				//*[@id="maincontent"]/div[3]/div/div[4]/div[1]/div[1]/ul/li/button/span
+	 @FindBy(xpath="//*[@id=\"maincontent\"]/div[3]/div/div[4]/div[1]/div[1]/ul/li/button/span")
 	    private WebElement evs_Secure;
 	 
 	 @FindBy(xpath="//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
