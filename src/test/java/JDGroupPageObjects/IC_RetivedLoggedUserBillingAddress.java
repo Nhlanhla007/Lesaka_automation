@@ -48,8 +48,11 @@ public class IC_RetivedLoggedUserBillingAddress {
     	navigateToBillingAddess(test);
     	if(action.elementExists(ic_streetAddress, 11)){
     		 streetAdd = action.getAttribute(ic_streetAddress, "value");
+            ICDelivery.Streetname = streetAdd;
     		 city =action.getAttribute(ic_city, "value");
+            ICDelivery.Cityname = city;
     		 postal = action.getAttribute(ic_postalCode, "value");
+            ICDelivery.Postalcode = postal;
     		 if(streetAdd !="" & city!="" & postal!=""){
     			 action.CompareResult("Basic address details collected for logged In user Street: "+streetAdd+" city : "+city+" postalcode : "+postal, "True", "True", test);
     		 }else{
@@ -62,15 +65,14 @@ public class IC_RetivedLoggedUserBillingAddress {
     }
     public void navigateToBillingAddess(ExtentTest test) throws IOException{
     	action.explicitWait(10000);
-    //	ic_myAccountButton.click();
-    	//ic_myAccountlist.click();
+    	ic_myAccountButton.click();
+        action.explicitWait(2000);
+    	ic_myAccountlist.click();
     	action.explicitWait(5000);
-
     	action.click(AddressBookEdit, "AddressBookEdit", test);
     	if(action.elementExists(ic_BillingAddress, 11)){
     		action.click(ic_BillingAddress, "ic_BillingAddress", test);
     		action.CompareResult(" Navigate to collect User Billing Addresss", "True", "True", test);
     	}
     }
-    
 }

@@ -18,17 +18,20 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import utils.Action;
+import utils.Base64Decoding;
 import utils.DataTable2;
 
 public class srs_Login {
 	WebDriver driver;
     Action action;
     DataTable2 dataTable2;
+	Base64Decoding decodePassword;
     public srs_Login(WebDriver driver,DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
         this.dataTable2=dataTable2;
+		decodePassword = new Base64Decoding();
     }
     @FindBy(xpath = "//input[@id='USERNAME_FIELD-inner']")
 	 WebElement Uname;
@@ -38,18 +41,18 @@ public class srs_Login {
 	 WebElement LogOn;
     @FindBy(xpath = "//*[@id='store']")
 	 WebElement Store;
-    
     @FindBy(xpath = "/html/body/form[3]/p/table/tbody/tr[2]/td[2]/table/tbody/tr[1]/td/input")
 	 WebElement StoreLogon;
     @FindBy(xpath = "/html/body/table/tbody/tr[1]/td[2]/table/tbody/tr[1]/td[3]/a/strong[contains(text(),'Sales Order')]")
 	 WebElement SalerOrder;
     
-    public void SRS_Login(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+    public void SRS_Login(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
     	boolean CheckSRSlogin = false;
     	String URL = dataTable2.getValueOnCurrentModule("URL");//input.get("URL").get(rowNumber);
     	String UserName = dataTable2.getValueOnCurrentModule("Username");//input.get("Username").get(rowNumber);
     	String Password = dataTable2.getValueOnCurrentModule("Password");//input.get("Password").get(rowNumber);
-    	String ExpectedKeysonFetchPayload = "";
+		Password = decodePassword.decode(Password);
+		String ExpectedKeysonFetchPayload = "";
     	int WaitTime=21;
     	action.navigateToURL(URL);
         CheckSRSlogin = LoginSRS(URL, UserName, Password,WaitTime,test);
@@ -58,22 +61,14 @@ public class srs_Login {
     }
     public boolean LoginSRS(String URL,String Usrname,String PassWrd,int TimeTowait,ExtentTest test) throws IOException{
     	boolean FlagSRSlogin = false;
-    	try {
-			action.writeText(Uname, Usrname, "UserName", test);
-			action.writeText(Pass, PassWrd, "Password", test);
-			action.click(LogOn, "Log On SRS", test);
-			action.waitForPageLoaded(TimeTowait);
-			
-			if(action.elementExists(Store, TimeTowait)){
-				FlagSRSlogin=true;
-				
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			
+		action.writeText(Uname, Usrname, "UserName", test);
+		action.writeText(Pass, PassWrd, "Password", test);
+		action.click(LogOn, "Log On SRS", test);
+		action.waitForPageLoaded(TimeTowait);
+		if(action.elementExists(Store, TimeTowait)){
+			FlagSRSlogin=true;
 		}
 		return FlagSRSlogin;
-    	
     }
    
 }
