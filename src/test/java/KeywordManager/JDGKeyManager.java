@@ -11,6 +11,7 @@ import emailverification.ICGiftCardVerification;
 import emailverification.ICWishlistverification;
 import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ic_ResetPasswordEmailLink;
+import evs_MagentoPageObjects.EVS_GiftCardReport;
 import evs_MagentoPageObjects.EVS_MagentoOrderSAPnumber;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
 import evs_MagentoPageObjects.EVS_MagentoRegisterNewUser;
@@ -172,11 +173,12 @@ public class JDGKeyManager {
         EVS_PopularSearch evs_PopularSearch = new EVS_PopularSearch(driver, dataTable2);
         EVS_SearchTextReturningNoResult evs_ReturnNoResults = new EVS_SearchTextReturningNoResult(driver, dataTable2);
         EVS_SearchTextResult evs_SearchText = new EVS_SearchTextResult(driver, dataTable2);		
+        EVS_RefreshLogoHomepage evs_Logo = new EVS_RefreshLogoHomepage(driver, dataTable2);
+        EVS_validateDifferentPaymentOptions evs_PaymentOptions = new EVS_validateDifferentPaymentOptions(driver, dataTable2);
         EVS_existingAddress evs_ExistingAddress = new EVS_existingAddress(driver, dataTable2);
         EVS_GiftCardPurchase evs_GiftCardPurchase = new EVS_GiftCardPurchase(driver, dataTable2);
         EVS_RetriveGiftCardOrderId evs_RetriveGiftCardOrderID = new EVS_RetriveGiftCardOrderId(driver, dataTable2);
-        EVS_RefreshLogoHomepage evs_Logo = new EVS_RefreshLogoHomepage(driver, dataTable2);
-        EVS_validateDifferentPaymentOptions evs_PaymentOptions = new EVS_validateDifferentPaymentOptions(driver, dataTable2);
+        EVS_GiftCardReport evs_giftCardReport = new EVS_GiftCardReport(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -668,6 +670,11 @@ public class JDGKeyManager {
                 break;
             case "evs_RetriveGiftCardOrderID":
                 evs_RetriveGiftCardOrderID.RetriveOrderID(test1);
+                break;
+            case "evs_giftCardReport":
+                ArrayList<HashMap<String, ArrayList<String>>> mySheet01 = new ArrayList<HashMap<String, ArrayList<String>>>();
+                mySheet01.add(dataMap2.get(moduleToRun + "++"));
+                evs_giftCardReport.giftCardReports(mySheet01, test1, testcaseID);
                 break;
         }
     }
