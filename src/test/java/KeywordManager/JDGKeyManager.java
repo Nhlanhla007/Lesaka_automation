@@ -172,8 +172,6 @@ public class JDGKeyManager {
         EVS_PopularSearch evs_PopularSearch = new EVS_PopularSearch(driver, dataTable2);
         EVS_SearchTextReturningNoResult evs_ReturnNoResults = new EVS_SearchTextReturningNoResult(driver, dataTable2);
         EVS_SearchTextResult evs_SearchText = new EVS_SearchTextResult(driver, dataTable2);		
-        EVS_RefreshLogoHomepage evs_Logo = new EVS_RefreshLogoHomepage(driver, dataTable2);
-        EVS_validateDifferentPaymentOptions evs_PaymentOptions = new EVS_validateDifferentPaymentOptions(driver, dataTable2);
         EVS_existingAddress evs_ExistingAddress = new EVS_existingAddress(driver, dataTable2);
         EVS_GiftCardPurchase evs_GiftCardPurchase = new EVS_GiftCardPurchase(driver, dataTable2);
         EVS_RetriveGiftCardOrderId evs_RetriveGiftCardOrderID = new EVS_RetriveGiftCardOrderId(driver, dataTable2);
@@ -463,6 +461,9 @@ public class JDGKeyManager {
             case "NavigateToWishlist_VerifyLoginPageAppear":
                 NavigetoWishlist.NavigateToWishlist_verifyLoginPageAppears(test1);
                 break;
+            case "skuProduct":
+                products.skuProduct(test1);
+                break;
             case"validatePaymentOption":
 				icPaymentOptions.validatePaymentOption(dataMap2.get(moduleToRun + "++"),test1, rowNumber);
 				break;
@@ -501,6 +502,10 @@ public class JDGKeyManager {
                 break;
             case "evs_DeliveryPopulation":
                 evs_delivery.deliveryPopulation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_deliveryPopulationGiftCard":
+                rowNumber = findRowToRun(dataMap2.get("deliveryPopulation++"), 0, testcaseID);
+                evs_delivery.deliveryPopulationGiftCard(dataMap2.get("deliveryPopulation++"), test1, rowNumber);
                 break;
             case "evs_AccountCreation":
                 evs_NewAccountCreation.accountCreation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
@@ -661,6 +666,9 @@ public class JDGKeyManager {
                 break;
             case "evs_GiftCardPurchase":
             	evs_GiftCardPurchase.purchaseGiftCard(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "evs_RetriveGiftCardOrderID":
+                evs_RetriveGiftCardOrderID.RetriveOrderID(test1);
                 break;
             case "evs_RetriveGiftCardOrderID":
                 evs_RetriveGiftCardOrderID.RetriveOrderID(test1);

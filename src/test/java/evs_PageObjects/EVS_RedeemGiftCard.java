@@ -19,12 +19,12 @@ import utils.Action;
 import utils.DataTable2;
 
 public class EVS_RedeemGiftCard {
-
+	
 	WebDriver driver;
 	Action action;
 	DataTable2 dataTable2;
 	EVS_Cart cart;
-
+    
 	public EVS_RedeemGiftCard(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -33,68 +33,68 @@ public class EVS_RedeemGiftCard {
 		// ic_products = new Ic_Products(driver, dataTable2);
 		cart = new EVS_Cart(driver, dataTable2);
 	}
-
+	
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());
-
+	 
 	@FindBy(xpath = "//span[contains(text(),'Products')]")
 	WebElement evs_ProductLink;
-
+	 
 	@FindBy(css = "a.go-back")
 	WebElement evs_Back;
-
+	 
 	@FindBy(xpath = "//span[contains(text(),'Want to redeem a gift card?')]")
 	WebElement evs_RedeemGiftCardSelect;
-
+	 
 	@FindBy(xpath = "//input[@id='giftcard-code']")
 	WebElement evs_GiftCardCode;
-
+	 
 	@FindBy(xpath = "//input[@id='giftcard-scratch-code']")
 	WebElement evs_GiftCardScratchCode;
-
+	 
 	@FindBy(xpath = "//span[contains(text(),'Check status')]")
 	WebElement evs_Checkstatus;
-
+	 
 	@FindBy(xpath = "//span[contains(text(),'Current Balance:')]/../span[@class='price']")
 	WebElement card_currentBalance;
-
+	 
 	@FindBy(xpath = "//span[contains(text(),'Check status')]/../../../preceding-sibling::div/button")
 	WebElement evs_Apply;
-
-	@FindBy(xpath = "//html/body/div[1]/header/div[3]/div[2]/div/div/div")
-	WebElement evs_SuccessfullyApplied;
+	 
+	 @FindBy(xpath = "//*[@id=\"maincontent\"]/div[1]/div[2]/div/div/div")
+	 WebElement evs_SuccessfullyApplied;
 
 	@FindBy(xpath = "//*[@id=\"cart-totals\"]/div/table/tbody/tr[1]/td/span")
 	WebElement evs_miniCartSubtotal;
-
+	 
 	@FindBy(xpath = "//*[@id=\"cart-totals\"]/div/table/tbody/tr[3]/td")
 	WebElement evs_GiftcardAmount;
-
-	@FindBy(xpath = "//tr[@class='grand totals']/td/strong/span")
-	WebElement evs_totalOrderAmount;
-
-	@FindBy(xpath = "//*[@id=\"maincontent\"]/div[2]/div/div/div[1]/div[1]/ul/li/button")
-	private WebElement evs_Secure;
+	 
+	 @FindBy(xpath = "//*[@id=\"cart-totals\"]/div/table/tbody/tr[5]/td/strong/span")
+	 WebElement evs_orderNumber;
+	 				//*[@id="maincontent"]/div[3]/div/div[4]/div[1]/div[1]/ul/li/button/span
+	 @FindBy(xpath="//*[@id=\"maincontent\"]/div[3]/div/div[4]/div[1]/div[1]/ul/li/button/span")
+	    private WebElement evs_Secure;
 
 	@FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
 	private WebElement evs_Deliver;
-
+	 
 	@FindBy(xpath = "//div[contains(text(),'Could not add gift card code')]")
 	private WebElement evs_GiftCardError;
-
+	 
 	@FindBy(xpath = "//span[contains(text(),'Order Summary')]/../div/button")
 	private WebElement evs_ContinuePayment;
-
+	 
 	@FindBy(xpath = "//*[@class=\"message-error error message\"]")
 	private WebElement invalidCouponCodeErrorPopUp;
-
+	 
 	int finalAmount = 0;
 	int finalOrder = 0;
-
+		 
 	public void redeemGiftCard(ExtentTest test) throws IOException, Exception {
 		String giftCardCode = dataTable2.getValueOnCurrentModule("giftCardCode");
 		String scratchCode = dataTable2.getValueOnCurrentModule("scratchCode");
 		String UsageType = dataTable2.getValueOnCurrentModule("UsageType");
-
+			 
 		action.explicitWait(15000);
 		if (action.waitUntilElementIsDisplayed(evs_ContinuePayment, 15000)) {
 			action.click(evs_ContinuePayment, "Click on Continue", test);
@@ -166,5 +166,5 @@ public class EVS_RedeemGiftCard {
 		String popUpErrorMessage = invalidCouponCodeErrorPopUp.findElement(By.xpath(".//div")).getText();
 		action.CompareResult("Pop up error message", "Please correct the gift card code.", popUpErrorMessage, test);
 	}
-
+	 
 }

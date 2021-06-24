@@ -52,6 +52,7 @@ public class EVS_SearchTextReturningNoResult {
 		action.click(evs_SearchIcon, "Click on search", test);
 		action.explicitWait(5000);
 		action.CompareResult("Search Result", "We can't find products matching the selection.",noProductsMsg.getText(), test);
+
 	}
 
 }
