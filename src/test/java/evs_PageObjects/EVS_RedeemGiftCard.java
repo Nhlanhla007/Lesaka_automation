@@ -86,6 +86,9 @@ public class EVS_RedeemGiftCard {
 	 
 	@FindBy(xpath = "//*[@class=\"message-error error message\"]")
 	private WebElement invalidCouponCodeErrorPopUp;
+
+	@FindBy(xpath = "//tr[@class='grand totals']/td/strong/span")
+	WebElement evs_totalOrderAmount;
 	 
 	int finalAmount = 0;
 	int finalOrder = 0;
