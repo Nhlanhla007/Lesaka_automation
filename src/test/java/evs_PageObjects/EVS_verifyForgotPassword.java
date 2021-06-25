@@ -46,10 +46,10 @@ public class EVS_verifyForgotPassword {
 	@FindBy(xpath = "//div[contains(text(),'If there is an account associated with')]")
 	WebElement confirmationMessage;
 
-	public void forgotPasswordPage(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+	public void forgotPasswordPage(ExtentTest test) throws IOException{
 		
 //		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
-		String Username = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "username");
+		String Username = dataTable2.getValueOnCurrentModule("username");
 	
 //		action.navigateToURL(url);
 		action.waitForElementVisibility(myAccountButton,"myAccountButton", 10);

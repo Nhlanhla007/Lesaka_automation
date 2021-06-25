@@ -154,6 +154,9 @@ public class DataGenerators {
             case "GENERATED NUMBER - 10":
                 requiredData = faker.number().digits(10).replace('0', '1');
                 break;
+            case "GENERATED PASSWORD":
+                requiredData = "S!s"+faker.number().digits(10).replace('0', '1');
+                break;
             default:
                 requiredData=dataTypeRequired;
                 break;

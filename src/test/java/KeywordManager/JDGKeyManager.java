@@ -7,10 +7,7 @@ import SRS.srs_LogonStoreByOrderPayload;
 import SRS.srs_salesOrder_DeliverStatus;
 
 import com.aventstack.extentreports.ExtentTest;
-import emailverification.ICGiftCardVerification;
-import emailverification.ICWishlistverification;
-import emailverification.ic_PasswordForgotEmailVerification;
-import emailverification.ic_ResetPasswordEmailLink;
+import emailverification.*;
 import evs_MagentoPageObjects.EVS_MagentoOrderSAPnumber;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
 import evs_MagentoPageObjects.EVS_MagentoRegisterNewUser;
@@ -177,6 +174,10 @@ public class JDGKeyManager {
         EVS_RetriveGiftCardOrderId evs_RetriveGiftCardOrderID = new EVS_RetriveGiftCardOrderId(driver, dataTable2);
         EVS_RefreshLogoHomepage evs_Logo = new EVS_RefreshLogoHomepage(driver, dataTable2);
         EVS_validateDifferentPaymentOptions evs_PaymentOptions = new EVS_validateDifferentPaymentOptions(driver, dataTable2);
+        EVS_PasswordForgotEmailVerification evsForgotEmailSent = new EVS_PasswordForgotEmailVerification(driver, dataTable2);
+        EVS_verifyForgotPassword evsVerifyForgotPass = new EVS_verifyForgotPassword(driver, dataTable2);
+        EVS_ResetPasswordEmailLink evsResetPasswordLink = new EVS_ResetPasswordEmailLink(driver, dataTable2);
+        EVS_GiftCardVerification evsGiftCardVerification = new EVS_GiftCardVerification(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -560,7 +561,7 @@ public class JDGKeyManager {
             	evs_RedeemGiftCard.redeemGiftCard(test1);
                 break;
             case "evs_ForgotPassword":
-                evs_VerifyForgotPass.forgotPasswordPage(dataMap2.get("evs_login++"), test1, rowNumber);
+                evs_VerifyForgotPass.forgotPasswordPage(test1);
                  break;
             case "evs_ForgotPasswordLink":
                 evs_forgottenPassLink.forgotPasswordLink(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
@@ -668,6 +669,20 @@ public class JDGKeyManager {
                 break;
             case "evs_RetriveGiftCardOrderID":
                 evs_RetriveGiftCardOrderID.RetriveOrderID(test1);
+                break;
+            case "evs_EmailSentVerification":
+                evsForgotEmailSent.evsVerifyNewPasswordEmailSent(test1);
+                break;
+            case "evs_VerifyForgotPass":
+                evsVerifyForgotPass.forgotPasswordPage(test1);
+                break;
+            case "evs_ResetForgottenPassword":
+                evsResetPasswordLink.clickLinkOnGmail(dataMap2.get(moduleToRun+ "++"), test1, rowNumber);
+                evsResetPasswordLink.resetNewPassword(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                evsResetPasswordLink.clickUsedResetLink(dataMap2.get(moduleToRun+ "++"), test1, rowNumber);
+                break;
+            case "evs_GiftCardVerificationSender":
+                evsGiftCardVerification.evsGiftCardVerificationSender(test1);
                 break;
         }
     }
