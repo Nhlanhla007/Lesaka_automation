@@ -179,12 +179,11 @@ public class JDGKeyManager {
         EVS_existingAddress evs_ExistingAddress = new EVS_existingAddress(driver, dataTable2);
         EVS_GiftCardPurchase evs_GiftCardPurchase = new EVS_GiftCardPurchase(driver, dataTable2);
         EVS_RetriveGiftCardOrderId evs_RetriveGiftCardOrderID = new EVS_RetriveGiftCardOrderId(driver, dataTable2);
-        EVS_RefreshLogoHomepage evs_Logo = new EVS_RefreshLogoHomepage(driver, dataTable2);
-        EVS_validateDifferentPaymentOptions evs_PaymentOptions = new EVS_validateDifferentPaymentOptions(driver, dataTable2);
         EVS_PasswordForgotEmailVerification evsForgotEmailSent = new EVS_PasswordForgotEmailVerification(driver, dataTable2);
         EVS_verifyForgotPassword evsVerifyForgotPass = new EVS_verifyForgotPassword(driver, dataTable2);
         EVS_ResetPasswordEmailLink evsResetPasswordLink = new EVS_ResetPasswordEmailLink(driver, dataTable2);
         EVS_GiftCardVerification evsGiftCardVerification = new EVS_GiftCardVerification(driver, dataTable2);
+        EVS_GiftCardReport evs_giftCardReport=new EVS_GiftCardReport(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
