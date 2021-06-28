@@ -184,6 +184,7 @@ public class JDGKeyManager {
         EVS_ResetPasswordEmailLink evsResetPasswordLink = new EVS_ResetPasswordEmailLink(driver, dataTable2);
         EVS_GiftCardVerification evsGiftCardVerification = new EVS_GiftCardVerification(driver, dataTable2);
         EVS_GiftCardReport evs_giftCardReport=new EVS_GiftCardReport(driver, dataTable2);
+        EVS_CompareProducts evs_productsCompared = new EVS_CompareProducts(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -694,6 +695,9 @@ public class JDGKeyManager {
                 break;
             case "evs_GiftCardVerificationSender":
                 evsGiftCardVerification.evsGiftCardVerificationSender(test1);
+                break;
+            case "evs_CompareProducts":
+                evs_productsCompared.validateCompare(test1);
                 break;
         }
     }

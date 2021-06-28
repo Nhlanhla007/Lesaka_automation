@@ -33,6 +33,7 @@ public class EVS_ProductSearch {
 	EVS_Cart cartValidation;
 	DataTable2 dataTable2;
 	EVS_WishList WishList;
+	EVS_CompareProducts compareProducts;
 
 	// ic_validateProductSKU validateProductSKU;
 	// ic_CompareProducts compareProducts;
@@ -43,8 +44,9 @@ public class EVS_ProductSearch {
 		cartValidation = new EVS_Cart(driver, dataTable2);
 		this.dataTable2 = dataTable2;
 		WishList = new EVS_WishList(driver, dataTable2);
+		compareProducts = new EVS_CompareProducts(driver, dataTable2);
 		// validateProductSKU = new ic_validateProductSKU(driver, dataTable2);
-		// compareProducts = new ic_CompareProducts(driver, dataTable2);
+		
 	}
 
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());
@@ -394,6 +396,17 @@ public class EVS_ProductSearch {
 		}
 
 	}
+	
+	public void addItemToCompare(WebElement productLink, int quanity, ExtentTest test) throws IOException, AWTException{
+		if (quanity == 1) {
+			WebElement compareLink = productLink.findElement(By.xpath(".//parent::strong/parent::div/div[@class='product-item-inner']/div[contains(@class,\"product actions\")]/div[@class='actions-secondary']/a[@title='Compare']/span"));
+			action.explicitWait(2000);				
+			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			executor.executeScript("arguments[0].click();", compareLink);
+			action.explicitWait(5000);
+
+		}		
+	}
 
 	void addToCartFromProdDetailsPage(WebElement productLink, String waitTimeInSeconds, int quanity, ExtentTest test)
 			throws Exception {
@@ -551,12 +564,8 @@ public class EVS_ProductSearch {
 										// prod);
 										break;
 									case "Add_To_Compare":
-										// compareProducts.compareProductsFunctionality(test,
-										// prod);
-										// compareProducts.validateAddedProductsCompare(test,
-										// prod);
-										// compareProducts.clearAllProduct(test,
-										// prod);
+										addItemToCompare(prod,quantityExecu, test);
+										compareProducts.comparePageValidation(productName,test);
 										break;
 									case "Validate_Out_Of_Stock":
 										addToCartFromProdDetailsPage(prod, waitTimeInSeconds, quantityExecu, test);
@@ -571,7 +580,7 @@ public class EVS_ProductSearch {
 							}
 						}
 					}
-					if(!(TypeOfOperation.equalsIgnoreCase("Add_To_Wishlist"))){
+					if(!((TypeOfOperation.equalsIgnoreCase("Add_To_Wishlist") | TypeOfOperation.equalsIgnoreCase("Add_To_Compare")))){
 						String skuCode = getSKUCode(cartAdditionMethod, prod, test);
 
 					productPrice_Quantity_SKU.add(skuCode);
