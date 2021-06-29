@@ -400,7 +400,8 @@ public class EVS_ProductSearch {
 	public void addItemToCompare(WebElement productLink, int quanity, ExtentTest test) throws IOException, AWTException{
 		if (quanity == 1) {
 			WebElement compareLink = productLink.findElement(By.xpath(".//parent::strong/parent::div/div[@class='product-item-inner']/div[contains(@class,\"product actions\")]/div[@class='actions-secondary']/a[@title='Compare']/span"));
-			action.explicitWait(2000);				
+			action.explicitWait(2000);		
+			action.mouseover(productLink, "On Product");
 			JavascriptExecutor executor = (JavascriptExecutor)driver;
 			executor.executeScript("arguments[0].click();", compareLink);
 			action.explicitWait(5000);

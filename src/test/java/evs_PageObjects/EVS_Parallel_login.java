@@ -37,7 +37,7 @@ public class EVS_Parallel_login {
 
 	}
 
-	@FindBy(className = "my-account")
+	@FindBy(xpath = "//div[contains(@class,'my-account icon')]")
 	WebElement evs_myAccountButton;
 
 	@FindBy(xpath = "//a[contains(text(),'Log In')]")
@@ -69,19 +69,16 @@ public class EVS_Parallel_login {
 
 		email = dataTable2.getValueOnCurrentModule("Email_Firefox_User");
 		Password = dataTable2.getValueOnCurrentModule("Password_Firefox_User");
-		FirstName = dataTable2.getValueOnCurrentModule("FirstName_Firefox_User");
+		FirstName = dataTable2.getValueOnCurrentModule("FirstName_Firefox_User");	
 		login(action2, test);
-
 		driver2.close();
 
 	}
 
 	public void login(Action action, ExtentTest test) throws IOException {
-
-//		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",
-//				dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "url");
-//
-//		action.navigateToURL(url);
+	
+		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnCurrentModule("urlKey"), "url");
+		action.navigateToURL(url);
 		action.waitForElementClickable(evs_myAccountButton,"evs_myAccountButton", 5);
 		action.click(evs_myAccountButton, "My Account", test);
 		action.waitForElementClickable(LoginBtn,"LoginBtn", 5);
@@ -91,8 +88,8 @@ public class EVS_Parallel_login {
 		action.waitForElementVisibility(evs_Password,"evs_Password", 5);
 		action.writeText(evs_Password, Password, "Password field", test);
 		action.clickEle(evs_SigninBtn, "click ic_SigninBtn", test);
-		action.explicitWait(15000);
-		action.waitForElementVisibility(userName_display,"userName_display", 15000);
+		action.explicitWait(10000);
+		action.waitForElementVisibility(userName_display,"userName_display", 15);
 		String expMsg = "Hi, " + FirstName;
 		String wlc_msg = action.getText(userName_display, "Welcome Messsage for the User", test);
 		action.CompareResult("Signup Validation", expMsg, wlc_msg, test);

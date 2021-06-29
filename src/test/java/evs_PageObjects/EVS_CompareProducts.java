@@ -57,8 +57,10 @@ public class EVS_CompareProducts {
 	@FindBy(xpath = "//strong[@class='product-item-name']/a")
 	public List<WebElement> compareItemList;
 
+	@FindBy(xpath = "(//button[@class='action tocart primary'])[1]")
+	public WebElement addToCart;
+
 	public void validateCompare(ExtentTest test) throws IOException {
-//		compareItem(test);
 		navigateToSearchResult(test);
 		removeAllItem(test);
 
@@ -70,31 +72,34 @@ public class EVS_CompareProducts {
 		String actualMsg = action.getText(addToCompareMsg, "Success message", test);
 		boolean successMsg = addToCompareMsg.isDisplayed();
 		if (successMsg) {
-			action.CompareResult("Validate message", expMsg, actualMsg, test); 
-			
-//			JavascriptExecutor executor = (JavascriptExecutor)driver;		
-//			Boolean disabled = (Boolean) executor.executeScript("return arguments[0].hasAttribute(\"disabled\");", compareItemTab);			
-//			if(!disabled){
-//				compareItem(test);				
-//			}
-			
-			
+			action.CompareResult("Success message on Product addition", expMsg, actualMsg, test);
+			boolean checkItemCount = compareItemList.size() > 1;
 
-			
-			
-			
-		} else {
-			action.CompareResult("Comparision failure", "true", String.valueOf(successMsg), test);
+			if (checkItemCount) {
+				action.CompareResult("Validate compare button status", "true", String.valueOf(checkItemCount), test);
+
+				compareItem(test);
+			} else {
+
+				action.CompareResult("Validate compare button status", "false", String.valueOf(checkItemCount), test);
+
+			}
 		}
-		
 
+		else {
+			action.CompareResult("Unable to Compare Item", "true", String.valueOf(successMsg), test);
+		}
 	}
-	
 
 	public void compareItem(ExtentTest test) throws IOException {
 
 		List<String> actualItemToCompareProducts = new ArrayList<String>();
+		action.scrollElemetnToCenterOfView(compareItemTab, "Compare Item button", test);
+		action.explicitWait(2000);
 		action.clickEle(compareItemTab, "Compare Item", test);
+		action.explicitWait(6000);
+		action.scrollElemetnToCenterOfView(addToCart, "Add to Cart", test);
+		action.explicitWait(3000);
 		if (action.isElementPresent(compareItemHeader)) {
 			List<WebElement> compareItem = compareItemList;
 
@@ -108,7 +113,7 @@ public class EVS_CompareProducts {
 
 			boolean checkCompateItem = actualItemToCompareProducts.containsAll(expectedItemsToCompare);
 
-			action.CompareResult("Check Items in Compate List", "true", String.valueOf(checkCompateItem), test);
+			action.CompareResult("Items in Compate List", "true", String.valueOf(checkCompateItem), test);
 		}
 
 	}
