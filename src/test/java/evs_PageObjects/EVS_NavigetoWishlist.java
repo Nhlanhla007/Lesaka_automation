@@ -58,7 +58,6 @@ public class EVS_NavigetoWishlist {
 	public void NavigateToWishlist_verifymsg(ExtentTest test) throws IOException {
 		String Username = dataTable2.getValueOnCurrentModule("Username");
 		String Password = dataTable2.getValueOnCurrentModule("Password");
-		// action.explicitWait(4000);
 		String ExpLoginType = dataTable2.getValueOnCurrentModule("Login_type");
 
 		int waitTime = Integer.parseInt(dataTable2.getValueOnCurrentModule("TimeOut_seconds"));
@@ -96,15 +95,12 @@ public class EVS_NavigetoWishlist {
 		action.writeText(passwordField, Passwrd, "Password field", test);
 		action.clickEle(SigninBtn, "click ic_SigninBtn", test);
 		action.explicitWait(3000);
-		System.out.println("Navigating to WishList Page");
 
 		if (action.isElementPresent(mywishlist_page)) {
 			check = true;
 			action.CompareResult("Navigation to Wishlist Page", "True", "True", test);
-			System.out.println("Successfully Navigated to Wish List Page");
 		} else {
 			action.CompareResult("Navigation to Wishlist Page", "True", "False", test);
-			System.out.println("Unable to Navigate to Wish List Page");
 		}
 		return check;
 	}

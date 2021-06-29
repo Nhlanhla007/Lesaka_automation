@@ -47,13 +47,13 @@ public class EVS_forgotPasswordLink {
 //		action.navigateToURL(url);
 
 		action.waitForElementVisibility(myAccountButton,"myAccountButton", 15);
-		action.clickEle(myAccountButton, "click on my account", test);
+		action.clickEle(myAccountButton, "My account", test);
 		
 		action.waitForElementVisibility(LoginBtn,"LoginBtn", 3);
-		action.clickEle(LoginBtn, "click on Login Button", test);
+		action.clickEle(LoginBtn, "Login Button", test);
 		
 		action.waitForElementVisibility(forgotPasswordLink,"forgotPasswordLink", 10);
-		action.clickEle(forgotPasswordLink, "Click on Forgot Password Link", test);
+		action.clickEle(forgotPasswordLink, "Forgot Password Link", test);
 		
 		action.CompareResult("Redirecting to forgot password page", "Forgot your password?",
 				forgotPwdHeader.getText(), test);
