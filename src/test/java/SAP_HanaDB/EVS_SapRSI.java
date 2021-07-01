@@ -72,17 +72,17 @@ public class EVS_SapRSI {
                 "rough_stock_value = '"+rough_stock_value+"' " +
                 "order by rand() limit 1";
 
-        System.out.println("Query:"+Query);
+        //System.out.println("Query:"+Query);
         ResultSet rs = hn.ExecuteQuery(Query);
         int rowsCountReturned = hn.GetRowsCount(rs);
-        System.out.println("rowsCountReturned: "+rowsCountReturned);
+        //System.out.println("rowsCountReturned: "+rowsCountReturned);
         if(rowsCountReturned >= 1) {
         String SKUCode=getColumnValue(hn,rs ,"ARTICLE_ID");
-        System.out.println("SKUCode: "+SKUCode);
+        //System.out.println("SKUCode: "+SKUCode);
 
         String AGGR_AVAIL_QTY_1=getColumnValue(hn,rs ,"AGGR_AVAIL_QTY");;
         String AGGR_AVAIL_QTY=AGGR_AVAIL_QTY_1.split("\\.")[0];
-        System.out.println("AGGR_AVAIL_QTY: "+AGGR_AVAIL_QTY);
+        //System.out.println("AGGR_AVAIL_QTY: "+AGGR_AVAIL_QTY);
 
         dataTable2.setValueOnCurrentModule("SKUCode",SKUCode);        
         dataTable2.setValueOnCurrentModule("AGGR_AVAIL_QTY",AGGR_AVAIL_QTY);
@@ -93,41 +93,11 @@ public class EVS_SapRSI {
         }        
     }
 
-    public void getDataFromSAPDBWithQty(ExtentTest test) throws IOException, SQLException {
-        hana hn =connectToSap(test) ;
-        String channelID=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","channelID",0);
-        String rough_stock_value=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","rough_stock_value",0);
-        String Query= "select * from SAPABAP1.\"/OAA/RSI_SNP\" " +
-                "where channel_id = '"+channelID+"' " +
-                "and ROUGH_STOCK_DATE >=to_date(now()) " +
-                "and AGGR_AVAIL_QTY=9999999999.000 " +
-                "and rough_stock_value = '"+rough_stock_value+"' " +
-                "order by rand() limit 1";
-        
-	    System.out.println("Query:"+Query);
-        ResultSet rs = hn.ExecuteQuery(Query);
-        int rowsCountReturned = hn.GetRowsCount(rs);
-        System.out.println("rowsCountReturned: "+rowsCountReturned);
-
-        String SKUCode=getColumnValue(hn,rs ,"ARTICLE_ID");
-        System.out.println("SKUCode: "+SKUCode);
-
-        String AGGR_AVAIL_QTY_1=getColumnValue(hn,rs ,"AGGR_AVAIL_QTY");;
-        String AGGR_AVAIL_QTY=AGGR_AVAIL_QTY_1.split("\\.")[0];
-        System.out.println("AGGR_AVAIL_QTY: "+AGGR_AVAIL_QTY);
-
-        dataTable2.setValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","SKUCode",SKUCode,0);
-        dataTable2.setValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",AGGR_AVAIL_QTY,0);
-        dataTable2.setValueOnOtherModule ("evs_ProductSearch","specificProduct",SKUCode,0);
-        hn.closeDB();
-    }
-
-    public void getDataFromSAPDBAfterCheckout(ExtentTest test) throws Exception {
+        public void getDataFromSAPDBAfterCheckout(ExtentTest test) throws Exception {
         hana hn =connectToSap(test);
         String channelID=dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","channelID",0);
         String ARTICLE_ID=dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","SKUCode",0);
         String AGGR_AVAIL_QTY=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0);
-        String rough_stock_value=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","rough_stock_value",0);
         
         action.click(catalogTab,"catalogTab",test);
         action.explicitWait(2000);
@@ -138,8 +108,7 @@ public class EVS_SapRSI {
         }
         action.explicitWait(5000);
         action.click(magentoFilterTab,"magentoFilterTab",test);
-        String sky = dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","SKUCode",0);
-        action.writeText(sku,sky,"skuInputTest",test);
+        action.writeText(sku,ARTICLE_ID,"skuInputTest",test);
         action.click(magentoApplyFilterTab,"magentoApplyFilterTab",test);
         action.explicitWait(5000);
         if(action.waitUntilElementIsDisplayed(clickEdit, 6000)) {
@@ -153,50 +122,31 @@ public class EVS_SapRSI {
         for ( WebElement i : storeCount ) {
         	action.scrollElemetnToCenterOfView(i, "Data Table", test);
             WebElement z1= i.findElement(By.xpath("./child::td[1]"));
-            WebElement z2= i.findElement(By.xpath("./child::td[2]"));
-            WebElement z3= i.findElement(By.xpath("./child::td[3]"));
             WebElement z4= i.findElement(By.xpath("./child::td[4]/div/div[2]/input"));
-            WebElement z5= i.findElement(By.xpath("./child::td[5]"));
-            WebElement z6= i.findElement(By.xpath("./child::td[6]"));
             String store=dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","Store",0);
             if(z1.getText().equals(store)) {
-                System.out.println(z1.getText());
-                System.out.println(z2.getText());
-                System.out.println(z3.getText());
-                System.out.println(z4.getAttribute("value"));
-                System.out.println(z5.getText());
-                System.out.println(z6.getText());
-                System.out.println("----");
-               // dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0);
                 action.CompareResult("Magento Item Quantity After Sales Order ", dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0),z4.getAttribute("value"), test);
             }
-
-		/*
-		 * String Query= "select * from SAPABAP1.\"/OAA/RSI_SNP\" " +
-		 * "where channel_id = '"+channelID+"' " +
-		 * "and ROUGH_STOCK_DATE >=to_date(now()) " + "and ARTICLE_ID='"+ARTICLE_ID+"' "
-		 * + "and rough_stock_value = '"+rough_stock_value+"' " +
-		 * "order by rand() limit 1";
-		 */
         
-        String Query = "select AGGR_AVAIL_QTY from SAPABAP1.\"/OAA/RSI_SNP\" "
-        		+ "where ARTICLE_ID = '"+ARTICLE_ID+"' "
-        				+ "and CHANNEL_ID = '"+channelID+"'";
+			String Query = "select AGGR_AVAIL_QTY from SAPABAP1.\"/OAA/RSI_SNP\" " + "where ARTICLE_ID = '" + ARTICLE_ID
+					+ "' " + "and CHANNEL_ID = '" + channelID + "'";
 
-        System.out.println("Query:"+Query);
+        //System.out.println("Query:"+Query);
         ResultSet rs = hn.ExecuteQuery(Query);
         int rowsCountReturned = hn.GetRowsCount(rs);
-        System.out.println("rowsCountReturned: "+rowsCountReturned);
+        //System.out.println("rowsCountReturned: "+rowsCountReturned);
+        if(rowsCountReturned >= 1) {
         String SKUCode=getColumnValue(hn,rs ,"ARTICLE_ID");
-        System.out.println("SKUCode: "+SKUCode);
+        //System.out.println("SKUCode: "+SKUCode);
         String AGGR_AVAIL_QTY_1=getColumnValue(hn,rs ,"AGGR_AVAIL_QTY");;
         String AGGR_AVAIL_QTYAfterOneCheckout=AGGR_AVAIL_QTY_1.split("\\.")[0];
-        System.out.println("AGGR_AVAIL_QTYAfterOneCheckout: "+AGGR_AVAIL_QTYAfterOneCheckout);
-        //AGGR_AVAIL_QTY = String.valueOf((Integer.parseInt(AGGR_AVAIL_QTY)-1));
-       // dataTable2.setValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","SKUCode",SKUCode,0);
-        //dataTable2.setValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTYAfterOneCheckout",AGGR_AVAIL_QTYAfterOneCheckout,0);
+        //System.out.println("AGGR_AVAIL_QTYAfterOneCheckout: "+AGGR_AVAIL_QTYAfterOneCheckout);
         action.CompareResult("AGGR_AVAIL_QTY In SAPDB After Sales Order",AGGR_AVAIL_QTY,AGGR_AVAIL_QTYAfterOneCheckout,test);
         hn.closeDB();
+	} else {
+		hn.closeDB();
+		throw new Exception("No Data Is Returned From SAP");
+	}
     }
     }
 
@@ -207,28 +157,28 @@ public class EVS_SapRSI {
           String ARTICLE_ID=dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","SKUCode",0);
           String AGGR_AVAIL_QTY=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0);
           String rough_stock_value=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","rough_stock_value",0);
-			/*
-			 * String Query= "select * from SAPABAP1.\"/OAA/RSI_SNP\" where " +
-			 * "channel_id = '"+channelID+"' and " + "ROUGH_STOCK_DATE >=to_date(now())and"
-			 * + " AGGR_AVAIL_QTY between 1 and 50000 " +
-			 * "and rough_stock_value = 'G' order by rand() limit 1";
-			 */
-          String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" where channel_id = 'SO61' and ROUGH_STOCK_DATE >=to_date(now())"
-          		+ "and AGGR_AVAIL_QTY between 1 and 50000 and rough_stock_value = 'G' and article_id = '000000000010115998' order by rand() limit 1";
-          System.out.println("Query:"+Query);
+			
+			String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" where " + "channel_id = '" + channelID + "' and "
+					+ "ROUGH_STOCK_DATE >=to_date(now())and" + " AGGR_AVAIL_QTY between 1 and 50000 "
+					+ "and rough_stock_value = 'G' order by rand() limit 1";
+ 
+          //Hard coded Article ID below as could not find data, proper query is above
+//          String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" where channel_id = 'SO61' and ROUGH_STOCK_DATE >=to_date(now())"
+//          		+ "and AGGR_AVAIL_QTY between 1 and 50000 and rough_stock_value = 'G' and article_id = '000000000010115998' order by rand() limit 1";
+          
+			//System.out.println("Query:"+Query);
           ResultSet rs = hn.ExecuteQuery(Query);
           int rowsCountReturned = hn.GetRowsCount(rs);
-          System.out.println("rowsCountReturned: "+rowsCountReturned);
+          //System.out.println("rowsCountReturned: "+rowsCountReturned);
           String SKUCode=getColumnValue(hn,rs ,"ARTICLE_ID");
-          System.out.println("SKUCode: "+SKUCode);
+          //System.out.println("SKUCode: "+SKUCode);
           String AGGR_AVAIL_QTY_1=getColumnValue(hn,rs ,"AGGR_AVAIL_QTY");
           String AGGR_AVAIL_QTYFinal=AGGR_AVAIL_QTY_1.split("\\.")[0];
-          System.out.println("Original AGGR_AVAIL_QTY: "+AGGR_AVAIL_QTYFinal);
+          //System.out.println("Original AGGR_AVAIL_QTY: "+AGGR_AVAIL_QTYFinal);
           String AGGR_AVAIL_QTY_AFTER_CHECKOUT = String.valueOf((Integer.parseInt(AGGR_AVAIL_QTYFinal)-1));
           dataTable2.setValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","SKUCode",SKUCode,0);
           dataTable2.setValueOnOtherModule("evs_ProductSearch", "specificProduct", SKUCode, 0);
           dataTable2.setValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",AGGR_AVAIL_QTY_AFTER_CHECKOUT,0);
-          //action.CompareResult("AGGR_AVAIL_QTY has reduce by 1 after buying",AGGR_AVAIL_QTY,AGGR_AVAIL_QTYAfterOneCheckout,test);
           hn.closeDB();
     }
 
@@ -242,7 +192,6 @@ public class EVS_SapRSI {
     public hana connectToSap(ExtentTest test) throws IOException, SQLException {
         String DBinstance = dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","DB_Instance",0);
         //ECCQA
-
         String primaryKey="DB_Instance";
         String conSheet="DB_connection_master";
         String Server =dataTable2.getRowUsingReferenceAndKey(conSheet,primaryKey,DBinstance,"Host");
@@ -279,25 +228,11 @@ public class EVS_SapRSI {
         List<WebElement> storeCount = driver.findElements(By.xpath("//*[@id=\"container\"]/div/div[2]/div[2]/div[2]/fieldset/div[2]/div/div[2]/table/tbody/tr"));
         for ( WebElement i : storeCount ) {
             WebElement z1= i.findElement(By.xpath("./child::td[1]"));
-            WebElement z2= i.findElement(By.xpath("./child::td[2]"));
-            WebElement z3= i.findElement(By.xpath("./child::td[3]"));
             WebElement z4= i.findElement(By.xpath("./child::td[4]/div/div[2]/input"));
-            WebElement z5= i.findElement(By.xpath("./child::td[5]"));
-            WebElement z6= i.findElement(By.xpath("./child::td[6]"));
             String store=dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","Store",0);
             if(z1.getText().equals(store)) {
-                System.out.println(z1.getText());
-                System.out.println(z2.getText());
-                System.out.println(z3.getText());
-                System.out.println(z4.getAttribute("value"));
-                System.out.println(z5.getText());
-                System.out.println(z6.getText());
-                System.out.println("----");
-               // dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0);
                 action.CompareResult(" Item Qty SapDB ", dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0),z4.getAttribute("value"), test);
-
             }
-
         }
 		
 		action.explicitWait(12000);

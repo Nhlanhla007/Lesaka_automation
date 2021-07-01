@@ -144,29 +144,18 @@ public class Ic_Products {
 	}
 
 	public void skuProduct(ExtentTest test) throws IOException, AWTException {
-//		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("ProductSearch","loginDetails",0),"url");
-//		action.navigateToURL(url);
-		String typeSearch = dataTable2.getValueOnOtherModule("ProductSearch", "typeSearch", 0);
 		String productsToSearch = dataTable2.getValueOnOtherModule("ProductSearch", "specificProduct", 0);
-		String quantityOfSearchProducts = dataTable2.getValueOnOtherModule("ProductSearch", "Quantity", 0);
-		String waitTimeInSeconds = dataTable2.getValueOnOtherModule("ProductSearch", "cartButtonWaitTimeInSeconds", 0);
-		String TypeOfOperation = dataTable2.getValueOnOtherModule("ProductSearch", "TypeOfOperation", 0);
-		String validationRequired = dataTable2.getValueOnOtherModule("ProductSearch", "validationRequired", 0);
 		List<String> theProducts = filterProducts(productsToSearch);
 		ic_EnterTextToSearchBar(theProducts.get(0), test);
 		action.explicitWait(5000);
 
 		WebElement addToCart= driver.findElements(By.xpath("//*[@class=\"product-item-link\"]")).get(0);
-		//action.scrollElementIntoView(addToCart);
 		action.mouseover(addToCart, "Scroll to add to cart");
 		System.out.println("Mouse over the");
 		WebElement btnAddToC = addToCart.findElement(By.xpath(".//parent::*/following-sibling::div//button"));
 		action.click(btnAddToC,"addToCart",test);
 		action.explicitWait(5000);
-		WebElement miniCart = driver.findElement(By.xpath("//*[@class=\"action showcart\"]")/*
-																							 * By.xpath(
-																							 * "/html/body/div[2]/header/div[2]/div/div[3]/div[3]/a/span[1]")
-																							 */);
+		WebElement miniCart = driver.findElement(By.xpath("//*[@class=\"action showcart\"]"));
 		action.click(miniCart, "miniCart", test);
 
 		WebElement miniCartcheckoutButton = driver.findElement(By.xpath("//*[@id=\"top-cart-btn-checkout\"]/span"));
@@ -175,18 +164,12 @@ public class Ic_Products {
 	}
 
 	public void skuProductValidateQuantity(ExtentTest test) throws IOException, AWTException {
-		String typeSearch = dataTable2.getValueOnOtherModule("ProductSearch","typeSearch",0);
 		String productsToSearch = dataTable2.getValueOnOtherModule("ProductSearch","specificProduct",0);
-		String quantityOfSearchProducts = dataTable2.getValueOnOtherModule("ProductSearch","Quantity",0);
-		String waitTimeInSeconds = dataTable2.getValueOnOtherModule("ProductSearch","cartButtonWaitTimeInSeconds",0);
-		String TypeOfOperation = dataTable2.getValueOnOtherModule("ProductSearch","TypeOfOperation",0);
-		String validationRequired = dataTable2.getValueOnOtherModule("ProductSearch","validationRequired",0);
 		List<String> theProducts = filterProducts(productsToSearch);
 		ic_EnterTextToSearchBar(theProducts.get(0),test);
 		action.explicitWait(5000);
 
 		WebElement addToCart= driver.findElements(By.xpath("//*[@class=\"product-item-link\"]")).get(0);
-		//action.scrollElementIntoView(addToCart);
 		action.mouseover(addToCart, "Scroll to add to cart");
 		System.out.println("Mouse over the");
 		WebElement btnAddToC = addToCart.findElement(By.xpath(".//parent::*/following-sibling::div//button"));

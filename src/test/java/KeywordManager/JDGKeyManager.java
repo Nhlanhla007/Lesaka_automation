@@ -638,9 +638,6 @@ public class JDGKeyManager {
             case "EVS_SapRSIGetDataFromSAPDB":
                 evs_sapRSI.getDataFromSAPDB(test1);
                 break;
-			case "EVS_SapRSIGetDataFromSAPDBWithQTY":
-				evs_sapRSI.getDataFromSAPDBWithQty(test1);
-				break;
             case "EVS_getRSIItemInMagento":
                 evs_sapRSI.getRSIItemInMagento(test1);
                 break;
