@@ -196,6 +196,7 @@ public class EVS_Delivery {
         action.writeText(postalCode,dataSheets.getValueOnCurrentModule("postalCode"),"postalCode",test);
         action.writeText(vatNumber,dataSheets.getValueOnCurrentModule("vatNumber"),"vatNumber",test);
         action.writeText(evs_nickname,dataSheets.getValueOnCurrentModule("nickName"),"nickName",test);
+        action.explicitWait(3000);
         action.dropDownselectbyvisibletext(province,dataSheets.getValueOnCurrentModule("province"),"province",test);
         action.explicitWait(10000);
         }

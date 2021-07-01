@@ -148,8 +148,9 @@ public class hana {
 	    return listofColumns;
 	}
 	public void closeDB() throws SQLException{
-		hanaconnet.close();
-		
+		if(!(hanaconnet.isClosed())) {
+			hanaconnet.close();
+		}
 	}
 }
 
