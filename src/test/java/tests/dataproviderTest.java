@@ -31,7 +31,7 @@ public class dataproviderTest extends BaseTest {
     int testcaseID;
     DataTable2 dataTable2;
     LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
-    //demo comment
+
     @BeforeClass
     public void setUp(){
         reportJD=new ExtentReportJD("IC");
@@ -39,7 +39,7 @@ public class dataproviderTest extends BaseTest {
     @DataProvider (name = "data-provider")
      public Object[][] dpMethod() throws Exception {
          dataTable2= new DataTable2();
-         dataTable2.setPath("xxxx");
+         dataTable2.setPath("MAIN");
          dataMap2=dataTable2.getExcelData();
          //Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
 
