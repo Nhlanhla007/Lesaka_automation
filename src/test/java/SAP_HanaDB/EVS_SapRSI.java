@@ -117,14 +117,15 @@ public class EVS_SapRSI {
         	//action.CompareResult("Records Returned", "True", "False", test);
         	throw new Exception("No Records Have Been Found");        	
         }
-//        action.explicitWait(5000);
-        List<WebElement> storeCount = driver.findElements(By.xpath("//*[@id=\"container\"]/div/div[2]/div[2]/div[2]/fieldset/div[2]/div/div[2]/table/tbody/tr"));
+        action.explicitWait(5000);
+        List<WebElement> storeCount = driver.findElements(By.xpath("//*[@class=\"data-row\"]"));
+		storeCount.addAll(driver.findElements(By.xpath("//*[@class=\"data-row _odd-row\"]")));
         for ( WebElement i : storeCount ) {
         	action.scrollElemetnToCenterOfView(i, "Data Table", test);
             WebElement z1= i.findElement(By.xpath("./child::td[1]"));
             WebElement z4= i.findElement(By.xpath("./child::td[4]/div/div[2]/input"));
             String store=dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","Store",0);
-            if(z1.getText().equals(store)) {
+            if(z1.getText().equalsIgnoreCase(store)) {
                 action.CompareResult("Magento Item Quantity After Sales Order ", dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0),z4.getAttribute("value"), test);
             }
         
@@ -158,13 +159,13 @@ public class EVS_SapRSI {
           String AGGR_AVAIL_QTY=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0);
           String rough_stock_value=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","rough_stock_value",0);
 			
-			String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" where " + "channel_id = '" + channelID + "' and "
-					+ "ROUGH_STOCK_DATE >=to_date(now())and" + " AGGR_AVAIL_QTY between 1 and 50000 "
-					+ "and rough_stock_value = 'G' order by rand() limit 1";
+//			String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" where " + "channel_id = '" + channelID + "' and "
+//					+ "ROUGH_STOCK_DATE >=to_date(now())and" + " AGGR_AVAIL_QTY between 1 and 50000 "
+//					+ "and rough_stock_value = 'G' order by rand() limit 1";
  
           //Hard coded Article ID below as could not find data, proper query is above
-//          String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" where channel_id = 'SO61' and ROUGH_STOCK_DATE >=to_date(now())"
-//          		+ "and AGGR_AVAIL_QTY between 1 and 50000 and rough_stock_value = 'G' and article_id = '000000000010115998' order by rand() limit 1";
+          String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" where channel_id = 'SO61' and ROUGH_STOCK_DATE >=to_date(now())"
+          		+ "and AGGR_AVAIL_QTY between 1 and 50000 and rough_stock_value = 'G' and article_id = '000000000010115998' order by rand() limit 1";
           
 			//System.out.println("Query:"+Query);
           ResultSet rs = hn.ExecuteQuery(Query);
