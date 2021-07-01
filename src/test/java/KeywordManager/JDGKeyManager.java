@@ -456,15 +456,21 @@ public class JDGKeyManager {
             case "getRSIItemInMagento":
                 sapRSI.getRSIItemInMagento(test1);
                 break;
-            case "getDataFromSAPDBAfterCheckout":
+            case "DataValidationAfterCheckout":
                 sapRSI.getDataFromSAPDBAfterCheckout(test1);
                 break;
             case "skuProduct":
                 products.skuProduct(test1);
                 break;
+            case "skuProductValidateOrderQuantity":
+                products.skuProductValidateQuantity(test1);
+                break;
             case "ic_SKUproduct":
                 SKUproduct.displayProductSKU(test1, el);
                 break;
+            case "getRSISellableArticle":
+				sapRSI.getSellableArticle(test1);
+				break;
             case "ic_SubscribeNewsletter":
                 ic_SubscribeNewsletter.SubscribeNewsletter(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
@@ -644,11 +650,17 @@ public class JDGKeyManager {
             case "EVS_getRSIItemInMagento":
                 evs_sapRSI.getRSIItemInMagento(test1);
                 break;
-            case "EVS_getDataFromSAPDBAfterCheckout":
+            case "EVS_DataValidationAfterCheckout":
                 evs_sapRSI.getDataFromSAPDBAfterCheckout(test1);
                 break;
+            case "EVS_getSellableArticle":
+            	evs_sapRSI.getSellableArticle(test1);
+            break;
             case "EVS_skuProduct":
                 evs_productSearch.skuProduct(test1);
+                break;
+            case "EVS_skuProductValidateOrderQuantity":
+                evs_productSearch.skuProductValidateQuantity(test1);
                 break;
             case "evs_cashDeposit":
             	evs_cashDeposit.InvoiceCashDeposit(test1);
