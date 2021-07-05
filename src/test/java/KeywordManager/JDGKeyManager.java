@@ -130,6 +130,7 @@ public class JDGKeyManager {
 		srs_LogonStoreByOrderPayload SRSLogonStore = new srs_LogonStoreByOrderPayload(driver,dataTable2);
 		srs_salesOrder_DeliverStatus SRSDeliverStatus = new srs_salesOrder_DeliverStatus(driver, dataTable2);
 		Magento_FetchOrderpayload MagentoFetchOrderpayload = new Magento_FetchOrderpayload(driver, dataTable2);
+		admin_ReOrder adminReorder = new admin_ReOrder(driver, dataTable2);
         
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
@@ -502,6 +503,9 @@ public class JDGKeyManager {
 			 case "LaunchPortal":
 	                lp.launchPortal (test1);
 	           break;
+			case "adminReorder":
+				adminReorder.editOrder(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+				break;
 
             //EVS CODE BELOW
             case "evs_Login":
