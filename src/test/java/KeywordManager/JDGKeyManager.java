@@ -12,6 +12,7 @@ import emailverification.ICWishlistverification;
 import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ic_ResetPasswordEmailLink;
 import evs_MagentoPageObjects.EVS_GiftCardReport;
+import evs_MagentoPageObjects.EVS_MagentoCancelUpaidEFT;
 import emailverification.*;
 import evs_MagentoPageObjects.EVS_MagentoOrderSAPnumber;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
@@ -131,7 +132,9 @@ public class JDGKeyManager {
 		srs_salesOrder_DeliverStatus SRSDeliverStatus = new srs_salesOrder_DeliverStatus(driver, dataTable2);
 		Magento_FetchOrderpayload MagentoFetchOrderpayload = new Magento_FetchOrderpayload(driver, dataTable2);
 		admin_ReOrder adminReorder = new admin_ReOrder(driver, dataTable2);
-        
+		ic_MagentoCancelUpaidEFT ic_MagentoCancelUpaidEFT = new ic_MagentoCancelUpaidEFT(driver, dataTable2);
+        IC_ReturnToConfirmOrderStatus ic_toConfirmOrderStatus = new IC_ReturnToConfirmOrderStatus(driver, dataTable2);
+		
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
         EVS_ProductSearch evs_productSearch = new EVS_ProductSearch(driver, dataTable2);
@@ -186,6 +189,8 @@ public class JDGKeyManager {
         EVS_GiftCardVerification evsGiftCardVerification = new EVS_GiftCardVerification(driver, dataTable2);
         EVS_GiftCardReport evs_giftCardReport=new EVS_GiftCardReport(driver, dataTable2);
         EVS_CompareProducts evs_productsCompared = new EVS_CompareProducts(driver, dataTable2);
+        EVS_MagentoCancelUpaidEFT evs_MagentoCancelUpaidEFT = new EVS_MagentoCancelUpaidEFT(driver, dataTable2);
+        EVS_ReturnToConfirmOrderStatus evs_toConfirmOrderStatus = new EVS_ReturnToConfirmOrderStatus(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -198,7 +203,7 @@ public class JDGKeyManager {
                 ic.login(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
             case "ic_login":
-                ic_login.Login_ic(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                 ic_login.Login_ic(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
             case "ic_invalidCredslogin":
                 ic_invalidCredslogin.invalidLogin_ic(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
@@ -501,11 +506,17 @@ public class JDGKeyManager {
 				MagentoFetchOrderpayload.FetchOrderPayload(test1);
 				break;
 			 case "LaunchPortal":
-	                lp.launchPortal (test1);
+	            lp.launchPortal (test1);
 	           break;
 			case "adminReorder":
 				adminReorder.editOrder(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
 				break;
+			case "ic_CancelOrder":
+				ic_MagentoCancelUpaidEFT.IC_cancelUpaidEFT(test1);
+	            break;
+	        case "ic_BackTo_IC":
+	            ic_toConfirmOrderStatus.backToIC(test1);
+	             break;
 
             //EVS CODE BELOW
             case "evs_Login":
@@ -712,6 +723,13 @@ public class JDGKeyManager {
             case "evs_CompareProducts":
                 evs_productsCompared.validateCompare(test1);
                 break;
+            case "evs_CancelOrder":
+            	evs_MagentoCancelUpaidEFT.EVS_cancelUpaidEFT(test1);
+                break;
+            case "evs_BackToEVS":
+            	evs_toConfirmOrderStatus.backToEvs(test1);
+                break;
+                
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){
