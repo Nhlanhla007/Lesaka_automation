@@ -15,11 +15,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
-import JDGroupPageObjects.ICDelivery;
+import ic_PageObjects.*;
 import evs_PageObjects.EVS_Delivery;
-import JDGroupPageObjects.IC_Cart;
-import JDGroupPageObjects.Ic_Products;
-import JDGroupPageObjects.ic_PayUPayment;
 import Logger.Log;
 import evs_PageObjects.EVS_ProductSearch;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;

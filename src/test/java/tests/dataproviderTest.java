@@ -1,5 +1,5 @@
 package tests;
-import JDGroupPageObjects.*;
+import ic_PageObjects.*;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
 import base.TestCaseBase;

@@ -36,10 +36,10 @@ public class EVS_UpdateCustomer {
 	    @FindBy(xpath="//*[@id=\"header-slideout--0\"]/li[2]/a")
 	    private WebElement MyAccountButton2;
 	  
-	    @FindBy(xpath="//*[@id=\"account-nav\"]/ul/li[5]/a")
+	    @FindBy(xpath="//*[@id=\"account-nav\"]/ul/li/a[text()='Address Book']")
 	    private WebElement AddressBookEdit;
 	    
-	    @FindBy(xpath="//*[@id=\"account-nav\"]/ul/li[6]/a")
+	    @FindBy(xpath="//*[@id=\"account-nav\"]/ul/li/a[text()='Account Information']")
 	    private WebElement AccountInfoEdit;
 	    
 	    //Edit
@@ -112,7 +112,7 @@ public class EVS_UpdateCustomer {
 	    @FindBy(xpath="//*[@id=\"form-validate\"]/div/div[1]/button/span")
 	    private WebElement SaveButton ;
 	    
-	    @FindBy(xpath="//*[@class=\"action edit\"]/span[contains(text(),'Change Billing Address')]")
+	    @FindBy(xpath="//span[contains(text(),'Change Billing Address')]")
 	    private WebElement ic_BillingAddress;
 	    
 	    @FindBy(xpath="//*[@id=\"maincontent\"]/div/div[2]/div[2]/div[2]/div[2]/div[2]/a/span")

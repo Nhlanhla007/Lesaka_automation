@@ -1,5 +1,7 @@
 package KeywordManager;
 
+import evs_MagentoPageObjects.*;
+import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
 import ic_PageObjects.*;
 import SAP_HanaDB.*;
 import SRS.srs_Login;
@@ -13,13 +15,6 @@ import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ic_ResetPasswordEmailLink;
 import evs_MagentoPageObjects.EVS_GiftCardReport;
 import emailverification.*;
-import evs_MagentoPageObjects.EVS_MagentoOrderSAPnumber;
-import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
-import evs_MagentoPageObjects.EVS_MagentoRegisterNewUser;
-import evs_MagentoPageObjects.EVS_MagentoRetrieveCustomerDetailsPage;
-import evs_MagentoPageObjects.EVS_Magento_Login;
-import evs_MagentoPageObjects.EVS_Magento_UserInfoVerification;
-import evs_MagentoPageObjects.EVS_admin_UserUpdate;
 import evs_PageObjects.*;
 import ic_MagentoPageObjects.*;
 import org.openqa.selenium.WebDriver;
@@ -188,6 +183,8 @@ public class JDGKeyManager {
         EVS_GiftCardVerification evsGiftCardVerification = new EVS_GiftCardVerification(driver, dataTable2);
         EVS_GiftCardReport evs_giftCardReport=new EVS_GiftCardReport(driver, dataTable2);
         EVS_CompareProducts evs_productsCompared = new EVS_CompareProducts(driver, dataTable2);
+        EVS_MyOrders evs_myOrders = new EVS_MyOrders(driver, dataTable2);
+        EVS_Magento_LaunchPortal evsMagentoLaunchPortal=new EVS_Magento_LaunchPortal(driver,dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -513,6 +510,7 @@ public class JDGKeyManager {
                 break;
             case "ic_Magento_LaunchPortal":
                 icMagentoLaunchPortal.launchPortal(test);
+                break;
 
             //EVS CODE BELOW
             case "evs_Login":
@@ -718,6 +716,12 @@ public class JDGKeyManager {
                 break;
             case "evs_CompareProducts":
                 evs_productsCompared.validateCompare(test1);
+                break;
+            case "evs_myOrder":
+                evs_myOrders.searchOrder(test1);
+                break;
+            case "evs_Magento_LaunchPortal":
+                evsMagentoLaunchPortal.launchPortal(test);
                 break;
 
 

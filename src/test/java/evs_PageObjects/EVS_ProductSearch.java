@@ -393,8 +393,7 @@ public class EVS_ProductSearch {
 	}
 
 	WebElement getCartButton(WebElement product) {
-		WebElement cartButton = product
-				.findElement(By.xpath(".//parent::*/following-sibling::div[5]/div[2]/div/form/button"));
+		WebElement cartButton = product.findElement(By.xpath(".//parent::*/following-sibling::div[5]/div[2]/div/form/button"));
 		return cartButton;
 	}
 
@@ -534,7 +533,6 @@ public class EVS_ProductSearch {
 			} else {
 				status = false;
 				action.CompareResult("Product Not Found", product, "", test);
-				// System.out.println("Item has not been found anywhere");
 			}
 		}
 		return null;

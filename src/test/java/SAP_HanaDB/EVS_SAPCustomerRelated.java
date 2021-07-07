@@ -15,14 +15,13 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
-import JDGroupPageObjects.ICDelivery;
+import ic_PageObjects.ICDelivery;
 import Logger.Log;
 import evs_MagentoPageObjects.EVS_MagentoAccountInformation;
 import evs_MagentoPageObjects.EVS_MagentoRetrieveCustomerDetailsPage;
 import ic_MagentoPageObjects.MagentoAccountInformation;
 import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
 import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
-import net.bytebuddy.implementation.bytecode.Throw;
 import utils.Action;
 import utils.Base64Decoding;
 import utils.DataTable2;

@@ -15,7 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
-import JDGroupPageObjects.ICDelivery;
+import ic_PageObjects.ICDelivery;
 import utils.Action;
 import utils.DataTable2;
 import utils.hana;
