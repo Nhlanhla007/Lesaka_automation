@@ -15,8 +15,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
-import JDGroupPageObjects.ICDelivery;
-import JDGroupPageObjects.ic_Login;
+import ic_PageObjects.ICDelivery;
+import ic_PageObjects.ic_Login;
 import Logger.Log;
 import ic_MagentoPageObjects.MagentoAccountInformation;
 import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
@@ -143,10 +143,8 @@ public class SAPCustomerRelated {
 		  
 		 
 		
-		String typeOfSAPValidation = input.get("typeOfSapValidation").get(rowNumber); 
-		//System.out.println(mySheets.get(2).get("firstName_output").get(sheetRow4));
+		String typeOfSAPValidation = input.get("typeOfSapValidation").get(rowNumber);
 		email = mySheets.get(0).get("emailAddress").get(sheetRow1);
-//		email="fake856088001957589@automationjdg.co.za";
 		website = mySheets.get(0).get("WebSite").get(sheetRow1);
 //		website="";
 		//If the update flag is checked it takes the latest updated email, 

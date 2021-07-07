@@ -1,6 +1,6 @@
 package tests;
 
-import JDGroupPageObjects.*;
+import ic_PageObjects.*;
 import KeywordManager.JDGKeyManager;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
@@ -13,9 +13,6 @@ import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ic_ResetPasswordEmailLink;
 import ic_MagentoPageObjects.*;
 import org.apache.log4j.Logger;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Before;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.*;

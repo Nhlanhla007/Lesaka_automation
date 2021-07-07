@@ -1,6 +1,6 @@
 package tests;
 
-import JDGroupPageObjects.*;
+import ic_PageObjects.*;
 import KeywordManager.JDGKeyManager;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
@@ -74,7 +74,8 @@ public class testTestClass<moduleName> {
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
-    }
+    }
+
 
 
     //End Tests-------------------------------------------------------------------------
@@ -557,4 +558,4 @@ public class testTestClass<moduleName> {
 
 
 
-}
+}

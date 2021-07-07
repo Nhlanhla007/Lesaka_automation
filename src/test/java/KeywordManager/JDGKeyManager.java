@@ -1,6 +1,6 @@
 package KeywordManager;
 
-import JDGroupPageObjects.*;
+import ic_PageObjects.*;
 import SAP_HanaDB.*;
 import SRS.srs_Login;
 import SRS.srs_LogonStoreByOrderPayload;
@@ -122,6 +122,8 @@ public class JDGKeyManager {
         SapRSI sapRSI = new SapRSI(driver, dataTable2);
         ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
         ic_validateDifferentPaymentOptions icPaymentOptions = new ic_validateDifferentPaymentOptions(driver, dataTable2);
+        IC_MyOrders ic_MyOrder = new IC_MyOrders(driver, dataTable2);
+        IC_magento_LaunchPortal icMagentoLaunchPortal=new IC_magento_LaunchPortal(driver,dataTable2);
         
         //New functionality for backlog in IC
         ic_ClickAndCollect ClickAndCollect = new ic_ClickAndCollect(driver, dataTable2);
@@ -506,6 +508,11 @@ public class JDGKeyManager {
 			case "adminReorder":
 				adminReorder.editOrder(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
 				break;
+            case "ic_myOrder":
+                ic_MyOrder.searchOrder(test1);
+                break;
+            case "ic_Magento_LaunchPortal":
+                icMagentoLaunchPortal.launchPortal(test);
 
             //EVS CODE BELOW
             case "evs_Login":
@@ -712,6 +719,8 @@ public class JDGKeyManager {
             case "evs_CompareProducts":
                 evs_productsCompared.validateCompare(test1);
                 break;
+
+
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){

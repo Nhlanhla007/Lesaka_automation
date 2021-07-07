@@ -14,7 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
-import JDGroupPageObjects.ic_PayUPayment;
+import ic_PageObjects.ic_PayUPayment;
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;

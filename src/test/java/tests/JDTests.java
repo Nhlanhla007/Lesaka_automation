@@ -41,7 +41,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
-import JDGroupPageObjects.*;
+import ic_PageObjects.*;
 import SAP_HanaDB.SAPCustomerRelated;
 import SAP_HanaDB.SAPorderRelated;
 import utils.*;
@@ -60,7 +60,7 @@ public class JDTests extends BaseTest {
 		dataTable2 = new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
 
-		dataTable2.setPath("MAIN");
+		dataTable2.setPath("TA667");
 		dataMap2 = dataTable2.getExcelData();
 		km = new JDGKeyManager(driver, dataTable2, dataMap2);
 		LinkedHashMap<String, ArrayList<String>> suites = dataMap2.get("Suites");
@@ -94,7 +94,7 @@ public class JDTests extends BaseTest {
 				try {
 					System.out.println("-------------------------------------------------------");
 					System.out.println("testCaseDescription: " + testcaseID + "_" + testCaseDescription);
-					for (int j = 0; j < 20; j++) {
+					for (int j = 0; j < 40; j++) {
 						String actionToRunLable = "Action" + (j + 1);
 						String actionToRun = "";
 						try {
@@ -168,7 +168,7 @@ public class JDTests extends BaseTest {
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
