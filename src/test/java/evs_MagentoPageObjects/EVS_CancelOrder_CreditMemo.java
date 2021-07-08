@@ -45,10 +45,11 @@ public class EVS_CancelOrder_CreditMemo {
     public void cancelOrderCreditMemo(ExtentTest test) throws IOException, InterruptedException {
 
         action.explicitWait(10000);
-        boolean check = creditMemoBtn.isDisplayed();
+        action.scrollToElement(creditMemoBtn,"Credit Memo",test);
         action.click(creditMemoBtn, "Credit Memo Btn", test);
-        action.waitUntilElementIsDisplayed(newMemoHeader, 5);
-        action.scrollToElement(refundTStoreCreditBtn, "Refund to Credit Store Button");
+        action.waitForElementDisplay(newMemoHeader,5,"New Memo Header");
+        action.scrollToElement(refundTStoreCreditBtn, "Refund to Credit Store Button",test);
+//        action.scrollToElement(refundTStoreCreditBtn, "Refund to Credit Store Button");
         action.click(refundTStoreCreditBtn, "Refund to Credit Button", test);
         action.click(refundOfflineBtn, "Refund Offline", test);
         action.explicitWait(10000);
