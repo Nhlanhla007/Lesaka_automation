@@ -25,7 +25,9 @@ public class IC_ReturnToConfirmOrderStatus {
 
     }
     
-    @FindBy(xpath="//span[contains(text(),'My Account')]")
+   /* @FindBy(xpath="//span[contains(text(),'My Account')]")
+    /html/body/div[3]/header/div[2]/div/div[3]/div[2]*/
+    @FindBy(xpath="/html/body/div[3]/header/div[2]/div/div[3]/div[2]")
 	private WebElement myAcco;
     
     @FindBy(xpath="//a[contains(text(),'My Orders')]")
