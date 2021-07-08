@@ -1,5 +1,6 @@
 package KeywordManager;
 
+import ic_PageObjects.IC_ReturnToConfirmOrderStatus;
 import evs_MagentoPageObjects.*;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
 import ic_PageObjects.*;
@@ -192,7 +193,7 @@ public class JDGKeyManager {
         EVS_ResetPasswordEmailLink evsResetPasswordLink = new EVS_ResetPasswordEmailLink(driver, dataTable2);
         EVS_GiftCardVerification evsGiftCardVerification = new EVS_GiftCardVerification(driver, dataTable2);
         EVS_GiftCardReport evs_giftCardReport=new EVS_GiftCardReport(driver, dataTable2);
-        EVS_CompareProducts evs_productsCompared = new EVS_CompareProducts(driver, dataTable2)
+        EVS_CompareProducts evs_productsCompared = new EVS_CompareProducts(driver, dataTable2);
         EVS_MyOrders evs_myOrders = new EVS_MyOrders(driver, dataTable2);
         EVS_Magento_LaunchPortal evsMagentoLaunchPortal=new EVS_Magento_LaunchPortal(driver,dataTable2);
         EVS_MagentoCancelUpaidEFT evs_MagentoCancelUpaidEFT = new EVS_MagentoCancelUpaidEFT(driver, dataTable2);

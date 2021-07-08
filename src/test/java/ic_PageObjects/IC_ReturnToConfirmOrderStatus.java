@@ -1,4 +1,4 @@
-package JDGroupPageObjects;
+package ic_PageObjects;
 
 import java.io.IOException;
 
