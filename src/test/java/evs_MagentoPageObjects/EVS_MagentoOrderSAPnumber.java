@@ -13,8 +13,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
-
-import groovy.time.TimeDuration;
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;

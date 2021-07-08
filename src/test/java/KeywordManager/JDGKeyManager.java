@@ -185,6 +185,7 @@ public class JDGKeyManager {
         EVS_CompareProducts evs_productsCompared = new EVS_CompareProducts(driver, dataTable2);
         EVS_MyOrders evs_myOrders = new EVS_MyOrders(driver, dataTable2);
         EVS_Magento_LaunchPortal evsMagentoLaunchPortal=new EVS_Magento_LaunchPortal(driver,dataTable2);
+        EVS_CancelOrder_CreditMemo cancelCreditMemo=new EVS_CancelOrder_CreditMemo(driver,dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -723,8 +724,9 @@ public class JDGKeyManager {
             case "evs_Magento_LaunchPortal":
                 evsMagentoLaunchPortal.launchPortal(test);
                 break;
-
-
+            case "evs_cancelCreditMemo":
+                cancelCreditMemo.cancelOrderCreditMemo(test);
+                break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){

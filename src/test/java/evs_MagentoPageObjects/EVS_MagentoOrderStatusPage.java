@@ -95,13 +95,13 @@ public class EVS_MagentoOrderStatusPage {
 		action.writeText(magentoIdSearchField, idToSearch, "searchId", test);
 		action.click(magentoApplyFilterTab, "Apply to filters", test);
 		// verify if a row is returned
-		Thread.sleep(20000);
+		Thread.sleep(10000);
 	}
 
 	public void viewOrderDetails(ExtentTest test) throws IOException, InterruptedException {
 		confirmRows(magentoTableRecords, test);
 		if (magentoTableRecords.size() == 1) {
-			action.click(viewOrderDetails, "Order Status", test);
+			action.click(viewOrderDetails, "View order details", test);
 			Thread.sleep(10000);
 			action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
 		} else {
@@ -118,7 +118,6 @@ public class EVS_MagentoOrderStatusPage {
 		
 		String idToSearch = dataTable2.getValueOnOtherModule("evs_OrderStatusSearch","orderID",0);
 		String orderStatus = input.get("orderStatus").get(rowNumber);
-		System.out.println("orderStatus :" + orderStatus);
 		action.explicitWait(15000);
 		NavigateOdersPage(test);
 		searchForOrder(idToSearch, test);
