@@ -94,9 +94,9 @@ public class MagentoOrderStatusPage {
 	
 	public void searchForOrder(String idToSearch, ExtentTest test) throws InterruptedException, IOException {
 		if (action.isDisplayed(clearFilters)) {
-			Thread.sleep(5000);
+			Thread.sleep(12000);
 			action.click(clearFilters, "Cleared Filters", test);
-			Thread.sleep(5000);
+			Thread.sleep(12000);
 		}
 		action.click(magentoFilterTab, "Filter tab", test);
 		action.writeText(magentoIdSearchField, idToSearch, "searchId", test);

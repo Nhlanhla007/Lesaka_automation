@@ -1,4 +1,4 @@
-package ic_MagentoPageObjects;
+package evs_MagentoPageObjects;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,18 +14,18 @@ import com.aventstack.extentreports.ExtentTest;
 import utils.Action;
 import utils.DataTable2;
 
-public class admin_ReOrder {
-	 WebDriver driver;
+public class EVS_Admin_Reorder {
+	 	WebDriver driver;
 	    Action action;
-	    MagentoOrderStatusPage orderStatus;
+	    EVS_MagentoOrderStatusPage orderStatus;
 		DataTable2 dataTable2;
 
-	    public admin_ReOrder(WebDriver driver, DataTable2 dataTable2) {
+	    public EVS_Admin_Reorder(WebDriver driver, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
 	        this.dataTable2= dataTable2;
-	        orderStatus = new MagentoOrderStatusPage(driver, dataTable2);
+	        orderStatus = new EVS_MagentoOrderStatusPage(driver, dataTable2);
 
 	    }
 	    //html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]/div[1]/button[6]/span[1]
@@ -73,23 +73,24 @@ public class admin_ReOrder {
 	    private WebElement admin_NewPOnumber;
 	    
 	    
-    public void editOrder(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException{
+    public void editOrder(ExtentTest test) throws Exception{
     	String orderComment = dataTable2.getValueOnCurrentModule("orderComment");
     	//String orderQty = dataTable2.getValueOnCurrentModule("orderQty");
     	//String OrderAction = dataTable2.getValueOnCurrentModule("OrderAction");
+    	int TimeOutinSecond = Integer.parseInt(dataTable2.getValueOnOtherModule("evs_GenerateOrderSAPnumber","TimeOutinSecond", 0));
     	boolean flagres = false;
-    	int TimeOutinSecond = Integer.parseInt(dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber","TimeOutinSecond", 0));
-    	String oldSAPnumber = dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber", "OrderSAPnumber", 0);//action.getText(OrderDetailSAPNumber, "oldSAPnumber",test);
+    	String oldSAPnumber = dataTable2.getValueOnOtherModule("evs_GenerateOrderSAPnumber", "OrderSAPnumber", 0);//action.getText(OrderDetailSAPNumber, "oldSAPnumber",test);
     	action.mouseover(OrderDetailSAPNumber, "Get old SAPnumber");
     	dataTable2.setValueOnCurrentModule("OldPO number", oldSAPnumber.replace("[RabbitMQ] Order SAP Number: ",""));
     	action.explicitWait(5000);
     	
     	action.click(admin_Reorder, "create reorder", test);
     	
-    	action.mouseover(admin_orderComment, "go to comments");
+    	action.scrollElemetnToCenterOfView(admin_orderComment, "Comments", test);
+    	action.mouseover(admin_orderComment, "Comments");
     	action.explicitWait(5000);
-    	action.clear(admin_orderComment, "clear");
-    	action.writeText(admin_orderComment, orderComment,"write the comment", test);
+    	action.clear(admin_orderComment, "Clear Comment Field");
+    	action.writeText(admin_orderComment, orderComment,"Write a reorder comment", test);
     	
     	action.click(admin_SubmitOrder, "Submit Re-Order", test);
     	
@@ -104,9 +105,10 @@ public class admin_ReOrder {
     	String reorderComm = action.getText(admin_commentVerify, "reorder comment",test);
     	action.CompareResult("Reorder", "Reorder", reorderComm, test);
     	
+    	
+    	
     	String newPOnumber = action.getText(admin_NewPOnumber, "New PO number",test);
     	dataTable2.setValueOnCurrentModule("ReorderPO number", newPOnumber);
-    	
     	//Need WHILE loop here.
     	int elapsedTime = 0; 
     	long startTime = System.currentTimeMillis();
@@ -118,10 +120,10 @@ public class admin_ReOrder {
 			action.refresh();
 		} else {
 			flagres = true;
-			dataTable2.setValueOnOtherModule("ic_RetriveOrderID", "orderID", newPOnumber, 0);
+			dataTable2.setValueOnOtherModule("evs_RetriveOrderID", "orderID", newPOnumber, 0);
 			action.scrollElemetnToCenterOfView(OrderDetailSAPNumber, "Get New SAP Number", test);
 			newSAPnumber = newSAPnumber.substring(newSAPnumber.indexOf("000"));
-			dataTable2.setValueOnOtherModule("GenerateOrderSAPnumber", "OrderSAPnumber", newSAPnumber, 0);
+			dataTable2.setValueOnOtherModule("evs_GenerateOrderSAPnumber", "OrderSAPnumber", newSAPnumber, 0);
 			dataTable2.setValueOnCurrentModule("NewSAP number", newSAPnumber);
 		}
     	
@@ -131,7 +133,10 @@ public class admin_ReOrder {
 		System.out.println("elapsedTime: "+elapsedTime);
 		
     	}
-    
+    	if(flagres == false) {
+    		throw new Exception("New ReOrder SAP number is not generated");
+    	}
+    	
     }
     
     public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
