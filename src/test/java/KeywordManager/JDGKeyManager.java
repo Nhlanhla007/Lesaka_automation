@@ -11,7 +11,7 @@ import SRS.srs_salesOrder_DeliverStatus;
 
 import com.aventstack.extentreports.ExtentTest;
 
-import JDGroupPageObjects.IC_ReturnToConfirmOrderStatus;
+import ic_PageObjects.IC_ReturnToConfirmOrderStatus;
 import emailverification.ICGiftCardVerification;
 import emailverification.ICWishlistverification;
 import emailverification.ic_PasswordForgotEmailVerification;
