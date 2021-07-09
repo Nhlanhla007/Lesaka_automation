@@ -68,7 +68,7 @@ public class JDTests extends BaseTest {
 		for (int i = 0; i < numberOfSuits; i++) {
 			if (suites.get("Execute").get(i).toLowerCase().equals("yes")) {
 				currentSuite = suites.get("testSuitName").get(i);
-				System.out.println("currentSuite:" + currentSuite);
+//				System.out.println("currentSuite:" + currentSuite);
 				reportJD = new ExtentReportJD(currentSuite);
 				runSuite(dataMap2.get(currentSuite));
 				reportJD.endReport();
