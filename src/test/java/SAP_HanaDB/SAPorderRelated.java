@@ -221,12 +221,12 @@ import utils.hana;
 				 List<String> alldataDelivery_block= hn.GetRowdataByColumnName(rs, "LIFSK");
 			   //  System.out.println("Delivery Block is  : "+alldataDelivery_block);
 			     String ActualDeliveryBlock = String.join(",", alldataDelivery_block).replace(" ","").replace(",", "");
-			   
-			     /*if(ActualDeliveryBlock.length()<=1){
-			    	 action.CompareResult(" Delivery block is lifted ", "EMPTY", "EMPTY", test);
-			     }else{
-			    	 action.CompareResult(" Delivery block is lifted ", "EMPTY", ActualDeliveryBlock, test);
-			     }*/
+
+//			     if(ActualDeliveryBlock.length()<=1){
+//			    	 action.CompareResult(" Delivery block is lifted ", "EMPTY", "EMPTY", test);
+//			     }else{
+//			    	 action.CompareResult(" Delivery block is lifted ", "EMPTY", ActualDeliveryBlock, test);
+//			     }
 			     //Collect the BP number for validating Customer details details -------------------------------
 			     List<String> allBPnumber= hn.GetRowdataByColumnName(rs, "KUNNR");
 			    // System.out.println("BP number is  : "+allBPnumber);

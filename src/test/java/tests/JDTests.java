@@ -60,6 +60,7 @@ public class JDTests extends BaseTest {
 		dataTable2 = new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
 		dataTable2.setPath("MAIN");
+
 		dataMap2 = dataTable2.getExcelData();
 		km = new JDGKeyManager(driver, dataTable2, dataMap2);
 		LinkedHashMap<String, ArrayList<String>> suites = dataMap2.get("Suites");
@@ -166,12 +167,13 @@ public class JDTests extends BaseTest {
 			// driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
-			try {
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				Thread.sleep(2000);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+
 			logger.info("Browser name is " + browserName);
 
 			logger.info("App URL: " + navigateURL);

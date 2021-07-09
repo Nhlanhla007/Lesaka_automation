@@ -1,5 +1,6 @@
 package KeywordManager;
 
+
 import ic_PageObjects.IC_ReturnToConfirmOrderStatus;
 import evs_MagentoPageObjects.*;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
@@ -200,6 +201,7 @@ public class JDGKeyManager {
         EVS_Magento_LaunchPortal evsMagentoLaunchPortal=new EVS_Magento_LaunchPortal(driver,dataTable2);
         EVS_MagentoCancelUpaidEFT evs_MagentoCancelUpaidEFT = new EVS_MagentoCancelUpaidEFT(driver, dataTable2);
         EVS_ReturnToConfirmOrderStatus evs_toConfirmOrderStatus = new EVS_ReturnToConfirmOrderStatus(driver, dataTable2);
+        EVS_CancelOrder_CreditMemo cancelCreditMemo=new EVS_CancelOrder_CreditMemo(driver,dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -744,13 +746,16 @@ public class JDGKeyManager {
             case "evs_Magento_LaunchPortal":
                 evsMagentoLaunchPortal.launchPortal(test);
                 break;
+
             case "evs_CancelOrder":
             	evs_MagentoCancelUpaidEFT.EVS_cancelUpaidEFT(test1);
                 break;
             case "evs_BackToEVS":
             	evs_toConfirmOrderStatus.backToEvs(test1);
                 break;
-
+            case "evs_cancelCreditMemo":
+                cancelCreditMemo.cancelOrderCreditMemo(test);
+                break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){
