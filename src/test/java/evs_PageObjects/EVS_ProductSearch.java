@@ -275,7 +275,7 @@ public class EVS_ProductSearch {
 	 * 
 	 * @param test
 	 */
-	public void evs_SelectProductAndAddToCart(ExtentTest test) throws IOException {
+	public void evs_SelectProductAndAddToCart(ExtentTest test) throws Exception {
 		String typeSearch = dataTable2.getValueOnCurrentModule("typeSearch");// input.get("typeSearch").get(rowNumber);
 		String productsToSearch = dataTable2.getValueOnCurrentModule("specificProduct");// input.get("specificProduct").get(rowNumber);
 		String quantityOfSearchProducts = dataTable2.getValueOnCurrentModule("Quantity");// input.get("Quantity").get(rowNumber);
@@ -284,7 +284,7 @@ public class EVS_ProductSearch {
 		String validationRequired = dataTable2.getValueOnCurrentModule("validationRequired");
 		List<String> theProducts = filterProducts(productsToSearch);
 
-		try {
+//		try {
 			Map<String, List<String>> productsInCart = evs_CreateCartFromProductListing(productsToSearch,
 					quantityOfSearchProducts, typeSearch, waitTimeInSeconds, test);
 			switch (TypeOfOperation) {
@@ -304,10 +304,10 @@ public class EVS_ProductSearch {
 			 */
 			}
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.info(e.getMessage());
-		}
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			logger.info(e.getMessage());
+//		}
 
 	}
 					
@@ -534,6 +534,7 @@ public class EVS_ProductSearch {
 			} else {
 				status = false;
 				action.CompareResult("Product Not Found", product, "", test);
+				throw new Exception("Product Not Found");
 			}
 		}
 		return null;
