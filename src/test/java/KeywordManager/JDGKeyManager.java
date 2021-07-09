@@ -11,6 +11,7 @@ import emailverification.ICGiftCardVerification;
 import emailverification.ICWishlistverification;
 import emailverification.ic_PasswordForgotEmailVerification;
 import emailverification.ic_ResetPasswordEmailLink;
+import evs_MagentoPageObjects.EVS_Admin_Reorder;
 import evs_MagentoPageObjects.EVS_GiftCardReport;
 import emailverification.*;
 import evs_MagentoPageObjects.EVS_MagentoOrderSAPnumber;
@@ -186,6 +187,7 @@ public class JDGKeyManager {
         EVS_GiftCardVerification evsGiftCardVerification = new EVS_GiftCardVerification(driver, dataTable2);
         EVS_GiftCardReport evs_giftCardReport=new EVS_GiftCardReport(driver, dataTable2);
         EVS_CompareProducts evs_productsCompared = new EVS_CompareProducts(driver, dataTable2);
+        EVS_Admin_Reorder evs_admin_reOrder = new EVS_Admin_Reorder(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -712,6 +714,9 @@ public class JDGKeyManager {
             case "evs_CompareProducts":
                 evs_productsCompared.validateCompare(test1);
                 break;
+            case "evs_admin_reOrder":
+            	evs_admin_reOrder.editOrder(test1);
+            	break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){
