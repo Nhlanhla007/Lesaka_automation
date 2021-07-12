@@ -58,10 +58,15 @@ public class ic_Login {
 		
 		//vv
 		public List<String> Login_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-
+			
+			String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"), "url");
 			String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 			String Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
 			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			action.navigateToURL(url);
+			action.waitForPageLoaded(10);
+			/*driver.navigate().refresh();
+			action.explicitWait(10000);*/
 			executor.executeScript("arguments[0].click();", ic_myAccountButton);
 			action.explicitWait(3000);
 			executor.executeScript("arguments[0].click();", ic_Login);
