@@ -72,9 +72,17 @@ public class EVS_Admin_Reorder {
 	    @FindBy(xpath="//*[@id=\"html-body\"]/div[2]/header/div[1]/div/h1")
 	    private WebElement admin_NewPOnumber;
 	    
+	    @FindBy(id = "cellphone_number")
+	    private WebElement cellPhoneNumber;
+	    
+	    @FindBy(id = "order-billing_address_telephone")
+	    private WebElement billingCellPhoneNumber;
+	    
 	    
     public void editOrder(ExtentTest test) throws Exception{
     	String orderComment = dataTable2.getValueOnCurrentModule("orderComment");
+    	String refreshWaitTime = dataTable2.getValueOnOtherModule("evs_GenerateOrderSAPnumber", "totalCounter", 0);
+    	String typeOfUser = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "UserType", 0);
     	//String orderQty = dataTable2.getValueOnCurrentModule("orderQty");
     	//String OrderAction = dataTable2.getValueOnCurrentModule("OrderAction");
     	int TimeOutinSecond = Integer.parseInt(dataTable2.getValueOnOtherModule("evs_GenerateOrderSAPnumber","TimeOutinSecond", 0));
@@ -92,6 +100,12 @@ public class EVS_Admin_Reorder {
     	action.clear(admin_orderComment, "Clear Comment Field");
     	action.writeText(admin_orderComment, orderComment,"Write a reorder comment", test);
     	
+    	if(typeOfUser.equalsIgnoreCase("Guest")) {
+    		String billingCellPhone = action.getText(billingCellPhoneNumber, "Billing Cell Phone Number", test);
+    		action.scrollElemetnToCenterOfView(cellPhoneNumber, "Cell Phone Number", test);
+    		action.writeText(cellPhoneNumber, billingCellPhone, "CellPhone Number", test);
+    	}
+    	
     	action.click(admin_SubmitOrder, "Submit Re-Order", test);
     	
     	action.explicitWait(5000);
@@ -108,6 +122,7 @@ public class EVS_Admin_Reorder {
     	
     	
     	String newPOnumber = action.getText(admin_NewPOnumber, "New PO number",test);
+    	newPOnumber = newPOnumber.replace("#", "");
     	dataTable2.setValueOnCurrentModule("ReorderPO number", newPOnumber);
     	//Need WHILE loop here.
     	int elapsedTime = 0; 
@@ -117,6 +132,7 @@ public class EVS_Admin_Reorder {
     	newSAPnumber = newSAPnumber.replace("[RabbitMQ] Order SAP Number: ","");
     	
 		if (newSAPnumber.equalsIgnoreCase(oldSAPnumber)) {
+			action.explicitWait(Integer.valueOf(refreshWaitTime)*1000);
 			action.refresh();
 		} else {
 			flagres = true;
