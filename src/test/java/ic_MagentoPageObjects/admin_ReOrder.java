@@ -75,6 +75,7 @@ public class admin_ReOrder {
 	    
     public void editOrder(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException{
     	String orderComment = dataTable2.getValueOnCurrentModule("orderComment");
+    	String refreshWaitTime = dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber", "totalCounter", 0);
     	//String orderQty = dataTable2.getValueOnCurrentModule("orderQty");
     	//String OrderAction = dataTable2.getValueOnCurrentModule("OrderAction");
     	boolean flagres = false;
@@ -105,6 +106,7 @@ public class admin_ReOrder {
     	action.CompareResult("Reorder", "Reorder", reorderComm, test);
     	
     	String newPOnumber = action.getText(admin_NewPOnumber, "New PO number",test);
+    	newPOnumber = newPOnumber.replace("#", "");
     	dataTable2.setValueOnCurrentModule("ReorderPO number", newPOnumber);
     	
     	//Need WHILE loop here.
@@ -115,6 +117,7 @@ public class admin_ReOrder {
     	newSAPnumber = newSAPnumber.replace("[RabbitMQ] Order SAP Number: ","");
     	
 		if (newSAPnumber.equalsIgnoreCase(oldSAPnumber)) {
+			action.explicitWait(Integer.valueOf(refreshWaitTime)*1000);
 			action.refresh();
 		} else {
 			flagres = true;
