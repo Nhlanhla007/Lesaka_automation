@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite
   SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="JDGTestIC">
-   <test name="JDGTestIC">
+<suite name="JDGTest">
+   <test name="EVS">
       <parameter name="moduleName" value="MAIN"/>
+      <parameter name="CurSuite" value="EVS"/>
       <classes>
          <class name="tests.testTestClass">
             <methods>
-               <include name="Updating_customer_last_name_on_IC"/>
+               <include name="EVS_Create_Sales_Order_with_Guest_User_EVS"/>
             </methods>
          </class>
       </classes>

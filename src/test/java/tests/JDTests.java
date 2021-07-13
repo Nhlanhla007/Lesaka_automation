@@ -1,8 +1,5 @@
 package tests;
 
-import java.io.*;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,23 +7,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import KeywordManager.JDGKeyManager;
-import SAP_HanaDB.SAPCustomerRelated;
-import SAP_HanaDB.SapRSI;
 import base.TestCaseBase;
-import emailverification.ICGiftCardVerification;
-import emailverification.ic_PasswordForgotEmailVerification;
-import emailverification.ICWishlistverification;
-import emailverification.ic_ResetPasswordEmailLink;
-import evs_PageObjects.EVS_Login;
-import ic_MagentoPageObjects.*;
-import ic_MagentoPageObjects.MagentoOrderStatusPage;
-import ic_MagentoPageObjects.Magento_UserInfoVerification;
-import ic_MagentoPageObjects.MagentoRegisterNewUser;
-import ic_MagentoPageObjects.admin_UserUpdate;
-import ic_MagentoPageObjects.ic_Magento_Login;
-import ic_MagentoPageObjects.MagentoOrderStatusPage;
-import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
-import ic_MagentoPageObjects.ic_Magento_Login;
 import com.aventstack.extentreports.ExtentTest;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -34,16 +15,9 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
-import ic_PageObjects.*;
-import SAP_HanaDB.SAPCustomerRelated;
-import SAP_HanaDB.SAPorderRelated;
 import utils.*;
 
 public class JDTests extends BaseTest {
@@ -54,12 +28,15 @@ public class JDTests extends BaseTest {
 	HashMap<String, Integer> occCount = null;
 	int testcaseID;
 	JDGKeyManager km = null;
+	JavaUtils utils;
+
 
 	@Test
 	public void suiteExecutor() throws Exception {
+		refreshScreenshotFolder();
 		dataTable2 = new DataTable2();
 		//Please update you module name here and copy jdgroupMAIN.xlsx to jdgroupTA104.xlsx
-		dataTable2.setPath("MAIN");
+		dataTable2.setPath("TA694");
 		dataMap2 = dataTable2.getExcelData();
 		km = new JDGKeyManager(driver, dataTable2, dataMap2);
 		LinkedHashMap<String, ArrayList<String>> suites = dataMap2.get("Suites");
@@ -67,14 +44,18 @@ public class JDTests extends BaseTest {
 		for (int i = 0; i < numberOfSuits; i++) {
 			if (suites.get("Execute").get(i).toLowerCase().equals("yes")) {
 				currentSuite = suites.get("testSuitName").get(i);
-//				System.out.println("currentSuite:" + currentSuite);
 				reportJD = new ExtentReportJD(currentSuite);
 				runSuite(dataMap2.get(currentSuite));
 				reportJD.endReport();
+
 			}
 		}
 	}
 
+	public void refreshScreenshotFolder() throws IOException {
+		JavaUtils.deleteFiles("./Reports/screenshots");
+
+	}
 
 	public void runSuite(HashMap<String, ArrayList<String>> singleSuiteData) throws Exception {
 
@@ -121,6 +102,7 @@ public class JDTests extends BaseTest {
 							// throw new Exception("failing");
 							km.runKeyWord(actionToRun, testcaseID, occCount, test);
 							writeToExcel(createFile());
+							reportJD.endReport();
 
 						}
 					}
@@ -166,13 +148,12 @@ public class JDTests extends BaseTest {
 			// driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
-//			try {
-//				Thread.sleep(2000);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			logger.info("Browser name is " + browserName);
 
 			logger.info("App URL: " + navigateURL);

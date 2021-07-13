@@ -47,9 +47,11 @@ public class ExtentReportJD {
     public void createSubTest(String testName) throws IOException {
         logger.createNode("Image is Present");;
     }
+
     public void endReport() {
         extent.flush();
     }
+
 
 
 }

@@ -52,7 +52,7 @@ public class testTestClass<moduleName> {
     @BeforeClass
     @Parameters({"moduleName","CurSuite"})
     public void once(String moduleName,String CurSuite) throws Exception {
-
+        JavaUtils.deleteFiles("./Reports/screenshots");
         dataTable2= new DataTable2();
         dataTable2.setPath(moduleName);
         dataMap2=dataTable2.getExcelData();
@@ -103,7 +103,7 @@ public class testTestClass<moduleName> {
 
     public void runAllKeys(int index, ExtentTest test) throws Exception {
 
-        for(int j=0;j<20;j++) {
+        for(int j=0;j<40;j++) {
             String actionToRunLable = "Action" + (j + 1);
             String actionToRun = "";
             try {
@@ -124,8 +124,11 @@ public class testTestClass<moduleName> {
                     occCount.put(currentKeyWord,occNum);
                 }
                 dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
-//                runKeyWord(actionToRun, test);
                 km.runKeyWord(actionToRun,testcaseID,occCount,test);
+                JDTests sample=new JDTests();
+                sample.writeToExcel(sample.createFile());
+                reportJD.endReport();
+
             }
         }
     }
@@ -530,7 +533,6 @@ public class testTestClass<moduleName> {
             e.printStackTrace();
         }
         logger.info("Browser name is "+browserName);
-
         logger.info("App URL: "+ navigateURL);
         Values.app= navigateURL;
         Values.browser=browserName;

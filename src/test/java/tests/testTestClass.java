@@ -52,7 +52,7 @@ public class testTestClass<moduleName> {
     @BeforeClass
     @Parameters({"moduleName","CurSuite"})
     public void once(String moduleName,String CurSuite) throws Exception {
-
+        JavaUtils.deleteFiles("./Reports/screenshots");
         dataTable2= new DataTable2();
         dataTable2.setPath(moduleName);
         dataMap2=dataTable2.getExcelData();
@@ -67,15 +67,14 @@ public class testTestClass<moduleName> {
         startBrowserSession();
     }
     //Start Tests-----------------------------------------------------------------------
-
-    @Test(testName ="57_Clear_cart_RegisteredUser_IC" )
-    public void Clear_cart_RegisteredUser_IC() throws Exception {
-        String testMethodName="Clear_cart_RegisteredUser_IC";
+    
+    @Test(testName ="1_EVS_Create_Sales_Order_with_Guest_User_EVS" )
+    public void EVS_Create_Sales_Order_with_Guest_User_EVS() throws Exception {
+        String testMethodName="EVS_Create_Sales_Order_with_Guest_User_EVS";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
     }
-
 
 
     //End Tests-------------------------------------------------------------------------
@@ -112,7 +111,7 @@ public class testTestClass<moduleName> {
 
     public void runAllKeys(int index, ExtentTest test) throws Exception {
 
-        for(int j=0;j<20;j++) {
+        for(int j=0;j<40;j++) {
             String actionToRunLable = "Action" + (j + 1);
             String actionToRun = "";
             try {
@@ -133,8 +132,11 @@ public class testTestClass<moduleName> {
                     occCount.put(currentKeyWord,occNum);
                 }
                 dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
-//                runKeyWord(actionToRun, test);
                 km.runKeyWord(actionToRun,testcaseID,occCount,test);
+                JDTests sample=new JDTests();
+                sample.writeToExcel(sample.createFile());
+                reportJD.endReport();
+
             }
         }
     }
@@ -529,11 +531,11 @@ public class testTestClass<moduleName> {
             navigateURL = ConfigFileReader.getPropertyVal("URL");
         }
         logger.info("Navigate to URL");
-//        driver.navigate().to(navigateURL);
+        //driver.navigate().to(navigateURL);
         driver.manage().window().maximize();
         driver.navigate().refresh();
         try {
-            Thread.sleep(10000);
+            Thread.sleep(20000);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -554,7 +556,6 @@ public class testTestClass<moduleName> {
     public void closeReport(){
         reportJD.endReport();
     }
-
 
 
 
