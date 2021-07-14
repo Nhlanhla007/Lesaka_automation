@@ -211,7 +211,6 @@ public class EVS_ProductSearch {
 
 		WebElement addToCart= driver.findElements(By.xpath("//*[@class=\"product-item-link\"]")).get(0);
 		action.mouseover(addToCart, "Scroll to add to cart");
-		System.out.println("Mouse over the");
 		WebElement btnAddToC = addToCart.findElement(By.xpath(".//parent::*/following-sibling::div[5]/div[2]/div/form/button"));
 		action.click(btnAddToC,"addToCart",test);
 		action.explicitWait(5000);

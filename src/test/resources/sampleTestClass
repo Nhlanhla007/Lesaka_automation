@@ -101,7 +101,7 @@ public class testTestClass<moduleName> {
         return index;
     }
 
-    public void runAllKeys(int index, ExtentTest test) throws Exception {
+    public void runAllKeys_1(int index, ExtentTest test) throws Exception {
 
         for(int j=0;j<40;j++) {
             String actionToRunLable = "Action" + (j + 1);
@@ -132,6 +132,50 @@ public class testTestClass<moduleName> {
             }
         }
     }
+
+    public void runAllKeys(int index, ExtentTest test) throws Exception {
+            try {
+                for (int j = 0; j < 40; j++) {
+                    String actionToRunLable = "Action" + (j + 1);
+                    String actionToRun = "";
+                    try {
+                        actionToRun = dataMap2.get(currentSuite).get(actionToRunLable).get(index);
+                    } catch (Exception e) {
+
+                    }
+                    currentKeyWord = actionToRun;
+                    dataTable2.setOccurenceCount(0);
+                    dataTable2.setModule(currentKeyWord);
+                    if (!actionToRun.equals("")) {
+                        System.out.println("xxxxxxxxxxxxx :" + actionToRun);
+                        if (!occCount.containsKey(currentKeyWord)) {
+                            occCount.put(currentKeyWord, 0);
+                        } else {
+                            int occNum = occCount.get(currentKeyWord);
+                            occNum++;
+                            occCount.put(currentKeyWord, occNum);
+                        }
+                        dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
+                        km.runKeyWord(actionToRun, testcaseID, occCount, test);
+                        JDTests sample = new JDTests();
+                        sample.writeToExcel(sample.createFile());
+                        reportJD.endReport();
+
+                    }
+                }
+            }
+            catch(Exception e) {
+                logger.info(e.getMessage());
+                e.printStackTrace();
+                e.getCause();
+                System.out.println(e.getMessage());
+                String screenShot = GenerateScreenShot.getScreenShot(driver);
+                ExtentTest node = test.createNode("Exception");
+                node.fail(e.getMessage() + node.addScreenCaptureFromPath(screenShot));
+
+            }
+        }
+
 
     public void runKeyWord (String actionToRun, ExtentTest test) throws Exception {
         String moduleToRun = actionToRun;

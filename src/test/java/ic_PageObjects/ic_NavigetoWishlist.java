@@ -44,7 +44,9 @@ public class ic_NavigetoWishlist {
 		
 		public void NavigateToWishlist_verifymsg(ExtentTest test) throws IOException{
 			String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
-			String password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
+			String Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
+//			String Username = dataTable2.getValueOnCurrentModule("Username");
+//			String Password = dataTable2.getValueOnCurrentModule("Password");
 			ConfigFileReader configFileReader = new ConfigFileReader();
 			action.explicitWait(5000);
 			String ExpLoginType =dataTable2.getValueOnCurrentModule("Login_type");//"ExistingUser";// logedOn_user or ExistingUser
@@ -57,7 +59,7 @@ public class ic_NavigetoWishlist {
 				break;
 			case "ExistingUser":
 				navigateWishlist(waitTime,test);
-				boolean checkLogin = loginUser(Username,password,waitTime,test);
+				boolean checkLogin = loginUser(Username,Password,waitTime,test);
 				if(checkLogin){
 					checkmsg = checkWishlist_message(waitTime,test);
 				}
@@ -77,7 +79,8 @@ public class ic_NavigetoWishlist {
 		action.writeText(ic_Username, Uname, "Username feild", test);
 		action.writeText(ic_Password, Passwrd, "Password feild", test);
 		action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
-		if (action.elementExists(mywishlist_page, waitTime)) {
+		action.waitForPageLoaded(20);
+		if (action.isElementPresent(mywishlist_page)) {
 			check = true;
 			action.CompareResult("Login to account in ic is sucessfull", "True", "True", test);
 		} else {

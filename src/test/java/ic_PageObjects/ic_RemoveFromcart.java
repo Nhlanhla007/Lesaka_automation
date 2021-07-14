@@ -25,27 +25,29 @@ public class ic_RemoveFromcart {
 			this.dataTable2=dataTable2;
 		}
 //		@FindBy(xpath = "//header/div[2]/div/div[3]/div[3]/a")
-		@FindBy(xpath = "/html/body/div[3]/header/div[2]/div/div[3]/div[4]/a")
+		@FindBy(xpath = "//a[contains(@class,'action showcart')]")
 	    private WebElement ic_CartButton;
 		
 		@FindBy(xpath = "//span[@class='counter-number']")
 	    private WebElement ic_CartQuantity;
 		
-		@FindBy(xpath = "//*[@id=\"minicart-content-wrapper\"]/div[3]/div[2]/div[3]/div/a/span")
+		@FindBy(xpath = "//span[contains(text(),'View and Edit Your Cart')]")
 	    private WebElement ViewandEditcart;
 		
 		@FindBy(xpath = "//span[text()='Shopping Cart']")
 	    private WebElement ShoppingCart_Hdr;
+
 		@FindBy(xpath = "//*[@id='form-validate']//div[@class='custom-clear']//span[text()='Remove All']")
 	    private WebElement Remove_all;
 		
 		@FindBy(xpath = "//body//aside[@role='dialog']//footer[@class='modal-footer']/button[@type='button']//span[text()='OK']")
 	    private WebElement ConfirmDelete_Ok;
+
 		@FindBy(xpath = "/html/body/div[1]/main/div[2]/div/div/p[text()='You have no items in your shopping cart.']")
 	    private WebElement ConfirmAllDelete_Message;
 		
 				
-		public void Clear_miniCart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+		public void Clear_miniCart(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
 			int waitTime = 6;
 			int checkQty;
 			checkQty = retriveCartQuantity(waitTime,test);
@@ -56,6 +58,7 @@ public class ic_RemoveFromcart {
 			}
 			if(checkQty==0){
 				action.scrollToElement(ic_CartButton, "ic_CartButton");
+
 				action.CompareResult("All the products are removed from minicart", 0+" Quantity in cart", checkQty+" Quantity in cart", test);
 			}else{
 				action.scrollToElement(ic_CartButton, "ic_CartButton");
@@ -77,12 +80,14 @@ public class ic_RemoveFromcart {
 			}
 			return Quantity;
 		}
-		public void NavigateToviewEditcart(int TimeOut, ExtentTest test) throws IOException{
+		public void NavigateToviewEditcart(int TimeOut, ExtentTest test) throws IOException, InterruptedException {
 			String ExpPageHdr = "Shopping Cart";
 			action.click(ic_CartButton, "click mini cart icon", test);
-			if(action.elementExists(ViewandEditcart, TimeOut)){
-				ViewandEditcart.click();
-//				action.click(ViewandEditcart, "View and Edit cart", test);
+//			action.explicitWait(10000);
+			action.waitUntilElementIsDisplayed(ViewandEditcart,20);
+			if(action.isElementPresent(ViewandEditcart)){
+//				ViewandEditcart.click();
+				action.click(ViewandEditcart, "View and Edit cart", test);
 				if(action.elementExists(ShoppingCart_Hdr, TimeOut)){
 					String shoppingcartPg = action.getText(ShoppingCart_Hdr, "ShoppingCart Header",test);
 					if(shoppingcartPg.equalsIgnoreCase("ExpPageHdr")){

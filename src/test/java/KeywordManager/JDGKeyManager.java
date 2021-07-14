@@ -126,7 +126,7 @@ public class JDGKeyManager {
         ICWishlistverification icEmailWishlistverification = new ICWishlistverification(driver, dataTable2);
         RedirectToProdDetailPageFromCart redirectAndVerify = new RedirectToProdDetailPageFromCart(driver, dataTable2);
         IC_Pagination pagination = new IC_Pagination(driver, dataTable2);
-        IC_Parallel_login parrallel_ic_Login = new IC_Parallel_login(driver, dataTable2);
+        IC_Parallel_login parallel_ic_Login = new IC_Parallel_login(driver, dataTable2);
         SapRSI sapRSI = new SapRSI(driver, dataTable2);
         ic_validateProductSKU SKUproduct = new ic_validateProductSKU(driver, dataTable2);
         ic_validateDifferentPaymentOptions icPaymentOptions = new ic_validateDifferentPaymentOptions(driver, dataTable2);
@@ -466,8 +466,8 @@ public class JDGKeyManager {
             case "verifyDeliveryOption":
                 icDeliveryOptionDisplay.validateDeliveryOptionsDisplays(test1, rowNumber);
                 break;
-            case "parrallel_ic_Login":
-                parrallel_ic_Login.checkParallelExecution(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+            case "parallel_ic_Login":
+                parallel_ic_Login.checkParallelExecution(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
                 break;
             case "SapRSIGetDataFromSAPDB":
                 sapRSI.getDataFromSAPDB(test1);
@@ -659,9 +659,6 @@ public class JDGKeyManager {
                 break;
             case "EVS_LaunchPortal":
                 evs_lp.launchPortal (test1);
-                break;
-            case "EVS_NavigetoWishlist":
-                evs_NavigetoWishlist.NavigateToWishlist_verifymsg(test1);
                 break;
             case "EVS_SendWishlistToEmail":
                 evs_SendWishlistToEmail.ShareYourwishlist(dataMap2.get(moduleToRun + "++"), test1, rowNumber);

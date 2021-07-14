@@ -21,79 +21,89 @@ import utils.DataTable2;
 
 public class EVS_Parallel_login {
 
-	WebDriver driver;
-	Action action;
-	DataTable2 dataSheets;
-	DataTable2 dataTable2;
-	String email;
-	String Password;
-	String FirstName;
+    WebDriver driver;
+    Action action;
+    DataTable2 dataSheets;
+    DataTable2 dataTable2;
+    String email;
+    String Password;
+    String FirstName;
 
-	public EVS_Parallel_login(WebDriver driver, DataTable2 dataTable2) {
-		this.driver = driver;
-		PageFactory.initElements(driver, this);
-		action = new Action(driver);
-		this.dataTable2 = dataTable2;
+    public EVS_Parallel_login(WebDriver driver, DataTable2 dataTable2) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+        action = new Action(driver);
+        this.dataTable2 = dataTable2;
 
-	}
+    }
 
-	@FindBy(xpath = "//div[contains(@class,'my-account icon')]")
-	WebElement evs_myAccountButton;
+    @FindBy(xpath = "//div[contains(@class,'my-account icon')]")
+    WebElement evs_myAccountButton;
 
-	@FindBy(xpath = "//a[contains(text(),'Log In')]")
-	WebElement LoginBtn;
+    @FindBy(xpath = "//a[contains(text(),'Log In')]")
+    WebElement LoginBtn;
 
-	@FindBy(xpath = "//input[@id='email']")
-	WebElement evs_email;
+    @FindBy(xpath = "//input[@id='email']")
+    WebElement evs_email;
 
-	@FindBy(xpath = "//input[@id='pass']")
-	WebElement evs_Password;
+    @FindBy(xpath = "//input[@id='pass']")
+    WebElement evs_Password;
 
-	@FindBy(xpath = "//button[@class='action login primary']")
-	WebElement evs_SigninBtn;
+    @FindBy(xpath = "//button[@class='action login primary']")
+    WebElement evs_SigninBtn;
 
-	@FindBy(xpath = "//span[@class='logged-in']")
-	WebElement userName_display;
+    @FindBy(xpath = "//span[@class='logged-in']")
+    WebElement userName_display;
 
-	public void checkParallelExecution(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
-			throws IOException, InterruptedException {
 
-		email = dataTable2.getValueOnCurrentModule("Email_Chrome_User");
-		Password = dataTable2.getValueOnCurrentModule("Password_Chrome_User");
-		FirstName = dataTable2.getValueOnCurrentModule("FirstName_Chrome_User");
-		login(action, test);
+    public void checkParallelExecution(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
+            throws IOException, InterruptedException {
 
-		WebDriver driver2 = TestCaseBase.initializeTestBaseSetup("FIREFOX");
-		PageFactory.initElements(driver2, this);
-		Action action2 = new Action(driver2);
+        email = dataTable2.getValueOnCurrentModule("Email_Chrome_User");
+        Password = dataTable2.getValueOnCurrentModule("Password_Chrome_User");
+        FirstName = dataTable2.getValueOnCurrentModule("FirstName_Chrome_User");
+        login(action, test);
 
-		email = dataTable2.getValueOnCurrentModule("Email_Firefox_User");
-		Password = dataTable2.getValueOnCurrentModule("Password_Firefox_User");
-		FirstName = dataTable2.getValueOnCurrentModule("FirstName_Firefox_User");	
-		login(action2, test);
-		driver2.close();
+        WebDriver driver2 = TestCaseBase.initializeTestBaseSetup("FIREFOX");
+        PageFactory.initElements(driver2, this);
+        Action action2 = new Action(driver2);
 
-	}
+        email = dataTable2.getValueOnCurrentModule("Email_Firefox_User");
+        Password = dataTable2.getValueOnCurrentModule("Password_Firefox_User");
+        FirstName = dataTable2.getValueOnCurrentModule("FirstName_Firefox_User");
+        login(action2, test);
+        driver2.close();
 
-	public void login(Action action, ExtentTest test) throws IOException {
-	
-		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnCurrentModule("urlKey"), "url");
-		action.navigateToURL(url);
-		action.waitForElementClickable(evs_myAccountButton,"evs_myAccountButton", 5);
-		action.click(evs_myAccountButton, "My Account", test);
-		action.waitForElementClickable(LoginBtn,"LoginBtn", 5);
-		action.click(LoginBtn, "Login In", test);
-		action.waitForElementVisibility(evs_email,"evs_email", 10);
-		action.writeText(evs_email, email, "email field", test);
-		action.waitForElementVisibility(evs_Password,"evs_Password", 5);
-		action.writeText(evs_Password, Password, "Password field", test);
-		action.clickEle(evs_SigninBtn, "click ic_SigninBtn", test);
-		action.explicitWait(10000);
-		action.waitForElementVisibility(userName_display,"userName_display", 15);
-		String expMsg = "Hi, " + FirstName;
-		String wlc_msg = action.getText(userName_display, "Welcome Messsage for the User", test);
-		action.CompareResult("Signup Validation", expMsg, wlc_msg, test);
+    }
 
-	}
+    public void login(Action action, ExtentTest test) throws IOException {
+
+        String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("urlKey"), "url");
+        action.navigateToURL(url);
+        action.waitForElementClickable(evs_myAccountButton, "evs_myAccountButton", 5);
+        action.click(evs_myAccountButton, "My Account", test);
+        action.waitForElementClickable(LoginBtn, "LoginBtn", 5);
+        action.click(LoginBtn, "Login In", test);
+        action.waitForElementVisibility(evs_email, "evs_email", 10);
+        action.writeText(evs_email, email, "email field", test);
+        action.waitForElementVisibility(evs_Password, "evs_Password", 5);
+        action.writeText(evs_Password, Password, "Password field", test);
+        action.clickEle(evs_SigninBtn, "click ic_SigninBtn", test);
+        action.explicitWait(10000);
+        String expMsg = "Hi, " + FirstName;
+        try {
+            boolean checkMsg;
+            if (checkMsg = userName_display.isDisplayed()) {
+                String wlc_msg = action.getText(userName_display, "Welcome Messsage for the User", test);
+                action.CompareResult("User Login Validation", expMsg, wlc_msg, test);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            action.CompareResult("User Login Validation", expMsg, e.getMessage(), test);
+
+        }
+
+    }
 
 }

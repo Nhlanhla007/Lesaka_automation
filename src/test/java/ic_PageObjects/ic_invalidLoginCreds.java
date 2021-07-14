@@ -54,9 +54,10 @@ public class ic_invalidLoginCreds {
 			//*[@id="email-error"]
 			
 			public List<String> invalidLogin_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-//				String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
-				String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
-				String Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
+				String Username = dataTable2.getValueOnCurrentModule("Username");
+				String Password = dataTable2.getValueOnCurrentModule("Password");
+//
+//
 //				action.navigateToURL(url);
 //				action.waitForPageLoaded(10);
 				action.explicitWait(10000);

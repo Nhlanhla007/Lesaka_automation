@@ -154,7 +154,8 @@ public class TestCaseBase {
 		 options.addArguments("--dns-prefetch-disable"); */
 		options.addArguments("--disable-features=VizDisplayCompositor");
 		//	options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-		options.setHeadless(false);
+		options.setHeadless(true);
+		options.addArguments("window-size=1382,744");
 		options.merge(capabilities);
 		setPropertyByOS("chrome");
 		return options;
@@ -188,6 +189,8 @@ public class TestCaseBase {
 	{
 		DesiredCapabilities capabilities = new DesiredCapabilities();
 		FirefoxOptions options= new FirefoxOptions();
+		options.setHeadless(true);
+		options.addArguments("window-size=1382,744");
 		options.merge(capabilities);
 		setPropertyByOS("firefox");
 		return options;

@@ -178,14 +178,10 @@ public class ic_NewAccountCreation {
 				action.click(newsLetter, "News letter", test);
 			}
 			//action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
-			System.out.println(identityType);
-			
 			if(identityType.equalsIgnoreCase("ID")) {
-				System.out.println("Inside ID");
 //			action.click(User_SAIDbtn, "Identity type: ID", test);
 			action.writeText(User_SAID, identityNumber, "ID/Passport number", test);
 			}else if(identityType.equalsIgnoreCase("Passport")){
-				System.out.println("Inside passport");
 				action.click(User_Passportbtn, "Identity type: Passport", test);
 				action.writeText(User_Passport, identityNumber, "ID/Passport number", test);
 			}

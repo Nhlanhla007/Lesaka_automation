@@ -101,7 +101,7 @@ public class EVS_Admin_Reorder {
     	action.writeText(admin_orderComment, orderComment,"Write a reorder comment", test);
     	
     	if(typeOfUser.equalsIgnoreCase("Guest")) {
-    		String billingCellPhone = action.getText(billingCellPhoneNumber, "Billing Cell Phone Number", test);
+			String billingCellPhone = action.getAttribute(billingCellPhoneNumber, "value");
     		action.scrollElemetnToCenterOfView(cellPhoneNumber, "Cell Phone Number", test);
     		action.writeText(cellPhoneNumber, billingCellPhone, "CellPhone Number", test);
     	}
