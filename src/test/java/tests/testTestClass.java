@@ -68,14 +68,20 @@ public class testTestClass<moduleName> {
     }
     //Start Tests-----------------------------------------------------------------------
     
-    @Test(testName ="1_EVS_Create_Sales_Order_with_Guest_User_EVS" )
-    public void EVS_Create_Sales_Order_with_Guest_User_EVS() throws Exception {
-        String testMethodName="EVS_Create_Sales_Order_with_Guest_User_EVS";
+    @Test(testName ="9_Validate_Quantity_can_be_increased_in_Cart_EVS" )
+    public void Validate_Quantity_can_be_increased_in_Cart_EVS() throws Exception {
+        String testMethodName="Validate_Quantity_can_be_increased_in_Cart_EVS";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
     }
-
+    @Test(testName ="116_EVS_Compare_products_EVS" )
+    public void EVS_Compare_products_EVS() throws Exception {
+        String testMethodName="EVS_Compare_products_EVS";
+        ExtentTest test =reportJD.createTest(testMethodName);
+        int TCIndex=getTestCaseIndex(testMethodName);
+        runner(TCIndex,test);
+    }
 
     //End Tests-------------------------------------------------------------------------
 
@@ -109,7 +115,7 @@ public class testTestClass<moduleName> {
         return index;
     }
 
-    public void runAllKeys(int index, ExtentTest test) throws Exception {
+    public void runAllKeys_1(int index, ExtentTest test) throws Exception {
 
         for(int j=0;j<40;j++) {
             String actionToRunLable = "Action" + (j + 1);
@@ -140,6 +146,50 @@ public class testTestClass<moduleName> {
             }
         }
     }
+
+    public void runAllKeys(int index, ExtentTest test) throws Exception {
+            try {
+                for (int j = 0; j < 40; j++) {
+                    String actionToRunLable = "Action" + (j + 1);
+                    String actionToRun = "";
+                    try {
+                        actionToRun = dataMap2.get(currentSuite).get(actionToRunLable).get(index);
+                    } catch (Exception e) {
+
+                    }
+                    currentKeyWord = actionToRun;
+                    dataTable2.setOccurenceCount(0);
+                    dataTable2.setModule(currentKeyWord);
+                    if (!actionToRun.equals("")) {
+                        System.out.println("xxxxxxxxxxxxx :" + actionToRun);
+                        if (!occCount.containsKey(currentKeyWord)) {
+                            occCount.put(currentKeyWord, 0);
+                        } else {
+                            int occNum = occCount.get(currentKeyWord);
+                            occNum++;
+                            occCount.put(currentKeyWord, occNum);
+                        }
+                        dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
+                        km.runKeyWord(actionToRun, testcaseID, occCount, test);
+                        JDTests sample = new JDTests();
+                        sample.writeToExcel(sample.createFile());
+                        reportJD.endReport();
+
+                    }
+                }
+            }
+            catch(Exception e) {
+                logger.info(e.getMessage());
+                e.printStackTrace();
+                e.getCause();
+                System.out.println(e.getMessage());
+                String screenShot = GenerateScreenShot.getScreenShot(driver);
+                ExtentTest node = test.createNode("Exception");
+                node.fail(e.getMessage() + node.addScreenCaptureFromPath(screenShot));
+
+            }
+        }
+
 
     public void runKeyWord (String actionToRun, ExtentTest test) throws Exception {
         String moduleToRun = actionToRun;
@@ -535,13 +585,12 @@ public class testTestClass<moduleName> {
         driver.manage().window().maximize();
         driver.navigate().refresh();
         try {
-            Thread.sleep(20000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         logger.info("Browser name is "+browserName);
-
         logger.info("App URL: "+ navigateURL);
         Values.app= navigateURL;
         Values.browser=browserName;
@@ -559,4 +608,5 @@ public class testTestClass<moduleName> {
 
 
 
-}
+
+}

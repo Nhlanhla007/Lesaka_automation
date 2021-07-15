@@ -8,7 +8,8 @@
       <classes>
          <class name="tests.testTestClass">
             <methods>
-               <include name="EVS_Create_Sales_Order_with_Guest_User_EVS"/>
+               <include name="Validate_Quantity_can_be_increased_in_Cart_EVS"/>
+               <include name="EVS_Compare_products_EVS"/>
             </methods>
          </class>
       </classes>
