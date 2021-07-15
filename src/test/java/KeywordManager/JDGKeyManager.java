@@ -757,6 +757,9 @@ public class JDGKeyManager {
             case "evs_admin_reOrder":
             	evs_admin_reOrder.editOrder(test1);
             	break;
+            case "evs_verifyDeliveryOption":
+                icDeliveryOptionDisplay.validateDeliveryOptionsDisplays(test1, rowNumber);
+                break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){
