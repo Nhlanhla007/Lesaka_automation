@@ -57,7 +57,7 @@ public class IC_Pagination {
 		
 		String allProductsInPage = String.valueOf(ic_products.size());
 		if(allProductsInPage != null | allProductsInPage != "") {
-			action.CompareResult("Total Product Count On Page One : " + allProductsInPage, "True", "True", test);
+//			action.CompareResult("Total Product Count On Page One : " + allProductsInPage, "True", "True", test);
 		}
 		
 		
@@ -78,7 +78,7 @@ public class IC_Pagination {
 		
 		String allProductsInPage2 = String.valueOf(ic_products.size());
 		if( allProductsInPage2 != null | allProductsInPage2 != "") {
-		action.CompareResult("Total Products In Page Two Match Products In Page One?", allProductsInPage, allProductsInPage2, test);
+//		action.CompareResult("Total Products In Page Two Match Products In Page One?", allProductsInPage, allProductsInPage2, test);
 		}
 				
 		int expChangedCurrentPage = Integer.parseInt(currentPageNumber) + 1;		

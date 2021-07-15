@@ -49,7 +49,8 @@ public class verifyForgotPassword {
 	WebElement ic_confirmMessage;
 
 	public void forgotPasswordPage(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-		String email = dataTable2.getValueOnOtherModule("accountCreation", "emailAddress", 0);
+//		String email = dataTable2.getValueOnOtherModule("accountCreation", "emailAddress", 0);
+		String email = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("loginDetails"), "username");
 //		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("accountCreation","loginDetails",0),"url");
 //		action.navigateToURL(url);
 		action.explicitWait(5000);

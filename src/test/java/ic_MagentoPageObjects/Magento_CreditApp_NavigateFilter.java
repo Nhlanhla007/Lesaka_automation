@@ -27,8 +27,12 @@ public class Magento_CreditApp_NavigateFilter {
 	
 	@FindBy(xpath = "//li[@id='menu-magento-customer-customer']")
 	private WebElement Customer;
+
 	@FindBy(xpath = "/html/body/div[1]/nav/ul/li[5]/div/ul/li[1]/ul/li[6]/div/ul/li/a/span[contains(text(),'Credit Applications')]")
+//	@FindBy(xpath ="(//span[contains(text(),'Credit Applications')])[2]");
 	private WebElement Credit_app;
+
+	//span[contains(text(),'Credit Applications')]
 	
 	
 	@FindBy(xpath = "//h1[contains(text(),'Credit Applications')]")
@@ -46,7 +50,7 @@ public class Magento_CreditApp_NavigateFilter {
 	@FindBy(xpath = "//span[contains(text(),'Apply Filters')]")
 	private WebElement Apply_Filter;
 	private static int waiton;
-	public void VerifyCreditAppSelection(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException{
+	public void VerifyCreditAppSelection(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
 		waiton =21;
 		String ExpEmail = dataTable2.getValueOnCurrentModule("EmailIdtoFilter");
 		System.out.println(ExpEmail);
@@ -76,10 +80,11 @@ public class Magento_CreditApp_NavigateFilter {
 		
 		
 	}
-	public void Navigate_To_CreditApp(ExtentTest test) throws IOException{
+	public void Navigate_To_CreditApp(ExtentTest test) throws Exception {
 		boolean checkFlag=false;
 		action.click(Customer, "Customer tab ", test);
-		if(action.elementExists(Credit_app, waiton)){
+		action.waitUntilElementIsDisplayed(Credit_app,10);
+		if(action.isElementPresent(Credit_app)){
 			action.click(Credit_app, "Credit_app", test);
 			if(action.elementExists(CreditApplicationPg, waiton)){
 				checkFlag=true;

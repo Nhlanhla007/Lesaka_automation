@@ -82,10 +82,11 @@ public class ic_NavigetoWishlist {
 		action.waitForPageLoaded(20);
 		if (action.isElementPresent(mywishlist_page)) {
 			check = true;
-			action.CompareResult("Login to account in ic is sucessfull", "True", "True", test);
-		} else {
-			action.CompareResult("Login to account in ic is sucessfull", "True", "False", test);
+			action.CompareResult("Login to account in ic is sucessfull", "True", String.valueOf(check), test);
 		}
+//		else {
+//			action.CompareResult("Login to account in ic is sucessfull", "True", "False", test);
+//		}
 		return check;
 	}
 

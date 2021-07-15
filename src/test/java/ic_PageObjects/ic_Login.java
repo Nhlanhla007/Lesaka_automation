@@ -18,80 +18,93 @@ import utils.DataTable2;
 
 public class ic_Login {
 
-	WebDriver driver;
-	Action action;
-	DataTable2 dataTable2;
-	public ic_Login(WebDriver driver, DataTable2 dataTable2) {
-		this.driver = driver;
-		PageFactory.initElements(driver, this);
-		action = new Action(driver);
-		this.dataTable2=dataTable2;
-	}
-	//Login to magento
-	@FindBy(className = "my-account")
-	WebElement ic_myAccountButton;
+    WebDriver driver;
+    Action action;
+    DataTable2 dataTable2;
 
-	//*[@id="header-slideout--0"]/li[3]/a
-	@FindBy(xpath = "//*[@id=\"header-slideout--0\"]/li[3]/a")
-	WebElement ic_Login;
+    public ic_Login(WebDriver driver, DataTable2 dataTable2) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+        action = new Action(driver);
+        this.dataTable2 = dataTable2;
+    }
 
-	@FindBy(xpath = "//*[@id='email']")
-	WebElement ic_Username;
+    //Login to magento
+    @FindBy(className = "my-account")
+    WebElement ic_myAccountButton;
 
-	@FindBy(xpath = "//*[@id='pass']")
-	WebElement ic_Password;
-	@FindBy(xpath = "//*[@id=\"send2\"]/span")
+    //*[@id="header-slideout--0"]/li[3]/a
+    @FindBy(xpath = "//*[@id=\"header-slideout--0\"]/li[3]/a")
+    WebElement ic_Login;
 
-	WebElement ic_SigninBtn;
+    @FindBy(xpath = "//*[@id='email']")
+    WebElement ic_Username;
 
-	//div[contains(text(),'Your account sign-in was incorrect. Please try again.')]Your account sign-in was incorrect. Please try again.
-	@FindBy(xpath = "//html/body/div[1]/header/div[3]/div[2]/div/div")
-	WebElement ic_InvalidCreds;
+    @FindBy(xpath = "//*[@id='pass']")
+    WebElement ic_Password;
+    @FindBy(xpath = "//*[@id=\"send2\"]/span")
 
-	@FindBy(className = "authorization-link")
-	WebElement logout;
+    WebElement ic_SigninBtn;
 
-	@FindBy(xpath="//*[@class = \"logo\"]")
-	private WebElement ic_logo;
-		
-		public static String Username;
-		
-		//vv
-		public List<String> Login_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-			
-			String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"), "url");
-			String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
-			String Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
-			JavascriptExecutor executor = (JavascriptExecutor)driver;
-			action.navigateToURL(url);
-			action.waitForPageLoaded(10);
+    //div[contains(text(),'Your account sign-in was incorrect. Please try again.')]Your account sign-in was incorrect. Please try again.
+    @FindBy(xpath = "//html/body/div[1]/header/div[3]/div[2]/div/div")
+    WebElement ic_InvalidCreds;
+
+    @FindBy(className = "authorization-link")
+    WebElement logout;
+
+    @FindBy(xpath = "//*[@class = \"logo\"]")
+    private WebElement ic_logo;
+
+    public static String Username;
+
+    public List<String> Login_ic(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException {
+
+        String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("loginDetails"), "url");
+        String Username = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("loginDetails"), "username");
+        String Password = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("loginDetails"), "password");
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        action.navigateToURL(url);
+        action.waitForPageLoaded(10);
 			/*driver.navigate().refresh();
 			action.explicitWait(10000);*/
-			executor.executeScript("arguments[0].click();", ic_myAccountButton);
-			action.explicitWait(3000);
-			executor.executeScript("arguments[0].click();", ic_Login);
-			
-			List<String> userCred = new ArrayList<>();
+        executor.executeScript("arguments[0].click();", ic_myAccountButton);
+        action.explicitWait(3000);
+        executor.executeScript("arguments[0].click();", ic_Login);
 
-			userCred.add(Username);
-			userCred.add(Password);
-			action.writeText(ic_Username, Username, "Username field", test);
-			action.writeText(ic_Password, Password, "Password field", test);
-			action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
-			action.click(ic_logo, "Click to go homepage", test);
 
-			userCreds(userCred);
-			return userCred;
-	     }
-		
-		public List<String> userCreds(List<String> userCreds){
-			return userCreds;
-		}	
+        List<String> userCred = new ArrayList<>();
 
-		public void logout(ExtentTest test,HashMap<String, ArrayList<String>> input,int rowNumber) throws Exception {
-			action.click(ic_myAccountButton, "My account", test);
-			JavascriptExecutor js = (JavascriptExecutor)driver;
-			js.executeScript("arguments[0].scrollIntoView();", logout); 
-			action.click(logout, "logout", test);
-		}
+        userCred.add(Username);
+        userCred.add(Password);
+        action.writeText(ic_Username, Username, "Username field", test);
+        action.writeText(ic_Password, Password, "Password field", test);
+        action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
+        action.waitForPageLoaded(20);
+        String expectedTitle = "Incredible Connection My Account";
+
+        if (driver.getTitle().equalsIgnoreCase(expectedTitle)) {
+            action.CompareResult("User successful Login ", "True", "True", test);
+        } else {
+            action.CompareResult("User successful Login", "True", "False", test);
+        }
+
+        action.clickEle(ic_logo, "IC Home Logo", test);
+        action.waitForPageLoaded(10);
+
+
+        userCreds(userCred);
+        return userCred;
+    }
+
+    public List<String> userCreds(List<String> userCreds) {
+        return userCreds;
+    }
+
+    public void logout(ExtentTest test, HashMap<String, ArrayList<String>> input, int rowNumber) throws Exception {
+        action.click(ic_myAccountButton, "My account", test);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", logout);
+        action.click(logout, "logout", test);
+    }
 }

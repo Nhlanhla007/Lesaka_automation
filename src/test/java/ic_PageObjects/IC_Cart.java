@@ -93,6 +93,7 @@ public class IC_Cart {
 			  navigateToCart(test);
 			  try {
 				for(WebElement productsInCart : icAllCartProducts) {
+						action.explicitWait(2000);
 					  String nameOfProduct = productsInCart.findElement(By.xpath(".//strong/a")).getText();
 					  String price = productsInCart.findElement(By.xpath(".//span/span/span/span")).getText();					  
 					  WebElement quantityTag = productsInCart.findElement(By.xpath(".//div[2]/input"));
@@ -101,7 +102,7 @@ public class IC_Cart {
 					  for(Map.Entry selectedProducts : products.entrySet()) {
 						  //@SuppressWarnings("unchecked")
 						List<String> data = (List<String>)selectedProducts.getValue();
-						if(selectedProducts.getKey().equals(nameOfProduct)) {
+						if(selectedProducts.getKey().toString().contains(nameOfProduct)) {
 						  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
 						  sum = sum + (Integer.parseInt(quantity) * Integer.parseInt(price.replace("R", "").replace(",", "") ) );
 						  action.CompareResult("Price : " +price +" for " +nameOfProduct, data.get(0), price, test);
@@ -111,7 +112,7 @@ public class IC_Cart {
 					  }
 				  }
 				action.CompareResult("Products Total", String.valueOf(sum), icSubtotal.getText().replace("R", "").replace(",", "").replace(".", "") , test);
-				action.CompareResult("Cart Counter Verfication", String.valueOf(allProductsInCartQuantity), itemsCount, test);
+				action.CompareResult("Cart Counter Verification", String.valueOf(allProductsInCartQuantity), itemsCount, test);
 				action.clickEle(icCCheckout, "Secure Checkout", test);
 				dataTable2.setValueOnOtherModule("ProductSearch", "CartTotal", String.valueOf(sum), 0);
 			} catch (Exception e) {
