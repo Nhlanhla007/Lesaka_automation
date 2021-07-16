@@ -96,11 +96,11 @@ public class IC_Parallel_login {
             boolean checkLogOutButton;
             if (checkLogOutButton = logoutBtn.isDisplayed()) {
 //                String wlc_msg = action.getText(ic_HelloMsg, "Welcome Messsage for the User", test);
-                action.CompareResult("User Login Validation", "true", String.valueOf(checkLogOutButton), test);
+                action.CompareResult("User Login", "true", String.valueOf(checkLogOutButton), test);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            action.CompareResult("User Login Validation", "true", e.getMessage(), test);
+            action.CompareResult("User Login", "true", e.getMessage(), test);
 
         }
 

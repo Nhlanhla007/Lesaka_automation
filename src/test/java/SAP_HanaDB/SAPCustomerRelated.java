@@ -188,7 +188,8 @@ public class SAPCustomerRelated {
 			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 				
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Registered customer from sales order")) {
-			String registeredUserEmail = dataTable2.getValueOnOtherModule("ic_login", "Username", 0);
+//			String registeredUserEmail = dataTable2.getValueOnOtherModule("ic_login", "Username", 0);
+			String registeredUserEmail = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0);
 			navigateToCustomerBpNumber(registeredUserEmail, "Incredible Connection", test);
 			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Guest Customer Creation")) {

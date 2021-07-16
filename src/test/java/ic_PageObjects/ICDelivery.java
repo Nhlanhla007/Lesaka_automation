@@ -164,7 +164,7 @@ public class ICDelivery {
         	dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
         	dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
         	dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
-        //	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
+        	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
 			/*
 			 * registeredUserDetails.put("Street Address", value);
 			 * registeredUserDetails.put("City", value);

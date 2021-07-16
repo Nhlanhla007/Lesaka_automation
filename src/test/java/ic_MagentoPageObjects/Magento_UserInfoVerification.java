@@ -42,9 +42,10 @@ public class Magento_UserInfoVerification {
 	}
 	@FindBy(xpath = "//input[@name='customer[partner_number]']")
 	WebElement customerBPnnumber;
-	@FindBy(xpath = "//span[contains(text(),'Account Information')]") 
-	//@FindBy(xpath = "//*[@id='page:left']/div/div/ul/li[@class='admin__page-nav-item']")
+
+	@FindBy(xpath = "//span[contains(text(),'Account Information')]")
 	WebElement Account_Information;
+
 	@FindBy(xpath = "//input[@name='customer[firstname]']")
 	WebElement Cust_Firstname;
 	@FindBy(xpath = "//input[@name='customer[lastname]']")
@@ -342,6 +343,7 @@ public class Magento_UserInfoVerification {
 			 */
 		}else if(typeOfVerificationFlag.equalsIgnoreCase("Registered customer from sales order")) {
 			action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
+			action.waitUntilElementIsDisplayed(Account_Information, 10);
 			action.click(Account_Information, "Account Information", test);
 			//NOTE DELIVERY POPULATION WITH REGISTERED new USER HAS TO RUN FOR THIS TO POPULATE ALSO EXISTING WITH EXISTING ADDRESS
 			//Map<String,String> customerDetails =ICDelivery.registeredUserDetails;
@@ -352,6 +354,7 @@ public class Magento_UserInfoVerification {
 			ExpSAIDnumber = dataTable2.getValueOnOtherModule("deliveryPopulation", "idNumber", 0).trim();
 			ExpVATnumber = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber", 0).trim();
 			//String ActSAID = FetchDataFromCustInfo_MagentoBackend(Cust_SAID, "Customer_SAID", 11, 2, test);
+			action.waitUntilElementIsDisplayed(Cust_SAID, 20);
 			String actualID = action.getAttribute(Cust_SAID, "value");
 			action.CompareResult("Verify the SAID number in Magento backend : ", ExpSAIDnumber, actualID, test);
 			

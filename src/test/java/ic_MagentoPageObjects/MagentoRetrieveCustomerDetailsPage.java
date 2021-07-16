@@ -81,7 +81,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 		//if(isMagentoSearchPageLoaded(10)) {		
 			
 		try {
-			if (action.waitUntilElementIsDisplayed(clearFilters, 8000)) {
+			if (action.waitUntilElementIsDisplayed(clearFilters, 20)) {
 				action.click(clearFilters, "Cleared Filters", test);
 				action.explicitWait(6000);
 			}
@@ -112,7 +112,9 @@ public class MagentoRetrieveCustomerDetailsPage {
 		else if(typeOfOperation.equalsIgnoreCase("Update Account")) {
 			customerEmail = dataTable2.getValueOnOtherModule("ICUpdateUser", "email_output", 0);
 		}else if(typeOfOperation.equalsIgnoreCase("Registered customer from sales order")){
-			customerEmail = dataTable2.getValueOnOtherModule("ic_login", "Username", 0);
+//			customerEmail = dataTable2.getValueOnOtherModule("ic_login", "Username", 0);
+			customerEmail = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0);
+
 		}else if(typeOfOperation.equalsIgnoreCase("Guest Customer Creation")){
 			customerEmail = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0);
 		}else {

@@ -82,7 +82,7 @@ public class ic_NavigetoWishlist {
 		action.waitForPageLoaded(20);
 		if (action.isElementPresent(mywishlist_page)) {
 			check = true;
-			action.CompareResult("Login to account in ic is sucessfull", "True", String.valueOf(check), test);
+			action.CompareResult("Login to IC", String.valueOf(true), String.valueOf(check), test);
 		}
 //		else {
 //			action.CompareResult("Login to account in ic is sucessfull", "True", "False", test);
@@ -97,7 +97,7 @@ public class ic_NavigetoWishlist {
 			// message", "true", "true", test);
 			msg_flag = true;
 		} else {
-			action.CompareResult("Wishlist contains no item verification message", "true", "flase", test);
+			action.CompareResult("Wishlist contains no item verification message", "true", "false", test);
 		}
 		return msg_flag;
 	}

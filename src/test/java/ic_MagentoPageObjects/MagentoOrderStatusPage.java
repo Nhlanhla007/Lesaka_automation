@@ -61,6 +61,7 @@ public class MagentoOrderStatusPage {
 	//Bundle Article Info below
     @FindBy(xpath = "//table[@class='admin__table-secondary order-information-table']/tbody/tr/td//span[@id='order_status']")
     public WebElement OrderStatus_orderDetailPage;
+
     
     @FindBy(xpath = "/html/body/div[2]/main/div[2]/div[1]/div/div[1]/div[1]/section[4]/div[2]/table/tbody/tr[1]/td[1]/div[2]")
     public WebElement listSKU;
@@ -93,12 +94,12 @@ public class MagentoOrderStatusPage {
 	}
 	
 	public void searchForOrder(String idToSearch, ExtentTest test) throws InterruptedException, IOException {
-		if (action.isDisplayed(clearFilters)) {
+		if (action.waitUntilElementIsDisplayed(clearFilters,120)) {
 			Thread.sleep(15000);
 			action.click(clearFilters, "Cleared Filters", test);
 			Thread.sleep(12000);
 		}
-		if(action.waitUntilElementIsDisplayed(magentoFilterTab, 20000)) {
+		if(action.waitUntilElementIsDisplayed(magentoFilterTab, 60)) {
 		action.click(magentoFilterTab, "Filter tab", test);
 		action.writeText(magentoIdSearchField, idToSearch, "searchId", test);
 		action.click(magentoApplyFilterTab, "Apply to filters", test);
