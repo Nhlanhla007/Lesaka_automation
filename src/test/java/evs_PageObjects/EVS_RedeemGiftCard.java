@@ -116,7 +116,7 @@ public class EVS_RedeemGiftCard {
 				String giftCarddValidate = null;
 				if (action.elementExistWelcome(evs_SuccessfullyApplied, 4, "Gift card added", test)) {
 					giftCarddValidate = action.getText(evs_SuccessfullyApplied, "gift card added", test);
-				}
+				} 
 
 				action.CompareResult("Gift card added", "Gift Card \"" + giftCardCode.trim() + "\" was added.",
 						giftCarddValidate, test);

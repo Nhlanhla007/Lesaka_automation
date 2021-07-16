@@ -41,9 +41,10 @@ public class EVS_PopularSearch{
 		boolean chkPopsearch = checkForPopularSearch(test,"Popular Searches");
 		action.CompareResult(" popular search is successfully displayed", "true", String.valueOf(chkPopsearch), test);
 	}
+	
 	public boolean checkForPopularSearch(ExtentTest test, String Expdata) throws IOException{
 		boolean checkFlag = false;
-		String Alldata = null;
+		String Alldata = "";
 		
 		if(action.isElementPresent(PopularSearch)){
 			String actPuopularSearch = action.getText(PopularSearch, "PopularSearch",test);
