@@ -97,10 +97,12 @@ public class EVS_RedeemGiftCard {
 		 String scratchCode = dataTable2.getValueOnCurrentModule("scratchCode");//input.get("scratchCode").get(rowNumber);
 		 String UsageType = dataTable2.getValueOnCurrentModule("UsageType");
 		 
-			boolean buttonAvail = action.waitUntilElementIsDisplayed(evs_Back, 15000);
+			boolean buttonAvail = action.waitUntilElementIsDisplayed(evs_Back, 20000);
 			action.explicitWait(4000);
 			if (buttonAvail) {
 				evs_Back.click();
+			}else {
+				throw new Exception("Back Navigation button is not clickable");
 			}
 			 
 			if (action.waitUntilElementIsDisplayed(evs_RedeemGiftCardSelect, 10000)) {
@@ -116,7 +118,7 @@ public class EVS_RedeemGiftCard {
 				String giftCarddValidate = null;
 				if (action.elementExistWelcome(evs_SuccessfullyApplied, 4, "Gift card added", test)) {
 					giftCarddValidate = action.getText(evs_SuccessfullyApplied, "gift card added", test);
-				} 
+				}
 
 				action.CompareResult("Gift card added", "Gift Card \"" + giftCardCode.trim() + "\" was added.",
 						giftCarddValidate, test);
