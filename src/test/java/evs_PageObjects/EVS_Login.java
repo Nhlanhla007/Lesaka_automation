@@ -4,6 +4,7 @@ import com.aventstack.extentreports.ExtentTest;
 
 import base.TestCaseBase;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -59,7 +60,7 @@ public class EVS_Login {
 		//public static String Username;
 		//public static String Password;
 		
-		public List<String> Login(ExtentTest test) throws IOException {
+		public List<String> Login(ExtentTest test) throws Exception {
 			// driver.navigate().to(ConfigFileReader.getPropertyVal("EVS_URL"));
 //			action.waitForPageLoaded(10);
 			String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"), "url");
@@ -82,6 +83,15 @@ public class EVS_Login {
 			action.writeText(evs_Password, Password, "Password field", test);
 			action.clickEle(evs_SigninBtn, "click evs_SigninBtn", test);
 			userCreds(userCred);
+			action.explicitWait(5000);
+			
+			boolean loginVisablilityy = driver.findElements(By.xpath("//span[@class=\"logged-in\"]")).size() > 0;
+			if(loginVisablilityy) {
+				action.CompareResult("Is Login Successful?", "True", "True", test);
+			}else {
+				action.CompareResult("Is Login Successful?", "True", "False", test);
+				throw new Exception("Login Is Unsuccessful");
+			}
 
 			return userCred;
 

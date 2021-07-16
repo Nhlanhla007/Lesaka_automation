@@ -154,8 +154,8 @@ public class EVS_Delivery {
     	String userType = dataSheets.getValueOnCurrentModule("UserType");
         //Thread.sleep(10000);
     	action.explicitWait(15000);
-    	if(action.waitUntilElementIsDisplayed(deliveryLink, 10000)) {
-        action.click(deliveryLink,"deliveryLink",test);
+    	if(action.waitUntilElementIsDisplayed(deliveryLink, 20000)) {
+        action.javaScriptClick(deliveryLink,"deliveryLink",test);
     	}
         String addressTypeICFont = action.getText(ic_AddressType, "Get Address Type",test);//ic_AddressType.getText();
         action.explicitWait(4000);
@@ -229,9 +229,9 @@ public class EVS_Delivery {
 			 * equalsIgnoreCase("Enter your delivery address & contact details:")){ //WHAT
 			 * SHOULD HAPPEN HERE THERE IS NO EXISITNG ADDRESS????????????? }
 			 *///Add else if for other scenario
-        if(action.waitUntilElementIsDisplayed(ContinueToPayment, 15000)) {
+        if(action.waitUntilElementIsDisplayed(ContinueToPayment, 20000)) {
         	action.explicitWait(5000);
-        action.click(ContinueToPayment,"ContinueToPayment",test);
+        action.javaScriptClick(ContinueToPayment,"ContinueToPayment",test);
         }
     }
     

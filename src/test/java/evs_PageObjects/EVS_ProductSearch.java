@@ -81,11 +81,11 @@ public class EVS_ProductSearch {
 	@FindBy(xpath = "//span[contains(text(),'Furniture & D�cor')]")
 	WebElement furnitureAndDecor;
 
-	/*@FindBy(xpath = "//*[@title='Availability']/span")
-	WebElement verifyAvailability;*/
-	
-	@FindBy(xpath = "//*[@title='Availability:']/span")
+	@FindBy(xpath = "//*[@title='Availability']/span")
 	WebElement verifyAvailability;
+	
+//	@FindBy(xpath = "//*[@title='Availability:']/span")
+//	WebElement verifyAvailability;
 
 	@FindBy(xpath = "//span[@class = \"sr-only\"]")
 	WebElement shopByDeptLink;
@@ -127,8 +127,12 @@ public class EVS_ProductSearch {
 	
 	@FindBy(xpath = "//*[@title=\"Notify me when available\"]")
 	WebElement notifyWhenProductIsAvailable;
+	
+	@FindBy(xpath = "//*[@class = \"modal-content\"]/div")
+	WebElement quantityExceedPopUpMsg;
 
-
+	@FindBy(xpath = "//button[@class=\"qty-action update update-cart-item\"]")
+	WebElement updateQuantityButton;
 
 	/*
 	 * PAGE METHODS
@@ -203,7 +207,7 @@ public class EVS_ProductSearch {
 
 	}
 
-	public void skuProductValidateQuantity(ExtentTest test) throws IOException, AWTException {		
+	public void skuProductValidateQuantity(ExtentTest test) throws Exception, AWTException {		
 		String productsToSearch = dataTable2.getValueOnOtherModule("evs_ProductSearch","specificProduct",0);
 		List<String> theProducts = filterProducts(productsToSearch);
 		ic_EnterTextToSearchBar(theProducts.get(0),test);
@@ -220,17 +224,25 @@ public class EVS_ProductSearch {
 		action.clear(miniCartItemQty,"miniCartItemQty");
 		action.writeText(miniCartItemQty,"9999999999999","miniCartItemQty",test);
 
-		Robot robot = new Robot();
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
+		//Robot robot = new Robot();
+		//robot.keyPress(KeyEvent.VK_ENTER);
+		//robot.keyRelease(KeyEvent.VK_ENTER);
 
-		action.explicitWait(2000);
+		action.explicitWait(3000);
+		action.waitUntilElementIsDisplayed(updateQuantityButton, 10000);		
+	//	action.waitForElementClickable(updateQuantityButton, "Update Quantity", 10);
+		action.javaScriptClick(updateQuantityButton, "Update Quantity", test);
 		
-		WebElement QtyToMuchPopUp= driver.findElement(By.xpath("//*[@class = \"modal-content\"]/div"));
-		action.getText(QtyToMuchPopUp,"QtyToMuchPopUp",test);
+		action.explicitWait(2000);
+		if(action.waitUntilElementIsDisplayed(quantityExceedPopUpMsg, 20000)) {
+		//WebElement QtyToMuchPopUp= driver.findElement(By.xpath("//*[@class = \"modal-content\"]/div"));
+		action.getText(quantityExceedPopUpMsg,"QtyToMuchPopUp",test);
 		action.explicitWait(5000);
 		WebElement QtyToMuchPopUpOKButton= driver.findElement(By.xpath("//*[@class=\"modal-footer\"]/button"));
 		action.click(QtyToMuchPopUpOKButton,"QtyToMuchPopUp",test);
+		}else {
+			throw new Exception("Pop Up is not displayed");
+		}
 
 	}
 
