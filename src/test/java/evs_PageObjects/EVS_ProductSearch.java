@@ -81,8 +81,8 @@ public class EVS_ProductSearch {
 	@FindBy(xpath = "//span[contains(text(),'Furniture & D�cor')]")
 	WebElement furnitureAndDecor;
 
-	/*@FindBy(xpath = "//*[@title='Availability']/span")
-	WebElement verifyAvailability;*/
+	@FindBy(xpath = "//*[@title='Availability']/span")
+	WebElement verifyAvailability1;
 
 	@FindBy(xpath = "//*[@title='Availability:']/span")
 	WebElement verifyAvailability;
@@ -445,9 +445,16 @@ public class EVS_ProductSearch {
 			WebElement prodC = productLink.findElement(By.xpath(".//parent::strong/parent::*/parent::*/a[1]"));
 			action.click(prodC, "Navigate to product Details page", test);
 		}
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-		boolean isPresent = driver.findElements(By.id("product-addtocart-button")).size() > 0;		
-		String availabilityStatus = action.getText(verifyAvailability, "Availability Of Product", test);
+		driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+		boolean isPresent = driver.findElements(By.id("product-addtocart-button")).size() > 0;
+		boolean availXpath1 = driver.findElements(By.xpath("//*[@title='Availability']/span")).size() > 0;
+		boolean availXpath2 = driver.findElements(By.xpath("//*[@title='Availability:']/span")).size() > 0;
+		String availabilityStatus="";
+		if(availXpath1) {
+		 availabilityStatus = action.getText(verifyAvailability1, "Availability Of Product", test);
+		}else if(availXpath2) {
+		 availabilityStatus = action.getText(verifyAvailability, "Availability Of Product", test);
+		}
 		if (isPresent & availabilityStatus.equalsIgnoreCase("In stock")) {
 			action.scrollElemetnToCenterOfView(productDetailsPageAddToCartButton, "productDetailsPageAddToCartButton",
 					test);
@@ -469,8 +476,11 @@ public class EVS_ProductSearch {
 			JavascriptExecutor js = (JavascriptExecutor)driver;
 			js.executeScript("window.scrollTo(0,0)");
 			
-			action.elementExistWelcome(productOfStockErrorMessage, 20, "Out Of Stock Pop Up", test);			
-			action.CompareResult("Product Out Of Stock", "This product is out of stock.", driver.findElement(By.xpath("//div[contains(text(),'This product is out of stock.')]")).getText(), test);			
+			if(action.elementExistWelcome(productOfStockErrorMessage, 20, "Out Of Stock Pop Up", test)) {			
+				action.CompareResult("Product Out Of Stock", "This product is out of stock.", driver.findElement(By.xpath("//div[contains(text(),'This product is out of stock.')]")).getText(), test);
+			}else {
+				throw new Exception("Out Of Stock Pop Up Is Not Displayed");
+			}
 		}
 
 	}
