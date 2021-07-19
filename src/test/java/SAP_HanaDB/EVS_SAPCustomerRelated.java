@@ -11,6 +11,8 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
@@ -67,8 +69,7 @@ public class EVS_SAPCustomerRelated {
 		return finalrow;
 	}
   
-    
-    
+
 	enum kna1Columns{
 		KUNNR,NAME1,ADRNR,ANRED,TELF1//ERDAT,ERNAM
 	}

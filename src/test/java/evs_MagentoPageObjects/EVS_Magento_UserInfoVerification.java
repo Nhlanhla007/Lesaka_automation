@@ -222,12 +222,12 @@ public class EVS_Magento_UserInfoVerification {
 					js.executeScript("window.scrollBy(0,0)");
 					action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
 					action.click(Account_Information, "Account Information", test);
-					ExpFirstname= dataTable2.getValueOnOtherModule("CreateaccountBackend", "Firstname", 0);
-					ExpLastname = dataTable2.getValueOnOtherModule("CreateaccountBackend", "Lastname", 0);
-					ExpEmail =dataTable2.getValueOnOtherModule("CreateaccountBackend", "Email", 0);
-					ExpSAIDnumber =dataTable2.getValueOnOtherModule("CreateaccountBackend", "SAID", 0);
-					ExpidentityType = dataTable2.getValueOnOtherModule("CreateaccountBackend", "Identitynumber/passport", 0);
-					ExpPassportnumber= dataTable2.getValueOnOtherModule("CreateaccountBackend", "Passport", 0);
+					ExpFirstname= dataTable2.getValueOnOtherModule("evs_CreateaccountBackend", "Firstname", 0);
+					ExpLastname = dataTable2.getValueOnOtherModule("evs_CreateaccountBackend", "Lastname", 0);
+					ExpEmail =dataTable2.getValueOnOtherModule("evs_CreateaccountBackend", "Email", 0);
+					ExpSAIDnumber =dataTable2.getValueOnOtherModule("evs_CreateaccountBackend", "SAID", 0);
+					ExpidentityType = dataTable2.getValueOnOtherModule("evs_CreateaccountBackend", "Identitynumber/passport", 0);
+					ExpPassportnumber= dataTable2.getValueOnOtherModule("evs_CreateaccountBackend", "Passport", 0);
 					switch (ExpidentityType) {
 					case "ID":
 						//String ActSAID = FetchDataFromCustInfo_MagentoBackend(Cust_SAID, "Customer_SAID", 11, 2, test);
@@ -388,6 +388,7 @@ public class EVS_Magento_UserInfoVerification {
 		action.CompareResult("Email in Magento backend : ", ExpEmail, actualEmail, test);
 
 		String ActualBPnumber =FetchDataFromCustInfo_MagentoBackend(customerBPnnumber,"customerBPnnumber",TimetoLoadpage,40,test);
+		action.scrollElementIntoView(customerBPnnumber);
 		System.out.println("ActualBPnumber:"+ActualBPnumber);
 		//hana han = new hana();
 //		han.hanaconnector(Integer.parseInt(ActualBPnumber));
@@ -470,6 +471,7 @@ public class EVS_Magento_UserInfoVerification {
 			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "False", test);
 			return resData;
 		}else{
+			action.scrollElementIntoView(customerBPnnumber);
 			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "True", test);
 			return resData;
 		}
