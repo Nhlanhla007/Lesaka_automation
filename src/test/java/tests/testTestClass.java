@@ -68,20 +68,13 @@ public class testTestClass<moduleName> {
     }
     //Start Tests-----------------------------------------------------------------------
     
-    @Test(testName ="9_Validate_Quantity_can_be_increased_in_Cart_EVS" )
-    public void Validate_Quantity_can_be_increased_in_Cart_EVS() throws Exception {
-        String testMethodName="Validate_Quantity_can_be_increased_in_Cart_EVS";
+    @Test(testName ="11_Updating_customer_last_name_on_Magento_IC" )
+    public void Updating_customer_last_name_on_Magento_IC() throws Exception {
+        String testMethodName="Updating_customer_last_name_on_Magento_IC";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
-    }
-    @Test(testName ="116_EVS_Compare_products_EVS" )
-    public void EVS_Compare_products_EVS() throws Exception {
-        String testMethodName="EVS_Compare_products_EVS";
-        ExtentTest test =reportJD.createTest(testMethodName);
-        int TCIndex=getTestCaseIndex(testMethodName);
-        runner(TCIndex,test);
-    }
+    }
 
     //End Tests-------------------------------------------------------------------------
 
