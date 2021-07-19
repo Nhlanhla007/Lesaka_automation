@@ -136,6 +136,7 @@ public class ic_NewAccountCreation {
 			logger.info(e.getMessage());
 			ExtentTest node =test.createNode("Click on create account");
 			node.fail(e.getMessage());
+
 		}
 	}
 
@@ -161,11 +162,8 @@ public class ic_NewAccountCreation {
 		String saIDvalidateIDWithMoreDigits = dataTable2.getValueOnCurrentModule("validateIDWithMoreDigits");
 		String existingAccountValidation =dataTable2.getValueOnCurrentModule("validateExistingAccount");
 
-//		try {
-			ic_NavigateToCreateAccount(test);
-			
-			Thread.sleep(5000);
-			
+		ic_NavigateToCreateAccount(test);
+			action.explicitWait(5000);
 			action.writeText(User_Firstname, firstName, "First name", test);
 			action.writeText(User_Lastname, lastName, "Last Name", test);
 			action.writeText(User_EmailId, emailAddress, "Email", test);
@@ -174,7 +172,6 @@ public class ic_NewAccountCreation {
 			action.writeText(User_Password, password, "Password", test);
 
 			if(selectNewsLetter.equalsIgnoreCase("YES")) {
-				System.out.println("Inside newslwtter");
 				action.click(newsLetter, "News letter", test);
 			}
 			//action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
@@ -320,7 +317,7 @@ public class ic_NewAccountCreation {
 	//TA27,28,29,30,31 CHECKS FLAG AND VALIDATES WHAT FLAG INDICATED COLUMN H IN accountCreation++
     public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID,String expVatNumber,String expVatNumberFlag,String expIdentityType,String expNewsletter) throws IOException, Exception{
         String ExpPage ="edit";
-        boolean accInfoOpt = action.waitUntilElementIsDisplayed(Account_info_option, 20000);//action.elementExists(Account_info_option, 11);
+        boolean accInfoOpt = action.waitUntilElementIsDisplayed(Account_info_option, 20);//action.elementExists(Account_info_option, 11);
         if(accInfoOpt==true){
             action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
             action.click(Account_info_option, "Account info link", test);

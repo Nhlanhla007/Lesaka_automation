@@ -133,7 +133,7 @@ public class admin_UserUpdate {
 			magRetri.tableData(email, "Incredible Connection", test);
 			
 			action.click(admin_AccountInfoCustomer, "Click Account information", test);	    	
-	    	
+	    	action.explicitWait(3000);
 			String firstNameText = action.getAttribute(admin_firstname, "value");
 			if(firstName.equalsIgnoreCase("Yes")){
 	    		
@@ -149,6 +149,8 @@ public class admin_UserUpdate {
 	    			action.explicitWait(4000);
 	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
 	    		}
+//	    		action.explicitWait(5000);
+	    		action.waitUntilElementIsDisplayed(admin_AccountInfoCustomer,5);
 	    		action.click(admin_AccountInfoCustomer, "clicking to account infor", test);
 	    		
 	    		String firstNameTextSaved = action.getAttribute(admin_firstUpdated, "value");

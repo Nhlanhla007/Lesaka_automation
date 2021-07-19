@@ -190,6 +190,7 @@ public class ICUpdateCustomer {
 	    		action.writeText(ic_firstname, firstNameTextUpdated,"first Name", test);
 				dataTable2.setValueOnCurrentModule("firstName_output",firstNameTextUpdated);
 	    		action.click(SaveButton, "Save", test);
+	    		action.explicitWait(2000);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    		action.explicitWait(5000);
@@ -265,6 +266,7 @@ public class ICUpdateCustomer {
 	    	//Address Book edit
 	    	
 	    	action.click(ic_addressInformation, "Information Address", test);
+	    	action.explicitWait(2000);
 	    	
 	    	//Billing Address
 	    	if(billingAddress.equalsIgnoreCase("Yes")){
@@ -315,6 +317,7 @@ public class ICUpdateCustomer {
 		    		dataTable2.setValueOnCurrentModule("billing_postalCode_output",postalCodeText);
 		    		
 		    		action.click(SaveButton, "Save", test);
+		    		action.waitUntilElementIsDisplayed(successSaved,10);
 		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, "Billing address updated",test), test);
 		    	
 		    	}else {

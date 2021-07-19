@@ -373,9 +373,9 @@ public class Magento_UserInfoVerification {
 		//action.clickEle(Account_Information, "Account_Information", test);
 		//basic verification--------------------------------------------------------------------------------------
 		//String ActFirstname = FetchDataFromCustInfo_MagentoBackend(Cust_Firstname, "Customer_Firstname", 11, 2, test);
+		action.explicitWait(3000);
 		String actualFirstName = action.getAttribute(Cust_Firstname, "value");
 		action.CompareResult("Verify the First name in Magento backend : ", ExpFirstname, actualFirstName, test);
-		
 		//String ActLastname = FetchDataFromCustInfo_MagentoBackend(Cust_Lastname, "Custome_Lastname", 11, 2, test);
 		String actualLastName = action.getAttribute(Cust_Lastname, "value");
 		action.CompareResult("Verify the Last name in Magento backend : ", ExpLastname, actualLastName, test);
@@ -464,11 +464,11 @@ public class Magento_UserInfoVerification {
 		}
 		if(resData.isEmpty() | resData==null | resData == ""){
 
-			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "False", test);
+			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "False", test);
 			throw new Exception("Partner Number Is Not Generated");
 			//return resData;
 		}else{
-			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "True", test);
+			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "True", test);
 			return resData;
 		}
 	}

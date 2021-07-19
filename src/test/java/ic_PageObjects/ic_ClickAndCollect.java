@@ -33,19 +33,24 @@ public class ic_ClickAndCollect {
     
     @FindBy(xpath="//ol[@class='product-instorestock-store-list']//li//div//button")
     public List<WebElement> Storelist;
+
     @FindBy(xpath="//div[@class='message info']//span[contains(text(),'No stock available for Click')]")
     private WebElement MessageNostore;
+
     boolean check =false;
      public void ClickandCollectDeliveryoption(ExtentTest test) throws IOException, InterruptedException{
-    	 Thread.sleep(8000);
+
+    	 action.explicitWait(15000);
+    	 action.waitUntilElementIsDisplayed(CollectBtn,30);
          action.click(CollectBtn, "Click and Collect delivery option", test);
 
-        if( action.elementExists(FindStore, 8)){
-            if(!(Storelist.size()>1)){
-
+        if(action.waitUntilElementIsDisplayed(FindStore, 10)){
             action.click(FindStore, "Find Store close to me option", test);
+            action.explicitWait(10000);
 
-            Thread.sleep(8000);
+            if(!(Storelist.size()>1)){
+            action.acceptAlert();
+            action.explicitWait(10000);
             }
 
             boolean Storevailableselected = false;
@@ -55,7 +60,7 @@ public class ic_ClickAndCollect {
                 try {
                     Storevailableselected = SelectAvailableStore(test);
                     action.click(Continue_payment, "Continue payment", test);
-                     Thread.sleep(22000);
+                    action.explicitWait(20000);
                     String checkUrl =action.getCurrentURL();
                     if(checkUrl.toUpperCase().contains("PAYMENT")){
                         check=true;
@@ -68,9 +73,9 @@ public class ic_ClickAndCollect {
                     trycount--;
                 }
             }
-                action.CompareResult("Trying for selection of nearest store loaction where the product is avilable", "true", String.valueOf(check), test);
+                action.CompareResult("Selection of nearest store location where the product is available", "true", String.valueOf(check), test);
         }else{
-            action.CompareResult("verify Find Store close to me option is present ", "True", "False", test);
+            action.CompareResult("Find Store close to me option is present ", "True", "False", test);
 
         }
      }

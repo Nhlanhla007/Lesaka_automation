@@ -68,11 +68,11 @@ public class MagentoRetrieveCustomerDetailsPage {
 
 	public void navigateToCustomer(ExtentTest test) throws IOException, InterruptedException {
 			action.click(customerTab, "Customer Tab", test);
-			if(action.waitUntilElementIsDisplayed(allCustomerTab, 10000)) {
-				action.explicitWait(5000);
+			if(action.waitUntilElementIsDisplayed(allCustomerTab, 10)) {
+				action.explicitWait(2000);
 				action.click(allCustomerTab, "All Customers Tab", test);
 			}
-			action.explicitWait(10000);
+			action.explicitWait(20000);
 	}
 
 	public void searchForCustomer(String emailToSearchBy,ExtentTest test) throws Exception {
@@ -81,9 +81,9 @@ public class MagentoRetrieveCustomerDetailsPage {
 		//if(isMagentoSearchPageLoaded(10)) {		
 			
 		try {
-			if (action.waitUntilElementIsDisplayed(clearFilters, 20)) {
+			if (action.waitUntilElementIsDisplayed(clearFilters, 60)) {
 				action.click(clearFilters, "Cleared Filters", test);
-				action.explicitWait(6000);
+				action.explicitWait(10000);
 			}
 		}catch(Exception e){
 			logger.info("Clear filter is not clickable");
@@ -121,7 +121,6 @@ public class MagentoRetrieveCustomerDetailsPage {
 			customerEmail = "";
 		}
 		String webSite = dataTable2.getValueOnOtherModule("accountCreation", "WebSite", 0);//input.get("WebSite").get(rowNumber);
-		System.out.println(customerEmail);
 		navigateToCustomer(test);
 		System.out.println("Hello from " + customerEmail);
 		searchForCustomer(customerEmail, test);
@@ -186,7 +185,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 	}
 	
 	public boolean isMagentoSearchPageLoaded(int timeoutInSec) throws Exception {
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);		
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		int timer = 0;
 		boolean status = false;
 		boolean run = true;

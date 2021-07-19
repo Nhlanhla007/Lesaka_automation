@@ -354,7 +354,7 @@ public class Action {
             }
         } catch (Exception e) {
             String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.fail("unable to Write to element:" + name + node.addScreenCaptureFromPath(screenShot));
+            node.fail("Unable to Write to element:" + name + node.addScreenCaptureFromPath(screenShot));
             throw e;
         }
     }
@@ -1795,7 +1795,7 @@ public class Action {
             node.pass("scroll to element" + name + node.addScreenCaptureFromPath(screenShot));
         } catch (Exception e) {
             String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.fail("unable to scroll to element" + name + node.addScreenCaptureFromPath(screenShot));
+            node.fail("unable to scroll to element: " + name + node.addScreenCaptureFromPath(screenShot));
             throw e;
         }
     }
