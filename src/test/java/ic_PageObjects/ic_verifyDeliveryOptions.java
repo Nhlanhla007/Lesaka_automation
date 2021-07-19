@@ -26,20 +26,20 @@ public class ic_verifyDeliveryOptions {
     }
     
     @FindBy(xpath="//*[@id=\"label_method_111_matrixrate\"]")
-    private WebElement evs_Deliver;
+    private WebElement ic_Deliver;
     
     @FindBy(xpath="//div[@id='label_method_clickandcollect_clickandcollect']")
-    private WebElement evs_collect;
+    private WebElement ic_collect;
     
     public void validateDeliveryOptionsDisplays (ExtentTest test,int rowNumber) throws IOException{
     	String checkoutTitle = driver.getTitle();
     	
-    	action.elementExists(evs_Deliver, 1000);
+    	action.elementExists(ic_Deliver, 1000);
     	action.explicitWait(15000);
     	String delivery = action.getScreenShot("ic_Deliver");
     	//action.CompareResult("display different Delivery Options", delivery,delivery , test);
     	action.explicitWait(10000);
-    	action.elementExists(evs_collect, 1000);
+    	action.elementExists(ic_collect, 1000);
     	String collect = action.getScreenShot("ic_collect");
     	action.explicitWait(10000);
     	action.CompareResult("The Delivery and Collect are displaying", collect,collect , test);
