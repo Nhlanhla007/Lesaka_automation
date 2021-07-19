@@ -81,11 +81,11 @@ public class EVS_ProductSearch {
 	@FindBy(xpath = "//span[contains(text(),'Furniture & D�cor')]")
 	WebElement furnitureAndDecor;
 
-	@FindBy(xpath = "//*[@title='Availability']/span")
-	WebElement verifyAvailability;
-
-	/*@FindBy(xpath = "//*[@title='Availability:']/span")
+	/*@FindBy(xpath = "//*[@title='Availability']/span")
 	WebElement verifyAvailability;*/
+
+	@FindBy(xpath = "//*[@title='Availability:']/span")
+	WebElement verifyAvailability;
 
 	@FindBy(xpath = "//span[@class = \"sr-only\"]")
 	WebElement shopByDeptLink;
