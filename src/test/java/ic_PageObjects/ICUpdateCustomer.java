@@ -190,7 +190,7 @@ public class ICUpdateCustomer {
 	    		action.writeText(ic_firstname, firstNameTextUpdated,"first Name", test);
 				dataTable2.setValueOnCurrentModule("firstName_output",firstNameTextUpdated);
 	    		action.click(SaveButton, "Save", test);
-	    		action.explicitWait(2000);
+	    		action.explicitWait(5000);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    		action.explicitWait(5000);
@@ -243,6 +243,7 @@ public class ICUpdateCustomer {
 	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
 	    		action.writeText(passCurrent, currentPassWordText, "Current password", test);
 	    		action.click(SaveButton, "Save", test);
+	    		action.explicitWait(5000);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
 	    		action.click(AccountInfoEdit, "Account Infor", test);
 	    	}else {
@@ -266,7 +267,7 @@ public class ICUpdateCustomer {
 	    	//Address Book edit
 	    	
 	    	action.click(ic_addressInformation, "Information Address", test);
-	    	action.explicitWait(2000);
+	    	action.explicitWait(5000);
 	    	
 	    	//Billing Address
 	    	if(billingAddress.equalsIgnoreCase("Yes")){
@@ -291,12 +292,13 @@ public class ICUpdateCustomer {
 	    		
 	    		//action.click(ic_BillingAddress, "Change Billing address", test);
 	    		//ic_BillingAddress.click();
+
 	    		action.javaScriptClick(ic_BillingAddress, "Change Billing address", test);
 	    		String streetAdressText = action.getAttribute(ic_streetAddress, "value");	    		
 	    		if(billing_streetAddress.equalsIgnoreCase("yes")){
 	    			//ADD random data from list here for addresses
 	    			String streetAdressTextUpdated = streetAddresses.get(randomitem);
-		    		action.clear(ic_streetAddress, "Removing Streeta address");
+		    		action.clear(ic_streetAddress, "Removing Street address");
 	    	
 		    		action.writeText(ic_streetAddress, streetAdressTextUpdated, "Street address", test);
 		    		mySheets.get(0).get("billing_streetAddress_output").set(sheetRow1, streetAdressTextUpdated);
@@ -317,6 +319,7 @@ public class ICUpdateCustomer {
 		    		dataTable2.setValueOnCurrentModule("billing_postalCode_output",postalCodeText);
 		    		
 		    		action.click(SaveButton, "Save", test);
+		    		action.waitExplicit(4000);
 		    		action.waitUntilElementIsDisplayed(successSaved,10);
 		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, "Billing address updated",test), test);
 		    	
@@ -356,6 +359,7 @@ public class ICUpdateCustomer {
 	    		dataTable2.setValueOnCurrentModule("shipping_postalCode_output",postalCodeText);
 	    		
 	    		action.click(SaveButton, "Save", test);
+				action.explicitWait(4000);
 	    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSaved, "Shipping address updated",test), test);
 	    		
 	    	}

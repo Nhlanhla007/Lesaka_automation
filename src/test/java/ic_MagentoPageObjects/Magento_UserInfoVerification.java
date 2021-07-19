@@ -249,6 +249,7 @@ public class Magento_UserInfoVerification {
 			//action.scrollElementIntoView(Account_Information);
 			action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
 			action.click(Account_Information, "Account Information", test);
+			action.explicitWait(5000);
 			ExpFirstname = dataTable2.getValueOnOtherModule("ICUpdateUser", "firstName_output", 0);
 			ExpLastname = dataTable2.getValueOnOtherModule("ICUpdateUser", "lastName_output", 0);
 			ExpEmail = dataTable2.getValueOnOtherModule("ICUpdateUser", "email_output", 0);
@@ -260,6 +261,7 @@ public class Magento_UserInfoVerification {
 			//action.scrollElementIntoView(Account_Information);
 			action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
 			action.click(Account_Information, "Account Information", test);
+			action.explicitWait(5000);
 			ExpFirstname=dataTable2.getValueOnOtherModule("adminUserUpdate", "adminFirstName_output", 0).trim();
 			ExpLastname =dataTable2.getValueOnOtherModule("adminUserUpdate", "adminLastName_output", 0).trim();
 			ExpEmail =dataTable2.getValueOnOtherModule("adminUserUpdate", "adminEmail_output", 0).trim();
@@ -272,7 +274,7 @@ public class Magento_UserInfoVerification {
 			String verifyBillingAddChange = dataTable2.getValueOnOtherModule("adminUserUpdate", "billingAddress", 0);
 			if(verifyBillingAddChange.equalsIgnoreCase("yes")) {
 				action.click(admin_AddressBtn, "Address Tab", test);
-				action.explicitWait(6000);
+				action.explicitWait(5000);
 				action.click(admin_billingEdit, "Billing Address Edit", test);
 				String updatedBillingAddress = dataTable2.getValueOnOtherModule("adminUserUpdate", "adminBilling_streetAddress_output", 0);
 				String actualBillingAdd = action.getAttribute(admin_Billing_streetAddress, "value");

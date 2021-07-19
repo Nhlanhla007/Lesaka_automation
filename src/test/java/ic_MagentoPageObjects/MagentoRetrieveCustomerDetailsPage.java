@@ -145,9 +145,9 @@ public class MagentoRetrieveCustomerDetailsPage {
 
 	public void tableData(String email,String webStore,ExtentTest test) throws Exception{
 		int totalRows = customerTableRecords.size();
-		System.out.println(totalRows);
+//		System.out.println(totalRows);
 		int totalColums = customerTableHeaders.size();
-		System.out.println(totalColums);
+//		System.out.println(totalColums);
 		if(totalRows>=2) {
 //				outerloop:
 //				for(int i =2;i<=totalRows;i++) {

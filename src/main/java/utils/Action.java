@@ -1784,7 +1784,7 @@ public class Action {
     }
 
     public void scrollElemetnToCenterOfView(WebElement element, String name, ExtentTest test) throws IOException {
-        ExtentTest node = test.createNode("Clicked Element: " + name);
+        ExtentTest node = test.createNode("Scrolled to : " + name);
         try {
             String scrollElementIntoMiddle = "var viewPortHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);"
                     + "var elementTop = arguments[0].getBoundingClientRect().top;"

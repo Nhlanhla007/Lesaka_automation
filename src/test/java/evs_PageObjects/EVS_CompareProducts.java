@@ -60,7 +60,7 @@ public class EVS_CompareProducts {
 	@FindBy(xpath = "(//button[@class='action tocart primary'])[1]")
 	public WebElement addToCart;
 
-	public void validateCompare(ExtentTest test) throws IOException {
+	public void validateCompare(ExtentTest test) throws IOException, InterruptedException {
 		navigateToSearchResult(test);
 		removeAllItem(test);
 
@@ -118,8 +118,10 @@ public class EVS_CompareProducts {
 
 	}
 
-	public void navigateToSearchResult(ExtentTest test) throws IOException {
-		if (action.isElementPresent(backButton)) {
+	public void navigateToSearchResult(ExtentTest test) throws IOException, InterruptedException {
+		action.explicitWait(3000);
+		action.scrollElemetnToCenterOfView(backButton,"Back Button",test);
+		if (action.waitUntilElementIsDisplayed(backButton,20)) {
 			action.clickEle(backButton, "Back button", test);
 			action.explicitWait(6000);
 		}
