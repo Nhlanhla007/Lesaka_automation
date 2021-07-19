@@ -97,7 +97,8 @@ public class EVS_NewAccountCreation {
 	@FindBy(id = "identity_number-error")
 	WebElement identityNumberError;
 	
-	@FindBy(xpath = "//body/div[2]/main[1]/div[1]/div[2]/div[1]/div[1]/div[1]")
+	//@FindBy(xpath = "//body/div[2]/main[1]/div[1]/div[2]/div[1]/div[1]/div[1]")
+	@FindBy(xpath = "//*[@data-bind=\"html: $parent.prepareMessageForHtml(message.text)\"]")
 	WebElement existingAccountError;
 
     @FindBy(xpath = "//*[@id='account-nav']/ul[@class='nav items']/li/a[contains(text(),'Account Information')]")

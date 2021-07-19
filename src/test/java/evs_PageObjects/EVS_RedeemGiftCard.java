@@ -97,10 +97,12 @@ public class EVS_RedeemGiftCard {
 		 String scratchCode = dataTable2.getValueOnCurrentModule("scratchCode");//input.get("scratchCode").get(rowNumber);
 		 String UsageType = dataTable2.getValueOnCurrentModule("UsageType");
 		 
-			boolean buttonAvail = action.waitUntilElementIsDisplayed(evs_Back, 15000);
+			boolean buttonAvail = action.waitUntilElementIsDisplayed(evs_Back, 20000);
 			action.explicitWait(4000);
 			if (buttonAvail) {
 				evs_Back.click();
+			}else {
+				throw new Exception("Back Navigation button is not clickable");
 			}
 			 
 			if (action.waitUntilElementIsDisplayed(evs_RedeemGiftCardSelect, 10000)) {

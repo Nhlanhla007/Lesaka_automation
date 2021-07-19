@@ -83,6 +83,7 @@ public class EVS_MagentoAccountInformation {
 			
 			public String getPartnerNumber(ExtentTest test) throws Exception {
 				action.click(Account_Info_link, "Account Information", test);
+				action.scrollElemetnToCenterOfView(customerBPnnumber, "Scroll to partner number", test);
 				ActualBPnumber = action.getAttribute(customerBPnnumber, "value");
 				action.waitExplicit(10);
 				boolean FlagGenerateBPnumber = false;
