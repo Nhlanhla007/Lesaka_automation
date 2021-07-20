@@ -498,7 +498,7 @@ public class EVS_SAPCustomerRelated {
 			String sapOrderNumeber = dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber", "OrderSAPnumber", 0);
 			String Query = "select KUNNR from SAPEQ1.VBAK where VBELN = '"+sapOrderNumeber+"'";
 		//	System.out.println("Query:"+Query);
-			ResultSet rs1 = hn.ExecuteQuery(Query);
+			ResultSet rs1 = hn.ExecuteQuery(Query,test);
 			hn.GetRowsCount(rs1);
 			newBpNumber = hn.GetRowdataByColumnName(rs1, "KUNNR").get(0);
 		}else {
@@ -506,7 +506,7 @@ public class EVS_SAPCustomerRelated {
 		}
 
 		String Query ="Select * from SAPEQ1.KNA1 WHERE KUNNR = '"+newBpNumber+"' Limit 1";
-		ResultSet rs = hn.ExecuteQuery(Query);
+		ResultSet rs = hn.ExecuteQuery(Query,test);
 		
 
 
@@ -514,12 +514,12 @@ public class EVS_SAPCustomerRelated {
 		int rowsCountReturned = hn.GetRowsCount(rs);
 		List<String> alldatainrows = hn.GetRowdataByColumnName(rs, "KUNNR");
 		
-		custData = kna1ColumnData(rs);
+		custData = kna1ColumnData(rs,test);
 		
 		return custData;
 	}
 	
-	public Map<String, String> kna1ColumnData(ResultSet data) throws Exception {		
+	public Map<String, String> kna1ColumnData(ResultSet data,ExtentTest test) throws Exception {		
 		//loop through the enum to get the names of all the fields
 		String valueOfADNR = null ;
 		String bpNumber = null;
@@ -533,13 +533,13 @@ public class EVS_SAPCustomerRelated {
 				bpNumber = d.get(0);
 			}
 		}
-		but0ID(bpNumber);
+		but0ID(bpNumber,test);
 		if(taxVatNumberFlag.equalsIgnoreCase("yes")) {
-			vatNumber(bpNumber);
+			vatNumber(bpNumber,test);
 		}
-		adrcWithprovince(bpNumber);
-		adr6Data(valueOfADNR);
-		but000Data(bpNumber);
+		adrcWithprovince(bpNumber,test);
+		adr6Data(valueOfADNR,test);
+		but000Data(bpNumber,test);
 		return  dataStore;
 	}
 	
@@ -547,16 +547,16 @@ public class EVS_SAPCustomerRelated {
 	/*
 	 * public void adrcData(String ADRCNumber) throws Exception { String query =
 	 * "SELECT * FROM SAPEQ1.ADRC WHERE ADDRNUMBER = '"+ADRCNumber+"'"; ResultSet
-	 * set = hn.ExecuteQuery(query); int rowsCountReturned = hn.GetRowsCount(set);
+	 * set = hn.ExecuteQuery(Query,test); int rowsCountReturned = hn.GetRowsCount(set);
 	 * System.out.println("Row count returned :"+rowsCountReturned); for(adrcColumns
 	 * adrc : adrcColumns.values()) { List<String> d =hn.GetRowdataByColumnName(set,
 	 * adrc.toString()); dataStore.put(adrc.toString(), d.get(0)); } }
 	 */
 	
 	//method for but000
-	public void but000Data(String bpNumber) throws Exception {
+	public void but000Data(String bpNumber,ExtentTest test) throws Exception {
 		String Query ="Select * from SAPEQ1.BUT000 AS adr WHERE PARTNER = '"+bpNumber.trim()+"' Limit 1";
-		ResultSet set = hn.ExecuteQuery(Query);
+		ResultSet set = hn.ExecuteQuery(Query,test);
 		int rowsCountReturned = hn.GetRowsCount(set);
 		for(but000Columns but000 : but000Columns.values()) {
 			List<String> d =hn.GetRowdataByColumnName(set, but000.toString().trim());
@@ -567,9 +567,9 @@ public class EVS_SAPCustomerRelated {
 			}
 		}
 	}
-	public void adr6Data(String ADRCNumber) throws SQLException {
+	public void adr6Data(String ADRCNumber,ExtentTest test) throws SQLException {
 		String query = "SELECT * FROM SAPEQ1.ADR6 WHERE ADDRNUMBER = '"+ADRCNumber+"' AND FLG_NOUSE = ''"; //NEED TO CHANGE SOMETHING IN THE QUERY
-		ResultSet set = hn.ExecuteQuery(query);
+		ResultSet set = hn.ExecuteQuery(query,test);
 		int rowsCountReturned = hn.GetRowsCount(set);
 		for(adrc6Columns but000 : adrc6Columns.values()) {
 			List<String> d =hn.GetRowdataByColumnName(set, but000.toString().trim());
@@ -581,9 +581,9 @@ public class EVS_SAPCustomerRelated {
 		}
 	}
 	
-	public void vatNumber(String bpNumber) throws SQLException {
+	public void vatNumber(String bpNumber,ExtentTest test) throws SQLException {
 		String query = "SELECT * FROM SAPEQ1.DFKKBPTAXNUM  WHERE PARTNER = '"+bpNumber+"'";
-		ResultSet set = hn.ExecuteQuery(query);
+		ResultSet set = hn.ExecuteQuery(query,test);
 		int rowsCountReturned = hn.GetRowsCount(set);
 		for(vatNumberColumns but000 : vatNumberColumns.values()) {
 			List<String> d =hn.GetRowdataByColumnName(set, but000.toString().trim());
@@ -595,9 +595,9 @@ public class EVS_SAPCustomerRelated {
 		}
 	}
 	
-	public void adr2(String ADRCNumber) throws Exception {
+	public void adr2(String ADRCNumber,ExtentTest test) throws Exception {
 		String query = "SELECT * FROM SAPEQ1.ADRC2 WHERE ADDRNUMBER = '"+ADRCNumber+"' AND FLG_NOUSE = ''";
-		ResultSet set = hn.ExecuteQuery(query);
+		ResultSet set = hn.ExecuteQuery(query,test);
 		int rowsCountReturned = hn.GetRowsCount(set);
 		for(adrc2Columns but000 : adrc2Columns.values()) {
 			List<String> d =hn.GetRowdataByColumnName(set, but000.toString().trim());
@@ -609,9 +609,9 @@ public class EVS_SAPCustomerRelated {
 		}
 	}
 	
-	public void but0ID(String bpNumber) throws Exception {
+	public void but0ID(String bpNumber,ExtentTest test) throws Exception {
 		String query = "SELECT * FROM SAPEQ1.BUT0ID WHERE PARTNER = '"+bpNumber+"'";
-		ResultSet set = hn.ExecuteQuery(query);
+		ResultSet set = hn.ExecuteQuery(query,test);
 		int rowsCountReturned = hn.GetRowsCount(set);
 		for(but0IDColumns but000 : but0IDColumns.values()) {
 			List<String> d =hn.GetRowdataByColumnName(set, but000.toString().trim());
@@ -623,11 +623,11 @@ public class EVS_SAPCustomerRelated {
 		}
 	}
 	
-	public void adrcWithprovince(String BpNumber) throws Exception {
+	public void adrcWithprovince(String BpNumber,ExtentTest test) throws Exception {
 		String query = "select * from SAPEQ1.ADRC "
 				+ "inner join SAPEQ1.T005U on ADRC.COUNTRY = T005U.LAND1 and ADRC.REGION = T005U.BLAND inner join SAPEQ1.BUT021_FS on ADRC.ADDRNUMBER = BUT021_FS.ADDRNUMBER "
 				+ "where BUT021_FS.PARTNER = '"+BpNumber+"' and BUT021_FS.ADR_KIND = 'ZDELIVERY' and T005U.MANDT = 000 and T005U.SPRAS = 'E'";
-		ResultSet set = hn.ExecuteQuery(query);
+		ResultSet set = hn.ExecuteQuery(query,test);
 		int rowsCountReturned = hn.GetRowsCount(set);
 		for (adrcColumns adrc : adrcColumns.values()) {
 			List<String> d = hn.GetRowdataByColumnName(set, adrc.toString());

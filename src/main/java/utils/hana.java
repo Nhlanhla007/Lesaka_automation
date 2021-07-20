@@ -54,8 +54,9 @@ public class hana {
 		
 	}
 
-	public static ResultSet ExecuteQuery(String Query) throws SQLException{
+	public static ResultSet ExecuteQuery(String Query,ExtentTest test) throws SQLException{
 		//Statement stmt1 = hanaconnet.createStatement(ResultSet.TYPE_FORWARD_ONLY,ResultSet.CONCUR_READ_ONLY);
+		test.info("EXECUTE DATABASE QUERY : " + Query);
 		java.sql.Statement stmt1 = hanaconnet.createStatement();
 	    ResultSet resultSet = stmt1.executeQuery(Query);
 	    stmt1.close();

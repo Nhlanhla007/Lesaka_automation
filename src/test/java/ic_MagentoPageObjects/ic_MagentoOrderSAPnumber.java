@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -84,6 +85,9 @@ public class ic_MagentoOrderSAPnumber {
     	if(flagres){
     		action.CompareResult("Verify SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
     	}else{
+    		JavascriptExecutor exe = (JavascriptExecutor)driver;
+            exe.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+            exe.executeScript("window.scrollBy(0,-500)");
     		action.CompareResult("Verify SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
     		throw new Exception("SAP Order Number Is Not Generated");
     	}

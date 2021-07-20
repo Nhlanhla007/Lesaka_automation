@@ -71,8 +71,9 @@ public class SapRSI {
                 "rough_stock_value = '"+rough_stock_value+"' " +
                 "order by rand() limit 1";
 
+        //test.info("SAP DATABASE QUERY : " +Query);
        // System.out.println("Query:"+Query);
-        ResultSet rs = hn.ExecuteQuery(Query);
+        ResultSet rs = hn.ExecuteQuery(Query,test);
         int rowsCountReturned = hn.GetRowsCount(rs);
        // System.out.println("rowsCountReturned: "+rowsCountReturned);
         if(rowsCountReturned >= 1) {
@@ -141,8 +142,9 @@ public class SapRSI {
 						+ "and ROUGH_STOCK_DATE >=to_date(now()) " + "and ARTICLE_ID='" + ARTICLE_ID + "' "
 						+ "and rough_stock_value = '" + rough_stock_value + "' " + "order by rand() limit 1";
 
+				//test.info("SAP DATABASE QUERY : " +Query);
 				// System.out.println("Query:"+Query);
-				ResultSet rs = hn.ExecuteQuery(Query);
+				ResultSet rs = hn.ExecuteQuery(Query,test);
 				int rowsCountReturned = hn.GetRowsCount(rs);
 				// System.out.println("rowsCountReturned: "+rowsCountReturned);
 				  if(rowsCountReturned >= 1) {
@@ -191,13 +193,15 @@ public class SapRSI {
 
     public void getRSIItemInMagento(ExtentTest test) throws IOException, Exception {
         action.click(catalogTab,"catalogTab",test);
-        action.click(productsTab,"productsTab",test);
+        //action.waitUntilElementIsDisplayed(productsTab, 10000);
+        action.explicitWait(4000);
+        action.javaScriptClick(productsTab,"productsTab",test);
         action.explicitWait(15000);
         if(action.waitUntilElementIsDisplayed(Clearbutton, 10000)) {
-        action.click(Clearbutton,"Clearbutton",test);
+        action.javaScriptClick(Clearbutton,"Clearbutton",test);
         }
         action.explicitWait(8000);
-        action.click(magentoFilterTab,"magentoFilterTab",test);
+        action.javaScriptClick(magentoFilterTab,"magentoFilterTab",test);
         action.writeText(sku,dataTable2.getValueOnOtherModule ("SapRSIGetDataFromSAPDB","SKUCode",0),"skuInputTest",test);
         action.click(magentoApplyFilterTab,"magentoApplyFilterTab",test);
         action.explicitWait(5000);
@@ -246,8 +250,10 @@ public class SapRSI {
 			 * "and AGGR_AVAIL_QTY between 1 and 50000 and rough_stock_value = 'G' and article_id = '000000000010115998' order by rand() limit 1"
 			 * ;
 			 */
+		
+		//test.info("SAP DATABASE QUERY : " +Query);
        // System.out.println("Query:"+Query);
-        ResultSet rs = hn.ExecuteQuery(Query);
+        ResultSet rs = hn.ExecuteQuery(Query,test);
         int rowsCountReturned = hn.GetRowsCount(rs);
         //System.out.println("rowsCountReturned: "+rowsCountReturned);
         if(rowsCountReturned >= 1) {

@@ -31,7 +31,7 @@ public class HanaDBtest {
 		String Query ="Select * from SAPEQ1.VBAK FULL OUTER JOIN SAPEQ1.VBAP ON SAPEQ1.VBAK.VBELN=SAPEQ1.VBAP.VBELN WHERE SAPEQ1.VBAK.VBELN ='0005231326' ";
 	ExtentTest test=null;
 		hana hn =new hana(DBType,Server,Port,Username,Password,test);
-		ResultSet rs = hn.ExecuteQuery(Query);
+		ResultSet rs = hn.ExecuteQuery(Query,test);
 		
 		int rowsCountReturned = hn.GetRowsCount(rs);
 		

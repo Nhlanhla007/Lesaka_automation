@@ -131,7 +131,7 @@ import utils.hana;
 //			String Query= "SELECT * FROM SAPEQ1."+Table1+" WHERE "+key+" = '"+SAP_orderNo+"'";
 			//System.out.println("Query:"+Query);
 			hana hn =new hana(TypeOfDB,Server,Port,Username,Password,test);
-			ResultSet rs = hn.ExecuteQuery(Query);
+			ResultSet rs = hn.ExecuteQuery(Query,test);
 			
 			int ExpRowcount=1;
 			int rowsCountReturned = hn.GetRowsCount(rs);
@@ -241,7 +241,7 @@ import utils.hana;
 			//String Query= "Select * from "+Schema+"."+Table1+" FULL OUTER JOIN "+Schema+"."+Table2+" ON "+Schema+"."+Table1+"."+key+" = "+Schema+"."+Table2+"."+key+" WHERE "+Schema+"."+Table1+"."+key+" = '"+SAP_orderNo+"' ";
 			String Query1 = "select * from  SAPEQ1.ADRC where SAPEQ1.ADRC.ADDRNUMBER IN (select SAPEQ1.VBPA.ADRNR from SAPEQ1.VBPA where SAPEQ1.VBPA.VBELN = '"+SAP_orderNo+"' and SAPEQ1.VBPA.PARVW = 'WE' and SAPEQ1.VBPA.POSNR<>'')";
 			
-			ResultSet rs1 = hn.ExecuteQuery(Query1);
+			ResultSet rs1 = hn.ExecuteQuery(Query1,test);
 			int Rowcount = hn.GetRowsCount(rs1);
 		//	System.out.println("TotalRowcount"+Rowcount);
 			List<String> allcolsdata =  hn.Getallcolumns(rs1);

@@ -81,6 +81,9 @@ public class Ic_Products {
 	@FindBy(xpath = "//*[@class=\"box-tocart\"]/div/span")
 	WebElement productOutOfStock;
 
+	@FindBy(xpath = "//*[@class=\"qty-action update update-cart-item\"]")
+	WebElement updateCartQuantityButton;
+	
 	List<WebElement> listElements;
 
 	@FindBy(id = "product-addtocart-button")
@@ -178,9 +181,13 @@ public class Ic_Products {
 		action.clear(miniCartItemQty,"miniCartItemQty");
 		action.writeText(miniCartItemQty,"9999999999999","miniCartItemQty",test);
 
-		Robot robot = new Robot();
-		robot.keyPress(KeyEvent.VK_ENTER);
-		robot.keyRelease(KeyEvent.VK_ENTER);
+		//Does not work when running headless Mvn
+//		Robot robot = new Robot();
+//		robot.keyPress(KeyEvent.VK_ENTER);
+//		robot.keyRelease(KeyEvent.VK_ENTER);
+		
+		action.explicitWait(2000);
+		action.javaScriptClick(updateCartQuantityButton, "Update Quantity", test);
 
 		action.explicitWait(2000);
 		
@@ -418,6 +425,7 @@ public class Ic_Products {
 			} else {
 				status = false;
 				action.CompareResult("Product Not Found", product, "", test);
+				throw new Exception("Product Not Found");
 				// System.out.println("Item has not been found anywhere");
 			}
 		}

@@ -71,9 +71,9 @@ public class EVS_SapRSI {
                 "and AGGR_AVAIL_QTY>0 and " +
                 "rough_stock_value = '"+rough_stock_value+"' " +
                 "order by rand() limit 1";
-
+        
         //System.out.println("Query:"+Query);
-        ResultSet rs = hn.ExecuteQuery(Query);
+        ResultSet rs = hn.ExecuteQuery(Query,test);
         int rowsCountReturned = hn.GetRowsCount(rs);
         //System.out.println("rowsCountReturned: "+rowsCountReturned);
         if(rowsCountReturned >= 1) {
@@ -133,7 +133,7 @@ public class EVS_SapRSI {
 					+ "' " + "and CHANNEL_ID = '" + channelID + "'";
 
         //System.out.println("Query:"+Query);
-        ResultSet rs = hn.ExecuteQuery(Query);
+        ResultSet rs = hn.ExecuteQuery(Query,test);
         int rowsCountReturned = hn.GetRowsCount(rs);
         //System.out.println("rowsCountReturned: "+rowsCountReturned);
         if(rowsCountReturned >= 1) {
@@ -168,7 +168,7 @@ public class EVS_SapRSI {
           		+ "and AGGR_AVAIL_QTY between 1 and 50000 and rough_stock_value = 'G' and article_id = '000000000010115998' order by rand() limit 1";
           
 			//System.out.println("Query:"+Query);
-          ResultSet rs = hn.ExecuteQuery(Query);
+          ResultSet rs = hn.ExecuteQuery(Query,test);
           int rowsCountReturned = hn.GetRowsCount(rs);
           //System.out.println("rowsCountReturned: "+rowsCountReturned);
           String SKUCode=getColumnValue(hn,rs ,"ARTICLE_ID");

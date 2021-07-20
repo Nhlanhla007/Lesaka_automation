@@ -86,6 +86,7 @@ public class EVS_MagentoOrderSAPnumber {
     	}else{
     		JavascriptExecutor exe = (JavascriptExecutor)driver;
             exe.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+            exe.executeScript("window.scrollBy(0,-500)");
     		action.CompareResult("SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
     		throw new Exception("SAP Order Number Is Not Generated");
     	}
