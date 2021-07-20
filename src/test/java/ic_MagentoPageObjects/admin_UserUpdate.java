@@ -203,27 +203,30 @@ public class admin_UserUpdate {
 	    	
 	    	action.click(admin_AccountInfoCustomer, "account infor", test);
 	    	String emailText = action.getAttribute(admin_email, "value");
-	    	if(emailFlag.equalsIgnoreCase("yes")){
-	    		String emailTextUpdated = id+"updated@jdg.co.za";
-	    		action.clear(admin_email, "removing the email");
-	    		action.writeText(admin_email,emailTextUpdated ,"last Name", test);
-	    		adminSheets.get(0).get("adminEmail_output").set(sheetRow1, emailTextUpdated);
-	    		
-	    		action.click(admin_SaveCustomerBtn, "Save", test);	
-	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, "",test), test);
-	    		
-	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
-	    		action.explicitWait(5000);
-	    		//admin_AccountInfoCustomer.click();
-	    		action.click(admin_AccountInfoCustomer, "customer infor", test);
-	    	}else {
-	    		adminSheets.get(0).get("adminEmail_output").set(sheetRow1, emailText);
-	    	}
-	    	
-	    	//action.click(admin_AddressBtn, "Change addresses", test);
-	    	//admin_AddressBtn.click();// update it
-	    	action.click(admin_AddressBtn, "Address button", test);
-	    	action.explicitWait(5000);
+
+			if(emailFlag.equalsIgnoreCase("yes")){
+				String emailTextUpdated = id+"updated@jdg.co.za";
+				action.clear(admin_email, "removing the email");
+				action.writeText(admin_email,emailTextUpdated ,"Email", test);
+				adminSheets.get(0).get("adminEmail_output").set(sheetRow1, emailTextUpdated);
+				action.click(admin_SaveCustomerBtn, "Save", test);
+				action.explicitWait(12000);
+				action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, "",test), test);
+				action.explicitWait(5000);
+
+				magRetri.searchForCustomer(emailTextUpdated, test);
+				magRetri.tableData(email, "Incredible Connection", test);
+				action.explicitWait(6000);
+				action.click(admin_AccountInfoCustomer, "Click Account information", test);
+				action.explicitWait(4000);
+				String newText = action.getAttribute(admin_email, "value");
+				adminSheets.get(0).get("adminEmail_output").set(sheetRow1, newText);
+			}else {
+				adminSheets.get(0).get("adminEmail_output").set(sheetRow1, emailText);
+			}
+
+	    	/*action.click(admin_AddressBtn, "Address button", test);
+	    	action.explicitWait(5000);*/
 	    	//Billing Address
 	    	
 

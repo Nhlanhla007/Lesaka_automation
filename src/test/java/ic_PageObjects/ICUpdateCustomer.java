@@ -234,21 +234,22 @@ public class ICUpdateCustomer {
 	    	
 	    	String emailText = action.getAttribute(ic_email, "value");
 	    	if(email.equalsIgnoreCase("yes")){
-	    		action.click(emailCheckBox, "EmailCheckBox", test);
-	    		String emailTextUpdated = id+"Updated@updated.com";
-	    		ic_email.clear();
-	    		action.writeText(ic_email, emailTextUpdated ,"email", test);
+				action.click(emailCheckBox, "EmailCheckBox", test);
+				String emailTextUpdated = id+"Updated@updated.com";
+				ic_email.clear();
+				action.writeText(ic_email, emailTextUpdated ,"email", test);
 				dataTable2.setValueOnCurrentModule("email_output",emailTextUpdated);
-				dataTable2.setValueOnOtherModule("ic_login","Username",emailTextUpdated,0);
-	    		String currentPassWordText = mySheets.get(1).get("Password").get(sheetRow2);
-	    		action.writeText(passCurrent, currentPassWordText, "Current password", test);
-	    		action.click(SaveButton, "Save", test);
-	    		action.explicitWait(5000);
-	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
-	    		action.click(AccountInfoEdit, "Account Infor", test);
-	    	}else {
+
+
+				String currentPassWordText = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnOtherModule("ic_login","loginDetails",0), "password");
+				action.writeText(passCurrent, currentPassWordText, "Current password", test);
+				action.click(SaveButton, "Save", test);
+				action.explicitWait(10000);
+				action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
+				action.click(AccountInfoEdit, "Account Infor", test);
+			}else {
 				dataTable2.setValueOnCurrentModule("email_output",emailText);
-	    	}
+			}
 	    	
 	    	if(passWord.equalsIgnoreCase("yes")){
 	    		action.click(passCheckBox, "PassWordCheckBox", test);

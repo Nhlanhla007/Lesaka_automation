@@ -110,6 +110,7 @@ public class MagentoOrderStatusPage {
 	
 	public void viewOrderDetails(ExtentTest test) throws IOException, InterruptedException {
 		confirmRows(magentoTableRecords, test);
+		action.explicitWait(10000);
 		if (magentoTableRecords.size() == 1) {
 			action.click(viewOrderDetails, "Order Status", test);
 			Thread.sleep(10000);

@@ -260,6 +260,7 @@ public class Magento_UserInfoVerification {
 			//GETS DATA FROM adminUserUpdates
 			//action.scrollElementIntoView(Account_Information);
 			action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
+			action.explicitWait(3000);
 			action.click(Account_Information, "Account Information", test);
 			action.explicitWait(5000);
 			ExpFirstname=dataTable2.getValueOnOtherModule("adminUserUpdate", "adminFirstName_output", 0).trim();
