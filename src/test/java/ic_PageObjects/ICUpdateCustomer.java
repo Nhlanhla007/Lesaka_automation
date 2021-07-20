@@ -80,7 +80,7 @@ public class ICUpdateCustomer {
 	    private WebElement passConfirmation;
 	    
 	   // @FindBy(xpath="/html/body/div[1]/header/div[3]/div[2]/div/div/div")
-        @FindBy(xpath="//div[contains(text(),'You saved the account information.')]")
+        @FindBy(xpath="//div[contains(text(),'You saved the address.')]")
         private WebElement successSaved;
 	    
 	    //still need to add the xpath
@@ -320,9 +320,11 @@ public class ICUpdateCustomer {
 		    		dataTable2.setValueOnCurrentModule("billing_postalCode_output",postalCodeText);
 		    		
 		    		action.click(SaveButton, "Save", test);
-		    		action.waitExplicit(4000);
+		    		action.explicitWait(5000);
 		    		action.waitUntilElementIsDisplayed(successSaved,10);
-		    		action.CompareResult("User address Saved", "You saved the address.", action.getText(successSaved, "Billing address updated",test), test);
+		    		String successMsg=action.getText(successSaved, "You saved the address.",test);
+
+		    		action.CompareResult("User address Saved", "You saved the address.", successMsg, test);
 		    	
 		    	}else {
 		    		dataTable2.setValueOnCurrentModule("billing_streetAddress_output",streetAdressText);

@@ -165,12 +165,12 @@ public class Magento_UserInfoVerification {
 				
 				//String ActSAID = FetchDataFromCustInfo_MagentoBackend(Cust_SAID, "Customer_SAID", 11, 2, test);
 				String actualID = action.getAttribute(Cust_SAID, "value");
-				action.CompareResult("Verify the SAID number in Magento backend : ", ExpSAIDnumber, actualID, test);
+				action.CompareResult("SAID number in Magento backend : ", ExpSAIDnumber, actualID, test);
 				break;
 			case "Passport":
 				//String ActPassport = FetchDataFromCustInfo_MagentoBackend(Cust_Passport, "Customer_Passport", 11, 2, test);
 				String acutalPassport = action.getAttribute(Cust_Passport, "value");
-				action.CompareResult("Verify the Passport number in Magento backend : ", ExpPassportnumber, acutalPassport, test);
+				action.CompareResult("Passport number in Magento backend : ", ExpPassportnumber, acutalPassport, test);
 				break;
 		
 		}
@@ -186,7 +186,7 @@ public class Magento_UserInfoVerification {
 		if(vatNumberFlag.equalsIgnoreCase("Yes")){
 			//String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
 			String actualVat = action.getAttribute(Cust_VAT, "value");
-			action.CompareResult("Verify the VAT number in Magento backend : ", ExpVATnumber, actualVat, test);
+			action.CompareResult("VAT number in Magento backend : ", ExpVATnumber, actualVat, test);
 
 		}
 		
@@ -197,9 +197,9 @@ public class Magento_UserInfoVerification {
 				boolean checknewsletter =action.elementExists(Cust_NewsLetter, TimetoLoadpage);
 				if(checknewsletter==true){
 					 ActNewsletteres =action.getAttribute(Cust_NewsLetter, "value");
-					action.CompareResult("Verify the Newsletter subscription is Checked  : ", "true",String.valueOf(ActNewsletteres), test);
+					action.CompareResult("Newsletter subscription is Checked  : ", "true",String.valueOf(ActNewsletteres), test);
 				}else{
-					action.CompareResult("Verify the Newsletter subscription is Checked: ", "true", String.valueOf(ActNewsletteres), test);
+					action.CompareResult("Newsletter subscription is Checked: ", "true", String.valueOf(ActNewsletteres), test);
 				}
 				
 				break;
@@ -209,9 +209,9 @@ public class Magento_UserInfoVerification {
 				boolean checknewsletter1=action.elementExists(Cust_NewsLetter, TimetoLoadpage);
 				if(checknewsletter1==true){
 					ActNonewsletter =action.getAttribute(Cust_NewsLetter, "value");
-					action.CompareResult("Verify the No Newsletter subscription : ", "false",String.valueOf(ActNonewsletter), test);
+					action.CompareResult("No Newsletter subscription : ", "false",String.valueOf(ActNonewsletter), test);
 				}else{
-					action.CompareResult("Verify the No Newsletter subscription : ", "false", String.valueOf(ActNonewsletter), test);
+					action.CompareResult("No Newsletter subscription : ", "false", String.valueOf(ActNonewsletter), test);
 				}
 				break;
 		
@@ -232,12 +232,12 @@ public class Magento_UserInfoVerification {
 					case "ID":
 						//String ActSAID = FetchDataFromCustInfo_MagentoBackend(Cust_SAID, "Customer_SAID", 11, 2, test);
 						String actualID = action.getAttribute(Cust_SAID, "value");
-						action.CompareResult("Verify the SAID number in Magento backend : ", ExpSAIDnumber, actualID, test);
+						action.CompareResult("SAID number in Magento backend : ", ExpSAIDnumber, actualID, test);
 						break;
 					case "Passport":
 						//String ActPassport = FetchDataFromCustInfo_MagentoBackend(Cust_Passport, "Customer_Passport", 11, 2, test);
 						String acutalPassport = action.getAttribute(Cust_Passport, "value");
-						action.CompareResult("Verify the Passport number in Magento backend : ", ExpPassportnumber, acutalPassport, test);
+						action.CompareResult("Passport number in Magento backend : ", ExpPassportnumber, acutalPassport, test);
 						break;
 				}
 					
@@ -319,21 +319,21 @@ public class Magento_UserInfoVerification {
 			String magentoGuestTelephone = action.getAttribute(guestTelephone, "value");
 			
 			action.mouseover(guestFirstName, "Guest first name");
-			action.CompareResult("Verify the First name in Magento backend : ", ExpFirstname, magentoGuestFirstName, test);
+			action.CompareResult("First name in Magento backend : ", ExpFirstname, magentoGuestFirstName, test);
 			action.mouseover(guestLastName, "Guest Last Name");
-			action.CompareResult("Verify the Last name in Magento backend : ", ExpLastname, magentoGuestLastName, test);
+			action.CompareResult("Last name in Magento backend : ", ExpLastname, magentoGuestLastName, test);
 			action.mouseover(guestEmail, "Guest email");
-			action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, magentoGuestEmail, test);
+			action.CompareResult("Email in Magento backend : ", ExpEmail, magentoGuestEmail, test);
 			action.mouseover(guestID, "Guest ID");
-			action.CompareResult("Verify the SAID number in Magento backend : ", ExpSAIDnumber, magentoGuestID, test);
+			action.CompareResult("SAID number in Magento backend : ", ExpSAIDnumber, magentoGuestID, test);
 			action.mouseover(guestVatNumber, "Guest VAT number");
-			action.CompareResult("Verify the VAT number in Magento backend : ", ExpVATnumber, magentoGuestVatNumber, test);
-			action.CompareResult("Verify Street address in Magento backend :", expStreetAddress,magentoGuestStreetAddress , test);
-			action.CompareResult("Verify City in Magento backend : ", expCity, magentoGuestCity, test);
+			action.CompareResult("VAT number in Magento backend : ", ExpVATnumber, magentoGuestVatNumber, test);
+			action.CompareResult("Street address in Magento backend :", expStreetAddress,magentoGuestStreetAddress , test);
+			action.CompareResult("City in Magento backend : ", expCity, magentoGuestCity, test);
 		//	action.CompareResult("Verify Province in Magento Backend", expProvince, magentoGuestProvince, test);
-			action.CompareResult("Verify Suburb in Magento backend : ", expSuburb, magentoGuestSuburb, test);
-			action.CompareResult("Verify Postal code in Magento backend : ", expPostalCode, magentoGuestPostalCode, test);
-			action.CompareResult("Verify Telephone in Magento backend : ", expTelephone, magentoGuestTelephone, test);
+			action.CompareResult("Suburb in Magento backend : ", expSuburb, magentoGuestSuburb, test);
+			action.CompareResult("Postal code in Magento backend : ", expPostalCode, magentoGuestPostalCode, test);
+			action.CompareResult("Telephone in Magento backend : ", expTelephone, magentoGuestTelephone, test);
 			//GET ADDRESS INFORMATION 
 			/*
 			 * String expStreetAddress
@@ -360,11 +360,11 @@ public class Magento_UserInfoVerification {
 			//String ActSAID = FetchDataFromCustInfo_MagentoBackend(Cust_SAID, "Customer_SAID", 11, 2, test);
 			action.waitUntilElementIsDisplayed(Cust_SAID, 20);
 			String actualID = action.getAttribute(Cust_SAID, "value");
-			action.CompareResult("Verify the SAID number in Magento backend : ", ExpSAIDnumber, actualID, test);
+			action.CompareResult("SAID number in Magento backend : ", ExpSAIDnumber, actualID, test);
 			
 			//String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
 			String actualVat = action.getAttribute(Cust_VAT, "value");
-			action.CompareResult("Verify the VAT number in Magento backend : ", ExpVATnumber, actualVat, test);
+			action.CompareResult("VAT number in Magento backend : ", ExpVATnumber, actualVat, test);
 			
 		}
 		
@@ -379,14 +379,14 @@ public class Magento_UserInfoVerification {
 		//String ActFirstname = FetchDataFromCustInfo_MagentoBackend(Cust_Firstname, "Customer_Firstname", 11, 2, test);
 		action.explicitWait(3000);
 		String actualFirstName = action.getAttribute(Cust_Firstname, "value");
-		action.CompareResult("Verify the First name in Magento backend : ", ExpFirstname, actualFirstName, test);
+		action.CompareResult("First name in Magento backend : ", ExpFirstname, actualFirstName, test);
 		//String ActLastname = FetchDataFromCustInfo_MagentoBackend(Cust_Lastname, "Custome_Lastname", 11, 2, test);
 		String actualLastName = action.getAttribute(Cust_Lastname, "value");
-		action.CompareResult("Verify the Last name in Magento backend : ", ExpLastname, actualLastName, test);
+		action.CompareResult("Last name in Magento backend : ", ExpLastname, actualLastName, test);
 		
 		//String ActEmailname = FetchDataFromCustInfo_MagentoBackend(Cust_Email, "Customer_Email", 11, 2, test);
 		String actualEmail = action.getAttribute(Cust_Email, "value");
-		action.CompareResult("Verify the Email in Magento backend : ", ExpEmail, actualEmail, test);
+		action.CompareResult("Email in Magento backend : ", ExpEmail, actualEmail, test);
 
 		
 		String ActualBPnumber =FetchDataFromCustInfo_MagentoBackend(customerBPnnumber,"customerBPnnumber",TimetoLoadpage,40,test);
