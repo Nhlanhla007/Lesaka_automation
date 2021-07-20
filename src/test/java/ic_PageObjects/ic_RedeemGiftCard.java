@@ -60,7 +60,7 @@ public class ic_RedeemGiftCard {
 	 @FindBy(xpath = "//*[@id=\"giftcard-form\"]/div/div[3]/div[1]/button/span")
 	 WebElement ic_Apply;
 	 
-	 @FindBy(xpath = "//html/body/div[1]/header/div[3]/div[2]/div/div/div")
+	 @FindBy(xpath = "//*[@data-bind=\"html: $parent.prepareMessageForHtml(message.text)\"]")
 	 WebElement ic_SuccessfullyApplied;
 	 
 	 @FindBy(xpath = "//*[@id=\"cart-totals\"]/div/table/tbody/tr[1]/td/span")
@@ -90,7 +90,7 @@ public class ic_RedeemGiftCard {
 	 @FindBy(xpath = "//*[@class=\"message-error error message\"]")
 	 private WebElement invalidCouponCodeErrorPopUp;
 	 
-	 int finalAmount = 0;
+	 double finalAmount = 0;
 	 int finalOrder = 0;
 	 public void redeemGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, Exception{
 		 String giftCardCode = input.get("giftCardCode").get(rowNumber);
@@ -106,26 +106,33 @@ public class ic_RedeemGiftCard {
 		 }
 		 //Enter the field
 		 if(UsageType.equalsIgnoreCase("Redeem")){
+			action.scrollElementIntoView(ic_GiftCardCode); 
 		 action.writeText(ic_GiftCardCode, giftCardCode, "Gift Card code", test);
 		 action.writeText(ic_GiftCardScratchCode, scratchCode, "Scratch Code", test);
 		 //click apply
 		 action.click(ic_Apply, "apply the the gift card", test);
 		 String giftCarddValidate = null;
-		 if(action.elementExistWelcome(ic_SuccessfullyApplied, 4, "Gift card added", test)){
+		 if(action.elementExists(ic_SuccessfullyApplied, 5)){
 			 giftCarddValidate = action.getText(ic_SuccessfullyApplied, "gift card added",test);
+			 action.CompareResult("Gift card added", "Gift Card \""+giftCardCode.trim()+"\" was added.",giftCarddValidate , test);
+		 } else{
+			 action.CompareResult("Popup appeared?", "True", "False", test);
+			 throw new Exception("There's a problem with the gift card code");
 		 }
 
-		 action.CompareResult("Gift card added", "Gift Card \""+giftCardCode.trim()+"\" was added.",giftCarddValidate , test);
 		 String subTotal = action.getText(ic_miniCartSubtotal, "Subtotal",test);
 		 String cardAmount = action.getText(ic_GiftcardAmount, "CardAmount",test);
 		 String finalOrder = action.getText(ic_orderNumber, "value",test);
+		 double subTotalInt = Integer.parseInt(subTotal.replace("R", "").replace(",", ""));
+		 double cardAmountInt = Integer.parseInt(cardAmount.replace("-", "").replace("R", ""));
+		 double finalOrderInt = Integer.parseInt(finalOrder.replace("R", "").replace(",", ""));
 			
-		 finalAmount = (Integer.parseInt(subTotal.replace("R", "")) - Integer.parseInt(cardAmount.replace("-", "").replace("R", "")));
+		 finalAmount = subTotalInt - cardAmountInt;
 		 
 		 String s= String.valueOf(finalAmount);
+		 String fo = String.valueOf(finalOrderInt);
 		 
-		 action.CompareResult("Final order finalized ", "R"+s, finalOrder, test);
-		 
+		 action.CompareResult("Final order finalized ", s, fo, test);
 		 
 		 //validate
 		 action.click(ic_secure, "Checkout Secure clicked", test);
@@ -139,10 +146,13 @@ public class ic_RedeemGiftCard {
 			 
 			 action.click(ic_Apply, "apply the the gift card", test);
 			 String giftCarddValidate = null;
-			 if(action.elementExistWelcome(ic_giftCardError, 4, "Please correct the gift card code.", test)){
+			 if(action.elementExists(ic_giftCardError, 5)){
 				 giftCarddValidate = action.getText(ic_giftCardError, "Please correct the gift card code.",test);
-				 
+				 action.CompareResult("Popup is displayed", giftCarddValidate, "Please correct the gift card code.", test);
 				 action.explicitWait(5000);
+			 } else {
+				 action.CompareResult("Popup appeared?", "True", "False", test);
+				 throw new Exception("The pop-up didn't appear");
 			 }
 			 
 		 }

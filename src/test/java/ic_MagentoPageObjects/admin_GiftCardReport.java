@@ -70,7 +70,7 @@ public admin_GiftCardReport(WebDriver driver, DataTable2 dataTable2){
 	@FindBy(xpath="//*[@id=\"giftcardaccountGrid_table\"]/tbody/tr[1]/td[3]")
 	private WebElement admin_CodeUdsed;
 	
-	@FindBy(xpath="//*[@id=\"historyGrid_table\"]/tbody/tr[1]/td[3]")
+	@FindBy(xpath="//*[@id=\"historyGrid_table\"]/tbody/tr[1]")
 	private WebElement admin_ActionUsed;
 					
 	@FindBy(xpath="//*[@id=\"historyGrid_table\"]/tbody/tr[1]/td[4]")
@@ -105,24 +105,24 @@ public admin_GiftCardReport(WebDriver driver, DataTable2 dataTable2){
 			action.click(admin_GiftCardHistory, "click History", test);
 			Action_Output = action.getText(admin_Action, "value",test);
 			mySheet.get(0).get("Action_Output").set(sheetRow1, Action_Output);
-			balanceChange_Output = action.getText(admin_GiftCardChangeBalance, "value",test);
+			/*balanceChange_Output = action.getText(admin_GiftCardChangeBalance, "value",test);
 			mySheet.get(0).get("balanceChange_Output").set(sheetRow1, balanceChange_Output);
 			currentBalance_Output = action.getText(admin_GiftCardBalance, "value",test);
 			mySheet.get(0).get("currentBalance_Output").set(sheetRow1, currentBalance_Output);
 			OrderNum_Output = action.getText(admin_GiftCardMoreInfo, "value",test);
-			mySheet.get(0).get("OrderNum_Output").set(sheetRow1, OrderNum_Output);
+			mySheet.get(0).get("OrderNum_Output").set(sheetRow1, OrderNum_Output);*/
 		}
 		if(giftCardStatus.equalsIgnoreCase("Used")){
 			action.click(admin_CodeUdsed, "click information", test);
 			action.click(admin_GiftCardHistory, "click History", test);
 			Action_Output = action.getText(admin_ActionUsed, "value",test);
 			mySheet.get(0).get("Action_Output").set(sheetRow1, Action_Output);
-			balanceChange_Output = action.getText(admin_GiftCardBalanceChan, "value",test);
+			/*balanceChange_Output = action.getText(admin_GiftCardBalanceChan, "value",test);
 			mySheet.get(0).get("balanceChange_Output").set(sheetRow1, balanceChange_Output);
 			currentBalance_Output = action.getText(admin_GiftCardBalanceLeft, "value",test);
 			mySheet.get(0).get("currentBalance_Output").set(sheetRow1, currentBalance_Output);
 			OrderNum_Output = action.getText(admin_GiftCardMoreInfoUsed, "value",test);
-			mySheet.get(0).get("OrderNum_Output").set(sheetRow1, OrderNum_Output);
+			mySheet.get(0).get("OrderNum_Output").set(sheetRow1, OrderNum_Output);*/
 	}
 	
 	}
