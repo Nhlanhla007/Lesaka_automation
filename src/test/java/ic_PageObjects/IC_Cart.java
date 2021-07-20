@@ -217,7 +217,9 @@ public class IC_Cart {
 	    }
 	    
 	    public void navigateToViewAndEditCart(ExtentTest test) throws Exception {
-	    	action.clickEle(viewAndEditCart, "View And Edit Cart", test);
+			action.scrollToElement(viewAndEditCart,"View and Edit Cart",test);
+			action.explicitWait(2000);
+			action.clickEle(viewAndEditCart, "View And Edit Cart", test);
 	    }
 	    
 	    public void removeAllItemsInCart(ExtentTest test) throws Exception {

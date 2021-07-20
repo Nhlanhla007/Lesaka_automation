@@ -36,7 +36,8 @@ public class ic_SearchMinimumCharacter {
 	@FindBy(xpath = "//header/div[2]/div[1]/div[2]/div[1]/form[1]/div[3]/button[1]")
 	WebElement icSearchIcon;
 	
-	@FindBy(xpath = "/html/body/div[4]")
+//	@FindBy(xpath = "/html/body/div[4]")
+	@FindBy(xpath = "//div[@id='klevuMinLtr']")
 	WebElement icContinueTyping;
 	
 	
