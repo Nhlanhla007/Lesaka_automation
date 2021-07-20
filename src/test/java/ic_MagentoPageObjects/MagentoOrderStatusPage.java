@@ -96,11 +96,11 @@ public class MagentoOrderStatusPage {
 	public void searchForOrder(String idToSearch, ExtentTest test) throws InterruptedException, IOException {
 		if (action.waitUntilElementIsDisplayed(clearFilters,120)) {
 			Thread.sleep(15000);
-			action.click(clearFilters, "Cleared Filters", test);
+			action.javaScriptClick(clearFilters, "Cleared Filters", test);
 			Thread.sleep(12000);
 		}
 		if(action.waitUntilElementIsDisplayed(magentoFilterTab, 60)) {
-		action.click(magentoFilterTab, "Filter tab", test);
+		action.javaScriptClick(magentoFilterTab, "Filter tab", test);
 		action.writeText(magentoIdSearchField, idToSearch, "searchId", test);
 		action.click(magentoApplyFilterTab, "Apply to filters", test);
 		// verify if a row is returned

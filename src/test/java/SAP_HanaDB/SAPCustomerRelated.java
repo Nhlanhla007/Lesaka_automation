@@ -621,9 +621,16 @@ public class SAPCustomerRelated {
 	}
 	
 	public void adrcWithprovince(String BpNumber,ExtentTest test) throws Exception {
+		
+		//Changing the adress type from ZDELIVERY to XXDEFAULT  since update customer doen't have any ZDEFAULT taype in the DB. Need to observe the impact of this change
+//		String query = "select * from SAPEQ1.ADRC "
+//				+ "inner join SAPEQ1.T005U on ADRC.COUNTRY = T005U.LAND1 and ADRC.REGION = T005U.BLAND inner join SAPEQ1.BUT021_FS on ADRC.ADDRNUMBER = BUT021_FS.ADDRNUMBER "
+//				+ "where BUT021_FS.PARTNER = '"+BpNumber+"' and BUT021_FS.ADR_KIND = 'ZDELIVERY' and T005U.MANDT = 000 and T005U.SPRAS = 'E'";
+//		
 		String query = "select * from SAPEQ1.ADRC "
 				+ "inner join SAPEQ1.T005U on ADRC.COUNTRY = T005U.LAND1 and ADRC.REGION = T005U.BLAND inner join SAPEQ1.BUT021_FS on ADRC.ADDRNUMBER = BUT021_FS.ADDRNUMBER "
-				+ "where BUT021_FS.PARTNER = '"+BpNumber+"' and BUT021_FS.ADR_KIND = 'ZDELIVERY' and T005U.MANDT = 000 and T005U.SPRAS = 'E'";
+				+ "where BUT021_FS.PARTNER = '"+BpNumber+"' and BUT021_FS.ADR_KIND = 'XXDEFAULT' and T005U.MANDT = 000 and T005U.SPRAS = 'E'";
+		
 		ResultSet set = hn.ExecuteQuery(query,test);
 		int rowsCountReturned = hn.GetRowsCount(set);
 		for (adrcColumns adrc : adrcColumns.values()) {

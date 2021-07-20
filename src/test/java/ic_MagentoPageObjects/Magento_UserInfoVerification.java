@@ -278,6 +278,7 @@ public class Magento_UserInfoVerification {
 				action.explicitWait(5000);
 				action.click(admin_billingEdit, "Billing Address Edit", test);
 				String updatedBillingAddress = dataTable2.getValueOnOtherModule("adminUserUpdate", "adminBilling_streetAddress_output", 0);
+				action.waitUntilElementIsDisplayed(admin_Billing_streetAddress, 20000);
 				String actualBillingAdd = action.getAttribute(admin_Billing_streetAddress, "value");
 				action.CompareResult("Billing Address In Magento Backend", updatedBillingAddress, actualBillingAdd, test);
 			}

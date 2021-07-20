@@ -251,6 +251,7 @@ public class admin_UserUpdate {
 	    		streetAddresses.add("100 Northern Parkway");
 	    		int randomitem = r.nextInt(streetAddresses.size());
 	    		
+	    		action.waitUntilElementIsDisplayed(admin_BillingStreetAddress, 20000);
 	    		String streetAdressText = action.getAttribute(admin_BillingStreetAddress, "value");
 	    		if(billing_streetAddress.equalsIgnoreCase("yes")){
 		    		
