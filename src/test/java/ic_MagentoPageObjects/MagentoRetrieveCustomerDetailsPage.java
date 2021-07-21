@@ -82,7 +82,8 @@ public class MagentoRetrieveCustomerDetailsPage {
 			
 		try {
 			if (action.waitUntilElementIsDisplayed(clearFilters, 60)) {
-				action.click(clearFilters, "Cleared Filters", test);
+				//action.click(clearFilters, "Cleared Filters", test);
+				action.javaScriptClick(clearFilters, "Cleared Filters", test);
 				action.explicitWait(10000);
 			}
 		}catch(Exception e){

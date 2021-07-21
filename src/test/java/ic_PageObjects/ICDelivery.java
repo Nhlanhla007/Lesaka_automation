@@ -224,7 +224,8 @@ public class ICDelivery {
 			 *///Add else if for other scenario
         if(action.waitUntilElementIsDisplayed(ContinueToPayment, 15000)) {
         	action.explicitWait(5000);
-        action.click(ContinueToPayment,"ContinueToPayment",test);
+        //action.click(ContinueToPayment,"ContinueToPayment",test);
+        action.javaScriptClick(ContinueToPayment,"ContinueToPayment",test);
         }
     }
     

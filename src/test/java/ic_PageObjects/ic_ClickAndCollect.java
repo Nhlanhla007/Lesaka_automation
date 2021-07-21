@@ -49,7 +49,7 @@ public class ic_ClickAndCollect {
             action.explicitWait(10000);
 
             if(!(Storelist.size()>1)){
-            action.acceptAlert();
+            //action.acceptAlert();
             action.explicitWait(10000);
             }
 

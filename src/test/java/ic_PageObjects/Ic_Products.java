@@ -246,7 +246,7 @@ public class Ic_Products {
 	 * @param rowNumber
 	 */
 	public void ic_SelectProductAndAddToCart(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
-			throws IOException {
+			throws Exception {
 		String typeSearch = input.get("typeSearch").get(rowNumber);
 		String productsToSearch = input.get("specificProduct").get(rowNumber);
 		String quantityOfSearchProducts = input.get("Quantity").get(rowNumber);
@@ -255,7 +255,7 @@ public class Ic_Products {
 		String validationRequired = dataTable2.getValueOnCurrentModule("validationRequired");
 		List<String> theProducts = filterProducts(productsToSearch);
 
-		try {
+		//try {
 			Map<String, List<String>> productsInCart = ic_CreateCartFromProductListing(productsToSearch,
 					quantityOfSearchProducts, typeSearch, waitTimeInSeconds, test);
 			switch (TypeOfOperation) {
@@ -274,10 +274,10 @@ public class Ic_Products {
 			 */
 			}
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.info(e.getMessage());
-		}
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			logger.info(e.getMessage());
+//		}
 
 	}
 
@@ -376,10 +376,11 @@ public class Ic_Products {
 			cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds),
 					test);
 			action.explicitWait(8000);
-		} else {
-			String outOfStockMessage = productOutOfStock.getText();
-			action.CompareResult("Product is out of stock", "Currently Out of Stock", outOfStockMessage, test);
-		}
+		} /*
+			 * else { String outOfStockMessage = productOutOfStock.getText();
+			 * action.CompareResult("Product is out of stock", "Currently Out of Stock",
+			 * outOfStockMessage, test); }
+			 */
 		// click add to cart button
 	}
 
@@ -435,11 +436,11 @@ public class Ic_Products {
 	public static Map<String, List<String>> productData;
 
 	Map<String, List<String>> ic_CreateCartFromProductListing(String productsList, String quantityOfProducts,
-			String searchCategory, String waitTimeInSeconds, ExtentTest test) {
+			String searchCategory, String waitTimeInSeconds, ExtentTest test) throws Exception {
 		productData = new LinkedHashMap<>();
 		String cartAdditionMethod = dataTable2.getValueOnCurrentModule("CartAdditionMethod");
 		String TypeOfOperation = dataTable2.getValueOnCurrentModule("TypeOfOperation");
-		try {
+		//try {
 			List<String> theProducts = filterProducts(productsList);
 			List<String> quantity = filterProducts(quantityOfProducts);
 			for (int s = 0; s < theProducts.size(); s++) {
@@ -480,7 +481,7 @@ public class Ic_Products {
 										// compareProducts.clearAllProduct(test, prod);
 										break;
 									case "Validate_Out_Of_Stock":
-										addToCartFromProdDetailsPage(prod, waitTimeInSeconds, quantityExecu, test);
+										validateProductOutOfStock(prod, waitTimeInSeconds, quantityExecu, test);
 										break;
 									}
 
@@ -495,11 +496,29 @@ public class Ic_Products {
 				}
 				productData.put(productName, productPriceAndQuantity);
 			}
-		} catch (Exception e) {
-			logger.info(e.getMessage());
-			e.printStackTrace();
-		}
+//		} catch (Exception e) {
+//			logger.info(e.getMessage());
+//			e.printStackTrace();
+//		}
 		return productData;
 
 	}
+	
+	public void validateProductOutOfStock(WebElement productLink, String waitTimeInSeconds, int quanity, ExtentTest test) throws Exception {
+		if (quanity == 1) {
+			action.click(productLink, "Navigate to product Details page", test);
+		}
+
+		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		boolean isPresent = driver.findElements(By.id("product-addtocart-button")).size() > 0;
+		action.CompareResult("Add To Cart Button Should Not Be Present", "true", String.valueOf(!isPresent), test);
+		if (isPresent) {
+			throw new Exception("Selected Product Is In Stock");
+		} else {
+			String outOfStockMessage = productOutOfStock.getText();
+			action.CompareResult("Product is out of stock", "Currently Out of Stock", outOfStockMessage, test);
+		}
+	}
+	
+	
 }

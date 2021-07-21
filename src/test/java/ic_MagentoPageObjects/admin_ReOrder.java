@@ -73,7 +73,7 @@ public class admin_ReOrder {
 	    private WebElement admin_NewPOnumber;
 	    
 	    
-    public void editOrder(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException{
+    public void editOrder(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception{
     	String orderComment = dataTable2.getValueOnCurrentModule("orderComment");
     	String refreshWaitTime = dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber", "totalCounter", 0);
     	//String orderQty = dataTable2.getValueOnCurrentModule("orderQty");
@@ -134,7 +134,9 @@ public class admin_ReOrder {
 		System.out.println("elapsedTime: "+elapsedTime);
 		
     	}
-    
+    	if(flagres == false) {
+    		throw new Exception("New ReOrder SAP number is not generated");
+    	}
     }
     
     public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
