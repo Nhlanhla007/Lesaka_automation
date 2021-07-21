@@ -166,7 +166,11 @@ public class SAPCustomerRelated {
 				navigateToCustomerBpNumber(updateEmail, website, test);
 			}else {
 				//email that logged into ic with
-				navigateToCustomerBpNumber(dataTable2.getValueOnOtherModule("ic_login", "Username", 0), website, test); //Change
+
+//				navigateToCustomerBpNumber(dataTable2.getValueOnOtherModule("ic_login", "Username", 0), website, test); //Change
+
+				navigateToCustomerBpNumber(dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnOtherModule("ic_login","loginDetails",0), "username"), website, test);
+
 			}
 			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Creation Magento Admin")) {

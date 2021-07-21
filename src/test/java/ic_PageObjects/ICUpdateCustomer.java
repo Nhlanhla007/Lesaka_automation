@@ -80,8 +80,11 @@ public class ICUpdateCustomer {
 	    private WebElement passConfirmation;
 	    
 	   // @FindBy(xpath="/html/body/div[1]/header/div[3]/div[2]/div/div/div")
-        @FindBy(xpath="//div[contains(text(),'You saved the address.')]")
+        @FindBy(xpath="//div[contains(text(),'You saved the account information.')]")
         private WebElement successSaved;
+
+	@FindBy(xpath="//div[contains(text(),'You saved the address.')]")
+	private WebElement successSavedAddress;
 	    
 	    //still need to add the xpath
 	  //*[@id="account-nav"]/ul/li[5]/a
@@ -321,8 +324,8 @@ public class ICUpdateCustomer {
 		    		
 		    		action.click(SaveButton, "Save", test);
 		    		action.explicitWait(5000);
-		    		action.waitUntilElementIsDisplayed(successSaved,10);
-		    		String successMsg=action.getText(successSaved, "You saved the address.",test);
+		    		action.waitUntilElementIsDisplayed(successSavedAddress,10);
+		    		String successMsg=action.getText(successSavedAddress, "You saved the address.",test);
 
 		    		action.CompareResult("User address Saved", "You saved the address.", successMsg, test);
 		    	
@@ -363,7 +366,7 @@ public class ICUpdateCustomer {
 	    		
 	    		action.click(SaveButton, "Save", test);
 				action.explicitWait(4000);
-	    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSaved, "Shipping address updated",test), test);
+	    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSavedAddress, "Shipping address updated",test), test);
 	    		
 	    	}
 	    	}

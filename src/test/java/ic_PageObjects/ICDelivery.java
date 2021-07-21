@@ -146,7 +146,7 @@ public class ICDelivery {
     	String addressType = dataSheets.getValueOnCurrentModule("AddressType"); 
     	String userType = dataSheets.getValueOnCurrentModule("UserType");
         //Thread.sleep(10000);
-    	action.explicitWait(15000);
+    	action.explicitWait(30000);
     	if(action.waitUntilElementIsDisplayed(deliveryLink, 10000)) {
         action.click(deliveryLink,"deliveryLink",test);
     	}
