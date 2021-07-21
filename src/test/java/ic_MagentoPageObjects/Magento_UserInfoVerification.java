@@ -467,11 +467,12 @@ public class Magento_UserInfoVerification {
 //			long timeElapsed = Duration.between(start,finish).toSeconds();
 		}
 		if(resData.isEmpty() | resData==null | resData == ""){
-
+			action.scrollElemetnToCenterOfView(customerBPnnumber, "Customer BP Number", test);
 			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "False", test);
 			throw new Exception("Partner Number Is Not Generated");
 			//return resData;
 		}else{
+			action.scrollElemetnToCenterOfView(customerBPnnumber, "Customer BP Number", test);
 			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "True", test);
 			return resData;
 		}
