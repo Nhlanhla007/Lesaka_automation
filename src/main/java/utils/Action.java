@@ -27,11 +27,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
 import com.google.common.base.Function;
 import Logger.Log;
@@ -656,8 +652,8 @@ public class Action {
      */
     public <T> boolean waitUntilElementIsDisplayed(T elementAttr, int secs) throws InterruptedException {
 
-        if((secs / 1000)>=1){
-            secs=secs/1000;
+        if ((secs / 1000) >= 1) {
+            secs = secs / 1000;
         }
 
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
@@ -862,18 +858,18 @@ public class Action {
         }
     }
 
-    public <T> void waitForElementDisplay(WebElement el, long time,String name) {
+    public <T> void waitForElementDisplay(WebElement el, long time, String name) {
 
         WebDriverWait wait = new WebDriverWait(driver, time);
-            try {
-                wait.until(ExpectedConditions.visibilityOf(el));
+        try {
+            wait.until(ExpectedConditions.visibilityOf(el));
 
-            } catch (Exception e) {
-                logger.info("Unable to locate element: "+name);
-                throw e;
+        } catch (Exception e) {
+            logger.info("Unable to locate element: " + name);
+            throw e;
 
-            }
         }
+    }
 
     /**
      * This method used for for checking the presence of the value in the list
@@ -1816,6 +1812,5 @@ public class Action {
         robot.keyPress(KeyEvent.VK_ENTER);
         robot.keyRelease(KeyEvent.VK_ENTER);
     }
-
 
 }

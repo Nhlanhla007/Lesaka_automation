@@ -15,6 +15,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import Logger.Log;
 
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -144,18 +146,33 @@ public class TestCaseBase {
 		ChromeOptions options = new ChromeOptions();
 		options.addArguments("--disable-notifications");
 		options.addArguments("disable-infobars");
-//		options.addArguments("--disable-gpu");
 		options.addArguments("--disable-dev-shm-usage");
-		//new
-		/*	options.addArguments("enable-automation"); 
+
+		/*	options.addArguments("enable-automation");
+		options.addArguments("--disable-gpu");
 		options.addArguments("--disable-browser-side-navigation");
 		options.addArguments("--disable-gpu");
 		options.addArguments("--disable-dev-shm-usage");
-		 options.addArguments("--dns-prefetch-disable"); */
+		options.addArguments("--dns-prefetch-disable");
+		options.setPageLoadStrategy(PageLoadStrategy.NORMAL);*/
 		options.addArguments("--disable-features=VizDisplayCompositor");
-		//	options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+
 		options.setHeadless(true);
 		options.addArguments("window-size=1382,744");
+
+		Map < String, Object > prefs = new HashMap < String, Object > ();
+		Map < String, Object > profile = new HashMap < String, Object > ();
+		Map < String, Object > contentSettings = new HashMap < String, Object > ();
+
+		// SET CHROME OPTIONS
+		// 0 - Default, 1 - Allow, 2 - Block
+		contentSettings.put("geolocation", 1);
+		profile.put("managed_default_content_settings", contentSettings);
+		prefs.put("profile", profile);
+		options.setExperimentalOption("prefs", prefs);
+		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+
+
 		options.merge(capabilities);
 		setPropertyByOS("chrome");
 		return options;
