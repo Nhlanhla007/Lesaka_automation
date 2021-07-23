@@ -143,7 +143,7 @@ public class MagentoOrderStatusPage {
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception, InterruptedException {
 //		String POfetchFrom = dataTable2.getValueOnOtherModule("OrderStatusSearch", "Fetch PO number", 0);
 //		String idToSearch = dataTable2.getValueOnOtherModule("PayUPagePayment","OrderID",0);
-		String idToSearch = "3100002624";//dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);//"3100002010";
+		String idToSearch = dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);//"3100002010";
 //		if(POfetchFrom.equalsIgnoreCase("IC")) {
 //			idToSearch= ic_PayUPayment.Oderid;
 //		}else {
