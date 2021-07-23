@@ -33,7 +33,7 @@ public class IC_RetriveOrderID {
     public void RetriveOrderID(ExtentTest test) throws IOException {
     	String typeOfUser = dataTable2.getValueOnOtherModule("deliveryPopulation", "UserType", 0).trim();
         String Oderid = null;
-        action.explicitWait(10000);
+//        action.explicitWait(10000);
         if(typeOfUser.equalsIgnoreCase("Registered")) {
         	action.isElementOnNextPage(OderIDRegisteredUser, (long) 11,test);
             Oderid = action.getText(OderIDRegisteredUser, "Order ID",test);

@@ -45,10 +45,11 @@ public class ic_LoginPasswordIsSecured {
 		String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("ic_login","loginDetails",0),"username");
 		String Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("ic_login","loginDetails",0),"password");
 		action.navigateToURL(url);
+		action.waitForPageLoaded(10);
 //		action.waitForPageLoaded(10);
-		action.explicitWait(10000);
+//		action.explicitWait(10000);
 		ic_myAccountButton.click();
-		action.explicitWait(3000);
+		action.explicitWait(2000);
 		ic_myAccountlist.click();
 		
 		List<String> userCred = new ArrayList<>();
@@ -56,7 +57,7 @@ public class ic_LoginPasswordIsSecured {
 		userCred.add(Password);
 		action.writeText(ic_Username, Username, "Username field", test);
 		action.writeText(ic_Password, Password, "Password field", test);
-		action.explicitWait(3000);
+		action.explicitWait(2000);
 		
 		String safePass = action.getText(ic_Password, "Get password Encrypted ",test);
 		

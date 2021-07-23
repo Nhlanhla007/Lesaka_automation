@@ -58,18 +58,17 @@ public class ic_Login {
 
     public static String Username;
 
-    public List<String> Login_ic(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException {
+    public List<String> Login_ic(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException, InterruptedException {
 
         String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("loginDetails"), "url");
         String Username = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("loginDetails"), "username");
         String Password = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("loginDetails"), "password");
         JavascriptExecutor executor = (JavascriptExecutor) driver;
+
         action.navigateToURL(url);
-        action.waitForPageLoaded(10);
-			/*driver.navigate().refresh();
-			action.explicitWait(10000);*/
+        action.waitForPageLoaded(30);
         executor.executeScript("arguments[0].click();", ic_myAccountButton);
-        action.explicitWait(3000);
+        action.explicitWait(2000);
         executor.executeScript("arguments[0].click();", ic_Login);
 
 
@@ -77,6 +76,7 @@ public class ic_Login {
 
         userCred.add(Username);
         userCred.add(Password);
+        action.waitUntilElementIsDisplayed(ic_Username,2);
         action.writeText(ic_Username, Username, "Username field", test);
         action.writeText(ic_Password, Password, "Password field", test);
         action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);

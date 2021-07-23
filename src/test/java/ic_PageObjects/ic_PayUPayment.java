@@ -50,7 +50,7 @@ public class ic_PayUPayment {
 			String Expiremonth = dataTable2.getValueOnCurrentModule("Expiremonth");
 			String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
 			String cvv = dataTable2.getValueOnCurrentModule("cvv");
-			action.explicitWait(5000);
+//			action.explicitWait(5000);
 			action.waitUntilElementIsDisplayed(PayU_Card,20);
 	        action.javaScriptClick(PayU_Card, " Card option in PayU",test);
 			//action.clickEle(PayU_Card, " Card option in PayU",test);
@@ -61,7 +61,8 @@ public class ic_PayUPayment {
 			action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Month on Card",test);
 			action.writeText(cvvNumber, cvv, "cvv number",test);
 			action.clickEle(PayBtn, "Payment submission button",test);
-			action.explicitWait(10);
-			System.out.println("##############END Execution###############");
+			action.waitForPageLoaded(30);
+
+//			action.explicitWait(10);
 		}
 }

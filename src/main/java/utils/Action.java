@@ -1813,4 +1813,41 @@ public class Action {
         robot.keyRelease(KeyEvent.VK_ENTER);
     }
 
+    public void ajaxWait(int timeoutInSeconds,ExtentTest test) throws Exception {
+
+        ExtentTest node = test.createNode("Check Ajax components Loaded");
+        if((timeoutInSeconds / 1000)>=1){
+            timeoutInSeconds=timeoutInSeconds/1000;
+        }
+        boolean flag = true;
+        int count = 0;
+        Boolean isJqueryCallDone;
+        while(flag == true & count < timeoutInSeconds) {
+            isJqueryCallDone = (Boolean)((JavascriptExecutor) driver).executeScript("return jQuery.active==0");
+            System.out.println("AJAX call completion: "+isJqueryCallDone);
+            if(isJqueryCallDone.booleanValue()==true) {
+                flag = false;
+                break;
+
+            }
+            Thread.sleep(1000);
+            count++;
+        }
+        if(flag == true) {
+            System.out.println("Ajax Page was not loaded in: "+count+" seconds");
+            String screenShot = GenerateScreenShot.getScreenShot(driver);
+
+            node.warning("Ajax Page was not loaded in: "+count+" seconds"+ node.addScreenCaptureFromPath(screenShot));
+        }
+        else{
+            System.out.println("Ajax Page loading completed in: "+count+" seconds");
+
+
+        }
+    }
+
+
+
+
+
 }

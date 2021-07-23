@@ -133,7 +133,7 @@ public class Ic_Products {
 		try {
 			if (ic_ElementVisable(icProductLink)) {
 				action.click(icProductLink, "Click product link", test);
-				Thread.sleep(10000);
+				Thread.sleep(5000);
 			}
 
 		} catch (Exception e) {
@@ -207,7 +207,8 @@ public class Ic_Products {
 			action.clear(icSearchBar, "SearchBar");
 			action.writeText(icSearchBar, productToFind, "SearchBar", test);
 			action.click(icSearchIcon, "Click on search", test);
-			Thread.sleep(10000);
+			action.waitForPageLoaded(20);
+//			Thread.sleep(10000);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info(e.getMessage());
@@ -354,7 +355,7 @@ public class Ic_Products {
 			Thread.sleep(2000);
 			addToCartButton.click();
 			cartValidation.cartButtonValidation(addToCartButton, Integer.parseInt(waitTimeInSeconds), test);
-			Thread.sleep(7000);
+			Thread.sleep(4000);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.info(e.getMessage());
@@ -375,7 +376,7 @@ public class Ic_Products {
 			productDetailsPageAddToCartButton.click();
 			cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds),
 					test);
-			action.explicitWait(8000);
+			action.explicitWait(5000);
 		} /*
 			 * else { String outOfStockMessage = productOutOfStock.getText();
 			 * action.CompareResult("Product is out of stock", "Currently Out of Stock",

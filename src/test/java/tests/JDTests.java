@@ -148,12 +148,12 @@ public class JDTests extends BaseTest {
 			// driver.navigate().to(navigateURL);
 			driver.manage().window().maximize();
 			driver.navigate().refresh();
-			try {
+			/*try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 			logger.info("Browser name is " + browserName);
 
 			logger.info("App URL: " + navigateURL);

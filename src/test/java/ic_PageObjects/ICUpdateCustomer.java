@@ -185,20 +185,22 @@ public class ICUpdateCustomer {
 	    	action.click(ic_myAccountButton, "Navigate to accountTab",test);
 	    	action.click(MyAccountButton2, "My Account", test);
 	    	
-	    	action.click(AccountInfoEdit, "Account Infor", test);
+	    	action.click(AccountInfoEdit, "Account Information", test);
 	    	String firstNameText = action.getAttribute(ic_firstname, "value");
 	    	if(firstName.equalsIgnoreCase("Yes")){
 	    		String firstNameTextUpdated = "Updated" + id;
-	    		action.clear(ic_firstname, "Remmoving first name");
+	    		action.clear(ic_firstname, "Removing first name");
 	    		action.writeText(ic_firstname, firstNameTextUpdated,"first Name", test);
 				dataTable2.setValueOnCurrentModule("firstName_output",firstNameTextUpdated);
 	    		action.click(SaveButton, "Save", test);
-	    		action.explicitWait(5000);
+	    		action.waitForPageLoaded(30);
+	    		action.explicitWait(3000);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
-	    		action.click(AccountInfoEdit, "Account Infor", test);
-	    		action.explicitWait(5000);
+	    		action.click(AccountInfoEdit, "Account Information", test);
+				action.waitForPageLoaded(30);
+//	    		action.explicitWait(5000);
 	    		String firstNameTextSaved = action.getAttribute(firstUpdated, "value");
-	    		action.CompareResult("compare updated first name", firstNameTextUpdated, firstNameTextSaved, test);
+	    		action.CompareResult("updated first name", firstNameTextUpdated, firstNameTextSaved, test);
 	    	}else {
 				dataTable2.setValueOnCurrentModule("firstName_output",firstNameText);
 	    	}
@@ -212,11 +214,13 @@ public class ICUpdateCustomer {
 				dataTable2.setValueOnCurrentModule("lastName_output",lastNameTextUpdated);
 	    		
 	    		action.click(SaveButton, "Save", test);
+				action.waitForPageLoaded(30);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
-	    		action.click(AccountInfoEdit, "Account Infor", test);
-	    		action.explicitWait(5000);
+	    		action.click(AccountInfoEdit, "Account Information", test);
+				action.waitForPageLoaded(30);
+	    		action.explicitWait(3000);
 	    		String lastNameTextSaved = action.getAttribute(lastNameUpdated, "value");
-	    		action.CompareResult("compare updated last name", lastNameTextUpdated, lastNameTextSaved, test);
+	    		action.CompareResult("updated last name", lastNameTextUpdated, lastNameTextSaved, test);
 	    	}else {
 				dataTable2.setValueOnCurrentModule("lastName_output",lastNameText);
 	    	}
@@ -225,11 +229,13 @@ public class ICUpdateCustomer {
 	    	String taxVatText = action.getAttribute(ic_taxVat, "value");
 	    	if(taxVat.equalsIgnoreCase("yes")){
 	    		String taxVatTextUpdated = "Updated" + id;
-	    		action.clear(ic_taxVat, "Remmoving Vat");
+	    		action.clear(ic_taxVat, "Removing Vat");
 	    		action.writeText(ic_taxVat, taxVatTextUpdated," VAT/TAX", test);
 				dataTable2.setValueOnCurrentModule("taxVat_output",taxVatTextUpdated);
 	    		action.click(SaveButton, "Save", test);
-	    		action.click(AccountInfoEdit, "Account Infor", test);
+				action.waitForPageLoaded(30);
+	    		action.click(AccountInfoEdit, "Account Information", test);
+				action.waitForPageLoaded(30);
 	    	}else {
 				dataTable2.setValueOnCurrentModule("taxVat_output",taxVatText);
 	    	}
@@ -247,9 +253,11 @@ public class ICUpdateCustomer {
 				String currentPassWordText = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnOtherModule("ic_login","loginDetails",0), "password");
 				action.writeText(passCurrent, currentPassWordText, "Current password", test);
 				action.click(SaveButton, "Save", test);
-				action.explicitWait(10000);
+				action.waitForPageLoaded(30);
+				action.explicitWait(3000);
 				action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
-				action.click(AccountInfoEdit, "Account Infor", test);
+				action.click(AccountInfoEdit, "Account Information", test);
+				action.waitForPageLoaded(30);
 			}else {
 				dataTable2.setValueOnCurrentModule("email_output",emailText);
 			}
@@ -263,15 +271,19 @@ public class ICUpdateCustomer {
 				dataTable2.setValueOnCurrentModule("passWord_output",passWTextUpdated);
 				dataTable2.setValueOnOtherModule("ic_login","Password",passWTextUpdated,0);
 	    		action.writeText(passConfirmation, passWTextUpdated, "Confirm new Password", test);
-	    		action.click(SaveButton, "Save", test);	
+	    		action.click(SaveButton, "Save", test);
+				action.waitForPageLoaded(30);
+				action.explicitWait(3000);
 	    		action.CompareResult("User Saved", "You saved the account information.", action.getText(successSaved, "",test), test);
-	    		action.click(AccountInfoEdit, "Account Infor", test);
+	    		action.click(AccountInfoEdit, "Account Information", test);
+				action.waitForPageLoaded(30);
 	    	}
 	    	
 	    	//Address Book edit
 	    	
 	    	action.click(ic_addressInformation, "Information Address", test);
-	    	action.explicitWait(5000);
+			action.waitForPageLoaded(30);
+//	    	action.explicitWait(5000);
 	    	
 	    	//Billing Address
 	    	if(billingAddress.equalsIgnoreCase("Yes")){
@@ -323,7 +335,8 @@ public class ICUpdateCustomer {
 		    		dataTable2.setValueOnCurrentModule("billing_postalCode_output",postalCodeText);
 		    		
 		    		action.click(SaveButton, "Save", test);
-		    		action.explicitWait(5000);
+					action.waitForPageLoaded(30);
+		    		action.explicitWait(3000);
 		    		action.waitUntilElementIsDisplayed(successSavedAddress,10);
 		    		String successMsg=action.getText(successSavedAddress, "You saved the address.",test);
 
@@ -338,6 +351,7 @@ public class ICUpdateCustomer {
 	    	//address shipping address
 	    	if(shippingAddress.equalsIgnoreCase("Yes")){
 	    		action.click(ic_ShippingAddress, "Change Shipping address", test);
+				action.waitForPageLoaded(30);
 	    	
 	    	if(shipping_streetAddress.equals("yes")){
 	    		String streetAddressText = action.getAttribute(ic_streetAddress, "value");
@@ -365,7 +379,8 @@ public class ICUpdateCustomer {
 	    		dataTable2.setValueOnCurrentModule("shipping_postalCode_output",postalCodeText);
 	    		
 	    		action.click(SaveButton, "Save", test);
-				action.explicitWait(4000);
+				action.waitForPageLoaded(30);
+				action.explicitWait(3000);
 	    		action.CompareResult("User address Saved", " You saved the address.", action.getText(successSavedAddress, "Shipping address updated",test), test);
 	    		
 	    	}
@@ -390,21 +405,26 @@ public class ICUpdateCustomer {
 	}
 	
 	public void navigateBackToCustomerDetails(String userType,String addressExist) {
-		action.explicitWait(4000);
+//		action.explicitWait(4000);
 		backButton.click();
+		action.waitForPageLoaded(30);
 //		action.click(backButton,"backButton",test);
-		action.explicitWait(4000);
+//		action.explicitWait(4000);
 		ic_myAccountButton.click();
-		action.explicitWait(4000);
+		action.waitForPageLoaded(30);
+//		action.explicitWait(4000);
 		MyAccountButton2.click();
-		action.explicitWait(4000);
+		action.waitForPageLoaded(30);
+//		action.explicitWait(4000);
 		if(userType.equalsIgnoreCase("Registered") & addressExist.equalsIgnoreCase("Select a saved address or add a new address:")) {
 		AddressBookEdit.click();
+		action.waitForPageLoaded(30);
 		ic_BillingAddress.click();
+		action.waitForPageLoaded(30);
 		}
 	}
 	
-	public Map<String,String> getExistingAddressInformation(String userType,String addressExist ) {
+	public Map<String,String> getExistingAddressInformation(String userType,String addressExist){
 		Map<String, String> addressInfo = new LinkedHashMap<>();
 		if(userType.equalsIgnoreCase("Registered") & addressExist.equalsIgnoreCase("Select a saved address or add a new address:") ){
 		String streetAdd = action.getAttribute(ic_streetAddress, "value");
@@ -421,7 +441,8 @@ public class ICUpdateCustomer {
 		addressInfo.put("Telephone", tele);
 		}
 		AccountInfoEdit.click();
-		action.explicitWait(5000);
+		action.waitForPageLoaded(30);
+//		action.explicitWait(5000);
 		String firstName = action.getAttribute(ic_firstname, "value");
 		addressInfo.put("firstName", firstName);
 		String lastNAme = action.getAttribute(ic_lastname, "value");
@@ -429,7 +450,7 @@ public class ICUpdateCustomer {
 		String taxVat = action.getAttribute(ic_taxVat, "value");
 		addressInfo.put("Vat number", taxVat);
 		emailCheckBox.click();
-		action.explicitWait(4000);
+//		action.explicitWait(4000);
 		String email = action.getAttribute(ic_email, "value");
 		addressInfo.put("email", email);
 		emailCheckBox.click();
@@ -438,10 +459,9 @@ public class ICUpdateCustomer {
 		}else {
 			addressInfo.put("ID", action.getAttribute(passportNumber, "value"));
 		}
-		action.explicitWait(5000);
+//		action.explicitWait(5000);
 		iCCartButton.click();
 		icCCheckout.click();
-
 		return addressInfo;
 		
 	}

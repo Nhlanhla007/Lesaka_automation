@@ -1,5 +1,7 @@
 package ic_PageObjects;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.List;
 
@@ -38,19 +40,20 @@ public class ic_ClickAndCollect {
     private WebElement MessageNostore;
 
     boolean check =false;
-     public void ClickandCollectDeliveryoption(ExtentTest test) throws IOException, InterruptedException{
+     public void ClickandCollectDeliveryoption(ExtentTest test) throws Exception {
 
     	 action.explicitWait(15000);
     	 action.waitUntilElementIsDisplayed(CollectBtn,30);
          action.click(CollectBtn, "Click and Collect delivery option", test);
-
+        action.ajaxWait(10,test);
         if(action.waitUntilElementIsDisplayed(FindStore, 10)){
             action.click(FindStore, "Find Store close to me option", test);
-            action.explicitWait(10000);
+            action.ajaxWait(10,test);
+//            action.explicitWait(5000);
 
             if(!(Storelist.size()>1)){
-            //action.acceptAlert();
-            action.explicitWait(10000);
+//            action.acceptAlert();
+//            action.explicitWait(10000);
             }
 
             boolean Storevailableselected = false;

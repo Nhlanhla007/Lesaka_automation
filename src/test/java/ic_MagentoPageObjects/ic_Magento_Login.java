@@ -43,25 +43,32 @@ public class ic_Magento_Login {
 		WebElement Dashboard;
 		
 		//vv
-		public void Login_magento(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+		public void Login_magento(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
 			String Username = "";
 			String Password = "";
 			LoginToMagento(test,Username,Password);
 	     }
-		public void LoginToMagento(ExtentTest test,String Username, String Password) throws IOException{
+		public void LoginToMagento(ExtentTest test,String Username, String Password) throws Exception {
 			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
 			Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 			Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
 			action.navigateToURL(url);
 			action.waitForPageLoaded(10);
 			String ResPage = driver.getTitle();
+			System.out.println("Launch page title: "+driver.getTitle());
+
 			if(ResPage.equalsIgnoreCase("Magento Admin")){
 				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
 				action.writeText(Magento_Username, Username, "Username feild", test);
 				action.writeText(Magento_Password, Password, "Password feild", test);
 				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
-				action.explicitWait(10000);
+				action.waitForPageLoaded(10);
+				action.ajaxWait(10,test);
+//				action.explicitWait(10000);
 				String resWelcomescreen = action.getText(Dashboard, "Dashboard", test);
+				System.out.println("Welcome page title: "+driver.getTitle());
+				action.CompareResult("Navigate to magento admin page is success", "Dashboard",driver.getTitle() , test);
+
 			}else{
 				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
 			

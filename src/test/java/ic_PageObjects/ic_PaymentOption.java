@@ -139,7 +139,7 @@ public class ic_PaymentOption {
 			Flag:
 			 for(Map.Entry m:PaymentMap.entrySet()){  
 				   if(m.getKey().toString().trim().toUpperCase().equalsIgnoreCase(Paytype)){
-					   System.out.println("FOUND match with excel pay type");  
+//					   System.out.println("FOUND match with excel pay type");
 					    actionele =(WebElement) m.getValue();
 					    break Flag;	   
 				   }
@@ -151,17 +151,20 @@ public class ic_PaymentOption {
 
 	public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 		try {
-			action.explicitWait(14000);
-			System.out.println("##############START Execution###############");
-			action.explicitWait(8000);
+//			action.explicitWait(14000);
 			String Paytype = input.get("Paytype_Option").get(rowNumber);
 			action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 			WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
-			action.waitExplicit(10);
+//			action.explicitWait(10);
 			action.scrollElemetnToCenterOfView(paymenttype,"paymenttype",test);
+			action.explicitWait(2000);
 			action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
-			action.waitExplicit(15);
+//			action.waitExplicit(15);
+			action.scrollElemetnToCenterOfView(Btn_PlaceOrder,"paymenttype",test);
+			action.explicitWait(2000);
 			action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+			action.waitForPageLoaded(30);
+			action.ajaxWait(10,test);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -170,7 +173,7 @@ public class ic_PaymentOption {
 	}
 	
 	public void CheckoutpaymentOptionGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception{
-		if(action.elementExists(Btn_PlaceOrder, 500)){	
+		if(action.waitUntilElementIsDisplayed(Btn_PlaceOrder, 10)){
 		String firstNameGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "firstName", 0);
         String lastnameGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "lastname", 0);
         String emailGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0);
@@ -182,7 +185,6 @@ public class ic_PaymentOption {
         String suburdGift= dataTable2.getValueOnOtherModule("deliveryPopulation", "Suburb", 0);
         String vatnumberGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber", 0);
 		action.explicitWait(14000);
-		System.out.println("##############START Execution!###############");
 		action.explicitWait(8000);
 		//String Paytype = input.get("Paytype_Option").get(rowNumber);
 		String Paytype = dataTable2.getValueOnOtherModule("CheckoutpaymentOption", "Paytype_Option", 0);

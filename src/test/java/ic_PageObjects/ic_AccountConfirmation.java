@@ -45,15 +45,15 @@ public class ic_AccountConfirmation {
 	    public void AccountCreationConfirmation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber){
 	    	
 	    	try {
-				Thread.sleep(6000);
-			
-	  
+				action.explicitWait(6000);
+
 	    	String customerName = input.get("CustomerName").get(rowNumber);
 	    	long time = 10000;
 			action.elementExistWelcome(WelcomePopUp, time , "Account created", test);
 	    	//action.CompareResult(TestDescription, Exp, Actual, test);
 
-			Thread.sleep(10000);
+//			Thread.sleep(10000);
+			action.waitForPageLoaded(20);
 	    	action.checkIfPageIsLoadedByURL("/customer/account/", "verify account", test);	    	   	
 	    	
 				action.click(MyAccountButton, "ClickingOnMyAccountButton", test);

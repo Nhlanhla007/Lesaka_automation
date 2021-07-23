@@ -82,6 +82,7 @@ public class ic_ContactDetailsLoan {
 	    	}
 	    	
 	    	action.click(ic_Submit, "Submit the loan Request", test);
+	    	action.waitForPageLoaded(30);
 	    		
 	    }
 		

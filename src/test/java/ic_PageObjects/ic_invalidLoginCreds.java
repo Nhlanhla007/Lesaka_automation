@@ -56,15 +56,9 @@ public class ic_invalidLoginCreds {
 			public List<String> invalidLogin_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 				String Username = dataTable2.getValueOnCurrentModule("Username");
 				String Password = dataTable2.getValueOnCurrentModule("Password");
-//
-//
-//				action.navigateToURL(url);
-//				action.waitForPageLoaded(10);
-				action.explicitWait(10000);
-//				ic_myAccountButton.click();
+
 				action.click(ic_myAccountButton,"ic_myAccountButton",test);
-				action.explicitWait(3000);
-//				ic_myAccountlist.click();
+				action.explicitWait(2000);
 				action.click(ic_myAccountlist,"ic_myAccountlist",test);
 				
 				List<String> userCred = new ArrayList<>();

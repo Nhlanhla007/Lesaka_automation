@@ -147,6 +147,8 @@ public class ic_EnterBasicDetails {
 	    	action.scrollToElement(ic_adminApplyForCredit, "Go to apply credit");
 	    	
 	    	action.click(ic_adminApplyForCredit, "click Apply Credit", test);
+	    	action.waitForPageLoaded(30);
+	    	action.ajaxWait(10,test);
 	    	
 	    	action.mouseover(ic_adminOrderYES, "scroll");
 	    	if(AreYouSubjectToAnAdministrationOrder.equalsIgnoreCase("Yes")){

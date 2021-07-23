@@ -131,6 +131,7 @@ public class ic_NewAccountCreation {
 		try {
 			action.click(ic_myAccountButton, "Navigate to accountTab",test);
 			action.click(ic_createAccount, "Navigate to create Account",test);
+			action.waitForPageLoaded(10);
 			action.checkIfPageIsLoadedByURL("/customer/account/create/", "validate account page is loaded",test);
 		} catch (IOException e) {
 			logger.info(e.getMessage());
@@ -143,7 +144,7 @@ public class ic_NewAccountCreation {
 	public  void accountCreation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
 //		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
 //		action.navigateToURL(url);
-		action.explicitWait(3000);
+//		action.explicitWait(3000);
 		String firstName = dataTable2.getValueOnCurrentModule("firstName");
 		String lastName = dataTable2.getValueOnCurrentModule("lastName");
 		String emailAddress = dataTable2.getValueOnCurrentModule("emailAddress");
@@ -163,7 +164,7 @@ public class ic_NewAccountCreation {
 		String existingAccountValidation =dataTable2.getValueOnCurrentModule("validateExistingAccount");
 
 		ic_NavigateToCreateAccount(test);
-			action.explicitWait(5000);
+//			action.explicitWait(5000);
 			action.writeText(User_Firstname, firstName, "First name", test);
 			action.writeText(User_Lastname, lastName, "Last Name", test);
 			action.writeText(User_EmailId, emailAddress, "Email", test);
@@ -271,16 +272,19 @@ public class ic_NewAccountCreation {
 		try {
 			if (saID.length() < 13) {
 				action.click(CreateAccountBtn, "Create account", test);
-				Thread.sleep(15000);
+//				Thread.sleep(15000);
+				action.ajaxWait(5,test);
 				action.elementExistWelcome(identityNumberError, 4000, identityNumberError.getText(), test);
 			} else if (saID.length() > 13) {
 				System.out.println("Enters more than 13 digits");
 				action.click(CreateAccountBtn, "Create account", test);
-				Thread.sleep(15000);
+				action.ajaxWait(5,test);
+//				Thread.sleep(15000);
 				action.elementExistWelcome(identityNumberError, 4000, identityNumberError.getText(), test);
 			} else {
 				action.click(CreateAccountBtn, "Create account", test);
-				Thread.sleep(15000);
+				action.ajaxWait(5,test);
+//				Thread.sleep(15000);
 				action.elementExistWelcome(identityNumberError, 4000, identityNumberError.getText(), test);
 			}
 		} catch (Exception e) {
@@ -321,7 +325,8 @@ public class ic_NewAccountCreation {
         if(accInfoOpt==true){
             action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
             action.click(Account_info_option, "Account info link", test);
-            action.explicitWait(11000);
+            action.waitForPageLoaded(10);
+//            action.explicitWait(11000);
             if(driver.getCurrentUrl().contains(ExpPage+"/")){
                 action.CompareResult("Verify Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
                
@@ -330,7 +335,7 @@ public class ic_NewAccountCreation {
                 String ActualLastname = action.getAttribute(Lastname, "value");
                
                 action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
-                action.explicitWait(5000);
+//                action.explicitWait(5000);
                 String ActualEmail = action.getAttribute(Email, "value");
                 action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
                
