@@ -23,12 +23,13 @@ public class admin_UserUpdate {
 	    
 	    MagentoRetrieveCustomerDetailsPage magRetri ;
 		MagentoAccountInformation magAccInfo;
-
+		int ajaxTimeOutInSeconds;
 	    public admin_UserUpdate(WebDriver driver, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
 	        magRetri = new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
+	    	ajaxTimeOutInSeconds = 20;//Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
 	    }
 	
 
@@ -132,8 +133,9 @@ public class admin_UserUpdate {
 	    	magRetri.searchForCustomer(email, test);
 			magRetri.tableData(email, "Incredible Connection", test);
 			
-			action.click(admin_AccountInfoCustomer, "Click Account information", test);	    	
-	    	action.explicitWait(3000);
+			action.click(admin_AccountInfoCustomer, "Click Account information", test);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
+	    	//action.explicitWait(3000);
 			String firstNameText = action.getAttribute(admin_firstname, "value");
 			if(firstName.equalsIgnoreCase("Yes")){
 	    		
@@ -143,15 +145,24 @@ public class admin_UserUpdate {
 	    		adminSheets.get(0).get("adminFirstName_output").set(sheetRow1, firstNameTextUpdated);
 	    		
 	    		action.click(admin_SaveCustomerBtn, "Save", test);
+	    		
+	    		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+	    		action.ajaxWait(ajaxTimeOutInSeconds, test);
+	    		
 	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, "",test), test);
 	    		
 	    		if(action.waitUntilElementIsDisplayed(admin_EditBtn, 10000)) {
-	    			action.explicitWait(4000);
-	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
+	    			//action.explicitWait(4000);
+	    		action.click(admin_EditBtn, "Navigating To Customer Details", test);
+
+	    		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+	    		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	    		}
 //	    		action.explicitWait(5000);
 	    		action.waitUntilElementIsDisplayed(admin_AccountInfoCustomer,5);
 	    		action.click(admin_AccountInfoCustomer, "clicking to account infor", test);
+	    		
+	    		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	    		
 	    		String firstNameTextSaved = action.getAttribute(admin_firstUpdated, "value");
 	    		action.CompareResult("compare updated first name", firstNameTextUpdated, firstNameTextSaved, test);
@@ -160,6 +171,7 @@ public class admin_UserUpdate {
 	    	}
 			
 			action.click(admin_AccountInfoCustomer, "Click Account information", test);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
 			String lastNameText = action.getAttribute(admin_lastname, "value");
 	    	if(lastName.equalsIgnoreCase("yes")){
 	    		
@@ -169,11 +181,19 @@ public class admin_UserUpdate {
 	    		adminSheets.get(0).get("adminLastName_output").set(sheetRow1, lastNameTextUpdated);
 	    		
 	    		action.click(admin_SaveCustomerBtn, "Save", test);
+	    		
+	    		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+	    		action.ajaxWait(ajaxTimeOutInSeconds, test);
+	    		
 	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, "",test), test);
 	    		
-	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
-	    		action.explicitWait(5000);
+	    		action.click(admin_EditBtn, "Navigating To Customer Details", test);
+	    		//action.explicitWait(5000);
+	    		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+	    		action.ajaxWait(ajaxTimeOutInSeconds, test);
+	    		
 	    		action.click(admin_AccountInfoCustomer, "Check if the lastname is updated", test);
+	    		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	    		
 	    		String lastNameTextSaved = action.getAttribute(admin_lastUpdated, "value");
 	    		action.CompareResult("compare updated last name", lastNameTextUpdated, lastNameTextSaved, test);
@@ -182,6 +202,7 @@ public class admin_UserUpdate {
 	    	}
 
 	    	action.click(admin_AccountInfoCustomer, "account infor", test);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
 	    	String taxVatText = action.getAttribute(admin_taxVat, "value");
 	    	if(taxVat.equalsIgnoreCase("yes")){
 	    		String taxVatTextUpdated = "Updated" + id;
@@ -190,18 +211,28 @@ public class admin_UserUpdate {
 	    		adminSheets.get(0).get("adminTaxVat_output").set(sheetRow1, taxVatTextUpdated);
 	    		
 	    		action.click(admin_SaveCustomerBtn, "Save", test);
+	    		
+	    		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+	    		action.ajaxWait(ajaxTimeOutInSeconds, test);
+	    		
 	    		action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, "",test), test);
 	    		
-	    		action.click(admin_EditBtn, "clicking edit to confirm", test);
-	    		action.explicitWait(5000);
+	    		action.click(admin_EditBtn, "Navigating To Customer Details", test);
+
+	    		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+	    		action.ajaxWait(ajaxTimeOutInSeconds, test);
+	    		
+	    		//action.explicitWait(5000);
 	    		//admin_AccountInfoCustomer.click();
 	    		action.click(admin_AccountInfoCustomer, "account infor", test);
+	    		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	    		
 	    	}else {
 	    		adminSheets.get(0).get("adminTaxVat_output").set(sheetRow1, taxVatText);
 	    	}
 	    	
 	    	action.click(admin_AccountInfoCustomer, "account infor", test);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
 	    	String emailText = action.getAttribute(admin_email, "value");
 
 			if(emailFlag.equalsIgnoreCase("yes")){
@@ -210,15 +241,20 @@ public class admin_UserUpdate {
 				action.writeText(admin_email,emailTextUpdated ,"Email", test);
 				adminSheets.get(0).get("adminEmail_output").set(sheetRow1, emailTextUpdated);
 				action.click(admin_SaveCustomerBtn, "Save", test);
-				action.explicitWait(12000);
+				
+				action.waitForPageLoaded(ajaxTimeOutInSeconds);
+				action.ajaxWait(ajaxTimeOutInSeconds, test);
+				
+				//action.explicitWait(12000);
 				action.CompareResult("User Saved", "You saved the customer.", action.getText(admin_successSaved, "",test), test);
-				action.explicitWait(5000);
+				//action.explicitWait(5000);
 
 				magRetri.searchForCustomer(emailTextUpdated, test);
 				magRetri.tableData(email, "Incredible Connection", test);
-				action.explicitWait(6000);
+				//action.explicitWait(6000);
 				action.click(admin_AccountInfoCustomer, "Click Account information", test);
-				action.explicitWait(4000);
+				action.ajaxWait(ajaxTimeOutInSeconds, test);
+				//action.explicitWait(4000);
 				String newText = action.getAttribute(admin_email, "value");
 				adminSheets.get(0).get("adminEmail_output").set(sheetRow1, newText);
 			}else {
@@ -233,6 +269,7 @@ public class admin_UserUpdate {
 	    	
 	    	if(billingAddress.equalsIgnoreCase("Yes")){
 	    		action.click(admin_billingEdit, "Edit", test);
+	    		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	    		
 		    	Random r = new Random();
 	    		//String randomAddres = streetAddresses.get(randomitem);
@@ -261,14 +298,14 @@ public class admin_UserUpdate {
 		    		action.writeText(admin_BillingStreetAddress, streetAdressTextUpdated, "Street address", test);
 		    		adminSheets.get(0).get("adminBilling_streetAddress_output").set(sheetRow1, streetAdressTextUpdated);
 		    		
-		    		action.explicitWait(6000);
+		    		//action.explicitWait(6000);
 		    		action.click(admin_SaveBillingBtn, "Save", test);
 		    	}else {
 		    		adminSheets.get(0).get("adminBilling_streetAddress_output").set(sheetRow1, streetAdressText);
 		    	}
-	    		action.explicitWait(5000);
+	    		//action.explicitWait(5000);
 	    		action.click(admin_AddressBtn, "address button", test);
-	    		action.explicitWait(5000);
+	    		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	    		
 	    		//address shipping address
 		    	if(shippingAddress.equalsIgnoreCase("Yes")){
@@ -276,7 +313,7 @@ public class admin_UserUpdate {
 		    		action.javaScriptClick(admin_shippingEdit, "Shipping edit clicked", test);
 		    		String streetAddressText = action.getAttribute(admin_shippingStreetAddress, "value");
 		    	if(shipping_streetAddress.equals("yes")){
-		    		action.explicitWait(5000);
+		    		//action.explicitWait(5000);
 		    		
 		    		String streetAddressTextUpdated = streetAddressText + "Updated" + id;
 		    		action.clear(admin_shippingStreetAddress, "Removing shipping Street address");
