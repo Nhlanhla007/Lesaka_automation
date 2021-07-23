@@ -21,12 +21,14 @@ public class SapRSI {
     WebDriver driver;
     Action action;
     DataTable2 dataTable2;
+    int ajaxTimeOutInSeconds;
     LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
     public SapRSI(WebDriver driver,DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
         this.dataTable2 = dataTable2;
+        ajaxTimeOutInSeconds = 20;//Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
     }
     
     @FindBy(xpath = "//*[@class=\"admin__menu\"]/ul[@id='nav']/li[@id=\"menu-magento-catalog-catalog\"]/a/span[contains(text(),\"Catalog\")]")
@@ -193,19 +195,29 @@ public class SapRSI {
 
     public void getRSIItemInMagento(ExtentTest test) throws IOException, Exception {
         action.click(catalogTab,"catalogTab",test);
-        //action.waitUntilElementIsDisplayed(productsTab, 10000);
-        action.explicitWait(4000);
+        action.waitUntilElementIsDisplayed(productsTab, 10000);
+        //action.explicitWait(4000);
         action.javaScriptClick(productsTab,"productsTab",test);
-        action.explicitWait(15000);
+        //action.explicitWait(15000);
+        action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		
         if(action.waitUntilElementIsDisplayed(Clearbutton, 10000)) {
         action.javaScriptClick(Clearbutton,"Clearbutton",test);
+        action.ajaxWait(ajaxTimeOutInSeconds, test);
         }
-        action.explicitWait(8000);
+        
         action.javaScriptClick(magentoFilterTab,"magentoFilterTab",test);
         action.writeText(sku,dataTable2.getValueOnOtherModule ("SapRSIGetDataFromSAPDB","SKUCode",0),"skuInputTest",test);
         action.click(magentoApplyFilterTab,"magentoApplyFilterTab",test);
-        action.explicitWait(5000);
+        
+        action.ajaxWait(ajaxTimeOutInSeconds, test);
+        
         action.javaScriptClick(clickEdit, "clickEdit", test);
+        
+        action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+        
 //        action.explicitWait(5000);
         List<WebElement> storeCount = driver.findElements(By.xpath("//*[@id=\"container\"]/div/div[2]/div[2]/div[2]/fieldset/div[2]/div/div[2]/table/tbody/tr"));
         for ( WebElement i : storeCount ) {
@@ -225,8 +237,7 @@ public class SapRSI {
 
             }
 
-        }
-        action.explicitWait(10000);
+        }        
         action.waitUntilElementIsDisplayed(sapDataTab, 10000);
         action.click(sapDataTab,"sapDataTab",test);
         action.scrollElemetnToCenterOfView(roughStockIndicatorAct, "Rough Stock Indicator", test);

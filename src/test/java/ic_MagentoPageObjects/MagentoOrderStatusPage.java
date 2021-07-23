@@ -24,11 +24,13 @@ public class MagentoOrderStatusPage {
 	WebDriver driver;
 	Action action;
 	DataTable2 dataTable2;
+	int ajaxTimeOutInSeconds;
 	public MagentoOrderStatusPage(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 		this.dataTable2 = dataTable2;
+		ajaxTimeOutInSeconds = 20;//Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
 	}
 	
 	@FindBy(id = "menu-magento-sales-sales")
@@ -65,6 +67,7 @@ public class MagentoOrderStatusPage {
     
     @FindBy(xpath = "/html/body/div[2]/main/div[2]/div[1]/div/div[1]/div[1]/section[4]/div[2]/table/tbody/tr[1]/td[1]/div[2]")
     public WebElement listSKU;
+    
 	
 	public void click(WebElement elementAttr, ExtentTest test) {
 		try {
@@ -93,42 +96,51 @@ public class MagentoOrderStatusPage {
 		magentoTableRecords.get(0);
 	}
 	
-	public void searchForOrder(String idToSearch, ExtentTest test) throws InterruptedException, IOException {
-		if (action.waitUntilElementIsDisplayed(clearFilters,120)) {
-			Thread.sleep(15000);
+	public void searchForOrder(String idToSearch, ExtentTest test) throws Exception {
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		if (action.waitUntilElementIsDisplayed(clearFilters,10)) {
 			action.javaScriptClick(clearFilters, "Cleared Filters", test);
-			Thread.sleep(12000);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
 		}
-		if(action.waitUntilElementIsDisplayed(magentoFilterTab, 60)) {
 		action.javaScriptClick(magentoFilterTab, "Filter tab", test);
 		action.writeText(magentoIdSearchField, idToSearch, "searchId", test);
 		action.click(magentoApplyFilterTab, "Apply to filters", test);
-		// verify if a row is returned
-		Thread.sleep(20000);
-		}
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	}
 	
-	public void viewOrderDetails(ExtentTest test) throws IOException, InterruptedException {
+	public void viewOrderDetails(ExtentTest test) throws Exception {
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		confirmRows(magentoTableRecords, test);
-		action.explicitWait(10000);
 		if (magentoTableRecords.size() == 1) {
-			action.click(viewOrderDetails, "Order Status", test);
-			Thread.sleep(10000);
-			action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
+			try {
+				action.click(viewOrderDetails, "Order Status", test);
+			} catch (Exception e) {
+				driver.navigate().refresh();
+				action.waitForPageLoaded(ajaxTimeOutInSeconds);
+				action.ajaxWait(ajaxTimeOutInSeconds, test);
+				action.click(viewOrderDetails, "Order Status", test);
+			}
+
+			//action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
 		} else {
-			action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
+			//action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
 		}
 	}
 	
-	public void orderStatusCheck(String orderStatus, ExtentTest test) throws IOException {
+	public void orderStatusCheck(String orderStatus, ExtentTest test) throws Exception {
+		if (magentoTableRecords.size() == 1) {
 		action.CompareResult("Order Status", orderStatus, magentoOrderStatus.getText(), test);
+		}else {
+			throw new Exception("No Records Are Returned");
+		}
 	}
 	
 	
     //public List<String> AllSKU;
     public Boolean isSKUPresent ;
     public String AllSKU = "";
-	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException, InterruptedException {
+	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception, InterruptedException {
 //		String POfetchFrom = dataTable2.getValueOnOtherModule("OrderStatusSearch", "Fetch PO number", 0);
 //		String idToSearch = dataTable2.getValueOnOtherModule("PayUPagePayment","OrderID",0);
 		String idToSearch = dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);//"3100002010";
@@ -139,20 +151,27 @@ public class MagentoOrderStatusPage {
 //		}
 		String orderStatus = input.get("orderStatus").get(rowNumber);
 		System.out.println("orderStatus :"+orderStatus);
-		action.explicitWait(15000);
+		//action.explicitWait(15000);
+		
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		
 		NavigateOdersPage(test);
 		searchForOrder(idToSearch,test);
 		orderStatusCheck(orderStatus, test);
 		viewOrderDetails(test);
 		
 		//Validate SKU for bundle article
-		//Thread.sleep(30000);
-		//NavigateTo_OrderdetailsPage(test);		
+		//NavigateTo_OrderdetailsPage(test);	
+		
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		isSKUPresent = driver.findElements(By.xpath("/html/body/div[2]/main/div[2]/div[1]/div/div[1]/div[1]/section[4]/div[2]/table/tbody/tr[1]/td[1]/div[2]")).size()>0;
 		dataTable2.setValueOnCurrentModule("IsBundleArticleSKUPresent", String.valueOf(isSKUPresent));
 		if(isSKUPresent) {
-		VerifyOrderStatus(test, orderStatus, 10, 5);
+		VerifyOrderStatus(test, orderStatus, ajaxTimeOutInSeconds, 5);
 		action.scrollElemetnToCenterOfView(listSKU, "SKU", test);
 		String skudata = action.getText(listSKU, "listSKU",test);
 		if (skudata.contains("SKU:")) {
@@ -185,15 +204,15 @@ public class MagentoOrderStatusPage {
 
 
 	
-	public void NavigateOdersPage(ExtentTest test) throws IOException, InterruptedException{
+	public void NavigateOdersPage(ExtentTest test) throws Exception {
 		if(action.waitUntilElementIsDisplayed(magentoSalesTab, 10000)) {
 		action.click(magentoSalesTab, "Sales tab", test);
 		}
 		if(action.waitUntilElementIsDisplayed(magentoOrderTab, 10000)) {
 		action.click(magentoOrderTab, "Order tab", test);
 		}
-		driver.navigate().refresh();
-		Thread.sleep(5000);
+		//driver.navigate().refresh();
+		//Thread.sleep(5000);
 	}
 	
     public void VerifyOrderStatus(ExtentTest test, String ExporderStatus, int TimeOutInseconds, int RefreshInterval) throws IOException{

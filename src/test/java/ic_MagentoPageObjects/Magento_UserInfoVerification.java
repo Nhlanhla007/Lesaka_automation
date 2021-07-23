@@ -115,7 +115,7 @@ public class Magento_UserInfoVerification {
 	  WebElement admin_Billing_streetAddress;
 	 
 	
-	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
+	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {		
 		int TimetoLoadpage=11;	
 		String ExpFirstname = null;
 		String ExpLastname = null;
@@ -130,8 +130,8 @@ public class Magento_UserInfoVerification {
 		
 		String typeOfVerificationFlag = dataTable2.getValueOnCurrentModule("Data Source");
 		
-		driver.navigate().refresh();
-		action.explicitWait(7000);
+		//driver.navigate().refresh();
+		//action.explicitWait(7000);
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		//driver.manage().window().s
 		

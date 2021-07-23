@@ -25,12 +25,13 @@ public class MagentoRetrieveCustomerDetailsPage {
 	WebDriver driver;
 	Action action;
 	DataTable2 dataTable2;
-
+	int ajaxTimeOutInSeconds;
 	public MagentoRetrieveCustomerDetailsPage(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 		this.dataTable2 = dataTable2;
+		ajaxTimeOutInSeconds = 20;//Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
 	}
 	
 	Logger logger = Log.getLogData(this.getClass().getSimpleName());
@@ -65,41 +66,31 @@ public class MagentoRetrieveCustomerDetailsPage {
 
 	@FindBy(xpath = "//tbody/tr[2]/td[17]/a")
 	WebElement viewCustomerDetails;
-
-	public void navigateToCustomer(ExtentTest test) throws IOException, InterruptedException {
+	
+	public void navigateToCustomer(ExtentTest test) throws Exception, InterruptedException {
+			
+		if (action.waitUntilElementIsDisplayed(customerTab, 10)) {
 			action.click(customerTab, "Customer Tab", test);
-			if(action.waitUntilElementIsDisplayed(allCustomerTab, 10)) {
-				action.explicitWait(2000);
-				action.click(allCustomerTab, "All Customers Tab", test);
-			}
-			action.explicitWait(20000);
+		}
+		if (action.waitUntilElementIsDisplayed(allCustomerTab, 10)) {
+			action.click(allCustomerTab, "All Customers Tab", test);
+		}
 	}
 
 	public void searchForCustomer(String emailToSearchBy,ExtentTest test) throws Exception {
-		boolean testallFlag=true;
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		
-		//if(isMagentoSearchPageLoaded(10)) {		
-			
-		try {
 			if (action.waitUntilElementIsDisplayed(clearFilters, 60)) {
-				//action.click(clearFilters, "Cleared Filters", test);
 				action.javaScriptClick(clearFilters, "Cleared Filters", test);
-				action.explicitWait(10000);
-			}
-		}catch(Exception e){
-			logger.info("Clear filter is not clickable");
-		}
+				action.ajaxWait(ajaxTimeOutInSeconds, test);
+			}			
 			action.click(magentoFilterTab, "Filter tab", test);
-			action.explicitWait(2000);
 			action.clear(emailSearchField, "Email ID");
-			action.explicitWait(2000);
 			action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
-			action.explicitWait(2000);
 			action.click(magentoApplyFilterTab, "Apply to filters", test);
-			testallFlag=false;
-			action.explicitWait(5000);
-
-		//}
+//			action.explicitWait(5000);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
 	}
 
 	public void retrieveCustomerDetails(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
@@ -122,16 +113,14 @@ public class MagentoRetrieveCustomerDetailsPage {
 			customerEmail = "";
 		}
 		String webSite = dataTable2.getValueOnOtherModule("accountCreation", "WebSite", 0);//input.get("WebSite").get(rowNumber);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		navigateToCustomer(test);
-		System.out.println("Hello from " + customerEmail);
+		//System.out.println("Hello from " + customerEmail);
 		searchForCustomer(customerEmail, test);
 		tableData(customerEmail, webSite, test);
 		//confirmRows(customerTableRecords, test);
-		try {
-			//action.click(viewCustomerDetails, "View Customer details", test);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 
@@ -150,40 +139,32 @@ public class MagentoRetrieveCustomerDetailsPage {
 		int totalColums = customerTableHeaders.size();
 //		System.out.println(totalColums);
 		if(totalRows>=2) {
-//				outerloop:
-//				for(int i =2;i<=totalRows;i++) {
-//					for(int j = 1;j<totalColums;j++) {
-//						String emailColumn = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[4]/div")).getText();
-//						String webSite = driver.findElement(By.xpath("//tbody/tr["+i+"]/td[11]/div")).getText();
 						WebElement clickEdit = driver.findElement(By.xpath("//tbody/tr[2]/td[17]/a"));
-//						if(emailColumn.equalsIgnoreCase(email) & webSite.equalsIgnoreCase(webStore)) {
-							//clickEdit.click();
-							viewCustomerDetails(clickEdit, test);
-//							break outerloop;
-//						}
-
-//					}
-//				}
+						viewCustomerDetails(clickEdit, test);
 		}else {
 			throw new Exception("No Records Returned");
-			//action.noRecordsReturnedFromTable(test, "No Records were returned");
 		}
+		
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	}
 
-	public void viewCustomerDetails(WebElement clickElement,ExtentTest test) {
-		try {
+	public void viewCustomerDetails(WebElement clickElement,ExtentTest test) throws Exception {
 			//confirmRows(customerTableRecords, test);
 			if (customerTableRecords.size() >= 1) {
+				try {
 				action.javaScriptClick(clickElement, "Customer Details", test);
-				action.explicitWait(15000);
-				action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
-			} else {
-				action.checkIfPageIsLoadedByURL("/customer/index/edit/", "Customer not found", test);
+				}catch(Exception e){
+					driver.navigate().refresh();
+					action.waitForPageLoaded(ajaxTimeOutInSeconds);
+					action.ajaxWait(ajaxTimeOutInSeconds, test);
+					action.javaScriptClick(clickElement, "Customer Details", test);
+				}
+				//action.explicitWait(15000);
+				//action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
+			} 
+				//action.checkIfPageIsLoadedByURL("/customer/index/edit/", "Customer not found", test);			
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
 	public boolean isMagentoSearchPageLoaded(int timeoutInSec) throws Exception {
 		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);

@@ -21,11 +21,13 @@ public class MagentoRegisterNewUser {
 	WebDriver driver;
 	Action action;
 	MagentoRetrieveCustomerDetailsPage RetriveCust;
+	int ajaxTimeOutInSeconds;
 	public MagentoRegisterNewUser(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 		RetriveCust =new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
+		ajaxTimeOutInSeconds = 20;//Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
 	}
 	//navigate to all customer
 	@FindBy(xpath = "//*[@class=\"admin__menu\"]/ul[@id='nav']/li[@id=\"menu-magento-customer-customer\"]/a/span[contains(text(),\"Customers\")]")
@@ -79,6 +81,10 @@ public class MagentoRegisterNewUser {
 		navigateToCustomer(test);
 
 		action.click(Add_Customer, "Add new Customer", test);
+		
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		
 		boolean resAccountinfo = action.elementExists(Account_Information, waitforelement);
 		if(resAccountinfo==true){
 			action.dropDownselectbyvisibletext(AssociatedWebsite_ele, AssociatedWebsite, "Website", test);
@@ -96,13 +102,17 @@ public class MagentoRegisterNewUser {
 
 
 			action.click(Save_Customer, "Save_Customer", test);
+			
+			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
+			
 			boolean resSavedcustomer = action.elementExists(Save_Customer_success, waitforelement);
 			if(resSavedcustomer==true){
 				action.CompareResult("verify New customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
 
 				//navigate to the table and click edit
 				RetriveCust.searchForCustomer(Email, test);
-				action.waitExplicit(waitforelement);
+				//action.waitExplicit(waitforelement);
 				RetriveCust.tableData(Email, AssociatedWebsite, test);
 				action.click(Account_Information, "Account Information", test);
 				if(action.waitUntilElementIsDisplayed(BPnumber, waitforelement)){
