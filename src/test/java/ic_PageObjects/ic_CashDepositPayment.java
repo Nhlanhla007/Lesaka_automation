@@ -75,9 +75,9 @@ public class ic_CashDepositPayment {
 		
 	}
 	
-	public void MagentoOrderInfoVerification(ExtentTest test,String ExpOrderstatus) throws IOException{
+	public void MagentoOrderInfoVerification(ExtentTest test,String ExpOrderstatus) throws Exception{
 		
-		try {
+		//try {
 			action.scrollToElement(OrderStatus, "OrderStatus");
 			String ActorderStatus = action.getText(OrderStatus,"OrderStatus",test);
 			if(ActorderStatus.equalsIgnoreCase(ExpOrderstatus)){
@@ -85,15 +85,15 @@ public class ic_CashDepositPayment {
 			}else{
 				action.CompareResult("verify Order ID status ", ExpOrderstatus, ActorderStatus, test);
 			}
-		} catch (Exception e) {
+		//} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			//e.printStackTrace();
+		//}
 	
 		
 	}
-	public void MagentoAdminDoInvoiceing(ExtentTest test) throws IOException{
-		try {
+	public void MagentoAdminDoInvoiceing(ExtentTest test) throws Exception{
+		//try {
 			action.click(Invoice_Tab, "Invoice_Tab", test);
 			action.waitForElementPresent(SubmitInvoice, 21);
 			action.scrollToElement(SubmitInvoice,"SubmitInvoice");
@@ -105,10 +105,10 @@ public class ic_CashDepositPayment {
 			}else{
 				action.CompareResult("Verify Invoicing Done successfully : ", "true", "false", test);
 			}
-		} catch (Exception e) {
+		//} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			//e.printStackTrace();
+		//}
 	
 	}
 	public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){

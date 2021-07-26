@@ -1,6 +1,9 @@
 package SAP_HanaDB;
 
 import com.aventstack.extentreports.ExtentTest;
+
+import ic_MagentoPageObjects.ic_Magento_Login;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,14 +24,15 @@ public class SapRSI {
     WebDriver driver;
     Action action;
     DataTable2 dataTable2;
-    int ajaxTimeOutInSeconds;
+
+    int ajaxTimeOutInSeconds = ic_Magento_Login.ajaxTimeOutInSeconds;
+
     LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
     public SapRSI(WebDriver driver,DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
         this.dataTable2 = dataTable2;
-        ajaxTimeOutInSeconds = 20;//Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
     }
     
     @FindBy(xpath = "//*[@class=\"admin__menu\"]/ul[@id='nav']/li[@id=\"menu-magento-catalog-catalog\"]/a/span[contains(text(),\"Catalog\")]")
@@ -101,25 +105,32 @@ public class SapRSI {
 		String AGGR_AVAIL_QTY = dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "AGGR_AVAIL_QTY", 0);
 		String rough_stock_value = dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "rough_stock_value", 0);
 		action.click(catalogTab, "catalogTab", test);
-		action.explicitWait(2000);
+		action.waitUntilElementIsDisplayed(productsTab, 10000);
 		action.click(productsTab, "productsTab", test);
-		action.explicitWait(9000);
+		//action.explicitWait(9000);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		if (action.waitUntilElementIsDisplayed(Clearbutton, 10000)) {
 			action.click(Clearbutton, "Clearbutton", test);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
 		}
-		action.explicitWait(5000);
+		//action.explicitWait(5000);		
 		action.click(magentoFilterTab, "magentoFilterTab", test);
-		action.explicitWait(2000);
+		//action.explicitWait(2000);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		action.writeText(sku, ARTICLE_ID, "skuInputTest", test);
 		action.click(magentoApplyFilterTab, "magentoApplyFilterTab", test);
-		action.explicitWait(5000);
+		//action.explicitWait(5000);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		if (action.waitUntilElementIsDisplayed(clickEdit, 6000)) {
 			action.javaScriptClick(clickEdit, "clickEdit", test);
+			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
 		} else {
 			// action.CompareResult("Records Returned", "True", "False", test);
 			throw new Exception("No Records Have Been Found");
 		}
-		action.explicitWait(5000);
+		//action.explicitWait(5000);
 		List<WebElement> storeCount = driver.findElements(By.xpath("//*[@class=\"data-row\"]"));
 		storeCount.addAll(driver.findElements(By.xpath("//*[@class=\"data-row _odd-row\"]")));
 		for (WebElement i : storeCount) {
@@ -237,7 +248,7 @@ public class SapRSI {
 
             }
 
-        }        
+        }
         action.waitUntilElementIsDisplayed(sapDataTab, 10000);
         action.click(sapDataTab,"sapDataTab",test);
         action.scrollElemetnToCenterOfView(roughStockIndicatorAct, "Rough Stock Indicator", test);

@@ -15,18 +15,17 @@ import utils.Action;
 import utils.DataTable2;
 
 public class admin_ReOrder {
-	 WebDriver driver;
+	 	WebDriver driver;
 	    Action action;
 	    MagentoOrderStatusPage orderStatus;
 		DataTable2 dataTable2;
-
+		int ajaxTimeOutInSeconds = ic_Magento_Login.ajaxTimeOutInSeconds;
 	    public admin_ReOrder(WebDriver driver, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
 	        this.dataTable2= dataTable2;
 	        orderStatus = new MagentoOrderStatusPage(driver, dataTable2);
-
 	    }
 	    //html[1]/body[1]/div[2]/main[1]/div[1]/div[2]/div[1]/div[1]/button[6]/span[1]
 	    //*[@id="order_reorder"]/span
@@ -83,18 +82,24 @@ public class admin_ReOrder {
     	String oldSAPnumber = dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber", "OrderSAPnumber", 0);//action.getText(OrderDetailSAPNumber, "oldSAPnumber",test);
     	action.mouseover(OrderDetailSAPNumber, "Get old SAPnumber");
     	dataTable2.setValueOnCurrentModule("OldPO number", oldSAPnumber.replace("[RabbitMQ] Order SAP Number: ",""));
-    	action.explicitWait(5000);
+    	//action.explicitWait(5000);
     	
     	action.click(admin_Reorder, "create reorder", test);
     	
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+    	
     	action.mouseover(admin_orderComment, "go to comments");
-    	action.explicitWait(5000);
+    	//action.explicitWait(5000);
     	action.clear(admin_orderComment, "clear");
     	action.writeText(admin_orderComment, orderComment,"write the comment", test);
     	
     	action.click(admin_SubmitOrder, "Submit Re-Order", test);
     	
-    	action.explicitWait(5000);
+    	//action.explicitWait(5000);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		
     	String invoiceMsg = action.getText(admin_invoiceMessage, "invoice message",test);
     	action.CompareResult("Popup-message generated invoice", "Automatically generated invoice.", invoiceMsg, test);
     	

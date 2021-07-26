@@ -24,13 +24,13 @@ public class MagentoOrderStatusPage {
 	WebDriver driver;
 	Action action;
 	DataTable2 dataTable2;
-	int ajaxTimeOutInSeconds;
+
+	int ajaxTimeOutInSeconds = ic_Magento_Login.ajaxTimeOutInSeconds;
 	public MagentoOrderStatusPage(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 		this.dataTable2 = dataTable2;
-		ajaxTimeOutInSeconds = 20;//Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
 	}
 	
 	@FindBy(id = "menu-magento-sales-sales")
@@ -67,7 +67,7 @@ public class MagentoOrderStatusPage {
     
     @FindBy(xpath = "/html/body/div[2]/main/div[2]/div[1]/div/div[1]/div[1]/section[4]/div[2]/table/tbody/tr[1]/td[1]/div[2]")
     public WebElement listSKU;
-    
+	
 	
 	public void click(WebElement elementAttr, ExtentTest test) {
 		try {
@@ -162,7 +162,7 @@ public class MagentoOrderStatusPage {
 		viewOrderDetails(test);
 		
 		//Validate SKU for bundle article
-		//NavigateTo_OrderdetailsPage(test);	
+		//NavigateTo_OrderdetailsPage(test);		
 		
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);

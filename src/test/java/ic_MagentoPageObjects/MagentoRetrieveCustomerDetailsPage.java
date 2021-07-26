@@ -25,13 +25,13 @@ public class MagentoRetrieveCustomerDetailsPage {
 	WebDriver driver;
 	Action action;
 	DataTable2 dataTable2;
-	int ajaxTimeOutInSeconds;
+
+	int ajaxTimeOutInSeconds = ic_Magento_Login.ajaxTimeOutInSeconds;
 	public MagentoRetrieveCustomerDetailsPage(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 		this.dataTable2 = dataTable2;
-		ajaxTimeOutInSeconds = 20;//Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
 	}
 	
 	Logger logger = Log.getLogData(this.getClass().getSimpleName());
@@ -66,7 +66,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 
 	@FindBy(xpath = "//tbody/tr[2]/td[17]/a")
 	WebElement viewCustomerDetails;
-	
+
 	public void navigateToCustomer(ExtentTest test) throws Exception, InterruptedException {
 			
 		if (action.waitUntilElementIsDisplayed(customerTab, 10)) {
@@ -75,16 +75,18 @@ public class MagentoRetrieveCustomerDetailsPage {
 		if (action.waitUntilElementIsDisplayed(allCustomerTab, 10)) {
 			action.click(allCustomerTab, "All Customers Tab", test);
 		}
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	}
 
 	public void searchForCustomer(String emailToSearchBy,ExtentTest test) throws Exception {
-		action.waitForPageLoaded(ajaxTimeOutInSeconds);
-		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		//action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		//action.ajaxWait(ajaxTimeOutInSeconds, test);
 		
 			if (action.waitUntilElementIsDisplayed(clearFilters, 60)) {
 				action.javaScriptClick(clearFilters, "Cleared Filters", test);
 				action.ajaxWait(ajaxTimeOutInSeconds, test);
-			}			
+			}
 			action.click(magentoFilterTab, "Filter tab", test);
 			action.clear(emailSearchField, "Email ID");
 			action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
@@ -113,8 +115,9 @@ public class MagentoRetrieveCustomerDetailsPage {
 			customerEmail = "";
 		}
 		String webSite = dataTable2.getValueOnOtherModule("accountCreation", "WebSite", 0);//input.get("WebSite").get(rowNumber);
-		action.waitForPageLoaded(ajaxTimeOutInSeconds);
-		action.ajaxWait(ajaxTimeOutInSeconds, test);
+
+		//action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		//action.ajaxWait(ajaxTimeOutInSeconds, test);
 		navigateToCustomer(test);
 		//System.out.println("Hello from " + customerEmail);
 		searchForCustomer(customerEmail, test);
@@ -162,7 +165,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 				}
 				//action.explicitWait(15000);
 				//action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
-			} 
+			}
 				//action.checkIfPageIsLoadedByURL("/customer/index/edit/", "Customer not found", test);			
 			}
 	
