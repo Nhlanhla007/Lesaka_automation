@@ -170,7 +170,7 @@ public class Ic_Products {
 
 		WebElement addToCart= driver.findElements(By.xpath("//*[@class=\"product-item-link\"]")).get(0);
 		action.mouseover(addToCart, "Scroll to add to cart");
-		System.out.println("Mouse over the");
+//		System.out.println("Mouse over the");
 		WebElement btnAddToC = addToCart.findElement(By.xpath(".//parent::*/following-sibling::div//button"));
 		action.click(btnAddToC,"addToCart",test);
 		action.explicitWait(5000);
@@ -205,7 +205,7 @@ public class Ic_Products {
 		try {
 			ic_ElementVisable(icSearchBar);
 			action.clear(icSearchBar, "SearchBar");
-			action.writeText(icSearchBar, productToFind, "SearchBar", test);
+			action.writeText(icSearchBar, productToFind, "Search Bar", test);
 			action.click(icSearchIcon, "Click on search", test);
 			action.waitForPageLoaded(20);
 //			Thread.sleep(10000);
