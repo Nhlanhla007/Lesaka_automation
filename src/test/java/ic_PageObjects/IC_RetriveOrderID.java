@@ -33,16 +33,17 @@ public class IC_RetriveOrderID {
     public void RetriveOrderID(ExtentTest test) throws IOException {
     	String typeOfUser = dataTable2.getValueOnOtherModule("deliveryPopulation", "UserType", 0).trim();
         String Oderid = null;
-//        action.explicitWait(10000);
+        action.explicitWait(6000);
+        action.waitForPageLoaded(30);
         if(typeOfUser.equalsIgnoreCase("Registered")) {
         	action.isElementOnNextPage(OderIDRegisteredUser, (long) 11,test);
-            Oderid = action.getText(OderIDRegisteredUser, "Order ID",test);
+            Oderid = action.getText(OderIDRegisteredUser, "Order ID : " + OderIDRegisteredUser.getText(),test);
             Oderid = Oderid.replace("Your order # is: ","").replace(".","");
             dataTable2.setValueOnCurrentModule ("orderID",Oderid);
             dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);
         }else if(typeOfUser.equalsIgnoreCase("Guest")) {
         	action.isElementOnNextPage(OderIDGuestUser, (long) 11,test);
-            Oderid = action.getText(OderIDGuestUser, "Order ID",test);
+            Oderid = action.getText(OderIDGuestUser, "Order ID :" + OderIDGuestUser.getText(),test);
             Oderid = Oderid.replace("Your order # is: ","").replace(".","");
             dataTable2.setValueOnCurrentModule ("orderID",Oderid);
             dataTable2.setValueOnOtherModule("OrderStatusSearch","orderID",Oderid,0);

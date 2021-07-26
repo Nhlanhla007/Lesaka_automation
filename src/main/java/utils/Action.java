@@ -1815,7 +1815,7 @@ public class Action {
 
     public void ajaxWait(int timeoutInSeconds,ExtentTest test) throws Exception {
 
-        ExtentTest node = test.createNode("Check Ajax components Loaded");
+        
         if((timeoutInSeconds / 1000)>=1){
             timeoutInSeconds=timeoutInSeconds/1000;
         }
@@ -1836,7 +1836,7 @@ public class Action {
         if(flag == true) {
             System.out.println("Ajax Page was not loaded in: "+count+" seconds");
             String screenShot = GenerateScreenShot.getScreenShot(driver);
-
+            ExtentTest node = test.createNode("Check Ajax components Loaded");
             node.warning("Ajax Page was not loaded in: "+count+" seconds"+ node.addScreenCaptureFromPath(screenShot));
         }
         else{

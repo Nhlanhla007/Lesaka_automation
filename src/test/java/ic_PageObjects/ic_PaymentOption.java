@@ -149,28 +149,57 @@ public class ic_PaymentOption {
 			return actionele;	
      }
 
-	public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-		try {
-//			action.explicitWait(14000);
-			String Paytype = input.get("Paytype_Option").get(rowNumber);
-			action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
-			WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
-//			action.explicitWait(10);
-			action.scrollElemetnToCenterOfView(paymenttype,"paymenttype",test);
-			action.explicitWait(2000);
-			action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
-//			action.waitExplicit(15);
-			action.scrollElemetnToCenterOfView(Btn_PlaceOrder,"paymenttype",test);
-			action.explicitWait(2000);
-			action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
-			action.waitForPageLoaded(30);
-			action.ajaxWait(10,test);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//	public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+//		try {
+////			action.explicitWait(14000);
+//			String Paytype = input.get("Paytype_Option").get(rowNumber);
+//			action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
+//			WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
+////			action.explicitWait(10);
+//			action.scrollElemetnToCenterOfView(paymenttype,"paymenttype",test);
+//			action.explicitWait(2000);
+//			action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
+////			action.waitExplicit(15);
+//			action.scrollElemetnToCenterOfView(Btn_PlaceOrder,"paymenttype",test);
+//			action.explicitWait(2000);
+//			action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+//			action.waitForPageLoaded(30);
+//			action.ajaxWait(10,test);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//	}
 
-	}
+		public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
+				throws IOException {
+			try {
+				// action.explicitWait(14000);
+				action.waitForPageLoaded(30);
+				action.ajaxWait(10, test);
+				String Paytype = input.get("Paytype_Option").get(rowNumber);
+				action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
+				WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
+				// action.explicitWait(10);
+				action.scrollElemetnToCenterOfView(paymenttype, "paymenttype", test);
+				// action.explicitWait(2000);
+				action.ajaxWait(10, test);
+				action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
+				// action.waitExplicit(15);
+				action.ajaxWait(10, test);
+				action.scrollElemetnToCenterOfView(Btn_PlaceOrder, "paymenttype", test);
+				action.explicitWait(2000);
+				action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+				action.ajaxWait(10, test);
+				action.waitForPageLoaded(30);
+				action.ajaxWait(10, test);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
 	
 	public void CheckoutpaymentOptionGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception{
 		if(action.waitUntilElementIsDisplayed(Btn_PlaceOrder, 10)){

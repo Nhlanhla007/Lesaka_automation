@@ -52,7 +52,7 @@ public class verifyForgotPassword {
     WebElement ic_failureMessage;
 
     public void forgotPasswordPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
-        String email = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("loginDetails"), "username");
+        String email = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("loginDetails"), "username").trim();
         action.click(ic_myAccountButton, "click on my account", test);
         action.explicitWait(2000);
         action.click(ic_myAccountlist, "list", test);

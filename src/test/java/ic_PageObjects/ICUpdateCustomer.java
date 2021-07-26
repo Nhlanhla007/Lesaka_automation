@@ -404,27 +404,32 @@ public class ICUpdateCustomer {
 		return rowNumber;
 	}
 	
-	public void navigateBackToCustomerDetails(String userType,String addressExist) {
+	public void navigateBackToCustomerDetails(String userType,String addressExist,ExtentTest test) throws Exception {
 //		action.explicitWait(4000);
-		backButton.click();
+		//backButton.click();
+		action.click(backButton, "Back Button", test);
 		action.waitForPageLoaded(30);
 //		action.click(backButton,"backButton",test);
 //		action.explicitWait(4000);
-		ic_myAccountButton.click();
+		//ic_myAccountButton.click();
+		action.click(ic_myAccountButton, "Account Information", test);
 		action.waitForPageLoaded(30);
 //		action.explicitWait(4000);
-		MyAccountButton2.click();
+		//MyAccountButton2.click();
+		action.click(MyAccountButton2, "Account Information", test);
 		action.waitForPageLoaded(30);
 //		action.explicitWait(4000);
 		if(userType.equalsIgnoreCase("Registered") & addressExist.equalsIgnoreCase("Select a saved address or add a new address:")) {
-		AddressBookEdit.click();
+		//AddressBookEdit.click();
+		action.click(AddressBookEdit, "Address Book Edit", test);
 		action.waitForPageLoaded(30);
-		ic_BillingAddress.click();
+		//ic_BillingAddress.click();
+		action.click(ic_BillingAddress, "Billing Address", test);
 		action.waitForPageLoaded(30);
 		}
 	}
 	
-	public Map<String,String> getExistingAddressInformation(String userType,String addressExist){
+	public Map<String,String> getExistingAddressInformation(String userType,String addressExist,ExtentTest test) throws Exception {
 		Map<String, String> addressInfo = new LinkedHashMap<>();
 		if(userType.equalsIgnoreCase("Registered") & addressExist.equalsIgnoreCase("Select a saved address or add a new address:") ){
 		String streetAdd = action.getAttribute(ic_streetAddress, "value");
@@ -440,7 +445,8 @@ public class ICUpdateCustomer {
 		String tele =action.getAttribute(telephone, "value");
 		addressInfo.put("Telephone", tele);
 		}
-		AccountInfoEdit.click();
+		//AccountInfoEdit.click();
+		action.click(AccountInfoEdit, "Account Information", test);
 		action.waitForPageLoaded(30);
 //		action.explicitWait(5000);
 		String firstName = action.getAttribute(ic_firstname, "value");
@@ -449,19 +455,23 @@ public class ICUpdateCustomer {
 		addressInfo.put("Last name", lastNAme);
 		String taxVat = action.getAttribute(ic_taxVat, "value");
 		addressInfo.put("Vat number", taxVat);
-		emailCheckBox.click();
+		//emailCheckBox.click();
+		action.click(emailCheckBox, "Email Checkbox", test);
 //		action.explicitWait(4000);
 		String email = action.getAttribute(ic_email, "value");
 		addressInfo.put("email", email);
-		emailCheckBox.click();
+		//emailCheckBox.click();
+		action.click(emailCheckBox, "Email Checkbox", test);
 		if(idRadioButton.isSelected()) {
 			addressInfo.put("ID", action.getAttribute(identityNumber, "value")) ;
 		}else {
 			addressInfo.put("ID", action.getAttribute(passportNumber, "value"));
 		}
 //		action.explicitWait(5000);
-		iCCartButton.click();
-		icCCheckout.click();
+		//iCCartButton.click();
+		action.click(iCCartButton, "Cart Button", test);		
+		//icCCheckout.click();
+		action.click(icCCheckout, "Check Out Button", test);
 		return addressInfo;
 		
 	}

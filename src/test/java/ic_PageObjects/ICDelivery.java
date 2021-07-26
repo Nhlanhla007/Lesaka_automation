@@ -164,8 +164,8 @@ public class ICDelivery {
                 action.writeText(email, dataSheets.getValueOnCurrentModule("email"), "email", test);
                 // action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
             } else if (userType.equalsIgnoreCase("Registered")) {
-                customerAddressDetails.navigateBackToCustomerDetails(userType, addressTypeICFont);
-                registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType, addressTypeICFont);
+                customerAddressDetails.navigateBackToCustomerDetails(userType, addressTypeICFont,test);
+                registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType, addressTypeICFont,test);
                 dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
                 dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
                 dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
@@ -199,8 +199,8 @@ public class ICDelivery {
             }
         } else if (addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")) {
             //details returned from this map will be written to excel --DONE NEED THOKOZANI'S INPUT AS TO DOES IT REALLY ADD AND THE TCID AND OCCURENCE
-            customerAddressDetails.navigateBackToCustomerDetails(userType, addressTypeICFont);
-            registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType, addressTypeICFont);
+            customerAddressDetails.navigateBackToCustomerDetails(userType, addressTypeICFont,test);
+            registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType, addressTypeICFont,test);
             //SHOULD BE TESTED THOKOZANI
 
             Streetname = registeredUserDetails.get("Street Address");
@@ -239,8 +239,8 @@ public class ICDelivery {
     }
 
     public void enterNewAddressWithAnExistingAddress(ExtentTest test) throws Exception {
-        customerAddressDetails.navigateBackToCustomerDetails("New", "Select a saved address or add a new address:");
-        registeredUserDetails = customerAddressDetails.getExistingAddressInformation("New", "Select a saved address or add a new address:");
+        customerAddressDetails.navigateBackToCustomerDetails("New", "Select a saved address or add a new address:",test);
+        registeredUserDetails = customerAddressDetails.getExistingAddressInformation("New", "Select a saved address or add a new address:",test);
         dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
         dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
         dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
