@@ -21,7 +21,7 @@ public class ic_Magento_Login {
 	WebDriver driver;
 	Action action;
 	DataTable2 dataTable2;
-		
+	public static int ajaxTimeOutInSeconds;
 		public ic_Magento_Login(WebDriver driver, DataTable2 dataTable2) {
 			this.driver = driver;
 			PageFactory.initElements(driver, this);
@@ -47,6 +47,7 @@ public class ic_Magento_Login {
 			String Username = "";
 			String Password = "";
 			LoginToMagento(test,Username,Password);
+			ajaxTimeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
 	     }
 		public void LoginToMagento(ExtentTest test,String Username, String Password) throws Exception {
 			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
