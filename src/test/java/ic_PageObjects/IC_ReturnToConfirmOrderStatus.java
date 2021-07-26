@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
 
+import ic_MagentoPageObjects.ic_Magento_Login;
 import utils.Action;
 import utils.DataTable2;
 
@@ -16,13 +17,13 @@ public class IC_ReturnToConfirmOrderStatus {
 	WebDriver driver;
     Action action;
     DataTable2 dataTable2;
+    int ajaxTimeOutInSeconds = ic_Magento_Login.ajaxTimeOutInSeconds;
     
     public IC_ReturnToConfirmOrderStatus(WebDriver driver, DataTable2 dataTable2){
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
         this.dataTable2 = dataTable2;
-
     }
     
    /* @FindBy(xpath="//span[contains(text(),'My Account')]")
@@ -42,10 +43,13 @@ public class IC_ReturnToConfirmOrderStatus {
     @FindBy(className = "my-account")
 	WebElement ic_myAccountButton;
     
-    public void backToIC(ExtentTest test) throws IOException{
+    public void backToIC(ExtentTest test) throws Exception{
         String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("ic_login","loginDetails", 0),"url");
         action.navigateToURL(url);
-        action.explicitWait(5000);
+        //action.explicitWait(5000);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		
         action.click(myAcco, " click my account", test);
         action.click(myOrder, "Orders", test);
         

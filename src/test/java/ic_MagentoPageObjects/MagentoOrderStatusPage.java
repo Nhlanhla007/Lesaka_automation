@@ -24,13 +24,12 @@ public class MagentoOrderStatusPage {
 	WebDriver driver;
 	Action action;
 	DataTable2 dataTable2;
-	int ajaxTimeOutInSeconds;
+	int ajaxTimeOutInSeconds = ic_Magento_Login.ajaxTimeOutInSeconds;
 	public MagentoOrderStatusPage(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 		this.dataTable2 = dataTable2;
-		ajaxTimeOutInSeconds = 20;//Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
 	}
 	
 	@FindBy(id = "menu-magento-sales-sales")

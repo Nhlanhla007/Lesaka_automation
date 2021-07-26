@@ -54,7 +54,7 @@ public class MagentoAccountInformation {
 				String expBPnumber =null;
 			
 				//Starts from Account information tab
-				action.waitExplicit(loadtime);
+			//	action.waitExplicit(loadtime);
 				action.click(Account_Info_link, "Account Information", test);
 				String ActualFirstname = action.getAttribute(customerFirstname, "value");
 				String ActualLastname = action.getAttribute(customerLastname, "value");

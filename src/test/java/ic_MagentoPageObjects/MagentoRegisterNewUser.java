@@ -21,13 +21,12 @@ public class MagentoRegisterNewUser {
 	WebDriver driver;
 	Action action;
 	MagentoRetrieveCustomerDetailsPage RetriveCust;
-	int ajaxTimeOutInSeconds;
+	int ajaxTimeOutInSeconds = ic_Magento_Login.ajaxTimeOutInSeconds;
 	public MagentoRegisterNewUser(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 		RetriveCust =new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
-		ajaxTimeOutInSeconds = 20;//Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
 	}
 	//navigate to all customer
 	@FindBy(xpath = "//*[@class=\"admin__menu\"]/ul[@id='nav']/li[@id=\"menu-magento-customer-customer\"]/a/span[contains(text(),\"Customers\")]")
@@ -85,7 +84,7 @@ public class MagentoRegisterNewUser {
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		
-		boolean resAccountinfo = action.elementExists(Account_Information, waitforelement);
+		boolean resAccountinfo = action.waitUntilElementIsDisplayed(Account_Information, waitforelement);
 		if(resAccountinfo==true){
 			action.dropDownselectbyvisibletext(AssociatedWebsite_ele, AssociatedWebsite, "Website", test);
 			action.writeText(Cust_Firstname, Firstname, "Customer firstname", test);
@@ -106,7 +105,7 @@ public class MagentoRegisterNewUser {
 			action.waitForPageLoaded(ajaxTimeOutInSeconds);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
 			
-			boolean resSavedcustomer = action.elementExists(Save_Customer_success, waitforelement);
+			boolean resSavedcustomer = action.waitUntilElementIsDisplayed(Save_Customer_success, waitforelement);
 			if(resSavedcustomer==true){
 				action.CompareResult("verify New customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
 
@@ -181,7 +180,11 @@ public class MagentoRegisterNewUser {
 			if(action.waitUntilElementIsDisplayed(allCustomerTab, 10000)) {
 			action.click(allCustomerTab, "All Customers Tab", test);
 			}
-			Thread.sleep(10000);
+			
+			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
+			
+			//Thread.sleep(10000);
 			String screenShotPath=action.getScreenShot(dateName);
 			node.pass("User navigated to Allcustomer section"+ node.addScreenCaptureFromPath(screenShotPath));
 

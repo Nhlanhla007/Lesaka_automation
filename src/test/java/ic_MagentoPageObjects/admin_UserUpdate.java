@@ -23,13 +23,12 @@ public class admin_UserUpdate {
 	    
 	    MagentoRetrieveCustomerDetailsPage magRetri ;
 		MagentoAccountInformation magAccInfo;
-		int ajaxTimeOutInSeconds;
+		int ajaxTimeOutInSeconds = ic_Magento_Login.ajaxTimeOutInSeconds;
 	    public admin_UserUpdate(WebDriver driver, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
 	        action = new Action(driver);
 	        magRetri = new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
-	    	ajaxTimeOutInSeconds = 20;//Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
 	    }
 	
 
