@@ -22,7 +22,7 @@ public class ic_AddProductsTowishlist {
 		}
 		ic_RefreshLogoHomepage RefreshLogoHomepage =new ic_RefreshLogoHomepage(driver,dataTable2);
 		Ic_Products icProducts =new Ic_Products(driver,dataTable2);
-		public void addProductsTowishlist(ExtentTest test) throws IOException{
+		public void addProductsTowishlist(ExtentTest test) throws Exception{
 			String AllProducts = "Samsung Toner D105L#b#c";
 			String AllQuantity = "1#2#3";
 			RefreshLogoHomepage.homepageLogo(test);

@@ -154,7 +154,7 @@ public class EVS_PaymentOption {
 
 	}
 
-	public void CheckoutpaymentOptionGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
+	public void CheckoutpaymentOptionGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception{
 		String firstNameGift = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "firstName", 0);
         String lastnameGift = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "lastname", 0);
         String emailGift = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "email", 0);
