@@ -188,7 +188,7 @@ public class ic_PaymentOption {
 				action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
 				// action.waitExplicit(15);
 				action.ajaxWait(10, test);
-				action.scrollElemetnToCenterOfView(Btn_PlaceOrder, "paymenttype", test);
+				action.scrollElemetnToCenterOfView(Btn_PlaceOrder, "Place Order Button", test);
 				action.explicitWait(2000);
 				action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
 				action.ajaxWait(10, test);

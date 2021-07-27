@@ -1514,15 +1514,20 @@ public class Action {
 
     // By sourav
     public void CheckEnabilityofButton(WebElement elementAttr, String name, boolean Expstatus, ExtentTest test)
-            throws IOException {
+            throws Exception {
         String TestDescription = "Verify that " + name + " button Enabled ";
         boolean resEnable = true;
         String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
         // ExtentTest test=
         // ExtentFactory.getInstance().createCase(TestDescription);
         ExtentTest node = test.createNode("Check Enability of Button is " + String.valueOf(Expstatus));
-        try {
+        resEnable = ic_isEnabled(elementAttr);
+        String screenShot = GenerateScreenShot.getScreenShot(driver);
+        CompareResult("Validate place order button is enabled","true",String.valueOf(resEnable),test);
+
+        /*try {
             resEnable = ic_isEnabled(elementAttr);
+
             String screenShot = GenerateScreenShot.getScreenShot(driver);
             node.pass(TestDescription + " Expected : " + Expstatus + " Actual :" + resEnable,
                     MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
@@ -1530,7 +1535,7 @@ public class Action {
             String screenShot = GenerateScreenShot.getScreenShot(driver);
             node.fail(TestDescription + " Expected : " + Expstatus + " Actual :" + resEnable,
                     MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
-        }
+        }*/
     }
 
     public <T> void clickEle(T elementAttr, String name, ExtentTest test) throws IOException {
