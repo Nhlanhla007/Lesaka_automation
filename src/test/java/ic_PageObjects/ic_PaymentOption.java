@@ -175,7 +175,8 @@ public class ic_PaymentOption {
 		public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
 				throws IOException {
 			try {
-				// action.explicitWait(14000);
+				action.waitUntilElementIsDisplayed(Btn_PlaceOrder, 10);
+				action.explicitWait(7000);
 				action.waitForPageLoaded(30);
 				action.ajaxWait(10, test);
 				String Paytype = input.get("Paytype_Option").get(rowNumber);

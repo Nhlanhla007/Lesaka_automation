@@ -151,8 +151,10 @@ public class ICDelivery {
         action.ajaxWait(20, test);
 //    	action.explicitWait(30000);
         if (action.waitUntilElementIsDisplayed(deliveryLink, 10)) {
+        	action.ajaxWait(20, test);
+        	action.explicitWait(5000);
             action.scrollToElement(deliveryLink, "Delivery Link", test);
-            action.click(deliveryLink, "deliveryLink", test);
+            action.javaScriptClick(deliveryLink, "deliveryLink", test);
             action.ajaxWait(10, test);
         }
         String addressTypeICFont = action.getText(ic_AddressType, "Get Address Type", test);//ic_AddressType.getText();

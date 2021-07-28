@@ -133,7 +133,8 @@ public class Ic_Products {
 		try {
 			if (ic_ElementVisable(icProductLink)) {
 				action.click(icProductLink, "Click product link", test);
-				Thread.sleep(5000);
+			//	Thread.sleep(5000);
+				action.waitForPageLoaded(40);
 			}
 
 		} catch (Exception e) {
@@ -208,7 +209,6 @@ public class Ic_Products {
 			action.writeText(icSearchBar, productToFind, "Search Bar", test);
 			action.click(icSearchIcon, "Click on search", test);
 			action.waitForPageLoaded(20);
-//			Thread.sleep(10000);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info(e.getMessage());
@@ -326,6 +326,9 @@ public class Ic_Products {
 
 		}
 
+		action.waitForPageLoaded(40);
+		action.explicitWait(3000);
+		
 	}
 
 	/**
