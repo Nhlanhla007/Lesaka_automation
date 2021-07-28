@@ -131,25 +131,30 @@ public class EVS_PaymentOption {
 		return actionele;
 	}
 
-	public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException {
+	public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
 		try {
-			action.explicitWait(20000);
+//			action.explicitWait(20000);
+			action.waitForPageLoaded(60);
+			action.ajaxWait(20,test);
 			String paytype = input.get("Paytype_Option").get(rowNumber);
 			action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 			WebElement paymentsType = evs_SelectPaymentMethod(paytype);
-//			action.waitForElementPresent(paymentsType,20);
-			action.explicitWait(20000);
+//			action.explicitWait(20000);
 			action.scrollToElement(paymentsType,"Payment type");
 			action.explicitWait(2000);
 			action.click(paymentsType,"Select Payment option as " + paytype,test);
-			action.explicitWait(5000);
+			action.ajaxWait(10,test);
+//			action.explicitWait(5000);
 			action.scrollToElement(Btn_PlaceOrder,"Pay using Card");
 			action.explicitWait(2000);
 			action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+			action.ajaxWait(10,test);
+			action.waitForPageLoaded(40);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new Exception("Unable to navigate to Checkout Payment: "+e.getMessage());
 		}
 
 	}
@@ -166,8 +171,7 @@ public class EVS_PaymentOption {
         String suburdGift= dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "Suburb", 0);
         String vatnumberGift = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "vatNumber", 0);
 		action.explicitWait(14000);
-		System.out.println("##############START Execution!###############");
-		action.explicitWait(8000);
+//		action.explicitWait(8000);
 		//String Paytype = input.get("Paytype_Option").get(rowNumber);
 		String Paytype = dataTable2.getValueOnOtherModule("evs_CheckoutpaymentOption", "Paytype_Option", 0);
 		action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);

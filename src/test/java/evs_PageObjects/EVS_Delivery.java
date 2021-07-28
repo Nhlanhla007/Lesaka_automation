@@ -231,7 +231,8 @@ public class EVS_Delivery {
 			 *///Add else if for other scenario
         if(action.waitUntilElementIsDisplayed(ContinueToPayment, 20000)) {
         	action.explicitWait(5000);
-        action.javaScriptClick(ContinueToPayment,"ContinueToPayment",test);
+        action.javaScriptClick(ContinueToPayment,"Continue To Payment",test);
+        action.waitForPageLoaded(40);
         }
     }
     

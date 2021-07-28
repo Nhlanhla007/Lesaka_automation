@@ -296,7 +296,7 @@ public class Action {
      */
 
     public <T> void javaScriptClick(T elementAttr, String name, ExtentTest test) throws IOException {
-        ExtentTest node = test.createNode("javaScriptClick element: " + name);
+        ExtentTest node = test.createNode("Click element: " + name);
         waitExplicit(WAIT_IN_SECONDS_MED);
         try {
             if (elementAttr.getClass().getName().contains("By")) {
@@ -1523,7 +1523,7 @@ public class Action {
         ExtentTest node = test.createNode("Check Enability of Button is " + String.valueOf(Expstatus));
         resEnable = ic_isEnabled(elementAttr);
         String screenShot = GenerateScreenShot.getScreenShot(driver);
-        CompareResult("Validate place order button is enabled","true",String.valueOf(resEnable),test);
+        CompareResult("place order button is enabled","true",String.valueOf(resEnable),test);
 
         /*try {
             resEnable = ic_isEnabled(elementAttr);

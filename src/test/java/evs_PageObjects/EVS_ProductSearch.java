@@ -140,7 +140,7 @@ public class EVS_ProductSearch {
 
 	public void clickNext(ExtentTest test) throws Exception {
 		action.mouseover(clickNext, "scroll to element");
-		action.explicitWait(10000);
+//		action.explicitWait(10000);
 		action.click(clickNext, "Clicked Next", test);
 	}
 
@@ -176,7 +176,8 @@ public class EVS_ProductSearch {
 		try {
 			if (ic_ElementVisable(productLink)) {
 				action.click(productLink, "Click product link", test);
-				Thread.sleep(10000);
+				action.waitForPageLoaded(40);
+//				Thread.sleep(10000);
 			}
 
 		} catch (Exception e) {
@@ -193,7 +194,6 @@ public class EVS_ProductSearch {
 
 		WebElement addToCart= driver.findElements(By.xpath("//*[@class=\"product-item-link\"]")).get(0);		
 		action.mouseover(addToCart, "Scroll to add to cart");
-		System.out.println("Mouse over the");
 		WebElement btnAddToC = addToCart.findElement(By.xpath(".//parent::*/following-sibling::div[5]/div[2]/div/form/button"));
 		action.click(btnAddToC,"addToCart",test);
 		action.explicitWait(5000);
@@ -223,16 +223,10 @@ public class EVS_ProductSearch {
 		WebElement miniCartItemQty= driver.findElement(By.xpath("//*[@class = \"details-qty qty\"]/input"));
 		action.clear(miniCartItemQty,"miniCartItemQty");
 		action.writeText(miniCartItemQty,"9999999999999","miniCartItemQty",test);
-
-		//Robot robot = new Robot();
-		//robot.keyPress(KeyEvent.VK_ENTER);
-		//robot.keyRelease(KeyEvent.VK_ENTER);
-
 		action.explicitWait(3000);
 		action.waitUntilElementIsDisplayed(updateQuantityButton, 10000);		
 	//	action.waitForElementClickable(updateQuantityButton, "Update Quantity", 10);
 		action.javaScriptClick(updateQuantityButton, "Update Quantity", test);
-
 		action.explicitWait(2000);
 		if(action.waitUntilElementIsDisplayed(quantityExceedPopUpMsg, 20000)) {
 		//WebElement QtyToMuchPopUp= driver.findElement(By.xpath("//*[@class = \"modal-content\"]/div"));
@@ -252,7 +246,8 @@ public class EVS_ProductSearch {
 			action.clear(searchBar, "SearchBar");
 			action.writeText(searchBar, productToFind, "SearchBar", test);
 			action.click(searchIcon, "Click on search", test);
-			action.explicitWait(6);
+			action.waitForPageLoaded(40);
+//			action.explicitWait(6);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info(e.getMessage());
@@ -364,6 +359,7 @@ public class EVS_ProductSearch {
 					if (category.equalsIgnoreCase(map.getKey().toString())) {
 						WebElement linkFromNavBar = byCategoryFromMenuBar(map.getValue().toString());
 						action.click(linkFromNavBar, "Navigating to : " + map.getKey().toString(), test);
+						action.waitForPageLoaded(40);
 					}
 				}
 			} else {
@@ -373,6 +369,7 @@ public class EVS_ProductSearch {
 					action.scrollElemetnToCenterOfView(typeOfSearch, "typeOfSearch", test);
 					action.scrollElementIntoView(typeOfSearch);
 					action.click(typeOfSearch, typeOfSearch.getText(), test);
+					action.waitForPageLoaded(40);
 				}
 			}
 			break;
@@ -418,7 +415,7 @@ public class EVS_ProductSearch {
 			action.explicitWait(2000);
 			action.click(addToCartButton, "Add To Cart", test);
 			cartValidation.cartButtonValidation(addToCartButton, Integer.parseInt(waitTimeInSeconds), test);
-			action.explicitWait(7000);
+//			action.explicitWait(7000);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.info(e.getMessage());
@@ -434,7 +431,8 @@ public class EVS_ProductSearch {
 			action.mouseover(productLink, "On Product");
 			JavascriptExecutor executor = (JavascriptExecutor)driver;
 			executor.executeScript("arguments[0].click();", compareLink);
-			action.explicitWait(5000);
+			action.waitForPageLoaded(40);
+//			action.explicitWait(5000);
 
 		}		
 	}
@@ -444,6 +442,7 @@ public class EVS_ProductSearch {
 		if (quanity == 1) {
 			WebElement prodC = productLink.findElement(By.xpath(".//parent::strong/parent::*/parent::*/a[1]"));
 			action.click(prodC, "Navigate to product Details page", test);
+			action.waitForPageLoaded(40);
 		}
 		driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
 		boolean isPresent = driver.findElements(By.id("product-addtocart-button")).size() > 0;
@@ -463,7 +462,7 @@ public class EVS_ProductSearch {
 			productDetailsPageAddToCartButton.click();
 			cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds),
 					test);
-			action.explicitWait(8000);
+//			action.explicitWait(8000);
 		}else {
 			if(action.waitUntilElementIsDisplayed(notifyWhenProductIsAvailable, 15000)) {
 				action.CompareResult("\"Notify Me When Available Is Present\"", "True", "True", test);
@@ -491,16 +490,18 @@ public class EVS_ProductSearch {
 		if (quanity == 1) {
 			WebElement prodC = productLink.findElement(By.xpath(".//parent::strong/parent::*/parent::*/a[1]"));
 			action.click(prodC, "Navigate to product Details page", test);
+			action.waitForPageLoaded(40);
 
 		}
 
-		action.explicitWait(5000);
+//		action.explicitWait(5000);
 
 
 		if (!action.isElementPresent(loggedInIcon)) {
 			
 			action.clickEle(addToWishListButton, "Add to WishList Button", test);
-			action.explicitWait(5);
+			action.waitForPageLoaded(40);
+//			action.explicitWait(5);
 			String msg = action.getText(loginMsg, "Login Message", test);
 			action.CompareResult("User redirected to Login Page",
 					"You must login or register to add items to your wishlist.", msg, test);
@@ -509,8 +510,6 @@ public class EVS_ProductSearch {
 			action.click(wishListButton, "Wish list button", test);
 			action.explicitWait(2000);
 			addToWishList(test);
-
-			// action.explicitWait(Integer.parseInt(waitTimeInSeconds));
 		}
 	}
 
@@ -522,7 +521,8 @@ public class EVS_ProductSearch {
 			if (action.isElementPresent(addToWishListCheckBox)) {
 				action.clickEle(addToWishListCheckBox, "Adding item to Wish List", test);
 				action.clickEle(addToWishLists, "Add to Wish List Pop up", test);
-				action.explicitWait(5000);
+				action.waitForPageLoaded(40);
+//				action.explicitWait(5000);
 			}
 			
 		}
@@ -549,11 +549,7 @@ public class EVS_ProductSearch {
 			WebElement nextButton = returnNext();
 			if (nextButton != null) {
 				clickNext(test);
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					logger.info(e.getMessage());
-				}
+				action.explicitWait(5000);
 			} else {
 				status = false;
 				action.CompareResult("Product Not Found", product, "", test);
