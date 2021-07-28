@@ -17,16 +17,16 @@ public class EVS_GiftCardReport {
 	WebDriver driver;
     Action action;
 	DataTable2 dataTable2;
-    
-public EVS_GiftCardReport(WebDriver driver, DataTable2 dataTable2){
+	int ajaxTimeOutInSeconds = EVS_Magento_Login.ajaxTimeOutInSeconds;
+
+	public EVS_GiftCardReport(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
-        PageFactory.initElements(driver, this);
-        action = new Action(driver);
-		this.dataTable2=dataTable2;
-        
-       
+		PageFactory.initElements(driver, this);
+		action = new Action(driver);
+		this.dataTable2 = dataTable2;
+
 	}
-	
+
 	@FindBy(xpath="//*[@id=\"menu-magento-backend-marketing\"]/a")
 	private WebElement admin_Marketing;
 	
@@ -83,7 +83,7 @@ public EVS_GiftCardReport(WebDriver driver, DataTable2 dataTable2){
 	private WebElement admin_GiftCardMoreInfoUsed;
 	
 	
-	public void giftCardReports(ArrayList<HashMap<String, ArrayList<String>>> mySheet,ExtentTest test,int testcaseID) throws IOException{
+	public void giftCardReports(ArrayList<HashMap<String, ArrayList<String>>> mySheet,ExtentTest test,int testcaseID) throws Exception{
 		int sheetRow1= findRowToRun(mySheet.get(0), 0, testcaseID);
 		
 		String giftCardCode = mySheet.get(0).get("giftCardCode").get(sheetRow1);
@@ -94,14 +94,21 @@ public EVS_GiftCardReport(WebDriver driver, DataTable2 dataTable2){
 		String OrderNum_Output = mySheet.get(0).get("OrderNum_Output").get(sheetRow1);
 		action.click(admin_Marketing, "Click marketing", test);
 		action.click(admin_GiftCardAccounts, "Click gift accounts", test);
+		
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		
 		action.click(admin_ResetFilter, "reset filter", test);
-		action.explicitWait(10000);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		action.writeText(admin_GiftCardCode, giftCardCode, "Get the gift card code", test);
-		action.explicitWait(10000);
+		//action.explicitWait(10000);
 		action.javaScriptClick(admin_GiftCardSearch, "we search", test);
-		action.explicitWait(10000);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		
 		if(giftCardStatus.equalsIgnoreCase("Available")){
 			action.click(admin_code, "click information", test);
+			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
 			action.click(admin_GiftCardHistory, "click History", test);
 			Action_Output = action.getText(admin_Action, "value",test);
 			mySheet.get(0).get("Action_Output").set(sheetRow1, Action_Output);

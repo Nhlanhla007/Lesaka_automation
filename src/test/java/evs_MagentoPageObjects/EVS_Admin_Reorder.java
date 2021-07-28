@@ -19,7 +19,7 @@ public class EVS_Admin_Reorder {
 	    Action action;
 	    EVS_MagentoOrderStatusPage orderStatus;
 		DataTable2 dataTable2;
-
+		int ajaxTimeOutInSeconds = EVS_Magento_Login.ajaxTimeOutInSeconds;
 	    public EVS_Admin_Reorder(WebDriver driver, DataTable2 dataTable2) {
 	        this.driver = driver;
 	        PageFactory.initElements(driver, this);
@@ -90,13 +90,16 @@ public class EVS_Admin_Reorder {
     	String oldSAPnumber = dataTable2.getValueOnOtherModule("evs_GenerateOrderSAPnumber", "OrderSAPnumber", 0);//action.getText(OrderDetailSAPNumber, "oldSAPnumber",test);
     	action.mouseover(OrderDetailSAPNumber, "Get old SAPnumber");
     	dataTable2.setValueOnCurrentModule("OldPO number", oldSAPnumber.replace("[RabbitMQ] Order SAP Number: ",""));
-    	action.explicitWait(5000);
+    	//action.explicitWait(5000);
     	
     	action.click(admin_Reorder, "create reorder", test);
     	
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+    	
     	action.scrollElemetnToCenterOfView(admin_orderComment, "Comments", test);
     	action.mouseover(admin_orderComment, "Comments");
-    	action.explicitWait(5000);
+    	//action.explicitWait(5000);
     	action.clear(admin_orderComment, "Clear Comment Field");
     	action.writeText(admin_orderComment, orderComment,"Write a reorder comment", test);
     	
@@ -108,7 +111,10 @@ public class EVS_Admin_Reorder {
     	
     	action.click(admin_SubmitOrder, "Submit Re-Order", test);
     	
-    	action.explicitWait(5000);
+    	//action.explicitWait(5000);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		
     	String invoiceMsg = action.getText(admin_invoiceMessage, "invoice message",test);
     	action.CompareResult("Popup-message generated invoice", "Automatically generated invoice.", invoiceMsg, test);
     	

@@ -46,8 +46,8 @@ public class ic_Magento_Login {
 		public void Login_magento(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
 			String Username = "";
 			String Password = "";
-			LoginToMagento(test,Username,Password);
 			ajaxTimeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("Login_magento", "TimeOutInSecond", 0));
+			LoginToMagento(test,Username,Password);			
 	     }
 		public void LoginToMagento(ExtentTest test,String Username, String Password) throws Exception {
 			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
@@ -63,8 +63,8 @@ public class ic_Magento_Login {
 				action.writeText(Magento_Username, Username, "Username feild", test);
 				action.writeText(Magento_Password, Password, "Password feild", test);
 				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
-				action.waitForPageLoaded(10);
-				action.ajaxWait(10,test);
+				action.waitForPageLoaded(ajaxTimeOutInSeconds);
+				action.ajaxWait(ajaxTimeOutInSeconds,test);
 //				action.explicitWait(10000);
 				String resWelcomescreen = action.getText(Dashboard, "Dashboard", test);
 				System.out.println("Welcome page title: "+driver.getTitle());

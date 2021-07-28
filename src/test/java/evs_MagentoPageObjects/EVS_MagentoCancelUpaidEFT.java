@@ -17,13 +17,14 @@ public class EVS_MagentoCancelUpaidEFT {
 	WebDriver driver;
     Action action;
 	DataTable2 dataTable2;
-    
-public EVS_MagentoCancelUpaidEFT(WebDriver driver, DataTable2 dataTable2){
+	int ajaxTimeOutInSeconds = EVS_Magento_Login.ajaxTimeOutInSeconds;
+
+	public EVS_MagentoCancelUpaidEFT(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
-        PageFactory.initElements(driver, this);
-        action = new Action(driver);
-		this.dataTable2=dataTable2;
-           
+		PageFactory.initElements(driver, this);
+		action = new Action(driver);
+		this.dataTable2 = dataTable2;
+
 	}
 	
 	@FindBy(xpath="//*[@class=\"action-default scalable cancel\"]")
@@ -35,13 +36,15 @@ public EVS_MagentoCancelUpaidEFT(WebDriver driver, DataTable2 dataTable2){
 	@FindBy(xpath="//div[contains(text(),'You canceled the order.')]")
 	private WebElement popUP_canceledOrder;
 		
-	public void EVS_cancelUpaidEFT(ExtentTest test) throws IOException{
+	public void EVS_cancelUpaidEFT(ExtentTest test) throws Exception{
 		
-	action.explicitWait(5000);	
+	//action.explicitWait(5000);	
 	action.click(admin_Cancel, "Cancelling the order", test);
-	action.explicitWait(5000);
-	action.click(popUP_OK, "Click ok", test);
-	action.explicitWait(5000);
+	//action.explicitWait(5000);
+	action.ajaxWait(ajaxTimeOutInSeconds, test);
+	action.click(popUP_OK, "Click ok", test);	
+	action.ajaxWait(ajaxTimeOutInSeconds, test);
+	action.explicitWait(2000);
 	String messageConfirm = action.getText(popUP_canceledOrder, "Confirmation message", test);
 	action.CompareResult("Confirm cancel order", "You canceled the order.", messageConfirm, test);
 		
