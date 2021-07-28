@@ -266,7 +266,7 @@ public class EVS_Delivery {
     	action.click(popUpSave, "Save", test);
     }
     
-    public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws InterruptedException, IOException {
+    public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
     	//Streetname =input.get("streetName").get(rowNumber);
     	String Streetname = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "streetName", 0);
         //Cityname =input.get("city").get(rowNumber);
@@ -282,7 +282,8 @@ public class EVS_Delivery {
         
         driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
         //action.click(cardDeliver_btn, "click Deliver", test);
-  
+        action.waitForPageLoaded(30);
+        action.ajaxWait(10, test);
         action.writeText(firstName, firstNameGift,"First name", test);
         action.writeText(lastname, lastnameGift, "Last name", test);
         action.writeText(email, emailGift,"Email", test);
