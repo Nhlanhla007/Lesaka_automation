@@ -18,6 +18,7 @@ import ic_PageObjects.ic_PayUPayment;
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
+import utils.GenerateScreenShot;
 
 public class MagentoOrderStatusPage {
 
@@ -110,20 +111,21 @@ public class MagentoOrderStatusPage {
 	}
 	
 	public void viewOrderDetails(ExtentTest test) throws Exception {
-		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		boolean ajaxLoadCompleted = action.ajaxWait(ajaxTimeOutInSeconds, test);
 		confirmRows(magentoTableRecords, test);
 		if (magentoTableRecords.size() == 1) {
-			try {
-				action.click(viewOrderDetails, "Order Status", test);
-			} catch (Exception e) {
-				driver.navigate().refresh();
-				action.waitForPageLoaded(ajaxTimeOutInSeconds);
-				action.ajaxWait(ajaxTimeOutInSeconds, test);
-				action.click(viewOrderDetails, "Order Status", test);
-			}
+			if(!ajaxLoadCompleted) {
+ 				driver.navigate().refresh();
+ 				action.waitForPageLoaded(ajaxTimeOutInSeconds);
+ 				action.ajaxWait(ajaxTimeOutInSeconds, test);
+ 				ExtentTest node = test.createNode("Reloading the Search Page");
+ 				String screenShot = GenerateScreenShot.getScreenShot(driver);
+ 	            node.info("Page Reload Completed"+ node.addScreenCaptureFromPath(screenShot));
+ 				action.click(viewOrderDetails, "Order Status", test);
 
 			//action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
-		} else {
+		}
+		}else {
 			//action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
 		}
 	}

@@ -1818,7 +1818,7 @@ public class Action {
         robot.keyRelease(KeyEvent.VK_ENTER);
     }
 
-    public void ajaxWait(int timeoutInSeconds,ExtentTest test) throws Exception {
+    public boolean ajaxWait(int timeoutInSeconds,ExtentTest test) throws Exception {
 
         
         if((timeoutInSeconds / 1000)>=1){
@@ -1846,9 +1846,8 @@ public class Action {
         }
         else{
             System.out.println("Ajax Page loading completed in: "+count+" seconds");
-
-
         }
+        return !flag;
     }
 
 

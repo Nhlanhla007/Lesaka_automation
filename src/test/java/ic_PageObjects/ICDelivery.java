@@ -285,7 +285,13 @@ public class ICDelivery {
         String streetNameG = dataSheets.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
 
         driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
-        action.click(cardDeliver_btn, "click Deliver", test);
+        if (action.waitUntilElementIsDisplayed(cardDeliver_btn, 10)) {
+         	action.ajaxWait(20, test);
+         	action.explicitWait(5000);
+             action.scrollToElement(cardDeliver_btn, "Delivery Link", test);
+             action.javaScriptClick(cardDeliver_btn, "deliveryLink", test);
+             action.ajaxWait(10, test);
+         }
 
         action.writeText(firstName, firstNameGift, "First name", test);
         action.writeText(lastname, lastnameGift, "Last name", test);

@@ -19,6 +19,7 @@ import com.aventstack.extentreports.ExtentTest;
 import Logger.Log;
 import utils.Action;
 import utils.DataTable2;
+import utils.GenerateScreenShot;
 
 public class MagentoRetrieveCustomerDetailsPage {
 
@@ -154,15 +155,17 @@ public class MagentoRetrieveCustomerDetailsPage {
 
 	public void viewCustomerDetails(WebElement clickElement,ExtentTest test) throws Exception {
 			//confirmRows(customerTableRecords, test);
+		boolean ajaxLoadCompleted = action.ajaxWait(ajaxTimeOutInSeconds, test);
 			if (customerTableRecords.size() >= 1) {
-				try {
-				action.javaScriptClick(clickElement, "Customer Details", test);
-				}catch(Exception e){
-					driver.navigate().refresh();
-					action.waitForPageLoaded(ajaxTimeOutInSeconds);
-					action.ajaxWait(ajaxTimeOutInSeconds, test);
-					action.javaScriptClick(clickElement, "Customer Details", test);
-				}
+				if(!ajaxLoadCompleted) {
+ 					driver.navigate().refresh();
+ 					action.waitForPageLoaded(ajaxTimeOutInSeconds);
+ 					action.ajaxWait(ajaxTimeOutInSeconds, test);
+ 					ExtentTest node = test.createNode("Reloading the Search Page");
+ 					String screenShot = GenerateScreenShot.getScreenShot(driver);
+ 		            node.info("Page Reload Completed"+ node.addScreenCaptureFromPath(screenShot));
+ 					action.javaScriptClick(clickElement, "Customer Details", test);
+ 				}
 				//action.explicitWait(15000);
 				//action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
 			}
