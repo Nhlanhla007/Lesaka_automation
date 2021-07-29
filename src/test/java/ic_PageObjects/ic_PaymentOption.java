@@ -191,7 +191,7 @@ public class ic_PaymentOption {
 				action.scrollElemetnToCenterOfView(paymenttype, "paymenttype", test);
 				// action.explicitWait(2000);
 				action.ajaxWait(10, test);
-				action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
+				action.javaScriptClick(paymenttype, "Select Payment option " + Paytype, test);
 				// action.waitExplicit(15);
 				action.ajaxWait(10, test);
  				action.explicitWait(1000);
@@ -200,7 +200,7 @@ public class ic_PaymentOption {
  				action.ajaxWait(10, test);
 				action.scrollElemetnToCenterOfView(Btn_PlaceOrder, "Place Order Button", test);
 				action.explicitWait(2000);
-				action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+				action.javaScriptClick(Btn_PlaceOrder, "Click on Place order Button ", test);
 				action.ajaxWait(10, test);
 				action.waitForPageLoaded(30);
 				action.ajaxWait(10, test);
