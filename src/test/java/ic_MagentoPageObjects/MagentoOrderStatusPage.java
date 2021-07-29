@@ -121,9 +121,9 @@ public class MagentoOrderStatusPage {
  				ExtentTest node = test.createNode("Reloading the Search Page");
  				String screenShot = GenerateScreenShot.getScreenShot(driver);
  	            node.info("Page Reload Completed"+ node.addScreenCaptureFromPath(screenShot));
- 				action.click(viewOrderDetails, "Order Status", test);
-
-			//action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
+ 				action.javaScriptClick(viewOrderDetails, "Order Status", test);
+		}else {
+			action.javaScriptClick(viewOrderDetails, "Order Status", test);
 		}
 		}else {
 			//action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);

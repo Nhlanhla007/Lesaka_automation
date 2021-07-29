@@ -165,6 +165,8 @@ public class MagentoRetrieveCustomerDetailsPage {
  					String screenShot = GenerateScreenShot.getScreenShot(driver);
  		            node.info("Page Reload Completed"+ node.addScreenCaptureFromPath(screenShot));
  					action.javaScriptClick(clickElement, "Customer Details", test);
+ 				}else {
+ 					action.javaScriptClick(clickElement, "Customer Details", test);
  				}
 				//action.explicitWait(15000);
 				//action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
