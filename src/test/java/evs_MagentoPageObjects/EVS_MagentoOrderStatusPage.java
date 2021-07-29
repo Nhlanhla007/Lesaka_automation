@@ -19,6 +19,7 @@ import ic_PageObjects.ic_PayUPayment;
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
+import utils.GenerateScreenShot;
 
 public class EVS_MagentoOrderStatusPage {
 
@@ -104,22 +105,32 @@ public class EVS_MagentoOrderStatusPage {
 		}
 		action.javaScriptClick(magentoFilterTab, "Filter tab", test);
 		action.writeText(magentoIdSearchField, idToSearch, "searchId", test);
-		action.click(magentoApplyFilterTab, "Apply to filters", test);
+		action.explicitWait(3000);
+		action.javaScriptClick(magentoApplyFilterTab, "Apply to filters", test);
+		action.explicitWait(5000);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	}
 
 	public void viewOrderDetails(ExtentTest test) throws Exception {
-		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		boolean ajaxLoadCompleted = action.ajaxWait(ajaxTimeOutInSeconds, test);
 		confirmRows(magentoTableRecords, test);
 		if (magentoTableRecords.size() == 1) {
-			try {
-				action.click(viewOrderDetails, "Order Status", test);
-			} catch (Exception e) {
+			if(!ajaxLoadCompleted) {
 				driver.navigate().refresh();
 				action.waitForPageLoaded(ajaxTimeOutInSeconds);
 				action.ajaxWait(ajaxTimeOutInSeconds, test);
-				action.click(viewOrderDetails, "Order Status", test);
+				ExtentTest node = test.createNode("Reloading the Search Page");
+				String screenShot = GenerateScreenShot.getScreenShot(driver);
+	            node.info("Page Reload Completed"+ node.addScreenCaptureFromPath(screenShot));
+				action.javaScriptClick(viewOrderDetails, "Order Status", test);
 			}
+			else{
+				action.javaScriptClick(viewOrderDetails, "Order Status", test);
+			}
+
+			//action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
+		} else {
+			//action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
 		}
 	}
 

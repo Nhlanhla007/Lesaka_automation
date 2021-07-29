@@ -133,11 +133,11 @@ public class EVS_PaymentOption {
 
 	public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
 		try {
-//			action.explicitWait(20000);
+			action.explicitWait(20000);
 			action.waitForPageLoaded(60);
 			action.ajaxWait(20,test);
 			String paytype = input.get("Paytype_Option").get(rowNumber);
-			action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
+			//action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 			WebElement paymentsType = evs_SelectPaymentMethod(paytype);
 //			action.explicitWait(20000);
 			action.scrollToElement(paymentsType,"Payment type");

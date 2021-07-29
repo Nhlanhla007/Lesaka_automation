@@ -507,7 +507,7 @@ public class EVS_ProductSearch {
 					"You must login or register to add items to your wishlist.", msg, test);
 
 		} else {
-			action.click(wishListButton, "Wish list button", test);
+			action.javaScriptClick(wishListButton, "Wish list button", test);
 			action.explicitWait(2000);
 			addToWishList(test);
 		}

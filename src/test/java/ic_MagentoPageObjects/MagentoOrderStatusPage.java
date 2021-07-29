@@ -106,7 +106,7 @@ public class MagentoOrderStatusPage {
 		}
 		action.javaScriptClick(magentoFilterTab, "Filter tab", test);
 		action.writeText(magentoIdSearchField, idToSearch, "searchId", test);
-		action.click(magentoApplyFilterTab, "Apply to filters", test);
+		action.javaScriptClick(magentoApplyFilterTab, "Apply to filters", test);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	}
 	
@@ -121,7 +121,10 @@ public class MagentoOrderStatusPage {
 				ExtentTest node = test.createNode("Reloading the Search Page");
 				String screenShot = GenerateScreenShot.getScreenShot(driver);
 	            node.info("Page Reload Completed"+ node.addScreenCaptureFromPath(screenShot));
-				action.click(viewOrderDetails, "Order Status", test);
+				action.javaScriptClick(viewOrderDetails, "Order Status", test);
+			}
+			else{
+				action.javaScriptClick(viewOrderDetails, "Order Status", test);
 			}
 
 			//action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
