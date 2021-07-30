@@ -106,6 +106,43 @@ public class EVS_PaymentOption {
 		@FindBy(xpath = "//span[contains(text(),'I agree to all the terms & conditions')]")
 		WebElement TermsCondition;
 	
+	    @FindBy(xpath = "//input[@id='id-book-upload']")
+	    WebElement selectIDButton;
+
+	    @FindBy(xpath = "//span[contains(text(),\"Ready to upload\")]")
+	    WebElement uploadMsg;
+
+	    @FindBy(xpath = "//span[contains(text(),'Submit')]")
+	    WebElement IDSubmitBtn;
+
+	    @FindBy(xpath = "//span[contains(text(),'Uploading proof of ID, please wait...')]")
+	    WebElement uploadingMsg;
+
+		
+		public void uploadValidID(ExtentTest test) throws Exception {
+			String uploadDocument = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Upload Document", 0);
+
+			if (uploadDocument.equalsIgnoreCase("yes")) {
+				try {
+					if (action.isElementPresent(selectIDButton)) {
+						String filePath = System.getProperty("user.dir") + "//src/test/resources/ID_&_Passport.png";
+						selectIDButton.sendKeys(filePath);
+						boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, 5);
+						action.CompareResult("Uplaod Messsage", "true", String.valueOf(uploadMessage), test);
+						if (uploadMessage) {
+							action.clickEle(IDSubmitBtn, "Submit Button", test);
+							boolean uploadingMessage = action.waitUntilElementIsDisplayed(uploadingMsg, 5);
+							action.CompareResult("File upload", "true", String.valueOf(uploadingMessage), test);
+						}
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					throw new Exception("Unable to upload the proof Document: " + e.getMessage());
+				}
+			}
+		}
+	
 
 	public WebElement evs_SelectPaymentMethod(String Paytype) {
 		Map<String, WebElement> PaymentMap = new HashMap<String, WebElement>();
