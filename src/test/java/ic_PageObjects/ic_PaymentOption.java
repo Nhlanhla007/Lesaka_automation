@@ -180,7 +180,7 @@ public class ic_PaymentOption {
 				action.waitForPageLoaded(30);
 				action.ajaxWait(10, test);
 				String Paytype = input.get("Paytype_Option").get(rowNumber);
-				action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
+				//action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 				WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
 				// action.explicitWait(10);
 				action.ajaxWait(10, test);
