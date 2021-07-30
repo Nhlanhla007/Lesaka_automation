@@ -204,7 +204,8 @@ public class JDGKeyManager {
         EVS_ReturnToConfirmOrderStatus evs_toConfirmOrderStatus = new EVS_ReturnToConfirmOrderStatus(driver, dataTable2);
         EVS_CancelOrder_CreditMemo cancelCreditMemo=new EVS_CancelOrder_CreditMemo(driver,dataTable2);
         EVS_Admin_Reorder evs_admin_reOrder = new EVS_Admin_Reorder(driver, dataTable2);
-        evs_TVLicenceApproval evs_TvLicense = new evs_TVLicenceApproval(driver, dataTable2);
+        evs_TVLicenceApproval evs_TvLicenseApproval = new evs_TVLicenceApproval(driver, dataTable2);
+        evs_TVLicenceValidation evs_TvLicense = new evs_TVLicenceValidation(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
