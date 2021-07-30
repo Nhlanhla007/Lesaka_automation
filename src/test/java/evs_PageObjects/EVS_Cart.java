@@ -122,7 +122,11 @@ public class EVS_Cart {
 			action.CompareResult("Products Total", String.valueOf(sum),icSubtotal.getText().replace("R", "").replace(",", ""), test);
 			action.CompareResult("Cart Counter Verfication", String.valueOf(allProductsInCartQuantity), itemsCount,test);
 				
-			action.click(icCCheckout, "Secure Checkout", test);
+			action.javaScriptClick(icCCheckout, "Secure Checkout", test);
+			action.waitForPageLoaded(40);
+			action.ajaxWait(20, test);
+			action.explicitWait(20000);
+			
 			dataTable2.setValueOnOtherModule("evs_ProductSearch", "CartTotal", String.valueOf(sum), 0);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

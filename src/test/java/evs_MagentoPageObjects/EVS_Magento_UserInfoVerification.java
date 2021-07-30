@@ -28,7 +28,7 @@ public class EVS_Magento_UserInfoVerification {
 	EVS_MagentoRetrieveCustomerDetailsPage MagentoRetrieveCustomer;
 	EVS_MagentoAccountInformation magentoAccountInformation = new EVS_MagentoAccountInformation(driver,dataTable2);
 	ICDelivery registeredCustomerDetails;
-	
+	int ajaxTimeOutInSeconds = EVS_Magento_Login.ajaxTimeOutInSeconds;
 	 public EVS_Magento_UserInfoVerification (WebDriver driver, DataTable2 dataTable2) {
 			this.driver = driver;
 			this.dataTable2 = dataTable2;
@@ -115,7 +115,7 @@ public class EVS_Magento_UserInfoVerification {
 	  WebElement admin_Billing_streetAddress;
 	 
 	
-	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException, ClassNotFoundException {
+	public void Validate_UserInfobackend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
 		int TimetoLoadpage=20;	
 		String ExpFirstname = null;
 		String ExpLastname = null;
@@ -130,14 +130,18 @@ public class EVS_Magento_UserInfoVerification {
 		
 		String typeOfVerificationFlag = dataTable2.getValueOnCurrentModule("Data Source");
 		
-		driver.navigate().refresh();
-		action.explicitWait(7000);
+//		driver.navigate().refresh();
+//		action.explicitWait(7000);
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		//driver.manage().window().s
 		
 		//IF CONSTUCT FOR WHAT TYPE OF VALIDATION IS TAKING PLACE
 		//For Account creation(Set this way by default)
 		//***************************************
+		
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		
 		if(typeOfVerificationFlag.equalsIgnoreCase("Create Account")) {	
 			//GETS DATA FROM ACCOUNT CREATION
 		js.executeScript("window.scrollBy(0,0)");
@@ -272,8 +276,9 @@ public class EVS_Magento_UserInfoVerification {
 			String verifyBillingAddChange = dataTable2.getValueOnOtherModule("evs_adminUserUpdate", "billingAddress", 0);
 			if(verifyBillingAddChange.equalsIgnoreCase("yes")) {
 				action.click(admin_AddressBtn, "Address Tab", test);
-				action.explicitWait(6000);
+				action.ajaxWait(ajaxTimeOutInSeconds, test);
 				action.click(admin_billingEdit, "Billing Address Edit", test);
+				action.ajaxWait(ajaxTimeOutInSeconds, test);
 				String updatedBillingAddress = dataTable2.getValueOnOtherModule("evs_adminUserUpdate", "adminBilling_streetAddress_output", 0);
 				String actualBillingAdd = action.getAttribute(admin_Billing_streetAddress, "value");
 				action.CompareResult("Billing Address In Magento Backend", updatedBillingAddress, actualBillingAdd, test);
@@ -302,6 +307,8 @@ public class EVS_Magento_UserInfoVerification {
 			action.scrollElemetnToCenterOfView(guestEditBtn,"Account_Information",test);
 			//action.explicitWait(000);
 			action.click(guestEditBtn, "Guest Edit Button", test);
+			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
 			//guestEditBtn.click();
 			String magentoGuestID = action.getAttribute(guestID, "value");
 			String magentoGuestFirstName = action.getAttribute(guestFirstName, "value");

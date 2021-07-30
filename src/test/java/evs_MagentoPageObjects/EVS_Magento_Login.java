@@ -17,6 +17,7 @@ public class EVS_Magento_Login {
 	WebDriver driver;
 	Action action;
 	DataTable2 dataTable2;
+	public static int ajaxTimeOutInSeconds;
 
 		public EVS_Magento_Login(WebDriver driver, DataTable2 dataTable2) {
 			this.driver = driver;
@@ -39,12 +40,13 @@ public class EVS_Magento_Login {
 		WebElement Dashboard;
 		
 		//vv
-		public void Login_magento(ExtentTest test) throws IOException{
+		public void Login_magento(ExtentTest test) throws Exception{
 			String Username = "";
 			String Password = "";
-			LoginToMagento(test,Username,Password);
+			ajaxTimeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("EVS_Login_magento", "TimeOutInSecond", 0));
+			LoginToMagento(test,Username,Password);			
 	     }
-		public void LoginToMagento(ExtentTest test,String Username, String Password) throws IOException{
+		public void LoginToMagento(ExtentTest test,String Username, String Password) throws Exception{
 			String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
 			Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 			Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
@@ -56,8 +58,11 @@ public class EVS_Magento_Login {
 				action.writeText(Magento_Username, Username, "Username field", test);
 				action.writeText(Magento_Password, Password, "Password field", test);
 				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
-				action.explicitWait(10000);
+				//action.explicitWait(10000);
+				action.waitForPageLoaded(ajaxTimeOutInSeconds);
+				action.ajaxWait(ajaxTimeOutInSeconds,test);
 				String resWelcomescreen = action.getText(Dashboard, "Dashboard", test);
+				action.CompareResult("Navigate to magento admin page is success", "Dashboard",driver.getTitle() , test);
 			}else{
 				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin - DEFAULT STORE VIEW", test);
 			

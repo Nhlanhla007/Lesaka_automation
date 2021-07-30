@@ -168,6 +168,7 @@ public class MagentoRetrieveCustomerDetailsPage {
  				}else {
  					action.javaScriptClick(clickElement, "Customer Details", test);
  				}
+
 				//action.explicitWait(15000);
 				//action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
 			}

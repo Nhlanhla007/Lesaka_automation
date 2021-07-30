@@ -1,6 +1,9 @@
 package evs_PageObjects;
 
 import com.aventstack.extentreports.ExtentTest;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -136,6 +139,10 @@ public class EVS_Delivery {
     @FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
     WebElement popUpSave;
     
+    
+    @FindBy(xpath = "//*[@class=\"pac-item\"]")
+    List<WebElement> googleAddressOptions;
+    
 //    @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
 //    WebElement cardDeliver_btn;
     
@@ -187,19 +194,49 @@ public class EVS_Delivery {
             //action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
 
         }
-        if(action.waitUntilElementIsDisplayed(ic_AddressType, 20000)) {
-        	action.explicitWait(8000);
-        action.writeText(streetName,dataSheets.getValueOnCurrentModule("streetName"),"streetName",test);
+		if (action.waitUntilElementIsDisplayed(ic_AddressType, 20000)) {
+			action.explicitWait(8000);
+			String searchStreetName = dataSheets.getValueOnCurrentModule("streetName");
+			String searchSuburb = dataSheets.getValueOnCurrentModule("Suburb").trim();
+			String searchCity = dataSheets.getValueOnCurrentModule("city").trim();
+			action.writeText(streetName, searchStreetName + " " + searchSuburb + " " + searchCity, "Enter Google Address", test);
+			searchStreetName = searchStreetName.substring(searchStreetName.indexOf(" ")).trim();
+			action.explicitWait(8000);
+			boolean flag = true;
+			for (WebElement option : googleAddressOptions) {
+				try {
+					String streetName = option.findElement(By.xpath(".//*[contains(text(),'" + searchStreetName + "')]")).getText();
+					boolean suburbInformation = option.findElements(By.xpath(".//*[contains(text(),'" + searchSuburb + "')]")).size() > 0;// option.findElement(By.xpath(".//span[3]")).getText();
+					boolean cityInformation = option.findElements(By.xpath(".//*[contains(text(),'" + searchCity + "')]")).size() > 0;
+					boolean suburbCityInformationStatus = suburbInformation & cityInformation;
+					if (suburbCityInformationStatus) {
+						action.CompareResult("Google Option Match Found", "true", "true", test);
+						action.click(option, "Google address option selected", test);						
+						action.ajaxWait(40, test);
+						action.explicitWait(8000);
+						flag = false;
+					}
+				} catch (Exception e) {
+				}
+
+			}
+
+			if (flag) {
+				throw new Exception("Google Address Has Not Been Found");
+			}
+              
+//        action.writeText(streetName,dataSheets.getValueOnCurrentModule("streetName"),"streetName",test);
+			action.waitUntilElementIsDisplayed(telephone, 5000);
         action.writeText(telephone,dataSheets.getValueOnCurrentModule("telephone"),"telephone",test);
-        action.writeText(city,dataSheets.getValueOnCurrentModule("city"),"city",test);
-        action.writeText(Suburb,dataSheets.getValueOnCurrentModule("Suburb"),"Suburb",test);
-        action.writeText(postalCode,dataSheets.getValueOnCurrentModule("postalCode"),"postalCode",test);
+//        action.writeText(city,dataSheets.getValueOnCurrentModule("city"),"city",test);
+//        action.writeText(Suburb,dataSheets.getValueOnCurrentModule("Suburb"),"Suburb",test);
+//        action.writeText(postalCode,dataSheets.getValueOnCurrentModule("postalCode"),"postalCode",test);
         action.writeText(vatNumber,dataSheets.getValueOnCurrentModule("vatNumber"),"vatNumber",test);
         action.writeText(evs_nickname,dataSheets.getValueOnCurrentModule("nickName"),"nickName",test);
-        action.explicitWait(5000);
-        action.dropDownselectbyvisibletext(province,dataSheets.getValueOnCurrentModule("province"),"province",test);
-        action.explicitWait(10000);
-        }
+//        action.explicitWait(5000);
+//        action.dropDownselectbyvisibletext(province,dataSheets.getValueOnCurrentModule("province"),"province",test);
+//        action.explicitWait(10000);
+		}
         }else if(addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Choose your address or add a new one:")) {
         	customerAddressDetails.navigateBackToCustomerDetails(userType,addressTypeICFont);
         	registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType,addressTypeICFont);          	
@@ -231,41 +268,73 @@ public class EVS_Delivery {
 			 *///Add else if for other scenario
         if(action.waitUntilElementIsDisplayed(ContinueToPayment, 20000)) {
         	action.explicitWait(5000);
-        action.javaScriptClick(ContinueToPayment,"ContinueToPayment",test);
+        action.javaScriptClick(ContinueToPayment,"Continue To Payment",test);
+        action.waitForPageLoaded(40);
         }
-    }
+        }
+    
     
     public void enterNewAddressWithAnExistingAddress(ExtentTest test) throws Exception {
-    	customerAddressDetails.navigateBackToCustomerDetails("New","Select a saved address or add a new address:");
-    	registeredUserDetails = customerAddressDetails.getExistingAddressInformation("New","Choose your address or add a new one:");
-    	dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
-    	dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
-    	dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
-    	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
-    	if(action.waitUntilElementIsDisplayed(newAddressButton, 15000)) {
-    		action.explicitWait(5000);
-       	    //newAddressButton.click();
-       	    action.click(newAddressButton, "New Address", test);
-    	}
-       	//action.writeText(popUpFirstName, dataSheets.getValueOnCurrentModule(""), "New First name", test);
-    	action.writeText(popUpStreetName, dataSheets.getValueOnCurrentModule("streetName"), "New Address Street name", test);
-    	action.explicitWait(4000);
-    	popUpCity.clear();
-    	action.writeText(popUpCity, dataSheets.getValueOnCurrentModule("city"), "New Address City", test);
+		customerAddressDetails.navigateBackToCustomerDetails("New", "Select a saved address or add a new address:");
+		registeredUserDetails = customerAddressDetails.getExistingAddressInformation("New","Choose your address or add a new one:");
+		dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
+		dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
+		dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
+		dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
+		if (action.waitUntilElementIsDisplayed(newAddressButton, 15000)) {
+			action.explicitWait(5000);
+			// newAddressButton.click();
+			action.click(newAddressButton, "New Address", test);
+		}
+		// action.writeText(popUpFirstName, dataSheets.getValueOnCurrentModule(""), "New
+		// First name", test);
+		String searchStreetName = dataSheets.getValueOnCurrentModule("streetName");
+		String searchSuburb = dataSheets.getValueOnCurrentModule("Suburb");
+		String searchCity = dataSheets.getValueOnCurrentModule("city");
+
+		action.explicitWait(4000);
+		action.writeText(popUpStreetName, searchStreetName + " " + searchSuburb + " " + searchCity,"New Address Street name", test);
+		searchStreetName = searchStreetName.substring(searchStreetName.indexOf(" ")).trim();
+		action.ajaxWait(30, test);
+		action.explicitWait(12000);
+		boolean flag = true;
+		for (WebElement option : googleAddressOptions) {
+			try {
+				String googlestreetName = option.findElement(By.xpath(".//*[contains(text(),'" + searchStreetName + "')]")).getText();
+				boolean suburbInformation = option.findElements(By.xpath(".//*[contains(text(),'" + searchSuburb + "')]")).size() > 0;// option.findElement(By.xpath(".//span[3]")).getText();
+				boolean cityInformation = option.findElements(By.xpath(".//*[contains(text(),'" + searchCity + "')]")).size() > 0;
+				boolean suburbCityInformationStatus = suburbInformation & cityInformation;
+				if (suburbCityInformationStatus) {
+					action.click(option, "Google address option selected", test);					
+					action.ajaxWait(30, test);
+					action.explicitWait(8000);
+					flag = false;
+				}
+			} catch (NoSuchElementException e) {
+			}
+		}
+
+			if (flag) {
+				throw new Exception("Google Address Has Not Been Found");
+			}
+		
+//    	action.explicitWait(4000);
+//    	popUpCity.clear();
+//    	action.writeText(popUpCity, dataSheets.getValueOnCurrentModule("city"), "New Address City", test);
     	action.writeText(popUpPhone, dataSheets.getValueOnCurrentModule("telephone"), "New Address Telephone", test);
-    	popUpsuburb.clear();
-    	action.writeText(popUpsuburb, dataSheets.getValueOnCurrentModule("Suburb"), "New Address Suburb", test);
-    	popUpPostalCode.clear();
-    	action.writeText(popUpPostalCode, dataSheets.getValueOnCurrentModule("postalCode"), "New Address postal code", test);
+//    	popUpsuburb.clear();
+//    	action.writeText(popUpsuburb, dataSheets.getValueOnCurrentModule("Suburb"), "New Address Suburb", test);
+//    	popUpPostalCode.clear();
+//    	action.writeText(popUpPostalCode, dataSheets.getValueOnCurrentModule("postalCode"), "New Address postal code", test);
     	action.writeText(popUpVatNumber, dataSheets.getValueOnCurrentModule("vatNumber"), "New Address Vat number", test);
-    	//popUpProvince.clear();
-    	action.selectFromDropDownUsingVisibleText(popUpProvince, dataSheets.getValueOnCurrentModule("province"), "New Address Province");
-    	action.explicitWait(4000);
-    	//popUpSave.click();
-    	action.click(popUpSave, "Save", test);
+//    	//popUpProvince.clear();
+//    	action.selectFromDropDownUsingVisibleText(popUpProvince, dataSheets.getValueOnCurrentModule("province"), "New Address Province");
+//    	action.explicitWait(4000);
+		// popUpSave.click();
+		action.click(popUpSave, "Save", test);
     }
     
-    public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws InterruptedException, IOException {
+    public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
     	//Streetname =input.get("streetName").get(rowNumber);
     	String Streetname = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "streetName", 0);
         //Cityname =input.get("city").get(rowNumber);
@@ -281,7 +350,8 @@ public class EVS_Delivery {
         
         driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
         //action.click(cardDeliver_btn, "click Deliver", test);
-  
+        action.waitForPageLoaded(30);
+        action.ajaxWait(10, test);
         action.writeText(firstName, firstNameGift,"First name", test);
         action.writeText(lastname, lastnameGift, "Last name", test);
         action.writeText(email, emailGift,"Email", test);

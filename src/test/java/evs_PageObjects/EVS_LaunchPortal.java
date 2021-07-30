@@ -23,6 +23,7 @@ public class EVS_LaunchPortal {
 	public void launchPortal(ExtentTest test) {
 		String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnCurrentModule("urlKey"), "url");
 		action.navigateToURL(url);
+		action.waitForPageLoaded(60);
 	}
 
 }

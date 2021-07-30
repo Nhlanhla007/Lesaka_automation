@@ -204,6 +204,8 @@ public class JDGKeyManager {
         EVS_ReturnToConfirmOrderStatus evs_toConfirmOrderStatus = new EVS_ReturnToConfirmOrderStatus(driver, dataTable2);
         EVS_CancelOrder_CreditMemo cancelCreditMemo=new EVS_CancelOrder_CreditMemo(driver,dataTable2);
         EVS_Admin_Reorder evs_admin_reOrder = new EVS_Admin_Reorder(driver, dataTable2);
+        evs_TVLicenceApproval evs_TvLicenseApproval = new evs_TVLicenceApproval(driver, dataTable2);
+        evs_TVLicenceValidation evs_TvLicense = new evs_TVLicenceValidation(driver, dataTable2);
         ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -760,6 +762,12 @@ public class JDGKeyManager {
             case "evs_verifyDeliveryOption":
                 icDeliveryOptionDisplay.validateDeliveryOptionsDisplays(test1, rowNumber);
                 break;
+            case"tvLicenseValidation":
+            	evs_TvLicense.TvLicenceValidation(test1, rowNumber);
+            	break;
+            case"uploadDocument":
+            	evs_PaymentOption.uploadValidID(test1);
+            	break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){

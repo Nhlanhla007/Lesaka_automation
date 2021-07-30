@@ -21,6 +21,7 @@ public class EVS_MagentoRegisterNewUser {
 	WebDriver driver;
 	Action action;
 	EVS_MagentoRetrieveCustomerDetailsPage RetriveCust;
+	int ajaxTimeOutInSeconds = EVS_Magento_Login.ajaxTimeOutInSeconds;
 	public EVS_MagentoRegisterNewUser(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -90,6 +91,8 @@ public class EVS_MagentoRegisterNewUser {
 		navigateToCustomer(test);
 
 		action.clickEle(Add_Customer, "Add new Customer", test);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		boolean resAccountinfo = action.elementExists(Account_Information, waitforelement);
 		if(resAccountinfo==true){
 			action.dropDownselectbyvisibletext(AssociatedWebsite_ele, AssociatedWebsite, "Website", test);
@@ -110,6 +113,8 @@ public class EVS_MagentoRegisterNewUser {
 			action.writeText(Cust_Phonenumber, Phonenumber, "Customer Cellphone number", test);
 			
 			action.clickEle(Save_Customer, "Save_Customer", test);
+			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
 			boolean resSavedcustomer = action.elementExists(Save_Customer_success, waitforelement);
 			if(resSavedcustomer==true){
 				action.CompareResult("verify New customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
@@ -168,7 +173,8 @@ public class EVS_MagentoRegisterNewUser {
 			if(action.waitUntilElementIsDisplayed(allCustomerTab, 10000)) {
 			action.click(allCustomerTab, "All Customers Tab", test);
 			}
-			action.explicitWait(1000);
+			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
 			String screenShotPath=action.getScreenShot(dateName);
 			node.pass("User navigated to Allcustomer section"+ node.addScreenCaptureFromPath(screenShotPath));
 

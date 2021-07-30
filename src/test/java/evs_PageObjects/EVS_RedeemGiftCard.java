@@ -115,6 +115,8 @@ public class EVS_RedeemGiftCard {
 				action.writeText(evs_GiftCardScratchCode, scratchCode, "Scratch Code", test);
 				// click apply
 				action.click(evs_Apply, "apply the the gift card", test);
+				action.waitForPageLoaded(20);
+				action.ajaxWait(10, test);
 				String giftCarddValidate = null;
 				if (action.elementExistWelcome(evs_SuccessfullyApplied, 4, "Gift card added", test)) {
 					giftCarddValidate = action.getText(evs_SuccessfullyApplied, "gift card added", test);
@@ -135,6 +137,8 @@ public class EVS_RedeemGiftCard {
 
 				 //validate
 		 action.click(evs_Secure, "Checkout Secure clicked", test);
+		 action.waitForPageLoaded(20);
+		 action.ajaxWait(10, test);
 		 
 		 }else if(UsageType.equalsIgnoreCase("Reuse")){
 			 action.scrollElemetnToCenterOfView(evs_GiftCardCode, "Gift card code", test);
