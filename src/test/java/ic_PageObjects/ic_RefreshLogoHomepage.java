@@ -36,9 +36,10 @@ public class ic_RefreshLogoHomepage {
 
     public void homepageLogo(ExtentTest test) throws Exception {
         JavascriptExecutor js = (JavascriptExecutor) driver;
+        action.explicitWait(10000);
         js.executeScript("arguments[0].scrollIntoView();", ic_logo);
         try{
-        action.click(ic_logo, "Click to go homepage", test);
+        action.javaScriptClick(ic_logo, "Click to go homepage", test);
             action.waitForPageLoaded(40);
             String title = driver.getTitle();
             action.CompareResult("Return homepage", "Incredible Connection Home", title, test);

@@ -116,6 +116,7 @@ public class IC_Cart {
 				action.clickEle(icCCheckout, "Secure Checkout", test);
 				action.waitForPageLoaded(40);
  	            action.ajaxWait(10, test);
+ 	            action.explicitWait(20000);
 				dataTable2.setValueOnOtherModule("ProductSearch", "CartTotal", String.valueOf(sum), 0);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
