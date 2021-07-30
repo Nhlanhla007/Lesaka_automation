@@ -135,6 +135,7 @@ public class EVS_MagentoOrderStatusPage {
 	}
 
 	public void orderStatusCheck(String orderStatus, ExtentTest test) throws Exception {
+		action.explicitWait(6000);
 		if (magentoTableRecords.size() == 1) {
 		action.CompareResult("Order Status", orderStatus, magentoOrderStatus.getText(), test);
 		}else {
