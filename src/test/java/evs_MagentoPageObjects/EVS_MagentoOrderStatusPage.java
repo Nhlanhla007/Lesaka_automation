@@ -106,9 +106,9 @@ public class EVS_MagentoOrderStatusPage {
 		action.javaScriptClick(magentoFilterTab, "Filter tab", test);
 		action.writeText(magentoIdSearchField, idToSearch, "searchId", test);
 		action.explicitWait(3000);
-		action.javaScriptClick(magentoApplyFilterTab, "Apply to filters", test);
-		action.explicitWait(5000);
+		action.javaScriptClick(magentoApplyFilterTab, "Apply to filters", test);		
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.explicitWait(5000);
 	}
 
 	public void viewOrderDetails(ExtentTest test) throws Exception {

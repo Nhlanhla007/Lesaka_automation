@@ -201,7 +201,7 @@ public class EVS_Delivery {
 			String searchCity = dataSheets.getValueOnCurrentModule("city").trim();
 			action.writeText(streetName, searchStreetName + " " + searchSuburb + " " + searchCity, "Enter Google Address", test);
 			searchStreetName = searchStreetName.substring(searchStreetName.indexOf(" ")).trim();
-			action.explicitWait(4000);
+			action.explicitWait(8000);
 			boolean flag = true;
 			for (WebElement option : googleAddressOptions) {
 				try {
@@ -213,7 +213,7 @@ public class EVS_Delivery {
 						action.CompareResult("Google Option Match Found", "true", "true", test);
 						action.click(option, "Google address option selected", test);						
 						action.ajaxWait(40, test);
-						action.explicitWait(4000);
+						action.explicitWait(8000);
 						flag = false;
 					}
 				} catch (Exception e) {
@@ -226,6 +226,7 @@ public class EVS_Delivery {
 			}
               
 //        action.writeText(streetName,dataSheets.getValueOnCurrentModule("streetName"),"streetName",test);
+			action.waitUntilElementIsDisplayed(telephone, 5000);
         action.writeText(telephone,dataSheets.getValueOnCurrentModule("telephone"),"telephone",test);
 //        action.writeText(city,dataSheets.getValueOnCurrentModule("city"),"city",test);
 //        action.writeText(Suburb,dataSheets.getValueOnCurrentModule("Suburb"),"Suburb",test);
@@ -235,7 +236,7 @@ public class EVS_Delivery {
 //        action.explicitWait(5000);
 //        action.dropDownselectbyvisibletext(province,dataSheets.getValueOnCurrentModule("province"),"province",test);
 //        action.explicitWait(10000);
-        
+		}
         }else if(addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Choose your address or add a new one:")) {
         	customerAddressDetails.navigateBackToCustomerDetails(userType,addressTypeICFont);
         	registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType,addressTypeICFont);          	
@@ -271,7 +272,7 @@ public class EVS_Delivery {
         action.waitForPageLoaded(40);
         }
         }
-    }
+    
     
     public void enterNewAddressWithAnExistingAddress(ExtentTest test) throws Exception {
 		customerAddressDetails.navigateBackToCustomerDetails("New", "Select a saved address or add a new address:");
@@ -294,7 +295,8 @@ public class EVS_Delivery {
 		action.explicitWait(4000);
 		action.writeText(popUpStreetName, searchStreetName + " " + searchSuburb + " " + searchCity,"New Address Street name", test);
 		searchStreetName = searchStreetName.substring(searchStreetName.indexOf(" ")).trim();
-		action.explicitWait(4000);
+		action.ajaxWait(30, test);
+		action.explicitWait(12000);
 		boolean flag = true;
 		for (WebElement option : googleAddressOptions) {
 			try {
@@ -305,7 +307,7 @@ public class EVS_Delivery {
 				if (suburbCityInformationStatus) {
 					action.click(option, "Google address option selected", test);					
 					action.ajaxWait(30, test);
-					action.explicitWait(4000);
+					action.explicitWait(8000);
 					flag = false;
 				}
 			} catch (NoSuchElementException e) {
