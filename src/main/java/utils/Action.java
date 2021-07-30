@@ -1821,9 +1821,9 @@ public class Action {
     public boolean ajaxWait(int timeoutInSeconds,ExtentTest test) throws Exception {
 
         
-        if((timeoutInSeconds / 1000)>=1){
+        //if((timeoutInSeconds / 1000)>=1){
             timeoutInSeconds=timeoutInSeconds/1000;
-        }
+        //}
         boolean flag = true;
         int count = 0;
         Boolean isJqueryCallDone;

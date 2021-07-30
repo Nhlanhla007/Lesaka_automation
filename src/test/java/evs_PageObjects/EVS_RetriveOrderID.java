@@ -36,6 +36,7 @@ public class EVS_RetriveOrderID {
 	
 
         String orderID = null;
+        action.waitForPageLoaded(40);
         action.explicitWait(10000);
         
         if(typeOfUser.equalsIgnoreCase("Registered")) {

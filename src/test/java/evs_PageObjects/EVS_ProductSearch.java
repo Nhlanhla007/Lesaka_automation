@@ -247,7 +247,7 @@ public class EVS_ProductSearch {
 			action.writeText(searchBar, productToFind, "SearchBar", test);
 			action.click(searchIcon, "Click on search", test);
 			action.waitForPageLoaded(40);
-//			action.explicitWait(6);
+			action.explicitWait(10000);
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.info(e.getMessage());
