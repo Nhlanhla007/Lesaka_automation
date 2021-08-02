@@ -1822,7 +1822,7 @@ public class Action {
 
         
         //if((timeoutInSeconds / 1000)>=1){
-            timeoutInSeconds=timeoutInSeconds/1000;
+            //timeoutInSeconds=timeoutInSeconds/1000;
         //}
         boolean flag = true;
         int count = 0;
@@ -1832,6 +1832,7 @@ public class Action {
             System.out.println("AJAX call completion: "+isJqueryCallDone);
             if(isJqueryCallDone.booleanValue()==true) {
                 flag = false;
+                count++;
                 break;
 
             }
@@ -1851,6 +1852,30 @@ public class Action {
         return !flag;
     }
 
+
+    public boolean waitForJStoLoad(int timeOutInSeconds) {
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
+        // wait for jQuery to load
+        ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                try {
+                    return ((Long)js.executeScript("return jQuery.active") == 0);
+                }
+                catch (Exception e) {
+                    return true;
+                }
+            }
+        };
+        // wait for Javascript to load
+        ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                return js.executeScript("return document.readyState")
+                        .toString().equals("complete");
+            }
+        };
+        return wait.until(jQueryLoad) && wait.until(jsLoad);
+    }
 
 
 
