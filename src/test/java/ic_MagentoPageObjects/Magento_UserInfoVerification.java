@@ -142,12 +142,18 @@ public class Magento_UserInfoVerification {
 		
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		//action.waitForJStoLoad(ajaxTimeOutInSeconds);
+		action.explicitWait(15000);
 		
 		if(typeOfVerificationFlag.equalsIgnoreCase("Create Account")) {	
 			//GETS DATA FROM ACCOUNT CREATION
+			
+		action.explicitWait(10000);
+		action.waitForJStoLoad(ajaxTimeOutInSeconds);
 		js.executeScript("window.scrollBy(0,0)");
 		action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
 		action.click(Account_Information, "Account Information", test);
+		action.explicitWait(3000);
 		ExpFirstname=input.get("firstName").get(rowNumber);//"Brian";
 		ExpLastname=input.get("lastName").get(rowNumber);//"Jones";
 		ExpEmail=input.get("emailAddress").get(rowNumber);//"BrenoFernandesMalingaPatrick8@armyspy.com";
@@ -227,6 +233,7 @@ public class Magento_UserInfoVerification {
 					js.executeScript("window.scrollBy(0,0)");
 					action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
 					action.click(Account_Information, "Account Information", test);
+					action.explicitWait(3000);
 					ExpFirstname= dataTable2.getValueOnOtherModule("CreateaccountBackend", "Firstname", 0);
 					ExpLastname = dataTable2.getValueOnOtherModule("CreateaccountBackend", "Lastname", 0);
 					ExpEmail =dataTable2.getValueOnOtherModule("CreateaccountBackend", "Email", 0);
@@ -254,7 +261,7 @@ public class Magento_UserInfoVerification {
 			//action.scrollElementIntoView(Account_Information);
 			action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
 			action.click(Account_Information, "Account Information", test);
-			//action.explicitWait(5000);
+			action.explicitWait(3000);
 			ExpFirstname = dataTable2.getValueOnOtherModule("ICUpdateUser", "firstName_output", 0);
 			ExpLastname = dataTable2.getValueOnOtherModule("ICUpdateUser", "lastName_output", 0);
 			ExpEmail = dataTable2.getValueOnOtherModule("ICUpdateUser", "email_output", 0);
@@ -267,7 +274,7 @@ public class Magento_UserInfoVerification {
 			action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
 			//action.explicitWait(3000);
 			action.click(Account_Information, "Account Information", test);
-			//action.explicitWait(5000);
+			action.explicitWait(3000);
 			ExpFirstname=dataTable2.getValueOnOtherModule("adminUserUpdate", "adminFirstName_output", 0).trim();
 			ExpLastname =dataTable2.getValueOnOtherModule("adminUserUpdate", "adminLastName_output", 0).trim();
 			ExpEmail =dataTable2.getValueOnOtherModule("adminUserUpdate", "adminEmail_output", 0).trim();
@@ -359,6 +366,7 @@ public class Magento_UserInfoVerification {
 			action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
 			action.waitUntilElementIsDisplayed(Account_Information, 10);
 			action.click(Account_Information, "Account Information", test);
+			action.explicitWait(3000);
 			//NOTE DELIVERY POPULATION WITH REGISTERED new USER HAS TO RUN FOR THIS TO POPULATE ALSO EXISTING WITH EXISTING ADDRESS
 			//Map<String,String> customerDetails =ICDelivery.registeredUserDetails;
 			//CAN GET FROM SHEET AS WELL
@@ -463,6 +471,7 @@ public class Magento_UserInfoVerification {
 			action.refresh();
 			action.waitForPageLoaded(TimetoLoadpage);
 			action.click(Account_Information, "Account_Information", test);
+			action.explicitWait(3000);
 			if(action.elementExists(element, TimetoLoadpage)==true){
 				resData = action.getAttribute(element, "value");
 			}

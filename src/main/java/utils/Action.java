@@ -1822,23 +1822,24 @@ public class Action {
 
         
         //if((timeoutInSeconds / 1000)>=1){
-            timeoutInSeconds=timeoutInSeconds/1000;
+            //timeoutInSeconds=timeoutInSeconds/1000;
         //}
         boolean flag = true;
         int count = 0;
         Boolean isJqueryCallDone;
-        while(flag == true & count < timeoutInSeconds) {
+        while(flag & count < timeoutInSeconds) {
             isJqueryCallDone = (Boolean)((JavascriptExecutor) driver).executeScript("return jQuery.active==0");
             System.out.println("AJAX call completion: "+isJqueryCallDone);
             if(isJqueryCallDone.booleanValue()==true) {
                 flag = false;
+                count++;
                 break;
 
             }
             Thread.sleep(1000);
             count++;
         }
-        if(flag == true) {
+        if(flag) {
             System.out.println("Ajax Page was not loaded in: "+count+" seconds");
             String screenShot = GenerateScreenShot.getScreenShot(driver);
             ExtentTest node = test.createNode("Check Ajax components Loaded");
@@ -1851,6 +1852,29 @@ public class Action {
         return !flag;
     }
 
+    public boolean waitForJStoLoad(int timeOutInSeconds) {
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
+        // wait for jQuery to load
+        ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                try {
+                    return ((Long)js.executeScript("return jQuery.active") == 0);
+                }
+                catch (Exception e) {
+                    return true;
+                }
+            }
+        };
+        // wait for Javascript to load
+        ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                return js.executeScript("return document.readyState")
+                        .toString().equals("complete");
+            }
+        };
+        return wait.until(jQueryLoad) && wait.until(jsLoad);
+    }
 
 
 
