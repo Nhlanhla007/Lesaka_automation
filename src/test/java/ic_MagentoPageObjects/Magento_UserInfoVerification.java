@@ -139,11 +139,11 @@ public class Magento_UserInfoVerification {
 		//IF CONSTUCT FOR WHAT TYPE OF VALIDATION IS TAKING PLACE
 		//For Account creation(Set this way by default)
 		//***************************************
-		
+
+		action.explicitWait(20000);
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		//action.waitForJStoLoad(ajaxTimeOutInSeconds);
-		action.explicitWait(15000);
 		
 		if(typeOfVerificationFlag.equalsIgnoreCase("Create Account")) {	
 			//GETS DATA FROM ACCOUNT CREATION
