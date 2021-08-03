@@ -67,23 +67,22 @@ public class EVS_Login {
 			String Username = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"), "username");
 			String Password = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"), "password");
 			action.navigateToURL(url);
-			action.waitForPageLoaded(10);
+			action.waitForJStoLoad(60);
 			driver.navigate().refresh();
-			action.explicitWait(10000);
+			action.waitForJStoLoad(60);
 			action.click(evs_myAccountButton, "Sign In/Create Account", test);
 			action.explicitWait(3000);
 			action.click(evs_myAccountlist, "Log In", test);
+			action.waitForJStoLoad(60);
 
 			List<String> userCred = new ArrayList<>();
-			// Username =dataTable2.getValueOnCurrentModule("Username");
-			// Password =dataTable2.getValueOnCurrentModule("Password");
 			userCred.add(Username);
 			userCred.add(Password);
 			action.writeText(evs_Username, Username, "Username field", test);
 			action.writeText(evs_Password, Password, "Password field", test);
 			action.clickEle(evs_SigninBtn, "click evs_SigninBtn", test);
 			userCreds(userCred);
-			action.explicitWait(5000);
+			action.waitForJStoLoad(60);
 			
 			boolean loginVisablilityy = driver.findElements(By.xpath("//span[@class=\"logged-in\"]")).size() > 0;
 			if(loginVisablilityy) {
@@ -94,15 +93,6 @@ public class EVS_Login {
 			}
 
 			return userCred;
-
-			/*
-			 * action.waitExplicit(31); String resWelcomescreen = action.getText(Dashboard,
-			 * "Dashboard"); System.out.println(resWelcomescreen);
-			 */
-			// }else{
-			// action.CompareResult("Navigate to magento admin page is success", ResPage,
-			// "Magento Admin", test);
-			// }
 		}
 		
 		public List<String> userCreds(List<String> userCreds){
@@ -120,18 +110,9 @@ public class EVS_Login {
 			JavascriptExecutor js = (JavascriptExecutor)driver;
 			js.executeScript("arguments[0].scrollIntoView();", logout); 
 			action.click(logout, "logout", test);
+			action.waitForJStoLoad(60);
 			}
 		}
 		
-		/*
-		 * public void closeBrowserAndLogin(ExtentTest test) throws Exception {
-		 * driver.quit(); driver = null; driver =
-		 * TestCaseBase.initializeTestBaseSetup("CHROME");
-		 * 
-		 * PageFactory.initElements(driver, this); action = new Action(driver);
-		 * action.navigateToURL(ConfigFileReader.getPropertyVal("EVS_URL"));
-		 * //Login(test); }
-		 */
-		
-		
+
 }

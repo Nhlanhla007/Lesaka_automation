@@ -28,7 +28,6 @@ public class EVS_PaymentOption {
 
 	}
 
-	// place order button
 	@FindBy(xpath = "//*[@id='opc-sidebar']/div[1]/div[1]/button")
 	WebElement Btn_PlaceOrder;
 
@@ -61,14 +60,9 @@ public class EVS_PaymentOption {
 
 	@FindBy(xpath = "(//span[contains(text(),'PayFlex')])[1]")
 	WebElement PayFlex;
-
-	
-	//-------------------------------------------------------------------------------------------------------------------
-		//gift card checkout
 		
 		@FindBy(xpath = "//*[@id=\"customer-email\"]")
 		WebElement emaiL;
-
 
 		@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[4]/div//input")
 	    WebElement firstnamE;
@@ -189,7 +183,6 @@ public class EVS_PaymentOption {
 			action.waitForPageLoaded(40);
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new Exception("Unable to navigate to Checkout Payment: "+e.getMessage());
 		}
@@ -208,8 +201,6 @@ public class EVS_PaymentOption {
         String suburdGift= dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "Suburb", 0);
         String vatnumberGift = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "vatNumber", 0);
 		action.explicitWait(14000);
-//		action.explicitWait(8000);
-		//String Paytype = input.get("Paytype_Option").get(rowNumber);
 		String Paytype = dataTable2.getValueOnOtherModule("evs_CheckoutpaymentOption", "Paytype_Option", 0);
 		action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 		WebElement paymenttype = evs_SelectPaymentMethod(Paytype);

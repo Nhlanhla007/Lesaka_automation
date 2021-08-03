@@ -1,5 +1,6 @@
 package evs_PageObjects;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -19,6 +20,7 @@ public class EVS_RemoveItemsFromCart {
     Action action;
     DataTable2 dataTable2;
     EVS_Cart cart;
+	EVS_ProductSearch product;
     
     @FindBy(css = "a.go-back")
     private WebElement backButton;
@@ -41,20 +43,15 @@ public class EVS_RemoveItemsFromCart {
         action = new Action(driver);
         this.dataTable2 = dataTable2;
         cart = new EVS_Cart(driver, dataTable2);
+		product = new EVS_ProductSearch(driver, dataTable2);
 	}
-	
-    //DECREASE QUANTITY FROM CART ON SPECIFIC PRODUCT FUNCTIONALITY
-	/*
-	 * public void removeItemFromCart(ExtentTest test) throws Exception {
-	 * backButton.click(); action.click(decreaseCartButton, "Decrease Item In Cart",
-	 * test); action.click(updateQuantity, "Update Quantity", test);
-	 * action.explicitWait(8000); String cartCounter =
-	 * cart.itemsInCartCounter(test);
-	 * action.CompareResult("Verify Items in cart counter", "2",cartCounter, test);
-	 * }
-	 */
-    
+
+
+
     public void removeItemFromCart(ExtentTest test) throws Exception {
+		String productsToSearch = dataTable2.getValueOnOtherModule("evs_ProductSearch", "specificProduct", 0);
+		List<String> theProducts = product.filterProducts(productsToSearch);
+		int totalProducts =theProducts.size();
     	boolean buttonAvail = action.waitUntilElementIsDisplayed(backButton, 15000);
 		action.explicitWait(4000);
 		if(buttonAvail) {
@@ -63,16 +60,23 @@ public class EVS_RemoveItemsFromCart {
 		if(action.waitUntilElementIsDisplayed(decreaseCartButton, 15000)) {
 			action.click(decreaseCartButton, "Remove Item in Cart", test);
 			}
-		boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4000,"Clear Shopping Cart Pop Up", test);
+		boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 5,"Clear Shopping Cart Pop Up", test);
 		if (isRemovePopUpDisplayed) {
 			action.click(okButtonRemoveAllItems, "Remove selected Article", test);
-			action.explicitWait(3000);
-			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+			action.explicitWait(10000);
+//			driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 			boolean cartCountVisablility = driver.findElements(By.xpath("//*[@class = \"counter-number\"]")).size()> 0;
 			if(cartCountVisablility) {
-				action.explicitWait(3000);		
 				String cartCount = cart.itemsInCartCounter(test);
-				action.CompareResult("Cart Count After update", "2", cartCount, test);
+				boolean countFlag=false;
+				if(totalProducts>Integer.parseInt(cartCount)){
+					countFlag=true;
+					action.CompareResult("Cart count is updated! "+"Original Count of Items: "+totalProducts+" Items in Cart after removing some item: "+cartCount,"true", String.valueOf(countFlag), test);
+				}
+				else{
+					action.CompareResult("Cart count is updated! "+"Original Count of Items: "+totalProducts+" Items in Cart after removing some item: "+cartCount,"true", String.valueOf(countFlag), test);
+					throw new Exception("Cart count is updated! "+"Original Count of Items: "+totalProducts+" Items in Cart after removing some item: "+cartCount);
+				}
 			}
 
 		}

@@ -51,15 +51,14 @@ public class EVS_Magento_Login {
 			Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 			Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
 			action.navigateToURL(url);
-			action.waitForPageLoaded(10);
+			action.waitForJStoLoad(ajaxTimeOutInSeconds);
 			String ResPage = action.getPageTitle(test);
 			if(ResPage.equalsIgnoreCase("Magento Admin - DEFAULT STORE VIEW")){
 				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin - DEFAULT STORE VIEW", test);
 				action.writeText(Magento_Username, Username, "Username field", test);
 				action.writeText(Magento_Password, Password, "Password field", test);
 				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
-				//action.explicitWait(10000);
-				action.waitForPageLoaded(ajaxTimeOutInSeconds);
+				action.waitForJStoLoad(ajaxTimeOutInSeconds);
 				action.ajaxWait(ajaxTimeOutInSeconds,test);
 				String resWelcomescreen = action.getText(Dashboard, "Dashboard", test);
 				action.CompareResult("Navigate to magento admin page is success", "Dashboard",driver.getTitle() , test);
