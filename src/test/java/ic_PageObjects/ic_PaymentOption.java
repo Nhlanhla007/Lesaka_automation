@@ -25,7 +25,7 @@ public class ic_PaymentOption {
 		action = new Action(driver);
 		this.dataTable2=dataTable2;
 	}
-	//place order button
+
 	@FindBy(xpath = "//*[@id='opc-sidebar']/div[1]/div[1]/button")
 	WebElement Btn_PlaceOrder;
 	//payement options
@@ -112,11 +112,7 @@ public class ic_PaymentOption {
     @FindBy(name = "custom_attributes[identity_number]")
     WebElement idNumber;
 	
-	
-	
-	//@FindBy(xpath = "//*[@id='billing-address-same-as-shipping-payumea_creditcard']")
-	//WebElement Billingshipping;
-	@FindBy(xpath = "//*[@id='checkout-payment-method-load']/div/div/div[3]/div[2]/div[2]/div/div/label/span")
+    @FindBy(xpath = "//*[@id='checkout-payment-method-load']/div/div/div[3]/div[2]/div[2]/div/div/label/span")
 	WebElement Billingshipping;
 	@FindBy(xpath = "//span[contains(text(),'I agree to all the terms & conditions')]")
 	WebElement TermsCondition;
@@ -173,12 +169,10 @@ public class ic_PaymentOption {
 //	}
 
 		public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
-				throws IOException {
+				throws Exception {
 			try {
 				action.waitUntilElementIsDisplayed(Btn_PlaceOrder, 10);
-				action.explicitWait(15000);
-				//action.waitForPageLoaded(30);
-				//action.waitForJStoLoad(60);
+				action.explicitWait(30000);
 				action.ajaxWait(10, test);
 				action.ajaxWait(10, test);
 				String Paytype = input.get("Paytype_Option").get(rowNumber);
@@ -207,11 +201,10 @@ public class ic_PaymentOption {
 				action.javaScriptClick(Btn_PlaceOrder, "Click on Place order Button ", test);
 				action.waitForJStoLoad(40);
 				action.ajaxWait(10, test);
-				action.waitForPageLoaded(30);
+				action.waitForJStoLoad(40);
 				action.ajaxWait(10, test);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new Exception("Unable to navigate Payment Details page. "+e.getMessage());
 			}
 		}
 	
@@ -228,16 +221,14 @@ public class ic_PaymentOption {
         String phonenumberGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "telephone", 0);
         String suburdGift= dataTable2.getValueOnOtherModule("deliveryPopulation", "Suburb", 0);
         String vatnumberGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber", 0);
-		action.explicitWait(14000);
-		action.explicitWait(8000);
-		//String Paytype = input.get("Paytype_Option").get(rowNumber);
+		action.explicitWait(10000);
 		String Paytype = dataTable2.getValueOnOtherModule("CheckoutpaymentOption", "Paytype_Option", 0);
 		action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 		WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
-		action.waitExplicit(10);
+		action.explicitWait(10000);
 		action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
 		action.explicitWait(5000);
-		 action.writeText(emaiL, emailGift,"Email", test);
+		action.writeText(emaiL, emailGift,"Email", test);
 		action.writeText(firstnamE, firstNameGift,"First name", test);
 	    action.writeText(lastname, lastnameGift, "Last name", test);
 	    action.writeText(streetnamE, streetNameG, "Street name", test);
@@ -257,6 +248,7 @@ public class ic_PaymentOption {
 		ICDelivery.Postalcode = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
 	    
 		action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+		action.waitForJStoLoad(60);
 
 	} else{
 		throw new Exception("Couldn't continue to PayU page Error gift card delivery population");

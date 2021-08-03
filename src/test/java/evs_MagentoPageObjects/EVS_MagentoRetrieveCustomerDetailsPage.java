@@ -75,6 +75,7 @@ public class EVS_MagentoRetrieveCustomerDetailsPage {
 			action.explicitWait(5000);
 			action.click(allCustomerTab, "All Customers Tab", test);
 		}
+		action.explicitWait(5000);
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	}
@@ -93,6 +94,7 @@ public class EVS_MagentoRetrieveCustomerDetailsPage {
 			action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
 			action.click(magentoApplyFilterTab, "Apply to filters", test);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
+			action.explicitWait(5000);
 
 		//}
 	}

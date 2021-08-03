@@ -66,12 +66,11 @@ public class ic_Login {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
 
         action.navigateToURL(url);
-        action.waitForPageLoaded(30);
+        action.waitForJStoLoad(60);
+//        action.waitForPageLoaded(30);
         executor.executeScript("arguments[0].click();", ic_myAccountButton);
         action.explicitWait(2000);
         executor.executeScript("arguments[0].click();", ic_Login);
-
-
         List<String> userCred = new ArrayList<>();
 
         userCred.add(Username);
@@ -80,7 +79,8 @@ public class ic_Login {
         action.writeText(ic_Username, Username, "Username field", test);
         action.writeText(ic_Password, Password, "Password field", test);
         action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
-        action.waitForPageLoaded(20);
+        action.waitForJStoLoad(60);
+//        action.waitForPageLoaded(20);
         String expectedTitle = "Incredible Connection My Account";
 
         if (driver.getTitle().equalsIgnoreCase(expectedTitle)) {
@@ -90,7 +90,8 @@ public class ic_Login {
         }
 
         action.clickEle(ic_logo, "IC Home Logo", test);
-        action.waitForPageLoaded(10);
+        action.waitForJStoLoad(30);
+//        action.waitForPageLoaded(10);
 
 
         userCreds(userCred);

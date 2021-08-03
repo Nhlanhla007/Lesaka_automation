@@ -27,23 +27,29 @@ public class ic_PayUPayment {
 		// PAYU site pay option
 		@FindBy(xpath = "//div[@class='toggle-group']//div[1][text()='Card']")
 		WebElement PayU_Card;
+
 		@FindBy(xpath = "//*[@id='0_cardNumber']")
 		WebElement cardNumber;
+
 		@FindBy(xpath = "//input[@id='0_nameOnCard']")
 		WebElement nameOnCard;
+
 		@FindBy(xpath = "//select[@id='0_expMonth']")
 		WebElement expMonth;
+
 		@FindBy(xpath = "//select[@id='0_expYear']")
 		WebElement expYear;
+
 		@FindBy(xpath = "//input[@id='0_cvv']")
 		WebElement cvvNumber;
+
 		@FindBy(xpath = "//button[@id='btnPay']")
 		WebElement PayBtn;
 		
 		@FindBy(xpath = "//*[@class='checkout-success']/p//span")
         WebElement OderID;
-		public static String Oderid;		
-		
+		public static String Oderid;
+
 		@FindBy(xpath = "//button[@id='validLink']")
 		WebElement continueBtn;
 		
@@ -68,9 +74,8 @@ public class ic_PayUPayment {
 			action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Month on Card",test);
 			action.writeText(cvvNumber, cvv, "cvv number",test);
 			action.clickEle(PayBtn, "Payment submission button",test);
-			//action.waitForPageLoaded(30);
 			try {
-		    action.waitForJStoLoad(40);
+		    action.waitForJStoLoad(10);
 		    if (action.isElementPresent(continueBtn)) {
 		        action.javaScriptClick(continueBtn, "Continue", test);
 		        action.waitForJStoLoad(40);
@@ -79,7 +84,5 @@ public class ic_PayUPayment {
 		} catch (Exception e) {
 		    throw new Exception("Unable to navigate to final order page. " + e.getMessage());
 		}
-
-//			action.explicitWait(10);
 		}
 }

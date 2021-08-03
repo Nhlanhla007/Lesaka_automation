@@ -33,11 +33,9 @@ public class EVS_RetriveOrderID {
 
     public void RetriveOrderID(ExtentTest test) throws IOException, Exception {
     	String typeOfUser = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "UserType", 0).trim();
-	
-
         String orderID = null;
-        action.waitForPageLoaded(40);
-        action.explicitWait(10000);
+        action.waitForJStoLoad(40);
+        action.explicitWait(5000);
         
         if(typeOfUser.equalsIgnoreCase("Registered")) {
         	action.waitUntilElementIsDisplayed(OrderIDRegisteredUser, 15000);

@@ -134,34 +134,24 @@ public class Magento_UserInfoVerification {
 		//driver.navigate().refresh();
 		//action.explicitWait(7000);
 		JavascriptExecutor js = (JavascriptExecutor)driver;
-		//driver.manage().window().s
-		
-		//IF CONSTUCT FOR WHAT TYPE OF VALIDATION IS TAKING PLACE
-		//For Account creation(Set this way by default)
-		//***************************************
-
 		action.explicitWait(20000);
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
-		//action.waitForJStoLoad(ajaxTimeOutInSeconds);
-		
+
 		if(typeOfVerificationFlag.equalsIgnoreCase("Create Account")) {	
-			//GETS DATA FROM ACCOUNT CREATION
-			
 		action.explicitWait(10000);
 		action.waitForJStoLoad(ajaxTimeOutInSeconds);
 		js.executeScript("window.scrollBy(0,0)");
 		action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
 		action.click(Account_Information, "Account Information", test);
 		action.explicitWait(3000);
-		ExpFirstname=input.get("firstName").get(rowNumber);//"Brian";
-		ExpLastname=input.get("lastName").get(rowNumber);//"Jones";
-		ExpEmail=input.get("emailAddress").get(rowNumber);//"BrenoFernandesMalingaPatrick8@armyspy.com";
+		ExpFirstname=input.get("firstName").get(rowNumber);
+		ExpLastname=input.get("lastName").get(rowNumber);
+		ExpEmail=input.get("emailAddress").get(rowNumber);
 	
-		//new variables flag  identityType on ID and passport
-		 ExpidentityType =input.get("identityType").get(rowNumber);//"ID";
-		 ExpPassportnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
-		 ExpSAIDnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
+		ExpidentityType =input.get("identityType").get(rowNumber);//"ID";
+		ExpPassportnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
+		ExpSAIDnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
 		
 		//new variable flag on newsletter
 		String ExpNewsletterFalg = input.get("newsletter").get(rowNumber);//"Yes";
@@ -192,10 +182,7 @@ public class Magento_UserInfoVerification {
 		}else{
 			NewletterArgs ="No newsletter";
 		}
-		
-		//validate the VAT/Tax number
-		if(vatNumberFlag.equalsIgnoreCase("Yes")){
-			//String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
+				if(vatNumberFlag.equalsIgnoreCase("Yes")){
 			String actualVat = action.getAttribute(Cust_VAT, "value");
 			action.CompareResult("VAT number in Magento backend : ", ExpVATnumber, actualVat, test);
 

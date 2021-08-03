@@ -114,7 +114,7 @@ public class EVS_MagentoOrderStatusPage {
 	public void viewOrderDetails(ExtentTest test) throws Exception {
 		boolean ajaxLoadCompleted = action.ajaxWait(ajaxTimeOutInSeconds, test);
 		confirmRows(magentoTableRecords, test);
-		if (magentoTableRecords.size() == 1) {
+		if (magentoTableRecords.size() >= 1) {
 			if(!ajaxLoadCompleted) {
 				driver.navigate().refresh();
 				action.waitForPageLoaded(ajaxTimeOutInSeconds);
@@ -135,12 +135,13 @@ public class EVS_MagentoOrderStatusPage {
 	}
 
 	public void orderStatusCheck(String orderStatus, ExtentTest test) throws Exception {
-		action.explicitWait(6000);
-		if (magentoTableRecords.size() == 1) {
+		action.explicitWait(10000);
+		action.waitForJStoLoad(ajaxTimeOutInSeconds);
+		//if (magentoTableRecords.size() == 1) {
 		action.CompareResult("Order Status", orderStatus, magentoOrderStatus.getText(), test);
-		}else {
-			throw new Exception("No Records Are Returned");
-		}
+		//}else {
+			//throw new Exception("No Records Are Returned");
+		//}
 	}
 
 	  //public List<String> AllSKU;

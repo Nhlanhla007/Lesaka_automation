@@ -147,6 +147,7 @@ public class ICDelivery {
         String addressType = dataSheets.getValueOnCurrentModule("AddressType");
         String userType = dataSheets.getValueOnCurrentModule("UserType");
         //Thread.sleep(10000);
+        action.waitForJStoLoad(60);
         action.waitForPageLoaded(40);
         action.ajaxWait(20, test);
 //    	action.explicitWait(30000);
@@ -158,7 +159,7 @@ public class ICDelivery {
             action.ajaxWait(10, test);
         }
         String addressTypeICFont = action.getText(ic_AddressType, "Get Address Type", test);//ic_AddressType.getText();
-//        action.explicitWait(4000);
+        action.explicitWait(4000);
         if (addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Enter your delivery address & contact details:")) {
             if (userType.equalsIgnoreCase("Guest")) {
                 action.writeText(firstName, dataSheets.getValueOnCurrentModule("firstName"), "firstName", test);
@@ -226,17 +227,12 @@ public class ICDelivery {
         } else if (addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")) {
             //Enters a new address with an existing address
             enterNewAddressWithAnExistingAddress(test);
-        } /*
-         * else if(addressType.equalsIgnoreCase("Existing") & addressTypeICFont.
-         * equalsIgnoreCase("Enter your delivery address & contact details:")){ //WHAT
-         * SHOULD HAPPEN HERE THERE IS NO EXISITNG ADDRESS????????????? }
-         *///Add else if for other scenario
+        }
         if (action.waitUntilElementIsDisplayed(ContinueToPayment, 15000)) {
             action.explicitWait(5000);
             //action.click(ContinueToPayment,"ContinueToPayment",test);
             action.javaScriptClick(ContinueToPayment, "Continue To Payment", test);
-            action.waitForJStoLoad(120);
-            //action.waitForPageLoaded(40);
+            action.waitForJStoLoad(120);;
             action.ajaxWait(10, test);
         }
     }
@@ -250,8 +246,6 @@ public class ICDelivery {
         dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
         if (action.waitUntilElementIsDisplayed(newAddressButton, 10)) {
     		action.explicitWait(4000);
-
-            //newAddressButton.click();
             action.javaScriptClick(newAddressButton, "New Address", test);
         }
         //action.writeText(popUpFirstName, dataSheets.getValueOnCurrentModule(""), "New First name", test);
