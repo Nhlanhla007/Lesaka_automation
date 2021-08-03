@@ -1,5 +1,6 @@
 package evs_PageObjects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -131,18 +132,19 @@ public class evs_TVLicenceValidation {
 					action.scrollElemetnToCenterOfView(tvLicenseProd, "TV License Product", test);
 					flag = false;
 					action.CompareResult("Is TV License Application added to cart?", "True", "True", test);
+					
+					//Add SKU tv license value to the cart either new SKU or existing SKU
+					List<String> tvLicenseProdSKU = new ArrayList<>();
+					tvLicenseProdSKU.add("1");
+					tvLicenseProdSKU.add("000000000010011406");
+					tvLicenseProdSKU.add("R" + tvLicenseAmount );
+					EVS_ProductSearch.productData.put("TV License", tvLicenseProdSKU);					
 					break;
 				}
 			}
 			if (flag) {
 				action.CompareResult("Is TV License Application added to cart?", "True", "False", test);
-			} else {
-				// List<String> tvLicenseInformation = new ArrayList<>();
-				// tvLicenseInformation.add(e);
-				// EVS_ProductSearch.productData.put("TV License Application", );
 			}
-			// }
-
 		} else {
 			action.CompareResult("Subtotal amount is the same as the cart total", allProductsInCart, subtotal, test);
 		}
