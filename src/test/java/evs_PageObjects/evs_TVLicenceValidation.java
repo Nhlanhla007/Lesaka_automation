@@ -93,7 +93,7 @@ public class evs_TVLicenceValidation {
 				action.ajaxWait(10, test);
 				action.waitForPageLoaded(30);
 
-				cartValidationWithLicense(test);
+				//cartValidationWithLicense(test);
 
 			}
 
@@ -108,7 +108,7 @@ public class evs_TVLicenceValidation {
 	}
 	// *******************************************
 
-	public void cartValidationWithLicense(ExtentTest test) throws Exception {
+	/*public void cartValidationWithLicense(ExtentTest test) throws Exception {
 		boolean flag = true;
 		String licenseAddition = dataTable2.getValueOnCurrentModule("License Addition");
 		String tvLicenseAmount = dataTable2.getValueOnCurrentModule("TV License Amount");
@@ -147,6 +147,6 @@ public class evs_TVLicenceValidation {
 			action.CompareResult("Subtotal amount is the same as the cart total", allProductsInCart, subtotal, test);
 		}
 
-	}
+	}*/
 
 }

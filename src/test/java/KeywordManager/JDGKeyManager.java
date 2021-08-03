@@ -768,6 +768,8 @@ public class JDGKeyManager {
             case"uploadDocument":
             	evs_PaymentOption.uploadValidID(test1);
             	break;
+            case"evs_TVapproval":
+            	evs_TvLicenseApproval.approveTVlicence(test1, rowNumber);
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){
