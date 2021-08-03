@@ -114,6 +114,8 @@ public class EVS_PaymentOption {
 
 		
 		public void uploadValidID(ExtentTest test) throws Exception {
+			action.explicitWait(15000);
+			action.ajaxWait(20, test);
 			String uploadDocument = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Upload Document", 0);
 
 			if (uploadDocument.equalsIgnoreCase("yes")) {

@@ -373,7 +373,7 @@ public class EVS_ProductSearch {
             throws Exception {
         if (quanity == 1) {
             WebElement prodC = productLink.findElement(By.xpath(".//parent::strong/parent::*/parent::*/a[1]"));
-            action.click(prodC, "Navigate to product Details page", test);
+            action.javaScriptClick(prodC, "Navigate to product Details page", test);
             action.waitForPageLoaded(40);
         }
         driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
@@ -558,7 +558,7 @@ public class EVS_ProductSearch {
     String getSKUCode(String cartAdditionType, WebElement productLink, ExtentTest test) throws Exception {
         if (cartAdditionType.equalsIgnoreCase("ProductListingPage")) {
             WebElement prodC = productLink.findElement(By.xpath(".//parent::strong/parent::*/parent::*/a[1]"));
-            action.click(prodC, "Navigate to product Details page to Retrieve SKU", test);
+            action.javaScriptClick(prodC, "Navigate to product Details page to Retrieve SKU", test);
             // Navigate to the cart detail page
             if (skuCode.getText() != null | skuCode.getText() != "") {
                 return skuCode.getText();
