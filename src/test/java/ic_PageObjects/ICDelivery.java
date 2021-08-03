@@ -235,7 +235,8 @@ public class ICDelivery {
             action.explicitWait(5000);
             //action.click(ContinueToPayment,"ContinueToPayment",test);
             action.javaScriptClick(ContinueToPayment, "Continue To Payment", test);
-            action.waitForPageLoaded(40);
+            action.waitForJStoLoad(120);
+            //action.waitForPageLoaded(40);
             action.ajaxWait(10, test);
         }
     }
@@ -248,10 +249,10 @@ public class ICDelivery {
         dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
         dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
         if (action.waitUntilElementIsDisplayed(newAddressButton, 10)) {
-//    		action.explicitWait(8000);
+    		action.explicitWait(4000);
 
             //newAddressButton.click();
-            action.click(newAddressButton, "New Address", test);
+            action.javaScriptClick(newAddressButton, "New Address", test);
         }
         //action.writeText(popUpFirstName, dataSheets.getValueOnCurrentModule(""), "New First name", test);
         action.writeText(popUpStreetName, dataSheets.getValueOnCurrentModule("streetName"), "New Address Street name", test);

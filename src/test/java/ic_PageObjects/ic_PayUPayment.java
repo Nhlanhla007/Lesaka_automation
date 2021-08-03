@@ -42,7 +42,14 @@ public class ic_PayUPayment {
 		
 		@FindBy(xpath = "//*[@class='checkout-success']/p//span")
         WebElement OderID;
-		public static String Oderid;
+		public static String Oderid;		
+		
+		@FindBy(xpath = "//button[@id='validLink']")
+		WebElement continueBtn;
+		
+		@FindBy(xpath = "//div[contains(text(),'Thank you, we have successfully received your orde')]")
+		WebElement successMsg;
+						
 
 		public void PayUPagePayment(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception{
 			String cardnumber = dataTable2.getValueOnCurrentModule("cardnumber");
@@ -61,7 +68,17 @@ public class ic_PayUPayment {
 			action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Month on Card",test);
 			action.writeText(cvvNumber, cvv, "cvv number",test);
 			action.clickEle(PayBtn, "Payment submission button",test);
-			action.waitForPageLoaded(30);
+			//action.waitForPageLoaded(30);
+			try {
+		    action.waitForJStoLoad(40);
+		    if (action.isElementPresent(continueBtn)) {
+		        action.javaScriptClick(continueBtn, "Continue", test);
+		        action.waitForJStoLoad(40);
+		    }
+		    action.CompareResult("order success message", "Thank you, we have successfully received your order", successMsg.getText(), test);
+		} catch (Exception e) {
+		    throw new Exception("Unable to navigate to final order page. " + e.getMessage());
+		}
 
 //			action.explicitWait(10);
 		}

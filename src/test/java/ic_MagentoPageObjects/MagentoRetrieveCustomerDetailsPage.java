@@ -73,9 +73,11 @@ public class MagentoRetrieveCustomerDetailsPage {
 		if (action.waitUntilElementIsDisplayed(customerTab, 10)) {
 			action.click(customerTab, "Customer Tab", test);
 		}
+		action.explicitWait(2000);
 		if (action.waitUntilElementIsDisplayed(allCustomerTab, 10)) {
-			action.click(allCustomerTab, "All Customers Tab", test);
+			action.javaScriptClick(allCustomerTab, "All Customers Tab", test);
 		}
+		action.explicitWait(5000);
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
 	}

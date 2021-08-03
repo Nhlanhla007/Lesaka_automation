@@ -176,8 +176,10 @@ public class ic_PaymentOption {
 				throws IOException {
 			try {
 				action.waitUntilElementIsDisplayed(Btn_PlaceOrder, 10);
-				action.explicitWait(7000);
-				action.waitForPageLoaded(30);
+				action.explicitWait(15000);
+				//action.waitForPageLoaded(30);
+				//action.waitForJStoLoad(60);
+				action.ajaxWait(10, test);
 				action.ajaxWait(10, test);
 				String Paytype = input.get("Paytype_Option").get(rowNumber);
 				//action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
@@ -188,6 +190,7 @@ public class ic_PaymentOption {
  				action.ajaxWait(10, test);
  				action.explicitWait(1000);
  				action.ajaxWait(10, test);
+ 				action.explicitWait(5000);
 				action.scrollElemetnToCenterOfView(paymenttype, "paymenttype", test);
 				// action.explicitWait(2000);
 				action.ajaxWait(10, test);
@@ -198,9 +201,11 @@ public class ic_PaymentOption {
  				action.ajaxWait(10, test);
  				action.explicitWait(1000);
  				action.ajaxWait(10, test);
+ 				action.explicitWait(5000);
 				action.scrollElemetnToCenterOfView(Btn_PlaceOrder, "Place Order Button", test);
 				action.explicitWait(2000);
 				action.javaScriptClick(Btn_PlaceOrder, "Click on Place order Button ", test);
+				action.waitForJStoLoad(40);
 				action.ajaxWait(10, test);
 				action.waitForPageLoaded(30);
 				action.ajaxWait(10, test);
