@@ -196,7 +196,7 @@ public class EVS_Delivery {
         }
 		if (action.waitUntilElementIsDisplayed(ic_AddressType, 20000)) {
 			action.explicitWait(8000);
-			String searchStreetName = dataSheets.getValueOnCurrentModule("streetName");
+			String searchStreetName = dataSheets.getValueOnCurrentModule("streetName").trim();
 			String searchSuburb = dataSheets.getValueOnCurrentModule("Suburb").trim();
 			String searchCity = dataSheets.getValueOnCurrentModule("city").trim();
 			action.writeText(streetName, searchStreetName + " " + searchSuburb + " " + searchCity, "Enter Google Address", test);
@@ -288,9 +288,9 @@ public class EVS_Delivery {
 		}
 		// action.writeText(popUpFirstName, dataSheets.getValueOnCurrentModule(""), "New
 		// First name", test);
-		String searchStreetName = dataSheets.getValueOnCurrentModule("streetName");
-		String searchSuburb = dataSheets.getValueOnCurrentModule("Suburb");
-		String searchCity = dataSheets.getValueOnCurrentModule("city");
+		String searchStreetName = dataSheets.getValueOnCurrentModule("streetName").trim();
+		String searchSuburb = dataSheets.getValueOnCurrentModule("Suburb").trim();
+		String searchCity = dataSheets.getValueOnCurrentModule("city").trim();
 
 		action.explicitWait(4000);
 		action.writeText(popUpStreetName, searchStreetName + " " + searchSuburb + " " + searchCity,"New Address Street name", test);
