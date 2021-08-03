@@ -1876,30 +1876,6 @@ public class Action {
         return wait.until(jQueryLoad) && wait.until(jsLoad);
     }
 
-    public boolean waitForJStoLoad(int timeOutInSeconds) {
-        JavascriptExecutor js = (JavascriptExecutor)driver;
-        WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
-        // wait for jQuery to load
-        ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver driver) {
-                try {
-                    return ((Long)js.executeScript("return jQuery.active") == 0);
-                }
-                catch (Exception e) {
-                    return true;
-                }
-            }
-        };
-        // wait for Javascript to load
-        ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver driver) {
-                return js.executeScript("return document.readyState")
-                        .toString().equals("complete");
-            }
-        };
-        return wait.until(jQueryLoad) && wait.until(jsLoad);
-    }
-
 
 
 

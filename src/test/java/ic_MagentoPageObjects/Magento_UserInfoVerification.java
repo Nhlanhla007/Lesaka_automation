@@ -126,37 +126,23 @@ public class Magento_UserInfoVerification {
 		String ExpSAIDnumber = null;
 		String vatNumberFlag = null;
 		String ExpVATnumber = null;
-		//DOES NOT WORK
-		//String ExpWebsite =dataTable2.getValueOnOtherModule("accountCreation", "WebSite",0);
 		
 		String typeOfVerificationFlag = dataTable2.getValueOnCurrentModule("Data Source");
-		
-		//driver.navigate().refresh();
-		//action.explicitWait(7000);
-		JavascriptExecutor js = (JavascriptExecutor)driver;
-		//driver.manage().window().s
-		
-		//IF CONSTUCT FOR WHAT TYPE OF VALIDATION IS TAKING PLACE
-		//For Account creation(Set this way by default)
-		//***************************************
 
+		JavascriptExecutor js = (JavascriptExecutor)driver;
 		action.explicitWait(20000);
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
-		//action.waitForJStoLoad(ajaxTimeOutInSeconds);
-		
-		if(typeOfVerificationFlag.equalsIgnoreCase("Create Account")) {	
-			//GETS DATA FROM ACCOUNT CREATION
-			
+		if(typeOfVerificationFlag.equalsIgnoreCase("Create Account")) {
 		action.explicitWait(10000);
 		action.waitForJStoLoad(ajaxTimeOutInSeconds);
 		js.executeScript("window.scrollBy(0,0)");
 		action.scrollElemetnToCenterOfView(Account_Information,"Account_Information",test);
 		action.click(Account_Information, "Account Information", test);
 		action.explicitWait(3000);
-		ExpFirstname=input.get("firstName").get(rowNumber);//"Brian";
-		ExpLastname=input.get("lastName").get(rowNumber);//"Jones";
-		ExpEmail=input.get("emailAddress").get(rowNumber);//"BrenoFernandesMalingaPatrick8@armyspy.com";
+		ExpFirstname=input.get("firstName").get(rowNumber);
+		ExpLastname=input.get("lastName").get(rowNumber);
+		ExpEmail=input.get("emailAddress").get(rowNumber);
 	
 		//new variables flag  identityType on ID and passport
 		 ExpidentityType =input.get("identityType").get(rowNumber);//"ID";
@@ -173,29 +159,21 @@ public class Magento_UserInfoVerification {
 		
 		 switch (ExpidentityType) {
 			case "ID":
-				
-				//String ActSAID = FetchDataFromCustInfo_MagentoBackend(Cust_SAID, "Customer_SAID", 11, 2, test);
 				String actualID = action.getAttribute(Cust_SAID, "value");
 				action.CompareResult("SAID number in Magento backend : ", ExpSAIDnumber, actualID, test);
 				break;
 			case "Passport":
-				//String ActPassport = FetchDataFromCustInfo_MagentoBackend(Cust_Passport, "Customer_Passport", 11, 2, test);
 				String acutalPassport = action.getAttribute(Cust_Passport, "value");
 				action.CompareResult("Passport number in Magento backend : ", ExpPassportnumber, acutalPassport, test);
 				break;
 		
 		}
-		//------Basic verification ends here------------------------------------
-		//validate news letter depending on ExpNewsletterFalg...
 		if(ExpNewsletterFalg.equalsIgnoreCase("Yes")){
 			NewletterArgs ="Newsletter";
 		}else{
 			NewletterArgs ="No newsletter";
 		}
-		
-		//validate the VAT/Tax number
-		if(vatNumberFlag.equalsIgnoreCase("Yes")){
-			//String ActVAT = FetchDataFromCustInfo_MagentoBackend(Cust_VAT, "Customer_VAT", 11, 2, test);
+				if(vatNumberFlag.equalsIgnoreCase("Yes")){
 			String actualVat = action.getAttribute(Cust_VAT, "value");
 			action.CompareResult("VAT number in Magento backend : ", ExpVATnumber, actualVat, test);
 

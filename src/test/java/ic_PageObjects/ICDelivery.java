@@ -68,8 +68,6 @@ public class ICDelivery {
     @FindBy(xpath = "//*[@id=\"opc-sidebar\"]/div[1]/div[1]/button")
     WebElement ContinueToPayment;
 
-    //---------------------------------------------------------------
-
     @FindBy(name = "street[0]")
     WebElement streetNameGift;
 
@@ -103,12 +101,6 @@ public class ICDelivery {
     @FindBy(name = "region_id")
     WebElement popUpProvince;
 
-    /*
-     * @FindBy(name = "firstname") WebElement popUpFirstName;
-     *
-     * @FindBy(name = "lastname") WebElement popUpLastName;
-     */
-
     @FindBy(name = "city")
     WebElement popUpCity;
 
@@ -127,12 +119,8 @@ public class ICDelivery {
     @FindBy(xpath = "//span[contains(text(),'New Address')]")
     WebElement newAddressButton;
 
-    // @FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
     @FindBy(xpath = "//*[@class=\"modal-footer\"]/button[1]")
     WebElement popUpSave;
-
-//    @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
-//    WebElement cardDeliver_btn;
 
     public static String Streetname;
     public static String Cityname;
@@ -147,9 +135,9 @@ public class ICDelivery {
         String addressType = dataSheets.getValueOnCurrentModule("AddressType");
         String userType = dataSheets.getValueOnCurrentModule("UserType");
         //Thread.sleep(10000);
+        action.waitForJStoLoad(60);
         action.waitForPageLoaded(40);
         action.ajaxWait(20, test);
-//    	action.explicitWait(30000);
         if (action.waitUntilElementIsDisplayed(deliveryLink, 10)) {
         	action.ajaxWait(20, test);
         	action.explicitWait(5000);
@@ -158,7 +146,7 @@ public class ICDelivery {
             action.ajaxWait(10, test);
         }
         String addressTypeICFont = action.getText(ic_AddressType, "Get Address Type", test);//ic_AddressType.getText();
-//        action.explicitWait(4000);
+        action.explicitWait(4000);
         if (addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Enter your delivery address & contact details:")) {
             if (userType.equalsIgnoreCase("Guest")) {
                 action.writeText(firstName, dataSheets.getValueOnCurrentModule("firstName"), "firstName", test);
@@ -219,24 +207,15 @@ public class ICDelivery {
             dataSheets.setValueOnCurrentModule("postalCode", registeredUserDetails.get("Post Code"));
             dataSheets.setValueOnCurrentModule("vatNumber", registeredUserDetails.get("Vat number"));
             dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
-            //	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
-//        	action.explicitWait(12000);
-
 
         } else if (addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")) {
             //Enters a new address with an existing address
             enterNewAddressWithAnExistingAddress(test);
-        } /*
-         * else if(addressType.equalsIgnoreCase("Existing") & addressTypeICFont.
-         * equalsIgnoreCase("Enter your delivery address & contact details:")){ //WHAT
-         * SHOULD HAPPEN HERE THERE IS NO EXISITNG ADDRESS????????????? }
-         *///Add else if for other scenario
+        }
         if (action.waitUntilElementIsDisplayed(ContinueToPayment, 15000)) {
             action.explicitWait(5000);
-            //action.click(ContinueToPayment,"ContinueToPayment",test);
             action.javaScriptClick(ContinueToPayment, "Continue To Payment", test);
             action.waitForJStoLoad(120);
-            //action.waitForPageLoaded(40);
             action.ajaxWait(10, test);
         }
     }
@@ -250,13 +229,9 @@ public class ICDelivery {
         dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
         if (action.waitUntilElementIsDisplayed(newAddressButton, 10)) {
     		action.explicitWait(4000);
-
-            //newAddressButton.click();
             action.javaScriptClick(newAddressButton, "New Address", test);
         }
-        //action.writeText(popUpFirstName, dataSheets.getValueOnCurrentModule(""), "New First name", test);
         action.writeText(popUpStreetName, dataSheets.getValueOnCurrentModule("streetName"), "New Address Street name", test);
-//    	action.explicitWait(4000);
         popUpCity.clear();
         action.writeText(popUpCity, dataSheets.getValueOnCurrentModule("city"), "New Address City", test);
         action.writeText(popUpPhone, dataSheets.getValueOnCurrentModule("telephone"), "New Address Telephone", test);
@@ -265,20 +240,14 @@ public class ICDelivery {
         popUpPostalCode.clear();
         action.writeText(popUpPostalCode, dataSheets.getValueOnCurrentModule("postalCode"), "New Address postal code", test);
         action.writeText(popUpVatNumber, dataSheets.getValueOnCurrentModule("vatNumber"), "New Address Vat number", test);
-        //popUpProvince.clear();
         action.selectFromDropDownUsingVisibleText(popUpProvince, dataSheets.getValueOnCurrentModule("province"), "New Address Province");
-//    	action.explicitWait(4000);
-        //popUpSave.click();
         action.click(popUpSave, "Save", test);
         action.ajaxWait(20, test);
     }
 
     public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
-        //Streetname =input.get("streetName").get(rowNumber);
         String Streetname = dataSheets.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
-        //Cityname =input.get("city").get(rowNumber);
         String Cityname = dataSheets.getValueOnOtherModule("deliveryPopulation", "city", 0);
-        //Postalcode = input.get("postalCode").get(rowNumber);
         String Postalcode = dataSheets.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
         String firstNameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "firstName", 0);
         String lastnameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "lastname", 0);

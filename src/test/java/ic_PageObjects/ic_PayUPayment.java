@@ -23,20 +23,25 @@ public class ic_PayUPayment {
 			action = new Action(driver);
 			this.dataTable2=dataTable2;
 		}
-		
-		// PAYU site pay option
+
 		@FindBy(xpath = "//div[@class='toggle-group']//div[1][text()='Card']")
 		WebElement PayU_Card;
+
 		@FindBy(xpath = "//*[@id='0_cardNumber']")
 		WebElement cardNumber;
+
 		@FindBy(xpath = "//input[@id='0_nameOnCard']")
 		WebElement nameOnCard;
+
 		@FindBy(xpath = "//select[@id='0_expMonth']")
 		WebElement expMonth;
+
 		@FindBy(xpath = "//select[@id='0_expYear']")
 		WebElement expYear;
+
 		@FindBy(xpath = "//input[@id='0_cvv']")
 		WebElement cvvNumber;
+
 		@FindBy(xpath = "//button[@id='btnPay']")
 		WebElement PayBtn;
 		
@@ -57,20 +62,16 @@ public class ic_PayUPayment {
 			String Expiremonth = dataTable2.getValueOnCurrentModule("Expiremonth");
 			String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
 			String cvv = dataTable2.getValueOnCurrentModule("cvv");
-//			action.explicitWait(5000);
 			action.waitUntilElementIsDisplayed(PayU_Card,20);
 	        action.javaScriptClick(PayU_Card, " Card option in PayU",test);
-			//action.clickEle(PayU_Card, " Card option in PayU",test);
-			//Enter card details
 			action.writeText(cardNumber,cardnumber, "card number",test);
 			action.writeText(nameOnCard, cardholdername, "name on card",test);
 			action.dropDownselectbyvisibletext(expMonth, Expiremonth, "Select Expirey Month on Card",test);
 			action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Month on Card",test);
 			action.writeText(cvvNumber, cvv, "cvv number",test);
 			action.clickEle(PayBtn, "Payment submission button",test);
-			//action.waitForPageLoaded(30);
 			try {
-		    action.waitForJStoLoad(40);
+		    action.waitForJStoLoad(10);
 		    if (action.isElementPresent(continueBtn)) {
 		        action.javaScriptClick(continueBtn, "Continue", test);
 		        action.waitForJStoLoad(40);
@@ -79,7 +80,5 @@ public class ic_PayUPayment {
 		} catch (Exception e) {
 		    throw new Exception("Unable to navigate to final order page. " + e.getMessage());
 		}
-
-//			action.explicitWait(10);
 		}
 }

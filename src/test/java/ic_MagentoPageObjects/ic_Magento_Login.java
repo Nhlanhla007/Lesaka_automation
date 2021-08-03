@@ -54,9 +54,8 @@ public class ic_Magento_Login {
 			Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 			Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
 			action.navigateToURL(url);
-			action.waitForPageLoaded(10);
+			action.waitForJStoLoad(ajaxTimeOutInSeconds);
 			String ResPage = driver.getTitle();
-			System.out.println("Launch page title: "+driver.getTitle());
 
 			if(ResPage.equalsIgnoreCase("Magento Admin")){
 				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
@@ -64,11 +63,7 @@ public class ic_Magento_Login {
 				action.writeText(Magento_Password, Password, "Password feild", test);
 				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
 				action.waitForJStoLoad(ajaxTimeOutInSeconds);
-				//action.waitForPageLoaded(ajaxTimeOutInSeconds);
-				//action.ajaxWait(ajaxTimeOutInSeconds,test);
-//				action.explicitWait(10000);
 				String resWelcomescreen = action.getText(Dashboard, "Dashboard", test);
-				System.out.println("Welcome page title: "+driver.getTitle());
 				action.CompareResult("Navigate to magento admin page is success", "Dashboard",driver.getTitle() , test);
 
 			}else{
