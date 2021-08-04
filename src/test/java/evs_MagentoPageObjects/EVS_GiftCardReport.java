@@ -110,6 +110,7 @@ public class EVS_GiftCardReport {
 			action.waitForPageLoaded(ajaxTimeOutInSeconds);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
 			action.click(admin_GiftCardHistory, "click History", test);
+			action.ajaxWait(ajaxTimeOutInSeconds,test);
 			Action_Output = action.getText(admin_Action, "value",test);
 			mySheet.get(0).get("Action_Output").set(sheetRow1, Action_Output);
 			/*balanceChange_Output = action.getText(admin_GiftCardChangeBalance, "value",test);
@@ -122,6 +123,7 @@ public class EVS_GiftCardReport {
 		if(giftCardStatus.equalsIgnoreCase("Used")){
 			action.click(admin_CodeUdsed, "click information", test);
 			action.click(admin_GiftCardHistory, "click History", test);
+			action.ajaxWait(ajaxTimeOutInSeconds,test);
 			Action_Output = action.getText(admin_ActionUsed, "value",test);
 			mySheet.get(0).get("Action_Output").set(sheetRow1, Action_Output);
 			/*balanceChange_Output = action.getText(admin_GiftCardBalanceChan, "value",test);
