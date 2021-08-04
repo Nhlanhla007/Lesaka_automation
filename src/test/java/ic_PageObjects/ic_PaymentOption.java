@@ -50,62 +50,34 @@ public class ic_PaymentOption {
 	WebElement Cash_Deposits;
 	@FindBy(xpath = "//body/div[2]/main[1]/div[2]/div[1]/div[1]/div[4]/ol[1]/li[3]/div[1]/form[1]/fieldset[1]/div[1]/div[1]/div[1]/div[12]/div[1]/label[1]/span[1]")
 	WebElement card;
-	
-	//-------------------------------------------------------------------------------------------------------------------
-	//gift card checkout
-	
+
 	@FindBy(xpath = "//*[@id=\"customer-email\"]")
 	WebElement emaiL;
 
-	/*@FindBy(name = "firstname")
-	@FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[4]/div/input")*/
-	//@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[14]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[4]/div//input")
 	@FindBy(xpath = "//*[@name=\"firstname\"]")
     WebElement firstnamE;
 	
-	/*@FindBy(xpath = "//input[@name="lastname"]")
-	 * //*[@id="checkout-payment-method-load"]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[4]/div//input*/
-	//@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[14]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[5]/div//input")
 	@FindBy(xpath = "//*[@name=\"lastname\"]")
     WebElement lastname;
 	
-	/*@FindBy(xpath = "//input[@name=\"telephone\"]")
-	 * @FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[13]/div/input")*/
-	//@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[14]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[13]/div//input")
 	@FindBy(xpath = "//*[@name=\"telephone\"]")
     WebElement telephone;
 	
-	/*@FindBy(xpath = "//input[@name=\"custom_attributes[suburb]\"]")
-	 * @FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[8]/div/input")*/
-	//@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[14]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[8]/div//input")
 	@FindBy(xpath = "//*[@name=\"custom_attributes[suburb]\"]")
     WebElement Suburb;
 	
-	//@FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/fieldset/div/div[1]/div/input")
-	//@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[14]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/fieldset/div/div[1]/div//input")
 	@FindBy(xpath = "//*[@name=\"street[0]\"]")
 	WebElement streetnamE;
 	
-	/*@FindBy(xpath = "//select[@name=\"region_id\"]")
-	 * @FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[9]/div/select")*/
-	//@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[14]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[9]/div//select")
 	@FindBy(xpath = "//select[@name=\"region_id\"]")
     WebElement province;
 	
-	/*@FindBy(xpath = "//input[@name=\"city\"]")
-	 * @FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[7]/div/input")*/
-	//@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[14]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[7]/div//input")
 	@FindBy(xpath = "//*[@name=\"city\"]")
     WebElement city;
 	
-	/*@FindBy(xpath = "//input[@name=\"postcode\"]")
-	 * @FindBy(xpath= "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[11]/div/input")*/
-	//@FindBy(xpath= "//*[@id=\"checkout-payment-method-load\"]/div/div/div[14]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[11]/div//input")
 	@FindBy(xpath = "//*[@name=\"postcode\"]")
     WebElement postalCode;
 	
-	//@FindBy(xpath = "/html/body/div[2]/main/div[2]/div/div/div[4]/ol/li[3]/div/form/fieldset/div[1]/div/div/div[3]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[14]/div/input")
-	//@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[14]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[14]/div//input")
 	@FindBy(xpath = "//*[@name=\"vat_id\"]")
 	WebElement vatNumber;
 
@@ -114,6 +86,7 @@ public class ic_PaymentOption {
 	
     @FindBy(xpath = "//*[@id='checkout-payment-method-load']/div/div/div[3]/div[2]/div[2]/div/div/label/span")
 	WebElement Billingshipping;
+
 	@FindBy(xpath = "//span[contains(text(),'I agree to all the terms & conditions')]")
 	WebElement TermsCondition;
 
@@ -135,7 +108,6 @@ public class ic_PaymentOption {
 			Flag:
 			 for(Map.Entry m:PaymentMap.entrySet()){  
 				   if(m.getKey().toString().trim().toUpperCase().equalsIgnoreCase(Paytype)){
-//					   System.out.println("FOUND match with excel pay type");
 					    actionele =(WebElement) m.getValue();
 					    break Flag;	   
 				   }
@@ -145,63 +117,26 @@ public class ic_PaymentOption {
 			return actionele;	
      }
 
-//	public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
-//		try {
-////			action.explicitWait(14000);
-//			String Paytype = input.get("Paytype_Option").get(rowNumber);
-//			action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
-//			WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
-////			action.explicitWait(10);
-//			action.scrollElemetnToCenterOfView(paymenttype,"paymenttype",test);
-//			action.explicitWait(2000);
-//			action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
-////			action.waitExplicit(15);
-//			action.scrollElemetnToCenterOfView(Btn_PlaceOrder,"paymenttype",test);
-//			action.explicitWait(2000);
-//			action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
-//			action.waitForPageLoaded(30);
-//			action.ajaxWait(10,test);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//	}
-
 		public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
 				throws Exception {
 			try {
-				action.waitUntilElementIsDisplayed(Btn_PlaceOrder, 10);
+				action.waitUntilElementIsDisplayed(Btn_PlaceOrder, 20);
 				action.explicitWait(30000);
-				action.ajaxWait(10, test);
-				action.ajaxWait(10, test);
 				String Paytype = input.get("Paytype_Option").get(rowNumber);
-				//action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 				WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
-				// action.explicitWait(10);
-				action.ajaxWait(10, test);
- 				action.explicitWait(1000);
- 				action.ajaxWait(10, test);
- 				action.explicitWait(1000);
- 				action.ajaxWait(10, test);
- 				action.explicitWait(5000);
 				action.scrollElemetnToCenterOfView(paymenttype, "paymenttype", test);
-				// action.explicitWait(2000);
-				action.ajaxWait(10, test);
+				action.explicitWait(2000);
 				action.javaScriptClick(paymenttype, "Select Payment option " + Paytype, test);
-				// action.waitExplicit(15);
 				action.ajaxWait(10, test);
  				action.explicitWait(1000);
  				action.ajaxWait(10, test);
  				action.explicitWait(1000);
  				action.ajaxWait(10, test);
- 				action.explicitWait(5000);
+ 				action.explicitWait(2000);
 				action.scrollElemetnToCenterOfView(Btn_PlaceOrder, "Place Order Button", test);
 				action.explicitWait(2000);
 				action.javaScriptClick(Btn_PlaceOrder, "Click on Place order Button ", test);
-				action.waitForJStoLoad(40);
-				action.ajaxWait(10, test);
-				action.waitForJStoLoad(40);
+				action.waitForJStoLoad(60);
 				action.ajaxWait(10, test);
 			} catch (Exception e) {
 				throw new Exception("Unable to navigate Payment Details page. "+e.getMessage());
@@ -249,6 +184,7 @@ public class ic_PaymentOption {
 	    
 		action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
 		action.waitForJStoLoad(60);
+		action.ajaxWait(10, test);
 
 	} else{
 		throw new Exception("Couldn't continue to PayU page Error gift card delivery population");

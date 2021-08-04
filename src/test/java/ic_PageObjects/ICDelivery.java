@@ -146,13 +146,10 @@ public class ICDelivery {
         Postalcode = input.get("postalCode").get(rowNumber);
         String addressType = dataSheets.getValueOnCurrentModule("AddressType");
         String userType = dataSheets.getValueOnCurrentModule("UserType");
-        //Thread.sleep(10000);
         action.waitForJStoLoad(60);
-        action.waitForPageLoaded(40);
         action.ajaxWait(20, test);
-//    	action.explicitWait(30000);
         if (action.waitUntilElementIsDisplayed(deliveryLink, 10)) {
-        	action.ajaxWait(20, test);
+//        	action.ajaxWait(20, test);
         	action.explicitWait(5000);
             action.scrollToElement(deliveryLink, "Delivery Link", test);
             action.javaScriptClick(deliveryLink, "deliveryLink", test);
@@ -229,11 +226,11 @@ public class ICDelivery {
             enterNewAddressWithAnExistingAddress(test);
         }
         if (action.waitUntilElementIsDisplayed(ContinueToPayment, 15000)) {
+            action.waitForJStoLoad(60);
+            action.ajaxWait(10,test);
             action.explicitWait(5000);
-            //action.click(ContinueToPayment,"ContinueToPayment",test);
             action.javaScriptClick(ContinueToPayment, "Continue To Payment", test);
-            action.waitForJStoLoad(120);;
-            action.ajaxWait(10, test);
+
         }
     }
 
@@ -268,11 +265,8 @@ public class ICDelivery {
     }
 
     public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
-        //Streetname =input.get("streetName").get(rowNumber);
         String Streetname = dataSheets.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
-        //Cityname =input.get("city").get(rowNumber);
         String Cityname = dataSheets.getValueOnOtherModule("deliveryPopulation", "city", 0);
-        //Postalcode = input.get("postalCode").get(rowNumber);
         String Postalcode = dataSheets.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
         String firstNameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "firstName", 0);
         String lastnameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "lastname", 0);

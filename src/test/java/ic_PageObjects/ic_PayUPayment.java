@@ -24,7 +24,6 @@ public class ic_PayUPayment {
         this.dataTable2 = dataTable2;
     }
 
-    // PAYU site pay option
     @FindBy(xpath = "//div[@class='toggle-group']//div[1][text()='Card']")
     WebElement PayU_Card;
 
@@ -58,13 +57,14 @@ public class ic_PayUPayment {
 
 
     public void PayUPagePayment(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
+        String cardnumber = dataTable2.getValueOnCurrentModule("cardnumber");
+        String cardholdername = dataTable2.getValueOnCurrentModule("cardholdername");
+        String Expiremonth = dataTable2.getValueOnCurrentModule("Expiremonth");
+        String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
+        String cvv = dataTable2.getValueOnCurrentModule("cvv");
         try {
-            String cardnumber = dataTable2.getValueOnCurrentModule("cardnumber");
-            String cardholdername = dataTable2.getValueOnCurrentModule("cardholdername");
-            String Expiremonth = dataTable2.getValueOnCurrentModule("Expiremonth");
-            String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
-            String cvv = dataTable2.getValueOnCurrentModule("cvv");
             action.waitUntilElementIsDisplayed(PayU_Card, 20);
+            action.clickEle(PayU_Card, " Card option in PayU", test);
             action.writeText(cardNumber, cardnumber, "card number", test);
             action.writeText(nameOnCard, cardholdername, "name on card", test);
             action.dropDownselectbyvisibletext(expMonth, Expiremonth, "Select Expirey Month on Card", test);
