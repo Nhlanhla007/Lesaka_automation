@@ -36,7 +36,8 @@ public class EVS_RefreshLogoHomepage {
 	    action.explicitWait(10000);
 	    JavascriptExecutor js = (JavascriptExecutor)driver;
 	    js.executeScript("arguments[0].scrollIntoView();", evs_logo); 
-	    action.click(evs_logo, "Click to go homepage", test); 
+	    action.click(evs_logo, "Click to go homepage", test);
+	    action.waitForPageLoaded(120);
 	    String title= driver.getTitle();
 	    action.CompareResult("Return homepage", "Home page - DEFAULT STORE VIEW", title, test);
 	    	

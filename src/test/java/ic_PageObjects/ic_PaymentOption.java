@@ -132,7 +132,7 @@ public class ic_PaymentOption {
  				action.ajaxWait(10, test);
  				action.explicitWait(1000);
  				action.ajaxWait(10, test);
- 				action.explicitWait(2000);
+ 				action.explicitWait(1000);
 				action.scrollElemetnToCenterOfView(Btn_PlaceOrder, "Place Order Button", test);
 				action.explicitWait(2000);
 				action.javaScriptClick(Btn_PlaceOrder, "Click on Place order Button ", test);

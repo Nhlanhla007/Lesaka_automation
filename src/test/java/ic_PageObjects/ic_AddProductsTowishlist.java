@@ -26,8 +26,6 @@ public class ic_AddProductsTowishlist {
 			String AllProducts = "Samsung Toner D105L#b#c";
 			String AllQuantity = "1#2#3";
 			RefreshLogoHomepage.homepageLogo(test);
-			//List<String> ToatalProducts = icProducts.filterProducts(AllProducts);
-			//List<String> ToatalQuantity = icProducts.filterProducts(AllQuantity);
 			
 		}
 		/*

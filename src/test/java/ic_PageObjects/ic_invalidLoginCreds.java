@@ -27,12 +27,10 @@ public class ic_invalidLoginCreds {
 		action = new Action(driver);
 		this.dataTable2=dataTable2;
 	}
-	
-	//Login to Ic
+
 			@FindBy(className = "my-account")
 			WebElement ic_myAccountButton;
-			
-			//*[@id="header-slideout--0"]/li[3]/a
+
 			@FindBy(xpath = "//*[@id=\"header-slideout--0\"]/li[3]/a")
 			WebElement ic_myAccountlist;
 			
@@ -47,12 +45,10 @@ public class ic_invalidLoginCreds {
 			
 			@FindBy(xpath = "//*[@id=\"email-error\"]")
 			WebElement ic_InvalidUsername;
-			//div[contains(text(),'Your account sign-in was incorrect. Please try again.')]Your account sign-in was incorrect. Please try again.
+
 			@FindBy(xpath = "//*[@class= \"message-error error message\"]/div")
 			WebElement ic_InvalidCreds;
-			
-			//*[@id="email-error"]
-			
+
 			public List<String> invalidLogin_ic(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException{
 				String Username = dataTable2.getValueOnCurrentModule("Username");
 				String Password = dataTable2.getValueOnCurrentModule("Password");

@@ -64,20 +64,20 @@ public class MagentoAccountInformation {
 
 
 
-				action.CompareResult("Verify the First name of user in Magento", expFristname, ActualFirstname, test);
+				action.CompareResult("First name of user in Magento", expFristname, ActualFirstname, test);
 				
-				action.CompareResult("Verify the Last name of user in Magento", expLastname, ActualLastname, test);
+				action.CompareResult("Last name of user in Magento", expLastname, ActualLastname, test);
 				
-				action.CompareResult("Verify the Email of user in Magento", expEmail, ActualEmail, test);
+				action.CompareResult("Email of user in Magento", expEmail, ActualEmail, test);
 				
-				action.CompareResult("Verify the SA ID number of user in Magento", expEmail, ActualEmail, test);
+				action.CompareResult("SA ID number of user in Magento", expEmail, ActualEmail, test);
 				boolean FlagGenerateBPnumber=false;
 				if(ActualBPnumber!=null){
 					FlagGenerateBPnumber=true;
-					action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
+					action.CompareResult("BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
 					
 				}else{
-					action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
+					action.CompareResult("BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
 			    }
 			}
 			
@@ -88,10 +88,10 @@ public class MagentoAccountInformation {
 				boolean FlagGenerateBPnumber = false;
 				if(ActualBPnumber!=null){
 					FlagGenerateBPnumber = true;
-					action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
+					action.CompareResult("BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
 					return ActualBPnumber = action.getAttribute(customerBPnnumber, "value");
 				}else{
-					action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
+					action.CompareResult("BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
 					return null;
 			    }
 				

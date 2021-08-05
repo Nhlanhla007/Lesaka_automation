@@ -33,8 +33,6 @@ public class ic_PopularSearch{
 	@FindBy(xpath = "//strong[contains(text(),'Popular Searches:')]/../div/a")
 	List<WebElement> PopularSearchlist;
 	public void VerifyPopularSearch(ExtentTest test,int rowNumber) throws IOException{
-//		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("IC_Launch_URL"),"url");
-//		action.navigateToURL(url);
 		action.click(icSearchBar, "ic SearchBar", test);
 		boolean chkPopsearch = checkForPopularSearch(test,"Popular Searches:");
 		action.CompareResult(" popular search is successfully displayed", "true", String.valueOf(chkPopsearch), test);

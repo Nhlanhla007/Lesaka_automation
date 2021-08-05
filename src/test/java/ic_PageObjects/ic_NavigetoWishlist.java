@@ -45,11 +45,9 @@ public class ic_NavigetoWishlist {
 		public void NavigateToWishlist_verifymsg(ExtentTest test) throws IOException{
 			String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"username");
 			String Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"password");
-//			String Username = dataTable2.getValueOnCurrentModule("Username");
-//			String Password = dataTable2.getValueOnCurrentModule("Password");
 			ConfigFileReader configFileReader = new ConfigFileReader();
 			action.explicitWait(5000);
-			String ExpLoginType =dataTable2.getValueOnCurrentModule("Login_type");//"ExistingUser";// logedOn_user or ExistingUser
+			String ExpLoginType =dataTable2.getValueOnCurrentModule("Login_type");
 			int waitTime = Integer.parseInt(dataTable2.getValueOnCurrentModule("TimeOut_seconds"));
 			boolean checkmsg;
 			switch (ExpLoginType) {
@@ -93,8 +91,6 @@ public class ic_NavigetoWishlist {
 	public boolean checkWishlist_message(int waitTime, ExtentTest test) throws IOException {
 		boolean msg_flag = false;
 		if (action.elementExists(mywishlist_msg, waitTime)) {
-			// action.CompareResult("Wishlist contains no item verification
-			// message", "true", "true", test);
 			msg_flag = true;
 		} else {
 			action.CompareResult("Wishlist contains no item verification message", "true", "false", test);

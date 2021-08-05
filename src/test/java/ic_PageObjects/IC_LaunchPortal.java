@@ -21,7 +21,7 @@ public class IC_LaunchPortal {
     public void launchPortal(ExtentTest test){
         String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("urlKey"),"url");
         action.navigateToURL(url);
-        action.waitForJStoLoad(60);
-//        action.waitForPageLoaded(40);
+        action.waitForJStoLoad(120);
+
     }
 }

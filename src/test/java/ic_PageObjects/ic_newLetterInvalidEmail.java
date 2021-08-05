@@ -28,8 +28,7 @@ public class ic_newLetterInvalidEmail {
 	}
 	@FindBy(xpath = "//input[@name='email']")
 	WebElement icNewsLetterEmail;
-	
-	//button[@ title="Subscribe"]
+
 	@FindBy(xpath = "//button[@title=\"Subscribe\"]")
 	WebElement icClickSubscribe;
 	

@@ -134,10 +134,6 @@ public class EVS_ProductSearch {
     @FindBy(xpath = "//button[@class=\"qty-action update update-cart-item\"]")
     WebElement updateQuantityButton;
 
-    /*
-     * PAGE METHODS
-     */
-
     public void clickNext(ExtentTest test) throws Exception {
         action.mouseover(clickNext, "scroll to element");
         action.click(clickNext, "Clicked Next", test);
@@ -173,26 +169,57 @@ public class EVS_ProductSearch {
         }
     }
 
-    public void skuProduct(ExtentTest test) throws IOException, AWTException {
+//    public void skuProduct(ExtentTest test) throws IOException, AWTException {
+//        String productsToSearch = dataTable2.getValueOnOtherModule("evs_ProductSearch", "specificProduct", 0);
+//        List<String> theProducts = filterProducts(productsToSearch);
+//        ic_EnterTextToSearchBar(theProducts.get(0), test);
+//        action.explicitWait(5000);
+//
+//        boolean productExistence = driver.findElements(By.xpath("//*[@class=\"message info empty\"]")).size()>0;
+//
+//        WebElement addToCart = driver.findElements(By.xpath("//*[@class=\"product-item-link\"]")).get(0);
+//        action.mouseover(addToCart, "Scroll to add to cart");
+//        WebElement btnAddToC = addToCart.findElement(By.xpath(".//parent::*/following-sibling::div[5]/div[2]/div/form/button"));
+//        action.click(btnAddToC, "addToCart", test);
+//        action.explicitWait(5000);
+//
+//        WebElement miniCart = driver.findElement(By.xpath("//*[@class = \"minicart-wrapper\"]/a"));
+//        action.click(miniCart, "miniCart", test);
+//
+//        WebElement miniCartcheckoutButton = driver.findElement(By.xpath("//*[@id=\"top-cart-btn-checkout\"]/span"));
+//        action.click(miniCartcheckoutButton, "miniCartcheckoutButton", test);
+//
+//
+//    }
+
+    public void skuProduct(ExtentTest test) throws Exception {
         String productsToSearch = dataTable2.getValueOnOtherModule("evs_ProductSearch", "specificProduct", 0);
         List<String> theProducts = filterProducts(productsToSearch);
         ic_EnterTextToSearchBar(theProducts.get(0), test);
         action.explicitWait(5000);
+        boolean productExistence = driver.findElements(By.xpath("//*[@class=\"message info empty\"]")).size()>0;
+        WebElement addToCart;
+        if(!productExistence) {
+            addToCart = driver.findElements(By.xpath("//*[@class=\"product-item-link\"]")).get(0);
+            action.mouseover(addToCart, "Scroll to add to cart");
+            boolean canProductBeAddedToCart = addToCart.findElements(By.xpath(".//parent::*/following-sibling::div[5]/div[2]/div/form/button")).size()>0;
+            if(canProductBeAddedToCart) {
+                WebElement btnAddToC = addToCart.findElement(By.xpath(".//parent::*/following-sibling::div[5]/div[2]/div/form/button"));
+                action.click(btnAddToC, "addToCart", test);
+                action.explicitWait(5000);
+            }else {
+                addToCartFromProdDetailsPage(addToCart, "10", 1, test);
 
-        WebElement addToCart = driver.findElements(By.xpath("//*[@class=\"product-item-link\"]")).get(0);
-        action.mouseover(addToCart, "Scroll to add to cart");
-        WebElement btnAddToC = addToCart.findElement(By.xpath(".//parent::*/following-sibling::div[5]/div[2]/div/form/button"));
-        action.click(btnAddToC, "addToCart", test);
-        action.explicitWait(5000);
-
-        WebElement miniCart = driver.findElement(By.xpath("//*[@class = \"minicart-wrapper\"]/a"));
-        action.click(miniCart, "miniCart", test);
-
-        WebElement miniCartcheckoutButton = driver.findElement(By.xpath("//*[@id=\"top-cart-btn-checkout\"]/span"));
-        action.click(miniCartcheckoutButton, "miniCartcheckoutButton", test);
-
-
+            }
+            WebElement miniCart = driver.findElement(By.xpath("//*[@class = \"minicart-wrapper\"]/a"));
+            action.click(miniCart, "miniCart", test);
+            WebElement miniCartcheckoutButton = driver.findElement(By.xpath("//*[@id=\"top-cart-btn-checkout\"]/span"));
+            action.click(miniCartcheckoutButton, "miniCartcheckoutButton", test);
+        }else {
+            throw new Exception("Product Does Not Exist");
+        }
     }
+
 
     public void skuProductValidateQuantity(ExtentTest test) throws Exception, AWTException {
         String productsToSearch = dataTable2.getValueOnOtherModule("evs_ProductSearch", "specificProduct", 0);

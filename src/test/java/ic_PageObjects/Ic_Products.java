@@ -48,9 +48,6 @@ public class Ic_Products {
 
 	static Logger logger = Log.getLogData(Action.class.getSimpleName());
 
-	/*
-	 * PAGE OBJECTS
-	 */
 	@FindBy(xpath = "//span[contains(text(),'Products')]")
 	WebElement icProductLink;
 
@@ -101,20 +98,10 @@ public class Ic_Products {
 		action.click(ic_ClickNext, "Clicked Next", test);
 	}
 
-	/**
-	 * Returns a list of products from current viewing page
-	 * 
-	 * @return List<WebElement>
-	 */
 	public List<WebElement> returnList() {
 		return ic_products;
 	}
 
-	/**
-	 * Validates if the product click NEXT page button exists/is visible
-	 * 
-	 * @return WebElement
-	 */
 	public WebElement returnNext() {
 		driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 		boolean isPresent = driver.findElements(By.xpath("//span[contains(text(),'Next')]")).size() > 0;
@@ -171,7 +158,6 @@ public class Ic_Products {
 
 		WebElement addToCart= driver.findElements(By.xpath("//*[@class=\"product-item-link\"]")).get(0);
 		action.mouseover(addToCart, "Scroll to add to cart");
-//		System.out.println("Mouse over the");
 		WebElement btnAddToC = addToCart.findElement(By.xpath(".//parent::*/following-sibling::div//button"));
 		action.click(btnAddToC,"addToCart",test);
 		action.explicitWait(5000);
@@ -181,12 +167,6 @@ public class Ic_Products {
 		WebElement miniCartItemQty= driver.findElement(By.xpath("//*[@class = \"details-qty qty\"]/input"));
 		action.clear(miniCartItemQty,"miniCartItemQty");
 		action.writeText(miniCartItemQty,"9999999999999","miniCartItemQty",test);
-
-		//Does not work when running headless Mvn
-//		Robot robot = new Robot();
-//		robot.keyPress(KeyEvent.VK_ENTER);
-//		robot.keyRelease(KeyEvent.VK_ENTER);
-		
 		action.explicitWait(2000);
 		action.javaScriptClick(updateCartQuantityButton, "Update Quantity", test);
 
@@ -215,37 +195,16 @@ public class Ic_Products {
 		}
 	}
 
-	// Checks if an element is visible
-	/**
-	 * Checks for the visability of an element
-	 * 
-	 * @param element
-	 * @return boolean
-	 */
 	public boolean ic_ElementVisable(WebElement element) {
 		return action.elementExists(element, 10);
 	}
 
-	/**
-	 * Filters through excel data, removes delimeters.
-	 * 
-	 * @param allProductsToSearch
-	 * @return List<String>
-	 */
 	public List<String> filterProducts(String allProductsToSearch) {
 		String[] productsArray = allProductsToSearch.split("#");
 		List<String> productsList = new ArrayList<String>(Arrays.asList(productsArray));
 		return productsList;
 	}
 
-	/**
-	 * Gathers data from excel. Determines search type inserted from excel and
-	 * selects appropriate construct for execution
-	 * 
-	 * @param input
-	 * @param test
-	 * @param rowNumber
-	 */
 	public void ic_SelectProductAndAddToCart(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
 			throws Exception {
 		String typeSearch = input.get("typeSearch").get(rowNumber);
@@ -270,26 +229,10 @@ public class Ic_Products {
 				break;
 			case "Validate_Out_Of_Stock":
 				break;
-			/*
-			 * default: cartValidation.iCcartVerification2(productsInCart, test); break;
-			 */
+
 			}
-
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			logger.info(e.getMessage());
-//		}
-
 	}
 
-	/**
-	 * Loads the listing page
-	 * 
-	 * @param category
-	 * @param product
-	 * @param test
-	 * @throws IOException
-	 */
 	public void loadProductListingPage(String category, String product, ExtentTest test) throws IOException {
 		switch (category) {
 		case "SearchUsingSearchBar":
@@ -331,12 +274,6 @@ public class Ic_Products {
 		
 	}
 
-	/**
-	 * Finds the category that will be searched
-	 * 
-	 * @param nameOfCategory
-	 * @return WebElement
-	 */
 	public WebElement byCategory(String nameOfCategory) {
 		WebElement category = driver.findElement(By.xpath("//span[contains(text(),\"" + nameOfCategory + "\")]"));
 		return category;
@@ -371,8 +308,7 @@ public class Ic_Products {
 		if (quanity == 1) {
 			action.click(productLink, "Navigate to product Details page", test);
 		}
-		// click on product name and enter listing page
-		// confirm that page has loaded
+
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		boolean isPresent = driver.findElements(By.id("product-addtocart-button")).size() > 0;
 		if (isPresent) {
@@ -393,14 +329,10 @@ public class Ic_Products {
 		if (quanity == 1) {
 			action.click(productLink, "Navigate to product Details page", test);
 		}
-		// click on product name and enter listing page
-		// confirm that page has loaded
 		if (action.waitUntilElementIsDisplayed(productDetailsPageAddToWishlistButton, 15000)) {
 			action.click(productDetailsPageAddToWishlistButton, "Add to wish list button", test);
 			action.explicitWait(Integer.parseInt(waitTimeInSeconds));
 		}
-		// click add to wish list
-
 	}
 
 	String findPrice(WebElement theProduct) {
@@ -431,7 +363,6 @@ public class Ic_Products {
 				status = false;
 				action.CompareResult("Product Not Found", product, "", test);
 				throw new Exception("Product Not Found");
-				// System.out.println("Item has not been found anywhere");
 			}
 		}
 		return null;

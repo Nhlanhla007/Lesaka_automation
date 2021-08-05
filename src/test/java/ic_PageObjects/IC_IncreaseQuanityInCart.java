@@ -36,28 +36,15 @@ public class IC_IncreaseQuanityInCart {
 	}
 
 	public void increaseQuantity(ExtentTest test) throws Exception {
-		//navigate back
 		boolean buttonAvail = action.waitUntilElementIsDisplayed(backButton, 15000);
 		if(buttonAvail) {
 		backButton.click();
 		}
-		//navigate to cart
-		//cart.navigateToCart(test);
-		//navigate to view cart
-		//action.explicitWait(3000);
-	//	cart.navigateToViewAndEditCart(test);
-		//add one quantity
-		//if(action.isDisplayed(quantityAdd)) {
-		//action.explicitWait(7000);
-		//action.click(quantityAdd, "Increase Quantity", test);
-		//action.javaScriptClick(quantityAdd, "Increase Quantity", test);
+
 		action.click(quantityAdd, "Increase Quantity", test);
-		//}
-		//click update
 		action.explicitWait(2000);
 		action.click(updateQuantity, "Update Quantity", test);
 		action.explicitWait(7000);
-		//confirm cart counter
 		String cartCount = cart.itemsInCartCounter(test);
 		action.CompareResult("Cart Count After update", "2", cartCount, test);
 	}

@@ -33,7 +33,6 @@ public class ic_Login {
     @FindBy(className = "my-account")
     WebElement ic_myAccountButton;
 
-    //*[@id="header-slideout--0"]/li[3]/a
     @FindBy(xpath = "//*[@id=\"header-slideout--0\"]/li[3]/a")
     WebElement ic_Login;
 
@@ -42,11 +41,10 @@ public class ic_Login {
 
     @FindBy(xpath = "//*[@id='pass']")
     WebElement ic_Password;
-    @FindBy(xpath = "//*[@id=\"send2\"]/span")
 
+    @FindBy(xpath = "//*[@id=\"send2\"]/span")
     WebElement ic_SigninBtn;
 
-    //div[contains(text(),'Your account sign-in was incorrect. Please try again.')]Your account sign-in was incorrect. Please try again.
     @FindBy(xpath = "//html/body/div[1]/header/div[3]/div[2]/div/div")
     WebElement ic_InvalidCreds;
 
@@ -66,8 +64,7 @@ public class ic_Login {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
 
         action.navigateToURL(url);
-        action.waitForJStoLoad(60);
-//        action.waitForPageLoaded(30);
+        action.waitForJStoLoad(120);
         executor.executeScript("arguments[0].click();", ic_myAccountButton);
         action.explicitWait(2000);
         executor.executeScript("arguments[0].click();", ic_Login);
@@ -79,8 +76,7 @@ public class ic_Login {
         action.writeText(ic_Username, Username, "Username field", test);
         action.writeText(ic_Password, Password, "Password field", test);
         action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
-        action.waitForJStoLoad(60);
-//        action.waitForPageLoaded(20);
+        action.waitForJStoLoad(120);
         String expectedTitle = "Incredible Connection My Account";
 
         if (driver.getTitle().equalsIgnoreCase(expectedTitle)) {
@@ -91,9 +87,6 @@ public class ic_Login {
 
         action.clickEle(ic_logo, "IC Home Logo", test);
         action.waitForJStoLoad(30);
-//        action.waitForPageLoaded(10);
-
-
         userCreds(userCred);
         return userCred;
     }

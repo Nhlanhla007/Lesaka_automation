@@ -33,8 +33,7 @@ public class IC_Pagination {
 		nextButtonNav = new IC_Cart(driver, dataTable2);
 	}
 	
-	
-	//Get all Xpaths
+
 	@FindBy(xpath = "//span[contains(text(),'Next')]")
 	public WebElement ic_ClickNext;
 	
@@ -49,8 +48,7 @@ public class IC_Pagination {
 	
 	@FindBy(xpath = "//*[@class=\"item current\"]/strong/span[2]")
 	public WebElement currentPage;
-	
-	//Main method
+
 	public void paginate(ExtentTest test) throws Exception {
 		productFunc.loadProductListingPage("All Products", "", test);
 		action.scrollElemetnToCenterOfView(ic_ClickNext,"ic_ClickNext",test);

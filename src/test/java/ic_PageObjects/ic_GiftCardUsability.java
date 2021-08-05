@@ -17,9 +17,7 @@ import utils.DataTable2;
 public class ic_GiftCardUsability {
 	WebDriver driver;
     Action action;
-    
-   
-	
+
 	public ic_GiftCardUsability(WebDriver driver, DataTable2 dataTable2){
 		
 		this.driver = driver;
@@ -30,8 +28,10 @@ public class ic_GiftCardUsability {
 	
 	@FindBy(xpath="//*[@id='block-giftcard-heading']//span[contains(text(),'Want to redeem a gift card?')]")
     private WebElement Reedem_giftcardOption;
+
 	@FindBy(xpath="//input[@id='giftcard-code']")
     private WebElement Giftcard_code;
+
 	@FindBy(xpath="//input[@id='giftcard-scratch-code']")
     private WebElement Giftcard_Scratchcode;
 	
@@ -48,9 +48,9 @@ public class ic_GiftCardUsability {
     private WebElement GrandTotal;
 	public void VeriyGiftcardUsableity(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws IOException, InterruptedException{
 	    action.waitExplicit(15);
-		int WaitTime =Integer.parseInt(input.get("DelayTime").get(rowNumber));// 5;
-		String GiftcardCode = input.get("GiftcardCode").get(rowNumber);//"RFU6Z5BAZ7X8HG3";
-		String ScratchCode = input.get("ScratchCode").get(rowNumber);//"5QDHR";
+		int WaitTime =Integer.parseInt(input.get("DelayTime").get(rowNumber));
+		String GiftcardCode = input.get("GiftcardCode").get(rowNumber);
+		String ScratchCode = input.get("ScratchCode").get(rowNumber);
 		String ExpBalance =input.get("ExpBalance").get(rowNumber);
 		action.elementExists(Reedem_giftcardOption, WaitTime);
 		action.clickEle(Reedem_giftcardOption, "Reedem_giftcardOption", test);

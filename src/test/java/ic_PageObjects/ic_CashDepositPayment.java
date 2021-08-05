@@ -93,7 +93,7 @@ public class ic_CashDepositPayment {
 		
 	}
 	public void MagentoAdminDoInvoiceing(ExtentTest test) throws Exception{
-		//try {
+
 			action.click(Invoice_Tab, "Invoice_Tab", test);
 			action.waitForElementPresent(SubmitInvoice, 21);
 			action.scrollToElement(SubmitInvoice,"SubmitInvoice");
@@ -105,11 +105,6 @@ public class ic_CashDepositPayment {
 			}else{
 				action.CompareResult("Verify Invoicing Done successfully : ", "true", "false", test);
 			}
-		//} catch (Exception e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		//}
-	
 	}
 	public int findRowToRun(HashMap<String, ArrayList<String>> input,int occCount,int testcaseID){
 		int numberRows=input.get("TCID").size();

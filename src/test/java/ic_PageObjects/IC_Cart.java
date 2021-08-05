@@ -179,14 +179,11 @@ public class IC_Cart {
 	    	for(Iterator<String> iterator = quantity.iterator(); iterator.hasNext(); ) {
 
 	    		for(Map.Entry map : products.entrySet()) {
-	    		//find name of product add it as the key
 	    			List<String> priceAndQuantity = new ArrayList<>();
 	    			String key = (String)map.getKey();
 	    			String value = (String)map.getValue();
 	    			priceAndQuantity.add(value);
 	    			String quantityNum = iterator.next();
-	    			
-	    			
 	    			priceAndQuantity.add(quantityNum);	    			
 	    			iterator.remove();	
 	    			
@@ -255,7 +252,6 @@ public class IC_Cart {
 	    }	    	  
 	    
 	    public void verifyCart(ExtentTest test) throws Exception {
-	    	//check cart
 	    	action.explicitWait(5000);
 	    	String itemsInCart = itemsInCartCounter(test);
 	    	String productQuantity = dataTable2.getValueOnOtherModule("ProductSearch", "Quantity", 0);

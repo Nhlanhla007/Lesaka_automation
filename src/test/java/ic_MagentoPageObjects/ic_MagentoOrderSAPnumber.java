@@ -14,8 +14,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
-
-import groovy.time.TimeDuration;
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
@@ -83,12 +81,12 @@ public class ic_MagentoOrderSAPnumber {
 			totalConunter++;
 		}
     	if(flagres){
-    		action.CompareResult("Verify SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
+    		action.CompareResult("SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
     	}else{
     		JavascriptExecutor exe = (JavascriptExecutor)driver;
             exe.executeScript("window.scrollTo(0, document.body.scrollHeight)");
             exe.executeScript("window.scrollBy(0,-500)");
-    		action.CompareResult("Verify SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
+    		action.CompareResult("SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
     		throw new Exception("SAP Order Number Is Not Generated");
     	}
     	System.out.println();

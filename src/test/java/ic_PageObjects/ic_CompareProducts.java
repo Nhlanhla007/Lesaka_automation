@@ -24,8 +24,7 @@ public class ic_CompareProducts {
 		action = new Action(driver);
 		this.dataTable2=dataTable2;
 	}
-	
-	//span[contains(text(),'Add to Compare')]
+
 	@FindBy(xpath = "//span[contains(text(),'Add to Compare')]")
 	public WebElement ic_compareBtn;
 	
@@ -38,8 +37,7 @@ public class ic_CompareProducts {
 	
 	@FindBy(xpath = "//*[@id=\"product-comparison\"]/tbody[1]/tr/td[2]/a/span/span/img")
 	public WebElement ic_SecondCompareProduct;
-	
-	//@FindBy(xpath = "//body[1]/div[1]/header[1]/div[2]/div[1]/div[2]/div[3]/nav[1]/ul[1]/li[1]/a[1]/span[1]")
+
 	@FindBy(xpath = "//span[contains(text(),'Products')]")
 	public WebElement ic_ProductsCompared;
 	
@@ -65,10 +63,7 @@ public class ic_CompareProducts {
 	}
 	
 	public void validateAddedProductsCompare(ExtentTest test, WebElement el) throws IOException{
-		 //driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-		// boolean isPresent = driver.findElements(By.cssSelector("a.go-back")).size() > 0;
 		action.click(ic_compareLink, "Go to Compare page", test);
-		//verify element exist
 		action.elementExists(ic_firstCompareProduct, 100);
 		action.explicitWait(1000);
 		action.elementExists(ic_SecondCompareProduct, 100);

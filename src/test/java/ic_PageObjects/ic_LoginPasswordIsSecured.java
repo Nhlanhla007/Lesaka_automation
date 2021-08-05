@@ -29,8 +29,7 @@ public class ic_LoginPasswordIsSecured {
 	
 	@FindBy(className = "my-account")
 	WebElement ic_myAccountButton;
-	
-	//*[@id="header-slideout--0"]/li[3]/a
+
 	@FindBy(xpath = "//*[@id=\"header-slideout--0\"]/li[3]/a")
 	WebElement ic_myAccountlist;
 	
@@ -45,9 +44,7 @@ public class ic_LoginPasswordIsSecured {
 		String Username =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("ic_login","loginDetails",0),"username");
 		String Password =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnOtherModule("ic_login","loginDetails",0),"password");
 		action.navigateToURL(url);
-		action.waitForPageLoaded(10);
-//		action.waitForPageLoaded(10);
-//		action.explicitWait(10000);
+		action.waitForJStoLoad(60);
 		ic_myAccountButton.click();
 		action.explicitWait(2000);
 		ic_myAccountlist.click();
@@ -58,7 +55,6 @@ public class ic_LoginPasswordIsSecured {
 		action.writeText(ic_Username, Username, "Username field", test);
 		action.writeText(ic_Password, Password, "Password field", test);
 		action.explicitWait(2000);
-		
 		String safePass = action.getText(ic_Password, "Get password Encrypted ",test);
 		
 		if(safePass != null | safePass !=""){

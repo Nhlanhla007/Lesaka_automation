@@ -26,8 +26,7 @@ public class ic_forgotPasswordLink {
 	}
 	@FindBy(className = "my-account")
 	WebElement ic_myAccountButton;
-	
-	//*[@id="header-slideout--0"]/li[3]/a
+
 	@FindBy(xpath = "//*[@id=\"header-slideout--0\"]/li[3]/a")
 	WebElement ic_myAccountlist;
 	
@@ -44,8 +43,6 @@ public class ic_forgotPasswordLink {
 			action.click(ic_myAccountlist, "list", test);
 			action.explicitWait(3000);
 			action.click(ic_forgotPassword, "click forgot link password", test);
-			//String pageTitle = driver.getTitle();
-			//System.out.println("this is the page"+ pageTitle);
 			action.CompareResult("Redirecting to forgot password page", "Forgot Your Password?", ic_forgotPassword.getText(), test);
 			
 	 }

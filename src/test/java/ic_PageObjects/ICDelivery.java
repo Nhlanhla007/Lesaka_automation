@@ -68,8 +68,6 @@ public class ICDelivery {
     @FindBy(xpath = "//*[@id=\"opc-sidebar\"]/div[1]/div[1]/button")
     WebElement ContinueToPayment;
 
-    //---------------------------------------------------------------
-
     @FindBy(name = "street[0]")
     WebElement streetNameGift;
 
@@ -103,12 +101,6 @@ public class ICDelivery {
     @FindBy(name = "region_id")
     WebElement popUpProvince;
 
-    /*
-     * @FindBy(name = "firstname") WebElement popUpFirstName;
-     *
-     * @FindBy(name = "lastname") WebElement popUpLastName;
-     */
-
     @FindBy(name = "city")
     WebElement popUpCity;
 
@@ -130,9 +122,6 @@ public class ICDelivery {
     // @FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
     @FindBy(xpath = "//*[@class=\"modal-footer\"]/button[1]")
     WebElement popUpSave;
-
-//    @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
-//    WebElement cardDeliver_btn;
 
     public static String Streetname;
     public static String Cityname;
@@ -290,9 +279,7 @@ public class ICDelivery {
         action.writeText(cityGift, input.get("city").get(rowNumber), "city", test);
         action.writeText(SuburbGift, input.get("Suburb").get(rowNumber), "Suburb", test);
         action.writeText(postalCodeGift, input.get("postalCode").get(rowNumber), "postalCode", test);
-//        action.explicitWait(12000);
         action.dropDownselectbyvisibletext(provinceGift, input.get("province").get(rowNumber), "province", test);
-        //Thread.sleep(10000);
         action.explicitWait(2000);
         action.click(placeOrder, "placeOrder", test);
         action.ajaxWait(10, test);

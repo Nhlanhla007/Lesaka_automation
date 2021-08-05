@@ -79,8 +79,8 @@ public class IC_Parallel_login {
 
         String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("urlKey"), "url");
         action.navigateToURL(url);
+        action.waitForJStoLoad(120);
 
-        action.explicitWait(10000);
         action.click(ic_myAccountButton, "My Account", test);
         action.waitForElementClickable(LoginBtn, "ic_myAccountButton", 5);
         action.click(LoginBtn, "Login In", test);
@@ -89,13 +89,11 @@ public class IC_Parallel_login {
         action.waitForElementVisibility(ic_Password, "ic_Password", 5);
         action.writeText(ic_Password, Password, "Password field", test);
         action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
-        action.explicitWait(10000);
+        action.waitForPageLoaded(120);
         action.click(ic_myAccountButton, "Click My Account Button", test);
-//        String expMsg = "Hello, " + FirstName + "!";
         try {
             boolean checkLogOutButton;
             if (checkLogOutButton = logoutBtn.isDisplayed()) {
-//                String wlc_msg = action.getText(ic_HelloMsg, "Welcome Messsage for the User", test);
                 action.CompareResult("User Login", "true", String.valueOf(checkLogOutButton), test);
             }
         } catch (Exception e) {

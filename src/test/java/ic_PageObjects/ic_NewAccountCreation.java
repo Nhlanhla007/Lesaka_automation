@@ -37,13 +37,13 @@ public class ic_NewAccountCreation {
 	
 	@FindBy(id = "password-confirmation")
 	WebElement ic_passwordConfirmation;
-	
-	
-	// user details information for new user in IC
+
 	@FindBy(xpath = "//input[@id='firstname']")
 	WebElement User_Firstname;
+
 	@FindBy(xpath = "//input[@id='lastname']")
 	WebElement User_Lastname;
+
 	@FindBy(xpath = "//input[@id='email_address']")
 	WebElement User_EmailId;
 	
@@ -70,8 +70,10 @@ public class ic_NewAccountCreation {
 	
 	@FindBy(xpath = "//input[@id='password']")
 	WebElement User_Password;
+
 	@FindBy(xpath = "//input[@id='password-confirmation']")
 	WebElement User_ConfirmPassword;
+
 	@FindBy(xpath = "// *[@type='submit']/span[contains(text(),'Create an Account')]")
 	WebElement CreateAccountBtn;
 	
@@ -84,12 +86,9 @@ public class ic_NewAccountCreation {
 	@FindBy(xpath = "//header/div[3]/div[2]/div[1]/div[1]/div[1]")
 	WebElement existingAccountError;
 
-	//Sourav TA17
     @FindBy(xpath = "//*[@id='account-nav']/ul[@class='nav items']/li/a[contains(text(),'Account Information')]")
     WebElement Account_info_option;
-   
-    
-    //TA31 Added the My Account click in IC AccountDetails
+
     @FindBy(xpath = "//*[@id=\"account-nav\"]/ul/li[1]/a")
     WebElement myAccountOption;
    
@@ -103,15 +102,15 @@ public class ic_NewAccountCreation {
    
     @FindBy(xpath = "//*[@class='field choice']/label[@for='change-email']")
     WebElement Change_Emailcheckbox;
+
     @FindBy(xpath = "//input[@id='email']")
     WebElement Email;
+
     @FindBy(xpath = "//input[@id='identity_number']")
     WebElement SAID;
 
     @FindBy(id = "cellphone_number")
     WebElement telephoneNumber;
-    
-  // Sourav TA19 customer info after click on Customer info 
 	
 	  @FindBy(xpath = "//span[contains(text(),'Account Information')]")
 	  WebElement Account_Info_link;
@@ -142,9 +141,6 @@ public class ic_NewAccountCreation {
 	}
 
 	public  void accountCreation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
-//		String url =dataTable2.getRowUsingReferenceAndKey("URL","SUTURLS",dataTable2.getValueOnCurrentModule("loginDetails"),"url");
-//		action.navigateToURL(url);
-//		action.explicitWait(3000);
 		String firstName = dataTable2.getValueOnCurrentModule("firstName");
 		String lastName = dataTable2.getValueOnCurrentModule("lastName");
 		String emailAddress = dataTable2.getValueOnCurrentModule("emailAddress");
@@ -155,7 +151,6 @@ public class ic_NewAccountCreation {
 		String selectNewsLetter = dataTable2.getValueOnCurrentModule("newsletter");
 		String taxVatNumbe = dataTable2.getValueOnCurrentModule("vatNumber");
 		String telephone = dataTable2.getValueOnCurrentModule("Telephone");
-		//Added flag for VAT number status check TA31
 		String tavVatNumberFlagStatus = dataTable2.getValueOnCurrentModule("vatNumberFlag");
 		String passwordValidation = dataTable2.getValueOnCurrentModule("validatePassword");
 		String saIDvalidateIncorrectID = dataTable2.getValueOnCurrentModule("validateIncorrectID");
@@ -164,7 +159,6 @@ public class ic_NewAccountCreation {
 		String existingAccountValidation =dataTable2.getValueOnCurrentModule("validateExistingAccount");
 
 		ic_NavigateToCreateAccount(test);
-//			action.explicitWait(5000);
 			action.writeText(User_Firstname, firstName, "First name", test);
 			action.writeText(User_Lastname, lastName, "Last Name", test);
 			action.writeText(User_EmailId, emailAddress, "Email", test);
@@ -175,7 +169,6 @@ public class ic_NewAccountCreation {
 			if(selectNewsLetter.equalsIgnoreCase("YES")) {
 				action.click(newsLetter, "News letter", test);
 			}
-			//action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
 			if(identityType.equalsIgnoreCase("ID")) {
 //			action.click(User_SAIDbtn, "Identity type: ID", test);
 			action.writeText(User_SAID, identityNumber, "ID/Passport number", test);
@@ -272,19 +265,16 @@ public class ic_NewAccountCreation {
 		try {
 			if (saID.length() < 13) {
 				action.click(CreateAccountBtn, "Create account", test);
-//				Thread.sleep(15000);
 				action.ajaxWait(5,test);
 				action.elementExistWelcome(identityNumberError, 4000, identityNumberError.getText(), test);
 			} else if (saID.length() > 13) {
 				System.out.println("Enters more than 13 digits");
 				action.click(CreateAccountBtn, "Create account", test);
 				action.ajaxWait(5,test);
-//				Thread.sleep(15000);
 				action.elementExistWelcome(identityNumberError, 4000, identityNumberError.getText(), test);
 			} else {
 				action.click(CreateAccountBtn, "Create account", test);
 				action.ajaxWait(5,test);
-//				Thread.sleep(15000);
 				action.elementExistWelcome(identityNumberError, 4000, identityNumberError.getText(), test);
 			}
 		} catch (Exception e) {
@@ -298,11 +288,7 @@ public class ic_NewAccountCreation {
 		passwordToChange += "fail";
 		return passwordToChange;
 	}
-	/*
-	 * public String alterId(String saId) { saId = saId. return; }
-	 * 
-	 */
-	//TA29,30 CHECKS FOR THE STATUS OF THE NEWSLETTER IN IC FRONT END  
+
 	String newsletterStatusCheck(ExtentTest test) {
 		String subscriptionStatus = null;
 		try {
@@ -316,17 +302,13 @@ public class ic_NewAccountCreation {
 		return subscriptionStatus;
 	}
 	
-	
-	//Sourav TA17
-	//TA27,28,29,30,31 CHECKS FLAG AND VALIDATES WHAT FLAG INDICATED COLUMN H IN accountCreation++
-    public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID,String expVatNumber,String expVatNumberFlag,String expIdentityType,String expNewsletter) throws IOException, Exception{
+	public void Verify_Acount_Information(ExtentTest test,String expFirstName,String expLastName,String expEmailAddress, String expSAID,String expVatNumber,String expVatNumberFlag,String expIdentityType,String expNewsletter) throws IOException, Exception{
         String ExpPage ="edit";
         boolean accInfoOpt = action.waitUntilElementIsDisplayed(Account_info_option, 20);//action.elementExists(Account_info_option, 11);
         if(accInfoOpt==true){
             action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
             action.click(Account_info_option, "Account info link", test);
             action.waitForPageLoaded(10);
-//            action.explicitWait(11000);
             if(driver.getCurrentUrl().contains(ExpPage+"/")){
                 action.CompareResult("Verify Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
                
@@ -335,12 +317,10 @@ public class ic_NewAccountCreation {
                 String ActualLastname = action.getAttribute(Lastname, "value");
                
                 action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
-//                action.explicitWait(5000);
                 String ActualEmail = action.getAttribute(Email, "value");
                 action.clickEle(Change_Emailcheckbox, "Enable click email checkbox ", test);
                
                 String ActualSAID = action.getAttribute(SAID, "value");
-                //TA31
                 String ActualTaxVatNumber =action.getAttribute(taxVatNumber, "value");
                 String ActualPassport = action.getAttribute(passport, "value");
 
@@ -386,20 +366,16 @@ public class ic_NewAccountCreation {
         }else{
             action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
         }
-       
-       
-        //action.selectExactValueFromListUsingText(elementAttr, value);
+
     }
 	
 	public void Magento_VerifyCustomerDetails(ExtentTest test,String expFristname,String expLastname,String expEmail,String expSAID) throws IOException{
-		//replace by this Parameter while merge parameter (ExtentTest test,String expFristname,String expLastname,String expEmail,String expSAID)
-	
+
 		try {
 			int loadtime=20;
 			
 			String expBPnumber =null;
-			
-			//Starts from Account information tab.
+
 			action.explicitWait(loadtime);
 			String ActualFirstname = action.getAttribute(customerFirstname, "value");
 			String ActualLastname = action.getAttribute(customerLastname, "value");

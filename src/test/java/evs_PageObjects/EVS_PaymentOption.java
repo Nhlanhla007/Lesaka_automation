@@ -170,15 +170,12 @@ public class EVS_PaymentOption {
 			action.waitForPageLoaded(60);
 			action.ajaxWait(20,test);
 			String paytype = input.get("Paytype_Option").get(rowNumber);
-			//action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 			WebElement paymentsType = evs_SelectPaymentMethod(paytype);
-//			action.explicitWait(20000);
 			action.scrollToElement(paymentsType,"Payment type");
 			action.explicitWait(2000);
 			action.click(paymentsType,"Select Payment option as " + paytype,test);
 			action.ajaxWait(10,test);
-//			action.explicitWait(5000);
-			action.scrollToElement(Btn_PlaceOrder,"Pay using Card");
+			action.scrollToElement(Btn_PlaceOrder,"Place Order Button");
 			action.explicitWait(2000);
 			action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
 			action.ajaxWait(10,test);

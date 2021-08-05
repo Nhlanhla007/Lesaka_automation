@@ -49,7 +49,6 @@ public class ic_ClickAndCollect {
         if(action.waitUntilElementIsDisplayed(FindStore, 10)){
             action.click(FindStore, "Find Store close to me option", test);
             action.ajaxWait(10,test);
-//            action.explicitWait(5000);
 
             if(!(Storelist.size()>1)){
 //            action.acceptAlert();

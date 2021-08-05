@@ -50,9 +50,6 @@ public class ic_AccountConfirmation {
 	    	String customerName = input.get("CustomerName").get(rowNumber);
 	    	long time = 10000;
 			action.elementExistWelcome(WelcomePopUp, time , "Account created", test);
-	    	//action.CompareResult(TestDescription, Exp, Actual, test);
-
-//			Thread.sleep(10000);
 			action.waitForPageLoaded(20);
 	    	action.checkIfPageIsLoadedByURL("/customer/account/", "verify account", test);	    	   	
 	    	
@@ -67,6 +64,5 @@ public class ic_AccountConfirmation {
 	    	
 	    	
 	    	}
-	    	
 	
 }

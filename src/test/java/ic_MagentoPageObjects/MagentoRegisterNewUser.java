@@ -109,7 +109,7 @@ public class MagentoRegisterNewUser {
 			
 			boolean resSavedcustomer = action.waitUntilElementIsDisplayed(Save_Customer_success, waitforelement);
 			if(resSavedcustomer==true){
-				action.CompareResult("verify New customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
+				action.CompareResult("new customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
 
 				//navigate to the table and click edit
 				RetriveCust.searchForCustomer(Email, test);
@@ -132,7 +132,7 @@ public class MagentoRegisterNewUser {
 				 */
 
 			}else{
-				action.CompareResult("verify New customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
+				action.CompareResult("new customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
 			}
 		}
 	}
@@ -165,11 +165,11 @@ public class MagentoRegisterNewUser {
 		}
 		if(resData.isEmpty() | resData==null | resData == ""){
 			action.scrollElemetnToCenterOfView(element,"element",test);
-			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "False", test);			
+			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "False", test);
 			return resData;
 		}else{
 			action.scrollElemetnToCenterOfView(element,"element",test);
-			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "True", test);
+			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "True", test);
 			return resData;
 		}
 	}
@@ -185,8 +185,6 @@ public class MagentoRegisterNewUser {
 			
 			action.waitForPageLoaded(ajaxTimeOutInSeconds);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
-			
-			//Thread.sleep(10000);
 			String screenShotPath=action.getScreenShot(dateName);
 			node.pass("User navigated to Allcustomer section"+ node.addScreenCaptureFromPath(screenShotPath));
 
