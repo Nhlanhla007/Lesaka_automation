@@ -126,7 +126,7 @@ public class EVS_PaymentOption {
 						boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, 5);
 						action.CompareResult("Uplaod Messsage", "true", String.valueOf(uploadMessage), test);
 						if (uploadMessage) {
-							action.clickEle(IDSubmitBtn, "Submit Button", test);
+							action.click(IDSubmitBtn, "Submit Button", test);
 							boolean uploadingMessage = action.waitUntilElementIsDisplayed(uploadingMsg, 5);
 							action.CompareResult("File upload", "true", String.valueOf(uploadingMessage), test);
 						}
