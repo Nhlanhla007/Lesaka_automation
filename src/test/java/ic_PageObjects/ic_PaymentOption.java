@@ -145,7 +145,9 @@ public class ic_PaymentOption {
 	
 	
 	public void CheckoutpaymentOptionGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception{
-		if(action.waitUntilElementIsDisplayed(Btn_PlaceOrder, 10)){
+		try{
+		action.waitUntilElementIsDisplayed(Btn_PlaceOrder, 20);
+		action.explicitWait(30000);
 		String firstNameGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "firstName", 0);
         String lastnameGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "lastname", 0);
         String emailGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0);
@@ -156,12 +158,10 @@ public class ic_PaymentOption {
         String phonenumberGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "telephone", 0);
         String suburdGift= dataTable2.getValueOnOtherModule("deliveryPopulation", "Suburb", 0);
         String vatnumberGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber", 0);
-		action.explicitWait(10000);
 		String Paytype = dataTable2.getValueOnOtherModule("CheckoutpaymentOption", "Paytype_Option", 0);
-		action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
+//		action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
 		WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
-		action.explicitWait(10000);
-		action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
+		action.javaScriptClick(paymenttype, "Select Payment option " + Paytype, test);
 		action.explicitWait(5000);
 		action.writeText(emaiL, emailGift,"Email", test);
 		action.writeText(firstnamE, firstNameGift,"First name", test);
@@ -176,8 +176,8 @@ public class ic_PaymentOption {
 	    action.clear(Suburb, "");
 	    action.writeText(Suburb, suburdGift,"Suburb", test);
 	    action.writeText(vatNumber, vatnumberGift,"Vat number", test);
-	    action.explicitWait(14000);
-	    
+	    action.explicitWait(15000);
+
 	    ICDelivery.Streetname = dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
 		ICDelivery.Cityname = dataTable2.getValueOnOtherModule("deliveryPopulation", "city", 0);
 		ICDelivery.Postalcode = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
@@ -186,8 +186,8 @@ public class ic_PaymentOption {
 		action.waitForJStoLoad(60);
 		action.ajaxWait(10, test);
 
-	} else{
-		throw new Exception("Couldn't continue to PayU page Error gift card delivery population");
+	} catch (Exception e){
+		throw new Exception("Couldn't continue to PayU page, Error in gift card delivery population "+e.getMessage());
 	}
 }
 
