@@ -8,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 import utils.Action;
 import utils.DataTable2;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -133,6 +132,7 @@ public class ICDelivery {
         Streetname = input.get("streetName").get(rowNumber);
         Cityname = input.get("city").get(rowNumber);
         Postalcode = input.get("postalCode").get(rowNumber);
+        String telephone = dataSheets.getValueOnCurrentModule("telephone");
         String addressType = dataSheets.getValueOnCurrentModule("AddressType");
         String userType = dataSheets.getValueOnCurrentModule("UserType");
         action.waitForJStoLoad(60);
@@ -145,7 +145,7 @@ public class ICDelivery {
             action.ajaxWait(10, test);
         }
         String addressTypeICFont = action.getText(ic_AddressType, "Get Address Type", test);//ic_AddressType.getText();
-        action.explicitWait(4000);
+        action.explicitWait(5000);
         if (addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Enter your delivery address & contact details:")) {
             if (userType.equalsIgnoreCase("Guest")) {
                 action.writeText(firstName, dataSheets.getValueOnCurrentModule("firstName"), "firstName", test);

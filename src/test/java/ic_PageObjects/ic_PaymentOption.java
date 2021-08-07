@@ -1,18 +1,16 @@
 package ic_PageObjects;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import com.aventstack.extentreports.ExtentTest;
 import utils.Action;
 import utils.DataTable2;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ic_PaymentOption {
 	WebDriver driver;
@@ -135,7 +133,7 @@ public class ic_PaymentOption {
  				action.explicitWait(1000);
 				action.scrollElemetnToCenterOfView(Btn_PlaceOrder, "Place Order Button", test);
 				action.explicitWait(2000);
-				action.javaScriptClick(Btn_PlaceOrder, "Click on Place order Button ", test);
+				action.javaScriptClick(Btn_PlaceOrder, "Place order Button ", test);
 				action.waitForJStoLoad(60);
 				action.ajaxWait(10, test);
 			} catch (Exception e) {
@@ -182,7 +180,7 @@ public class ic_PaymentOption {
 		ICDelivery.Cityname = dataTable2.getValueOnOtherModule("deliveryPopulation", "city", 0);
 		ICDelivery.Postalcode = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
 	    
-		action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+		action.clickEle(Btn_PlaceOrder, "Place order Button ", test);
 		action.waitForJStoLoad(60);
 		action.ajaxWait(10, test);
 

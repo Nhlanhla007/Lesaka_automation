@@ -79,7 +79,7 @@
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
-			<version>3.0.6</version>
+			<version>5.0.5</version>
 		</dependency>
 		<!--Selenium -->
 		<dependency>
@@ -242,9 +242,14 @@
             <version>7.4.0</version>
             <scope>compile</scope>
         </dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.3</version>
+		</dependency>
 
 
-    </dependencies>
+	</dependencies>
 
 	<build>
 		<finalName>KoneTestFramework</finalName>

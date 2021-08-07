@@ -1,25 +1,21 @@
 package ic_MagentoPageObjects;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
+import Logger.Log;
+import com.aventstack.extentreports.ExtentTest;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import com.aventstack.extentreports.ExtentTest;
-
-
-import Logger.Log;
 import utils.Action;
 import utils.DataTable2;
 import utils.GenerateScreenShot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MagentoRetrieveCustomerDetailsPage {
 
@@ -77,24 +73,23 @@ public class MagentoRetrieveCustomerDetailsPage {
 		if (action.waitUntilElementIsDisplayed(allCustomerTab, 10)) {
 			action.javaScriptClick(allCustomerTab, "All Customers Tab", test);
 		}
-		action.explicitWait(5000);
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.explicitWait(10000);
 	}
 
 	public void searchForCustomer(String emailToSearchBy,ExtentTest test) throws Exception {
-		//action.waitForPageLoaded(ajaxTimeOutInSeconds);
-		//action.ajaxWait(ajaxTimeOutInSeconds, test);
-		
+
 			if (action.waitUntilElementIsDisplayed(clearFilters, 60)) {
 				action.javaScriptClick(clearFilters, "Cleared Filters", test);
 				action.ajaxWait(ajaxTimeOutInSeconds, test);
 			}
-			action.click(magentoFilterTab, "Filter tab", test);
+			action.javaScriptClick(magentoFilterTab, "Filter tab", test);
+			action.explicitWait(2000);
 			action.clear(emailSearchField, "Email ID");
 			action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
 			action.click(magentoApplyFilterTab, "Apply to filters", test);
-//			action.explicitWait(5000);
+			action.explicitWait(5000);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
 	}
 

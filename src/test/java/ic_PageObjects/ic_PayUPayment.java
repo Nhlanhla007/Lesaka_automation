@@ -8,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 import utils.Action;
 import utils.DataTable2;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -62,16 +61,16 @@ public class ic_PayUPayment {
         String Expiremonth = dataTable2.getValueOnCurrentModule("Expiremonth");
         String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
         String cvv = dataTable2.getValueOnCurrentModule("cvv");
+        action.waitUntilElementIsDisplayed(PayU_Card, 20);
+        action.clickEle(PayU_Card, " Card option in PayU", test);
+        action.writeText(cardNumber, cardnumber, "card number", test);
+        action.writeText(nameOnCard, cardholdername, "name on card", test);
+        action.dropDownselectbyvisibletext(expMonth, Expiremonth, "Select Expirey Month on Card", test);
+        action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Month on Card", test);
+        action.writeText(cvvNumber, cvv, "cvv number", test);
+        action.clickEle(PayBtn, "Payment submission button", test);
+        action.waitForJStoLoad(10);
         try {
-            action.waitUntilElementIsDisplayed(PayU_Card, 20);
-            action.clickEle(PayU_Card, " Card option in PayU", test);
-            action.writeText(cardNumber, cardnumber, "card number", test);
-            action.writeText(nameOnCard, cardholdername, "name on card", test);
-            action.dropDownselectbyvisibletext(expMonth, Expiremonth, "Select Expirey Month on Card", test);
-            action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Month on Card", test);
-            action.writeText(cvvNumber, cvv, "cvv number", test);
-            action.clickEle(PayBtn, "Payment submission button", test);
-            action.waitForJStoLoad(10);
             if (action.isElementPresent(continueBtn)) {
                 action.javaScriptClick(continueBtn, "Continue", test);
                 action.waitForJStoLoad(40);
