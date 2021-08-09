@@ -16,8 +16,6 @@
 		<maven.build.timestamp.format>yyyy-MM-dd-HH-mm-ss</maven.build.timestamp.format>
 	</properties>
 
-
-
 	<dependencies>
 		<dependency>
 			<groupId>com.sap.cloud.db.jdbc</groupId>
@@ -69,6 +67,7 @@
 			<scope>test</scope>
 		</dependency>
 
+
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>json-schema-validator</artifactId>
@@ -81,6 +80,8 @@
 			<artifactId>extentreports</artifactId>
 			<version>5.0.5</version>
 		</dependency>
+
+
 		<!--Selenium -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
@@ -158,7 +159,7 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>4.0.1</version>
+			<version>4.1.2</version>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas -->
@@ -168,11 +169,23 @@
 			<version>4.0.1</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>4.1.2</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
 			<version>4.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.1.2</version>
 		</dependency>
 
 
@@ -249,19 +262,8 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5.3</version>
 		</dependency>
-		<dependency>
-			<groupId>com.aventstack</groupId>
-			<artifactId>extentreports</artifactId>
-			<version>3.0.6</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>com.aventstack</groupId>
-			<artifactId>extentreports</artifactId>
-			<version>5.0.5</version>
-		</dependency>
 	</dependencies>
+
 
 	<build>
 		<finalName>KoneTestFramework</finalName>

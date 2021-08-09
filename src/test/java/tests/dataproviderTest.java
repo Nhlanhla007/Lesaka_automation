@@ -24,7 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class dataproviderTest extends BaseTest {
-    ExtentReportJD reportJD;
+    ExtentReportGenerator reportJD;
     public String currentSuite;
     public String currentKeyWord;
     HashMap<String, Integer> occCount=null;
@@ -34,7 +34,7 @@ public class dataproviderTest extends BaseTest {
 
     @BeforeClass
     public void setUp(){
-        reportJD=new ExtentReportJD("IC");
+        reportJD=new ExtentReportGenerator("IC");
     }
     @DataProvider (name = "data-provider")
      public Object[][] dpMethod() throws Exception {
