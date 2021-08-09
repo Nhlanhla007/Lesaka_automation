@@ -1,21 +1,19 @@
 package ic_MagentoPageObjects;
 
+import com.aventstack.extentreports.ExtentTest;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import utils.Action;
+import utils.DataTable2;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-
-import com.aventstack.extentreports.ExtentTest;
-
-import utils.Action;
-import utils.DataTable2;
 
 public class MagentoRegisterNewUser {
 	WebDriver driver;
@@ -57,22 +55,28 @@ public class MagentoRegisterNewUser {
 	@FindBy(name = "customer[passport_number]")
 	WebElement passport;
 
+	@FindBy(name = "customer[cellphone_number]")
+	WebElement cellPhone;
+
 	//save new customer
 	@FindBy(xpath = "//span[contains(text(),'Save Customer')]")
 	WebElement Save_Customer;
+
 	@FindBy(xpath = "//div[contains(text(),'You saved the customer.')]")
 	WebElement Save_Customer_success;
+
 	//Fetch partner number
 	@FindBy(xpath = "//input[@name='customer[partner_number]']")
 	WebElement BPnumber;
 
 	public void CreateAccount_validateInfo_Backend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
-		String AssociatedWebsite=input.get("Website").get(rowNumber);//"Incredible Connection";
-		String Firstname = input.get("Firstname").get(rowNumber);//"Backend_Fisrtname";
-		String Lastname = input.get("Lastname").get(rowNumber);//"Backend_Lastname";
-		String Email = input.get("Email").get(rowNumber);//"TestAutomation1@gmail.com";
+		String AssociatedWebsite=input.get("Website").get(rowNumber);
+		String Firstname = input.get("Firstname").get(rowNumber);
+		String Lastname = input.get("Lastname").get(rowNumber);
+		String Email = input.get("Email").get(rowNumber);
+		String cellPhoneNumber = input.get("Cellphone").get(rowNumber);
 		String IDType = input.get("Identitynumber/passport").get(rowNumber);
-		String IDNumber = input.get("SAID").get(rowNumber);//"7503226018089";
+		String IDNumber = input.get("SAID").get(rowNumber);
 		String expPassport = input.get("Passport").get(rowNumber);
 		int waitforelement =Integer.parseInt(input.get("DelayforElements").get(rowNumber));
 		String resBPnumber = null;
@@ -81,10 +85,9 @@ public class MagentoRegisterNewUser {
 		navigateToCustomer(test);
 
 		action.click(Add_Customer, "Add new Customer", test);
-		
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
-
+		action.explicitWait(10000);
 		boolean resAccountinfo = action.waitUntilElementIsDisplayed(Account_Information, waitforelement);
 
 		if(resAccountinfo==true){
@@ -92,6 +95,7 @@ public class MagentoRegisterNewUser {
 			action.writeText(Cust_Firstname, Firstname, "Customer firstname", test);
 			action.writeText(Cust_Lastname, Lastname, "Customer lastname", test);
 			action.writeText(Cust_Email, Email, "Customer Email", test);
+			action.writeText(cellPhone,cellPhoneNumber,"Cellphone Number",test);
 
 			//Mandatory step to give id number or passport number for BP generation
 			switch (IDType){
@@ -164,11 +168,11 @@ public class MagentoRegisterNewUser {
 //			long timeElapsed = Duration.between(start,finish).toSeconds();
 		}
 		if(resData.isEmpty() | resData==null | resData == ""){
-			action.scrollElemetnToCenterOfView(element,"element",test);
+			action.scrollElemetnToCenterOfView(element,elename,test);
 			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "False", test);
 			return resData;
 		}else{
-			action.scrollElemetnToCenterOfView(element,"element",test);
+			action.scrollElemetnToCenterOfView(element,elename,test);
 			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "True", test);
 			return resData;
 		}

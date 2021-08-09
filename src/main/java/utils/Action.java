@@ -64,11 +64,12 @@ public class Action {
         String title = "";
         try {
             title = driver.getTitle();
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.pass("success get page title: " + title + node.addScreenCaptureFromPath(screenShot));
+            /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+            node.pass("success get page title: " + title + node.addScreenCaptureFromPath(screenShot));*/
+            node.pass("Successfully get page title: " + title,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
         } catch (Exception e) {
             String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.pass("failed to get page title: " + node.addScreenCaptureFromPath(screenShot));
+            node.fail(MarkupHelper.createLabel("Failed to get page title: ",ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
             throw e;
         }
         return title;
@@ -139,13 +140,17 @@ public class Action {
             }
             if (name != null) {
                 logger.info("Clicked Element: " + name);
-                String screenShot = GenerateScreenShot.getScreenShot(driver);
-                node.pass("Clicked Element: " + name + node.addScreenCaptureFromPath(screenShot));
-
+                /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+                node.pass("Clicked Element: " + name + node.addScreenCaptureFromPath(screenShot));*/
+                node.pass("clicked on the element: "+ name,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+                
             }
         } catch (Exception e) {
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
+            /*String screenShot = GenerateScreenShot.getScreenShot(driver);
             node.fail("unable to Click on element:" + name + node.addScreenCaptureFromPath(screenShot));
+            throw e;*/
+
+            node.fail(MarkupHelper.createLabel("element is not clickable due to :", ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
             throw e;
         }
     }
@@ -304,22 +309,26 @@ public class Action {
                 JavascriptExecutor executor = (JavascriptExecutor) driver;
                 executor.executeScript("arguments[0].click();", element);
                 logger.info("Clicked Element: " + name);
-                String screenShot = GenerateScreenShot.getScreenShot(driver);
-                node.pass("Clicked Element: " + name + node.addScreenCaptureFromPath(screenShot));
+                /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+                node.pass("Clicked Element: " + name + node.addScreenCaptureFromPath(screenShot));*/
+                node.pass("Clicked Element: " + name,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+
 
             } else {
                 JavascriptExecutor executor = (JavascriptExecutor) driver;
                 executor.executeScript("arguments[0].click();", elementAttr);
                 logger.info("Clicked Element: " + name);
-                String screenShot = GenerateScreenShot.getScreenShot(driver);
-                node.pass("Clicked Element: " + name + node.addScreenCaptureFromPath(screenShot));
+                /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+                node.pass("Clicked Element: " + name + node.addScreenCaptureFromPath(screenShot));*/
+                node.pass("Clicked Element: " + name,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
             }
             logger.info("Clicked Element: " + name);
 
         } catch (Throwable e) {
             logger.info("an error has occured : " + e.getMessage());
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.fail(" failed to Clicked Element: " + name + node.addScreenCaptureFromPath(screenShot));
+           /* String screenShot = GenerateScreenShot.getScreenShot(driver);
+            node.fail("Failed to Clicked Element: " + name + node.addScreenCaptureFromPath(screenShot));*/
+            node.fail(MarkupHelper.createLabel("Failed to Clicked Element: " + name, ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
 
         }
     }
@@ -345,12 +354,15 @@ public class Action {
             }
             if (name != null) {
                 String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-                String screenShot = GenerateScreenShot.getScreenShot(driver);
-                node.pass("Writing text: " + text + " to Element: " + node.addScreenCaptureFromPath(screenShot));
+                /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+                node.pass("Writing text: " + text + " to Element: " + node.addScreenCaptureFromPath(screenShot));*/
+                node.pass("Writing text: " + text + " to Element: ",MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+
             }
         } catch (Exception e) {
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.fail("Unable to Write to element:" + name + node.addScreenCaptureFromPath(screenShot));
+           /* String screenShot = GenerateScreenShot.getScreenShot(driver);
+            node.fail("Unable to Write to element:" + name + node.addScreenCaptureFromPath(screenShot));*/
+            node.fail(MarkupHelper.createLabel("Unable to Write text to element: " + name, ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
             throw e;
         }
     }
@@ -428,14 +440,17 @@ public class Action {
         try {
             if (elementAttr.getClass().getName().contains("By")) {
                 text = driver.findElement((By) elementAttr).getText();
-                String screenShot = GenerateScreenShot.getScreenShot(driver);
-                node.pass("Getting text from element:" + node.addScreenCaptureFromPath(screenShot));
+                /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+                node.pass("Getting text from element:" + node.addScreenCaptureFromPath(screenShot));*/
+                node.pass("Getting text from element: "+ name,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+
             } else {
                 // WebElement fluentElement = waitFluent((WebElement)
                 // elementAttr);
                 // text = elementAttr.getText();
-                String screenShot = GenerateScreenShot.getScreenShot(driver);
-                node.pass("Getting text from element:" + node.addScreenCaptureFromPath(screenShot));
+                /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+                node.pass("Getting text from element:" + node.addScreenCaptureFromPath(screenShot));*/
+                node.pass("Getting text from element: "+ name,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
                 text = ((WebElement) elementAttr).getText();
             }
             if (name != null) {
@@ -445,8 +460,9 @@ public class Action {
 
             return text;
         } catch (Exception e) {
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.fail("unable to get Text from element:" + name + node.addScreenCaptureFromPath(screenShot));
+            /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+            node.fail("Unable to get Text from element:" + name + node.addScreenCaptureFromPath(screenShot));*/
+            node.fail(MarkupHelper.createLabel("Unable to get Text from element: " + name, ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
             throw e;
         }
     }
@@ -548,16 +564,20 @@ public class Action {
             boolean flag = elementExists(elementAttr, time);
             if (flag) {
                 String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-                String screenShot = GenerateScreenShot.getScreenShot(driver);
-                node.pass("Element is on next page" + node.addScreenCaptureFromPath(screenShot));
+                /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+                node.pass("Element is on next page" + node.addScreenCaptureFromPath(screenShot));*/
+                node.pass("Element is on next page.. ",MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+
             } else {
-                String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
+              /*  String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
                 String screenShot = GenerateScreenShot.getScreenShot(driver);
-                node.fail("Element is not on next page" + node.addScreenCaptureFromPath(screenShot));
+                node.fail("Element is not on next page" + node.addScreenCaptureFromPath(screenShot))*/;
+                node.fail(MarkupHelper.createLabel("Element is not on next page..", ExtentColor.RED).getMarkup(), MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
 
             }
         } catch (Exception e) {
-            node.fail("issue with getting element" + e.getMessage());
+//            node.fail("Issue with getting element" + e.getMessage());
+            node.fail(MarkupHelper.createLabel("Issue with getting element..."+e.getMessage(), ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
 
         }
     }
@@ -701,12 +721,17 @@ public class Action {
         try {
             Thread.sleep(timeInMillsecs);
             String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.pass("waiting " + node.addScreenCaptureFromPath(screenShot));
+            /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+            node.pass("waiting " + node.addScreenCaptureFromPath(screenShot));*/
+            node.pass("waiting....",MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+
         } catch (InterruptedException e) {
             String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.fail("waiting" + node.addScreenCaptureFromPath(screenShot));
+            /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+            node.fail("waiting" + node.addScreenCaptureFromPath(screenShot));*/
+            node.fail(MarkupHelper.createLabel("Waiting....", ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+
+
         }
     }
 
@@ -1449,17 +1474,18 @@ public class Action {
             JavascriptExecutor js = (JavascriptExecutor) driver;
             if (element != null) {
                 js.executeScript("arguments[0].scrollIntoView(true);", element);
-                String screenShot = GenerateScreenShot.getScreenShot(driver);
-                node.pass("Scrolling to element:" + node.addScreenCaptureFromPath(screenShot));
-
+                /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+                node.pass("Scrolling to element:" + node.addScreenCaptureFromPath(screenShot));*/
+                node.pass("Scrolling to element: "+ name,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
             }
             if (name != null) {
                 logger.info("Scrolling to Element: " + name);
 
             }
         } catch (Exception e) {
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.fail("Unable to scroll to element" + name + node.addScreenCaptureFromPath(screenShot));
+            /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+            node.fail("Unable to scroll to element" + name + node.addScreenCaptureFromPath(screenShot));*/
+            node.fail(MarkupHelper.createLabel("Unable to scroll to element: " + name, ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
             throw e;
 
         }
@@ -1523,7 +1549,7 @@ public class Action {
         ExtentTest node = test.createNode("Check Enability of Button is " + String.valueOf(Expstatus));
         resEnable = ic_isEnabled(elementAttr);
         String screenShot = GenerateScreenShot.getScreenShot(driver);
-        CompareResult("place order button is enabled","true",String.valueOf(resEnable),test);
+        CompareResult("place order button is enabled", "true", String.valueOf(resEnable), test);
 
         /*try {
             resEnable = ic_isEnabled(elementAttr);
@@ -1545,103 +1571,24 @@ public class Action {
         String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new Date());
         if (elementAttr.getClass().getName().contains("By")) {
             driver.findElement((By) elementAttr).click();
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
+            /*String screenShot = GenerateScreenShot.getScreenShot(driver);
             node.pass("Successfully clicked on " + name,
-                    MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
+                    MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());*/
+            node.pass("Successfully clicked on: " + name,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+
             logger.info("Clicked Element: " + name);
         } else {
             WebElement fluentElement = waitFluent((WebElement) elementAttr);
             fluentElement.click();
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
+            /*String screenShot = GenerateScreenShot.getScreenShot(driver);
             node.pass("Successfully clicked on " + name,
-                    MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
+                    MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());*/
+            node.pass("Successfully clicked on: " + name,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
             logger.info("Clicked Element: " + name);
-
-            // ((WebElement) elementAttr).click();
         }
-        // if(name != null){
-        // ADD THE VALIDATION METHODS- WILL BE USED WITH THE test INSTANCE THAT
-        // WILL PRINT OUT THE STEPS
-
-        // }
 
     }
 
-    // public void CompareResult(String TestDescription,String Exp, String
-    // Actual,ExtentTest test) throws IOException{
-    // //INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS
-    // CREATED
-    // ExtentTest node=test.createNode("Verify result for test
-    // "+TestDescription);
-    // String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new
-    // Date());
-    // String screenShot=GenerateScreenShot.getScreenShot(driver);
-    // try{
-    // if (Actual.contains(Exp)) {
-    //
-    // node.pass("Successfully Verified : " + TestDescription + " Expected :
-    // "+Exp+" Actual
-    // :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
-    //
-    // } else {
-    //
-    // node.fail("Error found : " + TestDescription + " Expected : "+Exp+"
-    // Actual
-    // :"+Actual,MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
-    //
-    // }
-    //
-    // } catch(Throwable e){
-    // e.printStackTrace();
-    // try {
-    // node.fail(" Unknown Error found : : " + TestDescription + " Expected :
-    // "+Exp+" Actual
-    // :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
-    // } catch (IOException e1) {
-    // // TODO Auto-generated catch block
-    // e1.printStackTrace();
-    // }
-    //
-    // }
-    // }
-    // public void dropDownselectbyvisibletext(WebElement elementAttr,String
-    // valueToselect,String Testname,ExtentTest test) {
-    // //INSTANCE IS CREATED THAT HAS REFERENCE TO THE MAIN TEST THAT WAS
-    // CREATED
-    // ExtentTest node=test.createNode("Select value from dropdown : "+
-    // Testname);
-    // String dateName = new SimpleDateFormat("yyyyMMddhhmmssSSS").format(new
-    // Date());
-    //
-    // try{
-    // // Create object of the Select class
-    // Select se = new Select(elementAttr);
-    //
-    // // Select the option with value
-    //
-    // se.selectByVisibleText(valueToselect);
-    // String res = se.getFirstSelectedOption().getText();
-    // if(res.equalsIgnoreCase(valueToselect)){
-    // String screenShot=GenerateScreenShot.getScreenShot(driver);
-    // node.pass("Successfully selected : " + Testname + " Expected :
-    // "+valueToselect+" Actual
-    // :"+res,MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
-    // }
-    // }catch(Throwable e){
-    // e.printStackTrace();
-    // try {
-    // String screenShot=GenerateScreenShot.getScreenShot(driver);
-    // test.fail("Error to select : " + valueToselect + " form the dropdown :
-    // "+Testname+" Error message
-    // :"+e.getMessage(),MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
-    // } catch (IOException e1) {
-    // // TODO Auto-generated catch block
-    // e1.printStackTrace();
-    // }
-    //
-    // }
-    //
-    // }
     public boolean ic_isEnabled(WebElement elementAttr) throws Exception {
         boolean Finalresult = false;
         boolean result = false;
@@ -1665,17 +1612,20 @@ public class Action {
             String screenShot = GenerateScreenShot.getScreenShot(driver);
             if (driver.getCurrentUrl().contains(urlFragment)) {
 
-                node.pass("Page has been loaded: " + name + node.addScreenCaptureFromPath(screenShot));
+//                node.pass("Page has been loaded: " + name + node.addScreenCaptureFromPath(screenShot));
+                node.pass("Page has been loaded: " + name,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
 
             } else {
 
-                node.fail("Page has not been loaded: " + name + node.addScreenCaptureFromPath(screenShot));
+//                node.fail("Page has not been loaded: " + name + node.addScreenCaptureFromPath(screenShot));
+                node.fail(MarkupHelper.createLabel("Page has not been loaded: " + name, ExtentColor.RED).getMarkup(), MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
 
             }
 
-        } catch (IOException e) {
+        } catch (Exception e) {
 
-            node.fail("Page has not been loaded: " + name + e.getMessage());
+//            node.fail("Page has not been loaded: " + name + e.getMessage());
+            node.fail(MarkupHelper.createLabel("Page has not been loaded: " + name, ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
         }
     }
 
@@ -1686,11 +1636,15 @@ public class Action {
         String screenShot = GenerateScreenShot.getScreenShot(driver);
         if (Actual.contains(Exp)) {
             System.out.println("INSIDE COMPARE RESULT expected : " + Exp + " " + Actual);
-            node.pass("Successfully Verified : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual,
-                    MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
+            /*node.pass("Successfully Verified : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual,
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());*/
+
+            node.pass("Successfully Verified : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+
         } else {
-            node.fail("Error found  : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual,
-                    MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
+            /*node.fail("Error found  : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual,
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());*/
+            node.fail(MarkupHelper.createLabel("Error found  : " + TestDescription + " Expected : " + Exp + " Actual :" + Actual, ExtentColor.RED).getMarkup(), MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
         }
     }
 
@@ -1719,13 +1673,9 @@ public class Action {
 
     public void noRecordsReturnedFromTable(ExtentTest test, String name) {
         ExtentTest node = test.createNode("Clicked Element: " + name);
-        try {
 
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.fail(name + node.addScreenCaptureFromPath(screenShot));
-        } catch (IOException e) {
-            node.fail(e.getMessage());
-        }
+        String screenShot = GenerateScreenShot.getScreenShot(driver);
+        node.fail(name + node.addScreenCaptureFromPath(screenShot));
     }
 
     public void dropDownselectbyvisibletext(WebElement elementAttr, String valueToselect, String Testname,
@@ -1741,21 +1691,21 @@ public class Action {
             se.selectByVisibleText(valueToselect);
             String res = se.getFirstSelectedOption().getText();
             if (res.equalsIgnoreCase(valueToselect)) {
-                String screenShot = GenerateScreenShot.getScreenShot(driver);
+                /*String screenShot = GenerateScreenShot.getScreenShot(driver);
                 node.pass("Successfully selected : " + Testname + " Expected : " + valueToselect + " Actual :" + res,
-                        MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
+                        MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());*/
+                node.pass("Successfully selected : " + Testname + " Expected : " + valueToselect + " Actual :" + res,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+
+
             }
         } catch (Throwable e) {
             node.fail(e.getMessage());
-            try {
-                String screenShot = GenerateScreenShot.getScreenShot(driver);
-                test.fail("Error to select  : " + valueToselect + " form the dropdown : " + Testname
-                                + " Error message :" + e.getMessage(),
-                        MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                node.fail(e1.getMessage());
-            }
+            /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+            test.fail("Error to select  : " + valueToselect + " form the dropdown : " + Testname
+                            + " Error message :" + e.getMessage(),
+                    MediaEntityBuilder.createScreenCaptureFromPath(screenShot).build());*/
+            node.fail(MarkupHelper.createLabel("Error to select  : " + valueToselect + " form the dropdown : " + Testname
+                    + " Error message: ", ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
 
         }
 
@@ -1781,7 +1731,7 @@ public class Action {
     public void scrollElementIntoView(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView();", element);
-        explicitWait(6000);
+        explicitWait(3000);
     }
 
     public void scrollElemetnToCenterOfView(WebElement element, String name, ExtentTest test) throws IOException {
@@ -1792,12 +1742,14 @@ public class Action {
                     + "window.scrollBy(0, elementTop-(viewPortHeight/2));";
 
             ((JavascriptExecutor) driver).executeScript(scrollElementIntoMiddle, element);
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.pass("scroll to element" + name + node.addScreenCaptureFromPath(screenShot));
+          /*  String screenShot = GenerateScreenShot.getScreenShot(driver);
+            node.pass("scroll to element" + name + node.addScreenCaptureFromPath(screenShot));*/
+            node.pass("Scroll to element: " + name,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+
         } catch (Exception e) {
-            String screenShot = GenerateScreenShot.getScreenShot(driver);
-            node.fail("unable to scroll to element: " + name + node.addScreenCaptureFromPath(screenShot));
-            throw e;
+            /*String screenShot = GenerateScreenShot.getScreenShot(driver);
+            node.fail("unable to scroll to element: " + name + node.addScreenCaptureFromPath(screenShot));*/
+            node.fail(MarkupHelper.createLabel("Unable to scroll to element: " + name, ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
         }
     }
 
@@ -1818,19 +1770,19 @@ public class Action {
         robot.keyRelease(KeyEvent.VK_ENTER);
     }
 
-    public boolean ajaxWait(int timeoutInSeconds,ExtentTest test) throws Exception {
+    public boolean ajaxWait(int timeoutInSeconds, ExtentTest test) throws Exception {
 
-        
+
         //if((timeoutInSeconds / 1000)>=1){
-            //timeoutInSeconds=timeoutInSeconds/1000;
+        //timeoutInSeconds=timeoutInSeconds/1000;
         //}
         boolean flag = true;
         int count = 0;
         Boolean isJqueryCallDone;
-        while(flag & count < timeoutInSeconds) {
-            isJqueryCallDone = (Boolean)((JavascriptExecutor) driver).executeScript("return jQuery.active==0");
-            System.out.println("AJAX call completion: "+isJqueryCallDone);
-            if(isJqueryCallDone.booleanValue()==true) {
+        while (flag & count < timeoutInSeconds) {
+            isJqueryCallDone = (Boolean) ((JavascriptExecutor) driver).executeScript("return jQuery.active==0");
+            System.out.println("AJAX call completion: " + isJqueryCallDone);
+            if (isJqueryCallDone.booleanValue() == true) {
                 flag = false;
                 count++;
                 break;
@@ -1839,29 +1791,27 @@ public class Action {
             Thread.sleep(1000);
             count++;
         }
-        if(flag) {
-            System.out.println("Ajax Page was not loaded in: "+count+" seconds");
+        if (flag) {
+            System.out.println("Ajax Page was not loaded in: " + count + " seconds");
             String screenShot = GenerateScreenShot.getScreenShot(driver);
             ExtentTest node = test.createNode("Check Ajax components Loaded");
-            node.warning("Ajax Page was not loaded in: "+count+" seconds"+ node.addScreenCaptureFromPath(screenShot));
-        }
-        else{
-            System.out.println("Ajax Page loading completed in: "+count+" seconds");
+            node.warning("Ajax Page was not loaded in: " + count + " seconds" + node.addScreenCaptureFromPath(screenShot));
+        } else {
+            System.out.println("Ajax Page loading completed in: " + count + " seconds");
         }
 
         return !flag;
     }
 
     public boolean waitForJStoLoad(int timeOutInSeconds) {
-        JavascriptExecutor js = (JavascriptExecutor)driver;
+        JavascriptExecutor js = (JavascriptExecutor) driver;
         WebDriverWait wait = new WebDriverWait(driver, timeOutInSeconds);
         // wait for jQuery to load
         ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
                 try {
-                    return ((Long)js.executeScript("return jQuery.active") == 0);
-                }
-                catch (Exception e) {
+                    return ((Long) js.executeScript("return jQuery.active") == 0);
+                } catch (Exception e) {
                     return true;
                 }
             }
@@ -1876,7 +1826,11 @@ public class Action {
         return wait.until(jQueryLoad) && wait.until(jsLoad);
     }
 
-
+    public String takeScreenShotAsBase64() {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+    }
 
 
 }
+
+

@@ -1,20 +1,15 @@
 package ic_MagentoPageObjects;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import com.aventstack.extentreports.ExtentTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
-import com.aventstack.extentreports.ExtentTest;
-
-
 import utils.Action;
-import utils.ConfigFileReader;
 import utils.DataTable2;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ic_Magento_Login {
 
@@ -64,6 +59,7 @@ public class ic_Magento_Login {
 				action.writeText(Magento_Password, Password, "Password feild", test);
 				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
 				action.waitForJStoLoad(ajaxTimeOutInSeconds);
+				action.explicitWait(10000);
 				String resWelcomescreen = action.getText(Dashboard, "Dashboard", test);
 				action.CompareResult("Navigate to magento admin page is success", "Dashboard",driver.getTitle() , test);
 

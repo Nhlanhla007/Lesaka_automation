@@ -768,7 +768,7 @@ public class JDGKeyManager {
             case"uploadDocument":
             	evs_PaymentOption.uploadValidID(test1);
             	break;
-            case"evs_TVapproval":
+            case"evs_Tvapproval":
             	evs_TvLicenseApproval.approveTVlicence(test1, rowNumber);
         }
     }

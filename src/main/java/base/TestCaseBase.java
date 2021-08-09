@@ -155,23 +155,10 @@ public class TestCaseBase {
 		options.addArguments("--disable-dev-shm-usage");
 		options.addArguments("--dns-prefetch-disable");
 		options.setPageLoadStrategy(PageLoadStrategy.NORMAL);*/
-		options.addArguments("--disable-features=VizDisplayCompositor");
 
+		options.addArguments("--disable-features=VizDisplayCompositor");
 		options.setHeadless(true);
 		options.addArguments("window-size=1382,744");
-
-		Map < String, Object > prefs = new HashMap < String, Object > ();
-		Map < String, Object > profile = new HashMap < String, Object > ();
-		Map < String, Object > contentSettings = new HashMap < String, Object > ();
-
-		// SET CHROME OPTIONS
-		// 0 - Default, 1 - Allow, 2 - Block
-		contentSettings.put("geolocation", 1);
-		profile.put("managed_default_content_settings", contentSettings);
-		prefs.put("profile", profile);
-		options.setExperimentalOption("prefs", prefs);
-		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-
 
 		options.merge(capabilities);
 		setPropertyByOS("chrome");

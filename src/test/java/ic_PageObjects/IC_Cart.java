@@ -83,6 +83,7 @@ public class IC_Cart {
 	    
 	    public int sum;
 		  public void iCcartVerification2(Map<String, List<String>> products,ExtentTest test) {
+		  	action.explicitWait(3000);
 			  String itemsCount = itemsInCartCounter(test);
 			  int allProductsInCartQuantity = 0;
 			  navigateToCart(test);

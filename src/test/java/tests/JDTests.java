@@ -21,7 +21,6 @@ import org.testng.annotations.Test;
 import utils.*;
 
 public class JDTests extends BaseTest {
-	ExtentReportJD reportJD;
 
 	public String currentSuite;
 	public String currentKeyWord;
@@ -29,6 +28,7 @@ public class JDTests extends BaseTest {
 	int testcaseID;
 	JDGKeyManager km = null;
 	JavaUtils utils;
+	ExtentReportGenerator reportJD;
 
 
 	@Test
@@ -44,7 +44,7 @@ public class JDTests extends BaseTest {
 		for (int i = 0; i < numberOfSuits; i++) {
 			if (suites.get("Execute").get(i).toLowerCase().equals("yes")) {
 				currentSuite = suites.get("testSuitName").get(i);
-				reportJD = new ExtentReportJD(currentSuite);
+				reportJD = new ExtentReportGenerator(currentSuite);
 				runSuite(dataMap2.get(currentSuite));
 				reportJD.endReport();
 

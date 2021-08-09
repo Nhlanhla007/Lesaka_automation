@@ -79,7 +79,7 @@
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
-			<version>3.0.6</version>
+			<version>5.0.5</version>
 		</dependency>
 		<!--Selenium -->
 		<dependency>
@@ -175,6 +175,8 @@
 			<version>4.0.1</version>
 		</dependency>
 
+
+
 		<!--https://mvnrepository.com/artifact/ru.yandex.qatools.allure/allure-cli -->
 		<dependency>
 			<groupId>ru.yandex.qatools.allure</groupId>
@@ -242,9 +244,24 @@
             <version>7.4.0</version>
             <scope>compile</scope>
         </dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>3.0.6</version>
+		</dependency>
 
 
-    </dependencies>
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>5.0.5</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<finalName>KoneTestFramework</finalName>
