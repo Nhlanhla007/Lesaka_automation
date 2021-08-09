@@ -44,7 +44,7 @@ public class ICDelivery {
     WebElement lastname;
 
     @FindBy(name = "telephone")
-    WebElement telephone;
+    WebElement telephoneNumber;
 
     @FindBy(name = "region_id")
     WebElement province;
@@ -177,7 +177,7 @@ public class ICDelivery {
             if (action.waitUntilElementIsDisplayed(ic_AddressType, 5000)) {
 //        	action.explicitWait(5000);
                 action.writeText(streetName, dataSheets.getValueOnCurrentModule("streetName"), "streetName", test);
-                action.writeText(telephone, dataSheets.getValueOnCurrentModule("telephone"), "telephone", test);
+                action.writeText(telephoneNumber, dataSheets.getValueOnCurrentModule("telephone"), "telephone", test);
                 action.writeText(city, dataSheets.getValueOnCurrentModule("city"), "city", test);
                 action.writeText(Suburb, dataSheets.getValueOnCurrentModule("Suburb"), "Suburb", test);
                 action.writeText(postalCode, dataSheets.getValueOnCurrentModule("postalCode"), "postalCode", test);

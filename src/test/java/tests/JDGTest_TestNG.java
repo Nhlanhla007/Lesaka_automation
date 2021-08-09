@@ -40,7 +40,7 @@ public class JDGTest_TestNG<moduleName> {
     HashMap<String, Integer> occCount=null;
     int testcaseID;
     JDGKeyManager km=null;
-    ExtentReportJD reportJD=null;
+    ExtentReportGenerator reportJD=null;
     Logger logger = Log.getLogData(this.getClass().getSimpleName());
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
 
@@ -54,7 +54,7 @@ public class JDGTest_TestNG<moduleName> {
         dataTable2.setPath(moduleName);
         dataMap2=dataTable2.getExcelData();
         currentSuite=CurSuite;
-        reportJD=new ExtentReportJD(currentSuite);
+        reportJD=new ExtentReportGenerator(currentSuite);
         km=new JDGKeyManager(driver,dataTable2,dataMap2);
     }
 

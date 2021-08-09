@@ -88,6 +88,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 			action.explicitWait(2000);
 			action.clear(emailSearchField, "Email ID");
 			action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
+			action.explicitWait(3000);
 			action.click(magentoApplyFilterTab, "Apply to filters", test);
 			action.explicitWait(5000);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
@@ -166,10 +167,8 @@ public class MagentoRetrieveCustomerDetailsPage {
  					action.javaScriptClick(clickElement, "Customer Details", test);
  				}
 
-				//action.explicitWait(15000);
-				//action.checkIfPageIsLoadedByURL("/customer/index/edit/", "View Customer Details Page", test);
 			}
-				//action.checkIfPageIsLoadedByURL("/customer/index/edit/", "Customer not found", test);			
+
 			}
 	
 	public boolean isMagentoSearchPageLoaded(int timeoutInSec) throws Exception {

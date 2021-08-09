@@ -85,10 +85,9 @@ public class MagentoRegisterNewUser {
 		navigateToCustomer(test);
 
 		action.click(Add_Customer, "Add new Customer", test);
-		
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
-
+		action.explicitWait(10000);
 		boolean resAccountinfo = action.waitUntilElementIsDisplayed(Account_Information, waitforelement);
 
 		if(resAccountinfo==true){
@@ -169,11 +168,11 @@ public class MagentoRegisterNewUser {
 //			long timeElapsed = Duration.between(start,finish).toSeconds();
 		}
 		if(resData.isEmpty() | resData==null | resData == ""){
-			action.scrollElemetnToCenterOfView(element,"element",test);
+			action.scrollElemetnToCenterOfView(element,elename,test);
 			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "False", test);
 			return resData;
 		}else{
-			action.scrollElemetnToCenterOfView(element,"element",test);
+			action.scrollElemetnToCenterOfView(element,elename,test);
 			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "True", test);
 			return resData;
 		}
