@@ -401,7 +401,7 @@ public class EVS_Magento_UserInfoVerification {
 		String actualEmail = action.getAttribute(Cust_Email, "value");
 		action.CompareResult("Email in Magento backend : ", ExpEmail, actualEmail, test);
 
-		String ActualBPnumber =FetchDataFromCustInfo_MagentoBackend(customerBPnnumber,"customerBPnnumber",TimetoLoadpage,40,test);
+		String ActualBPnumber =FetchDataFromCustInfo_MagentoBackend(customerBPnnumber,"Customer BP Number",TimetoLoadpage,40,test);
 		action.scrollElementIntoView(customerBPnnumber);
 		System.out.println("ActualBPnumber:"+ActualBPnumber);
 		//hana han = new hana();

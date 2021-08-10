@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -90,15 +93,17 @@ public class EVS_MagentoRegisterNewUser {
 		//Navigate to all customer
 		navigateToCustomer(test);
 
-		action.clickEle(Add_Customer, "Add new Customer", test);
-		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.click(Add_Customer, "Add new Customer", test);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.explicitWait(10000);
 		boolean resAccountinfo = action.elementExists(Account_Information, waitforelement);
 		if(resAccountinfo==true){
 			action.dropDownselectbyvisibletext(AssociatedWebsite_ele, AssociatedWebsite, "Website", test);
-			action.click(Group_ele, Group, test);					//dropDownselectbyvisibletext(Group_ele, Group, "Group", test);
-			//action.explicitWait(1000);
+			action.explicitWait(2000);
+			action.click(Group_ele, Group, test);
+			action.explicitWait(2000);
 			action.click(Group_Default, Group, test);
+			action.explicitWait(2000);
 		    action.writeText(Cust_Firstname, Firstname, "Customer firstname", test);
 			action.writeText(Cust_Lastname, Lastname, "Customer lastname", test);
 			action.writeText(Cust_Email, Email, "Customer Email", test);
@@ -115,26 +120,26 @@ public class EVS_MagentoRegisterNewUser {
 			action.clickEle(Save_Customer, "Save_Customer", test);
 			action.waitForPageLoaded(ajaxTimeOutInSeconds);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
+			action.explicitWait(3000);
 			boolean resSavedcustomer = action.elementExists(Save_Customer_success, waitforelement);
 			if(resSavedcustomer==true){
-				action.CompareResult("verify New customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
+				action.CompareResult("New customer is created successfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
 
-				//navigate to the table and click edit
 				RetriveCust.searchForCustomer(Email, test);
 				action.waitExplicit(waitforelement);
 				RetriveCust.tableData(Email, AssociatedWebsite, test);
-				action.clickEle(Account_Information, "Account Information", test);
-				if(action.waitUntilElementIsDisplayed(BPnumber, waitforelement)){
+//				action.clickEle(Account_Information, "Account Information", test);
+				/*if(action.waitUntilElementIsDisplayed(BPnumber, waitforelement)){
 					resBPnumber = FetchDataFromCustInfo_MagentoBackend(BPnumber, "BP number", waitforelement, 5, test);
 					 input.get("BPnumber").set(rowNumber,resBPnumber);
-				}
+				}*/
 
-				if(resBPnumber!=null){
+				/*if(resBPnumber!=null){
 					action.scrollToElement(BPnumber, "BP Number");
-					action.CompareResult("verify BP number is  fetched : "+resBPnumber, String.valueOf("True"), String.valueOf("True"), test);
+					action.CompareResult("BP number is  fetched : "+resBPnumber, String.valueOf("True"), String.valueOf("True"), test);
 				}else{
-					action.CompareResult("verify BP number is fetched : "+resBPnumber, String.valueOf("True"), String.valueOf("False"), test);
-				}
+					action.CompareResult("BP number is fetched : "+resBPnumber, String.valueOf("True"), String.valueOf("False"), test);
+				}*/
 
 			}else{
 				action.CompareResult("verify New customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
@@ -157,10 +162,10 @@ public class EVS_MagentoRegisterNewUser {
 		}
 		if(!resData.isEmpty() ||resData!=null){
 
-			action.CompareResult("Verify "+elename+" is fetched sucessfully :"+resData,"True", "True", test);
+			action.CompareResult(elename+" is fetched sucessfully :"+resData,"True", "True", test);
 			return resData;
 		}else{
-			action.CompareResult("Verify "+elename+" is not fetched sucessfully :"+resData,"True", "False", test);
+			action.CompareResult(elename+" is not fetched sucessfully :"+resData,"True", "False", test);
 			return resData;
 		}
 	}
@@ -175,13 +180,14 @@ public class EVS_MagentoRegisterNewUser {
 			}
 			action.waitForPageLoaded(ajaxTimeOutInSeconds);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
-			String screenShotPath=action.getScreenShot(dateName);
-			node.pass("User navigated to Allcustomer section"+ node.addScreenCaptureFromPath(screenShotPath));
+			/*String screenShotPath=action.getScreenShot(dateName);
+			node.pass("User navigated to Allcustomer section"+ node.addScreenCaptureFromPath(screenShotPath));*/
+			node.pass("Navigated to Magento Customers", MediaEntityBuilder.createScreenCaptureFromBase64String(action.takeScreenShotAsBase64()).build());
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			String screenShotPath=action.getScreenShot(dateName);
-			node.fail("User navigated to Allcustomer section"+e.getMessage()+ node.addScreenCaptureFromPath(screenShotPath));
+//			String screenShotPath=action.getScreenShot(dateName);
+			node.fail(MarkupHelper.createLabel("Unable to navigate to Magento Customers", ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(action.takeScreenShotAsBase64()).build());
 		}
 	}
 

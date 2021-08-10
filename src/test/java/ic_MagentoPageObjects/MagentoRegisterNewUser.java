@@ -1,6 +1,9 @@
 package ic_MagentoPageObjects;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -113,17 +116,15 @@ public class MagentoRegisterNewUser {
 			
 			boolean resSavedcustomer = action.waitUntilElementIsDisplayed(Save_Customer_success, waitforelement);
 			if(resSavedcustomer==true){
-				action.CompareResult("new customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
+				action.CompareResult("New customer is created successfully in Backend Magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
 
-				//navigate to the table and click edit
 				RetriveCust.searchForCustomer(Email, test);
-				//action.waitExplicit(waitforelement);
 				RetriveCust.tableData(Email, AssociatedWebsite, test);
-				action.click(Account_Information, "Account Information", test);
-				if(action.waitUntilElementIsDisplayed(BPnumber, waitforelement)){
+//				action.click(Account_Information, "Account Information", test);
+				/*if(action.waitUntilElementIsDisplayed(BPnumber, waitforelement)){
 					resBPnumber = FetchDataFromCustInfo_MagentoBackend(BPnumber, "BP number", waitforelement, 15, test);
 					 input.get("BPnumber").set(rowNumber,resBPnumber);
-				}
+				}*/
 
 				/*
 				 * if(resBPnumber!=null | resBPnumber!="" | !resBPnumber.isEmpty() ){
@@ -136,7 +137,7 @@ public class MagentoRegisterNewUser {
 				 */
 
 			}else{
-				action.CompareResult("new customer is created sucessfully in Backend magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
+				action.CompareResult("New customer is created successfully in Backend Magento", String.valueOf(ExpCustomerCreateSuccess), String.valueOf(resSavedcustomer), test);
 			}
 		}
 	}
@@ -187,15 +188,17 @@ public class MagentoRegisterNewUser {
 			action.click(allCustomerTab, "All Customers Tab", test);
 			}
 			
-			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.waitForJStoLoad(ajaxTimeOutInSeconds);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
-			String screenShotPath=action.getScreenShot(dateName);
-			node.pass("User navigated to Allcustomer section"+ node.addScreenCaptureFromPath(screenShotPath));
+			/*String screenShotPath=action.getScreenShot(dateName);
+			node.pass("User navigated to Allcustomer section"+ node.addScreenCaptureFromPath(screenShotPath));*/
+			node.pass("Navigated to Magento Customers", MediaEntityBuilder.createScreenCaptureFromBase64String(action.takeScreenShotAsBase64()).build());
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			String screenShotPath=action.getScreenShot(dateName);
-			node.fail("User navigated to Allcustomer section"+e.getMessage()+ node.addScreenCaptureFromPath(screenShotPath));
+			/*String screenShotPath=action.getScreenShot(dateName);
+			node.fail("User navigated to Allcustomer section"+e.getMessage()+ node.addScreenCaptureFromPath(screenShotPath));*/
+			node.fail(MarkupHelper.createLabel("Unable to navigate to Magento Customers", ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(action.takeScreenShotAsBase64()).build());
 		}
 	}
 

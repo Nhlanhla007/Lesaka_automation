@@ -1491,6 +1491,15 @@ public class Action {
         }
     }
 
+    public void scrollToTopOfScreen(ExtentTest test) throws Exception {
+        try {
+            ((JavascriptExecutor) driver).executeScript("window.scrollTo(document.body.scrollHeight, 0)");
+        }
+        catch (Exception e){
+            throw new Exception("Unable to scroll to Top of screen: "+e.getMessage());
+        }
+    }
+
 
     public void waitExplicit(int seconds) {
         try {
@@ -1773,15 +1782,16 @@ public class Action {
     public boolean ajaxWait(int timeoutInSeconds, ExtentTest test) throws Exception {
 
 
-        //if((timeoutInSeconds / 1000)>=1){
-        //timeoutInSeconds=timeoutInSeconds/1000;
-        //}
+       /* if((timeoutInSeconds / 1000)>=1){
+        timeoutInSeconds=timeoutInSeconds/1000;
+        }*/
+
         boolean flag = true;
         int count = 0;
         Boolean isJqueryCallDone;
         while (flag & count < timeoutInSeconds) {
             isJqueryCallDone = (Boolean) ((JavascriptExecutor) driver).executeScript("return jQuery.active==0");
-            System.out.println("AJAX call completion: " + isJqueryCallDone);
+//            System.out.println("AJAX call completion: " + isJqueryCallDone);
             if (isJqueryCallDone.booleanValue() == true) {
                 flag = false;
                 count++;
@@ -1792,12 +1802,12 @@ public class Action {
             count++;
         }
         if (flag) {
-            System.out.println("Ajax Page was not loaded in: " + count + " seconds");
+//            System.out.println("Ajax Page was not loaded in: " + count + " seconds");
             String screenShot = GenerateScreenShot.getScreenShot(driver);
             ExtentTest node = test.createNode("Check Ajax components Loaded");
             node.warning("Ajax Page was not loaded in: " + count + " seconds" + node.addScreenCaptureFromPath(screenShot));
         } else {
-            System.out.println("Ajax Page loading completed in: " + count + " seconds");
+//            System.out.println("Ajax Page loading completed in: " + count + " seconds");
         }
 
         return !flag;

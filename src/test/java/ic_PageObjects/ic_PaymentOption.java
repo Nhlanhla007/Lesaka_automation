@@ -134,8 +134,8 @@ public class ic_PaymentOption {
 				action.scrollElemetnToCenterOfView(Btn_PlaceOrder, "Place Order Button", test);
 				action.explicitWait(2000);
 				action.javaScriptClick(Btn_PlaceOrder, "Place order Button ", test);
-				action.waitForJStoLoad(60);
-				action.ajaxWait(10, test);
+				action.waitForJStoLoad(120);
+				action.ajaxWait(30, test);
 			} catch (Exception e) {
 				throw new Exception("Unable to navigate Payment Details page. "+e.getMessage());
 			}

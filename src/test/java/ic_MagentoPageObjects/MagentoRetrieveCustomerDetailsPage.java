@@ -81,7 +81,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 	public void searchForCustomer(String emailToSearchBy,ExtentTest test) throws Exception {
 
 			if (action.waitUntilElementIsDisplayed(clearFilters, 60)) {
-				action.javaScriptClick(clearFilters, "Cleared Filters", test);
+				action.javaScriptClick(clearFilters, "Clear Filters", test);
 				action.ajaxWait(ajaxTimeOutInSeconds, test);
 			}
 			action.javaScriptClick(magentoFilterTab, "Filter tab", test);
@@ -89,7 +89,7 @@ public class MagentoRetrieveCustomerDetailsPage {
 			action.clear(emailSearchField, "Email ID");
 			action.writeText(emailSearchField,emailToSearchBy,"Email search field" , test);
 			action.explicitWait(3000);
-			action.click(magentoApplyFilterTab, "Apply to filters", test);
+			action.click(magentoApplyFilterTab, "Apply filters", test);
 			action.explicitWait(5000);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
 	}

@@ -61,7 +61,7 @@ public class ic_PayUPayment {
         String Expiremonth = dataTable2.getValueOnCurrentModule("Expiremonth");
         String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
         String cvv = dataTable2.getValueOnCurrentModule("cvv");
-        action.waitUntilElementIsDisplayed(PayU_Card, 20);
+        action.explicitWait(10000);
         action.clickEle(PayU_Card, " Card option in PayU", test);
         action.writeText(cardNumber, cardnumber, "card number", test);
         action.writeText(nameOnCard, cardholdername, "name on card", test);
