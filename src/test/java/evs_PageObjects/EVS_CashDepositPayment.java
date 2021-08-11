@@ -53,7 +53,7 @@ public class EVS_CashDepositPayment {
 //		return Oderid;
 //	}
 	public void InvoiceCashDeposit(ExtentTest test) throws Exception{		
-		String ExpOrderStatus = "Received Paid";		
+		String ExpOrderStatus = dataTable2.getValueOnCurrentModule("Order Status").trim() ;		
 			MagentoAdminDoInvoiceing(test);
 			MagentoOrderInfoVerification(test, ExpOrderStatus);
 	}

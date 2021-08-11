@@ -769,6 +769,7 @@ public class JDGKeyManager {
             	break;
             case"evs_Tvapproval":
             	evs_TvLicenseApproval.approveTVlicence(test1, rowNumber);
+            	break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){

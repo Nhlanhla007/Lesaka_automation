@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,12 +24,15 @@ public class evs_TVLicenceApproval {
     WebDriver driver;
     Action action;
     DataTable2 dataTable2;
+    EVS_MagentoOrderSAPnumber generateReceived;
+    int ajaxTimeOutInSeconds = EVS_Magento_Login.ajaxTimeOutInSeconds;
 
     public evs_TVLicenceApproval(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
         this.dataTable2 = dataTable2;
+        generateReceived = new EVS_MagentoOrderSAPnumber(driver, dataTable2);
     }
 
     @FindBy(xpath = "//div[contains(text(),'[RabbitMQ] Order SAP Number: ')][1]")
@@ -45,7 +50,7 @@ public class evs_TVLicenceApproval {
     @FindBy(xpath = "//*[@title=\"Update Account Validity\"]")
     private WebElement admin_ButtonTVpassword;
 
-    @FindBy(xpath = "//*[@class=\"odd\"]/tr/td/div/div[2]/span")
+    @FindBy(xpath = "//*[@class=\"odd\"]/tr/td/div/div[2]")
     private WebElement admin_NewTVlicenceSKU;
 
     @FindBy(xpath = "//div[contains(text(),'Validity change was processed')]")
@@ -56,6 +61,11 @@ public class evs_TVLicenceApproval {
 
     @FindBy(xpath = "//*[@class=\"odd\"]/tr/td/div/div[2]/span")
     private WebElement admin_NewTVlicenceHover;
+    
+    @FindBy(xpath = " //*[@id=\"order_status\"]")
+    private WebElement admin_ChangedStatusRecieved;
+    
+ 
 
     public void approveTVlicence(ExtentTest test, int rowNumber) throws Exception {
         String ApprovalPass = dataTable2.getValueOnCurrentModule("TV licence password Approval");
@@ -85,20 +95,63 @@ public class evs_TVLicenceApproval {
         } catch (Exception e) {
             throw new Exception("The new licence has not been approved! " + e.getMessage());
         }
+        
+       // GenerateRecieveStatus(test);
+        
+    }
+        
+       /* Timer t = new Timer();
+        public void GenerateRecieveStatus(ExtentTest test) throws Exception {
+        boolean flagres = false;
+    	int totalConunter=0;
+    	String Receivedstatus = "";
+    	long startTime = System.currentTimeMillis();
+    	int TimeOutinSecond =Integer.parseInt(dataTable2.getValueOnCurrentModule("TimeOutforRecievePaidStatus"));
+    	//int trycount =Integer.parseInt(input.get("totalCounter").get(rowNumber));
+    	int elapsedTime = 0;    	
+    	while(elapsedTime<=TimeOutinSecond && flagres==false)
+    	{
+			action.refresh();
+			action.waitForPageLoaded(TimeOutinSecond);
+			
+			try {
+				if(action.waitUntilElementIsDisplayed(admin_ChangedStatusRecieved, 2000)){						
+					Receivedstatus = admin_ChangedStatusRecieved.getText();//action.getText(OrderDetailSAPNumber, "SAP Number",test);
+						//action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
+						System.out.println(Receivedstatus);
+					if(Receivedstatus !="Pending SABC Validation"){
+			    		action.explicitWait(TimeOutinSecond);
+			    		action.refresh();
+			    	}else{
+			    		flagres = true;			    		
+						System.out.println("Show :" + Receivedstatus);
+			    	}
+				}else{
+					System.out.println("The Receive status does not exist");
+				}
+					
+			} catch (Exception e) {
+				
+			}
 
-    /*    String TVorderStatus = action.getText(admin_TVOrderStatus, "Get the current order status", test);
-
-
-
-
-        if(TVorderStatus != "Received Paid"){
-            action.refresh();
-            action.explicitWait(20000);
-
-        }*/
-
+			long endTime = System.currentTimeMillis();
+			long elapsedTimeInMils = endTime-startTime;
+			elapsedTime = ((int) elapsedTimeInMils)/1000;
+			System.out.println("elapsedTime: "+elapsedTime);
+			totalConunter++;
+		}
+    	if(flagres){
+    		action.scrollElemetnToCenterOfView(admin_ChangedStatusRecieved,"Receive Status",test);
+    		action.CompareResult("Is Receive Status visible ?", String.valueOf(true), String.valueOf(flagres), test);
+    	}else{
+    		JavascriptExecutor exe = (JavascriptExecutor)driver;
+            exe.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+            exe.executeScript("window.scrollBy(0,-500)");
+    		action.CompareResult("Is Receive Status visible ?", String.valueOf(true), String.valueOf(flagres), test);
+    	}
+    	System.out.println();
+    }*/
+        
+          
 
     }
-
-
-}
