@@ -54,7 +54,7 @@ public class JDGKeyManager {
         this.driver=driver;
     }
 
-    public void runKeyWord (String actionToRun,int testcaseID,HashMap<String, Integer> occCount, ExtentTest test) throws Exception {
+    public void runKeyWord (String actionToRun,int testcaseID,HashMap<String, Integer> occCount, ExtentTest test1) throws Exception {
         String moduleToRun = actionToRun;
         //IC classes below
         IConnection ic = new IConnection(driver, dataTable2);
@@ -205,7 +205,7 @@ public class JDGKeyManager {
         EVS_Admin_Reorder evs_admin_reOrder = new EVS_Admin_Reorder(driver, dataTable2);
         evs_TVLicenceApproval evs_TvLicenseApproval = new evs_TVLicenceApproval(driver, dataTable2);
         evs_TVLicenceValidation evs_TvLicense = new evs_TVLicenceValidation(driver, dataTable2);
-        ExtentTest test1 = test.createNode(moduleToRun);
+//        ExtentTest test1 = test.createNode(moduleToRun);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
             rowNumber = findRowToRun(dataMap2.get(moduleToRun + "++"), occCount.get(moduleToRun), testcaseID);
@@ -529,7 +529,7 @@ public class JDGKeyManager {
                 ic_MyOrder.searchOrder(test1);
                 break;
             case "ic_Magento_LaunchPortal":
-                icMagentoLaunchPortal.launchPortal(test);
+                icMagentoLaunchPortal.launchPortal(test1);
                 break;
 			case "ic_CancelOrder":
 				ic_MagentoCancelUpaidEFT.IC_cancelUpaidEFT(test1);
@@ -744,7 +744,7 @@ public class JDGKeyManager {
                 evs_myOrders.searchOrder(test1);
                 break;
             case "evs_Magento_LaunchPortal":
-                evsMagentoLaunchPortal.launchPortal(test);
+                evsMagentoLaunchPortal.launchPortal(test1);
                 break;
             case "evs_CancelOrder":
             	evs_MagentoCancelUpaidEFT.EVS_cancelUpaidEFT(test1);
@@ -753,7 +753,7 @@ public class JDGKeyManager {
             	evs_toConfirmOrderStatus.backToEvs(test1);
                 break;
             case "evs_cancelCreditMemo":
-                cancelCreditMemo.cancelOrderCreditMemo(test);
+                cancelCreditMemo.cancelOrderCreditMemo(test1);
                 break;
             case "evs_admin_reOrder":
             	evs_admin_reOrder.editOrder(test1);

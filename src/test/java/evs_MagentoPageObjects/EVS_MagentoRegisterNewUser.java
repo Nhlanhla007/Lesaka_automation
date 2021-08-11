@@ -78,14 +78,14 @@ public class EVS_MagentoRegisterNewUser {
 	WebElement BPnumber;
 
 	public void CreateAccount_validateInfo_Backend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
-		String AssociatedWebsite=input.get("Website").get(rowNumber);//"Incredible Connection";
+		String AssociatedWebsite=input.get("Website").get(rowNumber);;
 		String Group = input.get("Group").get(rowNumber);
-		String Firstname = input.get("Firstname").get(rowNumber);//"Backend_Fisrtname";
-		String Lastname = input.get("Lastname").get(rowNumber);//"Backend_Lastname";
-		String Email = input.get("Email").get(rowNumber);//"TestAutomation1@gmail.com";
+		String Firstname = input.get("Firstname").get(rowNumber);
+		String Lastname = input.get("Lastname").get(rowNumber);
+		String Email = input.get("Email").get(rowNumber);
 		String IDType = input.get("Identitynumber/passport").get(rowNumber);
 		String Phonenumber = input.get("Cellphone").get(rowNumber);
-		String IDNumber = input.get("SAID").get(rowNumber);//"7503226018089";
+		String IDNumber = input.get("SAID").get(rowNumber);
 		String expPassport = input.get("Passport").get(rowNumber);
 		int waitforelement =Integer.parseInt(input.get("DelayforElements").get(rowNumber));
 		String resBPnumber = null;

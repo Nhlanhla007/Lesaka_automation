@@ -23,7 +23,7 @@ public class ExtentReportGenerator {
                 .as(new ViewName[] { ViewName.DASHBOARD, ViewName.TEST, ViewName.AUTHOR, ViewName.CATEGORY, ViewName.DEVICE })
                 .apply();
 
-        spark.config().setDocumentTitle("Automation Report");
+        spark.config().setDocumentTitle("JDG_Automation Report");
         spark.config().setReportName("Extent report");
         spark.config().setTheme(Theme.STANDARD);
         extent.attachReporter(spark);

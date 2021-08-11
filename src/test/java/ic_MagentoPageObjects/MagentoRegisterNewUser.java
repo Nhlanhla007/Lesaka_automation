@@ -36,22 +36,24 @@ public class MagentoRegisterNewUser {
 	@FindBy(xpath = "//li[@role=\"menu-item\"]/a/span[contains(text(),'All Customers')]")
 	WebElement allCustomerTab;
 
-
-
 	@FindBy(xpath = "//button[@title='Add New Customer']")
 	WebElement Add_Customer;
+
 	@FindBy(xpath = "//*[@id='tab_customer']/span[1]")
 	WebElement Account_Information;
-	//Inside account info
 
 	@FindBy(xpath = "//select[@name='customer[website_id]']")
 	WebElement AssociatedWebsite_ele;
+
 	@FindBy(xpath = "//input[@name='customer[firstname]']")
 	WebElement Cust_Firstname;
+
 	@FindBy(xpath = "//input[@name='customer[lastname]']")
 	WebElement Cust_Lastname;
+
 	@FindBy(xpath = "//input[@name='customer[email]']")
 	WebElement Cust_Email;
+
 	@FindBy(xpath = "//input[@name='customer[identity_number]']")
 	WebElement Cust_ID;
 	
@@ -68,7 +70,6 @@ public class MagentoRegisterNewUser {
 	@FindBy(xpath = "//div[contains(text(),'You saved the customer.')]")
 	WebElement Save_Customer_success;
 
-	//Fetch partner number
 	@FindBy(xpath = "//input[@name='customer[partner_number]']")
 	WebElement BPnumber;
 

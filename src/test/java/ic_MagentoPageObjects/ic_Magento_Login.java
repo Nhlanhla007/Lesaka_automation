@@ -59,12 +59,13 @@ public class ic_Magento_Login {
 				action.writeText(Magento_Password, Password, "Password feild", test);
 				action.clickEle(Magento_SigninBtn, "click Magento_SigninBtn", test);
 				action.waitForJStoLoad(ajaxTimeOutInSeconds);
+				action.ajaxWait(ajaxTimeOutInSeconds,test);
 				action.explicitWait(10000);
-				String resWelcomescreen = action.getText(Dashboard, "Dashboard", test);
-				action.CompareResult("Navigate to magento admin page is success", "Dashboard",driver.getTitle() , test);
+//				String resWelcomescreen = action.getText(Dashboard, "Dashboard", test);
+				action.CompareResult("Navigation to magento admin page is successful", "Dashboard",driver.getTitle() , test);
 
 			}else{
-				action.CompareResult("Navigate to magento admin page is success", ResPage, "Magento Admin", test);
+				action.CompareResult("Navigation to magento admin page is successful", ResPage, "Magento Admin", test);
 			
     		}
 		}

@@ -86,8 +86,7 @@ public class EVS_NewAccountCreation {
 	
 	@FindBy(xpath = "//input[@id='password-confirmation']")
 	WebElement User_ConfirmPassword;
-	
-	//@FindBy(xpath = "// *[@type='submit']/span[contains(text(),'Create an Account')]")
+
 	@FindBy(xpath = "// *[@type='submit']/span[contains(text(),'Register')]")
 	WebElement CreateAccountBtn;
 	
@@ -96,19 +95,16 @@ public class EVS_NewAccountCreation {
 	
 	@FindBy(id = "identity_number-error")
 	WebElement identityNumberError;
-	
-	//@FindBy(xpath = "//body/div[2]/main[1]/div[1]/div[2]/div[1]/div[1]/div[1]")
+
 	@FindBy(xpath = "//*[@data-bind=\"html: $parent.prepareMessageForHtml(message.text)\"]")
 	WebElement existingAccountError;
 
     @FindBy(xpath = "//*[@id='account-nav']/ul[@class='nav items']/li/a[contains(text(),'Account Information')]")
     WebElement Account_info_option;
-   
-    
-    //TA31 Added the My Account click in evs AccountDetails
+
     @FindBy(xpath = "//*[@id=\"account-nav\"]/ul/li[1]/a")
     WebElement myAccountOption;
-    				//old //*[@id=\"maincontent\"]/div/div[2]/div[2]/div[2]/div[2]/div[1]/p
+
     @FindBy(xpath = "//*[@id=\"maincontent\"]/div[2]/div[2]/div[5]/div[2]/div[2]/div[1]/p")
     WebElement findNewsLetterStatus;
     
@@ -344,11 +340,11 @@ public class EVS_NewAccountCreation {
         String ExpPage ="edit";
         boolean accInfoOpt = action.waitUntilElementIsDisplayed(Account_info_option, 20000);//action.elementExists(Account_info_option, 11);
         if(accInfoOpt==true){
-            action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
+            action.CompareResult("account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
             action.click(Account_info_option, "Account info link", test);
             action.explicitWait(11000);
             if(driver.getCurrentUrl().contains(ExpPage+"/")){
-                action.CompareResult("Verify Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
+                action.CompareResult("Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
                
                 String ActualFirstname = action.getAttribute(Firstname, "value");
                
@@ -364,9 +360,9 @@ public class EVS_NewAccountCreation {
                 //String ActualTaxVatNumber =action.getAttribute(taxVatNumber, "value");
                 String ActualPassport = action.getAttribute(passport, "value");
 
-                action.CompareResult("Verify First Name ", expFirstName,ActualFirstname, test);
-                action.CompareResult("Verify Last Name ", expLastName,ActualLastname, test);
-                action.CompareResult("Verify Email Address ", expEmailAddress,ActualEmail, test);
+                action.CompareResult("First Name ", expFirstName,ActualFirstname, test);
+                action.CompareResult("Last Name ", expLastName,ActualLastname, test);
+                action.CompareResult("Email Address ", expEmailAddress,ActualEmail, test);
                 
                 switch (expIdentityType) {
 				case "ID":
@@ -381,17 +377,17 @@ public class EVS_NewAccountCreation {
                 	String actualStatus = newsletterStatusCheck(test);
 					String expectedStatus ="You are subscribed to \"General Subscription\".";
 					if(actualStatus.contains("subscribed")) {
-						action.CompareResult("Verify Newsletter subscription, you are subscribed to newsletter", expectedStatus, actualStatus, test);
+						action.CompareResult("Newsletter subscription, you are subscribed to newsletter", expectedStatus, actualStatus, test);
 					}else {
-						action.CompareResult("Verify Newsletter subscription", expectedStatus, actualStatus, test);
+						action.CompareResult("Newsletter subscription", expectedStatus, actualStatus, test);
 					}
                 }else if(expNewsletter.equalsIgnoreCase("no")) {
                 	String actualStatus1 = newsletterStatusCheck(test);
 					String expectedStatus1 =  "You aren't subscribed to our newsletter.";
 					if(actualStatus1.contains("aren't")) {	
-						action.CompareResult("Verify Newsletter subscription, you are not Subscibed to newsletter", expectedStatus1, actualStatus1, test);
+						action.CompareResult("Newsletter subscription, you are not Subscibed to newsletter", expectedStatus1, actualStatus1, test);
 					}else {
-						action.CompareResult("Verify Newsletter subscription", expectedStatus1, actualStatus1, test);
+						action.CompareResult("Newsletter subscription", expectedStatus1, actualStatus1, test);
 					}
 					
                 }
@@ -400,11 +396,11 @@ public class EVS_NewAccountCreation {
                 action.CompareResult("Verify Tax Vat Number", expVatNumber, ActualTaxVatNumber, test);
                 }*/
             }else{
-                action.CompareResult("Verify Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
+                action.CompareResult("Account info page is opened", ExpPage,driver.getCurrentUrl().toString(), test);
                
             }
         }else{
-            action.CompareResult("Verify account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
+            action.CompareResult("Account info option is present", String.valueOf(true),String.valueOf(accInfoOpt), test);
         }
        
        
@@ -428,18 +424,18 @@ public class EVS_NewAccountCreation {
 			String ActualIdentityNumber= action.getAttribute(customerIdentityNumber, "value");
 			
 			
-			action.CompareResult("Verify the First name of user in Magento", expFristname, ActualFirstname, test);
-			action.CompareResult("Verify the Last name of user in Magento", expLastname, ActualLastname, test);
-			action.CompareResult("Verify the Email of user in Magento", expEmail, ActualEmail, test);
+			action.CompareResult("First name of user in Magento", expFristname, ActualFirstname, test);
+			action.CompareResult("Last name of user in Magento", expLastname, ActualLastname, test);
+			action.CompareResult("Email of user in Magento", expEmail, ActualEmail, test);
 			
-			action.CompareResult("Verify the SA ID number of user in Magento", expEmail, ActualEmail, test);
+			action.CompareResult("SA ID number of user in Magento", expEmail, ActualEmail, test);
 			boolean FlagGenerateBPnumber=false;
 			if(ActualBPnumber!=null){
 				FlagGenerateBPnumber=true;
-				action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
+				action.CompareResult("BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
 				
 			}else{
-				action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
+				action.CompareResult("BP number of user in Magento :", String.valueOf(true),String.valueOf(FlagGenerateBPnumber)+"-BP no : "+ActualBPnumber.toString(), test);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -119,8 +120,9 @@ public class MagentoOrderStatusPage {
 				action.waitForPageLoaded(ajaxTimeOutInSeconds);
 				action.ajaxWait(ajaxTimeOutInSeconds, test);
 				ExtentTest node = test.createNode("Reloading the Search Page");
-				String screenShot = GenerateScreenShot.getScreenShot(driver);
-	            node.info("Page Reload Completed"+ node.addScreenCaptureFromPath(screenShot));
+				/*String screenShot = GenerateScreenShot.getScreenShot(driver);
+	            node.info("Page Reload Completed"+ node.addScreenCaptureFromPath(screenShot));*/
+				node.info("Page Reload Completed", MediaEntityBuilder.createScreenCaptureFromBase64String(action.takeScreenShotAsBase64()).build());
 				action.javaScriptClick(viewOrderDetails, "Order Status", test);
 			}
 			else{
