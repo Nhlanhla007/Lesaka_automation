@@ -30,10 +30,12 @@ public class EVS_NewAccountCreation {
 	WebDriver driver;
 	Action action;
 
+	DataTable2 dataTable2;
 	public EVS_NewAccountCreation(WebDriver driver, DataTable2 dataTable2) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
+		this.dataTable2 = dataTable2;
 		
 	}
 	
@@ -155,23 +157,23 @@ public class EVS_NewAccountCreation {
 	public  void accountCreation(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
 		driver.navigate().to(ConfigFileReader.getPropertyVal("EVS_URL"));
 		action.explicitWait(3000);
-		String firstName = input.get("firstName").get(rowNumber);
-		String lastName = input.get("lastName").get(rowNumber);
-		String emailAddress = input.get("emailAddress").get(rowNumber);
-		String password = input.get("password").get(rowNumber);
-		String confirmPassword = input.get("passwordConfirmation").get(rowNumber);
-		String identityType = input.get("identityType").get(rowNumber);
-		String identityNumber = input.get("identityNumber/passport").get(rowNumber);
-		String selectNewsLetter = input.get("newsletter").get(rowNumber);
+		String firstName = dataTable2.getValueOnCurrentModule("firstName");//input.get("firstName").get(rowNumber);
+		String lastName = dataTable2.getValueOnCurrentModule("lastName");//input.get("lastName").get(rowNumber);
+		String emailAddress = dataTable2.getValueOnCurrentModule("emailAddress");//input.get("emailAddress").get(rowNumber);
+		String password = dataTable2.getValueOnCurrentModule("password");//input.get("password").get(rowNumber);
+		String confirmPassword = dataTable2.getValueOnCurrentModule("passwordConfirmation");//input.get("passwordConfirmation").get(rowNumber);
+		String identityType = dataTable2.getValueOnCurrentModule("identityType");//input.get("identityType").get(rowNumber);
+		String identityNumber = dataTable2.getValueOnCurrentModule("identityNumber/passport");//input.get("identityNumber/passport").get(rowNumber);
+		String selectNewsLetter = dataTable2.getValueOnCurrentModule("newsletter");//input.get("newsletter").get(rowNumber);
 		//String taxVatNumbe = input.get("vatNumber").get(rowNumber);
-		String telephone = input.get("Telephone").get(rowNumber);
+		String telephone = dataTable2.getValueOnCurrentModule("Telephone");//input.get("Telephone").get(rowNumber);
 		//Added flag for VAT number status check TA31
 		//String tavVatNumberFlagStatus = input.get("vatNumberFlag").get(rowNumber);
-		String passwordValidation = input.get("validatePassword").get(rowNumber);
-		String saIDvalidateIncorrectID = input.get("validateIncorrectID").get(rowNumber);
-		String saIDvalidateIDWithLessDigits = input.get("validateIDWithLessDigits").get(rowNumber);
-		String saIDvalidateIDWithMoreDigits = input.get("validateIDWithMoreDigits").get(rowNumber);
-		String existingAccountValidation =input.get("validateExistingAccount").get(rowNumber);		
+		String passwordValidation = dataTable2.getValueOnCurrentModule("validatePassword");//input.get("validatePassword").get(rowNumber);
+		String saIDvalidateIncorrectID = dataTable2.getValueOnCurrentModule("validateIncorrectID");//input.get("validateIncorrectID").get(rowNumber);
+		String saIDvalidateIDWithLessDigits = dataTable2.getValueOnCurrentModule("validateIDWithLessDigits");//input.get("validateIDWithLessDigits").get(rowNumber);
+		String saIDvalidateIDWithMoreDigits = dataTable2.getValueOnCurrentModule("validateIDWithMoreDigits");//input.get("validateIDWithMoreDigits").get(rowNumber);
+		String existingAccountValidation =dataTable2.getValueOnCurrentModule("validateExistingAccount");//input.get("validateExistingAccount").get(rowNumber);		
 
 //		try {
 			evs_NavigateToCreateAccount(test);

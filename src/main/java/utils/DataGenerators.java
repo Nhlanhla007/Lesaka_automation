@@ -4,7 +4,13 @@ package utils;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
+
+import base.TestCaseBase;
+
 import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -97,8 +103,20 @@ public class DataGenerators {
      * @return 7712315046081
      */
     private String GenerateValidSAIdNumber() {
-        String idNumber;
-        idNumber = fakeValuesService.regexify("(((\\d{2}((0[13578]|1[02])(0[1-9]|[13]\\d|3[01])|(0[13456789]|1[012])(0[1-9]|[12]\\d|30)|02(0[1-9]|1\\d|2[0-8])))|([02468][048]|[13579][26])0229))((\\d{4})(\\d{3})|(\\d{7}))");
+        String idNumber;       
+        WebDriver IdGenerate =TestCaseBase.initializeTestBaseSetup(ConfigFileReader.getPropertyVal("BrowserType"));
+        DataTable2 dataTable2 = new DataTable2();
+
+        String website = dataTable2.getCommonDataFromSheet("Common_Data", "Id_Generate_Website");
+        IdGenerate.navigate().to(website);
+        
+		Action action = new Action(IdGenerate);
+		action.waitForJStoLoad(30);
+		
+        WebElement idNumberFromSite = IdGenerate.findElement(By.xpath("//*[@class=\"extra\"]/dl[2]/dd"));
+        idNumber = idNumberFromSite.getText().trim();
+        System.out.println("ID NUMBER HERE - " + idNumberFromSite.getText());
+        IdGenerate.quit();
         return idNumber;
     }
 

@@ -22,6 +22,7 @@ public class MagentoRegisterNewUser {
 	WebDriver driver;
 	Action action;
 	MagentoRetrieveCustomerDetailsPage RetriveCust;
+	DataTable2 dataTable2;
 
 	int ajaxTimeOutInSeconds = ic_Magento_Login.ajaxTimeOutInSeconds;
 	public MagentoRegisterNewUser(WebDriver driver, DataTable2 dataTable2) {
@@ -29,6 +30,7 @@ public class MagentoRegisterNewUser {
 		PageFactory.initElements(driver, this);
 		action = new Action(driver);
 		RetriveCust =new MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
+		this.dataTable2 = dataTable2;
 	}
 	//navigate to all customer
 	@FindBy(xpath = "//*[@class=\"admin__menu\"]/ul[@id='nav']/li[@id=\"menu-magento-customer-customer\"]/a/span[contains(text(),\"Customers\")]")
@@ -74,15 +76,16 @@ public class MagentoRegisterNewUser {
 	WebElement BPnumber;
 
 	public void CreateAccount_validateInfo_Backend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
-		String AssociatedWebsite=input.get("Website").get(rowNumber);
-		String Firstname = input.get("Firstname").get(rowNumber);
-		String Lastname = input.get("Lastname").get(rowNumber);
-		String Email = input.get("Email").get(rowNumber);
-		String cellPhoneNumber = input.get("Cellphone").get(rowNumber);
-		String IDType = input.get("Identitynumber/passport").get(rowNumber);
-		String IDNumber = input.get("SAID").get(rowNumber);
-		String expPassport = input.get("Passport").get(rowNumber);
-		int waitforelement =Integer.parseInt(input.get("DelayforElements").get(rowNumber));
+		String AssociatedWebsite=dataTable2.getValueOnCurrentModule("Website");//input.get("Website").get(rowNumber);;
+		String Firstname = dataTable2.getValueOnCurrentModule("Firstname");//input.get("Firstname").get(rowNumber);
+		String Lastname = dataTable2.getValueOnCurrentModule("Lastname");//input.get("Lastname").get(rowNumber);
+		String Email = dataTable2.getValueOnCurrentModule("Email");//input.get("Email").get(rowNumber);
+		String IDType =dataTable2.getValueOnCurrentModule("Identitynumber/passport");// input.get("Identitynumber/passport").get(rowNumber);
+		String cellPhoneNumber = dataTable2.getValueOnCurrentModule("Cellphone");//input.get("Cellphone").get(rowNumber);
+		String IDNumber = dataTable2.getValueOnCurrentModule("SAID");//input.get("SAID").get(rowNumber);
+		String expPassport = dataTable2.getValueOnCurrentModule("Passport");//input.get("Passport").get(rowNumber);
+		int waitforelement = Integer.parseInt(dataTable2.getValueOnCurrentModule("DelayforElements")/* input.get("DelayforElements").get(rowNumber) */);
+		
 		String resBPnumber = null;
 		boolean ExpCustomerCreateSuccess = true;
 		//Navigate to all customer
