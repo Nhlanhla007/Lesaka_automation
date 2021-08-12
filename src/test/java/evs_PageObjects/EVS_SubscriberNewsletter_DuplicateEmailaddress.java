@@ -41,9 +41,12 @@ public class EVS_SubscriberNewsletter_DuplicateEmailaddress {
 		String actualMessage = null;
 		boolean checkflag = false;
 		System.out.println("ExpEmailId : " + ExpEmailId);
+		action.explicitWait(5000);
 		action.scrollToElement(newsLetterEmailTextBox, "Scrolling to News letter Field");
+		action.explicitWait(2000);
 		action.writeText(newsLetterEmailTextBox, ExpEmailId, "Newsletter EmailID field", test);
 		action.click(clickSubscribeButton, "Subscribe button", test);
+		action.explicitWait(5000);
 		boolean errorMesg = action.isElementPresent(newLetterDuplicateMessage);
 		if (errorMesg) {
 			actualMessage = action.getText(newLetterDuplicateMessage, "Newsletter Subscribe Message", test);

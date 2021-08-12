@@ -48,10 +48,12 @@ public class EVS_Subscriber_Newsletter_ValidEmailaddress {
 		boolean checkflag = false;
 		System.out.println("ExpEmailId : " + uniqueEmailID);
 		logger.info("Entered unique email ID:"+uniqueEmailID);
-		
+		action.explicitWait(5000);
 		action.scrollToElement(newsLetterEmailTextBox, "Scrolling to News letter Field");
+		action.explicitWait(2000);
 		action.writeText(newsLetterEmailTextBox, uniqueEmailID, "Newsletter EmailID field", test);
 		action.click(clickSubscribeButton, "Subscribe button", test);
+		action.explicitWait(5000);
 		boolean errorMesg = action.isElementPresent(newLetterSuccessMessage);
 		if (errorMesg) {
 			actualMessage = action.getText(newLetterSuccessMessage, "Newsletter Subscribe Message", test);

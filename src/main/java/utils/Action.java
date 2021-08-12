@@ -1668,12 +1668,14 @@ public class Action {
                 return driver.findElements((By) elementAttr).size() > 0;
             } else {
                 wait.until((ExpectedConditions.visibilityOf(((WebElement) elementAttr))));
-                node.pass("Pop up is display " + name + node.addScreenCaptureFromPath(screenShot));
+//                node.pass("Pop up is display " + name + node.addScreenCaptureFromPath(screenShot));
+                node.pass("Pop up is display " + name,MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
                 return true;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            node.fail("Pop up is NOT displayed");
+//            node.fail("Pop up is NOT displayed");
+            node.fail(MarkupHelper.createLabel("Pop up is NOT displayed", ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
             return false;
 
         }

@@ -39,11 +39,13 @@ public class EVS_newLetterInvalidEmail {
 	public void evs_NewsLetterInvalidEmail(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
 			throws IOException {
 		String newsLetterEmail = dataTable2.getValueOnCurrentModule("LetterEmail");
-
+		action.explicitWait(5000);
 		action.scrollToElement(newsLetterEmailTextBox, "Scroll to news letter subscribtion");
+		action.explicitWait(2000);
 		action.clear(newsLetterEmailTextBox, "Clear the email text box");
 		action.writeText(newsLetterEmailTextBox, newsLetterEmail, "Enter an incorrect email", test);
 		action.click(clickSubscribeButton, "Subscribe", test);
+		action.explicitWait(5000);
 		action.CompareResult("Error message", "Please enter a valid email address (Ex: johndoe@domain.com).",
 				newsLetterErrorMessage.getText(), test);
 	}
