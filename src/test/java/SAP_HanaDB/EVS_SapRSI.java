@@ -167,13 +167,13 @@ public class EVS_SapRSI {
           String AGGR_AVAIL_QTY=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0);
           String rough_stock_value=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","rough_stock_value",0);
 			
-//			String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" where " + "channel_id = '" + channelID + "' and "
-//					+ "ROUGH_STOCK_DATE >=to_date(now())and" + " AGGR_AVAIL_QTY between 1 and 50000 "
-//					+ "and rough_stock_value = 'G' order by rand() limit 1";
+			String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" where " + "channel_id = '" + channelID + "' and "
+					+ "ROUGH_STOCK_DATE >=to_date(now())and" + " AGGR_AVAIL_QTY between 1 and 50000 "
+					+ "and rough_stock_value = 'G' order by rand() limit 1";
  
           //Hard coded Article ID below as could not find data, proper query is above
-          String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" where channel_id = 'SO61' and ROUGH_STOCK_DATE >=to_date(now())"
-          		+ "and AGGR_AVAIL_QTY between 1 and 50000 and rough_stock_value = 'G' and article_id = '000000000010115998' order by rand() limit 1";
+          /*String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" where channel_id = 'SO61' and ROUGH_STOCK_DATE >=to_date(now())"
+          		+ "and AGGR_AVAIL_QTY between 1 and 50000 and rough_stock_value = 'G' and article_id = '000000000010115998' order by rand() limit 1";*/
           
 			//System.out.println("Query:"+Query);
           ResultSet rs = hn.ExecuteQuery(Query,test);
@@ -182,6 +182,7 @@ public class EVS_SapRSI {
           String SKUCode=getColumnValue(hn,rs ,"ARTICLE_ID");
           //System.out.println("SKUCode: "+SKUCode);
           String AGGR_AVAIL_QTY_1=getColumnValue(hn,rs ,"AGGR_AVAIL_QTY");
+
           String AGGR_AVAIL_QTYFinal=AGGR_AVAIL_QTY_1.split("\\.")[0];
           //System.out.println("Original AGGR_AVAIL_QTY: "+AGGR_AVAIL_QTYFinal);
           String AGGR_AVAIL_QTY_AFTER_CHECKOUT = String.valueOf((Integer.parseInt(AGGR_AVAIL_QTYFinal)-1));
