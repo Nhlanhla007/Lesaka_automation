@@ -131,7 +131,8 @@ public class EVS_PaymentOption {
                     boolean NoFileSelectionCheck = action.isElementPresent(NoFileSelection);
                     action.CompareResult("No ID Document selected selected for Upload", "true", String.valueOf(NoFileSelectionCheck), test);
                     if (NoFileSelectionCheck) {
-                        String filePath = System.getProperty("user.dir") + "//src/test/resources/ID_&_Passport.png";
+
+                        String filePath = System.getProperty("user.dir") + "/src/test/resources/ID_&_Passport.png";
                         selectIDButton.sendKeys(filePath);
                         action.ajaxWait(10,test);
                         boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, 5);
