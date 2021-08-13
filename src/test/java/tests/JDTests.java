@@ -9,6 +9,9 @@ import java.util.concurrent.TimeUnit;
 import KeywordManager.JDGKeyManager;
 import base.TestCaseBase;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -29,6 +32,7 @@ public class JDTests extends BaseTest {
 	JDGKeyManager km = null;
 	JavaUtils utils;
 	ExtentReportGenerator reportJD;
+	Action action = null;
 
 
 	@Test
@@ -71,6 +75,8 @@ public class JDTests extends BaseTest {
 				dataTable2.setTestCaseID(testcaseID);
 				ExtentTest test = reportJD.createTest(testcaseID + " : " + testCaseDescription);
 				startBrowserSession();
+				action = new Action(driver);
+				ExtentTest test1=null;
 				try {
 					System.out.println("-------------------------------------------------------");
 					System.out.println("testCaseDescription: " + testcaseID + "_" + testCaseDescription);
@@ -79,13 +85,14 @@ public class JDTests extends BaseTest {
 						String actionToRun = "";
 						try {
 							actionToRun = singleSuiteData.get(actionToRunLable).get(i);
+							test1 = test.createNode(actionToRun);
 						} catch (Exception e) {
 
 						}
 						currentKeyWord = actionToRun;
 
 						if (!currentKeyWord.equals("")) {
-							System.out.println("actionToRunLable:" + actionToRunLable);
+							System.out.println("actionToRunLable: " + actionToRunLable);
 							System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxx:currentKeyWord:" + currentKeyWord);
 							if (!occCount.containsKey(currentKeyWord)) {
 								occCount.put(currentKeyWord, 0);
@@ -107,13 +114,14 @@ public class JDTests extends BaseTest {
 						}
 					}
 				} catch (Exception e) {
-					logger.info(e.getMessage());
+					/*logger.info(e.getMessage());
+                e.printStackTrace();
+                e.getCause();
+                System.out.println(e.getMessage());
+                String screenShot = GenerateScreenShot.getScreenShot(driver);
+                node.fail(e.getMessage() + node.addScreenCaptureFromPath(screenShot));*/
 					e.printStackTrace();
-					e.getCause();
-					System.out.println(e.getMessage());
-					String screenShot = GenerateScreenShot.getScreenShot(driver);
-					ExtentTest node = test.createNode("Exception");
-					node.fail(e.getMessage() + node.addScreenCaptureFromPath(screenShot));
+					test1.createNode("Exception").fail(MarkupHelper.createLabel("Exception occurred: ", ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(action.takeScreenShotAsBase64()).build());
 				}
 				endBrowserSession();
 			}

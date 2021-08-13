@@ -80,7 +80,6 @@ public class IC_Parallel_login {
         String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("urlKey"), "url");
         action.navigateToURL(url);
         action.waitForJStoLoad(120);
-
         action.click(ic_myAccountButton, "My Account", test);
         action.waitForElementClickable(LoginBtn, "ic_myAccountButton", 5);
         action.click(LoginBtn, "Login In", test);
@@ -88,21 +87,12 @@ public class IC_Parallel_login {
         action.writeText(ic_email, email, "email field", test);
         action.waitForElementVisibility(ic_Password, "ic_Password", 5);
         action.writeText(ic_Password, Password, "Password field", test);
-        action.clickEle(ic_SigninBtn, "click ic_SigninBtn", test);
-        action.waitForPageLoaded(120);
+        action.click(ic_SigninBtn, "click ic_SigninBtn", test);
+        action.waitForJStoLoad(120);
         action.click(ic_myAccountButton, "Click My Account Button", test);
-        try {
-            boolean checkLogOutButton;
-            if (checkLogOutButton = logoutBtn.isDisplayed()) {
-                action.CompareResult("User Login", "true", String.valueOf(checkLogOutButton), test);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            action.CompareResult("User Login", "true", e.getMessage(), test);
-
-        }
-
-
+        action.explicitWait(10000);
+        boolean checkLogOutButton = action.isElementPresent(logoutBtn);
+        action.CompareResult("User Login", "true", String.valueOf(checkLogOutButton), test);
     }
 
 }
