@@ -275,10 +275,14 @@ public class ICDelivery {
         action.writeText(lastname, lastnameGift, "Last name", test);
         action.writeText(email, emailGift, "Email", test);
         action.writeText(streetNameGift, streetNameG, "Street name", test);
-        action.writeText(telephoneGift, input.get("telephone").get(rowNumber), "telephone", test);
-        action.writeText(cityGift, input.get("city").get(rowNumber), "city", test);
-        action.writeText(SuburbGift, input.get("Suburb").get(rowNumber), "Suburb", test);
-        action.writeText(postalCodeGift, input.get("postalCode").get(rowNumber), "postalCode", test);
+//        action.writeText(telephoneGift, input.get("telephone").get(rowNumber), "telephone", test);
+        action.writeText(telephoneGift, dataSheets.getValueOnCurrentModule("telephone"), "Telephone", test);
+//        action.writeText(cityGift, input.get("city").get(rowNumber), "city", test);
+        action.writeText(cityGift, dataSheets.getValueOnCurrentModule("city"), "City", test);
+//        action.writeText(SuburbGift, input.get("Suburb").get(rowNumber), "Suburb", test);
+        action.writeText(SuburbGift, dataSheets.getValueOnCurrentModule("Suburb"), "Suburb", test);
+//        action.writeText(postalCodeGift, input.get("postalCode").get(rowNumber), "postalCode", test);
+        action.writeText(postalCodeGift, dataSheets.getValueOnCurrentModule("postalCode"), "Postal Code", test);
         action.dropDownselectbyvisibletext(provinceGift, input.get("province").get(rowNumber), "province", test);
         action.explicitWait(2000);
         action.click(placeOrder, "placeOrder", test);
