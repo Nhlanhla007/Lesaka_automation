@@ -179,6 +179,7 @@ public class EVS_SapRSI {
           ResultSet rs = hn.ExecuteQuery(Query,test);
           int rowsCountReturned = hn.GetRowsCount(rs);
           //System.out.println("rowsCountReturned: "+rowsCountReturned);
+          if(rowsCountReturned >= 1) {
           String SKUCode=getColumnValue(hn,rs ,"ARTICLE_ID");
           //System.out.println("SKUCode: "+SKUCode);
           String AGGR_AVAIL_QTY_1=getColumnValue(hn,rs ,"AGGR_AVAIL_QTY");
@@ -190,6 +191,11 @@ public class EVS_SapRSI {
           dataTable2.setValueOnOtherModule("evs_ProductSearch", "specificProduct", SKUCode, 0);
           dataTable2.setValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",AGGR_AVAIL_QTY_AFTER_CHECKOUT,0);
           hn.closeDB();
+          }else {
+        	  hn.closeDB();
+        	  throw new Exception("No Data Is Returned From SAP");
+          }
+          
     }
 
 
