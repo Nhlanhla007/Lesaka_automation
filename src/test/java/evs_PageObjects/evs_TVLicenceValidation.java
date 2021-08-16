@@ -60,6 +60,9 @@ public class evs_TVLicenceValidation {
 
 	@FindBy(xpath = "//div[contains(text(),'Adding product to cart will add TV Licence product')]")
 	private WebElement evs_TVlicenceMessage;
+	
+	@FindBy(xpath = "//div[contains(text(),'TV Licence validated. No outstanding balance')]")
+	private WebElement evs_ExistingTvLicence;
 
 	@FindBy(xpath = "//button[contains(text(),'Proceed')]")
 	private WebElement evs_buttonProceed;
@@ -99,6 +102,28 @@ public class evs_TVLicenceValidation {
 			}
 
 			if (LicenseAdd.equalsIgnoreCase("no")) {
+				if (typeOfIdentity.equalsIgnoreCase("ID")) {
+					action.javaScriptClick(evs_radioID, "select the ID identity type", test);
+					action.writeText(evs_TextfieldID, valueofIdentity, "writing the ID", test);
+					action.explicitWait(5000);
+					action.click(evs_buttonValidate, "Click validate", test);
+					action.ajaxWait(10, test);
+				}
+				if (typeOfIdentity.equalsIgnoreCase("Passport")) {
+					action.javaScriptClick(evs_radioPassport, "select the Passport identity type", test);
+					action.writeText(evs_TextfieldPass, valueofIdentity, "writing the ID", test);
+					action.explicitWait(5000);
+					action.click(evs_buttonValidate, "Click validate", test);
+					action.ajaxWait(10, test);
+				}
+				
+				String existingLicence = action.getText(evs_ExistingTvLicence, "Validate No Outstangind balance", test);
+				action.CompareResult("Adding the license fee R265 ", existingLicence,
+						action.getText(evs_ExistingTvLicence, "", test), test);
+				action.explicitWait(5000);
+				action.click(evs_buttonProceed, "Click Proceed", test);
+				action.ajaxWait(10, test);
+				action.waitForPageLoaded(30);
 
 			}
 
