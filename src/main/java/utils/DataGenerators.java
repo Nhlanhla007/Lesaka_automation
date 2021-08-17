@@ -33,6 +33,7 @@ public class DataGenerators {
     private String lastName;
     private String currentFirstName;
     private String currentLastName;
+    private String passportID;
 
     public DataGenerators() {
         fakeValuesService = new FakeValuesService(new Locale("en-ZA"), new RandomService());
@@ -122,8 +123,8 @@ public class DataGenerators {
 
     
     private String GenerateValidPassPortNumber() {
-        String passportNumber;
-        passportNumber = fakeValuesService.regexify("[A-Z]{2}[0-9]{2}[abcd]{2}[0-9]{2}");
+    	String passportNumber;
+        passportNumber= fakeValuesService.regexify("[A-Z]{2}[0-9]{2}[abcd]{2}[0-9]{2}");
         return passportNumber;
     }
 
@@ -176,8 +177,10 @@ public class DataGenerators {
             case "GENERATED VALID SA ID NUMBER":
                 requiredData = GenerateValidSAIdNumber();
                 break;
-            case "GENERATED Passport NUMBER":
+            case "GENERATED PASSPORT NUMBER":
                 requiredData = GenerateValidPassPortNumber();
+                passportID = requiredData;
+                
                 break;
             case "GENERATED NUMBER - 10":
                 requiredData = faker.number().digits(10).replace('0', '1');

@@ -166,8 +166,7 @@ public class EVS_NewAccountCreation {
 		String identityNumber = dataTable2.getValueOnCurrentModule("identityNumber/passport");//input.get("identityNumber/passport").get(rowNumber);
 		String selectNewsLetter = dataTable2.getValueOnCurrentModule("newsletter");//input.get("newsletter").get(rowNumber);
 		//String taxVatNumbe = input.get("vatNumber").get(rowNumber);
-		String telephone = dataTable2.getValueOnCurrentModule("Telephone");//input.get("Telephone").get(rowNumber);
-		//Added flag for VAT number status check TA31
+		String telephone = dataTable2.getValueOnCurrentModule("Telephone");
 		//String tavVatNumberFlagStatus = input.get("vatNumberFlag").get(rowNumber);
 		String passwordValidation = dataTable2.getValueOnCurrentModule("validatePassword");//input.get("validatePassword").get(rowNumber);
 		String saIDvalidateIncorrectID = dataTable2.getValueOnCurrentModule("validateIncorrectID");//input.get("validateIncorrectID").get(rowNumber);
@@ -198,10 +197,13 @@ public class EVS_NewAccountCreation {
 				System.out.println("Inside ID");
 //			action.click(User_SAIDbtn, "Identity type: ID", test);
 			action.writeText(User_SAID, identityNumber, "ID/Passport number", test);
+			dataTable2.setValueOnOtherModule("tvLicenseValidation", "ID/Passport", identityNumber, 0);
 			}else if(identityType.equalsIgnoreCase("Passport")){
 				System.out.println("Inside passport");
 				action.click(User_Passportbtn, "Identity type: Passport", test);
 				action.writeText(User_Passport, identityNumber, "ID/Passport number", test);
+				dataTable2.setValueOnOtherModule("tvLicenseValidation", "ID/Passport", identityNumber, 0);
+				
 			}
 
 			if (saIDvalidateIncorrectID.equalsIgnoreCase("yes")) {
