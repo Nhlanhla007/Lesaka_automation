@@ -251,15 +251,16 @@ public class EVS_SapRSI {
             WebElement z4= i.findElement(By.xpath("./child::td[4]/div/div[2]/input"));
             String store=dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","Store",0);
             if(z1.getText().equals(store)) {
-                action.CompareResult(" Item Qty SapDB ", dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0),z4.getAttribute("value"), test);
+            	action.scrollElemetnToCenterOfView(i, "Store Count", test);
+                action.CompareResult(" Item Qty In Magento", dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0),z4.getAttribute("value"), test);
             }
         }
 				
-		action.waitUntilElementIsDisplayed(sapDataTab, 10000);
+		action.waitUntilElementIsDisplayed(sapDataTab, 10000);		
 		action.click(sapDataTab, "sapDataTab", test);
 		action.scrollElemetnToCenterOfView(roughStockIndicatorAct, "Scroll to Rough Stock Indicator", test);
 		//System.out.println(action.getText(roughStockIndicatorAct, "roughStockIndicator", test));
-		action.CompareResult(" rough Stock Indicator SAP DB ",
+		action.CompareResult(" Rough Stock Indicator in Magento",
 				dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB", "rough_stock_value", 0),
 				action.getText(roughStockIndicatorAct, "roughStockIndicator", test), test);		 
 
