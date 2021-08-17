@@ -15,6 +15,7 @@ import com.aventstack.extentreports.ExtentTest;
 import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
+import utils.JavaUtils;
 
 public class EVS_PaymentOption {
     WebDriver driver;
@@ -129,10 +130,11 @@ public class EVS_PaymentOption {
 
                 if (uploadButton) {
                     boolean NoFileSelectionCheck = action.isElementPresent(NoFileSelection);
-                    action.CompareResult("No ID Document selected selected for Upload", "true", String.valueOf(NoFileSelectionCheck), test);
+                    action.CompareResult("No Document is selected for Upload", "true", String.valueOf(NoFileSelectionCheck), test);
                     if (NoFileSelectionCheck) {
 
-                        String filePath = System.getProperty("user.dir") + "/src/test/resources/ID_&_Passport.png";
+                        String filePath = System.getProperty("user.dir") + "/src/test/resources/ID_Passport.png";
+
                         selectIDButton.sendKeys(filePath);
                         action.ajaxWait(10,test);
                         boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, 5);
@@ -140,7 +142,6 @@ public class EVS_PaymentOption {
                         if (uploadMessage) {
                             action.explicitWait(10000);
                             action.javaScriptClick(IDSubmitBtn, "Submit Button", test);
-                            action.explicitWait(2000);
                             boolean uploadingMessage = action.waitUntilElementIsDisplayed(uploadingMsg, 5);
                             action.CompareResult("File uploading message", "true", String.valueOf(uploadingMessage), test);
                             action.explicitWait(10000);
@@ -151,7 +152,7 @@ public class EVS_PaymentOption {
                 }
             }
         } catch (Exception e) {
-            throw new Exception("Unable to upload the ID proof Document: " + e.getMessage());
+            throw new Exception("Unable to upload the Document: " + e.getMessage());
         }
     }
 

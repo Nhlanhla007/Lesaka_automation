@@ -275,13 +275,13 @@ public class ICDelivery {
         action.writeText(lastname, lastnameGift, "Last name", test);
         action.writeText(email, emailGift, "Email", test);
         action.writeText(streetNameGift, streetNameG, "Street name", test);
-        action.writeText(telephoneGift, input.get("telephone").get(rowNumber), "telephone", test);
-        action.writeText(cityGift, input.get("city").get(rowNumber), "city", test);
-        action.writeText(SuburbGift, input.get("Suburb").get(rowNumber), "Suburb", test);
-        action.writeText(postalCodeGift, input.get("postalCode").get(rowNumber), "postalCode", test);
-        action.dropDownselectbyvisibletext(provinceGift, input.get("province").get(rowNumber), "province", test);
+        action.writeText(telephoneGift, dataSheets.getValueOnOtherModule("deliveryPopulation", "telephone",0), "Telephone", test);
+        action.writeText(cityGift, dataSheets.getValueOnOtherModule("deliveryPopulation", "city",0), "City", test);
+        action.writeText(cityGift, dataSheets.getValueOnOtherModule("deliveryPopulation", "Suburb",0), "Suburb", test);
+        action.writeText(postalCodeGift, dataSheets.getValueOnOtherModule("deliveryPopulation", "postalCode",0), "Postal Code", test);
+        action.writeText(postalCodeGift, dataSheets.getValueOnOtherModule("deliveryPopulation", "province",0), "Province", test);
         action.explicitWait(2000);
-        action.click(placeOrder, "placeOrder", test);
+        action.click(placeOrder, "Place Order", test);
         action.ajaxWait(10, test);
     }
 }

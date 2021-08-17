@@ -21,11 +21,13 @@ import utils.DataTable2;
 public class EVS_MagentoOrderSAPnumber {
 	WebDriver driver;
     Action action;
+	DataTable2 dataTable2;
     
     public EVS_MagentoOrderSAPnumber(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
+		this.dataTable2 = dataTable2;
 
     }
     
@@ -36,7 +38,10 @@ public class EVS_MagentoOrderSAPnumber {
     private WebElement downloadSABCButton;
     
     @FindBy(xpath = "//div[contains(text(),'was downloaded')]")
-    private WebElement downloadSucesssMsg;
+    private WebElement downloadSuccessMsg;
+
+	@FindBy(xpath = "//span[@id='order_status']")
+	private WebElement magentoOrderStatus;
     
     Timer t = new Timer();
     public static String OrderSAPnumber;
@@ -49,6 +54,12 @@ public class EVS_MagentoOrderSAPnumber {
     	int TimeOutinSecond =Integer.parseInt(input.get("TimeOutinSecond").get(rowNumber));
     	int trycount =Integer.parseInt(input.get("totalCounter").get(rowNumber));
     	int elapsedTime = 0;    	
+    	action.explicitWait(10000);
+
+		String orderStatus = dataTable2.getValueOnOtherModule("evs_OrderStatusSearch", "orderStatus", 0);
+		action.CompareResult("Sales Order Status", orderStatus, magentoOrderStatus.getText(), test);
+
+
     	while(elapsedTime<=TimeOutinSecond && flagres==false)
     	{
 			action.refresh();
@@ -104,7 +115,7 @@ public class EVS_MagentoOrderSAPnumber {
 			 if(sabcFlag) {
 			   action.click(downloadSABCButton, "SABC Download ID Book", test);
 			   action.waitForJStoLoad(30);
-			   boolean msgFlag = action.isElementPresent(downloadSucesssMsg);
+			   boolean msgFlag = action.isElementPresent(downloadSuccessMsg);
 			   action.CompareResult("SABC ID Download message", String.valueOf(true), String.valueOf(msgFlag), test);
 			 }
 		} catch (Exception e) {

@@ -256,7 +256,7 @@ public class EVS_SapRSI {
             }
         }
 				
-		action.waitUntilElementIsDisplayed(sapDataTab, 10000);		
+		action.waitUntilElementIsDisplayed(sapDataTab, 10000);
 		action.click(sapDataTab, "sapDataTab", test);
 		action.scrollElemetnToCenterOfView(roughStockIndicatorAct, "Scroll to Rough Stock Indicator", test);
 		//System.out.println(action.getText(roughStockIndicatorAct, "roughStockIndicator", test));

@@ -21,16 +21,21 @@ import utils.DataTable2;
 public class ic_MagentoOrderSAPnumber {
 	WebDriver driver;
     Action action;
+	DataTable2 dataTable2;
     
     public ic_MagentoOrderSAPnumber(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
+		this.dataTable2 = dataTable2;
 
     }
     
     @FindBy(xpath="//div[contains(text(),'[RabbitMQ] Order SAP Number: ')][1]")
     private WebElement OrderDetailSAPNumber;
+
+	@FindBy(xpath = "//span[@id='order_status']")
+	private WebElement magentoOrderStatus;
     
     Timer t = new Timer();
     public static String OrderSAPnumber;
@@ -43,6 +48,12 @@ public class ic_MagentoOrderSAPnumber {
     	int TimeOutinSecond =Integer.parseInt(input.get("TimeOutinSecond").get(rowNumber));
     	int trycount =Integer.parseInt(input.get("totalCounter").get(rowNumber));
     	int elapsedTime = 0;
+    	action.explicitWait(10000);
+
+		String orderStatus = dataTable2.getValueOnOtherModule("OrderStatusSearch", "orderStatus", 0);
+		System.out.println("Sales Order Status :"+orderStatus);
+		action.CompareResult("Sales Order Status", orderStatus, magentoOrderStatus.getText(), test);
+
     	while(elapsedTime<=TimeOutinSecond && flagres==false)
     	{
 			action.refresh();

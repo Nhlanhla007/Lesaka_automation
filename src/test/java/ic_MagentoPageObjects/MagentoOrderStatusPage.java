@@ -56,7 +56,10 @@ public class MagentoOrderStatusPage {
 	@FindBy(xpath = "//body/div[2]/main[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[3]/button[1]")
 	public WebElement clearFilters;
 	
-	@FindBy(xpath = "//tbody/tr[1]/td[10]/a[1]")
+	/*@FindBy(xpath = "//tbody/tr[1]/td[10]/a[1]")
+	public WebElement viewOrderDetails;*/
+
+	@FindBy(xpath = "//table[@data-role='grid']/tbody/tr[1]/td[2]/div")
 	public WebElement viewOrderDetails;
 	
 	@FindBy(xpath = "//tbody/tr[1]/td[9]/div")
@@ -107,8 +110,10 @@ public class MagentoOrderStatusPage {
 		}
 		action.javaScriptClick(magentoFilterTab, "Filter tab", test);
 		action.writeText(magentoIdSearchField, idToSearch, "searchId", test);
+		action.explicitWait(3000);
 		action.javaScriptClick(magentoApplyFilterTab, "Apply to filters", test);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.explicitWait(5000);
 	}
 	
 	public void viewOrderDetails(ExtentTest test) throws Exception {
@@ -123,10 +128,11 @@ public class MagentoOrderStatusPage {
 				/*String screenShot = GenerateScreenShot.getScreenShot(driver);
 	            node.info("Page Reload Completed"+ node.addScreenCaptureFromPath(screenShot));*/
 				node.info("Page Reload Completed", MediaEntityBuilder.createScreenCaptureFromBase64String(action.takeScreenShotAsBase64()).build());
-				action.javaScriptClick(viewOrderDetails, "Order Status", test);
+//				action.javaScriptClick(viewOrderDetails, "Order Status", test);
+				action.javaScriptClick(viewOrderDetails, "Filtered order", test);
 			}
 			else{
-				action.javaScriptClick(viewOrderDetails, "Order Status", test);
+				action.javaScriptClick(viewOrderDetails, "Filtered order", test);
 			}
 
 			//action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
@@ -159,7 +165,7 @@ public class MagentoOrderStatusPage {
 //			idToSearch = input.get("productSearchId").get(rowNumber);
 //		}
 		String orderStatus = input.get("orderStatus").get(rowNumber);
-		System.out.println("orderStatus :"+orderStatus);
+//		System.out.println("orderStatus :"+orderStatus);
 		//action.explicitWait(15000);
 		
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
@@ -167,7 +173,7 @@ public class MagentoOrderStatusPage {
 		
 		NavigateOdersPage(test);
 		searchForOrder(idToSearch,test);
-		orderStatusCheck(orderStatus, test);
+//		orderStatusCheck(orderStatus, test);
 		viewOrderDetails(test);
 		
 		//Validate SKU for bundle article
