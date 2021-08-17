@@ -773,6 +773,9 @@ public class JDGKeyManager {
             case "evs_downloadSABC_ID":
             	evs_magentoSAPNumber.downloadSABC_ID(test1);
             	break;
+            case "user_license_verification":
+            	evs_TvLicenseApproval.licenseValidation(test1);
+            	break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){

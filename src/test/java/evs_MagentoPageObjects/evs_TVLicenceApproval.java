@@ -65,12 +65,60 @@ public class evs_TVLicenceApproval {
     @FindBy(xpath = " //*[@id=\"order_status\"]")
     private WebElement admin_ChangedStatusRecieved;
     
+    @FindBy(xpath = "//*[contains(text(),'Identity Number')]/following-sibling::td")
+    private WebElement idValidation;
+    
+    @FindBy(xpath = "//*[contains(text(),'Passport Number')]/following-sibling::td")
+    private WebElement passportValidation;
+    
  
+    
+    
+	public void licenseValidation(ExtentTest test) throws Exception {
+		String typeOfIdentificationValidation = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Type", 0);
+		String documentUploadIndicator = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Upload Document", 0);
+		String userType = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "UserType", 0);
+		String expectedDetailsUsedForTV;
+		action.explicitWait(5000);
+		action.waitForJStoLoad(ajaxTimeOutInSeconds);
+		if (documentUploadIndicator.equalsIgnoreCase("yes")) {
+			switch (typeOfIdentificationValidation.toUpperCase()) {
+			case "ID":
+				if (userType.equalsIgnoreCase("Registered")) {
+					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("evs_AccountCreation","identityNumber/passport", 0);
+					if (!(expectedDetailsUsedForTV.equalsIgnoreCase("") | expectedDetailsUsedForTV == null)) {
+						action.waitUntilElementIsDisplayed(idValidation, 20);
+						action.CompareResult("ID Validation", expectedDetailsUsedForTV, idValidation.getText(), test);
+					}
+				} else if (userType.equalsIgnoreCase("Guest")) {
+					action.waitUntilElementIsDisplayed(idValidation, 20);
+					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("tvLicenseValidation", "ID/Passport",0);
+					action.CompareResult("ID Validation", expectedDetailsUsedForTV, idValidation.getText(), test);
+				}
+				break;
+			case "PASSPORT":
+				if (userType.equalsIgnoreCase("Registered")) {
+					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("evs_AccountCreation","identityNumber/passport", 0);
+					if (!(expectedDetailsUsedForTV.equalsIgnoreCase("") | expectedDetailsUsedForTV == null)) {
+						action.waitUntilElementIsDisplayed(passportValidation, 20);
+						expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("tvLicenseValidation","ID/Passport", 0);
+						action.CompareResult("Passport Validation", expectedDetailsUsedForTV,passportValidation.getText(), test);
+					}
+				} else if (userType.equalsIgnoreCase("Guest")) {
+					action.waitUntilElementIsDisplayed(passportValidation, 20);
+					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("tvLicenseValidation", "ID/Passport",0);
+					action.CompareResult("Passport Validation", expectedDetailsUsedForTV, passportValidation.getText(),test);
+				}
+				break;
+			}
+		}
+
+	}
 
     public void approveTVlicence(ExtentTest test, int rowNumber) throws Exception {
         String ApprovalPass = dataTable2.getValueOnCurrentModule("TV licence password Approval");
         String SKUTvLicence = dataTable2.getValueOnCurrentModule("TV licence SKU");
-
+        
         action.explicitWait(5000);
         try {
             action.scrollElemetnToCenterOfView(admin_NewTVlicenceHover, "Status", test);
