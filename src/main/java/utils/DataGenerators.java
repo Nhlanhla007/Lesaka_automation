@@ -103,7 +103,7 @@ public class DataGenerators {
      * @return 7712315046081
      */
     private String GenerateValidSAIdNumber() {
-        String idNumber;       
+        String idNumber;
         WebDriver IdGenerate =TestCaseBase.initializeTestBaseSetup(ConfigFileReader.getPropertyVal("BrowserType"));
         DataTable2 dataTable2 = new DataTable2();
 
@@ -118,6 +118,13 @@ public class DataGenerators {
         System.out.println("ID NUMBER HERE - " + idNumberFromSite.getText());
         IdGenerate.quit();
         return idNumber;
+    }
+
+    
+    private String GenerateValidPassPortNumber() {
+        String passportNumber;
+        passportNumber = fakeValuesService.regexify("[A-Z]{2}[0-9]{2}[abcd]{2}[0-9]{2}");
+        return passportNumber;
     }
 
     public String GenerateRequiredData(String dataTypeRequired) {
@@ -168,6 +175,9 @@ public class DataGenerators {
                 break;
             case "GENERATED VALID SA ID NUMBER":
                 requiredData = GenerateValidSAIdNumber();
+                break;
+            case "GENERATED Passport NUMBER":
+                requiredData = GenerateValidPassPortNumber();
                 break;
             case "GENERATED NUMBER - 10":
                 requiredData = faker.number().digits(10).replace('0', '1');
