@@ -770,7 +770,7 @@ public class JDGKeyManager {
             case"evs_Tvapproval":
             	evs_TvLicenseApproval.approveTVlicence(test1, rowNumber);
             	break;
-            case "evs_downloadSABC_ID":
+            case "evs_downloadSABC_Document":
             	evs_magentoSAPNumber.downloadSABC_ID(test1);
             	break;
             case "user_license_verification":
