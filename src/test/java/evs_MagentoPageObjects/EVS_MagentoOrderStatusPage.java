@@ -55,10 +55,13 @@ public class EVS_MagentoOrderStatusPage {
 	@FindBy(xpath = "//body/div[2]/main[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[3]/button[1]")
 	public WebElement clearFilters;
 
-	@FindBy(xpath = "//tbody/tr[1]/td[10]/a[1]")
+	/*@FindBy(xpath = "//tbody/tr[1]/td[10]/a[1]")
+	public WebElement viewOrderDetails*/;
+
+	@FindBy(xpath = "//table[@data-role='grid']/tbody/tr[1]/td[2]/div")
 	public WebElement viewOrderDetails;
 
-	@FindBy(xpath = "//tbody/tr[1]/td[9]/div")
+	@FindBy(xpath = "//tbody/tr[1]/td[8]/div")
 	public WebElement magentoOrderStatus;
 	
 	//Bundle Article Info below
@@ -113,7 +116,7 @@ public class EVS_MagentoOrderStatusPage {
 
 	public void viewOrderDetails(ExtentTest test) throws Exception {
 		boolean ajaxLoadCompleted = action.ajaxWait(ajaxTimeOutInSeconds, test);
-		confirmRows(magentoTableRecords, test);
+//		confirmRows(magentoTableRecords, test);
 		if (magentoTableRecords.size() >= 1) {
 			if(!ajaxLoadCompleted) {
 				driver.navigate().refresh();
@@ -122,10 +125,15 @@ public class EVS_MagentoOrderStatusPage {
 				ExtentTest node = test.createNode("Reloading the Search Page");
 				String screenShot = GenerateScreenShot.getScreenShot(driver);
 	            node.info("Page Reload Completed"+ node.addScreenCaptureFromPath(screenShot));
-				action.javaScriptClick(viewOrderDetails, "Order Status", test);
+
+//				action.javaScriptClick(viewOrderDetails, "Order Status", test);
+				action.javaScriptClick(viewOrderDetails, "Sales Order record", test);
+
+
 			}
 			else{
-				action.javaScriptClick(viewOrderDetails, "Order Status", test);
+//				action.javaScriptClick(viewOrderDetails, "Order Status", test);
+				action.javaScriptClick(viewOrderDetails, "Sales Order record", test);
 			}
 
 			//action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
@@ -148,8 +156,6 @@ public class EVS_MagentoOrderStatusPage {
     public Boolean isSKUPresent ;
     public String AllSKU = "";
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
-//		String POfetchFrom = dataTable2.getValueOnOtherModule("OrderStatusSearch", "Fetch PO number", 0);
-//		String idToSearch = dataTable2.getValueOnOtherModule("PayUPagePayment","OrderID",0);
 		String idToSearch = dataTable2.getValueOnOtherModule("evs_RetriveOrderID","orderID",0);//"3100002010";
 //		if(POfetchFrom.equalsIgnoreCase("IC")) {
 //			idToSearch= ic_PayUPayment.Oderid;
@@ -164,7 +170,7 @@ public class EVS_MagentoOrderStatusPage {
 		
 		NavigateOdersPage(test);
 		searchForOrder(idToSearch,test);
-		orderStatusCheck(orderStatus, test);
+//		orderStatusCheck(orderStatus, test);
 		viewOrderDetails(test);
 		
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
