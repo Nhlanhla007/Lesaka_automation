@@ -27,10 +27,14 @@ public class ic_WishList {
     }
     @FindBy(xpath="//ol[@class='product-items']/li")
     List<WebElement> ic_AllMywishlistProducts;
-    ic_NavigetoWishlist NavigetoWishlist =new ic_NavigetoWishlist(driver,dataTable2);
+
+    ic_NavigetoWishlist navigeToWishlist;
+
     public void ValidateProductsIn_Wishlist(Map<String, List<String>> products,ExtentTest test) throws IOException{
-    	int waitTime = 11;
-    	//NavigetoWishlist.navigateWishlist(waitTime, test);
+        int waitTime = 11;
+        navigeToWishlist =new ic_NavigetoWishlist(driver,dataTable2);
+        navigeToWishlist.navigateWishlist(waitTime,test);
+
     	for(Map.Entry selectedProducts : products.entrySet()) {
     		
    
