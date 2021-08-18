@@ -254,34 +254,38 @@ public class ICDelivery {
     }
 
     public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
-        String Streetname = dataSheets.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
-        String Cityname = dataSheets.getValueOnOtherModule("deliveryPopulation", "city", 0);
-        String Postalcode = dataSheets.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
+        String cityName = dataSheets.getValueOnOtherModule("deliveryPopulation", "city", 0);
+        String suburb = dataSheets.getValueOnOtherModule("deliveryPopulation", "Suburb", 0);
+        String postalCode = dataSheets.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
         String firstNameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "firstName", 0);
         String lastnameGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "lastname", 0);
         String emailGift = dataSheets.getValueOnOtherModule("deliveryPopulation", "email", 0);
         String streetNameG = dataSheets.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
+        String telephone = dataSheets.getValueOnOtherModule("deliveryPopulation", "telephone", 0);
+        String province = dataSheets.getValueOnOtherModule("deliveryPopulation", "province", 0);
 
         driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
         if (action.waitUntilElementIsDisplayed(cardDeliver_btn, 10)) {
-         	action.ajaxWait(20, test);
-         	action.explicitWait(5000);
-             action.scrollToElement(cardDeliver_btn, "Delivery Link", test);
-             action.javaScriptClick(cardDeliver_btn, "deliveryLink", test);
-             action.ajaxWait(10, test);
-         }
+            action.ajaxWait(20, test);
+            action.explicitWait(5000);
+            action.scrollToElement(cardDeliver_btn, "Delivery Link", test);
+            action.javaScriptClick(cardDeliver_btn, "DeliveryLink", test);
+            action.ajaxWait(20, test);
+            action.explicitWait(10000);
+        }
 
         action.writeText(firstName, firstNameGift, "First name", test);
         action.writeText(lastname, lastnameGift, "Last name", test);
         action.writeText(email, emailGift, "Email", test);
         action.writeText(streetNameGift, streetNameG, "Street name", test);
-        action.writeText(telephoneGift, dataSheets.getValueOnOtherModule("deliveryPopulation", "telephone",0), "Telephone", test);
-        action.writeText(cityGift, dataSheets.getValueOnOtherModule("deliveryPopulation", "city",0), "City", test);
-        action.writeText(cityGift, dataSheets.getValueOnOtherModule("deliveryPopulation", "Suburb",0), "Suburb", test);
-        action.writeText(postalCodeGift, dataSheets.getValueOnOtherModule("deliveryPopulation", "postalCode",0), "Postal Code", test);
-        action.writeText(postalCodeGift, dataSheets.getValueOnOtherModule("deliveryPopulation", "province",0), "Province", test);
+        action.writeText(telephoneGift, telephone, "Telephone", test);
+        action.writeText(provinceGift,province , "Province", test);
+        action.writeText(cityGift, cityName, "City", test);
+        action.writeText(SuburbGift, suburb, "Suburb", test);
+        action.writeText(postalCodeGift, postalCode, "Postal Code", test);
         action.explicitWait(2000);
         action.click(placeOrder, "Place Order", test);
-        action.ajaxWait(10, test);
+        action.ajaxWait(20, test);
+
     }
 }
