@@ -76,12 +76,12 @@ public class evs_TVLicenceApproval {
     
 	public void licenseValidation(ExtentTest test) throws Exception {
 		String typeOfIdentificationValidation = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Type", 0);
-		String documentUploadIndicator = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Upload Document", 0);
+		String customerType = dataTable2.getValueOnOtherModule("tvLicenseValidation", "SABC_Customer_Type", 0);
 		String userType = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "UserType", 0);
 		String expectedDetailsUsedForTV;
 		action.explicitWait(5000);
 		action.waitForJStoLoad(ajaxTimeOutInSeconds);
-		if (documentUploadIndicator.equalsIgnoreCase("yes")) {
+		if (customerType.equalsIgnoreCase("New")) {
 			switch (typeOfIdentificationValidation.toUpperCase()) {
 			case "ID":
 				if (userType.equalsIgnoreCase("Registered")) {
@@ -101,7 +101,6 @@ public class evs_TVLicenceApproval {
 					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("evs_AccountCreation","identityNumber/passport", 0);
 					if (!(expectedDetailsUsedForTV.equalsIgnoreCase("") | expectedDetailsUsedForTV == null)) {
 						action.waitUntilElementIsDisplayed(passportValidation, 20);
-						expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("tvLicenseValidation","ID/Passport", 0);
 						action.CompareResult("Passport Validation", expectedDetailsUsedForTV,passportValidation.getText(), test);
 					}
 				} else if (userType.equalsIgnoreCase("Guest")) {
@@ -110,6 +109,15 @@ public class evs_TVLicenceApproval {
 					action.CompareResult("Passport Validation", expectedDetailsUsedForTV, passportValidation.getText(),test);
 				}
 				break;
+			}
+		}else if(customerType.equalsIgnoreCase("Existing")) {			
+			expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("tvLicenseValidation", "ID/Passport",0);
+			if(typeOfIdentificationValidation.equalsIgnoreCase("ID")) {
+				action.waitUntilElementIsDisplayed(idValidation, 20);
+				action.CompareResult("ID Validation", expectedDetailsUsedForTV, idValidation.getText(), test);
+			}else if(typeOfIdentificationValidation.equalsIgnoreCase("Passport")) {
+				action.waitUntilElementIsDisplayed(passportValidation, 20);
+				action.CompareResult("Passport Validation", expectedDetailsUsedForTV, passportValidation.getText(),test);
 			}
 		}
 
