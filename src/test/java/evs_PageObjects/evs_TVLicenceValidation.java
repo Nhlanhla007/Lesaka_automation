@@ -72,7 +72,7 @@ public class evs_TVLicenceValidation {
 		String typeOfIdentity = dataTable2.getValueOnCurrentModule("Type");
 		String valueofIdentity = dataTable2.getValueOnCurrentModule("ID/Passport");
 
-		if (action.elementExistWelcome(evs_popUpElement, 10000, "TV licence", test)) {
+		if (action.elementExistWelcome(evs_popUpElement, 180, "TV licence", test)) {
 			if (LicenseAdd.equalsIgnoreCase("yes")) {
 
 				if (typeOfIdentity.equalsIgnoreCase("ID")) {
