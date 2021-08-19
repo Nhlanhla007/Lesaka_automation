@@ -193,16 +193,25 @@ public class EVS_NewAccountCreation {
 			//action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
 			System.out.println(identityType);
 			
+			
+			
+				
 			if(identityType.equalsIgnoreCase("ID")) {
 				System.out.println("Inside ID");
 //			action.click(User_SAIDbtn, "Identity type: ID", test);
 			action.writeText(User_SAID, identityNumber, "ID/Passport number", test);
-			dataTable2.setValueOnOtherModule("tvLicenseValidation", "ID/Passport", identityNumber, 0);
 			}else if(identityType.equalsIgnoreCase("Passport")){
 				System.out.println("Inside passport");
 				action.click(User_Passportbtn, "Identity type: Passport", test);
 				action.writeText(User_Passport, identityNumber, "ID/Passport number", test);
+				
+			}
+			
+			try{
+				
 				dataTable2.setValueOnOtherModule("tvLicenseValidation", "ID/Passport", identityNumber, 0);
+			
+			} catch(Exception e){
 				
 			}
 
