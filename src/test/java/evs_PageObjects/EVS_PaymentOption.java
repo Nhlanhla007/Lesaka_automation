@@ -133,7 +133,7 @@ public class EVS_PaymentOption {
                     action.CompareResult("No Document is selected for Upload", "true", String.valueOf(NoFileSelectionCheck), test);
                     if (NoFileSelectionCheck) {
 
-                        String filePath = System.getProperty("user.dir") + "/src/test/resources/ID_Passport.png";
+                        String filePath = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Document Upload Location", 0);
 
                         selectIDButton.sendKeys(filePath);
                         action.ajaxWait(10,test);
