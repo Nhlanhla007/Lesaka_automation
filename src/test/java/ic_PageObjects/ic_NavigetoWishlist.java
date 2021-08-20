@@ -36,6 +36,7 @@ public class ic_NavigetoWishlist {
 
     @FindBy(xpath = "//*[@id='pass']")
     WebElement ic_Password;
+
     @FindBy(xpath = "//*[@id=\"send2\"]/span")
     WebElement ic_SigninBtn;
 

@@ -7,6 +7,9 @@ import SAP_HanaDB.SAPorderRelated;
 import SAP_HanaDB.SapRSI;
 import base.TestCaseBase;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.markuputils.ExtentColor;
+import com.aventstack.extentreports.markuputils.MarkupHelper;
 import emailverification.ICGiftCardVerification;
 import emailverification.ICWishlistverification;
 import emailverification.ic_PasswordForgotEmailVerification;
@@ -43,11 +46,10 @@ public class testTestClass<moduleName> {
     HashMap<String, Integer> occCount=null;
     int testcaseID;
     JDGKeyManager km=null;
-    ExtentReportJD reportJD=null;
+    ExtentReportGenerator reportJD=null;
     Logger logger = Log.getLogData(this.getClass().getSimpleName());
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
-
-    Action action = new Action(driver);
+    Action action = null;
     
     @BeforeClass
     @Parameters({"moduleName","CurSuite"})
@@ -57,7 +59,7 @@ public class testTestClass<moduleName> {
         dataTable2.setPath(moduleName);
         dataMap2=dataTable2.getExcelData();
         currentSuite=CurSuite;
-        reportJD=new ExtentReportJD(currentSuite);
+        reportJD=new ExtentReportGenerator(currentSuite);
         km=new JDGKeyManager(driver,dataTable2,dataMap2);
     }
 
@@ -65,12 +67,14 @@ public class testTestClass<moduleName> {
     public void setUp() throws Exception {
         occCount=new HashMap<String, Integer>();
         startBrowserSession();
+        action = new Action(driver);
+
     }
     //Start Tests-----------------------------------------------------------------------
     
-    @Test(testName ="11_Updating_customer_last_name_on_Magento_IC" )
-    public void Updating_customer_last_name_on_Magento_IC() throws Exception {
-        String testMethodName="Updating_customer_last_name_on_Magento_IC";
+    @Test(testName ="42_Wish_List_Validate_Product_can_be_added_to_cart_from_Wish_list_EVS" )
+    public void Wish_List_Validate_Product_can_be_added_to_cart_from_Wish_list_EVS() throws Exception {
+        String testMethodName="Wish_List_Validate_Product_can_be_added_to_cart_from_Wish_list_EVS";
         ExtentTest test =reportJD.createTest(testMethodName);
         int TCIndex=getTestCaseIndex(testMethodName);
         runner(TCIndex,test);
@@ -108,80 +112,51 @@ public class testTestClass<moduleName> {
         return index;
     }
 
-    public void runAllKeys_1(int index, ExtentTest test) throws Exception {
-
-        for(int j=0;j<40;j++) {
-            String actionToRunLable = "Action" + (j + 1);
-            String actionToRun = "";
-            try {
-                actionToRun = dataMap2.get(currentSuite).get(actionToRunLable).get(index);
-            } catch (Exception e) {
-
-            }
-            currentKeyWord=actionToRun;
-            dataTable2.setOccurenceCount(0);
-            dataTable2.setModule(currentKeyWord);
-            if(!actionToRun.equals("")) {
-                System.out.println("xxxxxxxxxxxxx :"+actionToRun);
-                if(!occCount.containsKey(currentKeyWord)){
-                    occCount.put(currentKeyWord,0);
-                }else{
-                    int occNum=occCount.get(currentKeyWord);
-                    occNum++;
-                    occCount.put(currentKeyWord,occNum);
-                }
-                dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
-                km.runKeyWord(actionToRun,testcaseID,occCount,test);
-                JDTests sample=new JDTests();
-                sample.writeToExcel(sample.createFile());
-                reportJD.endReport();
-
-            }
-        }
-    }
-
     public void runAllKeys(int index, ExtentTest test) throws Exception {
+            ExtentTest node=null;
+            ExtentTest test1=null;
             try {
-                for (int j = 0; j < 40; j++) {
-                    String actionToRunLable = "Action" + (j + 1);
-                    String actionToRun = "";
-                    try {
-                        actionToRun = dataMap2.get(currentSuite).get(actionToRunLable).get(index);
-                    } catch (Exception e) {
+                    for (int j = 0; j < 40; j++) {
+                        String actionToRunLable = "Action" + (j + 1);
+                        String actionToRun = "";
+                        try {
+                            actionToRun = dataMap2.get(currentSuite).get(actionToRunLable).get(index);
+                            test1 = test.createNode(actionToRun);
+                        } catch (Exception e) {
 
-                    }
-                    currentKeyWord = actionToRun;
-                    dataTable2.setOccurenceCount(0);
-                    dataTable2.setModule(currentKeyWord);
-                    if (!actionToRun.equals("")) {
-                        System.out.println("xxxxxxxxxxxxx :" + actionToRun);
-                        if (!occCount.containsKey(currentKeyWord)) {
-                            occCount.put(currentKeyWord, 0);
-                        } else {
-                            int occNum = occCount.get(currentKeyWord);
-                            occNum++;
-                            occCount.put(currentKeyWord, occNum);
                         }
-                        dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
-                        km.runKeyWord(actionToRun, testcaseID, occCount, test);
-                        JDTests sample = new JDTests();
-                        sample.writeToExcel(sample.createFile());
-                        reportJD.endReport();
+                        currentKeyWord = actionToRun;
+                        dataTable2.setOccurenceCount(0);
+                        dataTable2.setModule(currentKeyWord);
+                        if (!actionToRun.equals("")) {
+                            System.out.println("xxxxxxxxxxxxx :" + actionToRun);
+                            if (!occCount.containsKey(currentKeyWord)) {
+                                occCount.put(currentKeyWord, 0);
+                            } else {
+                                int occNum = occCount.get(currentKeyWord);
+                                occNum++;
+                                occCount.put(currentKeyWord, occNum);
+                            }
+                            dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
+                            km.runKeyWord(actionToRun, testcaseID, occCount, test1);
+                            JDTests sample = new JDTests();
+                            sample.writeToExcel(sample.createFile());
+                            reportJD.endReport();
 
+                        }
                     }
                 }
-            }
-            catch(Exception e) {
-                logger.info(e.getMessage());
+                catch(Exception e) {
+                /*logger.info(e.getMessage());
                 e.printStackTrace();
                 e.getCause();
                 System.out.println(e.getMessage());
                 String screenShot = GenerateScreenShot.getScreenShot(driver);
-                ExtentTest node = test.createNode("Exception");
-                node.fail(e.getMessage() + node.addScreenCaptureFromPath(screenShot));
-
+                node.fail(e.getMessage() + node.addScreenCaptureFromPath(screenShot));*/
+                e.printStackTrace();
+                test1.createNode("Exception").fail(MarkupHelper.createLabel("Exception occurred: ", ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(action.takeScreenShotAsBase64()).build());
+                }
             }
-        }
 
 
     public void runKeyWord (String actionToRun, ExtentTest test) throws Exception {
@@ -577,12 +552,6 @@ public class testTestClass<moduleName> {
         //driver.navigate().to(navigateURL);
         driver.manage().window().maximize();
         driver.navigate().refresh();
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
         logger.info("Browser name is "+browserName);
         logger.info("App URL: "+ navigateURL);
         Values.app= navigateURL;
@@ -595,11 +564,7 @@ public class testTestClass<moduleName> {
     }
 
     @AfterClass
-    public void closeReport(){
-        reportJD.endReport();
-    }
-
-
-
-
+        public void closeReport(){
+            reportJD.endReport();
+        }
 }

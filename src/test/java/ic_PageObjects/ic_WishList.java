@@ -28,17 +28,15 @@ public class ic_WishList {
     @FindBy(xpath="//ol[@class='product-items']/li")
     List<WebElement> ic_AllMywishlistProducts;
 
-    ic_NavigetoWishlist navigeToWishlist;
+    ic_NavigetoWishlist navigateToWishlist;
 
     public void ValidateProductsIn_Wishlist(Map<String, List<String>> products,ExtentTest test) throws IOException{
         int waitTime = 11;
-        navigeToWishlist =new ic_NavigetoWishlist(driver,dataTable2);
-        navigeToWishlist.navigateWishlist(waitTime,test);
+        navigateToWishlist =new ic_NavigetoWishlist(driver,dataTable2);
+        navigateToWishlist.navigateWishlist(waitTime,test);
 
     	for(Map.Entry selectedProducts : products.entrySet()) {
-    		
-   
-    		//Figure out how to throw failure if product is not found
+
 	    	for(WebElement productsInCart : ic_AllMywishlistProducts) {
 	    		String nameOfProduct = productsInCart.findElement(By.xpath(".//strong/a")).getText();
 					  //action.CompareResult("Name : " + nameOfProduct +" present in wishlist", (String)selectedProducts.getKey(), nameOfProduct, test);

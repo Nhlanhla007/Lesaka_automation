@@ -50,7 +50,7 @@ public class EVS_NavigetoWishlist {
 	WebElement SigninBtn;
 
 	@FindBy(xpath = "//span[contains(text(),'My Wish Lists')]")
-	WebElement mywishlist_page;
+	WebElement myWishlist_page;
 
 	@FindBy(xpath = "//span[contains(text(),'You have no items in your wish list.')]")
 	WebElement mywishlist_msg;
@@ -81,11 +81,12 @@ public class EVS_NavigetoWishlist {
 	}
 
 	public void navigateWishlist(int waitTime, ExtentTest test) throws IOException {
+		if (!action.isElementPresent(myWishlist_page)){
 		action.waitForElementPresent(myAccount, waitTime);
 		action.clickEle(myAccount, "Click on My Account", test);
 		action.waitForElementPresent(wishListLink, waitTime);
 		action.clickEle(wishListLink, "Click on My Wish List", test);
-	}
+	}}
 
 	public boolean loginUser(String Uname, String Passwrd, int waitTime, ExtentTest test) throws IOException {
 		boolean check = false;
@@ -96,7 +97,7 @@ public class EVS_NavigetoWishlist {
 		action.clickEle(SigninBtn, "click ic_SigninBtn", test);
 		action.explicitWait(3000);
 
-		if (action.isElementPresent(mywishlist_page)) {
+		if (action.isElementPresent(myWishlist_page)) {
 			check = true;
 			action.CompareResult("Navigation to Wishlist Page", "True", "True", test);
 		} else {

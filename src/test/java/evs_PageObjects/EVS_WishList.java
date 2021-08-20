@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ic_PageObjects.ic_NavigetoWishlist;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,11 +32,13 @@ public class EVS_WishList {
 
 	@FindBy(xpath = "//ol[@class='product-items wishlist']/li")
 	List<WebElement> ic_AllMywishlistProducts;
-	
-	EVS_NavigetoWishlist NavigetoWishlist = new EVS_NavigetoWishlist(driver, dataTable2);
+
+	EVS_NavigetoWishlist navigateToWishlist;
 
 	public void ValidateProductsIn_Wishlist(Map<String, List<String>> products, ExtentTest test) throws IOException {
-		int waitTime = 6;
+		int waitTime = 10;;
+		navigateToWishlist = new EVS_NavigetoWishlist(driver, dataTable2);
+		navigateToWishlist.navigateWishlist(waitTime,test);
 
 		for (Map.Entry selectedProducts : products.entrySet()) {
 
