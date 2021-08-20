@@ -19,109 +19,112 @@ import utils.ConfigFileReader;
 import utils.DataTable2;
 
 public class EVS_MagentoOrderSAPnumber {
-	WebDriver driver;
+    WebDriver driver;
     Action action;
-	DataTable2 dataTable2;
-    
+    DataTable2 dataTable2;
+
     public EVS_MagentoOrderSAPnumber(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
-		this.dataTable2 = dataTable2;
+        this.dataTable2 = dataTable2;
 
     }
-    
-    @FindBy(xpath="//div[contains(text(),'[RabbitMQ] Order SAP Number: ')][1]")
+
+    @FindBy(xpath = "//div[contains(text(),'[RabbitMQ] Order SAP Number: ')][1]")
     private WebElement OrderDetailSAPNumber;
-    
+
     @FindBy(xpath = "//a[contains(text(),'Download SABC ID Book')]")
     private WebElement downloadSABCButton;
-    
+
     @FindBy(xpath = "//div[contains(text(),'was downloaded')]")
     private WebElement downloadSuccessMsg;
 
-	@FindBy(xpath = "//span[@id='order_status']")
-	private WebElement magentoOrderStatus;
-    
+    @FindBy(xpath = "//span[@id='order_status']")
+    private WebElement magentoOrderStatus;
+
     Timer t = new Timer();
     public static String OrderSAPnumber;
-    
-    public void GenerateOrderSAPnumber(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
-    	boolean flagres = false;
-    	int totalConunter=0;
-    	String OrderSAPnumber = "";
-    	long startTime = System.currentTimeMillis();
-    	int TimeOutinSecond =Integer.parseInt(input.get("TimeOutinSecond").get(rowNumber));
-    	int trycount =Integer.parseInt(input.get("totalCounter").get(rowNumber));
-    	int elapsedTime = 0;    	
-    	action.explicitWait(10000);
 
-		String orderStatus = dataTable2.getValueOnOtherModule("evs_OrderStatusSearch", "orderStatus", 0);
-		action.CompareResult("Sales Order Status", orderStatus, magentoOrderStatus.getText(), test);
+    public void GenerateOrderSAPnumber(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
+        boolean flagres = false;
+        int totalConunter = 0;
+        String OrderSAPnumber = "";
+        long startTime = System.currentTimeMillis();
+        int TimeOutinSecond = Integer.parseInt(input.get("TimeOutinSecond").get(rowNumber));
+        int trycount = Integer.parseInt(input.get("totalCounter").get(rowNumber));
+        int elapsedTime = 0;
+        action.explicitWait(10000);
+
+        String orderStatus = dataTable2.getValueOnOtherModule("evs_OrderStatusSearch", "orderStatus", 0);
+        action.CompareResult("Sales Order Status", orderStatus, magentoOrderStatus.getText(), test);
 
 
-    	while(elapsedTime<=TimeOutinSecond && flagres==false)
-    	{
-			action.refresh();
-			action.waitForPageLoaded(TimeOutinSecond);
-			
-			try {
-				if(action.waitUntilElementIsDisplayed(OrderDetailSAPNumber, 2000)){						
-						OrderSAPnumber = OrderDetailSAPNumber.getText();//action.getText(OrderDetailSAPNumber, "SAP Number",test);
-						//action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
-						System.out.println(OrderSAPnumber);
-					if(OrderSAPnumber.isEmpty()){
-			    		action.explicitWait(TimeOutinSecond);
-			    		action.refresh();
-						System.out.println("not found on count:" + totalConunter);
-			    	}else{
-			    		flagres = true;			    		
-						System.out.println("OrderSAPnumber :" + OrderSAPnumber);
-						input.get("OrderSAPnumber").set(rowNumber,OrderSAPnumber.replace("[RabbitMQ] Order SAP Number: ",""));
-			    	}
-				}else{
-					System.out.println("OrderDetailSAPNumber not exist");
-				}
-					
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				/*
-				 * if(trycount==totalConunter){ e.printStackTrace(); }
-				 */
-			}
+        while (elapsedTime <= TimeOutinSecond && flagres == false) {
+            action.refresh();
+            action.waitForPageLoaded(TimeOutinSecond);
 
-			//Thread.sleep(TimeOutinSecond * 1000);
-			long endTime = System.currentTimeMillis();
-			long elapsedTimeInMils = endTime-startTime;
-			elapsedTime = ((int) elapsedTimeInMils)/1000;
-			System.out.println("elapsedTime: "+elapsedTime);
-			totalConunter++;
-		}
-    	if(flagres){
-    		action.scrollElemetnToCenterOfView(OrderDetailSAPNumber,"OrderDetailSAPNumber",test);
-    		action.CompareResult("SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
-    	}else{
-    		JavascriptExecutor exe = (JavascriptExecutor)driver;
+            try {
+                if (action.waitUntilElementIsDisplayed(OrderDetailSAPNumber, 2000)) {
+                    OrderSAPnumber = OrderDetailSAPNumber.getText();//action.getText(OrderDetailSAPNumber, "SAP Number",test);
+                    //action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
+                    System.out.println(OrderSAPnumber);
+                    if (OrderSAPnumber.isEmpty()) {
+                        action.explicitWait(TimeOutinSecond);
+                        action.refresh();
+                        System.out.println("not found on count:" + totalConunter);
+                    } else {
+                        flagres = true;
+                        System.out.println("OrderSAPnumber :" + OrderSAPnumber);
+                        input.get("OrderSAPnumber").set(rowNumber, OrderSAPnumber.replace("[RabbitMQ] Order SAP Number: ", ""));
+                    }
+                } else {
+                    System.out.println("OrderDetailSAPNumber not exist");
+                }
+
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                /*
+                 * if(trycount==totalConunter){ e.printStackTrace(); }
+                 */
+            }
+
+            //Thread.sleep(TimeOutinSecond * 1000);
+            long endTime = System.currentTimeMillis();
+            long elapsedTimeInMils = endTime - startTime;
+            elapsedTime = ((int) elapsedTimeInMils) / 1000;
+            System.out.println("elapsedTime: " + elapsedTime);
+            totalConunter++;
+        }
+        if (flagres) {
+            action.scrollElemetnToCenterOfView(OrderDetailSAPNumber, "OrderDetailSAPNumber", test);
+            action.CompareResult("SAP order Number generated :" + OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
+        } else {
+            JavascriptExecutor exe = (JavascriptExecutor) driver;
             exe.executeScript("window.scrollTo(0, document.body.scrollHeight)");
             exe.executeScript("window.scrollBy(0,-500)");
-    		action.CompareResult("SAP order Number generated :"+OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
-    		throw new Exception("SAP Order Number Is Not Generated");
-    	}
+            action.CompareResult("SAP order Number generated :" + OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
+            throw new Exception("SAP Order Number Is Not Generated");
+        }
     }
 
     public void downloadSABC_ID(ExtentTest test) throws Exception {
-    	 try {
-			boolean sabcFlag = action.isElementPresent(downloadSABCButton);
-			 if(sabcFlag) {
-			   action.click(downloadSABCButton, "SABC Download ID Book", test);
-			   action.waitForJStoLoad(30);
-			   boolean msgFlag = action.isElementPresent(downloadSuccessMsg);
-			   action.CompareResult("SABC ID Download message", String.valueOf(true), String.valueOf(msgFlag), test);
-			 }
-		} catch (Exception e) {
-			throw new Exception("Unable to Download SABC ID Book " + e.getMessage());
-		}
+
+        String documentDownloadCheck = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Download Document", 0);
+
+        if (documentDownloadCheck.equalsIgnoreCase("yes")) {
+            try {
+                boolean sabcFlag = action.isElementPresent(downloadSABCButton);
+                if (sabcFlag) {
+                    action.click(downloadSABCButton, "SABC Download ID Book", test);
+                    action.waitForJStoLoad(30);
+                    boolean msgFlag = action.isElementPresent(downloadSuccessMsg);
+                    action.CompareResult("SABC ID Download message", String.valueOf(true), String.valueOf(msgFlag), test);
+                }
+            } catch (Exception e) {
+                throw new Exception("Unable to Download SABC ID Book " + e.getMessage());
+            }
+        }
     }
-    
-    
+
 }

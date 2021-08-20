@@ -35,8 +35,6 @@ public class evs_TVLicenceValidation {
 	@FindBy(xpath = "//*[contains(text(),'Items in Cart')]")
 	WebElement viewAllItemsInCart;
 
-	// Bongi Code
-	// *******************************************
 	@FindBy(xpath = "//*[@class=\"sbp-header\"]")
 	private WebElement evs_popUpElement;
 
