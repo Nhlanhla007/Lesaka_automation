@@ -110,9 +110,6 @@ public class EVS_MagentoOrderSAPnumber {
 
     public void downloadSABC_ID(ExtentTest test) throws Exception {
 
-        String documentDownloadCheck = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Download Document", 0);
-
-        if (documentDownloadCheck.equalsIgnoreCase("yes")) {
             try {
                 boolean sabcFlag = action.isElementPresent(downloadSABCButton);
                 if (sabcFlag) {
@@ -125,6 +122,5 @@ public class EVS_MagentoOrderSAPnumber {
                 throw new Exception("Unable to Download SABC ID Book " + e.getMessage());
             }
         }
-    }
 
 }
