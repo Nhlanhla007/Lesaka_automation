@@ -64,11 +64,18 @@ public class evs_TVLicenceValidation {
 
 	@FindBy(xpath = "//button[contains(text(),'Proceed')]")
 	private WebElement evs_buttonProceed;
+	
+	@FindBy(xpath = "//*[@class=\"sbp-real-input id-num\"]/following-sibling::div//div[@class=\"id-num fake-input-content\"]")	
+	private WebElement idValueAddedForValidation;
+	
+	@FindBy(xpath = "//*[@class=\"sbp-real-input passport-num\"]/following-sibling::div//div[@class=\"passport-num fake-input-content\"]")
+	private WebElement passportValueAddedForValidation;
+	
 
 	public void TvLicenceValidation(ExtentTest test, int rowNumber) throws Exception {
 		String LicenseAdd = dataTable2.getValueOnCurrentModule("License Addition");
 		String typeOfIdentity = dataTable2.getValueOnCurrentModule("Type");
-		String valueofIdentity = dataTable2.getValueOnCurrentModule("ID/Passport");
+		String valueofIdentity = dataTable2.getValueOnCurrentModule("IDOrPassport");
 
 		if (action.elementExistWelcome(evs_popUpElement, 180, "TV licence", test)) {
 			if (LicenseAdd.equalsIgnoreCase("yes")) {
@@ -102,6 +109,10 @@ public class evs_TVLicenceValidation {
 			if (LicenseAdd.equalsIgnoreCase("no")) {
 				if (typeOfIdentity.equalsIgnoreCase("ID")) {
 					action.javaScriptClick(evs_radioID, "select the ID identity type", test);
+					if(!(action.getText(idValueAddedForValidation, "ID Value", test).isEmpty())) {
+						dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDorPassport", idValueAddedForValidation.getText(), 0);
+					}
+					action.clear(evs_TextfieldID, "Clearing Validation Field");	
 					action.writeText(evs_TextfieldID, valueofIdentity, "writing the ID", test);
 					action.explicitWait(5000);
 					action.click(evs_buttonValidate, "Click validate", test);
@@ -109,6 +120,10 @@ public class evs_TVLicenceValidation {
 				}
 				if (typeOfIdentity.equalsIgnoreCase("Passport")) {
 					action.javaScriptClick(evs_radioPassport, "select the Passport identity type", test);
+					if(!(action.getText(passportValueAddedForValidation, "Passport Value", test).isEmpty())) {
+						dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDorPassport", passportValueAddedForValidation.getText(), 0);
+					}
+					action.clear(evs_TextfieldPass, "Clearing Validation Field");
 					action.writeText(evs_TextfieldPass, valueofIdentity, "writing the ID", test);
 					action.explicitWait(5000);
 					action.click(evs_buttonValidate, "Click validate", test);

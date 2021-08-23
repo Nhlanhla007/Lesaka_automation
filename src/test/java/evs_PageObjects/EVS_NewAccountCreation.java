@@ -163,7 +163,7 @@ public class EVS_NewAccountCreation {
 		String password = dataTable2.getValueOnCurrentModule("password");//input.get("password").get(rowNumber);
 		String confirmPassword = dataTable2.getValueOnCurrentModule("passwordConfirmation");//input.get("passwordConfirmation").get(rowNumber);
 		String identityType = dataTable2.getValueOnCurrentModule("identityType");//input.get("identityType").get(rowNumber);
-		String identityNumber = dataTable2.getValueOnCurrentModule("identityNumber/passport");//input.get("identityNumber/passport").get(rowNumber);
+		String identityNumber = dataTable2.getValueOnCurrentModule("IDOrPassport");//input.get("identityNumber/passport").get(rowNumber);
 		String selectNewsLetter = dataTable2.getValueOnCurrentModule("newsletter");//input.get("newsletter").get(rowNumber);
 		//String taxVatNumbe = input.get("vatNumber").get(rowNumber);
 		String telephone = dataTable2.getValueOnCurrentModule("Telephone");
@@ -199,17 +199,17 @@ public class EVS_NewAccountCreation {
 			if(identityType.equalsIgnoreCase("ID")) {
 				System.out.println("Inside ID");
 //			action.click(User_SAIDbtn, "Identity type: ID", test);
-			action.writeText(User_SAID, identityNumber, "ID/Passport number", test);
+			action.writeText(User_SAID, identityNumber, "IDOrPassport number", test);
 			}else if(identityType.equalsIgnoreCase("Passport")){
 				System.out.println("Inside passport");
 				action.click(User_Passportbtn, "Identity type: Passport", test);
-				action.writeText(User_Passport, identityNumber, "ID/Passport number", test);
+				action.writeText(User_Passport, identityNumber, "IDOrPassport number", test);
 				
 			}
 			
 			try{
 				
-				dataTable2.setValueOnOtherModule("tvLicenseValidation", "ID/Passport", identityNumber, 0);
+				dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDOrPassport", identityNumber, 0);
 			
 			} catch(Exception e){
 				
@@ -219,21 +219,21 @@ public class EVS_NewAccountCreation {
 				System.out.println("Enters validate with incorrect digits");
 				String identityNumberIncorrect = "7657674565563";
 				User_SAID.clear();
-				action.writeText(User_SAID, identityNumberIncorrect, "ID/Passport number", test);
+				action.writeText(User_SAID, identityNumberIncorrect, "IDOrPassport number", test);
 				ic_VerifySAIDLimit(identityNumber, test);
 			}
 			if (saIDvalidateIDWithLessDigits.equalsIgnoreCase("yes")) {
 				System.out.println("Enters validate with less digits");
 				String identityWithLess = identityNumber.substring(0, 10);
 				User_SAID.clear();
-				action.writeText(User_SAID, identityWithLess, "ID/Passport number", test);
+				action.writeText(User_SAID, identityWithLess, "IDOrPassport number", test);
 				ic_VerifySAIDLimit(identityWithLess, test);
 			}
 			if (saIDvalidateIDWithMoreDigits.equalsIgnoreCase("yes")) {
 				System.out.println("Enters validate with more digits");
 				String identityWithMore = identityNumber.concat("543");
 				User_SAID.clear();
-				action.writeText(User_SAID, identityWithMore, "ID/Passport number", test);
+				action.writeText(User_SAID, identityWithMore, "IDOrPassport number", test);
 				ic_VerifySAIDLimit(identityWithMore, test);
 
 			}

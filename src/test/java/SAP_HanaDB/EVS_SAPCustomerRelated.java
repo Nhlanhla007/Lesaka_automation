@@ -309,11 +309,11 @@ public class EVS_SAPCustomerRelated {
 				}
 
 				if (passportOrIdFlag.equalsIgnoreCase("ID")) {
-					passportOrId = mySheets.get(0).get("identityNumber/passport").get(sheetRow1);
+					passportOrId = mySheets.get(0).get("IDOrPassport").get(sheetRow1);
 
 					action.CompareResult("SAP SA ID", passportOrId, SAID, test);
 				} else if (passportOrIdFlag.equalsIgnoreCase("Passport")) {
-					passportOrId = mySheets.get(0).get("identityNumber/passport").get(sheetRow1);
+					passportOrId = mySheets.get(0).get("IDOrPassport").get(sheetRow1);
 
 					action.CompareResult("SAP Passport", passportOrId, passport, test);
 				}

@@ -172,31 +172,31 @@ public class ic_NewAccountCreation {
 			}
 			if(identityType.equalsIgnoreCase("ID")) {
 //			action.click(User_SAIDbtn, "Identity type: ID", test);
-			action.writeText(User_SAID, identityNumber, "ID/Passport number", test);
+			action.writeText(User_SAID, identityNumber, "IDOrPassport number", test);
 			}else if(identityType.equalsIgnoreCase("Passport")){
 				action.click(User_Passportbtn, "Identity type: Passport", test);
-				action.writeText(User_Passport, identityNumber, "ID/Passport number", test);
+				action.writeText(User_Passport, identityNumber, "IDOrPassport number", test);
 			}
 
 			if (saIDvalidateIncorrectID.equalsIgnoreCase("yes")) {
 				System.out.println("Enters validate with incorrect digits");
 				String identityNumberIncorrect = "7657674565563";
 				User_SAID.clear();
-				action.writeText(User_SAID, identityNumberIncorrect, "ID/Passport number", test);
+				action.writeText(User_SAID, identityNumberIncorrect, "IDOrPassport number", test);
 				ic_VerifySAIDLimit(identityNumber, test);
 			}
 			if (saIDvalidateIDWithLessDigits.equalsIgnoreCase("yes")) {
 				System.out.println("Enters validate with less digits");
 				String identityWithLess = identityNumber.substring(0, 10);
 				User_SAID.clear();
-				action.writeText(User_SAID, identityWithLess, "ID/Passport number", test);
+				action.writeText(User_SAID, identityWithLess, "IDOrPassport number", test);
 				ic_VerifySAIDLimit(identityWithLess, test);
 			}
 			if (saIDvalidateIDWithMoreDigits.equalsIgnoreCase("yes")) {
 				System.out.println("Enters validate with more digits");
 				String identityWithMore = identityNumber.concat("543");
 				User_SAID.clear();
-				action.writeText(User_SAID, identityWithMore, "ID/Passport number", test);
+				action.writeText(User_SAID, identityWithMore, "IDOrPassport number", test);
 				ic_VerifySAIDLimit(identityWithMore, test);
 
 			}
