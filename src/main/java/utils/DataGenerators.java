@@ -124,7 +124,7 @@ public class DataGenerators {
     
     private String GenerateValidPassPortNumber() {
     	String passportNumber;
-        passportNumber= fakeValuesService.regexify("[A-Z]{2}[0-9]{2}[abcd]{2}[0-9]{2}");
+        passportNumber= fakeValuesService.regexify("[A-Z]{2}[0-9]{2}[ABCD]{2}[0-9]{2}");
         return passportNumber;
     }
 
