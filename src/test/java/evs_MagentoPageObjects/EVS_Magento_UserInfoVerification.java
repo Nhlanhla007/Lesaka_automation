@@ -156,8 +156,8 @@ public class EVS_Magento_UserInfoVerification {
 	
 		//new variables flag  identityType on ID and passport
 		 ExpidentityType =input.get("identityType").get(rowNumber);//"ID";
-		 ExpPassportnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
-		 ExpSAIDnumber=input.get("identityNumber/passport").get(rowNumber);//"5311266534086";
+		 ExpPassportnumber=input.get("IDOrPassport").get(rowNumber);//"5311266534086";
+		 ExpSAIDnumber=input.get("IDOrPassport").get(rowNumber);//"5311266534086";
 		
 		//new variable flag on newsletter
 		String ExpNewsletterFalg = input.get("newsletter").get(rowNumber);//"Yes";
