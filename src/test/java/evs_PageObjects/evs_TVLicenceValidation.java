@@ -110,7 +110,7 @@ public class evs_TVLicenceValidation {
 				if (typeOfIdentity.equalsIgnoreCase("ID")) {
 					action.javaScriptClick(evs_radioID, "select the ID identity type", test);
 					if(!(action.getText(idValueAddedForValidation, "ID Value", test).isEmpty())) {
-						dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDorPassport", idValueAddedForValidation.getText(), 0);
+						dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDOrPassport", idValueAddedForValidation.getText(), 0);
 					}
 					action.clear(evs_TextfieldID, "Clearing Validation Field");	
 					action.writeText(evs_TextfieldID, valueofIdentity, "writing the ID", test);
@@ -121,7 +121,7 @@ public class evs_TVLicenceValidation {
 				if (typeOfIdentity.equalsIgnoreCase("Passport")) {
 					action.javaScriptClick(evs_radioPassport, "select the Passport identity type", test);
 					if(!(action.getText(passportValueAddedForValidation, "Passport Value", test).isEmpty())) {
-						dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDorPassport", passportValueAddedForValidation.getText(), 0);
+						dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDOrPassport", passportValueAddedForValidation.getText(), 0);
 					}
 					action.clear(evs_TextfieldPass, "Clearing Validation Field");
 					action.writeText(evs_TextfieldPass, valueofIdentity, "writing the ID", test);
