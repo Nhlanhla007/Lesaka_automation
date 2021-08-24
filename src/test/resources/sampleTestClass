@@ -556,6 +556,7 @@ public class testTestClass<moduleName> {
         driver.quit();
     }
 
+
     @AfterClass
         public void closeReport(){
             reportJD.endReport();
