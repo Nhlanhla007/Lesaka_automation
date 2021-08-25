@@ -208,13 +208,12 @@ public class EVS_NewAccountCreation {
 			}
 			
 			try{
-				
-				dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDOrPassport", identityNumber, 0);
-			
+				if (!(identityNumber.isEmpty())) {
+					dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDOrPassport", identityNumber, 0);
+				}
 			} catch(Exception e){
 				
 			}
-
 			if (saIDvalidateIncorrectID.equalsIgnoreCase("yes")) {
 				System.out.println("Enters validate with incorrect digits");
 				String identityNumberIncorrect = "7657674565563";

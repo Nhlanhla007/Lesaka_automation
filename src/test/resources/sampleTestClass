@@ -553,8 +553,9 @@ public class testTestClass<moduleName> {
     }
 
     public void endBrowserSession() throws IOException {
-        driver.close();
+        driver.quit();
     }
+
 
     @AfterClass
         public void closeReport(){
