@@ -142,6 +142,7 @@ public class JDGKeyManager {
 		admin_ReOrder adminReorder = new admin_ReOrder(driver, dataTable2);
 		ic_MagentoCancelUpaidEFT ic_MagentoCancelUpaidEFT = new ic_MagentoCancelUpaidEFT(driver, dataTable2);
         IC_ReturnToConfirmOrderStatus ic_toConfirmOrderStatus = new IC_ReturnToConfirmOrderStatus(driver, dataTable2);
+        IC_ESDpurchase ic_esdPurchase = new IC_ESDpurchase(driver, dataTable2);
         
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
@@ -536,6 +537,9 @@ public class JDGKeyManager {
 	            break;
 	        case "ic_BackTo_IC":
 	            ic_toConfirmOrderStatus.backToIC(test1);
+	             break;
+	        case "ic_ESDPurchase":
+	        	ic_esdPurchase.purchaseESD(test1, rowNumber);
 	             break;
 
             //EVS CODE BELOW
