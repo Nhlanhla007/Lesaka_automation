@@ -185,7 +185,7 @@ public class ic_PaymentOption {
 		action.ajaxWait(10, test);
 
 	} catch (Exception e){
-		throw new Exception("Couldn't continue to PayU page, Error in gift card delivery population "+e.getMessage());
+		throw new Exception("Couldn't continue to PayU page, Error in delivery population "+e.getMessage());
 	}
 }
 
