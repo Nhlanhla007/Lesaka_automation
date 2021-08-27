@@ -776,6 +776,12 @@ public class JDGKeyManager {
             case "user_license_verification":
             	evs_TvLicenseApproval.licenseValidation(test1);
             	break;
+            case "evs_RemoveTVLicenseOrProduct":
+            	evs_RemoveItemsFromCart.removeTVLicense(test1);
+            	break;
+            case "evs_validateTVLicensePopUp":
+            	evs_TvLicense.validateNoTVLicensePopUpShows(test1);
+            	break;
 
         }
     }
