@@ -81,19 +81,18 @@ public class EVS_MagentoRegisterNewUser {
 	WebElement BPnumber;
 
 	public void CreateAccount_validateInfo_Backend(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception {
-		String AssociatedWebsite=dataTable2.getValueOnCurrentModule("Website");//input.get("Website").get(rowNumber);;
-		String Group = dataTable2.getValueOnCurrentModule("Group");//input.get("Group").get(rowNumber);
-		String Firstname = dataTable2.getValueOnCurrentModule("Firstname");//input.get("Firstname").get(rowNumber);
-		String Lastname = dataTable2.getValueOnCurrentModule("Lastname");//input.get("Lastname").get(rowNumber);
-		String Email = dataTable2.getValueOnCurrentModule("Email");//input.get("Email").get(rowNumber);
-		String IDType =dataTable2.getValueOnCurrentModule("Identitynumber/passport");// input.get("Identitynumber/passport").get(rowNumber);
-		String Phonenumber = dataTable2.getValueOnCurrentModule("Cellphone");//input.get("Cellphone").get(rowNumber);
-		String IDNumber = dataTable2.getValueOnCurrentModule("SAID");//input.get("SAID").get(rowNumber);
-		String expPassport = dataTable2.getValueOnCurrentModule("Passport");//input.get("Passport").get(rowNumber);
-		int waitforelement = Integer.parseInt(dataTable2.getValueOnCurrentModule("DelayforElements")/* input.get("DelayforElements").get(rowNumber) */);
+		String AssociatedWebsite=dataTable2.getValueOnCurrentModule("Website");
+		String Group = dataTable2.getValueOnCurrentModule("Group");
+		String Firstname = dataTable2.getValueOnCurrentModule("Firstname");
+		String Lastname = dataTable2.getValueOnCurrentModule("Lastname");
+		String Email = dataTable2.getValueOnCurrentModule("Email");
+		String IDType =dataTable2.getValueOnCurrentModule("Identitynumber/passport");
+		String Phonenumber = dataTable2.getValueOnCurrentModule("Cellphone");
+		String IDNumber = dataTable2.getValueOnCurrentModule("SAID");
+		String expPassport = dataTable2.getValueOnCurrentModule("Passport");
+		int waitforelement = Integer.parseInt(dataTable2.getValueOnCurrentModule("DelayforElements"));
 		String resBPnumber = null;
 		boolean ExpCustomerCreateSuccess = true;
-		//Navigate to all customer
 		navigateToCustomer(test);
 
 		action.click(Add_Customer, "Add new Customer", test);
@@ -115,8 +114,10 @@ public class EVS_MagentoRegisterNewUser {
 			switch (IDType){
 				case "SAID":
 					action.writeText(Cust_ID, IDNumber, "Customer ID Number", test);
+					break;
 				case "Passport":
 					action.writeText(passport, expPassport, "Customer Passport", test);
+					break;
 			}
 			action.writeText(Cust_Phonenumber, Phonenumber, "Customer Cellphone number", test);
 			

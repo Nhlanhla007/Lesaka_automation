@@ -114,13 +114,13 @@ import utils.hana;
 				String produts = (String)map.getKey();
 				//sum += (Integer.parseInt(quantity)*Integer.parseInt(price.replace("R", "").replace(",", "")));
 				ExpProductName.add(produts);
-			} 
-			
-			String ExpCITY=ICDelivery.Cityname.toLowerCase().trim();//"Pietersburg";
+			}
+
+			/*String ExpCITY=ICDelivery.Cityname.toLowerCase().trim();//"Pietersburg";
 			String ExpSTREET=ICDelivery.Streetname.toLowerCase().trim();//"Gemsbok Street";
-			String ExpPostalcode =ICDelivery.Postalcode.trim();
-			
-			
+			String ExpPostalcode =ICDelivery.Postalcode.trim();*/
+
+
 			//--------------------------------------------------------------------------
 			
 			Tablename Table1=Tablename.VBAK;
@@ -219,7 +219,6 @@ import utils.hana;
 				 }
 				// verify Delivery Block ----------------------------------------------------
 				 List<String> alldataDelivery_block= hn.GetRowdataByColumnName(rs, "LIFSK");
-			   //  System.out.println("Delivery Block is  : "+alldataDelivery_block);
 			     String ActualDeliveryBlock = String.join(",", alldataDelivery_block).replace(" ","").replace(",", "");
 
 //			     if(ActualDeliveryBlock.length()<=1){
@@ -247,32 +246,36 @@ import utils.hana;
 			List<String> allcolsdata =  hn.Getallcolumns(rs1);
 		//	System.out.println("ALL COLS DATA : "+allcolsdata);
 			//Verify the address---------------------------------------------------------
-			
-			
-			List<String> alldataADRNR = hn.GetRowdataByColumnName(rs1, "ADDRNUMBER");
-			//System.out.println("ADDRESS number is  : "+alldataADRNR);
-			logger.info("ADDRESS number is  : "+alldataADRNR);
-			
-			List<String> alldataSTREET = hn.GetRowdataByColumnName(rs1, "STREET");
-		//	System.out.println("STREET is  : "+alldataSTREET);
-			String ActualStreet =String.join(" ", alldataSTREET).toLowerCase();
-			action.CompareResult(" Street name from SAP DB ", ExpSTREET, ActualStreet, test);
-			
-			List<String> alldataCITY = hn.GetRowdataByColumnName(rs1, "CITY1");
-		//	System.out.println("CITY is  : "+alldataCITY);
-			String ActualCity = String.join(",", alldataCITY).toLowerCase();
-			action.CompareResult(" CITY name from SAP DB ", ExpCITY, ActualCity, test);
-			
-			List<String> alldataPOST_CODE = hn.GetRowdataByColumnName(rs1, "POST_CODE1");
-		//	System.out.println("POST_CODE number is  : "+alldataPOST_CODE);
-			String ActualPostalCode = String.join(" ", alldataPOST_CODE);
-			action.CompareResult(" Postal code from SAP DB ", ExpPostalcode, ActualPostalCode, test);
+
+			String esdProduct = dataTable2.getValueOnOtherModule("ProductSearch", "ESD Product", 0);
+
+			if((esdProduct.equalsIgnoreCase("No"))) {
+
+				String ExpCITY=ICDelivery.Cityname.toLowerCase().trim();
+				String ExpSTREET=ICDelivery.Streetname.toLowerCase().trim();
+				String ExpPostalcode =ICDelivery.Postalcode.trim();
+
+				List<String> alldataADRNR = hn.GetRowdataByColumnName(rs1, "ADDRNUMBER");
+				logger.info("ADDRESS number is  : " + alldataADRNR);
+
+				List<String> alldataSTREET = hn.GetRowdataByColumnName(rs1, "STREET");
+				String ActualStreet = String.join(" ", alldataSTREET).toLowerCase();
+				action.CompareResult(" Street name from SAP DB ", ExpSTREET, ActualStreet, test);
+
+				List<String> alldataCITY = hn.GetRowdataByColumnName(rs1, "CITY1");
+				String ActualCity = String.join(",", alldataCITY).toLowerCase();
+				action.CompareResult(" CITY name from SAP DB ", ExpCITY, ActualCity, test);
+
+				List<String> alldataPOST_CODE = hn.GetRowdataByColumnName(rs1, "POST_CODE1");
+				String ActualPostalCode = String.join(" ", alldataPOST_CODE);
+				action.CompareResult(" Postal code from SAP DB ", ExpPostalcode, ActualPostalCode, test);
+			}
 			
 			hn.closeDB();
-			//System.out.println("Closing database");
 			logger.info("Closing Database");
 		}
-		
+	    }
 
-}
+
+
 

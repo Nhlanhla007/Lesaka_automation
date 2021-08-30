@@ -55,9 +55,6 @@ public class EVS_MagentoOrderStatusPage {
 	@FindBy(xpath = "//body/div[2]/main[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[3]/button[1]")
 	public WebElement clearFilters;
 
-	/*@FindBy(xpath = "//tbody/tr[1]/td[10]/a[1]")
-	public WebElement viewOrderDetails*/;
-
 	@FindBy(xpath = "//table[@data-role='grid']/tbody/tr[1]/td[2]/div")
 	public WebElement viewOrderDetails;
 
@@ -116,7 +113,6 @@ public class EVS_MagentoOrderStatusPage {
 
 	public void viewOrderDetails(ExtentTest test) throws Exception {
 		boolean ajaxLoadCompleted = action.ajaxWait(ajaxTimeOutInSeconds, test);
-//		confirmRows(magentoTableRecords, test);
 		if (magentoTableRecords.size() >= 1) {
 			if(!ajaxLoadCompleted) {
 				driver.navigate().refresh();
@@ -156,12 +152,8 @@ public class EVS_MagentoOrderStatusPage {
     public Boolean isSKUPresent ;
     public String AllSKU = "";
 	public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
-		String idToSearch = dataTable2.getValueOnOtherModule("evs_RetriveOrderID","orderID",0);//"3100002010";
-//		if(POfetchFrom.equalsIgnoreCase("IC")) {
-//			idToSearch= ic_PayUPayment.Oderid;
-//		}else {
-//			idToSearch = input.get("productSearchId").get(rowNumber);
-//		}
+		String idToSearch = dataTable2.getValueOnOtherModule("evs_RetriveOrderID","orderID",0);
+//
 		String orderStatus = input.get("orderStatus").get(rowNumber);
 		System.out.println("orderStatus :"+orderStatus);
 		
@@ -218,34 +210,15 @@ public class EVS_MagentoOrderStatusPage {
 		if (action.waitUntilElementIsDisplayed(magentoOrderTab, 10000)) {
 			action.click(magentoOrderTab, "Order tab", test);
 		}
-//		driver.navigate().refresh();
-//		Thread.sleep(5000);
 	}
 
 	 public void VerifyOrderStatus(ExtentTest test, String ExporderStatus, int TimeOutInseconds, int RefreshInterval) throws IOException{
-
-
-
 	        boolean flagres = false;
-
 	        long startTime = System.currentTimeMillis();
 	        int TimeOutinSecond =TimeOutInseconds;
-
-
-
 	        int trycount =RefreshInterval;
-
 	        int elapsedTime = 0;
-
-
-
 	        String ActOrderStatus="";
-
-
-
-	        //--------------code---------
-
-
 
 	        while(elapsedTime<=TimeOutinSecond && flagres==false){
 	            action.refresh();
