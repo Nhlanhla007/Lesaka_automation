@@ -142,7 +142,7 @@ public class JDGKeyManager {
 		admin_ReOrder adminReorder = new admin_ReOrder(driver, dataTable2);
 		ic_MagentoCancelUpaidEFT ic_MagentoCancelUpaidEFT = new ic_MagentoCancelUpaidEFT(driver, dataTable2);
         IC_ReturnToConfirmOrderStatus ic_toConfirmOrderStatus = new IC_ReturnToConfirmOrderStatus(driver, dataTable2);
-        IC_ESDpurchase ic_esdPurchase = new IC_ESDpurchase(driver, dataTable2);
+        IC_ESDpurchase ic_esdLearnMore = new IC_ESDpurchase(driver, dataTable2);
         
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
@@ -207,6 +207,8 @@ public class JDGKeyManager {
         evs_TVLicenceApproval evs_TvLicenseApproval = new evs_TVLicenceApproval(driver, dataTable2);
         evs_TVLicenceValidation evs_TvLicense = new evs_TVLicenceValidation(driver, dataTable2);
         OpenGateSales openGateSales=new OpenGateSales(driver,dataTable2);
+        EVS_myTVLicense evs_MyTVLicense = new EVS_myTVLicense(driver, dataTable2);
+
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
             rowNumber = findRowToRun(dataMap2.get(moduleToRun + "++"), occCount.get(moduleToRun), testcaseID);
@@ -538,8 +540,8 @@ public class JDGKeyManager {
 	        case "ic_BackTo_IC":
 	            ic_toConfirmOrderStatus.backToIC(test1);
 	             break;
-	        case "ic_ESDPurchase":
-	        	ic_esdPurchase.purchaseESD(test1, rowNumber);
+	        case "ic_ESDLearnMore":
+	        	ic_esdLearnMore.learnMoreESD(test1, rowNumber);
 	             break;
 
             //EVS CODE BELOW
@@ -788,6 +790,9 @@ public class JDGKeyManager {
             	break;
             case "evs_validateTVLicensePopUp":
             	evs_TvLicense.validateNoTVLicensePopUpShows(test1);
+            	break;
+            case "evs_MyTVLicense":
+            	evs_MyTVLicense.MyTVlicenseValidation(test1);
             	break;
 
         }
