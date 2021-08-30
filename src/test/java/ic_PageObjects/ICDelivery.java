@@ -139,7 +139,7 @@ public class ICDelivery {
         action.ajaxWait(20, test);
         if (action.waitUntilElementIsDisplayed(deliveryLink, 10)) {
 //        	action.ajaxWait(20, test);
-        	action.explicitWait(5000);
+            action.explicitWait(5000);
             action.scrollToElement(deliveryLink, "Delivery Link", test);
             action.javaScriptClick(deliveryLink, "deliveryLink", test);
             action.ajaxWait(10, test);
@@ -153,8 +153,8 @@ public class ICDelivery {
                 action.writeText(email, dataSheets.getValueOnCurrentModule("email"), "email", test);
                 // action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
             } else if (userType.equalsIgnoreCase("Registered")) {
-                customerAddressDetails.navigateBackToCustomerDetails(userType, addressTypeICFont,test);
-                registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType, addressTypeICFont,test);
+                customerAddressDetails.navigateBackToCustomerDetails(userType, addressTypeICFont, test);
+                registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType, addressTypeICFont, test);
                 dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
                 dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
                 dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
@@ -187,10 +187,8 @@ public class ICDelivery {
 //        action.explicitWait(10000);
             }
         } else if (addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")) {
-            //details returned from this map will be written to excel --DONE NEED THOKOZANI'S INPUT AS TO DOES IT REALLY ADD AND THE TCID AND OCCURENCE
-            customerAddressDetails.navigateBackToCustomerDetails(userType, addressTypeICFont,test);
-            registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType, addressTypeICFont,test);
-            //SHOULD BE TESTED THOKOZANI
+            customerAddressDetails.navigateBackToCustomerDetails(userType, addressTypeICFont, test);
+            registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType, addressTypeICFont, test);
 
             Streetname = registeredUserDetails.get("Street Address");
             Cityname = registeredUserDetails.get("City");
@@ -216,7 +214,7 @@ public class ICDelivery {
         }
         if (action.waitUntilElementIsDisplayed(ContinueToPayment, 15000)) {
             action.waitForJStoLoad(60);
-            action.ajaxWait(10,test);
+            action.ajaxWait(10, test);
             action.explicitWait(5000);
             action.javaScriptClick(ContinueToPayment, "Continue To Payment", test);
 
@@ -224,14 +222,14 @@ public class ICDelivery {
     }
 
     public void enterNewAddressWithAnExistingAddress(ExtentTest test) throws Exception {
-        customerAddressDetails.navigateBackToCustomerDetails("New", "Select a saved address or add a new address:",test);
-        registeredUserDetails = customerAddressDetails.getExistingAddressInformation("New", "Select a saved address or add a new address:",test);
+        customerAddressDetails.navigateBackToCustomerDetails("New", "Select a saved address or add a new address:", test);
+        registeredUserDetails = customerAddressDetails.getExistingAddressInformation("New", "Select a saved address or add a new address:", test);
         dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
         dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
         dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
         dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
         if (action.waitUntilElementIsDisplayed(newAddressButton, 10)) {
-    		action.explicitWait(4000);
+            action.explicitWait(4000);
             action.javaScriptClick(newAddressButton, "New Address", test);
         }
         //action.writeText(popUpFirstName, dataSheets.getValueOnCurrentModule(""), "New First name", test);
@@ -279,7 +277,7 @@ public class ICDelivery {
         action.writeText(email, emailGift, "Email", test);
         action.writeText(streetNameGift, streetNameG, "Street name", test);
         action.writeText(telephoneGift, telephone, "Telephone", test);
-        action.writeText(provinceGift,province , "Province", test);
+        action.writeText(provinceGift, province, "Province", test);
         action.writeText(cityGift, cityName, "City", test);
         action.writeText(SuburbGift, suburb, "Suburb", test);
         action.writeText(postalCodeGift, postalCode, "Postal Code", test);

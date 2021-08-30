@@ -206,7 +206,7 @@ public class JDGKeyManager {
         EVS_Admin_Reorder evs_admin_reOrder = new EVS_Admin_Reorder(driver, dataTable2);
         evs_TVLicenceApproval evs_TvLicenseApproval = new evs_TVLicenceApproval(driver, dataTable2);
         evs_TVLicenceValidation evs_TvLicense = new evs_TVLicenceValidation(driver, dataTable2);
-//        ExtentTest test1 = test.createNode(moduleToRun);
+        OpenGateSales openGateSales=new OpenGateSales(driver,dataTable2);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
             rowNumber = findRowToRun(dataMap2.get(moduleToRun + "++"), occCount.get(moduleToRun), testcaseID);
@@ -780,6 +780,9 @@ public class JDGKeyManager {
             case "user_license_verification":
             	evs_TvLicenseApproval.licenseValidation(test1);
             	break;
+            case "OpenGateSales":
+                openGateSales.searchOrderOpenGateSales(test1);
+                break;
 
         }
     }
