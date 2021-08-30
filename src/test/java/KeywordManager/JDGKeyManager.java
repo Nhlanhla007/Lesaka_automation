@@ -783,6 +783,12 @@ public class JDGKeyManager {
             case "OpenGateSales":
                 openGateSales.searchOrderOpenGateSales(test1);
                 break;
+            case "evs_RemoveTVLicenseOrProduct":
+            	evs_RemoveItemsFromCart.removeTVLicense(test1);
+            	break;
+            case "evs_validateTVLicensePopUp":
+            	evs_TvLicense.validateNoTVLicensePopUpShows(test1);
+            	break;
 
         }
     }
