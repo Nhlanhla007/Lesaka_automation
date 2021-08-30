@@ -83,7 +83,7 @@ public class IC_ESDpurchase {
 	    	}
 	    }
 	    
-	    public void purchaseESD( ExtentTest test, int rowNumber) throws IOException, Exception {
+	    public void learnMoreESD( ExtentTest test, int rowNumber) throws IOException, Exception {
 	    	action.explicitWait(12000);
 	    	action.click(ic_back, "go back", test);
 	    	action.explicitWait(5000);
