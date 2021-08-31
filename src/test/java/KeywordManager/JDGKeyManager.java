@@ -143,6 +143,7 @@ public class JDGKeyManager {
 		ic_MagentoCancelUpaidEFT ic_MagentoCancelUpaidEFT = new ic_MagentoCancelUpaidEFT(driver, dataTable2);
         IC_ReturnToConfirmOrderStatus ic_toConfirmOrderStatus = new IC_ReturnToConfirmOrderStatus(driver, dataTable2);
         IC_ESDpurchase ic_esdLearnMore = new IC_ESDpurchase(driver, dataTable2);
+        ic_TVLicenceValidation ic_TVLicenseValidation = new ic_TVLicenceValidation(driver, dataTable2);
         
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
@@ -793,6 +794,9 @@ public class JDGKeyManager {
             	break;
             case "evs_MyTVLicense":
             	evs_MyTVLicense.MyTVlicenseValidation(test1);
+            	break;
+            case "ic_tvLicenseValidation":
+            	ic_TVLicenseValidation.cartValidationWithLicense(test1);
             	break;
 
         }
