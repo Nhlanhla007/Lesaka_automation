@@ -144,6 +144,7 @@ public class JDGKeyManager {
         IC_ReturnToConfirmOrderStatus ic_toConfirmOrderStatus = new IC_ReturnToConfirmOrderStatus(driver, dataTable2);
         IC_ESDpurchase ic_esdLearnMore = new IC_ESDpurchase(driver, dataTable2);
         ic_TVLicenceValidation ic_TVLicenseValidation = new ic_TVLicenceValidation(driver, dataTable2);
+        IC_validateRegistrationForm ValidateRegForm = new IC_validateRegistrationForm(driver,dataTable2);
         
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
@@ -209,6 +210,7 @@ public class JDGKeyManager {
         evs_TVLicenceValidation evs_TvLicense = new evs_TVLicenceValidation(driver, dataTable2);
         OpenGateSales openGateSales=new OpenGateSales(driver,dataTable2);
         EVS_myTVLicense evs_MyTVLicense = new EVS_myTVLicense(driver, dataTable2);
+        EVS_validateRegistrationForm evs_ValidateRegForm = new EVS_validateRegistrationForm(driver,dataTable2);
 
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -544,6 +546,10 @@ public class JDGKeyManager {
 	        case "ic_ESDLearnMore":
 	        	ic_esdLearnMore.learnMoreESD(test1, rowNumber);
 	             break;
+	        case "ValidateRegistrationForm":
+	        	ValidateRegForm.validateRegForm(test1);
+            	break;
+
 
             //EVS CODE BELOW
             case "evs_Login":
@@ -797,6 +803,9 @@ public class JDGKeyManager {
             	break;
             case "ic_tvLicenseValidation":
             	ic_TVLicenseValidation.cartValidationWithLicense(test1);
+            	break;
+            case "evs_ValidateRegistrationForm":
+            	evs_ValidateRegForm.validateRegForm(test1);
             	break;
 
         }
