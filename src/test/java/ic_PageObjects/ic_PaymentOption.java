@@ -1,6 +1,7 @@
 package ic_PageObjects;
 
 import com.aventstack.extentreports.ExtentTest;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -87,6 +88,60 @@ public class ic_PaymentOption {
 
 	@FindBy(xpath = "//span[contains(text(),'I agree to all the terms & conditions')]")
 	WebElement TermsCondition;
+
+	@FindBy(xpath = "//input[@id='id-book-upload']")
+	WebElement selectIDButton;
+
+	@FindBy(xpath = "//span[contains(text(),'No file selected')]")
+	WebElement NoFileSelection;
+
+	@FindBy(xpath = "//span[contains(text(),\"Ready to upload\")]")
+	WebElement uploadMsg;
+
+	@FindBy(xpath = "//span[contains(text(),'Submit')]")
+	WebElement IDSubmitBtn;
+
+	@FindBy(xpath = "//span[contains(text(),'Uploading proof of ID, please wait...')]")
+	WebElement uploadingMsg;
+
+
+	public void uploadValidID(ExtentTest test) throws Exception {
+		action.explicitWait(15000);
+		action.ajaxWait(20, test);
+		String uploadDocument = dataTable2.getValueOnOtherModule("ic_tvLicenseValidation", "Upload Document", 0);
+
+		try {
+			if (uploadDocument.equalsIgnoreCase("yes")) {
+				boolean uploadButton = action.isElementPresent(selectIDButton);
+				action.CompareResult("Upload Button is displayed", "true", String.valueOf(uploadButton), test);
+
+				if (uploadButton) {
+					boolean NoFileSelectionCheck = action.isElementPresent(NoFileSelection);
+					action.CompareResult("No Document is selected for Upload", "true", String.valueOf(NoFileSelectionCheck), test);
+					if (NoFileSelectionCheck) {
+
+						String filePath = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Document Upload Location", 0);
+
+						selectIDButton.sendKeys(filePath);
+						action.ajaxWait(10,test);
+						boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, 5);
+						action.CompareResult("Ready to upload message", "true", String.valueOf(uploadMessage), test);
+						if (uploadMessage) {
+							action.explicitWait(10000);
+							action.javaScriptClick(IDSubmitBtn, "Submit Button", test);
+							boolean uploadingMessage = action.waitUntilElementIsDisplayed(uploadingMsg, 5);
+							action.CompareResult("File uploading message", "true", String.valueOf(uploadingMessage), test);
+							action.explicitWait(10000);
+							boolean uploadCompleteFlag = driver.findElements(By.xpath("//span[contains(text(),'Uploading proof of ID, please wait...')]")).size() > 0;
+							action.CompareResult("Uploading is Completed", "false", String.valueOf(uploadCompleteFlag), test);
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new Exception("Unable to upload the Document: " + e.getMessage());
+		}
+	}
 
 
 	

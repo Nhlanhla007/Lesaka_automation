@@ -556,6 +556,11 @@ public class JDGKeyManager {
 	        case"ic_Tvapproval":
 	        	ic_tvLicenceApproval.approveTVlicence(test1, rowNumber);
             	break;
+            case"ic_uploadDocument":
+                Payopt.uploadValidID(test1);
+                break;
+
+
 
 
             //EVS CODE BELOW
@@ -784,7 +789,7 @@ public class JDGKeyManager {
             case"tvLicenseValidation":
             	evs_TvLicense.TvLicenceValidation(test1, rowNumber);
             	break;
-            case"uploadDocument":
+            case"evs_uploadDocument":
             	evs_PaymentOption.uploadValidID(test1);
             	break;
             case"evs_Tvapproval":
