@@ -135,7 +135,8 @@ public class EVS_Delivery {
     @FindBy(xpath = "//span[contains(text(),'Add Address')]")
     WebElement newAddressButton;
 
-    @FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
+    //@FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
+    @FindBy(xpath = "//*[@class=\"modal-footer\"]/button[1]")
     WebElement popUpSave;
 
 
