@@ -69,7 +69,7 @@ public class ic_MagentoOrderSAPnumber {
         action.CompareResult("Sales Order Status", orderStatus, magentoOrderStatus.getText(), test);
 
         action.scrollElemetnToCenterOfView(itemsOrdered,"Items Ordered",test);
-        action.explicitWait(2);
+        action.explicitWait(2000);
 
         try {
             String esdProduct = dataTable2.getValueOnOtherModule("ProductSearch", "ESD Product", 0);

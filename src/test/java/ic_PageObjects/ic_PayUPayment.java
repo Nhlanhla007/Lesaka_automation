@@ -61,23 +61,27 @@ public class ic_PayUPayment {
         String Expiremonth = dataTable2.getValueOnCurrentModule("Expiremonth");
         String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
         String cvv = dataTable2.getValueOnCurrentModule("cvv");
-        action.explicitWait(10000);
-        action.clickEle(PayU_Card, " Card option in PayU", test);
-        action.writeText(cardNumber, cardnumber, "card number", test);
-        action.writeText(nameOnCard, cardholdername, "name on card", test);
-        action.dropDownselectbyvisibletext(expMonth, Expiremonth, "Select Expirey Month on Card", test);
-        action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Month on Card", test);
-        action.writeText(cvvNumber, cvv, "cvv number", test);
-        action.clickEle(PayBtn, "Payment submission button", test);
-        action.waitForJStoLoad(10);
-        try {
-            if (action.isElementPresent(continueBtn)) {
-                action.javaScriptClick(continueBtn, "Continue", test);
-                action.waitForJStoLoad(40);
+        if (action.waitUntilElementIsDisplayed(cardNumber, 20)) {
+            action.clickEle(PayU_Card, " Card option in PayU", test);
+            action.writeText(cardNumber, cardnumber, "card number", test);
+            action.writeText(nameOnCard, cardholdername, "name on card", test);
+            action.dropDownselectbyvisibletext(expMonth, Expiremonth, "Select Expirey Month on Card", test);
+            action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Month on Card", test);
+            action.writeText(cvvNumber, cvv, "cvv number", test);
+            action.clickEle(PayBtn, "Payment submission button", test);
+            action.waitForJStoLoad(10);
+            try {
+                if (action.isElementPresent(continueBtn)) {
+                    action.javaScriptClick(continueBtn, "Continue", test);
+                    action.waitForJStoLoad(40);
+                }
+                action.CompareResult("order success message", "Thank you, we have successfully received your order", successMsg.getText(), test);
+            } catch (Exception e) {
+                throw new Exception("Unable to navigate to final order page. " + e.getMessage());
             }
-            action.CompareResult("order success message", "Thank you, we have successfully received your order", successMsg.getText(), test);
-        } catch (Exception e) {
-            throw new Exception("Unable to navigate to final order page. " + e.getMessage());
+        } else {
+            throw new Exception("Unable to Navigate to PayU page");
         }
+
     }
 }

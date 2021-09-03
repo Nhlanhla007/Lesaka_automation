@@ -136,7 +136,7 @@ public class EVS_PaymentOption {
                         String filePath = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Document Upload Location", 0);
 
                         selectIDButton.sendKeys(filePath);
-                        action.ajaxWait(10,test);
+                        action.ajaxWait(10, test);
                         boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, 5);
                         action.CompareResult("Ready to upload message", "true", String.valueOf(uploadMessage), test);
                         if (uploadMessage) {
@@ -185,24 +185,27 @@ public class EVS_PaymentOption {
     public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
         try {
             action.explicitWait(20000);
-            action.waitForPageLoaded(60);
+            action.waitForJStoLoad(60);
             action.ajaxWait(20, test);
-            String paytype = input.get("Paytype_Option").get(rowNumber);
-            WebElement paymentsType = evs_SelectPaymentMethod(paytype);
-            action.scrollToElement(paymentsType, "Payment type");
-            action.explicitWait(2000);
-            action.click(paymentsType, "Select Payment option as " + paytype, test);
-            action.ajaxWait(10, test);
-            action.scrollToElement(Btn_PlaceOrder, "Place Order Button");
-            action.explicitWait(2000);
-            action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
-            action.ajaxWait(10, test);
-            action.ajaxWait(10, test);
-            action.waitForPageLoaded(40);
+            if (action.waitUntilElementIsDisplayed(Btn_PlaceOrder,30)) {
+                String paytype = input.get("Paytype_Option").get(rowNumber);
+                WebElement paymentsType = evs_SelectPaymentMethod(paytype);
+                action.scrollToElement(paymentsType, "Payment type");
+                action.explicitWait(2000);
+                action.click(paymentsType, "Select Payment option as " + paytype, test);
+                action.ajaxWait(10, test);
+                action.scrollToElement(Btn_PlaceOrder, "Place Order Button");
+                action.explicitWait(2000);
+                action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+                action.ajaxWait(10, test);
+                action.ajaxWait(10, test);
+                action.waitForPageLoaded(40);
 
+            } else {
+                throw new Exception("Unable to navigate to Checkout Payment");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Unable to navigate to Checkout Payment: " + e.getMessage());
         }
 
     }
