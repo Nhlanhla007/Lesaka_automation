@@ -50,7 +50,8 @@ public class evs_TVLicenceApproval {
     @FindBy(xpath = "//*[@title=\"Update Account Validity\"]")
     private WebElement admin_ButtonTVpassword;
 
-    @FindBy(xpath = "//*[@class=\"data-table admin__table-primary edit-order-table\"]//*[contains(text(),'TV License Application')]/parent::*//*[@class=\"product-sku-block\"]/text()[2]")
+    //@FindBy(xpath = "//*[@class=\"data-table admin__table-primary edit-order-table\"]//*[contains(text(),'TV License Application')]/parent::*//*[@class=\"product-sku-block\"]/text()[2]")
+    @FindBy(xpath = "//*[@class=\"odd\"]/tr/td/div/div[2]")
     private WebElement admin_NewTVlicenceSKU;
 
     @FindBy(xpath = "//div[contains(text(),'Validity change was processed')]")
