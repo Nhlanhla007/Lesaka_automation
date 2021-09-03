@@ -69,7 +69,7 @@ public class EVS_PayUPayment {
         String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
         String cvv = dataTable2.getValueOnCurrentModule("cvv");
 
-        if (action.waitUntilElementIsDisplayed(cardNumber,20)) {
+        if (action.waitUntilElementIsDisplayed(PayU_Card,20)) {
             action.clickEle(PayU_Card, " Card option in PayU", test);
             action.writeText(cardNumber, cardnumber, "card number", test);
             action.writeText(nameOnCard, cardholdername, "name on card", test);
