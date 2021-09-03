@@ -28,50 +28,50 @@ public class MagentoOrderStatusPage {
     DataTable2 dataTable2;
 
     int ajaxTimeOutInSeconds = ic_Magento_Login.ajaxTimeOutInSeconds;
-
+	
     public MagentoOrderStatusPage(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
         this.dataTable2 = dataTable2;
     }
-
+	
     @FindBy(id = "menu-magento-sales-sales")
     public WebElement magentoSalesTab;
-
+	
     @FindBy(xpath = "//body[1]/div[1]/nav[1]/ul[1]/li[3]/div[1]/ul[1]/li[1]/ul[1]/li[1]/div[1]/ul[1]/li[1]/a[1]/span[1]")
     public WebElement magentoOrderTab;
-
+	
     @FindBy(xpath = "//button[contains(text(),'Filters')]")
     public WebElement magentoFilterTab;
-
+	
     @FindBy(name = "increment_id")
     public WebElement magentoIdSearchField;
-
+	
     @FindBy(xpath = "//span[contains(text(),'Apply Filters')]")
     public WebElement magentoApplyFilterTab;
-
+	
     @FindBy(className = "data-row")
     public List<WebElement> magentoTableRecords;
-
+	
     @FindBy(xpath = "//body/div[2]/main[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[3]/button[1]")
     public WebElement clearFilters;
 
     @FindBy(xpath = "//table[@data-role='grid']/tbody/tr[1]/td[2]/div")
     public WebElement viewOrderDetails;
-
+	
     @FindBy(xpath = "//tbody/tr[1]/td[9]/div")
     public WebElement magentoOrderStatus;
-
+	
     //Bundle Article Info below
     @FindBy(xpath = "//table[@class='admin__table-secondary order-information-table']/tbody/tr/td//span[@id='order_status']")
     public WebElement OrderStatus_orderDetailPage;
 
-
+    
     @FindBy(xpath = "/html/body/div[2]/main/div[2]/div[1]/div/div[1]/div[1]/section[4]/div[2]/table/tbody/tr[1]/td[1]/div[2]")
     public WebElement listSKU;
-
-
+	
+	
     public void click(WebElement elementAttr, ExtentTest test) {
         try {
             action.click(elementAttr, "NavigateToOrder", test);
@@ -80,7 +80,7 @@ public class MagentoOrderStatusPage {
             e.printStackTrace();
         }
     }
-
+	
     public void writeText(WebElement elementAttr, String text, ExtentTest test) {
         try {
             action.writeText(elementAttr, text, "Wrote text" + text, test);
@@ -89,31 +89,34 @@ public class MagentoOrderStatusPage {
             e.printStackTrace();
         }
     }
-
+	
     public void confirmRows(List<WebElement> elements, ExtentTest test) {
         System.out.println(elements.size());
         //action.expectSingleRow(elements, "Confirm single data row returned",test);
     }
-
+	
     public void clickOnOrderStatus() {
         magentoTableRecords.get(0);
     }
-
+	
     public void searchForOrder(String idToSearch, ExtentTest test) throws Exception {
         action.waitForPageLoaded(ajaxTimeOutInSeconds);
         action.ajaxWait(ajaxTimeOutInSeconds, test);
-        if (action.waitUntilElementIsDisplayed(clearFilters, 10)) {
+
+        if (action.waitUntilElementIsDisplayed(clearFilters,ajaxTimeOutInSeconds )) {
             action.javaScriptClick(clearFilters, "Cleared Filters", test);
             action.ajaxWait(ajaxTimeOutInSeconds, test);
         }
         action.javaScriptClick(magentoFilterTab, "Filter tab", test);
-        action.writeText(magentoIdSearchField, idToSearch, "searchId", test);
+        action.writeText(magentoIdSearchField, idToSearch, "ID", test);
+        action.ajaxWait(20,test);
         action.explicitWait(3000);
+
         action.click(magentoApplyFilterTab, "Apply to filters", test);
         action.ajaxWait(ajaxTimeOutInSeconds, test);
         action.explicitWait(5000);
     }
-
+	
     public void viewOrderDetails(ExtentTest test) throws Exception {
         boolean ajaxLoadCompleted = action.ajaxWait(ajaxTimeOutInSeconds, test);
         if (magentoTableRecords.size() >= 1) {
@@ -133,7 +136,7 @@ public class MagentoOrderStatusPage {
             //action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
         }
     }
-
+	
     public void orderStatusCheck(String orderStatus, ExtentTest test) throws Exception {
         action.explicitWait(10000);
         action.waitForJStoLoad(ajaxTimeOutInSeconds);
@@ -143,14 +146,14 @@ public class MagentoOrderStatusPage {
         //throw new Exception("No Records Are Returned");
         //}
     }
-
-
+	
+	
     //public List<String> AllSKU;
     public Boolean isSKUPresent;
     public String AllSKU = "";
-
+		
     public void navigateToOrderPage(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception, InterruptedException {
-
+		
         String idToSearch = dataTable2.getValueOnOtherModule("ic_RetriveOrderID", "orderID", 0);
         String orderStatus = input.get("orderStatus").get(rowNumber);
         action.waitForPageLoaded(ajaxTimeOutInSeconds);
@@ -160,13 +163,13 @@ public class MagentoOrderStatusPage {
         searchForOrder(idToSearch, test);
 //		orderStatusCheck(orderStatus, test);
         viewOrderDetails(test);
-
+		
         //Validate SKU for bundle article
         //NavigateTo_OrderdetailsPage(test);
-
+		
         action.waitForPageLoaded(ajaxTimeOutInSeconds);
         action.ajaxWait(ajaxTimeOutInSeconds, test);
-
+		
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         isSKUPresent = driver.findElements(By.xpath("/html/body/div[2]/main/div[2]/div[1]/div/div[1]/div[1]/section[4]/div[2]/table/tbody/tr[1]/td[1]/div[2]")).size() > 0;
         dataTable2.setValueOnCurrentModule("IsBundleArticleSKUPresent", String.valueOf(isSKUPresent));
@@ -211,7 +214,7 @@ public class MagentoOrderStatusPage {
             action.click(magentoOrderTab, "Order tab", test);
         }
     }
-
+	
     public void VerifyOrderStatus(ExtentTest test, String ExporderStatus, int TimeOutInseconds, int RefreshInterval) throws IOException {
         boolean flagres = false;
         long startTime = System.currentTimeMillis();
@@ -240,7 +243,7 @@ public class MagentoOrderStatusPage {
             long elapsedTimeInMils = endTime - startTime;
             elapsedTime = ((int) elapsedTimeInMils) / 1000;
             System.out.println("elapsedTime: " + elapsedTime);
-
+             
         }
         if (flagres == true) {
             action.CompareResult(" Order Status on Order Details Page in MagentoAdmin", ExporderStatus, ActOrderStatus, test);
@@ -251,5 +254,5 @@ public class MagentoOrderStatusPage {
 
     }
 
-
+	
 }

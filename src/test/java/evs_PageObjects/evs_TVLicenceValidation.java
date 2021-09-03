@@ -1,8 +1,10 @@
 package evs_PageObjects;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -70,6 +72,9 @@ public class evs_TVLicenceValidation {
 	
 	@FindBy(xpath = "//*[@class=\"sbp-real-input passport-num\"]/following-sibling::div//div[@class=\"passport-num fake-input-content\"]")
 	private WebElement passportValueAddedForValidation;
+	
+	@FindBy(xpath="//*[@data-role=\"proceed-to-checkout\"]")
+	private WebElement secureCheckout;
 	
 
 	public void TvLicenceValidation(ExtentTest test, int rowNumber) throws Exception {
@@ -188,5 +193,18 @@ public class evs_TVLicenceValidation {
 		}
 
 	}
+	
+	public void validateNoTVLicensePopUpShows(ExtentTest test) throws Exception {
+		action.click(secureCheckout, "Secure Checkout", test);
+		action.waitForJStoLoad(30);
+		boolean isValidationPopUpVisible = driver.findElements(By.xpath("//*[@class=\"sbp-header\"]")).size()>0;
+		if(!(isValidationPopUpVisible) ){
+			action.CompareResult("TV License Validation Is Not Displayed", "True", "True", test);
+		}
+		else {
+			action.CompareResult("TV License Validation is Still Present", "True", "False", test);
+			throw new Exception("TV License Validation is Still Present");
+		}
+		}	
 
 }

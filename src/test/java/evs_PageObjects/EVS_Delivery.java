@@ -33,7 +33,7 @@ public class EVS_Delivery {
         action = new Action(driver);
         dataSheets = dataTable2;
         customerAddressDetails = new EVS_UpdateCustomer(driver, dataTable2);
-
+ 
     }
 
     @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]")
@@ -71,7 +71,7 @@ public class EVS_Delivery {
 
     @FindBy(name = "custom_attributes[identity_number]")
     WebElement idNumber;
-
+    
     @FindBy(xpath = "//input[@name=\"custom_attributes[nickname]\"]")
     WebElement evs_nickname;
 
@@ -104,54 +104,54 @@ public class EVS_Delivery {
 
     @FindBy(className = "form-checkout-title")
     WebElement ic_AddressType;
-
+    
     @FindBy(name = "street[0]")
     WebElement popUpStreetName;
-
+    
     @FindBy(name = "region_id")
     WebElement popUpProvince;
-
+    
     /*
      * @FindBy(name = "firstname") WebElement popUpFirstName;
      *
      * @FindBy(name = "lastname") WebElement popUpLastName;
      */
-
+    
     @FindBy(name = "city")
     WebElement popUpCity;
 
     @FindBy(name = "postcode")
     WebElement popUpPostalCode;
-
+    
     @FindBy(name = "custom_attributes[suburb]")
     WebElement popUpsuburb;
-
+    
     @FindBy(name = "vat_id")
     WebElement popUpVatNumber;
-
+    
     @FindBy(name = "telephone")
     WebElement popUpPhone;
-
+    
     @FindBy(xpath = "//span[contains(text(),'Add Address')]")
     WebElement newAddressButton;
-
+    
     //@FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
     @FindBy(xpath = "//*[@class=\"modal-footer\"]/button[1]")
     WebElement popUpSave;
-
-
+    
+    
     @FindBy(xpath = "//*[@class=\"pac-item\"]")
     List<WebElement> googleAddressOptions;
-
+    
 //    @FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
 //    WebElement cardDeliver_btn;
-
+    
 //    public static String Streetname;
 //    public static String Cityname;
 //    public static String Postalcode;
 
     public static Map<String, String> registeredUserDetails;
-
+    
     public void deliveryPopulation(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
         //driver.navigate().to(ConfigFileReader.getPropertyVal("EVS_URL"));
         String Streetname = input.get("streetName").get(rowNumber);
@@ -224,7 +224,7 @@ public class EVS_Delivery {
                 if (flag) {
                     throw new Exception("Google Address Has Not Been Found");
                 }
-
+              
 //        action.writeText(streetName,dataSheets.getValueOnCurrentModule("streetName"),"streetName",test);
                 action.waitUntilElementIsDisplayed(telephone, 5000);
                 action.writeText(telephone, dataSheets.getValueOnCurrentModule("telephone"), "telephone", test);
@@ -240,11 +240,11 @@ public class EVS_Delivery {
         } else if (addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Choose your address or add a new one:")) {
             customerAddressDetails.navigateBackToCustomerDetails(userType, addressTypeICFont);
             registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType, addressTypeICFont);
-
+        	
             Streetname = registeredUserDetails.get("Street Address");
             Cityname = registeredUserDetails.get("City");
             Postalcode = registeredUserDetails.get("Post Code");
-
+            
             dataSheets.setValueOnCurrentModule("streetName", registeredUserDetails.get("Street Address"));
             dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
             dataSheets.setValueOnCurrentModule("lastname", registeredUserDetails.get("Last name"));
@@ -257,7 +257,7 @@ public class EVS_Delivery {
             dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
             //	dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
             action.explicitWait(12000);
-
+        	
         } else if (addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Choose your address or add a new one:")) {
             //Enters a new address with an existing address
             enterNewAddressWithAnExistingAddress(test);
@@ -272,8 +272,8 @@ public class EVS_Delivery {
             action.waitForPageLoaded(40);
         }
     }
-
-
+    
+    
     public void enterNewAddressWithAnExistingAddress(ExtentTest test) throws Exception {
         customerAddressDetails.navigateBackToCustomerDetails("New", "Select a saved address or add a new address:");
         registeredUserDetails = customerAddressDetails.getExistingAddressInformation("New", "Choose your address or add a new one:");
@@ -317,7 +317,7 @@ public class EVS_Delivery {
         if (flag) {
             throw new Exception("Google Address Has Not Been Found");
         }
-
+		
 //    	action.explicitWait(4000);
 //    	popUpCity.clear();
 //    	action.writeText(popUpCity, dataSheets.getValueOnCurrentModule("city"), "New Address City", test);
@@ -333,7 +333,7 @@ public class EVS_Delivery {
         // popUpSave.click();
         action.click(popUpSave, "Save", test);
     }
-
+    
     public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
         //Streetname =input.get("streetName").get(rowNumber);
         String Streetname = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "streetName", 0);
@@ -347,7 +347,7 @@ public class EVS_Delivery {
         String emailGift = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "email", 0);
         String SuburbG = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "Suburb", 0);
         String provinceG = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "province", 0);
-
+        
         driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
         //action.click(cardDeliver_btn, "click Deliver", test);
         action.waitForPageLoaded(30);
@@ -364,6 +364,6 @@ public class EVS_Delivery {
         action.dropDownselectbyvisibletext(provinceGift, provinceG, "province", test);
         action.explicitWait(10000);
         action.click(placeOrder, "placeOrder", test);
-
+       
     }
 }

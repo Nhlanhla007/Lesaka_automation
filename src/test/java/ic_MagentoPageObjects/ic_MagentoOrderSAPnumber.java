@@ -22,7 +22,7 @@ public class ic_MagentoOrderSAPnumber {
     WebDriver driver;
     Action action;
     DataTable2 dataTable2;
-
+    
     public ic_MagentoOrderSAPnumber(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -30,7 +30,7 @@ public class ic_MagentoOrderSAPnumber {
         this.dataTable2 = dataTable2;
 
     }
-
+    
     @FindBy(xpath = "//div[contains(text(),'[RabbitMQ] Order SAP Number: ')][1]")
     private WebElement OrderDetailSAPNumber;
 
@@ -43,9 +43,15 @@ public class ic_MagentoOrderSAPnumber {
     @FindBy(xpath = "//span[contains(text(),'Items Ordered')]")
     private WebElement itemsOrdered;
 
+    @FindBy(xpath = "//a[contains(text(),'Download SABC ID Book')]")
+    private WebElement downloadSABCButton;
+
+    @FindBy(xpath = "//div[contains(text(),'was downloaded')]")
+    private WebElement downloadSuccessMsg;
+    
     Timer t = new Timer();
     public static String OrderSAPnumber;
-
+    
     public void GenerateOrderSAPnumber(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
         boolean flagres = false;
         boolean openGateFlag = false;
@@ -61,10 +67,8 @@ public class ic_MagentoOrderSAPnumber {
         String orderStatus = dataTable2.getValueOnOtherModule("OrderStatusSearch", "orderStatus", 0);
         System.out.println("Sales Order Status :" + orderStatus);
         action.CompareResult("Sales Order Status", orderStatus, magentoOrderStatus.getText(), test);
-
         action.scrollElemetnToCenterOfView(itemsOrdered,"Items Ordered",test);
-        action.explicitWait(2);
-
+        action.explicitWait(2000);
         try {
             String esdProduct = dataTable2.getValueOnOtherModule("ProductSearch", "ESD Product", 0);
             if (esdProduct.equalsIgnoreCase("yes")) {
@@ -78,7 +82,7 @@ public class ic_MagentoOrderSAPnumber {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+					
         while (elapsedTime <= TimeOutinSecond && flagres == false) {
             action.refresh();
             action.waitForPageLoaded(TimeOutinSecond);
@@ -120,6 +124,21 @@ public class ic_MagentoOrderSAPnumber {
                 exe.executeScript("window.scrollBy(0,-500)");
                 action.CompareResult("SAP order Number generated: " + OrderSAPnumber + "  ", String.valueOf(true), String.valueOf(flagres), test);
                 throw new Exception("SAP Order Number Is Not Generated");
+        }
+    }
+
+    public void downloadSABC_ID(ExtentTest test) throws Exception {
+
+        try {
+            boolean sabcFlag = action.isElementPresent(downloadSABCButton);
+            if (sabcFlag) {
+                action.click(downloadSABCButton, "SABC Download ID Book", test);
+                action.waitForJStoLoad(30);
+                boolean msgFlag = action.isElementPresent(downloadSuccessMsg);
+                action.CompareResult("SABC ID Download message", String.valueOf(true), String.valueOf(msgFlag), test);
+            }
+        } catch (Exception e) {
+            throw new Exception("Unable to Download SABC ID Book " + e.getMessage());
         }
     }
 }
