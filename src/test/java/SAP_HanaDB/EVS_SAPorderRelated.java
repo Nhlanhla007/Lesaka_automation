@@ -117,7 +117,7 @@ import utils.hana;
 				//sum += (Integer.parseInt(quantity)*Integer.parseInt(price.replace("R", "").replace(",", "")));
 				ExpSku.add(SKU);
 				//ExpSku.add("000000000010119332");//to be removed
-		  //}
+		  }
 				
 			//String ExpCITY=  ICDelivery.Cityname.toLowerCase().trim();//"johannesburg";		
 			String ExpCITY= dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "city", 0).toLowerCase().trim();
@@ -271,7 +271,5 @@ import utils.hana;
 			logger.info("Closing Database");
 		}
 		
-
-}
 
 }
