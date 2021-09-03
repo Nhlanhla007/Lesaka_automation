@@ -197,6 +197,7 @@ public class EVS_PaymentOption {
             action.explicitWait(2000);
             action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
             action.ajaxWait(10, test);
+            action.ajaxWait(10, test);
             action.waitForPageLoaded(40);
 
         } catch (Exception e) {

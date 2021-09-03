@@ -63,29 +63,27 @@ public class EVS_PayUPayment {
 
     public void PayUPagePayment(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
             throws Exception {
-        try {
             String cardnumber = dataTable2.getValueOnCurrentModule("cardnumber");
             String cardholdername = dataTable2.getValueOnCurrentModule("cardholdername");
             String Expiremonth = dataTable2.getValueOnCurrentModule("Expiremonth");
             String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
             String cvv = dataTable2.getValueOnCurrentModule("cvv");
-            action.clickEle(PayU_Card, " Card option in PayU", test);
-            action.writeText(cardNumber, cardnumber, "card number", test);
-            action.writeText(nameOnCard, cardholdername, "name on card", test);
-            action.dropDownselectbyvisibletext(expMonth, Expiremonth, "Select Expirey Month on Card", test);
-            action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Year on Card", test);
-            action.writeText(cvvNumber, cvv, "cvv number", test);
-            action.clickEle(PayBtn, "Payment submission button", test);
-            action.waitForJStoLoad(10);
-            if (action.isElementPresent(continueBtn)) {
-                action.javaScriptClick(continueBtn, "Continue", test);
-                action.waitForJStoLoad(40);
+            if (action.isElementPresent(cardNumber)) {
+                action.clickEle(PayU_Card, " Card option in PayU", test);
+                action.writeText(cardNumber, cardnumber, "card number", test);
+                action.writeText(nameOnCard, cardholdername, "name on card", test);
+                action.dropDownselectbyvisibletext(expMonth, Expiremonth, "Select Expirey Month on Card", test);
+                action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Year on Card", test);
+                action.writeText(cvvNumber, cvv, "cvv number", test);
+                action.clickEle(PayBtn, "Payment submission button", test);
+                action.waitForJStoLoad(10);
+                if (action.isElementPresent(continueBtn)) {
+                    action.javaScriptClick(continueBtn, "Continue", test);
+                    action.waitForJStoLoad(40);
+                }
+                action.CompareResult("order success message", "Thank you, we have successfully received your order", successMsg.getText(), test);
+            } else {
+                throw new Exception("Unable to navigate to Payment Details page");
             }
-            action.CompareResult("order success message", "Thank you, we have successfully received your order", successMsg.getText(), test);
-        } catch (Exception e) {
-            throw new Exception("Unable to navigate to final order page. " + e.getMessage());
-        }
-
     }
-
 }

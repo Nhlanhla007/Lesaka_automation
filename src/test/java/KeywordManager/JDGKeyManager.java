@@ -559,8 +559,9 @@ public class JDGKeyManager {
             case"ic_uploadDocument":
                 Payopt.uploadValidID(test1);
                 break;
-
-
+            case "ic_downloadSABC_Document":
+                icOrderSAPnumber.downloadSABC_ID(test1);
+                break;
 
 
             //EVS CODE BELOW
