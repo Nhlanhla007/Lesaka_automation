@@ -43,6 +43,12 @@ public class ic_MagentoOrderSAPnumber {
     @FindBy(xpath = "//span[contains(text(),'Items Ordered')]")
     private WebElement itemsOrdered;
 
+    @FindBy(xpath = "//a[contains(text(),'Download SABC ID Book')]")
+    private WebElement downloadSABCButton;
+
+    @FindBy(xpath = "//div[contains(text(),'was downloaded')]")
+    private WebElement downloadSuccessMsg;
+
     Timer t = new Timer();
     public static String OrderSAPnumber;
 
@@ -120,6 +126,21 @@ public class ic_MagentoOrderSAPnumber {
                 exe.executeScript("window.scrollBy(0,-500)");
                 action.CompareResult("SAP order Number generated: " + OrderSAPnumber + "  ", String.valueOf(true), String.valueOf(flagres), test);
                 throw new Exception("SAP Order Number Is Not Generated");
+        }
+    }
+
+    public void downloadSABC_ID(ExtentTest test) throws Exception {
+
+        try {
+            boolean sabcFlag = action.isElementPresent(downloadSABCButton);
+            if (sabcFlag) {
+                action.click(downloadSABCButton, "SABC Download ID Book", test);
+                action.waitForJStoLoad(30);
+                boolean msgFlag = action.isElementPresent(downloadSuccessMsg);
+                action.CompareResult("SABC ID Download message", String.valueOf(true), String.valueOf(msgFlag), test);
+            }
+        } catch (Exception e) {
+            throw new Exception("Unable to Download SABC ID Book " + e.getMessage());
         }
     }
 }
