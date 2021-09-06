@@ -102,16 +102,13 @@ public class MagentoOrderStatusPage {
     public void searchForOrder(String idToSearch, ExtentTest test) throws Exception {
         action.waitForPageLoaded(ajaxTimeOutInSeconds);
         action.ajaxWait(ajaxTimeOutInSeconds, test);
-
-        if (action.waitUntilElementIsDisplayed(clearFilters,ajaxTimeOutInSeconds )) {
+        if (action.waitUntilElementIsDisplayed(clearFilters, 10)) {
             action.javaScriptClick(clearFilters, "Cleared Filters", test);
             action.ajaxWait(ajaxTimeOutInSeconds, test);
         }
         action.javaScriptClick(magentoFilterTab, "Filter tab", test);
-        action.writeText(magentoIdSearchField, idToSearch, "ID", test);
-        action.ajaxWait(20,test);
+        action.writeText(magentoIdSearchField, idToSearch, "searchId", test);
         action.explicitWait(3000);
-
         action.click(magentoApplyFilterTab, "Apply to filters", test);
         action.ajaxWait(ajaxTimeOutInSeconds, test);
         action.explicitWait(5000);

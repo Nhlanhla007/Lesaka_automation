@@ -82,11 +82,11 @@ public class ic_MagentoOrderSAPnumber {
         } catch (Exception e) {
             e.printStackTrace();
         }
-					
+
         while (elapsedTime <= TimeOutinSecond && flagres == false) {
             action.refresh();
             action.waitForPageLoaded(TimeOutinSecond);
-
+			
             try {
                 if (action.elementExists(OrderDetailSAPNumber, 10)) {
                     action.scrollToElement(OrderDetailSAPNumber, "OrderDetailSAPNumber");
@@ -95,7 +95,7 @@ public class ic_MagentoOrderSAPnumber {
                         action.explicitWait(TimeOutinSecond);
                         action.refresh();
                         System.out.println("Not found on count:" + totalConunter);
-
+					
                     } else {
                         flagres = true;
                         System.out.println("SAP Order Number: " + OrderSAPnumber);

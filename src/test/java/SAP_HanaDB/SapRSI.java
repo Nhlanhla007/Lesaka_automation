@@ -110,8 +110,9 @@ public class SapRSI {
 		//action.explicitWait(9000);
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.explicitWait(5000);
 		if (action.waitUntilElementIsDisplayed(Clearbutton, 10000)) {
-			action.click(Clearbutton, "Clearbutton", test);
+			action.javaScriptClick(Clearbutton, "Clearbutton", test);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
 		}
 		//action.explicitWait(5000);		
