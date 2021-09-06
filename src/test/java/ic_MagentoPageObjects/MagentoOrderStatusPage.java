@@ -114,20 +114,6 @@ public class MagentoOrderStatusPage {
         action.explicitWait(5000);
     }
 	
-        if (action.waitUntilElementIsDisplayed(clearFilters,ajaxTimeOutInSeconds )) {
-            action.javaScriptClick(clearFilters, "Cleared Filters", test);
-            action.ajaxWait(ajaxTimeOutInSeconds, test);
-        }
-        action.javaScriptClick(magentoFilterTab, "Filter tab", test);
-        action.writeText(magentoIdSearchField, idToSearch, "ID", test);
-        action.ajaxWait(20,test);
-        action.explicitWait(3000);
-
-        action.click(magentoApplyFilterTab, "Apply to filters", test);
-        action.ajaxWait(ajaxTimeOutInSeconds, test);
-        action.explicitWait(5000);
-    }
-	
     public void viewOrderDetails(ExtentTest test) throws Exception {
         boolean ajaxLoadCompleted = action.ajaxWait(ajaxTimeOutInSeconds, test);
         if (magentoTableRecords.size() >= 1) {

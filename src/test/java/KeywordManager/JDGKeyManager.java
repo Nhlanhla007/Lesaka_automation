@@ -814,9 +814,6 @@ public class JDGKeyManager {
             case "evs_MyTVLicense":
             	evs_MyTVLicense.MyTVlicenseValidation(test1);
             	break;
-            case "ic_tvLicenseValidation":
-            	ic_TVLicenseValidation.cartValidationWithLicense(test1);
-            	break;
             case "evs_ValidateRegistrationForm":
             	evs_ValidateRegForm.validateRegForm(test1);
             	break;

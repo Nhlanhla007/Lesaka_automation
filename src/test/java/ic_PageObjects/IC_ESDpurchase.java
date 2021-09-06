@@ -19,12 +19,8 @@ import utils.DataTable2;
 public class IC_ESDpurchase {
 	
 	  WebDriver driver;
-	    Action action;
-	    DataTable2 dataTable2;
-
-	WebDriver driver;
-	Action action;
-	DataTable2 dataTable2;
+	  Action action;
+	  DataTable2 dataTable2;
 
 	Ic_Products ic_products;
 	ic_PayUPayment ic_payU;
