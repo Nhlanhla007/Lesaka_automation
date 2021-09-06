@@ -141,6 +141,8 @@ public class evs_TVLicenceApproval {
                     action.CompareResult("is the new tv lic SKU", SKUTvLicence.trim(), SKUnewTvli.trim(), test);
         		}
         	}
+            action.scrollElemetnToCenterOfView(admin_statuChange, "Admin Status Select", test);
+            action.explicitWait(3000);
         	action.click(admin_statuChange, "choose the required status", test);
             action.explicitWait(5000);
             action.click(admin_ApproveStatus, "Selecting Approve option status", test);
