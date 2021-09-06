@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -50,9 +51,8 @@ public class evs_TVLicenceApproval {
     @FindBy(xpath = "//*[@title=\"Update Account Validity\"]")
     private WebElement admin_ButtonTVpassword;
 
-    //@FindBy(xpath = "//*[@class=\"data-table admin__table-primary edit-order-table\"]//*[contains(text(),'TV License Application')]/parent::*//*[@class=\"product-sku-block\"]/text()[2]")
-    @FindBy(xpath = "//*[@class=\"odd\"]/tr/td/div/div[2]")
-    private WebElement admin_NewTVlicenceSKU;
+    @FindBy(xpath = "//*[@class=\"product-title\"]")
+    private List<WebElement> admin_NewTVlicenceSKU;
 
     @FindBy(xpath = "//div[contains(text(),'Validity change was processed')]")
     private WebElement admin_TVlicenseApprovedMessage;
@@ -130,13 +130,16 @@ public class evs_TVLicenceApproval {
         
         action.explicitWait(5000);
         try {
-            action.scrollElemetnToCenterOfView(admin_NewTVlicenceHover, "Status", test);
-            String SKUnewTvli = action.getText(admin_NewTVlicenceSKU, "", test).trim();
-            SKUnewTvli.replace("SKU:", "");
-            action.CompareResult("is the new tv lic SKU", SKUTvLicence.trim(), SKUnewTvli.trim(), test);
-            action.scrollElemetnToCenterOfView(admin_statuChange, "Select", test);
-            action.explicitWait(3000);
-            action.click(admin_statuChange, "choose the required status", test);
+        	for(WebElement skuValue:admin_NewTVlicenceSKU) {
+        		if(skuValue.getText().trim().equalsIgnoreCase("TV License Application")) {
+        			WebElement licenseSkuValue = skuValue.findElement(By.xpath(".//following-sibling::div"));
+                    action.scrollElemetnToCenterOfView(skuValue, "Status", test);
+                    String SKUnewTvli = action.getText(licenseSkuValue, "TV License SKU Value", test).trim();
+                    SKUnewTvli.replace("SKU:", "");
+                    action.CompareResult("is the new tv lic SKU", SKUTvLicence.trim(), SKUnewTvli.trim(), test);
+        		}
+        	}
+        	action.click(admin_statuChange, "choose the required status", test);
             action.explicitWait(5000);
             action.click(admin_ApproveStatus, "Selecting Approve option status", test);
             action.ajaxWait(10, test);
