@@ -100,9 +100,9 @@ public class IC_Cart {
 						if(selectedProducts.getKey().toString().contains(nameOfProduct)) {
 						  action.CompareResult("Name : " + nameOfProduct , (String)selectedProducts.getKey(), nameOfProduct, test);
 						  sum = sum + (Integer.parseInt(quantity) * Integer.parseInt(price.replace("R", "").replace(",", "") ) );
-						  action.CompareResult("Price : " +price +" for " +nameOfProduct, data.get(0), price, test);
-						  allProductsInCartQuantity += Integer.parseInt(data.get(1));
-						  action.CompareResult("Quantity : " + quantity +" for " + nameOfProduct, data.get(1), quantity, test);						  
+						  action.CompareResult("Price : " +price +" for " +nameOfProduct, data.get(2), price, test);
+						  allProductsInCartQuantity += Integer.parseInt(data.get(0));
+						  action.CompareResult("Quantity : " + quantity +" for " + nameOfProduct, data.get(0), quantity, test);						  
 						}
 					  }
 				  }

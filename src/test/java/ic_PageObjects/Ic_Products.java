@@ -81,6 +81,12 @@ public class Ic_Products {
 	@FindBy(xpath = "//*[@class=\"qty-action update update-cart-item\"]")
 	WebElement updateCartQuantityButton;
 	
+//    @FindBy(xpath = "//*[@class=\"product attribute sku\"]/div")
+//    WebElement skuCode;
+    
+    @FindBy(xpath = "//*[@data-price-type = \"finalPrice\"]/span")
+    WebElement productFinalPrice;
+	
 	List<WebElement> listElements;
 
 	@FindBy(id = "product-addtocart-button")
@@ -387,8 +393,9 @@ public class Ic_Products {
 				int quantityExecu = 0;
 				if (prod != null) {
 					productName = prod.getText();
-					String productPrice = findPrice(prod);
-					productPriceAndQuantity.add(productPrice);
+																//Take the price from the DETAILS PAGE
+					//String productPrice = findPrice(prod);
+					//productPriceAndQuantity.add(productPrice);
 					for (int o = 0; o < quantity.size(); o++) {
 						if (o == s) {
 							for (int g = 0; g < Integer.parseInt(quantity.get(o)); g++) {
@@ -426,9 +433,16 @@ public class Ic_Products {
 									productPriceAndQuantity.add(quantity.get(o));
 								}
 							}
-						}
+						}						 						
 					}
 				}
+				if (!((TypeOfOperation.equalsIgnoreCase("Add_To_Wishlist") | TypeOfOperation.equalsIgnoreCase("Add_To_Compare")))) {
+                    String skuCode = getSKUCode(cartAdditionMethod, prod, test);
+
+                    productPriceAndQuantity.add(skuCode);
+                    String productPrice = productFinalPrice.getText();
+                    productPriceAndQuantity.add(productPrice);
+                }
 				productData.put(productName, productPriceAndQuantity);
 			}
 //		} catch (Exception e) {
@@ -455,5 +469,26 @@ public class Ic_Products {
 		}
 	}
 	
-	
+	String getSKUCode(String cartAdditionType, WebElement productLink, ExtentTest test) throws Exception {
+		WebElement skuCode ;
+        if (cartAdditionType.equalsIgnoreCase("ProductListingPage")) {
+            //WebElement prodC = productLink.findElement(By.xpath(".//parent::strong/parent::*/parent::*/a[1]"));
+            action.javaScriptClick(productLink, "Navigate to product Details page to Retrieve SKU", test);
+            //action.waitForPageLoaded(10);
+            //action.ajaxWait(20, test);
+            action.explicitWait(2000);
+            //action.waitUntilElementIsDisplayed(skuCode, 20);
+            // Navigate to the cart detail page
+            skuCode= driver.findElement(By.xpath("//*[@class=\"product attribute sku\"]/div"));
+            if (skuCode.getText() != null | skuCode.getText() != "") {
+                return skuCode.getText();
+            }
+        } else {
+        	 skuCode= driver.findElement(By.xpath("//*[@class=\"product attribute sku\"]/div"));
+            if (skuCode.getText() != null | skuCode.getText() != "") {
+                return skuCode.getText();
+            }
+        }
+        return "NA";
+    }
 }
