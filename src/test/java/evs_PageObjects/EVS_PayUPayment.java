@@ -17,6 +17,7 @@ public class EVS_PayUPayment {
     WebDriver driver;
     Action action;
     DataTable2 dataTable2;
+    public static int timeOutInSeconds;
 
     public EVS_PayUPayment(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
@@ -63,13 +64,14 @@ public class EVS_PayUPayment {
 
     public void PayUPagePayment(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
             throws Exception {
+        timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("evs_PayUPagePayment", "TimeOutInSecond", 0));
         String cardnumber = dataTable2.getValueOnCurrentModule("cardnumber");
         String cardholdername = dataTable2.getValueOnCurrentModule("cardholdername");
         String Expiremonth = dataTable2.getValueOnCurrentModule("Expiremonth");
         String ExpireYear = dataTable2.getValueOnCurrentModule("ExpireYear");
         String cvv = dataTable2.getValueOnCurrentModule("cvv");
 
-        if (action.waitUntilElementIsDisplayed(PayU_Card,20)) {
+        if (action.waitUntilElementIsDisplayed(PayU_Card,timeOutInSeconds)) {
             action.clickEle(PayU_Card, " Card option in PayU", test);
             action.writeText(cardNumber, cardnumber, "card number", test);
             action.writeText(nameOnCard, cardholdername, "name on card", test);
@@ -77,11 +79,11 @@ public class EVS_PayUPayment {
             action.dropDownselectbyvisibletext(expYear, ExpireYear, "Select Expirey Year on Card", test);
             action.writeText(cvvNumber, cvv, "cvv number", test);
             action.clickEle(PayBtn, "Payment submission button", test);
-            action.waitForJStoLoad(10);
+            action.waitForJStoLoad(timeOutInSeconds);
             try {
                 if (action.isElementPresent(continueBtn)) {
                     action.javaScriptClick(continueBtn, "Continue", test);
-                    action.waitForJStoLoad(40);
+                    action.waitForJStoLoad(timeOutInSeconds);
                 }
                 action.CompareResult("order success message", "Thank you, we have successfully received your order", successMsg.getText(), test);
             } catch (Exception e) {

@@ -82,6 +82,7 @@ public class EVS_GiftCardPurchase {
 		String cardMessage = input.get("cardMessage").get(rowNumber);
 		String giftC = dataTable2.getValueOnCurrentModule("GiftCardSKU");
 		evs_products.loadProductListingPage("SearchUsingSearchBar", giftC, test);
+		String sapSKUValidation = dataTable2.getValueOnCurrentModule("sapSKUValidation");
 		/*action.mouseover(evs_detail, "");
 		action.click(evs_viewItem, "more information", test);*/
 		/*if(selectAmountFlag.equalsIgnoreCase("Yes")){
@@ -118,8 +119,9 @@ public class EVS_GiftCardPurchase {
 			giftCardAmount.replace("R", "");
 		
 		List<String> giftCardData =new ArrayList<>();
-		giftCardData.add(giftCardAmount);
 		giftCardData.add("1");
+		giftCardData.add(sapSKUValidation);
+
 		giftCardData.add(cartTots);
 		evs_products.productData =new LinkedHashMap<>();
 		evs_products.productData.put("CH Gift Card IC SA", giftCardData);
