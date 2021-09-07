@@ -21,6 +21,7 @@ public class EVS_PaymentOption {
     WebDriver driver;
     Action action;
     DataTable2 dataTable2;
+    public static int timeOutInSeconds;
 
     public EVS_PaymentOption(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
@@ -118,43 +119,6 @@ public class EVS_PaymentOption {
     WebElement uploadingMsg;
 
 
-    public void uploadValidID(ExtentTest test) throws Exception {
-        action.explicitWait(15000);
-        action.ajaxWait(20, test);
-        String uploadDocument = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Upload Document", 0);
-
-        try {
-            if (uploadDocument.equalsIgnoreCase("yes")) {
-                boolean uploadButton = action.isElementPresent(selectIDButton);
-                action.CompareResult("Upload Button is displayed", "true", String.valueOf(uploadButton), test);
-
-                if (uploadButton) {
-                    boolean NoFileSelectionCheck = action.isElementPresent(NoFileSelection);
-                    action.CompareResult("No Document is selected for Upload", "true", String.valueOf(NoFileSelectionCheck), test);
-                    if (NoFileSelectionCheck) {
-
-                        String filePath = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Document Upload Location", 0);
-
-                        selectIDButton.sendKeys(filePath);
-                        action.ajaxWait(10, test);
-                        boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, 5);
-                        action.CompareResult("Ready to upload message", "true", String.valueOf(uploadMessage), test);
-                        if (uploadMessage) {
-                            action.explicitWait(10000);
-                            action.javaScriptClick(IDSubmitBtn, "Submit Button", test);
-                            boolean uploadingMessage = action.waitUntilElementIsDisplayed(uploadingMsg, 5);
-                            action.CompareResult("File uploading message", "true", String.valueOf(uploadingMessage), test);
-                            action.explicitWait(10000);
-                            boolean uploadCompleteFlag = driver.findElements(By.xpath("//span[contains(text(),'Uploading proof of ID, please wait...')]")).size() > 0;
-                            action.CompareResult("Uploading is Completed", "false", String.valueOf(uploadCompleteFlag), test);
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            throw new Exception("Unable to upload the Document: " + e.getMessage());
-        }
-    }
 
 
     public WebElement evs_SelectPaymentMethod(String Paytype) {
@@ -184,22 +148,26 @@ public class EVS_PaymentOption {
 
     public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
         try {
+            timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("evs_CheckoutpaymentOption", "TimeOutInSecond", 0));
             action.explicitWait(20000);
-            action.waitForJStoLoad(60);
-            action.ajaxWait(20, test);
-            if (action.waitUntilElementIsDisplayed(Btn_PlaceOrder,30)) {
+            /*action.waitForJStoLoad(timeOutInSeconds);
+            action.ajaxWait(timeOutInSeconds, test);*/
+            if (action.waitUntilElementIsDisplayed(Btn_PlaceOrder,timeOutInSeconds)) {
                 String paytype = input.get("Paytype_Option").get(rowNumber);
                 WebElement paymentsType = evs_SelectPaymentMethod(paytype);
                 action.scrollToElement(paymentsType, "Payment type");
                 action.explicitWait(2000);
                 action.click(paymentsType, "Select Payment option as " + paytype, test);
-                action.ajaxWait(10, test);
+                action.ajaxWait(timeOutInSeconds, test);
                 action.scrollToElement(Btn_PlaceOrder, "Place Order Button");
                 action.explicitWait(2000);
-                action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
-                action.ajaxWait(10, test);
-                action.ajaxWait(10, test);
-                action.waitForPageLoaded(40);
+                action.clickEle(Btn_PlaceOrder, "Place order Button ", test);
+//                action.ajaxWait(10, test);
+                action.ajaxWait(timeOutInSeconds, test);
+//                action.ajaxWait(10, test);
+                action.ajaxWait(timeOutInSeconds, test);
+//                action.waitForPageLoaded(40);
+                action.waitForPageLoaded(timeOutInSeconds);
 
             } else {
                 throw new Exception("Unable to navigate to Checkout Payment");
@@ -211,6 +179,7 @@ public class EVS_PaymentOption {
     }
 
     public void CheckoutpaymentOptionGiftCard(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
+        timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("evs_CheckoutpaymentOption", "TimeOutInSecond", 0));
         String firstNameGift = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "firstName", 0);
         String lastnameGift = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "lastname", 0);
         String emailGift = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "email", 0);
@@ -225,7 +194,7 @@ public class EVS_PaymentOption {
         String Paytype = dataTable2.getValueOnOtherModule("evs_CheckoutpaymentOption", "Paytype_Option", 0);
         action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
         WebElement paymenttype = evs_SelectPaymentMethod(Paytype);
-        action.waitExplicit(10);
+        action.explicitWait(10000);
         action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
         action.explicitWait(5000);
         action.mouseover(emaiL, "");
@@ -240,9 +209,48 @@ public class EVS_PaymentOption {
         action.writeText(Suburb, suburdGift, "Suburb", test);
         action.writeText(vatNumber, vatnumberGift, "Vat number", test);
         action.explicitWait(14000);
-
         action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
 
     }
+
+    public void uploadValidID(ExtentTest test) throws Exception {
+        timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("evs_CheckoutpaymentOption", "TimeOutInSecond", 0));
+        String uploadDocument = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Upload Document", 0);
+        action.explicitWait(10000);
+//        action.ajaxWait(timeOutInSeconds, test);
+
+        try {
+            if (uploadDocument.equalsIgnoreCase("yes")) {
+                boolean uploadButton = action.isElementPresent(selectIDButton);
+                action.CompareResult("Upload Button is displayed", "true", String.valueOf(uploadButton), test);
+
+                if (uploadButton) {
+                    boolean NoFileSelectionCheck = action.isElementPresent(NoFileSelection);
+                    action.CompareResult("No Document is selected for Upload", "true", String.valueOf(NoFileSelectionCheck), test);
+                    if (NoFileSelectionCheck) {
+
+                        String filePath = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Document Upload Location", 0);
+
+                        selectIDButton.sendKeys(filePath);
+//                        action.ajaxWait(timeOutInSeconds, test);
+                        boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, timeOutInSeconds);
+                        action.CompareResult("Ready to upload message", "true", String.valueOf(uploadMessage), test);
+                        if (uploadMessage) {
+                            action.explicitWait(5000);
+                            action.javaScriptClick(IDSubmitBtn, "Submit Button", test);
+                            boolean uploadingMessage = action.waitUntilElementIsDisplayed(uploadingMsg, timeOutInSeconds);
+                            action.CompareResult("File uploading message", "true", String.valueOf(uploadingMessage), test);
+                            action.explicitWait(5000);
+                            boolean uploadCompleteFlag = driver.findElements(By.xpath("//span[contains(text(),'Uploading proof of ID, please wait...')]")).size() > 0;
+                            action.CompareResult("Uploading is Completed", "false", String.valueOf(uploadCompleteFlag), test);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("Unable to upload the Document: " + e.getMessage());
+        }
+    }
+
 
 }

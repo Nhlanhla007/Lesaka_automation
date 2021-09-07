@@ -19,6 +19,7 @@ public class ICDelivery {
     DataTable2 dataSheets;
 
     ICUpdateCustomer customerAddressDetails;
+    public static int timeOutInSeconds;
 
     public ICDelivery(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
@@ -129,23 +130,24 @@ public class ICDelivery {
     public static Map<String, String> registeredUserDetails;
 
     public void deliveryPopulation(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
+        timeOutInSeconds = Integer.parseInt(dataSheets.getValueOnOtherModule("deliveryPopulation","TimeOutInSecond",0));
         Streetname = input.get("streetName").get(rowNumber);
         Cityname = input.get("city").get(rowNumber);
         Postalcode = input.get("postalCode").get(rowNumber);
         String telephone = dataSheets.getValueOnCurrentModule("telephone");
         String addressType = dataSheets.getValueOnCurrentModule("AddressType");
         String userType = dataSheets.getValueOnCurrentModule("UserType");
-        action.waitForJStoLoad(60);
-        action.ajaxWait(20, test);
-        if (action.waitUntilElementIsDisplayed(deliveryLink, 10)) {
+        action.waitForJStoLoad(timeOutInSeconds);
+        action.ajaxWait(timeOutInSeconds, test);
+        if (action.waitUntilElementIsDisplayed(deliveryLink, timeOutInSeconds)) {
 //        	action.ajaxWait(20, test);
             action.explicitWait(5000);
             action.scrollToElement(deliveryLink, "Delivery Link", test);
-            action.javaScriptClick(deliveryLink, "deliveryLink", test);
-            action.ajaxWait(10, test);
+            action.javaScriptClick(deliveryLink, "Delivery Link", test);
+            action.ajaxWait(timeOutInSeconds, test);
         }
         String addressTypeICFont = action.getText(ic_AddressType, "Get Address Type", test);//ic_AddressType.getText();
-        action.explicitWait(5000);
+        action.explicitWait(timeOutInSeconds);
         if (addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Enter your delivery address & contact details:")) {
             if (userType.equalsIgnoreCase("Guest")) {
                 action.writeText(firstName, dataSheets.getValueOnCurrentModule("firstName"), "firstName", test);
@@ -174,7 +176,7 @@ public class ICDelivery {
                 //action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
 
             }
-            if (action.waitUntilElementIsDisplayed(ic_AddressType, 5000)) {
+            if (action.waitUntilElementIsDisplayed(ic_AddressType, timeOutInSeconds)) {
 //        	action.explicitWait(5000);
                 action.writeText(streetName, dataSheets.getValueOnCurrentModule("streetName"), "streetName", test);
                 action.writeText(telephoneNumber, dataSheets.getValueOnCurrentModule("telephone"), "telephone", test);
@@ -183,7 +185,7 @@ public class ICDelivery {
                 action.writeText(postalCode, dataSheets.getValueOnCurrentModule("postalCode"), "postalCode", test);
                 action.writeText(vatNumber, dataSheets.getValueOnCurrentModule("vatNumber"), "vatNumber", test);
                 action.dropDownselectbyvisibletext(province, dataSheets.getValueOnCurrentModule("province"), "province", test);
-                action.ajaxWait(20, test);
+                action.ajaxWait(timeOutInSeconds, test);
 //        action.explicitWait(10000);
             }
         } else if (addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")) {
@@ -212,9 +214,9 @@ public class ICDelivery {
             //Enters a new address with an existing address
             enterNewAddressWithAnExistingAddress(test);
         }
-        if (action.waitUntilElementIsDisplayed(ContinueToPayment, 15000)) {
-            action.waitForJStoLoad(60);
-            action.ajaxWait(10, test);
+        if (action.waitUntilElementIsDisplayed(ContinueToPayment, timeOutInSeconds)) {
+            action.waitForJStoLoad(timeOutInSeconds);
+            action.ajaxWait(timeOutInSeconds, test);
             action.explicitWait(5000);
             action.javaScriptClick(ContinueToPayment, "Continue To Payment", test);
 
@@ -228,7 +230,7 @@ public class ICDelivery {
         dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
         dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
         dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
-        if (action.waitUntilElementIsDisplayed(newAddressButton, 10)) {
+        if (action.waitUntilElementIsDisplayed(newAddressButton, timeOutInSeconds)) {
             action.explicitWait(4000);
             action.javaScriptClick(newAddressButton, "New Address", test);
         }
@@ -248,10 +250,11 @@ public class ICDelivery {
 //    	action.explicitWait(4000);
         //popUpSave.click();
         action.click(popUpSave, "Save", test);
-        action.ajaxWait(20, test);
+        action.ajaxWait(timeOutInSeconds, test);
     }
 
     public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
+        timeOutInSeconds = Integer.parseInt(dataSheets.getValueOnOtherModule("deliveryPopulation","TimeOutInSecond",0));
         String cityName = dataSheets.getValueOnOtherModule("deliveryPopulation", "city", 0);
         String suburb = dataSheets.getValueOnOtherModule("deliveryPopulation", "Suburb", 0);
         String postalCode = dataSheets.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
@@ -262,13 +265,13 @@ public class ICDelivery {
         String telephone = dataSheets.getValueOnOtherModule("deliveryPopulation", "telephone", 0);
         String province = dataSheets.getValueOnOtherModule("deliveryPopulation", "province", 0);
 
-        driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
-        if (action.waitUntilElementIsDisplayed(cardDeliver_btn, 10)) {
-            action.ajaxWait(20, test);
+//        driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
+        if (action.waitUntilElementIsDisplayed(cardDeliver_btn, timeOutInSeconds)) {
+            action.ajaxWait(timeOutInSeconds, test);
             action.explicitWait(5000);
             action.scrollToElement(cardDeliver_btn, "Delivery Link", test);
             action.javaScriptClick(cardDeliver_btn, "DeliveryLink", test);
-            action.ajaxWait(20, test);
+            action.ajaxWait(timeOutInSeconds, test);
             action.explicitWait(10000);
         }
 
@@ -283,7 +286,7 @@ public class ICDelivery {
         action.writeText(postalCodeGift, postalCode, "Postal Code", test);
         action.explicitWait(2000);
         action.click(placeOrder, "Place Order", test);
-        action.ajaxWait(20, test);
+        action.ajaxWait(timeOutInSeconds, test);
 
     }
 }

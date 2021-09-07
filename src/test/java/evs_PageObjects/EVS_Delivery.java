@@ -26,6 +26,7 @@ public class EVS_Delivery {
     DataTable2 dataSheets;
 
     EVS_UpdateCustomer customerAddressDetails;
+    public static int timeOutInSeconds;
 
     public EVS_Delivery(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
@@ -154,6 +155,7 @@ public class EVS_Delivery {
     
     public void deliveryPopulation(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
         //driver.navigate().to(ConfigFileReader.getPropertyVal("EVS_URL"));
+        timeOutInSeconds = Integer.parseInt(dataSheets.getValueOnOtherModule("evs_DeliveryPopulation","TimeOutInSecond",0));
         String Streetname = input.get("streetName").get(rowNumber);
         String Cityname = input.get("city").get(rowNumber);
         String Postalcode = input.get("postalCode").get(rowNumber);
@@ -161,7 +163,7 @@ public class EVS_Delivery {
         String userType = dataSheets.getValueOnCurrentModule("UserType");
         //Thread.sleep(10000);
         action.explicitWait(15000);
-        if (action.waitUntilElementIsDisplayed(deliveryLink, 20000)) {
+        if (action.waitUntilElementIsDisplayed(deliveryLink, timeOutInSeconds)) {
             action.javaScriptClick(deliveryLink, "deliveryLink", test);
         }
         String addressTypeICFont = action.getText(ic_AddressType, "Get Address Type", test);//ic_AddressType.getText();
@@ -194,7 +196,7 @@ public class EVS_Delivery {
                 //action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
 
             }
-            if (action.waitUntilElementIsDisplayed(ic_AddressType, 20000)) {
+            if (action.waitUntilElementIsDisplayed(ic_AddressType, timeOutInSeconds)) {
                 action.explicitWait(8000);
                 String searchStreetName = dataSheets.getValueOnCurrentModule("streetName").trim();
                 String searchSuburb = dataSheets.getValueOnCurrentModule("Suburb").trim();
@@ -212,7 +214,7 @@ public class EVS_Delivery {
                         if (suburbCityInformationStatus) {
                             action.CompareResult("Google Option Match Found", "true", "true", test);
                             action.click(option, "Google address option selected", test);
-                            action.ajaxWait(40, test);
+                            action.ajaxWait(timeOutInSeconds, test);
                             action.explicitWait(8000);
                             flag = false;
                         }
@@ -226,7 +228,7 @@ public class EVS_Delivery {
                 }
               
 //        action.writeText(streetName,dataSheets.getValueOnCurrentModule("streetName"),"streetName",test);
-                action.waitUntilElementIsDisplayed(telephone, 5000);
+                action.waitUntilElementIsDisplayed(telephone, timeOutInSeconds);
                 action.writeText(telephone, dataSheets.getValueOnCurrentModule("telephone"), "telephone", test);
 //        action.writeText(city,dataSheets.getValueOnCurrentModule("city"),"city",test);
 //        action.writeText(Suburb,dataSheets.getValueOnCurrentModule("Suburb"),"Suburb",test);
@@ -266,10 +268,10 @@ public class EVS_Delivery {
          * equalsIgnoreCase("Enter your delivery address & contact details:")){ //WHAT
          * SHOULD HAPPEN HERE THERE IS NO EXISITNG ADDRESS????????????? }
          *///Add else if for other scenario
-        if (action.waitUntilElementIsDisplayed(ContinueToPayment, 20000)) {
+        if (action.waitUntilElementIsDisplayed(ContinueToPayment, timeOutInSeconds)) {
             action.explicitWait(5000);
             action.javaScriptClick(ContinueToPayment, "Continue To Payment", test);
-            action.waitForPageLoaded(40);
+            action.waitForPageLoaded(timeOutInSeconds);
         }
     }
     
@@ -281,7 +283,7 @@ public class EVS_Delivery {
         dataSheets.setValueOnCurrentModule("firstName", registeredUserDetails.get("firstName"));
         dataSheets.setValueOnCurrentModule("email", registeredUserDetails.get("email"));
         dataSheets.setValueOnCurrentModule("idNumber", registeredUserDetails.get("ID"));
-        if (action.waitUntilElementIsDisplayed(newAddressButton, 15000)) {
+        if (action.waitUntilElementIsDisplayed(newAddressButton, timeOutInSeconds)) {
             action.explicitWait(5000);
             // newAddressButton.click();
             action.click(newAddressButton, "New Address", test);
@@ -295,7 +297,8 @@ public class EVS_Delivery {
         action.explicitWait(4000);
         action.writeText(popUpStreetName, searchStreetName + " " + searchSuburb + " " + searchCity, "New Address Street name", test);
         searchStreetName = searchStreetName.substring(searchStreetName.indexOf(" ")).trim();
-        action.ajaxWait(30, test);
+//        action.ajaxWait(30, test);
+        action.ajaxWait(timeOutInSeconds, test);
         action.explicitWait(12000);
         boolean flag = true;
         for (WebElement option : googleAddressOptions) {
@@ -306,7 +309,8 @@ public class EVS_Delivery {
                 boolean suburbCityInformationStatus = suburbInformation & cityInformation;
                 if (suburbCityInformationStatus) {
                     action.click(option, "Google address option selected", test);
-                    action.ajaxWait(30, test);
+//                    action.ajaxWait(30, test);
+                    action.ajaxWait(timeOutInSeconds, test);
                     action.explicitWait(8000);
                     flag = false;
                 }
@@ -336,6 +340,7 @@ public class EVS_Delivery {
     
     public void deliveryPopulationGiftCard(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
         //Streetname =input.get("streetName").get(rowNumber);
+        timeOutInSeconds = Integer.parseInt(dataSheets.getValueOnOtherModule("evs_DeliveryPopulation","TimeOutInSecond",0));
         String Streetname = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "streetName", 0);
         //Cityname =input.get("city").get(rowNumber);
         String Cityname = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "city", 0);
@@ -348,10 +353,11 @@ public class EVS_Delivery {
         String SuburbG = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "Suburb", 0);
         String provinceG = dataSheets.getValueOnOtherModule("evs_DeliveryPopulation", "province", 0);
         
-        driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
+//        driver.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
         //action.click(cardDeliver_btn, "click Deliver", test);
-        action.waitForPageLoaded(30);
-        action.ajaxWait(10, test);
+        action.waitForPageLoaded(timeOutInSeconds);
+//        action.ajaxWait(10, test);
+        action.ajaxWait(timeOutInSeconds, test);
         action.writeText(firstName, firstNameGift, "First name", test);
         action.writeText(lastname, lastnameGift, "Last name", test);
         action.writeText(email, emailGift, "Email", test);

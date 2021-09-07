@@ -204,10 +204,10 @@ public class EVS_MagentoOrderStatusPage {
 	}
 	
 	public void NavigateOdersPage(ExtentTest test) throws IOException, InterruptedException {
-		if (action.waitUntilElementIsDisplayed(magentoSalesTab, 10000)) {
+		if (action.waitUntilElementIsDisplayed(magentoSalesTab, ajaxTimeOutInSeconds)) {
 			action.click(magentoSalesTab, "Sales tab", test);
 		}
-		if (action.waitUntilElementIsDisplayed(magentoOrderTab, 10000)) {
+		if (action.waitUntilElementIsDisplayed(magentoOrderTab, ajaxTimeOutInSeconds)) {
 			action.click(magentoOrderTab, "Order tab", test);
 		}
 	}

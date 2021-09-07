@@ -17,15 +17,16 @@ public class ic_PaymentOption {
     WebDriver driver;
     Action action;
     DataTable2 dataTable2;
+    public static int timeOutInSeconds;
 
     public ic_PaymentOption(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         this.dataTable2 = dataTable2;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
-        this.dataTable2 = dataTable2;
+
     }
-	
+
     @FindBy(xpath = "//*[@id='opc-sidebar']/div[1]/div[1]/button")
     WebElement Btn_PlaceOrder;
     //payement options
@@ -56,34 +57,34 @@ public class ic_PaymentOption {
 
     @FindBy(xpath = "//*[@name=\"firstname\"]")
     WebElement firstnamE;
-	
+
     @FindBy(xpath = "//*[@name=\"lastname\"]")
     WebElement lastname;
-	
+
     @FindBy(xpath = "//*[@name=\"telephone\"]")
     WebElement telephone;
-	
+
     @FindBy(xpath = "//*[@name=\"custom_attributes[suburb]\"]")
     WebElement Suburb;
-	
+
     @FindBy(xpath = "//*[@name=\"street[0]\"]")
     WebElement streetnamE;
-	
+
     @FindBy(xpath = "//select[@name=\"region_id\"]")
     WebElement province;
-	
+
     @FindBy(xpath = "//*[@name=\"city\"]")
     WebElement city;
-	
+
     @FindBy(xpath = "//*[@name=\"postcode\"]")
     WebElement postalCode;
-	
+
     @FindBy(xpath = "//*[@name=\"vat_id\"]")
     WebElement vatNumber;
 
     @FindBy(name = "custom_attributes[identity_number]")
     WebElement idNumber;
-	
+
     @FindBy(xpath = "//*[@id='checkout-payment-method-load']/div/div/div[3]/div[2]/div[2]/div/div/label/span")
     WebElement Billingshipping;
 
@@ -104,45 +105,6 @@ public class ic_PaymentOption {
 
     @FindBy(xpath = "//span[contains(text(),'Uploading proof of ID, please wait...')]")
     WebElement uploadingMsg;
-
-
-	public void uploadValidID(ExtentTest test) throws Exception {
-		action.explicitWait(15000);
-		action.ajaxWait(20, test);
-		String uploadDocument = dataTable2.getValueOnOtherModule("ic_tvLicenseValidation", "Upload Document", 0);
-	
-        try {
-            if (uploadDocument.equalsIgnoreCase("yes")) {
-                boolean uploadButton = action.isElementPresent(selectIDButton);
-                action.CompareResult("Upload Button is displayed", "true", String.valueOf(uploadButton), test);
-				 
-                if (uploadButton) {
-                    boolean NoFileSelectionCheck = action.isElementPresent(NoFileSelection);
-                    action.CompareResult("No Document is selected for Upload", "true", String.valueOf(NoFileSelectionCheck), test);
-                    if (NoFileSelectionCheck) {
-			
-                        String filePath = dataTable2.getValueOnOtherModule("ic_tvLicenseValidation", "Document Upload Location", 0);
-
-                        selectIDButton.sendKeys(filePath);
-                        action.ajaxWait(10, test);
-                        boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, 5);
-                        action.CompareResult("Ready to upload message", "true", String.valueOf(uploadMessage), test);
-                        if (uploadMessage) {
-                            action.explicitWait(10000);
-                            action.javaScriptClick(IDSubmitBtn, "Submit Button", test);
-                            boolean uploadingMessage = action.waitUntilElementIsDisplayed(uploadingMsg, 5);
-                            action.CompareResult("File uploading message", "true", String.valueOf(uploadingMessage), test);
-                            action.explicitWait(10000);
-                            boolean uploadCompleteFlag = driver.findElements(By.xpath("//span[contains(text(),'Uploading proof of ID, please wait...')]")).size() > 0;
-                            action.CompareResult("Uploading is Completed", "false", String.valueOf(uploadCompleteFlag), test);
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            throw new Exception("Unable to upload the Document: " + e.getMessage());
-        }
-    }
 
 
     public WebElement ic_SelectPaymentMethod(String Paytype) {
@@ -170,48 +132,56 @@ public class ic_PaymentOption {
         return actionele;
     }
 
-		public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
-				throws Exception {
-			try {
-				action.waitUntilElementIsDisplayed(Btn_PlaceOrder, 20);
-				action.explicitWait(30000);
-				String Paytype = input.get("Paytype_Option").get(rowNumber);
-				WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
-				action.scrollElemetnToCenterOfView(paymenttype, "paymenttype", test);
-				action.explicitWait(2000);
-				action.javaScriptClick(paymenttype, "Select Payment option " + Paytype, test);
-				action.ajaxWait(10, test);
- 				action.explicitWait(1000);
- 				action.ajaxWait(10, test);
- 				action.explicitWait(1000);
- 				action.ajaxWait(10, test);
- 				action.explicitWait(1000);
-				action.scrollElemetnToCenterOfView(Btn_PlaceOrder, "Place Order Button", test);
-				action.explicitWait(2000);
-				action.javaScriptClick(Btn_PlaceOrder, "Place order Button ", test);
-				action.waitForJStoLoad(120);
-				action.ajaxWait(30, test);
-			} catch (Exception e) {
-				throw new Exception("Unable to navigate Payment Details page. "+e.getMessage());
-			}
-		}
-	
-	
-	public void CheckoutpaymentOptionGiftCard(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception{
-		try{
-		action.waitUntilElementIsDisplayed(Btn_PlaceOrder, 20);
-		action.explicitWait(30000);
-		String firstNameGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "firstName", 0);
-        String lastnameGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "lastname", 0);
-        String emailGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0);
-        String streetNameG = dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
-        String provinceGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "province", 0);
-        String cityGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "city", 0);
-        String postalcodeGift= dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
-        String phonenumberGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "telephone", 0);
-        String suburdGift= dataTable2.getValueOnOtherModule("deliveryPopulation", "Suburb", 0);
-        String vatnumberGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber", 0);
-		String Paytype = dataTable2.getValueOnOtherModule("CheckoutpaymentOption", "Paytype_Option", 0);
+    public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
+            throws Exception {
+        try {
+            timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("CheckoutpaymentOption", "TimeOutInSecond", 0));
+            action.explicitWait(20000);
+            /*action.waitForPageLoaded(timeOutInSeconds);
+            action.ajaxWait(timeOutInSeconds, test);*/
+            if (action.waitUntilElementIsDisplayed(Btn_PlaceOrder, timeOutInSeconds)) {
+                String Paytype = input.get("Paytype_Option").get(rowNumber);
+                WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
+                action.scrollElemetnToCenterOfView(paymenttype, "paymenttype", test);
+                action.explicitWait(2000);
+                action.javaScriptClick(paymenttype, "Select Payment option " + Paytype, test);
+                action.ajaxWait(10, test);
+                action.explicitWait(1000);
+                action.ajaxWait(10, test);
+                action.explicitWait(1000);
+                action.ajaxWait(10, test);
+                action.explicitWait(1000);
+                action.scrollElemetnToCenterOfView(Btn_PlaceOrder, "Place Order Button", test);
+                action.explicitWait(2000);
+                action.javaScriptClick(Btn_PlaceOrder, "Place order Button ", test);
+                action.waitForJStoLoad(timeOutInSeconds);
+//                action.ajaxWait(timeOutInSeconds, test);
+            } else {
+                throw new Exception("Unable to navigate to Checkout Payment");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void CheckoutpaymentOptionGiftCard(HashMap<String, ArrayList<String>> input, ExtentTest test,
+                                              int rowNumber) throws Exception {
+        try {
+            timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("CheckoutpaymentOption", "TimeOutInSecond", 0));
+            action.waitUntilElementIsDisplayed(Btn_PlaceOrder, timeOutInSeconds);
+            action.explicitWait(30000);
+            String firstNameGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "firstName", 0);
+            String lastnameGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "lastname", 0);
+            String emailGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0);
+            String streetNameG = dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
+            String provinceGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "province", 0);
+            String cityGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "city", 0);
+            String postalcodeGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
+            String phonenumberGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "telephone", 0);
+            String suburdGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "Suburb", 0);
+            String vatnumberGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber", 0);
+            String Paytype = dataTable2.getValueOnOtherModule("CheckoutpaymentOption", "Paytype_Option", 0);
 //		action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
             WebElement paymenttype = ic_SelectPaymentMethod(Paytype);
             action.javaScriptClick(paymenttype, "Select Payment option " + Paytype, test);
@@ -230,19 +200,58 @@ public class ic_PaymentOption {
             action.writeText(Suburb, suburdGift, "Suburb", test);
             action.writeText(vatNumber, vatnumberGift, "Vat number", test);
             action.explicitWait(15000);
-	    
+
             ICDelivery.Streetname = dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
             ICDelivery.Cityname = dataTable2.getValueOnOtherModule("deliveryPopulation", "city", 0);
             ICDelivery.Postalcode = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
-	    
+
             action.clickEle(Btn_PlaceOrder, "Place order Button ", test);
-            action.waitForJStoLoad(60);
-            action.ajaxWait(10, test);
+            action.waitForJStoLoad(timeOutInSeconds);
+            action.ajaxWait(timeOutInSeconds, test);
 
         } catch (Exception e) {
             throw new Exception("Couldn't continue to PayU page, Error in delivery population " + e.getMessage());
         }
     }
+
+
+    public void uploadValidID(ExtentTest test) throws Exception {
+        timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("CheckoutpaymentOption", "TimeOutInSecond", 0));
+        String uploadDocument = dataTable2.getValueOnOtherModule("ic_tvLicenseValidation", "Upload Document", 0);
+        action.explicitWait(10000);
+//        action.waitForJStoLoad(timeOutInSeconds);
+
+        try {
+            if (uploadDocument.equalsIgnoreCase("yes")) {
+                boolean uploadButton = action.isElementPresent(selectIDButton);
+                action.CompareResult("Upload Button is displayed", "true", String.valueOf(uploadButton), test);
+
+                if (uploadButton) {
+                    boolean NoFileSelectionCheck = action.isElementPresent(NoFileSelection);
+                    action.CompareResult("No Document is selected for Upload", "true", String.valueOf(NoFileSelectionCheck), test);
+                    if (NoFileSelectionCheck) {
+                        String filePath = dataTable2.getValueOnOtherModule("ic_tvLicenseValidation", "Document Upload Location", 0);
+                        selectIDButton.sendKeys(filePath);
+//                        action.ajaxWait(timeOutInSeconds, test);
+                        boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, timeOutInSeconds);
+                        action.CompareResult("Ready to upload message", "true", String.valueOf(uploadMessage), test);
+                        if (uploadMessage) {
+                            action.explicitWait(5000);
+                            action.javaScriptClick(IDSubmitBtn, "Submit Button", test);
+                            boolean uploadingMessage = action.waitUntilElementIsDisplayed(uploadingMsg, timeOutInSeconds);
+                            action.CompareResult("File uploading message", "true", String.valueOf(uploadingMessage), test);
+                            action.explicitWait(5000);
+                            boolean uploadCompleteFlag = driver.findElements(By.xpath("//span[contains(text(),'Uploading proof of ID, please wait...')]")).size() > 0;
+                            action.CompareResult("Uploading is Completed", "false", String.valueOf(uploadCompleteFlag), test);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("Unable to upload the Document: " + e.getMessage());
+        }
+    }
+
 
 }
 	
