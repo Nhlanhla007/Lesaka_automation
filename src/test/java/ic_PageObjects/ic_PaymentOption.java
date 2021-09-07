@@ -134,7 +134,7 @@ public class ic_PaymentOption {
 
     public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber)
             throws Exception {
-        try {
+
             timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("CheckoutpaymentOption", "TimeOutInSecond", 0));
             action.explicitWait(20000);
             /*action.waitForPageLoaded(timeOutInSeconds);
@@ -159,9 +159,6 @@ public class ic_PaymentOption {
             } else {
                 throw new Exception("Unable to navigate to Checkout Payment");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 

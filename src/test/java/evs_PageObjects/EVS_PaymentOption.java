@@ -147,7 +147,7 @@ public class EVS_PaymentOption {
     }
 
     public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
-        try {
+
             timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("evs_CheckoutpaymentOption", "TimeOutInSecond", 0));
             action.explicitWait(20000);
             /*action.waitForJStoLoad(timeOutInSeconds);
@@ -172,11 +172,7 @@ public class EVS_PaymentOption {
             } else {
                 throw new Exception("Unable to navigate to Checkout Payment");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-
-    }
 
     public void CheckoutpaymentOptionGiftCard(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
         timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("evs_CheckoutpaymentOption", "TimeOutInSecond", 0));
