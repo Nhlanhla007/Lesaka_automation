@@ -83,6 +83,8 @@ public class ic_GiftCardPurchase {
         String recipientEmail = input.get("recipientEmail").get(rowNumber);
         String cardMessage = input.get("cardMessage").get(rowNumber);
         String giftC = dataTable2.getValueOnCurrentModule("GiftCardSKU");
+        String sapSKUValidation = dataTable2.getValueOnCurrentModule("sapSKUValidation");
+
         ic_products.loadProductListingPage("SearchUsingSearchBar", giftC, test);
         action.click(ic_MoreInfo, "more information", test);
         if (selectAmountFlag.equalsIgnoreCase("Yes")) {
@@ -119,8 +121,8 @@ public class ic_GiftCardPurchase {
             giftCardAmount.replace("R", "");
         }
         List<String> giftCardData = new ArrayList<>();
-        giftCardData.add(giftCardAmount);
         giftCardData.add("1");
+        giftCardData.add(sapSKUValidation);
         giftCardData.add(cartTots);
         Ic_Products.productData = new LinkedHashMap<>();
         Ic_Products.productData.put("CH Gift Card IC SA", giftCardData);
