@@ -564,7 +564,13 @@ public class JDGKeyManager {
             case "OpenGateSales":
                 openGateSales.searchOrderOpenGateSales(test1);
                 break;
-
+            case "ic_RemoveTVLicenseOrProduct":
+            	removeItemsFromCart.removeTVLicense(test1);
+            	break;
+            case "ic_validateTVLicensePopUp":
+            	ic_TVLicenseValidation.validateNoTVLicensePopUpShows(test1);
+            	break;
+            	
 
             //EVS CODE BELOW
             case "evs_Login":
