@@ -67,31 +67,40 @@ public class EVS_PaymentOption {
     @FindBy(xpath = "//*[@id=\"customer-email\"]")
     WebElement emaiL;
 
-    @FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[4]/div//input")
+    //@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[4]/div//input")
+    @FindBy(xpath = "//*[@name=\"firstname\"]")
     WebElement firstnamE;
 
-    @FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[5]/div//input")
+    //@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[5]/div//input")
+    @FindBy(xpath = "//*[@name=\"lastname\"]")
     WebElement lastname;
 
-    @FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[14]/div//input")
+   // @FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[14]/div//input")
+    @FindBy(xpath = "//*[@name=\"telephone\"]")
     WebElement telephone;
 
-    @FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[13]/div//input")
+    //@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[13]/div//input")
+    @FindBy(xpath = "//*[@name=\"custom_attributes[suburb]\"]")
     WebElement Suburb;
 
-    @FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/fieldset/div/div[1]/div//input")
+    //@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/fieldset/div/div[1]/div//input")
+    @FindBy(xpath = "//*[@name=\"street[0]\"]")
     WebElement streetnamE;
 
-    @FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[9]/div/select")
+   // @FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[9]/div/select")
+    @FindBy(xpath = "//select[@name=\"region_id\"]")
     WebElement province;
 
-    @FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[7]/div//input")
+   // @FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[7]/div//input")
+    @FindBy(xpath = "//*[@name=\"city\"]")
     WebElement city;
 
-    @FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[11]/div//input")
+    //@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[11]/div//input")
+    @FindBy(xpath = "//*[@name=\"postcode\"]")
     WebElement postalCode;
 
-    @FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[15]/div//input")
+    //@FindBy(xpath = "//*[@id=\"checkout-payment-method-load\"]/div/div/div[10]/div[2]/div[2]/div/fieldset/div[2]/div/form/div/div[15]/div//input")
+    @FindBy(xpath = "//*[@name=\"vat_id\"]")
     WebElement vatNumber;
 
     @FindBy(name = "custom_attributes[identity_number]")
