@@ -11,7 +11,6 @@ import SRS.srs_LogonStoreByOrderPayload;
 import SRS.srs_salesOrder_DeliverStatus;
 import com.aventstack.extentreports.ExtentTest;
 
-import ic_PageObjects.IC_ReturnToConfirmOrderStatus;
 import emailverification.ICGiftCardVerification;
 import emailverification.ICWishlistverification;
 import emailverification.ic_PasswordForgotEmailVerification;
@@ -21,7 +20,6 @@ import evs_MagentoPageObjects.EVS_GiftCardReport;
 import evs_MagentoPageObjects.EVS_MagentoCancelUpaidEFT;
 import emailverification.*;
 import evs_MagentoPageObjects.EVS_MagentoOrderSAPnumber;
-import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
 import evs_MagentoPageObjects.EVS_MagentoRegisterNewUser;
 import evs_MagentoPageObjects.EVS_MagentoRetrieveCustomerDetailsPage;
 import evs_MagentoPageObjects.EVS_Magento_Login;
@@ -146,6 +144,7 @@ public class JDGKeyManager {
         ic_TVLicenceValidation ic_TVLicenseValidation = new ic_TVLicenceValidation(driver, dataTable2);
         IC_validateRegistrationForm ValidateRegForm = new IC_validateRegistrationForm(driver,dataTable2);
         ic_TVLicenceApproval ic_tvLicenceApproval = new ic_TVLicenceApproval(driver, dataTable2);
+        OpenGateSales openGateSales=new OpenGateSales(driver,dataTable2);
         
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
@@ -209,7 +208,7 @@ public class JDGKeyManager {
         EVS_Admin_Reorder evs_admin_reOrder = new EVS_Admin_Reorder(driver, dataTable2);
         evs_TVLicenceApproval evs_TvLicenseApproval = new evs_TVLicenceApproval(driver, dataTable2);
         evs_TVLicenceValidation evs_TvLicense = new evs_TVLicenceValidation(driver, dataTable2);
-        OpenGateSales openGateSales=new OpenGateSales(driver,dataTable2);
+        EVS_OpenGateSales evs_openGateSales=new EVS_OpenGateSales(driver,dataTable2);
         EVS_myTVLicense evs_MyTVLicense = new EVS_myTVLicense(driver, dataTable2);
         EVS_validateRegistrationForm evs_ValidateRegForm = new EVS_validateRegistrationForm(driver,dataTable2);
 
@@ -562,7 +561,16 @@ public class JDGKeyManager {
             case "ic_downloadSABC_Document":
                 icOrderSAPnumber.downloadSABC_ID(test1);
                 break;
-
+            case "OpenGateSales":
+                openGateSales.searchOrderOpenGateSales(test1);
+                break;
+            case "ic_RemoveTVLicenseOrProduct":
+            	removeItemsFromCart.removeTVLicense(test1);
+            	break;
+            case "ic_validateTVLicensePopUp":
+            	ic_TVLicenseValidation.validateNoTVLicensePopUpShows(test1);
+            	break;
+            	
 
             //EVS CODE BELOW
             case "evs_Login":
@@ -802,8 +810,8 @@ public class JDGKeyManager {
             case "user_license_verification":
             	evs_TvLicenseApproval.licenseValidation(test1);
             	break;
-            case "OpenGateSales":
-                openGateSales.searchOrderOpenGateSales(test1);
+            case "evs_OpenGateSales":
+                evs_openGateSales.searchOrderOpenGateSales(test1);
                 break;
             case "evs_RemoveTVLicenseOrProduct":
             	evs_RemoveItemsFromCart.removeTVLicense(test1);

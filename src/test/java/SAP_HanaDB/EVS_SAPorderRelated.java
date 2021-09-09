@@ -186,6 +186,8 @@ import utils.hana;
 				
 				
 				//Verify all product description----------------------------------------------
+				String isSkuPresent = dataTable2.getValueOnOtherModule("evs_OrderStatusSearch", "IsBundleArticleSKUPresent", 0);
+				if(isSkuPresent.equalsIgnoreCase("")|isSkuPresent == null) {
 				List<String> alldataProductdesc= hn.GetRowdataByColumnName(rs, "MATNR");
 				//System.out.println("Product name is  : "+alldataProductdesc);
 				logger.info("Product SKU is  : "+alldataProductdesc);
@@ -213,6 +215,29 @@ import utils.hana;
 				} else{
 					int cartItemnotpresent = ExpSku.size() - counter;
 					action.CompareResult("if all items are present on DB? "+cartItemnotpresent+ " item is not present is DB", "true", "false", test);
+				}
+				}else {
+					 //List<String> bundleArticleSKU= MagentoOrderStatusPage.AllSKU;
+					List<String> bundleArticleSKU =Arrays.asList(dataTable2.getValueOnOtherModule("evs_OrderStatusSearch", "BundleArticleSKU", 0).split("#"));
+					List<String> alldataSKU= hn.GetRowdataByColumnName(rs, "MATNR");
+					//logger.info("Product name is  : "+alldataProductdesc);
+					 for(int k=0;k<bundleArticleSKU.size();k++){
+						 boolean skuPresent = false;
+						 for(int i=0;i<alldataSKU.size();i++) {
+							 if(alldataSKU.get(i).equalsIgnoreCase(bundleArticleSKU.get(k))) {
+								 skuPresent = true;
+								 action.CompareResult("Magento SKU Is Present In SAP Database", alldataSKU.get(i), bundleArticleSKU.get(k), test);
+							 }
+						 }
+						 if(skuPresent == false) {
+							 action.CompareResult("Magento SKU for "+ bundleArticleSKU.get(k)+" Is Not Present In SAP Database", "true", "false", test);
+						 }
+						 //String eachProduct = ExpProductName.get(k);
+						 //String AllProductsNameDB =String.join("", alldataProductdesc);
+						 //System.out.println("ExpeachProduct "+eachProduct+" Actual "+AllProductsNameDB);
+						 //action.CompareResult(" Products Purchased Description in SAP DB", eachProduct.trim().toUpperCase(), AllProductsNameDB.trim().toUpperCase(), test);
+			
+				}
 				}
 				 
 				// verify Delivery Block ----------------------------------------------------
@@ -269,7 +294,5 @@ import utils.hana;
 			hn.closeDB();
 			//System.out.println("Closing database");
 			logger.info("Closing Database");
-		}
-		
-
+	}
 }

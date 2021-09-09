@@ -168,9 +168,9 @@ public class MagentoOrderStatusPage {
         action.ajaxWait(ajaxTimeOutInSeconds, test);
 		
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        isSKUPresent = driver.findElements(By.xpath("/html/body/div[2]/main/div[2]/div[1]/div/div[1]/div[1]/section[4]/div[2]/table/tbody/tr[1]/td[1]/div[2]")).size() > 0;
-        dataTable2.setValueOnCurrentModule("IsBundleArticleSKUPresent", String.valueOf(isSKUPresent));
+        isSKUPresent = driver.findElements(By.xpath("/html/body/div[2]/main/div[2]/div[1]/div/div[1]/div[1]/section[4]/div[2]/table/tbody/tr[1]/td[1]/div[2]")).size() > 0;        
         if (isSKUPresent) {
+        	dataTable2.setValueOnCurrentModule("IsBundleArticleSKUPresent", String.valueOf(isSKUPresent));
             VerifyOrderStatus(test, orderStatus, ajaxTimeOutInSeconds, 5);
             action.scrollElemetnToCenterOfView(listSKU, "SKU", test);
             String skudata = action.getText(listSKU, "listSKU", test);
@@ -178,7 +178,7 @@ public class MagentoOrderStatusPage {
                 String[] arraySKU = skudata.replace("-", "").split("\n");
                 System.out.println(arraySKU.length);
                 //AllSKU = new ArrayList<String>();
-                for (int i = 0; i < arraySKU.length; i++) {
+                for (int i = 1; i < arraySKU.length; i++) {
                     int SKUsize = arraySKU[i].toString().trim().length();
                     String SKUValue = arraySKU[i].toString().trim();
                     int spitSKU = SKUValue.indexOf("000");

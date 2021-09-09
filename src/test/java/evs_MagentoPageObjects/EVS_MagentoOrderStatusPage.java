@@ -170,8 +170,8 @@ public class EVS_MagentoOrderStatusPage {
 		
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		isSKUPresent = driver.findElements(By.xpath("/html/body/div[2]/main/div[2]/div[1]/div/div[1]/div[1]/section[4]/div[2]/table/tbody/tr[1]/td[1]/div[2]")).size()>0;
-		dataTable2.setValueOnCurrentModule("IsBundleArticleSKUPresent", String.valueOf(isSKUPresent));
 		if(isSKUPresent) {
+		dataTable2.setValueOnCurrentModule("IsBundleArticleSKUPresent", String.valueOf(isSKUPresent));
 		VerifyOrderStatus(test, orderStatus, 10, 5);
 		action.scrollElemetnToCenterOfView(listSKU, "SKU", test);
 		String skudata = action.getText(listSKU, "listSKU",test);

@@ -43,6 +43,13 @@ public class EVS_MagentoOrderSAPnumber {
     @FindBy(xpath = "//span[@id='order_status']")
     private WebElement magentoOrderStatus;
 
+    @FindBy(xpath = "//ul[@class='note-list']//div[contains(text(),'successfully activated.')]")
+    private WebElement OpenGateActivation;
+
+    @FindBy(xpath = "//span[contains(text(),'Items Ordered')]")
+    private WebElement itemsOrdered;
+
+
     Timer t = new Timer();
     public static String OrderSAPnumber;
 
@@ -50,6 +57,8 @@ public class EVS_MagentoOrderSAPnumber {
         boolean flagres = false;
         int totalConunter = 0;
         String OrderSAPnumber = "";
+        boolean openGateFlag = false;
+        String OpenGateActivationMessage = "";
         long startTime = System.currentTimeMillis();
         int TimeOutinSecond = Integer.parseInt(input.get("TimeOutinSecond").get(rowNumber));
         int trycount = Integer.parseInt(input.get("totalCounter").get(rowNumber));
@@ -58,6 +67,22 @@ public class EVS_MagentoOrderSAPnumber {
 
         String orderStatus = dataTable2.getValueOnOtherModule("evs_OrderStatusSearch", "orderStatus", 0);
         action.CompareResult("Sales Order Status", orderStatus, magentoOrderStatus.getText(), test);
+        action.scrollElemetnToCenterOfView(itemsOrdered,"Items Ordered",test);
+        action.explicitWait(2000);
+
+        try {
+            String esdProduct = dataTable2.getValueOnOtherModule("evs_ProductSearch", "ESD Product", 0);
+            if (esdProduct.equalsIgnoreCase("yes")) {
+                action.scrollElemetnToCenterOfView(OpenGateActivation, "OpenGate Activation", test);
+                OpenGateActivationMessage = OpenGateActivation.getText();
+                if (!(OpenGateActivationMessage.isEmpty())) {
+                    openGateFlag = true;
+                }
+                action.CompareResult("OpenGate Activation: " + OpenGateActivationMessage, String.valueOf(true), String.valueOf(openGateFlag), test);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         while (elapsedTime <= TimeOutinSecond && flagres == false) {
@@ -65,7 +90,8 @@ public class EVS_MagentoOrderSAPnumber {
             action.waitForPageLoaded(TimeOutinSecond);
 
             try {
-                if (action.waitUntilElementIsDisplayed(OrderDetailSAPNumber, 2000)) {
+                if (action.waitUntilElementIsDisplayed(OrderDetailSAPNumber, 2)) {
+                    action.scrollToElement(OrderDetailSAPNumber, "OrderDetailSAPNumber");
                     OrderSAPnumber = OrderDetailSAPNumber.getText();//action.getText(OrderDetailSAPNumber, "SAP Number",test);
                     //action.scrollToElement(OrderDetailSAPNumber,"OrderDetailSAPNumber");
                     System.out.println(OrderSAPnumber);

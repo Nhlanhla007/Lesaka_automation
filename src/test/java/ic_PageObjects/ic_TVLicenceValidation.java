@@ -3,6 +3,7 @@ package ic_PageObjects;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -102,7 +103,7 @@ public class ic_TVLicenceValidation {
 						action.getText(ic_TVlicenceMessage, "", test), test);
 				action.explicitWait(5000);
 				action.click(ic_buttonProceed, "Click Proceed", test);
-				action.ajaxWait(10, test);
+				action.ajaxWait(40, test);
 				action.waitForPageLoaded(30);
 
 				cartValidationWithLicense(test);
@@ -193,7 +194,18 @@ public class ic_TVLicenceValidation {
 
 	}
 	
-
+    public void validateNoTVLicensePopUpShows(ExtentTest test) throws Exception {
+		action.click(secureCheckout, "Secure Checkout", test);
+		action.waitForJStoLoad(30);
+		boolean isValidationPopUpVisible = driver.findElements(By.xpath("//*[@class=\"sbp-header\"]")).size()>0;
+		if(!(isValidationPopUpVisible) ){
+			action.CompareResult("TV License Validation Is Not Displayed", "True", "True", test);
+		}
+		else {
+			action.CompareResult("TV License Validation is Still Present", "True", "False", test);
+			throw new Exception("TV License Validation is Still Present");
+		}
+		}	
 
 
 

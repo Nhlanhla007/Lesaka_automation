@@ -361,15 +361,46 @@ public class EVS_Delivery {
         action.writeText(firstName, firstNameGift, "First name", test);
         action.writeText(lastname, lastnameGift, "Last name", test);
         action.writeText(email, emailGift, "Email", test);
-        action.writeText(streetNameGift, Streetname, "Street name", test);
-        action.writeText(telephoneGift, phoneGift, "telephone", test);
-        action.writeText(cityGift, Cityname, "city", test);
-        action.writeText(SuburbGift, SuburbG, "Suburb", test);
-        action.writeText(postalCodeGift, Postalcode, "postalCode", test);
-        action.explicitWait(12000);
-        action.dropDownselectbyvisibletext(provinceGift, provinceG, "province", test);
-        action.explicitWait(10000);
-        action.click(placeOrder, "placeOrder", test);
+        action.writeText(telephone, phoneGift, "Telephone", test);
+  
+        
+        action.writeText(streetName, Streetname + " " + SuburbG + " " + Cityname, "Enter Google Address", test);
+        Streetname = Streetname.substring(Streetname.indexOf(" ")).trim();
+        action.explicitWait(8000);
+        boolean flag = true;
+        for (WebElement option : googleAddressOptions) {
+            try {
+                String streetName = option.findElement(By.xpath(".//*[contains(text(),'" + Streetname + "')]")).getText();
+                boolean suburbInformation = option.findElements(By.xpath(".//*[contains(text(),'" + SuburbG + "')]")).size() > 0;// option.findElement(By.xpath(".//span[3]")).getText();
+                boolean cityInformation = option.findElements(By.xpath(".//*[contains(text(),'" + Cityname + "')]")).size() > 0;
+                boolean suburbCityInformationStatus = suburbInformation & cityInformation;
+                if (suburbCityInformationStatus) {
+                    action.CompareResult("Google Option Match Found", "true", "true", test);
+                    action.click(option, "Google address option selected", test);
+                    action.ajaxWait(timeOutInSeconds, test);
+                    action.explicitWait(8000);
+                    flag = false;
+                }
+            } catch (Exception e) {
+            }
+
+        }
+
+        if (flag) {
+            throw new Exception("Google Address Has Not Been Found");
+        }
+
+        
+        
+//        action.writeText(streetNameGift, Streetname, "Street name", test);
+//        action.writeText(telephoneGift, phoneGift, "telephone", test);
+//        action.writeText(cityGift, Cityname, "city", test);
+//        action.writeText(SuburbGift, SuburbG, "Suburb", test);
+//        action.writeText(postalCodeGift, Postalcode, "postalCode", test);
+//        action.explicitWait(12000);
+//        action.dropDownselectbyvisibletext(provinceGift, provinceG, "province", test);
+          //action.explicitWait(10000);
+          action.click(placeOrder, "placeOrder", test);
        
     }
 }
