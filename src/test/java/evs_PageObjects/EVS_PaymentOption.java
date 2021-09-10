@@ -223,8 +223,6 @@ public class EVS_PaymentOption {
     public void uploadValidID(ExtentTest test) throws Exception {
         String uploadDocument = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Upload Document", 0);
         action.explicitWait(10000);
-//        action.ajaxWait(timeOutInSeconds, test);
-
         try {
             if (uploadDocument.equalsIgnoreCase("yes")) {
                 boolean uploadButton = action.isElementPresent(selectIDButton);
@@ -238,7 +236,6 @@ public class EVS_PaymentOption {
                         String filePath = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Document Upload Location", 0);
 
                         selectIDButton.sendKeys(filePath);
-//                        action.ajaxWait(timeOutInSeconds, test);
                         boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, 10);
                         action.CompareResult("Ready to upload message", "true", String.valueOf(uploadMessage), test);
                         if (uploadMessage) {

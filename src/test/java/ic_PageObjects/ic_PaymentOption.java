@@ -215,7 +215,6 @@ public class ic_PaymentOption {
     public void uploadValidID(ExtentTest test) throws Exception {
         String uploadDocument = dataTable2.getValueOnOtherModule("ic_tvLicenseValidation", "Upload Document", 0);
         action.explicitWait(10000);
-//        action.waitForJStoLoad(timeOutInSeconds);
 
         try {
             if (uploadDocument.equalsIgnoreCase("yes")) {
@@ -228,7 +227,6 @@ public class ic_PaymentOption {
                     if (NoFileSelectionCheck) {
                         String filePath = dataTable2.getValueOnOtherModule("ic_tvLicenseValidation", "Document Upload Location", 0);
                         selectIDButton.sendKeys(filePath);
-//                        action.ajaxWait(timeOutInSeconds, test);
                         boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, 10);
                         action.CompareResult("Ready to upload message", "true", String.valueOf(uploadMessage), test);
                         if (uploadMessage) {
