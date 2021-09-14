@@ -574,6 +574,9 @@ public class JDGKeyManager {
             case "ic_MyTVLicense":
             	ic_MyTVLicense.MyTVlicenseValidation(test1);
             	break;
+            case "ic_user_license_verification":
+            	ic_tvLicenceApproval.licenseValidation(test1);
+            	break;
             	
 
             //EVS CODE BELOW

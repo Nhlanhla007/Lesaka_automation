@@ -70,15 +70,16 @@ public class ic_TVLicenceApproval {
     @FindBy(xpath = "//*[contains(text(),'Identity Number')]/following-sibling::td")
     private WebElement idValidation;
     
-    @FindBy(xpath = "//*[contains(text(),'Passport Number')]/following-sibling::td")
+    //@FindBy(xpath = "//*[contains(text(),'Passport Number')]/following-sibling::td")
+    @FindBy(xpath = "//*[contains(text(),'Passport')]/following-sibling::td")
     private WebElement passportValidation;
     
  
     
 	public void licenseValidation(ExtentTest test) throws Exception {
-		String typeOfIdentificationValidation = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Type", 0);
-		String customerType = dataTable2.getValueOnOtherModule("tvLicenseValidation", "SABC_Customer_Type", 0);
-		String userType = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "UserType", 0);
+		String typeOfIdentificationValidation = dataTable2.getValueOnOtherModule("ic_tvLicenseValidation", "Type", 0);
+		String customerType = dataTable2.getValueOnOtherModule("ic_tvLicenseValidation", "SABC_Customer_Type", 0);
+		String userType = dataTable2.getValueOnOtherModule("deliveryPopulation", "UserType", 0);
 		String expectedDetailsUsedForTV;
 		action.explicitWait(5000);
 		action.waitForJStoLoad(ajaxTimeOutInSeconds);
@@ -86,33 +87,33 @@ public class ic_TVLicenceApproval {
 			switch (typeOfIdentificationValidation.toUpperCase()) {
 			case "ID":
 				if (userType.equalsIgnoreCase("Registered")) {
-					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("evs_AccountCreation","IDOrPassport", 0);
+					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("accountCreation","identityNumber/passport", 0);
 					if (!(expectedDetailsUsedForTV.equalsIgnoreCase("") | expectedDetailsUsedForTV == null)) {
 						action.waitUntilElementIsDisplayed(idValidation, 20);
 						action.CompareResult("ID Validation", expectedDetailsUsedForTV, idValidation.getText(), test);
 					}
 				} else if (userType.equalsIgnoreCase("Guest")) {
 					action.waitUntilElementIsDisplayed(idValidation, 20);
-					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("tvLicenseValidation", "IDOrPassport",0);
+					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("ic_tvLicenseValidation", "IDOrPassport",0);
 					action.CompareResult("ID Validation", expectedDetailsUsedForTV, idValidation.getText(), test);
 				}
 				break;
 			case "PASSPORT":
 				if (userType.equalsIgnoreCase("Registered")) {
-					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("evs_AccountCreation","IDOrPassport", 0);
+					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("accountCreation","identityNumber/passport", 0);
 					if (!(expectedDetailsUsedForTV.equalsIgnoreCase("") | expectedDetailsUsedForTV == null)) {
 						action.waitUntilElementIsDisplayed(passportValidation, 20);
 						action.CompareResult("Passport Validation", expectedDetailsUsedForTV,passportValidation.getText(), test);
 					}
 				} else if (userType.equalsIgnoreCase("Guest")) {
 					action.waitUntilElementIsDisplayed(passportValidation, 20);
-					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("tvLicenseValidation", "IDOrPassport",0);
+					expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("ic_tvLicenseValidation", "IDOrPassport",0);
 					action.CompareResult("Passport Validation", expectedDetailsUsedForTV, passportValidation.getText(),test);
 				}
 				break;
 			}
 		}else if(customerType.equalsIgnoreCase("Existing")) {			
-			expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("tvLicenseValidation", "IDOrPassport",0);
+			expectedDetailsUsedForTV = dataTable2.getValueOnOtherModule("ic_tvLicenseValidation", "IDOrPassport",0);
 			if(typeOfIdentificationValidation.equalsIgnoreCase("ID")) {
 				action.waitUntilElementIsDisplayed(idValidation, 20);
 				action.CompareResult("ID Validation", expectedDetailsUsedForTV, idValidation.getText(), test);
