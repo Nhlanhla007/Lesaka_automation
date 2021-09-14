@@ -117,7 +117,7 @@ public class evs_TVLicenceValidation {
 			}
 			String id_passport_compare;
 			if(userType.equalsIgnoreCase("Registered") & addreType.equalsIgnoreCase("New")){
-				id_passport_compare = dataTable2.getValueOnOtherModule("accountCreation", "identityNumber/passport", 0);
+				id_passport_compare = dataTable2.getValueOnOtherModule("evs_AccountCreation", "IDOrPassport", 0);
 				
 			}
 			else {
