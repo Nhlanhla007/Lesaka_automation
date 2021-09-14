@@ -57,10 +57,14 @@ public class ic_TVLicenceValidation {
 	@FindBy(xpath = "//button[contains(text(),'Proceed')]")
 	private WebElement ic_buttonProceed;
 	
-	@FindBy(xpath = "//*[@class=\"sbp-real-input id-num\"]/following-sibling::div//div[@class=\"id-num fake-input-content\"]")	
+	//@FindBy(xpath = "//*[@class=\"sbp-real-input id-num\"]/following-sibling::div//div[@class=\"id-num fake-input-content\"]")
+	@FindBy(xpath = " //*[@class=\"sbp-real-input id-num\"]")
+	//@FindBy(xpath = " //*[@class=\"id-num fake-input-content disabled\"]")	
 	private WebElement idValueAddedForValidation;
 	
-	@FindBy(xpath = "//*[@class=\"sbp-real-input passport-num\"]/following-sibling::div//div[@class=\"passport-num fake-input-content\"]")
+	//@FindBy(xpath = "//*[@class=\"sbp-real-input passport-num\"]/following-sibling::div//div[@class=\"passport-num fake-input-content\"]")
+	//@FindBy(xpath = "//*[@class=\"passport-num fake-input-content disabled\"]")
+	@FindBy(xpath = "//*[@class=\"sbp-real-input passport-num\"]")
 	private WebElement passportValueAddedForValidation;
 	
 	@FindBy(xpath="//*[@data-role=\"proceed-to-checkout\"]")
@@ -75,11 +79,18 @@ public class ic_TVLicenceValidation {
 	@FindBy(xpath = "//*[@class=\"product-item-details\"]//strong")
 	List<WebElement> productsAddedToCart;
 	
+	@FindBy(xpath = "//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]")
+    WebElement deliveryLink;
+
+	
 
 	public void TvLicenceValidation(ExtentTest test, int rowNumber) throws Exception {
 		String LicenseAdd = dataTable2.getValueOnCurrentModule("License Addition");
 		String typeOfIdentity = dataTable2.getValueOnCurrentModule("Type");
 		String valueofIdentity = dataTable2.getValueOnCurrentModule("IDOrPassport");
+		String userType = dataTable2.getValueOnOtherModule("deliveryPopulation", "UserType", 0);
+		String addreType = dataTable2.getValueOnOtherModule("deliveryPopulation", "AddressType", 0);
+		
 
 		if (action.elementExistWelcome(ic_popUpElement, 180, "TV licence", test)) {
 			if (LicenseAdd.equalsIgnoreCase("yes")) {
@@ -109,26 +120,41 @@ public class ic_TVLicenceValidation {
 				cartValidationWithLicense(test);
 
 			}
-
+			
+			String id_passport_compare;
+			if(userType.equalsIgnoreCase("Registered") & addreType.equalsIgnoreCase("New")){
+				id_passport_compare = dataTable2.getValueOnOtherModule("accountCreation", "identityNumber/passport", 0);
+				
+			}
+			else {
+				id_passport_compare = dataTable2.getValueOnCurrentModule("IDOrPassport");
+			}
+			
 			if (LicenseAdd.equalsIgnoreCase("no")) {
 				if (typeOfIdentity.equalsIgnoreCase("ID")) {
 					action.javaScriptClick(ic_radioID, "select the ID identity type", test);
-					if(!(action.getText(idValueAddedForValidation, "ID Value", test).isEmpty())) {
-						dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDOrPassport", idValueAddedForValidation.getText(), 0);
+					if(action.getText(idValueAddedForValidation, "ID Value", test).isEmpty()) {
+						dataTable2.setValueOnOtherModule("ic_tvLicenseValidation", "IDOrPassport", idValueAddedForValidation.getText(), 0);
+						action.CompareResult("if the ID correct", id_passport_compare, idValueAddedForValidation.getText(), test);
+						//action.clear(ic_TextfieldID, "Clearing Validation Field");	
+						action.writeText(ic_TextfieldID, id_passport_compare, "writing the ID", test);
 					}
-					action.clear(ic_TextfieldID, "Clearing Validation Field");	
-					action.writeText(ic_TextfieldID, valueofIdentity, "writing the ID", test);
+					/*action.clear(ic_TextfieldID, "Clearing Validation Field");	
+					action.writeText(ic_TextfieldID, valueofIdentity, "writing the ID", test);*/
 					action.explicitWait(5000);
 					action.click(ic_buttonValidate, "Click validate", test);
 					action.ajaxWait(10, test);
 				}
 				if (typeOfIdentity.equalsIgnoreCase("Passport")) {
 					action.javaScriptClick(ic_radioPassport, "select the Passport identity type", test);
-					if(!(action.getText(passportValueAddedForValidation, "Passport Value", test).isEmpty())) {
-						dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDOrPassport", passportValueAddedForValidation.getText(), 0);
+					if(action.getText(passportValueAddedForValidation, "Passport Value", test).isEmpty()) {
+						dataTable2.setValueOnOtherModule("ic_tvLicenseValidation", "IDOrPassport", passportValueAddedForValidation.getText(), 0);
+						action.CompareResult("if the ID correct", id_passport_compare, passportValueAddedForValidation.getText(), test);
+						//action.clear(ic_TextfieldPass, "Clearing Validation Field");
+						action.writeText(ic_TextfieldPass, id_passport_compare, "writing the ID", test);
 					}
-					action.clear(ic_TextfieldPass, "Clearing Validation Field");
-					action.writeText(ic_TextfieldPass, valueofIdentity, "writing the ID", test);
+					//action.clear(ic_TextfieldPass, "Clearing Validation Field");
+					//action.writeText(ic_TextfieldPass, valueofIdentity, "writing the ID", test);
 					action.explicitWait(5000);
 					action.click(ic_buttonValidate, "Click validate", test);
 					action.ajaxWait(10, test);
@@ -144,11 +170,16 @@ public class ic_TVLicenceValidation {
 
 			}
 
-		} else {
+		} else if(action.elementExistWelcome(deliveryLink, 60, "Delivery population", test)) {
+			action.scrollElemetnToCenterOfView(deliveryLink, "", test);
+			System.out.println("User has been validated");
+		}else {
 			throw new Exception("TV Licence Validation popup didn't appear");
 		}
 
 	}
+	
+	
 	// *******************************************
     
     

@@ -213,17 +213,16 @@ public class EVS_PaymentOption {
         action.writeText(telephone, phonenumberGift, "Phone number", test);
         action.writeText(Suburb, suburdGift, "Suburb", test);
         action.writeText(vatNumber, vatnumberGift, "Vat number", test);
-        action.explicitWait(14000);
+        action.explicitWait(10000);
         action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);
+        action.waitForPageLoaded(timeOutInSeconds);
+        action.ajaxWait(timeOutInSeconds, test);
 
     }
 
     public void uploadValidID(ExtentTest test) throws Exception {
-        timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("evs_CheckoutpaymentOption", "TimeOutInSecond", 0));
         String uploadDocument = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Upload Document", 0);
         action.explicitWait(10000);
-//        action.ajaxWait(timeOutInSeconds, test);
-
         try {
             if (uploadDocument.equalsIgnoreCase("yes")) {
                 boolean uploadButton = action.isElementPresent(selectIDButton);
@@ -237,13 +236,12 @@ public class EVS_PaymentOption {
                         String filePath = dataTable2.getValueOnOtherModule("tvLicenseValidation", "Document Upload Location", 0);
 
                         selectIDButton.sendKeys(filePath);
-//                        action.ajaxWait(timeOutInSeconds, test);
-                        boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, timeOutInSeconds);
+                        boolean uploadMessage = action.waitUntilElementIsDisplayed(uploadMsg, 10);
                         action.CompareResult("Ready to upload message", "true", String.valueOf(uploadMessage), test);
                         if (uploadMessage) {
                             action.explicitWait(5000);
                             action.javaScriptClick(IDSubmitBtn, "Submit Button", test);
-                            boolean uploadingMessage = action.waitUntilElementIsDisplayed(uploadingMsg, timeOutInSeconds);
+                            boolean uploadingMessage = action.waitUntilElementIsDisplayed(uploadingMsg, 10);
                             action.CompareResult("File uploading message", "true", String.valueOf(uploadingMessage), test);
                             action.explicitWait(5000);
                             boolean uploadCompleteFlag = driver.findElements(By.xpath("//span[contains(text(),'Uploading proof of ID, please wait...')]")).size() > 0;

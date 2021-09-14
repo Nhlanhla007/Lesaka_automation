@@ -145,6 +145,7 @@ public class JDGKeyManager {
         IC_validateRegistrationForm ValidateRegForm = new IC_validateRegistrationForm(driver,dataTable2);
         ic_TVLicenceApproval ic_tvLicenceApproval = new ic_TVLicenceApproval(driver, dataTable2);
         OpenGateSales openGateSales=new OpenGateSales(driver,dataTable2);
+        IC_myTVLicense ic_MyTVLicense = new IC_myTVLicense(driver, dataTable2);
         
         //evs classes below
         EVS_Login evs_Login = new EVS_Login(driver, dataTable2);
@@ -569,6 +570,12 @@ public class JDGKeyManager {
             	break;
             case "ic_validateTVLicensePopUp":
             	ic_TVLicenseValidation.validateNoTVLicensePopUpShows(test1);
+            	break;
+            case "ic_MyTVLicense":
+            	ic_MyTVLicense.MyTVlicenseValidation(test1);
+            	break;
+            case "ic_user_license_verification":
+            	ic_tvLicenceApproval.licenseValidation(test1);
             	break;
             	
 
