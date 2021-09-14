@@ -104,6 +104,11 @@ public class SapRSI {
 		String ARTICLE_ID = dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "SKUCode", 0);
 		String AGGR_AVAIL_QTY = dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "AGGR_AVAIL_QTY", 0);
 		String rough_stock_value = dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "rough_stock_value", 0);
+		boolean quantityExistance =true;
+		int timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "TImeOutInSeconds", 0));
+		int pollingTimeInSeconds=Integer.parseInt(dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "PollingTimeInSeconds", 0));
+		
+		
 		action.click(catalogTab, "catalogTab", test);
 		action.waitUntilElementIsDisplayed(productsTab, 10000);
 		action.click(productsTab, "productsTab", test);
@@ -131,6 +136,47 @@ public class SapRSI {
 			// action.CompareResult("Records Returned", "True", "False", test);
 			throw new Exception("No Records Have Been Found");
 		}
+		String AGGR_AVAIL_QTYAfterOneCheckout = "" ;
+		String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" " + "where channel_id = '" + channelID + "' "
+				+ "and ROUGH_STOCK_DATE >=to_date(now()) " + "and ARTICLE_ID='" + ARTICLE_ID + "' "
+				+ "and rough_stock_value = '" + rough_stock_value + "' " + "order by rand() limit 1";
+		int polling = pollingTimeInSeconds;
+		for(int x = polling;pollingTimeInSeconds<=timeOutInSeconds;) {
+		//Add Loop Here			
+		ResultSet rs = hn.ExecuteQuery(Query,test);
+		int rowsCountReturned = hn.GetRowsCount(rs);
+		  if(rowsCountReturned >= 1) {
+		String SKUCode = getColumnValue(hn, rs, "ARTICLE_ID");
+		String AGGR_AVAIL_QTY_1 = getColumnValue(hn, rs, "AGGR_AVAIL_QTY");
+		AGGR_AVAIL_QTYAfterOneCheckout = AGGR_AVAIL_QTY_1.split("\\.")[0];
+		//Polling Wait
+		//pollingInMilliseconds+=x*1000;
+		//Add logger here:::		
+		if(AGGR_AVAIL_QTY.equalsIgnoreCase(AGGR_AVAIL_QTYAfterOneCheckout)) {
+			action.CompareResult("AGGR_AVAIL_QTY In SAPDB After Sales Order", AGGR_AVAIL_QTY,AGGR_AVAIL_QTYAfterOneCheckout, test);	
+			quantityExistance =false;
+			break;
+		}else {
+			//Do WAIT and DO POLLING for the refresh
+			action.explicitWait(x*1000);
+			pollingTimeInSeconds += x;						
+		}
+		
+		 }else {
+	        	hn.closeDB();
+	        	throw new Exception("No Data Is Returned From SAP");
+	        }	
+		}
+		if(quantityExistance) {
+			action.CompareResult("AGGR_AVAIL_QTY In SAPDB After Sales Order After Waiting For " + timeOutInSeconds/60 + " Minutes", AGGR_AVAIL_QTY, AGGR_AVAIL_QTYAfterOneCheckout, test);
+			hn.closeDB();
+		}else {
+			hn.closeDB();
+		}
+//}
+//hn.closeDB();
+
+		
 		//action.explicitWait(5000);
 		List<WebElement> storeCount = driver.findElements(By.xpath("//*[@class=\"data-row\"]"));
 		storeCount.addAll(driver.findElements(By.xpath("//*[@class=\"data-row _odd-row\"]")));
@@ -152,35 +198,8 @@ public class SapRSI {
 						dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "AGGR_AVAIL_QTY", 0),
 						z4.getAttribute("value"), test);
 
-				String Query = "select * from SAPABAP1.\"/OAA/RSI_SNP\" " + "where channel_id = '" + channelID + "' "
-						+ "and ROUGH_STOCK_DATE >=to_date(now()) " + "and ARTICLE_ID='" + ARTICLE_ID + "' "
-						+ "and rough_stock_value = '" + rough_stock_value + "' " + "order by rand() limit 1";
-
-				//test.info("SAP DATABASE QUERY : " +Query);
-				// System.out.println("Query:"+Query);
-				ResultSet rs = hn.ExecuteQuery(Query,test);
-				int rowsCountReturned = hn.GetRowsCount(rs);
-				// System.out.println("rowsCountReturned: "+rowsCountReturned);
-				  if(rowsCountReturned >= 1) {
-				String SKUCode = getColumnValue(hn, rs, "ARTICLE_ID");
-				// System.out.println("SKUCode: "+SKUCode);
-				String AGGR_AVAIL_QTY_1 = getColumnValue(hn, rs, "AGGR_AVAIL_QTY");
-				String AGGR_AVAIL_QTYAfterOneCheckout = AGGR_AVAIL_QTY_1.split("\\.")[0];
-				// System.out.println("AGGR_AVAIL_QTYAfterOneCheckout:
-				// "+AGGR_AVAIL_QTYAfterOneCheckout);
-				// AGGR_AVAIL_QTY = String.valueOf((Integer.parseInt(AGGR_AVAIL_QTY)-1));
-				// dataTable2.setValueOnOtherModule
-				// ("SapRSIGetDataFromSAPDB","SKUCode",SKUCode,0);
-				// dataTable2.setValueOnOtherModule("SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTYAfterOneCheckout",AGGR_AVAIL_QTYAfterOneCheckout,0);
-				action.CompareResult("AGGR_AVAIL_QTY In SAPDB After Sales Order", AGGR_AVAIL_QTY,AGGR_AVAIL_QTYAfterOneCheckout, test);
-				hn.closeDB();
-				 }else {
-			        	hn.closeDB();
-			        	throw new Exception("No Data Is Returned From SAP");
-			        }
-			}
+					}
 		}
-		hn.closeDB();
 	}
 
 
