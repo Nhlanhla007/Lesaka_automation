@@ -203,9 +203,9 @@ public class EVS_PaymentOption {
         String Paytype = dataTable2.getValueOnOtherModule("evs_CheckoutpaymentOption", "Paytype_Option", 0);
         action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
         WebElement paymenttype = evs_SelectPaymentMethod(Paytype);
-        action.explicitWait(10000);
+        action.explicitWait(15000);
         action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
-        action.explicitWait(5000);
+        action.explicitWait(10000);
         action.mouseover(emaiL, "");
         action.writeText(emaiL, emailGift, "Email", test);
 
