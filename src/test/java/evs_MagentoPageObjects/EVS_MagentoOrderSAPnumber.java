@@ -73,8 +73,8 @@ public class EVS_MagentoOrderSAPnumber {
         try {
             String esdProduct = dataTable2.getValueOnOtherModule("evs_ProductSearch", "ESD Product", 0);
             if (esdProduct.equalsIgnoreCase("yes")) {
-                action.scrollElemetnToCenterOfView(OpenGateActivation, "OpenGate Activation", test);
                 OpenGateActivationMessage = OpenGateActivation.getText();
+                action.scrollElemetnToCenterOfView(OpenGateActivation, "OpenGate Activation", test);
                 if (!(OpenGateActivationMessage.isEmpty())) {
                     openGateFlag = true;
                 }
