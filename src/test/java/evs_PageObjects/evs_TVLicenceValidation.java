@@ -86,6 +86,9 @@ public class evs_TVLicenceValidation {
 		String valueofIdentity = dataTable2.getValueOnCurrentModule("IDOrPassport");
 		String userType = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "UserType", 0);
 		String addreType = dataTable2.getValueOnOtherModule("evs_DeliveryPopulation", "AddressType", 0);
+		String licensePopup = dataTable2.getValueOnCurrentModule("TV Pop-up");
+		
+		if(licensePopup.equalsIgnoreCase("yes")){
 
 		if (action.elementExistWelcome(evs_popUpElement, 180, "TV licence", test)) {
 			if (LicenseAdd.equalsIgnoreCase("yes")) {
@@ -165,13 +168,21 @@ public class evs_TVLicenceValidation {
 
 			}
 
-		} else if(action.elementExistWelcome(deliveryLink, 60, "Delivery population", test)) {
-			action.scrollElemetnToCenterOfView(deliveryLink, "", test);
-			System.out.println("User has been validated");
-		}else {
+		} else {
 			throw new Exception("TV Licence Validation popup didn't appear");
+			}
 		}
-
+	
+		else {
+			boolean isValidationPopUpVisible = driver.findElements(By.xpath("//*[@class=\"sbp-header\"]")).size()>0;
+			if(!(isValidationPopUpVisible) ){
+				action.CompareResult("TV License Validation Is Not Displayed", "True", "True", test);
+				}
+				else {
+				action.CompareResult("TV License Validation is Still Present", "True", "False", test);
+				throw new Exception("TV License Validation is Still Present");
+				}
+		}
 	}
 	// *******************************************
 
