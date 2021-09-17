@@ -53,7 +53,7 @@ public class ic_CashDepositPayment {
 	public void InvoiceCashDeposit(ArrayList<HashMap<String, ArrayList<String>>> RequiredSheets,ExtentTest test,int testcaseID) throws IOException{
 		int CurrentSheetRow = findRowToRun(RequiredSheets.get(0), 0, testcaseID);
 		int LoginsheetRow = findRowToRun(RequiredSheets.get(1), 0, testcaseID);
-		String ExpOrderStatus = "Received Paid";
+		String ExpOrderStatus = dataTable2.getValueOnCurrentModule("Order Status");
 		try{
 //			String OrderID = dataTable2.getValueOnOtherModule("ic_RetriveOrderID","orderID",0);
 //			System.out.println("OrderID found is :"+OrderID);

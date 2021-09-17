@@ -110,6 +110,7 @@ public class EVS_Login {
 			JavascriptExecutor js = (JavascriptExecutor)driver;
 			js.executeScript("arguments[0].scrollIntoView();", logout); 
 			action.click(logout, "logout", test);
+			action.explicitWait(5000);
 			action.waitForJStoLoad(60);
 			}
 		}
