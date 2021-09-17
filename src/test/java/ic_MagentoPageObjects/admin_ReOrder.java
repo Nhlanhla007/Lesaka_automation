@@ -71,10 +71,17 @@ public class admin_ReOrder {
 	    @FindBy(xpath="//*[@id=\"html-body\"]/div[2]/header/div[1]/div/h1")
 	    private WebElement admin_NewPOnumber;
 	    
+	    @FindBy(id = "order-billing_address_telephone")
+	    private WebElement billingCellPhoneNumber;
+	    
+	    @FindBy(id = "cellphone_number")
+	    private WebElement cellPhoneNumber;
+	    
 	    
     public void editOrder(HashMap<String, ArrayList<String>> input,ExtentTest test,int rowNumber) throws Exception{
     	String orderComment = dataTable2.getValueOnCurrentModule("orderComment");
     	String refreshWaitTime = dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber", "totalCounter", 0);
+    	String typeOfUser = dataTable2.getValueOnOtherModule("deliveryPopulation", "UserType", 0);
     	//String orderQty = dataTable2.getValueOnCurrentModule("orderQty");
     	//String OrderAction = dataTable2.getValueOnCurrentModule("OrderAction");
     	boolean flagres = false;
@@ -93,6 +100,12 @@ public class admin_ReOrder {
     	//action.explicitWait(5000);
     	action.clear(admin_orderComment, "clear");
     	action.writeText(admin_orderComment, orderComment,"write the comment", test);
+    	
+    	if(typeOfUser.equalsIgnoreCase("Guest")) {
+			String billingCellPhone = action.getAttribute(billingCellPhoneNumber, "value");
+    		action.scrollElemetnToCenterOfView(cellPhoneNumber, "Cell Phone Number", test);
+    		action.writeText(cellPhoneNumber, billingCellPhone, "CellPhone Number", test);
+    	}
     	
     	action.click(admin_SubmitOrder, "Submit Re-Order", test);
     	
