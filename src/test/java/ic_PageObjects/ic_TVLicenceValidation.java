@@ -96,18 +96,24 @@ public class ic_TVLicenceValidation {
 			
 			if (action.elementExistWelcome(ic_popUpElement, 180, "TV licence", test)) {
 				if (LicenseAdd.equalsIgnoreCase("yes")) {
-	
+					
+					System.out.println(action.getAttribute(ic_TextfieldID, "value"));
+					
 					if (typeOfIdentity.equalsIgnoreCase("ID")) {
 						action.javaScriptClick(ic_radioID, "select the ID identity type", test);
-						action.writeText(ic_TextfieldID, valueofIdentity, "writing the ID", test);
-						action.explicitWait(5000);
+						if(action.getAttribute(ic_TextfieldID, "value").isEmpty()) {
+							action.writeText(ic_TextfieldID, valueofIdentity, "writing the ID", test);
+							action.explicitWait(5000);
+						}
 						action.click(ic_buttonValidate, "Click validate", test);
 						action.ajaxWait(10, test);
 					}
 					if (typeOfIdentity.equalsIgnoreCase("Passport")) {
 						action.javaScriptClick(ic_radioPassport, "select the Passport identity type", test);
-						action.writeText(ic_TextfieldPass, valueofIdentity, "writing the ID", test);
-						action.explicitWait(5000);
+						if(action.getAttribute(ic_TextfieldPass, "value").isEmpty()) {
+							action.writeText(ic_TextfieldPass, valueofIdentity, "writing the Passport", test);
+							action.explicitWait(5000);
+						}
 						action.click(ic_buttonValidate, "Click validate", test);
 						action.ajaxWait(10, test);
 					}
@@ -135,10 +141,11 @@ public class ic_TVLicenceValidation {
 				if (LicenseAdd.equalsIgnoreCase("no")) {
 					if (typeOfIdentity.equalsIgnoreCase("ID")) {
 						action.javaScriptClick(ic_radioID, "select the ID identity type", test);
-						if(!(action.getText(idValueAddedForValidation, "ID Value", test).isEmpty())) {
+						if(!(action.getAttribute(ic_TextfieldID, "value").isEmpty())) {
 							dataTable2.setValueOnOtherModule("ic_tvLicenseValidation", "IDOrPassport", idValueAddedForValidation.getText(), 0);
 							action.CompareResult("if the ID correct", id_passport_compare, idValueAddedForValidation.getText(), test);
 							//action.clear(ic_TextfieldID, "Clearing Validation Field");	
+						}else {
 							action.writeText(ic_TextfieldID, id_passport_compare, "writing the ID", test);
 						}
 						/*action.clear(ic_TextfieldID, "Clearing Validation Field");	
@@ -149,10 +156,12 @@ public class ic_TVLicenceValidation {
 					}
 					if (typeOfIdentity.equalsIgnoreCase("Passport")) {
 						action.javaScriptClick(ic_radioPassport, "select the Passport identity type", test);
-						if(!(action.getText(passportValueAddedForValidation, "Passport Value", test).isEmpty())) {
+						if(!(action.getAttribute(ic_TextfieldPass, "value").isEmpty())) {
 							dataTable2.setValueOnOtherModule("ic_tvLicenseValidation", "IDOrPassport", passportValueAddedForValidation.getText(), 0);
 							action.CompareResult("if the ID correct", id_passport_compare, passportValueAddedForValidation.getText(), test);
 							//action.clear(ic_TextfieldPass, "Clearing Validation Field");
+							
+						} else {
 							action.writeText(ic_TextfieldPass, id_passport_compare, "writing the ID", test);
 						}
 						//action.clear(ic_TextfieldPass, "Clearing Validation Field");

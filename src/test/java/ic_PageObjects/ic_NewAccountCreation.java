@@ -167,9 +167,9 @@ public class ic_NewAccountCreation {
 			action.writeText(taxVatNumber, taxVatNumbe, "Tax/Vat", test);
 			action.writeText(User_Password, password, "Password", test);
 
-			if(selectNewsLetter.equalsIgnoreCase("YES")) {
-				action.click(newsLetter, "News letter", test);
-			}
+//			if(selectNewsLetter.equalsIgnoreCase("YES")) {
+//				action.click(newsLetter, "News letter", test);
+//			}
 			if(identityType.equalsIgnoreCase("ID")) {
 //			action.click(User_SAIDbtn, "Identity type: ID", test);
 			action.writeText(User_SAID, identityNumber, "IDOrPassport number", test);
@@ -341,11 +341,11 @@ public class ic_NewAccountCreation {
                 if(expNewsletter.equalsIgnoreCase("yes")) {
                 	String actualStatus = newsletterStatusCheck(test);
 					String expectedStatus ="You are subscribed to \"General Subscription\".";
-					if(actualStatus.contains("subscribed")) {
-						action.CompareResult("Newsletter subscription, you are subscribed to newsletter", expectedStatus, actualStatus, test);
-					}else {
-						action.CompareResult("Newsletter subscription", expectedStatus, actualStatus, test);
-					}
+//					if(actualStatus.contains("subscribed")) {
+//						action.CompareResult("Newsletter subscription, you are subscribed to newsletter", expectedStatus, actualStatus, test);
+//					}else {
+//						action.CompareResult("Newsletter subscription", expectedStatus, actualStatus, test);
+//					}
                 }else if(expNewsletter.equalsIgnoreCase("no")) {
                 	String actualStatus1 = newsletterStatusCheck(test);
 					String expectedStatus1 =  "You aren't subscribed to our newsletter.";

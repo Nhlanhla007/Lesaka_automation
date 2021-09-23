@@ -53,7 +53,7 @@ public class ic_ContactDetailsLoan {
 	    @FindBy(xpath="//input[@name=\"subscribe\"]")
 	    private WebElement ic_contactNewsLetterSub;
 	    
-	    @FindBy(xpath="//*[@id=\"creditApplicationForm.contactDetails__fieldset\"]/div/div[8]/div[1]/button[2]/span")
+	    @FindBy(xpath="//*[@id=\"creditApplicationForm.contactDetails__fieldset\"]/div/div[7]/div[1]/button[2]/span")
 	    private WebElement ic_Submit;
 	    
 	    
@@ -77,10 +77,11 @@ public class ic_ContactDetailsLoan {
 	    	action.writeText(ic_contactEmailAddress,contactEmailAddress , "contact email address", test);
 	    	action.writeText(ic_contactCorreLanguage,contactCorreLAnguage , "Correspondence Language", test);
 	    	action.javaScriptClick(ic_contactTermsAccept, "Terms and Conditions", test);
-	    	if((contactSubscribeFlag.equalsIgnoreCase("Yes"))){
-	    	action.javaScriptClick(ic_contactNewsLetterSub, "News letter", test);
-	    	}
-	    	
+			/*
+			 * if((contactSubscribeFlag.equalsIgnoreCase("Yes"))){
+			 * action.javaScriptClick(ic_contactNewsLetterSub, "News letter", test); }
+			 */
+	    	action.scrollElemetnToCenterOfView(ic_Submit, "scroll to submit", test);
 	    	action.click(ic_Submit, "Submit the loan Request", test);
 	    	action.waitForPageLoaded(30);
 	    		
