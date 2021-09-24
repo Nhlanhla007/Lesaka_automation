@@ -137,8 +137,8 @@ public class evs_TVLicenceValidation {
 				if (typeOfIdentity.equalsIgnoreCase("ID")) {
 					action.javaScriptClick(evs_radioID, "select the ID identity type", test);
 					if(!(action.getAttribute(evs_TextfieldID, "value").isEmpty())) {
-						dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDOrPassport", idValueAddedForValidation.getText(), 0);
-						action.CompareResult("if the ID correct", id_passport_compare, idValueAddedForValidation.getText(), test);
+						dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDOrPassport",action.getAttribute(evs_TextfieldID, "value"), 0);
+						action.CompareResult("if the ID correct", id_passport_compare, action.getAttribute(evs_TextfieldID, "value"), test);
 						//action.clear(evs_TextfieldID, "Clearing Validation Field");	
 					} else {
 						action.writeText(evs_TextfieldID, id_passport_compare, "writing the ID", test);
@@ -152,8 +152,8 @@ public class evs_TVLicenceValidation {
 				if (typeOfIdentity.equalsIgnoreCase("Passport")) {
 					action.javaScriptClick(evs_radioPassport, "select the Passport identity type", test);
 					if(!(action.getAttribute(evs_TextfieldPass, "value").isEmpty())) {
-						dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDOrPassport", passportValueAddedForValidation.getText(), 0);
-						action.CompareResult("if the ID correct", id_passport_compare, passportValueAddedForValidation.getText(), test);
+						dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDOrPassport", action.getAttribute(evs_TextfieldPass, "value"), 0);
+						action.CompareResult("if the ID correct", id_passport_compare, action.getAttribute(evs_TextfieldPass, "value"), test);
 						//action.clear(evs_TextfieldPass, "Clearing Validation Field");
 					} else {
 						action.writeText(evs_TextfieldPass, id_passport_compare, "writing the ID", test);

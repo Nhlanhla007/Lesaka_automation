@@ -58,14 +58,14 @@ public class ic_TVLicenceValidation {
 	private WebElement ic_buttonProceed;
 	
 	//@FindBy(xpath = "//*[@class=\"sbp-real-input id-num\"]/following-sibling::div//div[@class=\"id-num fake-input-content\"]")
-	@FindBy(xpath = " //*[@class=\"sbp-real-input id-num\"]")
+	//@FindBy(xpath = " //*[@class=\"sbp-real-input id-num\"]")
 	//@FindBy(xpath = " //*[@class=\"id-num fake-input-content disabled\"]")	
-	private WebElement idValueAddedForValidation;
+	//private WebElement idValueAddedForValidation;
 	
 	//@FindBy(xpath = "//*[@class=\"sbp-real-input passport-num\"]/following-sibling::div//div[@class=\"passport-num fake-input-content\"]")
 	//@FindBy(xpath = "//*[@class=\"passport-num fake-input-content disabled\"]")
-	@FindBy(xpath = "//*[@class=\"sbp-real-input passport-num\"]")
-	private WebElement passportValueAddedForValidation;
+	//@FindBy(xpath = "//*[@class=\"sbp-real-input passport-num\"]")
+	//private WebElement passportValueAddedForValidation;
 	
 	@FindBy(xpath="//*[@data-role=\"proceed-to-checkout\"]")
 	private WebElement secureCheckout;
@@ -142,8 +142,8 @@ public class ic_TVLicenceValidation {
 					if (typeOfIdentity.equalsIgnoreCase("ID")) {
 						action.javaScriptClick(ic_radioID, "select the ID identity type", test);
 						if(!(action.getAttribute(ic_TextfieldID, "value").isEmpty())) {
-							dataTable2.setValueOnOtherModule("ic_tvLicenseValidation", "IDOrPassport", idValueAddedForValidation.getText(), 0);
-							action.CompareResult("if the ID correct", id_passport_compare, idValueAddedForValidation.getText(), test);
+							dataTable2.setValueOnOtherModule("ic_tvLicenseValidation", "IDOrPassport", action.getAttribute(ic_TextfieldID, "value"), 0);
+							action.CompareResult("if the ID correct", id_passport_compare, action.getAttribute(ic_TextfieldID, "value"), test);
 							//action.clear(ic_TextfieldID, "Clearing Validation Field");	
 						}else {
 							action.writeText(ic_TextfieldID, id_passport_compare, "writing the ID", test);
@@ -157,8 +157,8 @@ public class ic_TVLicenceValidation {
 					if (typeOfIdentity.equalsIgnoreCase("Passport")) {
 						action.javaScriptClick(ic_radioPassport, "select the Passport identity type", test);
 						if(!(action.getAttribute(ic_TextfieldPass, "value").isEmpty())) {
-							dataTable2.setValueOnOtherModule("ic_tvLicenseValidation", "IDOrPassport", passportValueAddedForValidation.getText(), 0);
-							action.CompareResult("if the ID correct", id_passport_compare, passportValueAddedForValidation.getText(), test);
+							dataTable2.setValueOnOtherModule("ic_tvLicenseValidation", "IDOrPassport", action.getAttribute(ic_TextfieldPass, "value"), 0);
+							action.CompareResult("if the ID correct", id_passport_compare, action.getAttribute(ic_TextfieldPass, "value"), test);
 							//action.clear(ic_TextfieldPass, "Clearing Validation Field");
 							
 						} else {
