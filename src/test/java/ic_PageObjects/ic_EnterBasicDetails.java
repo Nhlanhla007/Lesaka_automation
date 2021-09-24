@@ -29,6 +29,9 @@ public class ic_EnterBasicDetails {
 	    @FindBy(xpath="//*[@id=\"js-footer-accordion\"]/div[1]/div/div/div[2]/ul/li[7]/a")
 	    private WebElement ic_adminApplyForCredit;
 	    
+	    @FindBy(xpath="//*[@id=\"credit-application-component\"]/button/span")
+	    private WebElement ic_2ApplyForCredit;
+	    
 	    //Are you subject to an Administration Order?
 	    @FindBy(xpath="//*[@id=\"creditApplicationForm.basicDetails__fieldset\"]/div/div[1]/span")
 	    private WebElement ic_adminFirstQuest;
@@ -147,6 +150,10 @@ public class ic_EnterBasicDetails {
 	    	action.scrollToElement(ic_adminApplyForCredit, "Go to apply credit");
 	    	
 	    	action.click(ic_adminApplyForCredit, "click Apply Credit", test);
+	    	action.waitForPageLoaded(30);
+	    	action.ajaxWait(10,test);
+	    	
+	    	action.click(ic_2ApplyForCredit, "click Apply Credit", test);
 	    	action.waitForPageLoaded(30);
 	    	action.ajaxWait(10,test);
 	    	

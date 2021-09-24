@@ -3,6 +3,7 @@ package evs_PageObjects;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
@@ -127,6 +128,9 @@ public class EVS_PaymentOption {
     @FindBy(xpath = "//span[contains(text(),'Uploading proof of ID, please wait...')]")
     WebElement uploadingMsg;
 
+    @FindBy(xpath = "//*[@class=\"pac-item\"]")
+    List<WebElement> googleAddressOptions;
+
 
 
 
@@ -199,19 +203,47 @@ public class EVS_PaymentOption {
         String Paytype = dataTable2.getValueOnOtherModule("evs_CheckoutpaymentOption", "Paytype_Option", 0);
         action.CheckEnabilityofButton(Btn_PlaceOrder, "Place Order", false, test);
         WebElement paymenttype = evs_SelectPaymentMethod(Paytype);
-        action.explicitWait(10000);
+        action.explicitWait(15000);
         action.clickEle(paymenttype, "Select Payment option " + Paytype, test);
-        action.explicitWait(5000);
+        action.explicitWait(10000);
         action.mouseover(emaiL, "");
         action.writeText(emaiL, emailGift, "Email", test);
+
+        action.writeText(streetnamE, streetNameG + " " + suburdGift + " " + cityGift, "Enter Google Address", test);
+        streetNameG = streetNameG.substring(streetNameG.indexOf(" ")).trim();
+        action.explicitWait(10000);
+        boolean flag = true;
+        for (WebElement option : googleAddressOptions) {
+            try {
+                String streetName = option.findElement(By.xpath(".//*[contains(text(),'" + streetNameG + "')]")).getText();
+                boolean suburbInformation = option.findElements(By.xpath(".//*[contains(text(),'" + suburdGift + "')]")).size() > 0;// option.findElement(By.xpath(".//span[3]")).getText();
+                boolean cityInformation = option.findElements(By.xpath(".//*[contains(text(),'" + cityGift + "')]")).size() > 0;
+                boolean suburbCityInformationStatus = suburbInformation & cityInformation;
+                if (suburbCityInformationStatus) {
+                    action.CompareResult("Google Option Match Found", "true", "true", test);
+                    action.click(option, "Google address option selected", test);
+                    action.ajaxWait(timeOutInSeconds, test);
+                    action.explicitWait(10000);
+                    flag = false;
+                }
+            } catch (Exception e) {
+            }
+
+        }
+
+        if (flag) {
+            throw new Exception("Google Address Has Not Been Found");
+        }
+
+
         action.writeText(firstnamE, firstNameGift, "First name", test);
         action.writeText(lastname, lastnameGift, "Last name", test);
-        action.writeText(streetnamE, streetNameG, "Street name", test);
-        action.writeText(province, provinceGift, "Province", test);
-        action.writeText(city, cityGift, "City", test);
-        action.writeText(postalCode, postalcodeGift, "Postal code", test);
+//        action.writeText(streetnamE, streetNameG, "Street name", test);
+//        action.writeText(province, provinceGift, "Province", test);
+//        action.writeText(city, cityGift, "City", test);
+//        action.writeText(postalCode, postalcodeGift, "Postal code", test);
         action.writeText(telephone, phonenumberGift, "Phone number", test);
-        action.writeText(Suburb, suburdGift, "Suburb", test);
+//        action.writeText(Suburb, suburdGift, "Suburb", test);
         action.writeText(vatNumber, vatnumberGift, "Vat number", test);
         action.explicitWait(10000);
         action.clickEle(Btn_PlaceOrder, "Click on Place order Button ", test);

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -44,7 +45,10 @@ public class EVS_MagentoOrderSAPnumber {
     private WebElement magentoOrderStatus;
 
     @FindBy(xpath = "//ul[@class='note-list']//div[contains(text(),'successfully activated.')]")
-    private WebElement OpenGateActivation;
+    private WebElement OpenGateActivationSuccess;
+
+    @FindBy(xpath = "//ul[@class='note-list']//div[contains(text(),'Failed activate') ]")
+    private WebElement OpenGateActivationFailure;
 
     @FindBy(xpath = "//span[contains(text(),'Items Ordered')]")
     private WebElement itemsOrdered;
@@ -67,16 +71,21 @@ public class EVS_MagentoOrderSAPnumber {
 
         String orderStatus = dataTable2.getValueOnOtherModule("evs_OrderStatusSearch", "orderStatus", 0);
         action.CompareResult("Sales Order Status", orderStatus, magentoOrderStatus.getText(), test);
-        action.scrollElemetnToCenterOfView(itemsOrdered,"Items Ordered",test);
+        action.scrollElemetnToCenterOfView(itemsOrdered, "Items Ordered", test);
         action.explicitWait(2000);
 
         try {
             String esdProduct = dataTable2.getValueOnOtherModule("evs_ProductSearch", "ESD Product", 0);
             if (esdProduct.equalsIgnoreCase("yes")) {
-                action.scrollElemetnToCenterOfView(OpenGateActivation, "OpenGate Activation", test);
-                OpenGateActivationMessage = OpenGateActivation.getText();
-                if (!(OpenGateActivationMessage.isEmpty())) {
+                boolean check = driver.findElements(By.xpath("//ul[@class='note-list']//div[contains(text(),'successfully activated.')]")).size() > 0;
+                if (check) {
+                    OpenGateActivationMessage = OpenGateActivationSuccess.getText();
+                    action.scrollElemetnToCenterOfView(OpenGateActivationSuccess, "OpenGate Activation", test);
                     openGateFlag = true;
+                }
+                else{
+                    OpenGateActivationMessage = OpenGateActivationFailure.getText();
+                    action.scrollElemetnToCenterOfView(OpenGateActivationFailure, "OpenGate Activation Failure", test);
                 }
                 action.CompareResult("OpenGate Activation: " + OpenGateActivationMessage, String.valueOf(true), String.valueOf(openGateFlag), test);
             }
@@ -136,17 +145,17 @@ public class EVS_MagentoOrderSAPnumber {
 
     public void downloadSABC_ID(ExtentTest test) throws Exception {
 
-            try {
-                boolean sabcFlag = action.isElementPresent(downloadSABCButton);
-                if (sabcFlag) {
-                    action.click(downloadSABCButton, "SABC Download ID Book", test);
-                    action.waitForJStoLoad(30);
-                    boolean msgFlag = action.isElementPresent(downloadSuccessMsg);
-                    action.CompareResult("SABC ID Download message", String.valueOf(true), String.valueOf(msgFlag), test);
-                }
-            } catch (Exception e) {
-                throw new Exception("Unable to Download SABC ID Book " + e.getMessage());
+        try {
+            boolean sabcFlag = action.isElementPresent(downloadSABCButton);
+            if (sabcFlag) {
+                action.click(downloadSABCButton, "SABC Download ID Book", test);
+                action.waitForJStoLoad(30);
+                boolean msgFlag = action.isElementPresent(downloadSuccessMsg);
+                action.CompareResult("SABC ID Download message", String.valueOf(true), String.valueOf(msgFlag), test);
             }
+        } catch (Exception e) {
+            throw new Exception("Unable to Download SABC ID Book " + e.getMessage());
         }
+    }
 
 }

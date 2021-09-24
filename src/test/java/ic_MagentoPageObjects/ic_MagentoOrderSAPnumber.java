@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,7 +39,10 @@ public class ic_MagentoOrderSAPnumber {
     private WebElement magentoOrderStatus;
 
     @FindBy(xpath = "//ul[@class='note-list']//div[contains(text(),'successfully activated.')]")
-    private WebElement OpenGateActivation;
+    private WebElement OpenGateActivationSuccess;
+
+    @FindBy(xpath = "//ul[@class='note-list']//div[contains(text(),'Failed activate') ]")
+    private WebElement OpenGateActivationFailure;
 
     @FindBy(xpath = "//span[contains(text(),'Items Ordered')]")
     private WebElement itemsOrdered;
@@ -72,10 +76,15 @@ public class ic_MagentoOrderSAPnumber {
         try {
             String esdProduct = dataTable2.getValueOnOtherModule("ProductSearch", "ESD Product", 0);
             if (esdProduct.equalsIgnoreCase("yes")) {
-                action.scrollElemetnToCenterOfView(OpenGateActivation, "OpenGate Activation", test);
-                OpenGateActivationMessage = OpenGateActivation.getText();
-                if (!(OpenGateActivationMessage.isEmpty())) {
+                boolean check = driver.findElements(By.xpath("//ul[@class='note-list']//div[contains(text(),'successfully activated.')]")).size() > 0;
+                if (check) {
+                    OpenGateActivationMessage = OpenGateActivationSuccess.getText();
+                    action.scrollElemetnToCenterOfView(OpenGateActivationSuccess, "OpenGate Activation", test);
                     openGateFlag = true;
+                }
+                else{
+                    OpenGateActivationMessage = OpenGateActivationFailure.getText();
+                    action.scrollElemetnToCenterOfView(OpenGateActivationFailure, "OpenGate Activation", test);
                 }
                 action.CompareResult("OpenGate Activation: " + OpenGateActivationMessage, String.valueOf(true), String.valueOf(openGateFlag), test);
             }

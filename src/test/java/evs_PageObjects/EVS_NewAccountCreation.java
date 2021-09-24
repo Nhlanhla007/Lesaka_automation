@@ -336,7 +336,7 @@ public class EVS_NewAccountCreation {
 		String subscriptionStatus = null;
 		try {
 			action.clickEle(myAccountOption, "My Account Link", test);
-			subscriptionStatus = findNewsLetterStatus.getText();
+			//subscriptionStatus = findNewsLetterStatus.getText();
 			action.clickEle(Account_info_option, "Account info link", test);
 			return subscriptionStatus;
 		} catch (IOException e) {
@@ -388,19 +388,21 @@ public class EVS_NewAccountCreation {
                 if(expNewsletter.equalsIgnoreCase("yes")) {
                 	String actualStatus = newsletterStatusCheck(test);
 					String expectedStatus ="You are subscribed to \"General Subscription\".";
-					if(actualStatus.contains("subscribed")) {
-						action.CompareResult("Newsletter subscription, you are subscribed to newsletter", expectedStatus, actualStatus, test);
-					}else {
-						action.CompareResult("Newsletter subscription", expectedStatus, actualStatus, test);
-					}
+//					if(actualStatus.contains("subscribed")) {
+//						action.CompareResult("Newsletter subscription, you are subscribed to newsletter", expectedStatus, actualStatus, test);
+//					}else {
+//						action.CompareResult("Newsletter subscription", expectedStatus, actualStatus, test);
+//					}
                 }else if(expNewsletter.equalsIgnoreCase("no")) {
                 	String actualStatus1 = newsletterStatusCheck(test);
 					String expectedStatus1 =  "You aren't subscribed to our newsletter.";
-					if(actualStatus1.contains("aren't")) {	
-						action.CompareResult("Newsletter subscription, you are not Subscibed to newsletter", expectedStatus1, actualStatus1, test);
-					}else {
-						action.CompareResult("Newsletter subscription", expectedStatus1, actualStatus1, test);
-					}
+					/*
+					 * if(actualStatus1.contains("aren't")) { action.
+					 * CompareResult("Newsletter subscription, you are not Subscibed to newsletter",
+					 * expectedStatus1, actualStatus1, test); }else {
+					 * action.CompareResult("Newsletter subscription", expectedStatus1,
+					 * actualStatus1, test); }
+					 */
 					
                 }
                 //TA31
