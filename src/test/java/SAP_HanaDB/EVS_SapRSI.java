@@ -26,6 +26,9 @@ public class EVS_SapRSI {
     DataTable2 dataTable2;
     int ajaxTimeOutInSeconds = EVS_Magento_Login.ajaxTimeOutInSeconds;
     LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
+    
+    int timeOutInSeconds;
+	int pollingTimeInSeconds; 
     public EVS_SapRSI(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -103,8 +106,8 @@ public class EVS_SapRSI {
         String ARTICLE_ID=dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB","SKUCode",0);
         String AGGR_AVAIL_QTY=dataTable2.getValueOnOtherModule ("EVS_SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0);
         boolean quantityExistance =true;
-		int timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB", "TImeOutInSeconds", 0));
-		int pollingTimeInSeconds=Integer.parseInt(dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB", "PollingTimeInSeconds", 0));
+		 timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB", "TImeOutInSeconds", 0));
+		 pollingTimeInSeconds=Integer.parseInt(dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB", "PollingTimeInSeconds", 0));
 		
         
         
@@ -283,9 +286,29 @@ public class EVS_SapRSI {
 		action.click(sapDataTab, "sapDataTab", test);
 		action.scrollElemetnToCenterOfView(roughStockIndicatorAct, "Scroll to Rough Stock Indicator", test);
 		//System.out.println(action.getText(roughStockIndicatorAct, "roughStockIndicator", test));
-		action.CompareResult(" Rough Stock Indicator in Magento",
-				dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB", "rough_stock_value", 0),
-				action.getText(roughStockIndicatorAct, "roughStockIndicator", test), test);		 
-
-    }
+		
+		timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB", "TImeOutInSeconds", 0));
+		pollingTimeInSeconds=Integer.parseInt(dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB", "PollingTimeInSeconds", 0));
+		//Add loop here 
+		int polling = pollingTimeInSeconds;        
+		boolean roughStockFlag = true;
+		for (int x = polling; pollingTimeInSeconds <= timeOutInSeconds;) {
+			// Add Loop Here
+			String roughStockValue = roughStockIndicatorAct.getText();
+			if (roughStockValue.isEmpty() | roughStockValue == null) {
+				action.refresh();
+				action.click(sapDataTab, "sapDataTab", test);
+				action.scrollElemetnToCenterOfView(roughStockIndicatorAct, "Scroll to Rough Stock Indicator", test);
+				action.explicitWait(x * 1000);
+				pollingTimeInSeconds += x;
+			} else {
+				action.CompareResult(" Rough Stock Indicator in Magento",dataTable2.getValueOnOtherModule("EVS_SapRSIGetDataFromSAPDB", "rough_stock_value", 0),action.getText(roughStockIndicatorAct, "roughStockIndicator", test), test);
+				roughStockFlag = false;
+				break;
+			}
+		}
+		if (roughStockFlag) {
+			action.CompareResult("Rough Stock Indicator has not appeared in " + timeOutInSeconds / 60 + " minutes","true", "false", test);
+		}
+	}
 }
