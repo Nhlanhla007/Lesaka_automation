@@ -121,9 +121,9 @@ public class EVS_Admin_Reorder {
     	String reOrderCreated = action.getText(admin_ReOrderCreated, "invoice message",test);
     	action.CompareResult("Popup-message create order", "You created the order.", reOrderCreated, test);
     	
-    	action.mouseover(admin_commentVerify, "verify comment");
-    	String reorderComm = action.getText(admin_commentVerify, "reorder comment",test);
-    	action.CompareResult("Reorder", "Reorder", reorderComm, test);
+    	//action.mouseover(admin_commentVerify, "verify comment");
+    	//String reorderComm = action.getText(admin_commentVerify, "reorder comment",test);
+    	//action.CompareResult("Reorder", "Reorder", reorderComm, test);
     	
     	
     	
