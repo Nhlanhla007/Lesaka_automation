@@ -286,7 +286,8 @@ public class SapRSI {
 		//Add Loop Here			
 		String roughStockValue = roughStockIndicatorAct.getText();		
         if(roughStockValue.isEmpty() | roughStockValue == null) {
-        	action.refresh();        	        	
+        	action.refresh();   
+        	action.ajaxWait(ajaxTimeOutInSeconds, test);
         	action.click(sapDataTab,"sapDataTab",test);
             action.scrollElemetnToCenterOfView(roughStockIndicatorAct, "Rough Stock Indicator", test);
             action.explicitWait(x*1000);

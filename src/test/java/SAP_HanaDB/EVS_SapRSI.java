@@ -297,6 +297,7 @@ public class EVS_SapRSI {
 			String roughStockValue = roughStockIndicatorAct.getText();
 			if (roughStockValue.isEmpty() | roughStockValue == null) {
 				action.refresh();
+				action.ajaxWait(ajaxTimeOutInSeconds, test);
 				action.click(sapDataTab, "sapDataTab", test);
 				action.scrollElemetnToCenterOfView(roughStockIndicatorAct, "Scroll to Rough Stock Indicator", test);
 				action.explicitWait(x * 1000);
