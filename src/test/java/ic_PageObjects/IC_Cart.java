@@ -230,7 +230,7 @@ public class IC_Cart {
 	    	if(action.waitUntilElementIsDisplayed(removeAllCartItems, 15000)) {
 			executor.executeScript("arguments[0].click();", removeAllCartItems);		
 	    	}
-	    	boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4000, "Clear Shopping Cart Pop Up", test);
+	    	boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4, "Clear Shopping Cart Pop Up", test);
 	    	if(isRemovePopUpDisplayed) {	    		
 	    		action.click(okButtonRemoveAllItems, "Remove All Items Button", test);
 	    		if(action.waitUntilElementIsDisplayed(emptyCartConfrimation, 15000)) {

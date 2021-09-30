@@ -207,7 +207,7 @@ public class ic_NewAccountCreation {
 				confirmPassword = ic_VerifyPasswordcanDiffer(confirmPassword);
 				action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
 				action.click(CreateAccountBtn, "Create account", test);
-				action.elementExistWelcome(enterMatchingPassword, 4000, "Check password", test);
+				action.elementExistWelcome(enterMatchingPassword, 4, "Check password", test);
 			}else {
 				action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
 				action.click(CreateAccountBtn, "Create account", test);
@@ -267,16 +267,16 @@ public class ic_NewAccountCreation {
 			if (saID.length() < 13) {
 				action.click(CreateAccountBtn, "Create account", test);
 				action.ajaxWait(5,test);
-				action.elementExistWelcome(identityNumberError, 4000, identityNumberError.getText(), test);
+				action.elementExistWelcome(identityNumberError, 4, identityNumberError.getText(), test);
 			} else if (saID.length() > 13) {
 				System.out.println("Enters more than 13 digits");
 				action.click(CreateAccountBtn, "Create account", test);
 				action.ajaxWait(5,test);
-				action.elementExistWelcome(identityNumberError, 4000, identityNumberError.getText(), test);
+				action.elementExistWelcome(identityNumberError, 4, identityNumberError.getText(), test);
 			} else {
 				action.click(CreateAccountBtn, "Create account", test);
 				action.ajaxWait(5,test);
-				action.elementExistWelcome(identityNumberError, 4000, identityNumberError.getText(), test);
+				action.elementExistWelcome(identityNumberError, 4, identityNumberError.getText(), test);
 			}
 		} catch (Exception e) {
 			logger.info(e.getMessage());
