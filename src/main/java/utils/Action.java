@@ -1673,7 +1673,7 @@ public class Action {
                 return true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
 //            node.fail("Pop up is NOT displayed");
             node.fail(MarkupHelper.createLabel("Pop up is NOT displayed", ExtentColor.RED).getMarkup() + "<br>"+ e.getMessage()+ "</br>", MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
             return false;

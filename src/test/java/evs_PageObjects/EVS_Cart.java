@@ -70,7 +70,8 @@ public class EVS_Cart {
 	@FindBy(xpath = "//*[@class=\"custom-clear\"]")
 	private WebElement removeAllCartItems;
 	    
-	@FindBy(xpath = "//*[@class=\"modal-inner-wrap\"]")
+	
+	@FindBy(xpath = "//h1[contains(text(),'Clear shopping cart?')]")
 	public WebElement removeConfirmationPopUp;
 
 	@FindBy(xpath = "//*[@class=\"action-primary action-accept\"]")
@@ -92,7 +93,7 @@ public class EVS_Cart {
 
 	public double sum;
 		  
-	public void iCcartVerification2(Map<String, List<String>> products, ExtentTest test) throws IOException {
+	public void iCcartVerification2(Map<String, List<String>> products, ExtentTest test) throws Exception {
 		// Verifies if all the products have been added in the cart
 		String itemsCount = itemsInCartCounter(test);
 		// need to compare that the quantity in the list matches the itemsCount
@@ -100,11 +101,10 @@ public class EVS_Cart {
 		// Find all elements from the list
 		navigateToCart(test);
 		action.explicitWait(3000);
-		try {
 			for (WebElement productsInCart : icAllCartProducts) {
 				String nameOfProduct = productsInCart.findElement(By.xpath(".//strong/a")).getText();
 				String price = productsInCart.findElement(By.xpath(".//span/span/span/span")).getText();
-				WebElement quantityTag = productsInCart.findElement(By.xpath(".//div[2]/input"));
+				WebElement quantityTag = productsInCart.findElement(By.xpath(".//input"));
 				String quantity = action.getAttribute(quantityTag, "data-item-qty");
 
 				for (Map.Entry selectedProducts : products.entrySet()) {
@@ -128,11 +128,7 @@ public class EVS_Cart {
 			action.explicitWait(20000);
 			
 			dataTable2.setValueOnOtherModule("evs_ProductSearch", "CartTotal", String.valueOf(sum), 0);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			logger.info(e.getMessage());
-			e.printStackTrace();
-		}
+
 	}
 			
 	public void cartButtonValidation(WebElement addToCartButton, int waitTimeInSeconds, ExtentTest test) {
@@ -258,7 +254,7 @@ public class EVS_Cart {
 			if (action.waitUntilElementIsDisplayed(removeAllCartItems, 15000)) {
 				executor.executeScript("arguments[0].click();", removeAllCartItems);
 			}
-			boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4000,"Clear Shopping Cart Pop Up", test);
+			boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4,"Clear Shopping Cart Pop Up", test);
 			if (isRemovePopUpDisplayed) {
 				action.click(okButtonRemoveAllItems, "Remove All Items Button", test);
 				if (action.waitUntilElementIsDisplayed(emptyCartConfrimation, 15000)) {

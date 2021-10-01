@@ -31,7 +31,9 @@ public class EVS_RemoveItemsFromCart {
     @FindBy(xpath = "(//*[contains(@class, 'qty-action update update-cart-item')])")
     private WebElement updateQuantity;
     
-    @FindBy(xpath = "//*[@class=\"modal-inner-wrap\"]")
+    //@FindBy(xpath = "//*[@class=\"modal-inner-wrap\"]")
+    //@FindBy(xpath = "//h1[contains(text(),'Clear shopping cart?')]")
+    @FindBy(xpath="//*[@class=\"modal-header\"]//h1[contains(text(),'Remove')]")
     public WebElement removeConfirmationPopUp;
     
     @FindBy(xpath = "//*[@class=\"action-primary action-accept\"]")

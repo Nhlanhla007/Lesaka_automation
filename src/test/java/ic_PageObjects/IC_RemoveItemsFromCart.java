@@ -70,7 +70,7 @@ public class IC_RemoveItemsFromCart {
     	if(action.waitUntilElementIsDisplayed(decreaseCartButton, 15000)) {
     	action.click(decreaseCartButton, "Decrease Item In Cart",test);
     	}
-    	boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4000, "Clear Shopping Cart Pop Up", test);
+    	boolean isRemovePopUpDisplayed = action.elementExistWelcome(removeConfirmationPopUp, 4, "Clear Shopping Cart Pop Up", test);
     	if(isRemovePopUpDisplayed) {	    		
     		action.click(okButtonRemoveAllItems, "Remove selected Article", test);
     		action.explicitWait(4000);

@@ -26,6 +26,8 @@ public class SapRSI {
     DataTable2 dataTable2;
 
     int ajaxTimeOutInSeconds = ic_Magento_Login.ajaxTimeOutInSeconds;
+	int timeOutInSeconds ;
+	int pollingTimeInSeconds;
 
     LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
     public SapRSI(WebDriver driver,DataTable2 dataTable2) {
@@ -104,10 +106,9 @@ public class SapRSI {
 		String ARTICLE_ID = dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "SKUCode", 0);
 		String AGGR_AVAIL_QTY = dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "AGGR_AVAIL_QTY", 0);
 		String rough_stock_value = dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "rough_stock_value", 0);
+		pollingTimeInSeconds=Integer.parseInt(dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "PollingTimeInSeconds", 0));
+		timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "TImeOutInSeconds", 0));
 		boolean quantityExistance =true;
-		int timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "TImeOutInSeconds", 0));
-		int pollingTimeInSeconds=Integer.parseInt(dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "PollingTimeInSeconds", 0));
-		
 		
 		action.click(catalogTab, "catalogTab", test);
 		action.waitUntilElementIsDisplayed(productsTab, 10000);
@@ -273,8 +274,33 @@ public class SapRSI {
         action.click(sapDataTab,"sapDataTab",test);
         action.scrollElemetnToCenterOfView(roughStockIndicatorAct, "Rough Stock Indicator", test);
       //  System.out.println(action.getText(roughStockIndicatorAct,"roughStockIndicator",test));
+        
+        //Add loop here
+        
+        timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "TImeOutInSeconds", 0));
+        pollingTimeInSeconds=Integer.parseInt(dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "PollingTimeInSeconds", 0));
+        
+        int polling = pollingTimeInSeconds;        
+        boolean roughStockFlag = true;
+		for(int x = polling;pollingTimeInSeconds<=timeOutInSeconds;) {
+		//Add Loop Here			
+		String roughStockValue = roughStockIndicatorAct.getText();		
+        if(roughStockValue.isEmpty() | roughStockValue == null) {
+        	action.refresh();   
+        	action.ajaxWait(ajaxTimeOutInSeconds, test);
+        	action.click(sapDataTab,"sapDataTab",test);
+            action.scrollElemetnToCenterOfView(roughStockIndicatorAct, "Rough Stock Indicator", test);
+            action.explicitWait(x*1000);
+        	pollingTimeInSeconds += x;
+        }else {
         action.CompareResult(" rough Stock Indicator SAP DB ", dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB","rough_stock_value",0), action.getText(roughStockIndicatorAct,"roughStockIndicator",test), test);
-
+        roughStockFlag = false;
+        break;
+        }
+    }
+		if(roughStockFlag) {
+			action.CompareResult("Rough Stock Indicator has not appeared in " + timeOutInSeconds/60 + " minutes", "true", "false", test);
+		}
     }
     
     public void getSellableArticle(ExtentTest test) throws Exception {
