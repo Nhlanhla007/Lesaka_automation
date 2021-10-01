@@ -303,7 +303,7 @@ public class Ic_Products {
 			addToCartButton.click();
 			cartValidation.cartButtonValidation(addToCartButton, Integer.parseInt(waitTimeInSeconds), test);
 			//Thread.sleep(4000);
-			action.explicitWait(2000);
+			action.explicitWait(4000);
 		//} catch (Exception e) {
 			// TODO Auto-generated catch block
 			//logger.info(e.getMessage());
