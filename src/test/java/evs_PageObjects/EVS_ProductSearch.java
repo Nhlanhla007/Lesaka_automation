@@ -156,17 +156,17 @@ public class EVS_ProductSearch {
         return null;
     }
 
-    public void ic_ClickProductLink(ExtentTest test) {
-        try {
+    public void ic_ClickProductLink(ExtentTest test) throws Exception {
+        //try {
             if (ic_ElementVisable(productLink)) {
                 action.click(productLink, "Click product link", test);
                 action.waitForJStoLoad(60);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.info(e.getMessage());
-        }
+//        } catch (Exception e) {
+      //      e.printStackTrace();
+    //        logger.info(e.getMessage());
+  //      }
     }
 
 //    public void skuProduct(ExtentTest test) throws IOException, AWTException {
@@ -252,18 +252,18 @@ public class EVS_ProductSearch {
 
     }
 
-    public void ic_EnterTextToSearchBar(String productToFind, ExtentTest test) {
-        try {
+    public void ic_EnterTextToSearchBar(String productToFind, ExtentTest test) throws Exception {
+        //try {
             ic_ElementVisable(searchBar);
             action.clear(searchBar, "SearchBar");
             action.writeText(searchBar, productToFind, "SearchBar", test);
             action.click(searchIcon, "Click on search", test);
             action.waitForPageLoaded(40);
             action.explicitWait(10000);
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.info(e.getMessage());
-        }
+        //} catch (Exception e) {
+          //  e.printStackTrace();
+            //logger.info(e.getMessage());
+        //}
     }
 
     public boolean ic_ElementVisable(WebElement element) {

@@ -60,12 +60,19 @@ public class EVS_Magento_Login {
 				action.waitForJStoLoad(ajaxTimeOutInSeconds);
 				action.ajaxWait(ajaxTimeOutInSeconds,test);
 				action.explicitWait(10000);
-				String resWelcomescreen = action.getText(Dashboard, "Dashboard", test);
-				action.CompareResult("Navigation to magento admin page is successful", "Dashboard",driver.getTitle() , test);
-			}else{
-				action.CompareResult("Navigation to magento admin page is successful", ResPage, "Magento Admin - DEFAULT STORE VIEW", test);
+				//String resWelcomescreen = action.getText(Dashboard, "Dashboard", test);
+				//action.CompareResult("Navigation to magento admin page is successful", "Dashboard",driver.getTitle() , test);
+			}
+//			else{
+//				action.CompareResult("Navigation to magento admin page is successful", ResPage, "Magento Admin - DEFAULT STORE VIEW", test);			
+//    		}
 			
-    		}
+			if(driver.getTitle().contains("Dashboard")) {
+				action.CompareResult("Navigation to magento admin page is successful", "Dashboard",driver.getTitle() , test);
+			}else {
+				action.CompareResult("Navigation to magento admin page is unsuccessful", "Dashboard", driver.getTitle(), test);
+				throw new Exception("Login to Magento is unsuccessful");
+			}
 		}
 		
 

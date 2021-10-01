@@ -122,21 +122,21 @@ public class Ic_Products {
 		return null;
 	}
 
-	public void ic_ClickProductLink(ExtentTest test) {
-		try {
+	public void ic_ClickProductLink(ExtentTest test) throws Exception {
+		//try {
 			if (ic_ElementVisable(icProductLink)) {
 				action.click(icProductLink, "Click product link", test);
 			//	Thread.sleep(5000);
 				action.waitForPageLoaded(40);
 			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.info(e.getMessage());
-		}
+	//	} catch (Exception e) {
+		//	e.printStackTrace();
+			//logger.info(e.getMessage());
+		//}
 	}
 
-	public void skuProduct(ExtentTest test) throws IOException, AWTException {
+	public void skuProduct(ExtentTest test) throws Exception {
 		String productsToSearch = dataTable2.getValueOnOtherModule("ProductSearch", "specificProduct", 0);
 		List<String> theProducts = filterProducts(productsToSearch);
 		ic_EnterTextToSearchBar(theProducts.get(0), test);
@@ -156,7 +156,7 @@ public class Ic_Products {
 
 	}
 
-	public void skuProductValidateQuantity(ExtentTest test) throws IOException, AWTException {
+	public void skuProductValidateQuantity(ExtentTest test) throws Exception {
 		String productsToSearch = dataTable2.getValueOnOtherModule("ProductSearch","specificProduct",0);
 		List<String> theProducts = filterProducts(productsToSearch);
 		ic_EnterTextToSearchBar(theProducts.get(0),test);
@@ -188,17 +188,17 @@ public class Ic_Products {
 
 	
 	
-	public void ic_EnterTextToSearchBar(String productToFind, ExtentTest test) {
-		try {
+	public void ic_EnterTextToSearchBar(String productToFind, ExtentTest test) throws Exception {
+		//try {
 			ic_ElementVisable(icSearchBar);
 			action.clear(icSearchBar, "SearchBar");
 			action.writeText(icSearchBar, productToFind, "Search Bar", test);
 			action.click(icSearchIcon, "Click on search", test);
 			action.waitForPageLoaded(20);
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.info(e.getMessage());
-		}
+		//} catch (Exception e) {
+			//e.printStackTrace();
+			//logger.info(e.getMessage());
+		//}
 	}
 
 	public boolean ic_ElementVisable(WebElement element) {
@@ -239,7 +239,7 @@ public class Ic_Products {
 			}
 	}
 
-	public void loadProductListingPage(String category, String product, ExtentTest test) throws IOException {
+	public void loadProductListingPage(String category, String product, ExtentTest test) throws Exception {
 		switch (category) {
 		case "SearchUsingSearchBar":
 			ic_EnterTextToSearchBar(product, test);
@@ -296,16 +296,18 @@ public class Ic_Products {
 	}
 
 	void addToCart(WebElement addToCartButton, String waitTimeInSeconds, ExtentTest test) {
-		try {
+		//try {
 			action.mouseover(addToCartButton, "Scroll to add to cart");
-			Thread.sleep(2000);
+			//Thread.sleep(2000);
+			action.explicitWait(2000);
 			addToCartButton.click();
 			cartValidation.cartButtonValidation(addToCartButton, Integer.parseInt(waitTimeInSeconds), test);
-			Thread.sleep(4000);
-		} catch (Exception e) {
+			//Thread.sleep(4000);
+			action.explicitWait(2000);
+		//} catch (Exception e) {
 			// TODO Auto-generated catch block
-			logger.info(e.getMessage());
-		}
+			//logger.info(e.getMessage());
+		//}
 
 	}
 
@@ -360,11 +362,12 @@ public class Ic_Products {
 			WebElement nextButton = returnNext();
 			if (nextButton != null) {
 				clickNext(test);
-				try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					logger.info(e.getMessage());
-				}
+				//try {
+					//Thread.sleep(5000);
+				action.explicitWait(5000);
+				//} catch (InterruptedException e) {
+					//logger.info(e.getMessage());
+				//}
 			} else {
 				status = false;
 				action.CompareResult("Product Not Found", product, "", test);
