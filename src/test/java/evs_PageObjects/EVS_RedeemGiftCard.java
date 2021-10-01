@@ -71,8 +71,8 @@ public class EVS_RedeemGiftCard {
 	 
 	 @FindBy(xpath = "//*[@id=\"cart-totals\"]/div/table/tbody/tr[5]/td/strong/span")
 	 WebElement evs_orderNumber;
-	 				//*[@id="maincontent"]/div[3]/div/div[4]/div[1]/div[1]/ul/li/button/span
-	 @FindBy(xpath="//*[@id=\"maincontent\"]/div[3]/div/div[4]/div[1]/div[1]/ul/li/button/span")
+	 
+	 @FindBy(xpath = "//*[@id=\"top-cart-btn-checkout\"]/span")
 	    private WebElement evs_Secure;
 	 
 	 @FindBy(xpath="//*[@id=\"checkout-shipping-method-load\"]/table/tbody/tr[1]/td[4]/button")
@@ -122,8 +122,7 @@ public class EVS_RedeemGiftCard {
 					giftCarddValidate = action.getText(evs_SuccessfullyApplied, "gift card added", test);
 				}
 
-				action.CompareResult("Gift card added", "Gift Card \"" + giftCardCode.trim() + "\" was added.",
-						giftCarddValidate, test);
+				action.CompareResult("Gift card added", "Gift Card \"" + giftCardCode.trim() + "\" was added.",giftCarddValidate.trim(), test);
 				String subTotal = action.getText(evs_miniCartSubtotal, "Subtotal", test);
 				String cardAmount = action.getText(evs_GiftcardAmount, "CardAmount", test);
 				String finalOrder = action.getText(evs_orderNumber, "value", test);

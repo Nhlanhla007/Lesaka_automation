@@ -114,7 +114,7 @@ public class ic_RedeemGiftCard {
 		 String giftCarddValidate = null;
 		 if(action.elementExists(ic_SuccessfullyApplied, 5)){
 			 giftCarddValidate = action.getText(ic_SuccessfullyApplied, "gift card added",test);
-			 action.CompareResult("Gift card added", "Gift Card \""+giftCardCode.trim()+"\" was added.",giftCarddValidate , test);
+			 action.CompareResult("Gift card added", "Gift Card \""+giftCardCode.trim()+"\" was added.",giftCarddValidate.trim() , test);
 		 } else{
 			 action.CompareResult("Popup appeared?", "True", "False", test);
 			 throw new Exception("There's a problem with the gift card code");
