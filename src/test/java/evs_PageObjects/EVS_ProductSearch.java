@@ -258,8 +258,7 @@ public class EVS_ProductSearch {
             action.clear(searchBar, "SearchBar");
             action.writeText(searchBar, productToFind, "SearchBar", test);
             action.click(searchIcon, "Click on search", test);
-            action.waitForPageLoaded(40);
-            action.explicitWait(10000);
+            action.waitForPageLoaded(40);            
         //} catch (Exception e) {
           //  e.printStackTrace();
             //logger.info(e.getMessage());
@@ -348,6 +347,7 @@ public class EVS_ProductSearch {
                 }
                 break;
         }
+        action.explicitWait(10000);
     }
 
     public WebElement byCategory(String nameOfCategory) {
