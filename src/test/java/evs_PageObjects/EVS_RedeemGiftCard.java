@@ -122,7 +122,7 @@ public class EVS_RedeemGiftCard {
 					giftCarddValidate = action.getText(evs_SuccessfullyApplied, "gift card added", test);
 				}
 
-				action.CompareResult("Gift card added","Gift Card \"" + giftCardCode.trim() + " \" was added.",giftCarddValidate.trim(), test);
+				action.CompareResult("Gift card added","Gift Card \"" + giftCardCode.trim() + "\" was added.",giftCarddValidate.trim(), test);
 				String subTotal = action.getText(evs_miniCartSubtotal, "Subtotal", test);
 				String cardAmount = action.getText(evs_GiftcardAmount, "CardAmount", test);
 				String finalOrder = action.getText(evs_orderNumber, "value", test);
