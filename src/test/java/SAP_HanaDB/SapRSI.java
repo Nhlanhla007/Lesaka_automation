@@ -67,6 +67,14 @@ public class SapRSI {
     @FindBy(xpath = "//*[@id=\"container\"]/div/div[2]/div[2]/div[2]/fieldset/div[2]/div/div[2]/table/tbody/tr")
     public WebElement productStoreCount;
 
+    @FindBy(id = "store-change-button")
+    WebElement changeStoreView;
+    
+    @FindBy(xpath = "//*[@class=\"modal-content\"]//*[contains(text(),'scope')]")
+    WebElement changeStoreViewPopUp;
+    
+    @FindBy(xpath = "//button[@class=\"action-primary action-accept\"]")
+    WebElement changeStoreViewAcceptBtn;
     
     public void getDataFromSAPDB(ExtentTest test) throws Exception {
         hana hn =connectToSap(test) ;
@@ -79,17 +87,12 @@ public class SapRSI {
                 "rough_stock_value = '"+rough_stock_value+"' " +
                 "order by rand() limit 1";
 
-        //test.info("SAP DATABASE QUERY : " +Query);
-       // System.out.println("Query:"+Query);
         ResultSet rs = hn.ExecuteQuery(Query,test);
         int rowsCountReturned = hn.GetRowsCount(rs);
-       // System.out.println("rowsCountReturned: "+rowsCountReturned);
         if(rowsCountReturned >= 1) {
         String SKUCode=getColumnValue(hn,rs ,"ARTICLE_ID");
-     //   System.out.println("SKUCode: "+SKUCode);
         String AGGR_AVAIL_QTY_1=getColumnValue(hn,rs ,"AGGR_AVAIL_QTY");;
         String AGGR_AVAIL_QTY=AGGR_AVAIL_QTY_1.split("\\.")[0];
-       //.out.println("AGGR_AVAIL_QTY: "+AGGR_AVAIL_QTY);
 
         dataTable2.setValueOnCurrentModule("SKUCode",SKUCode);
         dataTable2.setValueOnCurrentModule("AGGR_AVAIL_QTY",AGGR_AVAIL_QTY);
@@ -120,21 +123,17 @@ public class SapRSI {
 		if (action.waitUntilElementIsDisplayed(Clearbutton, 10000)) {
 			action.javaScriptClick(Clearbutton, "Clearbutton", test);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
-		}
-		//action.explicitWait(5000);		
+		}		
 		action.click(magentoFilterTab, "magentoFilterTab", test);
-		//action.explicitWait(2000);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		action.writeText(sku, ARTICLE_ID, "skuInputTest", test);
 		action.click(magentoApplyFilterTab, "magentoApplyFilterTab", test);
-		//action.explicitWait(5000);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		if (action.waitUntilElementIsDisplayed(clickEdit, 6000)) {
 			action.javaScriptClick(clickEdit, "clickEdit", test);
 			action.waitForPageLoaded(ajaxTimeOutInSeconds);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
 		} else {
-			// action.CompareResult("Records Returned", "True", "False", test);
 			throw new Exception("No Records Have Been Found");
 		}
 		String AGGR_AVAIL_QTYAfterOneCheckout = "" ;
@@ -143,22 +142,18 @@ public class SapRSI {
 				+ "and rough_stock_value = '" + rough_stock_value + "' " + "order by rand() limit 1";
 		int polling = pollingTimeInSeconds;
 		for(int x = polling;pollingTimeInSeconds<=timeOutInSeconds;) {
-		//Add Loop Here			
 		ResultSet rs = hn.ExecuteQuery(Query,test);
 		int rowsCountReturned = hn.GetRowsCount(rs);
 		  if(rowsCountReturned >= 1) {
 		String SKUCode = getColumnValue(hn, rs, "ARTICLE_ID");
 		String AGGR_AVAIL_QTY_1 = getColumnValue(hn, rs, "AGGR_AVAIL_QTY");
 		AGGR_AVAIL_QTYAfterOneCheckout = AGGR_AVAIL_QTY_1.split("\\.")[0];
-		//Polling Wait
-		//pollingInMilliseconds+=x*1000;
-		//Add logger here:::		
+
 		if(AGGR_AVAIL_QTY.equalsIgnoreCase(AGGR_AVAIL_QTYAfterOneCheckout)) {
 			action.CompareResult("AGGR_AVAIL_QTY In SAPDB After Sales Order", AGGR_AVAIL_QTY,AGGR_AVAIL_QTYAfterOneCheckout, test);	
 			quantityExistance =false;
 			break;
 		}else {
-			//Do WAIT and DO POLLING for the refresh
 			action.explicitWait(x*1000);
 			pollingTimeInSeconds += x;						
 		}
@@ -174,8 +169,6 @@ public class SapRSI {
 		}else {
 			hn.closeDB();
 		}
-//}
-//hn.closeDB();
 
 		
 		//action.explicitWait(5000);
@@ -194,7 +187,6 @@ public class SapRSI {
 				 * System.out.println(z5.getText()); System.out.println(z6.getText());
 				 * System.out.println("----");
 				 */
-				// dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",0);
 				action.CompareResult("Magento Item Quantity After Sales Order ",
 						dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "AGGR_AVAIL_QTY", 0),
 						z4.getAttribute("value"), test);
@@ -228,9 +220,7 @@ public class SapRSI {
     public void getRSIItemInMagento(ExtentTest test) throws IOException, Exception {
         action.click(catalogTab,"catalogTab",test);
         action.waitUntilElementIsDisplayed(productsTab, 10000);
-        //action.explicitWait(4000);
         action.javaScriptClick(productsTab,"productsTab",test);
-        //action.explicitWait(15000);
         action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		
@@ -241,14 +231,25 @@ public class SapRSI {
         
         action.javaScriptClick(magentoFilterTab,"magentoFilterTab",test);
         action.writeText(sku,dataTable2.getValueOnOtherModule ("SapRSIGetDataFromSAPDB","SKUCode",0),"skuInputTest",test);
-        action.click(magentoApplyFilterTab,"magentoApplyFilterTab",test);
-        
+        action.click(magentoApplyFilterTab,"magentoApplyFilterTab",test);        
         action.ajaxWait(ajaxTimeOutInSeconds, test);
         
-        action.javaScriptClick(clickEdit, "clickEdit", test);
-        
+        if(action.waitUntilElementIsDisplayed(clickEdit, 6000)) {
+        action.javaScriptClick(clickEdit, "clickEdit", test);        
         action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
+        }else {        	
+        	throw new Exception("No Records Have Been Found");        	
+        }
+    
+      		action.click(changeStoreView, "Change Store View", test);
+      		action.explicitWait(2000);
+      		action.click(changeStoreView.findElement(By.xpath("./following::ul//a[contains(text(),'Incredible Connection')]")), "Select Special Store View", test);
+      						
+      		action.elementExistWelcome(changeStoreViewPopUp, ajaxTimeOutInSeconds, "Change Store View", test);
+      		action.click(changeStoreViewAcceptBtn, "Accept Change View", test);
+      		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+      		action.ajaxWait(ajaxTimeOutInSeconds, test);
         
 //        action.explicitWait(5000);
         List<WebElement> storeCount = driver.findElements(By.xpath("//*[@id=\"container\"]/div/div[2]/div[2]/div[2]/fieldset/div[2]/div/div[2]/table/tbody/tr"));
@@ -273,9 +274,6 @@ public class SapRSI {
         action.waitUntilElementIsDisplayed(sapDataTab, 10000);
         action.click(sapDataTab,"sapDataTab",test);
         action.scrollElemetnToCenterOfView(roughStockIndicatorAct, "Rough Stock Indicator", test);
-      //  System.out.println(action.getText(roughStockIndicatorAct,"roughStockIndicator",test));
-        
-        //Add loop here
         
         timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "TImeOutInSeconds", 0));
         pollingTimeInSeconds=Integer.parseInt(dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB", "PollingTimeInSeconds", 0));
@@ -283,8 +281,7 @@ public class SapRSI {
         int polling = pollingTimeInSeconds;        
         boolean roughStockFlag = true;
 		for(int x = polling;pollingTimeInSeconds<=timeOutInSeconds;) {
-		//Add Loop Here			
-		String roughStockValue = roughStockIndicatorAct.getText();		
+		String roughStockValue = action.getAttribute(roughStockIndicatorAct, "value");// roughStockIndicatorAct.getText();		
         if(roughStockValue.isEmpty() | roughStockValue == null) {
         	action.refresh();   
         	action.ajaxWait(ajaxTimeOutInSeconds, test);
@@ -293,7 +290,7 @@ public class SapRSI {
             action.explicitWait(x*1000);
         	pollingTimeInSeconds += x;
         }else {
-        action.CompareResult(" rough Stock Indicator SAP DB ", dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB","rough_stock_value",0), action.getText(roughStockIndicatorAct,"roughStockIndicator",test), test);
+        action.CompareResult(" rough Stock Indicator SAP DB ", dataTable2.getValueOnOtherModule("SapRSIGetDataFromSAPDB","rough_stock_value",0), roughStockValue, test);
         roughStockFlag = false;
         break;
         }
@@ -319,22 +316,16 @@ public class SapRSI {
 			 * ;
 			 */
 		
-		//test.info("SAP DATABASE QUERY : " +Query);
-       // System.out.println("Query:"+Query);
         ResultSet rs = hn.ExecuteQuery(Query,test);
         int rowsCountReturned = hn.GetRowsCount(rs);
-        //System.out.println("rowsCountReturned: "+rowsCountReturned);
         if(rowsCountReturned >= 1) {
         String SKUCode=getColumnValue(hn,rs ,"ARTICLE_ID");
-        //System.out.println("SKUCode: "+SKUCode);
         String AGGR_AVAIL_QTY_1=getColumnValue(hn,rs ,"AGGR_AVAIL_QTY");
         String AGGR_AVAIL_QTYFinal=AGGR_AVAIL_QTY_1.split("\\.")[0];
-        //System.out.println("Original AGGR_AVAIL_QTY: "+AGGR_AVAIL_QTYFinal);
         String AGGR_AVAIL_QTY_AFTER_CHECKOUT = String.valueOf((Integer.parseInt(AGGR_AVAIL_QTYFinal)-1));
         dataTable2.setValueOnOtherModule ("SapRSIGetDataFromSAPDB","SKUCode",SKUCode,0);
         dataTable2.setValueOnOtherModule("ProductSearch", "specificProduct", SKUCode, 0);
         dataTable2.setValueOnOtherModule("SapRSIGetDataFromSAPDB","AGGR_AVAIL_QTY",AGGR_AVAIL_QTY_AFTER_CHECKOUT,0);
-        //action.CompareResult("AGGR_AVAIL_QTY has reduce by 1 after buying",AGGR_AVAIL_QTY,AGGR_AVAIL_QTYAfterOneCheckout,test);
         hn.closeDB();
         }else {
         	hn.closeDB();
