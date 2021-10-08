@@ -212,6 +212,7 @@ public class JDGKeyManager {
         EVS_OpenGateSales evs_openGateSales=new EVS_OpenGateSales(driver,dataTable2);
         EVS_myTVLicense evs_MyTVLicense = new EVS_myTVLicense(driver, dataTable2);
         EVS_validateRegistrationForm evs_ValidateRegForm = new EVS_validateRegistrationForm(driver,dataTable2);
+        EVS_BundleArticleCreation evs_bundleCreation = new EVS_BundleArticleCreation(driver,dataTable2);
 
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -830,6 +831,15 @@ public class JDGKeyManager {
             	break;
             case "evs_ValidateRegistrationForm":
             	evs_ValidateRegForm.validateRegForm(test1);
+            	break;
+            case "evs_NavigateToBundleProduct":
+            	evs_bundleCreation.test();
+            	break;
+            case "evs_SetBasicBundleProductDetails":
+            	evs_bundleCreation.test();
+            	break;
+            case "evs_AddProductsToBundle":
+            	evs_bundleCreation.test();
             	break;
 
         }
