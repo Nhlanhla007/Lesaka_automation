@@ -833,14 +833,21 @@ public class JDGKeyManager {
             	evs_ValidateRegForm.validateRegForm(test1);
             	break;
             case "evs_NavigateToBundleProduct":
-            	evs_bundleCreation.test();
+            	evs_bundleCreation.NavigateToBundle(test1);
             	break;
             case "evs_SetBasicBundleProductDetails":
-            	evs_bundleCreation.test();
+            	evs_bundleCreation.SetBasicBundleProductDetails_1(test1);
+            	break;
+            case "evs_SetTaxBundleProductDetails":
+            	evs_bundleCreation.SetTaxBundleProductDetails_1(test1);
             	break;
             case "evs_AddProductsToBundle":
-            	evs_bundleCreation.test();
+            	evs_bundleCreation.addBundleProducts(test1);
             	break;
+            case "evs_sapData":
+            	evs_bundleCreation.sapData(test1);
+            	break;
+            	
 
         }
     }

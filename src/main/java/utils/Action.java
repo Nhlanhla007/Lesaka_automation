@@ -1514,22 +1514,30 @@ public class Action {
      *
      * @param ele
      * @param name
+     * @throws Exception 
      */
-    public void selectCheckBox(WebElement ele, String name) {
-        try {
+    public void selectCheckBox(WebElement ele, String name, ExtentTest test) throws Exception {
+    		//ExtentTest node = test.createNode(" : " + name);
             boolean selected = false;
             selected = ele.isSelected();
-            if (selected)
-                ele.click();
-            if (name != null) {
-                logger.info("Clicking checkbox: " + name);
+            if (!selected) {
+                click(ele, name, test);}
+            //else {
+            	//node.pass(name +" is Selected",MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+                //}
 
-            }
-
-        } catch (Throwable e) {
-            e.printStackTrace();
-
-        }
+        }    
+    
+    public boolean checkboxStatus(WebElement el,String Testname, ExtentTest test) {
+    	ExtentTest node = test.createNode("Checkbox status Verification" + Testname);
+		if (el.isSelected()) {
+			node.pass(Testname +" is Selected",MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+			return true;
+		} else {
+			//node.fail(Testname +" is Not Selected",MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
+			return false;
+		}
+		
     }
 
     public WebElement waitFluent(WebElement ele) {
