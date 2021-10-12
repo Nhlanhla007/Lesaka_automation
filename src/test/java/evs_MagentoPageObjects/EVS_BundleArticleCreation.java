@@ -190,10 +190,10 @@ public class EVS_BundleArticleCreation {
 		}
 			action.scrollElemetnToCenterOfView(bun_prodname, "Scroll To Bundle Name", test);
 			action.writeText(bun_prodname, bundleName +Bundle_id , "Bundle Name", test);
-			//dataTable2.setValueOnOtherModule("", enableProd, Bundle_id, ajaxTimeOutInSeconds);
+			dataTable2.setValueOnOtherModule("evs_BundleCreation", "Bundle_Article_Name", bundleName +Bundle_id, 0);
 			action.clear(bun_prodSKU, akeneoID);
 			action.writeText(bun_prodSKU, akeneoID +Bundle_id, "Bundle SKU", test);
-			//dataTable2.setValueOnOtherModule("", enableProd, Bundle_id, ajaxTimeOutInSeconds);
+			dataTable2.setValueOnOtherModule("evs_BundleCreation", "Akeneo_ID", akeneoID +Bundle_id, 0);
 			
 			if(dynamicSKU.equalsIgnoreCase("Yes")) {
 				action.scrollElemetnToCenterOfView(bun_DynamicSKU, "Scroll To Dynamic SKU", test);
