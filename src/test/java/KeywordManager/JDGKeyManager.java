@@ -213,7 +213,7 @@ public class JDGKeyManager {
         EVS_myTVLicense evs_MyTVLicense = new EVS_myTVLicense(driver, dataTable2);
         EVS_validateRegistrationForm evs_ValidateRegForm = new EVS_validateRegistrationForm(driver,dataTable2);
         EVS_BundleArticleCreation evs_bundleCreation = new EVS_BundleArticleCreation(driver,dataTable2);
-
+        EVS_BundleArticleFrontEnd evs_bundleFrontEnd = new EVS_BundleArticleFrontEnd(driver, dataTable2);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
             rowNumber = findRowToRun(dataMap2.get(moduleToRun + "++"), occCount.get(moduleToRun), testcaseID);
