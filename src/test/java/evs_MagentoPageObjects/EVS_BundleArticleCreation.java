@@ -434,7 +434,7 @@ public class EVS_BundleArticleCreation {
 	
 	public void sapData(ExtentTest test) throws Exception{
 		String siteSpecifcStatus = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Site_Article_Status", 0);
-		String roughStockIndicatorValue = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Site_Article_Status", 0);
+		String roughStockIndicatorValue = dataTable2.getValueOnOtherModule("evs_BundleCreation", "RSI_Value", 0);
 		
 		action.scrollElemetnToCenterOfView(sapDataMenuItem, "SAP Menu Item", test);		
 		action.click(sapDataMenuItem, "SAP DATA", test);
