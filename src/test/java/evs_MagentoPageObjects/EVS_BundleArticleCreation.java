@@ -82,6 +82,15 @@ public class EVS_BundleArticleCreation {
     @FindBy(xpath="//*[@name='product[weight]']")
     private WebElement bun_weight;
     
+    @FindBy(xpath="//span[normalize-space()='Search Engine Optimization']")
+    private WebElement bun_searchEngine;
+    
+    @FindBy(xpath="//*[@name='product[meta_title]']")
+    private WebElement bun_productURL1;
+    
+    @FindBy(xpath="//*[@name='product[url_key_create_redirect]']")
+    private WebElement bun_productURL;
+    
     @FindBy(xpath="//div[@class='admin__actions-switch'])[5]")
     private WebElement bun_DynamicWeight;
     
@@ -93,6 +102,9 @@ public class EVS_BundleArticleCreation {
     
     @FindBy(xpath="//*[@name='product[quantity_and_stock_status][qty]']")
     private WebElement bun_Qty;
+    
+    @FindBy(xpath="//*[@name='use_default[status]']")
+    private WebElement bun_enableProd_defaultV;
     
     @FindBy(xpath="//*[@name='product[quantity_and_stock_status][is_in_stock]']")
     private WebElement bun_stockStatus;
@@ -164,6 +176,8 @@ public class EVS_BundleArticleCreation {
     
 	public void test() {}
 	
+	public static int totalBundlePrice; 
+	
 	public void NavigateToBundle(ExtentTest test) throws Exception {
 		action.click(bun_catalog, "Click To Catalog", test);
 		action.click(bun_product, "Click To Products", test);
@@ -178,7 +192,6 @@ public class EVS_BundleArticleCreation {
 		String bundleName = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Bundle_Article_Name", 0);
 		String akeneoID = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Akeneo_ID", 0);
 		String dynamicSKU = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Dynamic_SKU", 0);
-		String enableProd = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Enable_product", 0);
 		Random rand = new Random();
 		String Bundle_id = String.format("%03d", rand.nextInt(10000));
 		
@@ -201,9 +214,8 @@ public class EVS_BundleArticleCreation {
 			}else {
 				action.click(bun_DynamicSKU, "set the SKU", test);
 			}
-			if(enableProd.equalsIgnoreCase("No")) {
 				action.javaScriptClick(bun_EnableProduct, "set Enable product", test);
-			}
+
 			action.click(bun_Save, "Click Save", test);
 			action.waitForPageLoaded(ajaxTimeOutInSeconds);
 			action.ajaxWait(ajaxTimeOutInSeconds, test);
@@ -219,6 +231,7 @@ public class EVS_BundleArticleCreation {
 		String storeScope = dataTable2.getValueOnOtherModule("evs_BundleCreation","Default_Store_View" ,0);
 		String dynamicWeight = dataTable2.getValueOnOtherModule("evs_BundleCreation","Dynamic_Weight" ,0);
 		String SetProdNew = dataTable2.getValueOnOtherModule("evs_BundleCreation","Set_Product" ,0);
+		String stockStatus = dataTable2.getValueOnOtherModule("evs_BundleCreation","Stock" ,0);
 		
 		if(storeScope.equalsIgnoreCase("Default Store View")){
 			action.click(bun_buttonScope, "Set Store Scope View", test);
@@ -259,11 +272,12 @@ public class EVS_BundleArticleCreation {
 		}
 		
 		if(action.ic_isEnabled(bun_stockStatus)) {
-			action.CompareResult("Stock Status Is Set To In Stock ", "In Stock", bun_stockStatus.getText(), test);
+			action.CompareResult("Stock Status Is Set To In Stock ", stockStatus, bun_stockStatus.getText(), test);
 		}else {
 			throw new Exception("Stock Status has be updated to Out of stock ");
 		}
 		
+		searchEngineURL(test);
 		AdvanceInventoryBundle(test);
 		categoryName(test);
 		action.click(bun_Save, "Click Save", test);
@@ -309,7 +323,14 @@ public class EVS_BundleArticleCreation {
 		}
 		
 	}
-
+	public void searchEngineURL(ExtentTest test) throws Exception{
+		action.scrollElemetnToCenterOfView(bun_searchEngine, "Scroll to Search engine", test);
+		action.click(bun_searchEngine, "Scroll to Search engine", test);
+		action.scrollElemetnToCenterOfView(bun_productURL, "Scroll to Product Key URL", test);
+		String urlKeyName = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Bundle_Article_Name", 0);
+		String URL_Key =urlKeyName.toLowerCase().replace(" ", "-").replace("+-", "");
+		dataTable2.setValueOnOtherModule("evs_BundleCreation", "Product_URL", URL_Key, 0);
+	}
 
 	public void addBundleProducts(ExtentTest test) throws Exception {
 		String shipBundleTypeValue = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Ship_Bundle_Method", 0);
@@ -332,7 +353,8 @@ public class EVS_BundleArticleCreation {
 			//System.out.println("bundle_options[bundle_options]["+i+"][title]");
 			//System.out.println("bundle_options[bundle_options]["+i+"][type]");
 			//System.out.println("bundle_options[bundle_options]["+i+"][required]");
-			action.click(addOption, "Add New Bunlde Item", test);
+			action.scrollElemetnToCenterOfView(addOption, "Add New Bundle Item", test);
+			action.click(addOption, "Add New Bundle Item", test);
 			//Confirm that the title shows up
 			boolean o = driver.findElements(By.name("bundle_options[bundle_options]["+i+"][default_title]")).size() >0;
 			
@@ -359,6 +381,7 @@ public class EVS_BundleArticleCreation {
 				addProductsToOption(i, allproductSKUValues.get(i),allItemQuantity.get(i),test);
 											
 			}
+			action.explicitWait(3000);
 		}
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		action.javaScriptClick(bun_Save, "Save", test);
@@ -388,6 +411,7 @@ public class EVS_BundleArticleCreation {
 		
 		if(action.waitUntilElementIsDisplayed(addProductCheckbox, 10000)) {
 			action.selectCheckBox(addProductCheckbox, "Add Product To Bundle Checkbox", test);
+			totalBundlePrice += Integer.parseInt(driver.findElement(By.xpath("//div[3]/table/tbody/tr/td[8]/div")).getText().replace("R", "").replace(".", "").replace(",", ""));
 		}else {
 			throw new Exception("No Records Returned");
 		}
@@ -409,8 +433,8 @@ public class EVS_BundleArticleCreation {
 	}
 	
 	public void sapData(ExtentTest test) throws Exception{
-		String siteSpecifcStatus = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Site_Article_Status", ajaxTimeOutInSeconds);;
-		String roughStockIndicatorValue = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Site_Article_Status", ajaxTimeOutInSeconds);;
+		String siteSpecifcStatus = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Site_Article_Status", 0);
+		String roughStockIndicatorValue = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Site_Article_Status", 0);
 		
 		action.scrollElemetnToCenterOfView(sapDataMenuItem, "SAP Menu Item", test);		
 		action.click(sapDataMenuItem, "SAP DATA", test);
@@ -431,7 +455,15 @@ public class EVS_BundleArticleCreation {
 		}
 		
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.scrollElemetnToCenterOfView(bun_EnableProduct, "Enable The Bundle Product", test);
+		if(action.isDisplayed(bun_EnableProduct)) {
+			action.javaScriptClick(bun_enableProd_defaultV, "Uncheck Use Default Value", test);
+			action.javaScriptClick(bun_EnableProduct, "Enable The Product", test);
+		}
 		action.javaScriptClick(bun_Save, "Save", test);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.explicitWait(4000);
 		action.elementExistWelcome(bun_successMessage, ajaxTimeOutInSeconds, "Save pop up success", test);
 	}
 	

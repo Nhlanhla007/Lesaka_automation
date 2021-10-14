@@ -847,6 +847,12 @@ public class JDGKeyManager {
             case "evs_sapData":
             	evs_bundleCreation.sapData(test1);
             	break;
+            case "evs_BundlePDL":
+            	evs_bundleFrontEnd.navToProdDetailPage(test1);
+            	break;
+            case "evs_searchBundleArticle":
+            	evs_bundleFrontEnd.searchBundleProduct(test1);
+            	break;
             	
 
         }
