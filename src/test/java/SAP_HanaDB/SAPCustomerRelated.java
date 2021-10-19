@@ -229,7 +229,7 @@ public class SAPCustomerRelated {
 		String SAPFirstName = customerDetails.get("NAME_FIRST");
 		String SAPLastName = customerDetails.get("NAME_LAST");
 		String SAPEmail = customerDetails.get("SMTP_ADDR");
-		String sapVatnumber = customerDetails.get("TAXNUM");
+		//String sapVatnumber = customerDetails.get("TAXNUM");
 		String SAID = customerDetails.get("IDNUMBER");
 		String passport = customerDetails.get("IDNUMBER");
 		String SAPtelNumber = customerDetails.get("TELF1");
@@ -261,7 +261,7 @@ public class SAPCustomerRelated {
 				}
 				if (taxVatNumberFlag.equalsIgnoreCase("yes")) {
 					String taxVatNumeber = mySheets.get(2).get("taxVat_output").get(sheetRow4).trim();
-					action.CompareResult("SAP UpdatedTaxNumber", taxVatNumeber, sapVatnumber, test);
+					//action.CompareResult("SAP UpdatedTaxNumber", taxVatNumeber, sapVatnumber, test);
 				}
 				if (updateEmailFlag.equalsIgnoreCase("yes")) {
 					String Email = updateEmail.trim();
@@ -306,7 +306,7 @@ public class SAPCustomerRelated {
 				if (vatNumberFlag.equalsIgnoreCase("Yes")) {
 					vatNumber = mySheets.get(0).get("vatNumber").get(sheetRow1);
 
-					action.CompareResult("SAP Vat number", vatNumber, sapVatnumber, test);
+					//action.CompareResult("SAP Vat number", vatNumber, sapVatnumber, test);
 				}
 
 				if (passportOrIdFlag.equalsIgnoreCase("ID")) {
@@ -350,9 +350,9 @@ public class SAPCustomerRelated {
 				String taxVatNumberUpdateFlag = mySheets.get(4).get("taxVat").get(customerUpdateBackEndSheet);
 				if (taxVatNumberUpdateFlag.equalsIgnoreCase("yes")) {
 					String updatedTaxNumber = mySheets.get(4).get("adminTaxVat_output").get(customerUpdateBackEndSheet);
-					if(updatedTaxNumber!=null | sapVatnumber != null) {
-						action.CompareResult("SAP tax/Vat number", updatedTaxNumber, sapVatnumber, test);
-					}
+					//if(updatedTaxNumber!=null | sapVatnumber != null) {
+					//	action.CompareResult("SAP tax/Vat number", updatedTaxNumber, sapVatnumber, test);
+					//}
 				}
 				String 	emailUpdateFlag = mySheets.get(4).get("email").get(customerUpdateBackEndSheet);
 				if (emailUpdateFlag.equalsIgnoreCase("yes")) {
@@ -413,7 +413,7 @@ public class SAPCustomerRelated {
 				action.CompareResult("SAP Updated Province", newProvince, SAPProvince, test);
 				action.CompareResult("SAP Updated Billing Address", newStreetName, SAPStreetAddress, test);
 				action.CompareResult("SAP SA ID", newIDNumber, SAID, test);
-				action.CompareResult("SAP Vat number", newVatNumber, sapVatnumber, test);
+				//action.CompareResult("SAP Vat number", newVatNumber, sapVatnumber, test);
 				action.CompareResult("SAP Telephone", newTelephone, SAPtelNumber, test);
 
 				break;
@@ -454,7 +454,7 @@ public class SAPCustomerRelated {
 				action.CompareResult("SAP Email", registEmail, SAPEmail, test);
 				action.CompareResult("SAP SA ID", registIDnumber, SAID, test);
 				if(registVATnumber != null) {
-				action.CompareResult("SAP Vat number", registVATnumber, sapVatnumber, test);
+				//action.CompareResult("SAP Vat number", registVATnumber, sapVatnumber, test);
 				}
 //				String addressTypeInIC = ICDelivery.addressTypeICFont;
 //				String typeOfAddressUsage = dataTable2.getValueOnOtherModule("deliveryPopulation", "AddressType", 0);
