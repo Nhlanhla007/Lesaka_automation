@@ -833,14 +833,6 @@ public class JDGKeyManager {
             	evs_ValidateRegForm.validateRegForm(test1);
             	break;
             case "evs_NavigateToBundleProduct":
-            	evs_bundleCreation.test();
-            	break;
-            case "evs_SetBasicBundleProductDetails":
-            	evs_bundleCreation.test();
-            	break;
-            case "evs_AddProductsToBundle":
-            	evs_bundleCreation.test();
-            	break;
             	evs_bundleCreation.NavigateToBundle(test1);
             	break;
             case "evs_SetBasicBundleProductDetails":
@@ -861,6 +853,7 @@ public class JDGKeyManager {
             case "evs_searchBundleArticle":
             	evs_bundleFrontEnd.searchBundleProduct(test1);
             	break;
+            	
 
         }
     }
