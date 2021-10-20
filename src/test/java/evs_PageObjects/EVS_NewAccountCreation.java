@@ -165,7 +165,7 @@ public class EVS_NewAccountCreation {
 	    @FindBy(xpath = "//span[contains(text(),'Delete Customer')]")
 	    WebElement deleteCustomer;
 	    
-	    @FindBy(xpath = "//*[@class=\"modal-footer\"]/button[2]")
+	    @FindBy(xpath = "//*[@class=\"modal-footer\"]/button[2]//*[contains(text(),'OK')]")
 	    WebElement deleteCustomerConfirmation;
 	    
 	    @FindBy(xpath = "//*[contains(text(),'You deleted the customer.')]")
@@ -502,7 +502,7 @@ public class EVS_NewAccountCreation {
 	public void deleteCustomer(ExtentTest test) throws Exception {
 		action.click(deleteCustomer, "Delete Customer", test);
 		action.explicitWait(2000);
-		action.javaScriptClick(deleteCustomerConfirmation, "Confirm Delete", test);
+		action.click(deleteCustomerConfirmation, "Confirm Delete", test);
 		action.ajaxWait(10, test);
 		action.waitForPageLoaded(5000);
 		action.ajaxWait(10, test);
