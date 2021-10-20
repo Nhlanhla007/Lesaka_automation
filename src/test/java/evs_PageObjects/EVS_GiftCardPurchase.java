@@ -83,13 +83,14 @@ public class EVS_GiftCardPurchase {
 		String giftC = dataTable2.getValueOnCurrentModule("GiftCardSKU");
 		evs_products.loadProductListingPage("SearchUsingSearchBar", giftC, test);
 		String sapSKUValidation = dataTable2.getValueOnCurrentModule("sapSKUValidation");
-		/*action.mouseover(evs_detail, "");
-		action.click(evs_viewItem, "more information", test);*/
-		/*if(selectAmountFlag.equalsIgnoreCase("Yes")){
-		action.writeText(ic_Amount, selectAmount, "Select the Amount", test);
-		}else {
-			action.writeText(ic_AmountInput, inputAmount, "Write your amount of choice", test);
-		}*/
+		action.mouseover(evs_detail, "");
+		action.click(evs_viewItem, "more information", test);
+		/*
+		 * if(selectAmountFlag.equalsIgnoreCase("Yes")){ action.writeText(ic_Amount,
+		 * selectAmount, "Select the Amount", test); }else {
+		 * action.writeText(ic_AmountInput, inputAmount, "Write your amount of choice",
+		 * test); }
+		 */
 		action.clear(evs_AmountInput, "clear the amount");
 		action.writeText(evs_AmountInput, inputAmount, "Enter your amount of choice", test);
 		action.writeText(evs_SenderName, senderName, "sender name", test);
