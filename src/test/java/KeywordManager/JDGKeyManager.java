@@ -578,6 +578,12 @@ public class JDGKeyManager {
             case "ic_user_license_verification":
             	ic_tvLicenceApproval.licenseValidation(test1);
             	break;
+            case"ic_removeAddress":
+            	verifyAcc.removeAddress(test1);
+            	break;
+            case "ic_DeleteCustomer":
+            	newAcc.deleteCustomer(test1);
+            	break;
 
             //EVS CODE BELOW
             case "evs_Login":
@@ -853,7 +859,12 @@ public class JDGKeyManager {
             case "evs_searchBundleArticle":
             	evs_bundleFrontEnd.searchBundleProduct(test1);
             	break;
-            	
+            case "evs_DeleteCustomer":
+            	evs_NewAccountCreation.deleteCustomer(test1);
+            	break;
+            case"evs_removeAddress":
+            	evs_NewAccountCreation.removeAddressEVS(test1);
+            	break;
 
         }
     }

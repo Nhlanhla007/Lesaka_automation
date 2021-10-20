@@ -4,8 +4,12 @@ import com.aventstack.extentreports.ExtentTest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import com.aventstack.extentreports.ExtentTest;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -141,6 +145,31 @@ public class EVS_NewAccountCreation {
 	  WebElement customerBPnnumber;
 	  @FindBy(xpath = "//input[@name='customer[identity_number]']")
 	  WebElement customerIdentityNumber;
+	  
+	  
+	  @FindBy(xpath = "//span[contains(text(),'Delete')]")
+	    List<WebElement> allAddresses;
+	    
+	    @FindBy(xpath = "//*[@class=\"modal-footer\"]/button[2]")
+	    WebElement okDeleteAddressButton;
+	    
+	    @FindBy(xpath = "//*[@class=\"my-account icon__expand-arrow\"]")
+	    WebElement 	myAccount;
+	    
+	    @FindBy(xpath = "//*[contains(text(),'My Account')]")
+	    WebElement myAccountSubHeading;
+	    
+	    @FindBy(xpath = "//*[contains(text(),'Address Book')]")
+	    WebElement addressBook;
+	    
+	    @FindBy(xpath = "//span[contains(text(),'Delete Customer')]")
+	    WebElement deleteCustomer;
+	    
+	    @FindBy(xpath = "//*[@class=\"modal-footer\"]/button[2]")
+	    WebElement deleteCustomerConfirmation;
+	    
+	    @FindBy(xpath = "//*[contains(text(),'You deleted the customer.')]")
+	    WebElement deleteConfirmationMessage;
 
 	public void evs_NavigateToCreateAccount(ExtentTest test) {
 		try {
@@ -455,5 +484,28 @@ public class EVS_NewAccountCreation {
 			// TODO Auto-generated catch block
 			action.CompareResult("Magento_VerifyCustomerDetails method failed : "+"ERROR found as "+e.getMessage(), String.valueOf(true),String.valueOf(false), test);
 		}
+	}
+	
+    public void removeAddressEVS(ExtentTest test) throws Exception {	 
+    	action.click(myAccount, "My Account", test);
+    	//action.click(myAccountSubHeading, "My Account SubHeading", test);
+    	action.click(addressBook, "AddressBook", test);
+    	int size = 10;    	 
+    	for(int s = 0; s<size ; s++) {
+    		size = allAddresses.size() - 1;	   
+    		driver.findElement(By.xpath("//span[contains(text(),'Delete')]")).click();
+    		action.ajaxWait(10, test);
+    		okDeleteAddressButton.click();
+    	}	    	
+    }
+	
+	public void deleteCustomer(ExtentTest test) throws Exception {
+		action.click(deleteCustomer, "Delete Customer", test);
+		action.explicitWait(2000);
+		action.javaScriptClick(deleteCustomerConfirmation, "Confirm Delete", test);
+		action.ajaxWait(10, test);
+		action.waitForPageLoaded(5000);
+		action.ajaxWait(10, test);
+		action.CompareResult("Customer Deleted", "You deleted the customer.", deleteConfirmationMessage.getText().trim(), test);
 	}
 }
