@@ -150,8 +150,13 @@ public class ICDelivery {
         action.explicitWait(timeOutInSeconds);
         if (addressType.equalsIgnoreCase("New") & addressTypeICFont.equalsIgnoreCase("Enter your delivery address & contact details:")) {
             if (userType.equalsIgnoreCase("Guest")) {
+            	action.validateIfInputFieldIsEmpty(firstName,"First Name", test);
                 action.writeText(firstName, dataSheets.getValueOnCurrentModule("firstName"), "firstName", test);
+                
+                action.validateIfInputFieldIsEmpty(lastname,"Last Name", test);
                 action.writeText(lastname, dataSheets.getValueOnCurrentModule("lastname"), "lastname", test);
+                
+                action.validateIfInputFieldIsEmpty(email,"Email", test);
                 action.writeText(email, dataSheets.getValueOnCurrentModule("email"), "email", test);
                 // action.writeText(idNumber,dataSheets.getValueOnCurrentModule("idNumber"),"idNumber",test);
             } else if (userType.equalsIgnoreCase("Registered")) {
@@ -178,12 +183,24 @@ public class ICDelivery {
             }
             if (action.waitUntilElementIsDisplayed(ic_AddressType, timeOutInSeconds)) {
 //        	action.explicitWait(5000);
+            	action.validateIfInputFieldIsEmpty(streetName,"Street name", test);
                 action.writeText(streetName, dataSheets.getValueOnCurrentModule("streetName"), "streetName", test);
+                
+                action.validateIfInputFieldIsEmpty(telephoneNumber,"Telephone", test);
                 action.writeText(telephoneNumber, dataSheets.getValueOnCurrentModule("telephone"), "telephone", test);
+                
+                action.validateIfInputFieldIsEmpty(city,"City", test);
                 action.writeText(city, dataSheets.getValueOnCurrentModule("city"), "city", test);
+                
+                action.validateIfInputFieldIsEmpty(Suburb,"Suburb", test);
                 action.writeText(Suburb, dataSheets.getValueOnCurrentModule("Suburb"), "Suburb", test);
+                
+                action.validateIfInputFieldIsEmpty(postalCode,"Postal Code", test);
                 action.writeText(postalCode, dataSheets.getValueOnCurrentModule("postalCode"), "postalCode", test);
+                
+                action.validateIfInputFieldIsEmpty(vatNumber,"Vat Number", test);
                 action.writeText(vatNumber, dataSheets.getValueOnCurrentModule("vatNumber"), "vatNumber", test);
+                
                 action.dropDownselectbyvisibletext(province, dataSheets.getValueOnCurrentModule("province"), "province", test);
                 action.ajaxWait(timeOutInSeconds, test);
 //        action.explicitWait(10000);

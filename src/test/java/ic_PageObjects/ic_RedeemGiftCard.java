@@ -106,7 +106,7 @@ public class ic_RedeemGiftCard {
 		 }
 		 //Enter the field
 		 if(UsageType.equalsIgnoreCase("Redeem")){
-			action.scrollElementIntoView(ic_GiftCardCode); 
+			action.scrollElemetnToCenterOfView(ic_GiftCardCode,"Scroll to gift card view",test); 
 		 action.writeText(ic_GiftCardCode, giftCardCode, "Gift Card code", test);
 		 action.writeText(ic_GiftCardScratchCode, scratchCode, "Scratch Code", test);
 		 //click apply
@@ -140,7 +140,7 @@ public class ic_RedeemGiftCard {
 		 }
 		 
 		 if(UsageType.equalsIgnoreCase("Reuse")){
-			 
+			 action.scrollElemetnToCenterOfView(ic_GiftCardCode,"Scroll to gift card view",test); 
 			 action.writeText(ic_GiftCardCode, giftCardCode, "Gift Card code", test);
 			 action.writeText(ic_GiftCardScratchCode, scratchCode, "Scratch Code", test);
 			 

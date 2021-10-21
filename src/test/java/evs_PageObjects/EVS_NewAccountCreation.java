@@ -145,7 +145,7 @@ public class EVS_NewAccountCreation {
 	  WebElement customerBPnnumber;
 	  @FindBy(xpath = "//input[@name='customer[identity_number]']")
 	  WebElement customerIdentityNumber;
-	  
+
 	  
 	  @FindBy(xpath = "//span[contains(text(),'Delete')]")
 	    List<WebElement> allAddresses;
