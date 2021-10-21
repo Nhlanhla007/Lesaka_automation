@@ -74,6 +74,18 @@ public class Action {
         }
         return title;
     }
+    
+    //Add method for that checks if its valid
+    public void validateIfInputFieldIsEmpty(WebElement element,String name,ExtentTest test) throws Exception {    	
+    	if(getAttribute(element, "value").isEmpty()) {
+    		CompareResult("If "+name+" Field is Empty?", "true", "true", test);
+    	}else {
+    		CompareResult("If "+name+" Field is Empty?", "true", "false", test);
+    	}
+    	
+    }
+    
+    
 
     public String getScreenShot(String screenshotName) throws IOException {
         File currentDirFile = new File(".");
