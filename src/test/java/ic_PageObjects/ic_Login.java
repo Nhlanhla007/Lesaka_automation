@@ -79,6 +79,7 @@ public class ic_Login {
         action.waitForJStoLoad(120);
         String expectedTitle = "Incredible Connection My Account";
 
+        action.explicitWait(5000);
         if (driver.getTitle().equalsIgnoreCase(expectedTitle)) {
             action.CompareResult("User successful Login ", "True", "True", test);
         } else {

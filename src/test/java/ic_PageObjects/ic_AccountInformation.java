@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,6 +43,36 @@ public class ic_AccountInformation {
 	    @FindBy(xpath = "//input[@id='identity_number']")
 		WebElement SAID;
 	    
+	    
+	    @FindBy(xpath = "//span[contains(text(),'Delete')]")
+	    List<WebElement> allAddresses;
+	    
+	    @FindBy(xpath = "//*[@class=\"modal-footer\"]/button[2]")
+	    WebElement okDeleteAddressButton;
+	    
+	    @FindBy(xpath = "//*[@class=\"my-account icon__expand-arrow\"]")
+	    WebElement 	myAccount;
+	    
+	    @FindBy(xpath = "//*[contains(text(),'My Account')]")
+	    WebElement myAccountSubHeading;
+	    
+	    @FindBy(xpath = "//*[contains(text(),'Address Book')]")
+	    WebElement addressBook;
+	    
+	    public void removeAddress(ExtentTest test) throws Exception {	 
+	    	action.click(myAccount, "My Account", test);
+	    	action.click(myAccountSubHeading, "My Account SubHeading", test);
+	    	action.click(addressBook, "AddressBook", test);
+	    	
+	    	int size = allAddresses.size() - 1;	    	
+	    	for(int s = 0; s<size ; s++) {
+	    		driver.findElement(By.xpath("//span[contains(text(),'Delete')]")).click();
+	    		action.explicitWait(1000);
+	    		okDeleteAddressButton.click();
+	    		action.waitForPageLoaded(5000);
+	    	}	    	
+	    }
+	
 	    public void Verify_Acount_Information(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws IOException, InterruptedException {
 			String ExpPage ="edit";
 			String ExpFirstname=input.get("firstName").get(rowNumber);

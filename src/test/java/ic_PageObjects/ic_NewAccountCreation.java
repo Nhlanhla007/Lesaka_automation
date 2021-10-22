@@ -126,6 +126,15 @@ public class ic_NewAccountCreation {
 	  WebElement customerBPnnumber;
 	  @FindBy(xpath = "//input[@name='customer[identity_number]']")
 	  WebElement customerIdentityNumber;
+	  
+		@FindBy(xpath = "//span[contains(text(),'Delete Customer')]")
+		WebElement deleteCustomer;
+
+		@FindBy(xpath = "//*[@class=\"modal-footer\"]/button[2]")
+		WebElement deleteCustomerConfirmation;
+
+		@FindBy(xpath = "//*[contains(text(),'You deleted the customer.')]")
+		WebElement deleteConfirmationMessage;
 
 	public void ic_NavigateToCreateAccount(ExtentTest test) {
 		try {
@@ -405,4 +414,15 @@ public class ic_NewAccountCreation {
 			action.CompareResult("Magento_VerifyCustomerDetails method failed : "+"ERROR found as "+e.getMessage(), String.valueOf(true),String.valueOf(false), test);
 		}
 	}
+	
+	public void deleteCustomer(ExtentTest test) throws Exception {
+		action.click(deleteCustomer, "Delete Customer", test);
+		action.explicitWait(2000);
+		action.javaScriptClick(deleteCustomerConfirmation, "Confirm Delete", test);
+		action.ajaxWait(10, test);
+		action.waitForPageLoaded(5000);
+		action.ajaxWait(10, test);
+		action.CompareResult("Customer Deleted", "You deleted the customer.", deleteConfirmationMessage.getText().trim(), test);
+	}
+	
 }

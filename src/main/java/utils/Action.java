@@ -75,6 +75,18 @@ public class Action {
         return title;
     }
 
+    //Add method for that checks if its valid
+    public void validateIfInputFieldIsEmpty(WebElement element,String name,ExtentTest test) throws Exception {    	
+    	if(getAttribute(element, "value").isEmpty()) {
+    		CompareResult("If "+name+" Field is Empty?", "true", "true", test);
+    	}else {
+    		CompareResult("If "+name+" Field is Empty?", "true", "false", test);
+    	}
+    	
+    }
+    
+    
+
     public String getScreenShot(String screenshotName) throws IOException {
         File currentDirFile = new File(".");
         String helper = currentDirFile.getAbsolutePath();
@@ -206,6 +218,15 @@ public class Action {
         if (url.contains("incredibleconnection")) {
             driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
             explicitWait(5000);
+            boolean clearBOGOpopup = driver.findElements(By.xpath("//*[@class=\"modal-popup rule-popup _show\"]/div[2]//button")).size() > 0;
+            if(clearBOGOpopup) {
+            	WebElement closeCookies = driver.findElement(By.xpath("//*[@class=\"modal-popup rule-popup _show\"]/div[2]//button"));
+            	JavascriptExecutor executor = (JavascriptExecutor) driver;
+                executor.executeScript("arguments[0].click();", closeCookies);
+            	//closeCookie.click();
+            	//javaScriptClick("//*[@class=\"modal-popup rule-popup _show\"]/div[2]//div", "Clear BOGO", null)
+            	
+            }
             boolean clearCookiesAvailability = driver.findElements(By.xpath("//*[@class=\"cookie-notice-content\"]")).size() > 0;
             if (clearCookiesAvailability) {
                 try {
@@ -218,8 +239,10 @@ public class Action {
                     e.printStackTrace();
                 }
             }
+            
         }
     }
+
 
 
     public String getCurrentURL() {
@@ -1526,7 +1549,7 @@ public class Action {
             	//node.pass(name +" is Selected",MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
                 //}
 
-        }    
+        }
     
     public boolean checkboxStatus(WebElement el,String Testname, ExtentTest test) {
     	ExtentTest node = test.createNode("Checkbox status Verification" + Testname);
