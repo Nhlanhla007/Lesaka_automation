@@ -213,7 +213,7 @@ public class JDGKeyManager {
         EVS_myTVLicense evs_MyTVLicense = new EVS_myTVLicense(driver, dataTable2);
         EVS_validateRegistrationForm evs_ValidateRegForm = new EVS_validateRegistrationForm(driver,dataTable2);
         EVS_BundleArticleCreation evs_bundleCreation = new EVS_BundleArticleCreation(driver,dataTable2);
-
+        EVS_BundleArticleFrontEnd evs_bundleFrontEnd = new EVS_BundleArticleFrontEnd(driver, dataTable2);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
             rowNumber = findRowToRun(dataMap2.get(moduleToRun + "++"), occCount.get(moduleToRun), testcaseID);
@@ -839,13 +839,16 @@ public class JDGKeyManager {
             	evs_ValidateRegForm.validateRegForm(test1);
             	break;
             case "evs_NavigateToBundleProduct":
-            	evs_bundleCreation.test();
+            	evs_bundleCreation.NavigateToBundle(test1);
             	break;
             case "evs_SetBasicBundleProductDetails":
-            	evs_bundleCreation.test();
+            	evs_bundleCreation.SetBasicBundleProductDetails_1(test1);
+            	break;
+            case "evs_SetTaxBundleProductDetails":
+            	evs_bundleCreation.SetTaxBundleProductDetails_1(test1);
             	break;
             case "evs_AddProductsToBundle":
-            	evs_bundleCreation.test();
+            	evs_bundleCreation.addBundleProducts(test1);
             	break;
             case "evs_sapData":
             	evs_bundleCreation.sapData(test1);
@@ -862,16 +865,6 @@ public class JDGKeyManager {
             case"evs_removeAddress":
             	evs_NewAccountCreation.removeAddressEVS(test1);
             	break;
-            case "evs_sapData":
-            	evs_bundleCreation.sapData(test1);
-            	break;
-            case "evs_BundlePDL":
-            	evs_bundleFrontEnd.navToProdDetailPage(test1);
-            	break;
-            case "evs_searchBundleArticle":
-            	evs_bundleFrontEnd.searchBundleProduct(test1);
-            	break;
-            	
 
         }
     }
