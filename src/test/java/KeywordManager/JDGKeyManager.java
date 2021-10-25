@@ -2,6 +2,7 @@ package KeywordManager;
 
 
 import ic_PageObjects.IC_ReturnToConfirmOrderStatus;
+import spm_PageObjects.SPM_LaunchPortal;
 import evs_MagentoPageObjects.*;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
 import ic_PageObjects.*;
@@ -214,6 +215,7 @@ public class JDGKeyManager {
         EVS_validateRegistrationForm evs_ValidateRegForm = new EVS_validateRegistrationForm(driver,dataTable2);
         EVS_BundleArticleCreation evs_bundleCreation = new EVS_BundleArticleCreation(driver,dataTable2);
         EVS_BundleArticleFrontEnd evs_bundleFrontEnd = new EVS_BundleArticleFrontEnd(driver, dataTable2);
+        SPM_LaunchPortal spm_launchPortal = new SPM_LaunchPortal(driver, dataTable2);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
             rowNumber = findRowToRun(dataMap2.get(moduleToRun + "++"), occCount.get(moduleToRun), testcaseID);
@@ -864,6 +866,11 @@ public class JDGKeyManager {
             	break;
             case"evs_removeAddress":
             	evs_NewAccountCreation.removeAddressEVS(test1);
+            	break;
+            // Sleep masters keywords below
+            	
+            case "SPM_LaunchPortal":
+            	spm_launchPortal.launchPortal(test1);
             	break;
 
         }
