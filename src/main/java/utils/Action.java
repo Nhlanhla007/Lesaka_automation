@@ -74,7 +74,7 @@ public class Action {
         }
         return title;
     }
-    
+
     //Add method for that checks if its valid
     public void validateIfInputFieldIsEmpty(WebElement element,String name,ExtentTest test) throws Exception {    	
     	if(getAttribute(element, "value").isEmpty()) {
@@ -1549,7 +1549,7 @@ public class Action {
             	//node.pass(name +" is Selected",MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
                 //}
 
-        }    
+        }
     
     public boolean checkboxStatus(WebElement el,String Testname, ExtentTest test) {
     	ExtentTest node = test.createNode("Checkbox status Verification" + Testname);
