@@ -215,18 +215,9 @@ public class Action {
     public void navigateToURL(String url) {
         driver.navigate().to(url);
         driver.manage().window().maximize();
-        if (url.contains("incredibleconnection")) {
-            driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-            explicitWait(5000);
-            boolean clearBOGOpopup = driver.findElements(By.xpath("//*[@class=\"modal-popup rule-popup _show\"]/div[2]//button")).size() > 0;
-            if(clearBOGOpopup) {
-            	WebElement closeCookies = driver.findElement(By.xpath("//*[@class=\"modal-popup rule-popup _show\"]/div[2]//button"));
-            	JavascriptExecutor executor = (JavascriptExecutor) driver;
-                executor.executeScript("arguments[0].click();", closeCookies);
-            	//closeCookie.click();
-            	//javaScriptClick("//*[@class=\"modal-popup rule-popup _show\"]/div[2]//div", "Clear BOGO", null)
-            	
-            }
+        driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+        explicitWait(5000);
+        if (url.contains("incredibleconnection")) {                      
             boolean clearCookiesAvailability = driver.findElements(By.xpath("//*[@class=\"cookie-notice-content\"]")).size() > 0;
             if (clearCookiesAvailability) {
                 try {
@@ -239,7 +230,14 @@ public class Action {
                     e.printStackTrace();
                 }
             }
-            
+        }
+        boolean clearBOGOpopup = driver.findElements(By.xpath("//*[@class=\"modal-popup rule-popup _show\"]/div[2]//button")).size() > 0;
+        if(clearBOGOpopup) {
+        	WebElement closeCookies = driver.findElement(By.xpath("//*[@class=\"modal-popup rule-popup _show\"]/div[2]//button"));
+        	JavascriptExecutor executor = (JavascriptExecutor) driver;
+            executor.executeScript("arguments[0].click();", closeCookies);
+        	//closeCookie.click();
+        	//javaScriptClick("//*[@class=\"modal-popup rule-popup _show\"]/div[2]//div", "Clear BOGO", null)
         }
     }
 
