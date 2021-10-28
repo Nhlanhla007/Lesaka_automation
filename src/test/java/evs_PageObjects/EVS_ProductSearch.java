@@ -131,7 +131,8 @@ public class EVS_ProductSearch {
     @FindBy(xpath = "//*[@class = \"modal-content\"]/div")
     WebElement quantityExceedPopUpMsg;
 
-    @FindBy(xpath = "//button[@class=\"qty-action update update-cart-item\"]")
+    //@FindBy(xpath = "//button[@class=\"qty-action update update-cart-item\"]")
+    @FindBy(xpath = "//*[@class=\"action-primary action-accept\"]")
     WebElement updateQuantityButton;
 
     public void clickNext(ExtentTest test) throws Exception {
@@ -237,7 +238,7 @@ public class EVS_ProductSearch {
         WebElement miniCartItemQty = driver.findElement(By.xpath("//*[@class = \"details-qty qty\"]/input"));
         action.clear(miniCartItemQty, "miniCartItemQty");
         action.writeText(miniCartItemQty, "9999999999999", "miniCartItemQty", test);
-        action.explicitWait(3000);
+        action.explicitWait(5000);
         action.waitUntilElementIsDisplayed(updateQuantityButton, 10000);
         action.javaScriptClick(updateQuantityButton, "Update Quantity", test);
         action.explicitWait(2000);
