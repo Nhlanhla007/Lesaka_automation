@@ -54,7 +54,7 @@ public class MagentoOrderStatusPage {
     @FindBy(className = "data-row")
     public List<WebElement> magentoTableRecords;
 	
-    @FindBy(xpath = "//body/div[2]/main[1]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[3]/button[1]")
+    @FindBy(xpath = "//button[contains(text(),'Clear all')]")
     public WebElement clearFilters;
 
     @FindBy(xpath = "//table[@data-role='grid']/tbody/tr[1]/td[2]/div")
