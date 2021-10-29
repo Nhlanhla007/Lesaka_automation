@@ -1,4 +1,5 @@
-package evs_PageObjects;
+package spm_PageObjects;
+
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,25 +28,25 @@ import utils.Action;
 import utils.ConfigFileReader;
 import utils.DataTable2;
 
-public class EVS_ProductSearch {
+public class SPM_ProductSearch {
 
     WebDriver driver;
     Action action;
-    EVS_Cart cartValidation;
+    //EVS_Cart cartValidation;
     DataTable2 dataTable2;
-    EVS_WishList WishList;
-    EVS_CompareProducts compareProducts;
+    //EVS_WishList WishList;
+    //EVS_CompareProducts compareProducts;
 
     // ic_validateProductSKU validateProductSKU;
     // ic_CompareProducts compareProducts;
-    public EVS_ProductSearch(WebDriver driver, DataTable2 dataTable2) {
+    public SPM_ProductSearch(WebDriver driver, DataTable2 dataTable2) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
-        cartValidation = new EVS_Cart(driver, dataTable2);
+        //cartValidation = new EVS_Cart(driver, dataTable2);
         this.dataTable2 = dataTable2;
-        WishList = new EVS_WishList(driver, dataTable2);
-        compareProducts = new EVS_CompareProducts(driver, dataTable2);
+        //WishList = new EVS_WishList(driver, dataTable2);
+       // compareProducts = new EVS_CompareProducts(driver, dataTable2);
         // validateProductSKU = new ic_validateProductSKU(driver, dataTable2);
 
     }
@@ -60,7 +62,7 @@ public class EVS_ProductSearch {
     @FindBy(xpath = "//input[@id='search']")
     WebElement searchBar;
 
-    @FindBy(xpath = "//button[@type='submit' and @title='Search']")
+    @FindBy(xpath = "//div[@class='my-search']")
     WebElement searchIcon;
 
     @FindBy(css = "a.product-item-link")
@@ -131,9 +133,44 @@ public class EVS_ProductSearch {
     @FindBy(xpath = "//*[@class = \"modal-content\"]/div")
     WebElement quantityExceedPopUpMsg;
 
-    //@FindBy(xpath = "//button[@class=\"qty-action update update-cart-item\"]")
-    @FindBy(xpath = "//*[@class=\"action-primary action-accept\"]")
+    @FindBy(xpath = "//button[@class=\"qty-action update update-cart-item\"]")
     WebElement updateQuantityButton;
+    
+    //Range
+    @FindBy(xpath = "//div[@class='product-info-top-title']//div[@class='base']")
+    WebElement bed_prodName;
+    
+    @FindBy(xpath = "//div[@option-label='Bed Set (Mattress + Base)']")
+    WebElement bed_bedSet;
+    
+    @FindBy(xpath = "//div[@option-label='Mattress Only']")
+    WebElement bed_bedMattress;
+    
+    @FindBy(xpath = "(//span[@class='swatch-option-inner'])[1]")
+    WebElement bed_lengthMattress;
+    
+    @FindBy(xpath = "(//span[@class='swatch-option-inner'])[2]")
+    WebElement bed_exraLength;
+    @FindBy(xpath = "//div[@option-label='Single (92cm)']")
+    WebElement bed_type92;
+    
+    @FindBy(xpath = "//div[@option-label='Three Quarter']")
+    WebElement bed_type107CM;
+    
+    @FindBy(xpath = "//div[@option-label='Double (137cm)']")
+    WebElement bed_type137CM;
+    
+    @FindBy(xpath = "//div[@option-label='Queen (152cm)']")
+    WebElement bed_type152CM;
+    
+    @FindBy(xpath = "//div[@option-label='King (183cm)']")
+    WebElement bed_type183CM;
+    
+    @FindBy(xpath = "//div[@class='product-info-price']//span[@class='price']")
+    WebElement bed_price ;
+    
+    @FindBy(xpath = "//*[contains(text(),\"We're sorry, no results found\")]")
+    WebElement productNotFoundMessage;
 
     public void clickNext(ExtentTest test) throws Exception {
         action.mouseover(clickNext, "scroll to element");
@@ -238,7 +275,7 @@ public class EVS_ProductSearch {
         WebElement miniCartItemQty = driver.findElement(By.xpath("//*[@class = \"details-qty qty\"]/input"));
         action.clear(miniCartItemQty, "miniCartItemQty");
         action.writeText(miniCartItemQty, "9999999999999", "miniCartItemQty", test);
-        action.explicitWait(5000);
+        action.explicitWait(3000);
         action.waitUntilElementIsDisplayed(updateQuantityButton, 10000);
         action.javaScriptClick(updateQuantityButton, "Update Quantity", test);
         action.explicitWait(2000);
@@ -256,9 +293,11 @@ public class EVS_ProductSearch {
     public void ic_EnterTextToSearchBar(String productToFind, ExtentTest test) throws Exception {
         //try {
             ic_ElementVisable(searchBar);
+            action.click(searchIcon, "Click on search", test);
             action.clear(searchBar, "SearchBar");
             action.writeText(searchBar, productToFind, "SearchBar", test);
-            action.click(searchIcon, "Click on search", test);
+            searchBar.sendKeys(Keys.ENTER);
+            //action.click(searchIcon, "Click on search", test);
             action.waitForPageLoaded(40);            
         //} catch (Exception e) {
           //  e.printStackTrace();
@@ -276,7 +315,7 @@ public class EVS_ProductSearch {
         return productsList;
     }
 
-    public void evs_SelectProductAndAddToCart(ExtentTest test) throws Exception {
+    public void spm_SelectProductAndAddToCart(ExtentTest test) throws Exception {
         String typeSearch = dataTable2.getValueOnCurrentModule("typeSearch");// input.get("typeSearch").get(rowNumber);
         String productsToSearch = dataTable2.getValueOnCurrentModule("specificProduct");// input.get("specificProduct").get(rowNumber);
         String quantityOfSearchProducts = dataTable2.getValueOnCurrentModule("Quantity");// input.get("Quantity").get(rowNumber);
@@ -290,11 +329,11 @@ public class EVS_ProductSearch {
         switch (TypeOfOperation) {
             case "Add_To_Wishlist":
                 if (validationRequired.equalsIgnoreCase("Yes_Wishlist")) {
-                    WishList.ValidateProductsIn_Wishlist(productsInCart, test);
+                  //  WishList.ValidateProductsIn_Wishlist(productsInCart, test);
                 }
                 break;
             case "Add_To_Cart":
-                cartValidation.iCcartVerification2(productsInCart, test);
+               // cartValidation.iCcartVerification2(productsInCart, test);
                 break;
             case "Validate_Out_Of_Stock":
                 break;
@@ -379,7 +418,7 @@ public class EVS_ProductSearch {
         try {
             action.explicitWait(2000);
             action.click(addToCartButton, "Add To Cart", test);
-            cartValidation.cartButtonValidation(addToCartButton, Integer.parseInt(waitTimeInSeconds), test);
+           // cartValidation.cartButtonValidation(addToCartButton, Integer.parseInt(waitTimeInSeconds), test);
         } catch (Exception e) {
             throw new Exception("Unable to Add product to Cart. "+e.getMessage());
         }
@@ -415,11 +454,9 @@ public class EVS_ProductSearch {
             availabilityStatus = action.getText(verifyAvailability, "Availability Of Product", test);
         }
         if (isPresent & availabilityStatus.equalsIgnoreCase("In stock")) {
-            action.scrollElemetnToCenterOfView(productDetailsPageAddToCartButton, "productDetailsPageAddToCartButton",
-                    test);
+            action.scrollElemetnToCenterOfView(productDetailsPageAddToCartButton, "productDetailsPageAddToCartButton",test);
             productDetailsPageAddToCartButton.click();
-            cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds),
-                    test);
+          //  cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds),test);
         } else {
             if (action.waitUntilElementIsDisplayed(notifyWhenProductIsAvailable, 15000)) {
                 action.CompareResult("\"Notify Me When Available Is Present\"", "True", "True", test);
@@ -489,7 +526,7 @@ public class EVS_ProductSearch {
         while (status) {
             List<WebElement> allProducts = products;
             for (WebElement el : allProducts) {
-                if (el.getText().trim().toLowerCase().equalsIgnoreCase(product)) {
+                if (el.getText().trim().toLowerCase().equalsIgnoreCase(product.trim())) {
                     status = false;
                     action.mouseover(el, "On Product");
                     return el;
@@ -550,10 +587,13 @@ public class EVS_ProductSearch {
                                             break;
                                         case "Add_To_Compare":
                                             addItemToCompare(prod, quantityExecu, test);
-                                            compareProducts.comparePageValidation(productName, test);
+                                          //  compareProducts.comparePageValidation(productName, test);
                                             break;
                                         case "Validate_Out_Of_Stock":
                                             addToCartFromProdDetailsPage(prod, waitTimeInSeconds, quantityExecu, test);
+                                            break;
+                                        case "Validate_Range":
+                                        	rangeValidation(test);
                                             break;
                                     }
                                 }
@@ -598,5 +638,226 @@ public class EVS_ProductSearch {
         }
         return "NA";
     }
+    
+    public void rangeValidation(ExtentTest test) throws IOException {
+    	String prodName = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "ProductName", 0);
+    	String lengthType = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "Length_Type", 0);
+    	String beddingType = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "Bedding_Type", 0);
+    	String beddingWidth = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "Width", 0);
+    	String beddingBreadth = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "breadthFront", 0);
+    	String beddingLength = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "Length", 0);
+    	
+    	action.CompareResult("The Product Name Is Visible", prodName.trim(), bed_prodName.getText().trim(), test);
+    		
+    switch(beddingWidth){
+    	case "92":
+    			action.scrollElemetnToCenterOfView(bed_type92, "Scroll To View The Width", test);
+    			action.CompareResult("The Mattress Width Size",beddingBreadth.trim(),bed_type92.getText().replace("width: 91cm", "").trim(), test);
+    			String frontWidth = bed_type92.getText().replace("width: 91cm", "").trim();
+    			dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Width", frontWidth, 0);
+    			if(beddingType.equalsIgnoreCase("Bed Set (Mattress + Base)")){
+    				action.isEnabled(bed_bedSet);
+    				action.CompareResult("The Bedding Type",beddingType.trim() , bed_bedSet.getText().trim(), test);
+    					if(lengthType.equalsIgnoreCase("Standard")){
+    						action.CompareResult("The Bed Set Standard Length Size",beddingLength.trim() , bed_lengthMattress.getText(), test);
+    						String frontLength = bed_lengthMattress.getText().trim();
+    						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+    					}else{
+    					action.CompareResult("The Bed Set Extra Length Size", beddingLength.trim(), bed_exraLength.getText(), test);
+    					String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+    					}
+    				}
+    			else if(beddingType.equalsIgnoreCase("Mattress Only")){
+    				action.isEnabled(bed_bedSet);
+    				action.CompareResult("The The Bedding Type", beddingType.trim(), bed_bedMattress.getText().trim(), test);
+    				if(lengthType.equalsIgnoreCase("Standard")){
+    					action.CompareResult("The Mattress Standard Length Size", beddingLength.trim(), bed_lengthMattress.getText(), test);
+    					String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+    				}else {
+    					action.CompareResult("The Mattress Extra Length Size", beddingLength.trim(), bed_exraLength.getText(), test);
+    					String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+    				}
+    			}
+    		break;
+    	case "107":
+    		action.scrollElemetnToCenterOfView(bed_type107CM, "Scroll To View The Width", test);
+			action.CompareResult("The Mattress Width Size", beddingBreadth.trim(), bed_type107CM.getText().trim(), test);
+			String frontWidth107 = bed_type107CM.getText().trim();
+			dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Width", frontWidth107, 0);
+			if(beddingType.equalsIgnoreCase("Bed Set (Mattress + Base)")){
+				action.isEnabled(bed_bedSet);
+				action.CompareResult("The Bedding Type", beddingType.trim(),bed_bedSet.getText().trim(), test);
+					if(lengthType.equalsIgnoreCase("Standard")){
+						action.CompareResult("The Bed Set Standard Length Size", beddingLength.trim(), bed_lengthMattress.getText(), test);
+						String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+					}else{
+						action.CompareResult("The Bed Set Extra Length Size",beddingLength.trim(), bed_exraLength.getText(), test);
+    					String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+    				}
+				}
+			else if(beddingType.equalsIgnoreCase("Mattress Only")){
+				action.isEnabled(bed_bedSet);
+				action.CompareResult("The Bedding Type", beddingType.trim(),bed_bedMattress.getText().trim(), test);
+					if(lengthType.equalsIgnoreCase("Standard")){
+						action.CompareResult("The Mattress Standard Length Size", beddingLength.trim(), bed_lengthMattress.getText(), test);
+						String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+					}else{
+						action.CompareResult("The Mattress Extra Length Size",beddingLength.trim(), bed_exraLength.getText(), test);
+    					String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+    				}
+			}
+    		break;
+    	case "137":
+    		action.scrollElemetnToCenterOfView(bed_type137CM, "Scroll To View The Width", test);
+			action.CompareResult("The Mattress Width Size", beddingBreadth.trim(), bed_type137CM.getText().trim(), test);
+			String frontWidth137 = bed_type137CM.getText().trim();
+			dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Width", frontWidth137, 0);
+			if(beddingType.equalsIgnoreCase("Bed Set (Mattress + Base)")){
+				action.isEnabled(bed_bedSet);
+				action.CompareResult("The Bedding Type", beddingType.trim(),bed_bedSet.getText().trim(), test);
+					if(lengthType.equalsIgnoreCase("Standard")){
+						action.CompareResult("The Bed Set Standard Length Size", beddingLength.trim(), bed_lengthMattress.getText(), test);
+						String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+					}else{
+						action.CompareResult("The Bed Set Extra Length Size",beddingLength.trim(), bed_exraLength.getText(), test);
+    					String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+					}
+				}
+			else if(beddingType.equalsIgnoreCase("Mattress Only")){
+				action.isEnabled(bed_bedSet);
+				action.CompareResult("The Bedding Type", beddingType.trim(),bed_bedMattress.getText().trim(), test);
+				if(lengthType.equalsIgnoreCase("Standard")){
+					action.CompareResult("The Mattress Standard Length Size", beddingLength.trim(), bed_lengthMattress.getText(), test);
+					String frontLength = bed_lengthMattress.getText().trim();
+					dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+				}else {
+					action.CompareResult("The Mattress Extra Length Size",beddingLength.trim(), bed_exraLength.getText(), test);
+					String frontLength = bed_lengthMattress.getText().trim();
+					dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+				}
+			}
+    		break;	
+    	case "152":
+    		action.scrollElemetnToCenterOfView(bed_type152CM, "Scroll To View The Width", test);
+			action.CompareResult("The Mattress Width Size", beddingBreadth.trim(), bed_type152CM.getText().trim(), test);
+			String frontWidth152 = bed_type152CM.getText().trim();
+			dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Width", frontWidth152, 0);
+			if(beddingType.equalsIgnoreCase("Bed Set (Mattress + Base)")){
+				action.isEnabled(bed_bedSet);
+				action.CompareResult("The Bedding Type", beddingType.trim(),bed_bedSet.getText().trim(), test);
+					if(lengthType.equalsIgnoreCase("Standard")){
+						action.CompareResult("The Bed Set Standard Length Size", beddingLength.trim(), bed_lengthMattress.getText(), test);
+						String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+					}else{
+						action.CompareResult("The Bed Set Extra Length Size",beddingLength.trim(), bed_exraLength.getText(), test);
+    					String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+					}
+				}
+			else if(beddingType.equalsIgnoreCase("Mattress Only")){
+				action.isEnabled(bed_bedSet);
+				action.CompareResult("The Bedding Type", beddingType.trim(),bed_bedMattress.getText().trim(), test);
+				if(lengthType.equalsIgnoreCase("Standard")){
+					action.CompareResult("The Mattress Standard Length Size", beddingLength.trim(), bed_lengthMattress.getText(), test);
+					String frontLength = bed_lengthMattress.getText().trim();
+					dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+				}else {
+					action.CompareResult("The Mattress Extra Length Size",beddingLength.trim(), bed_exraLength.getText(), test);
+					String frontLength = bed_lengthMattress.getText().trim();
+					dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+				}
+			}
+    		break;
+    	case "183":
+    		action.scrollElemetnToCenterOfView(bed_type183CM, "Scroll To View The Width", test);
+			action.CompareResult("The Mattress Width Size", beddingBreadth.trim(), bed_type183CM.getText().trim(), test);
+			String frontWidth183 = bed_type183CM.getText().trim();
+			dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Width", frontWidth183, 0);
+			if(beddingType.equalsIgnoreCase("Bed Set (Mattress + Base)")){
+				action.isEnabled(bed_bedSet);
+				action.CompareResult("The Bedding Type", beddingType.trim(),bed_bedSet.getText().trim(), test);
+					if(lengthType.equalsIgnoreCase("Standard")){
+						action.CompareResult("The Bed Set Standard Length Size", beddingLength.trim(), bed_lengthMattress.getText(), test);
+						String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+					}else{
+						action.CompareResult("The Bed Set Extra Length Size",beddingLength.trim(), bed_exraLength.getText(), test);
+    					String frontLength = bed_lengthMattress.getText().trim();
+						dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+					}
+				}
+			else if(beddingType.equalsIgnoreCase("Mattress Only")){
+				action.isEnabled(bed_bedSet);
+				action.CompareResult("The Bedding Type", beddingType.trim(),bed_bedMattress.getText().trim(), test);
+				if(lengthType.equalsIgnoreCase("Standard")){
+					action.CompareResult("The Mattress Standard Length Size", beddingLength.trim(), bed_lengthMattress.getText(), test);
+					String frontLength = bed_lengthMattress.getText().trim();
+					dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+				}else {
+					action.CompareResult("The Mattress Extra Length Size",beddingLength.trim(), bed_exraLength.getText(), test);
+					String frontLength = bed_lengthMattress.getText().trim();
+					dataTable2.setValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", frontLength, 0);
+				}
+			}
+    		break;	
+
+    		}	
+    	}
+    	
+    public void rangeSearch(ExtentTest test) throws IOException, Exception {
+    	String searchTY = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "typeSearch", 0);
+    	String rangeSKU = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "specificProduct", 0);
+    	String prodName = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "ProductName", 0);
+    	loadProductListingPage(searchTY, rangeSKU, test);
+    	WebElement prod = ic_FindProduct(test, prodName);
+    	action.click(prod, "Product detail page", test);
+    	action.waitForPageLoaded(10);
+    	action.ajaxWait(20, test);
+    }
+    
+    public WebElement validateProductNotFound(ExtentTest test) throws Exception {
+    	String searchProduct = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "specificProduct", 0);
+    	String searchTY = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "typeSearch", 0);
+    	loadProductListingPage(searchTY, searchProduct, test);
+        boolean status = true;
+        while (status) {
+            List<WebElement> allProducts = products;
+            if(allProducts.size()>1) {
+            	   status = false;            	   
+                   action.CompareResult("Product Not Found", "true", "true", test);
+                   break;
+                   //action.CompareResult("Product Not Found or Out of Stock", "We're sorry, no results found", productNotFoundMessage.getText(), test);	
+            }
+            for (WebElement el : allProducts) {
+                if (el.getText().trim().toLowerCase().equalsIgnoreCase(searchProduct.trim())) {
+                    status = false;
+                    action.mouseover(el, "On Product");
+                    return el;
+                }
+            }
+            WebElement nextButton = returnNext();
+            if (nextButton != null) {
+                clickNext(test);
+                action.explicitWait(5000);
+            } else {
+                status = false;
+                //action.CompareResult("Product Not Found or Out of Stock", "true", "true", test);
+                action.CompareResult("Product Not Found or Out of Stock", "We're sorry, no results found", productNotFoundMessage.getText(), test);
+                //throw new Exception("Product Not Found or Out of Stock ");
+            }
+        }
+        return null;
+    }
+    
 
 }

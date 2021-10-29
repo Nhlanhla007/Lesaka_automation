@@ -74,7 +74,7 @@ public class Action {
         }
         return title;
     }
-
+    
     //Add method for that checks if its valid
     public void validateIfInputFieldIsEmpty(WebElement element,String name,ExtentTest test) throws Exception {    	
     	if(getAttribute(element, "value").isEmpty()) {
@@ -217,7 +217,7 @@ public class Action {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
         explicitWait(5000);
-        if (url.contains("incredibleconnection")) {                      
+        if (url.contains("incredibleconnection")) {
             boolean clearCookiesAvailability = driver.findElements(By.xpath("//*[@class=\"cookie-notice-content\"]")).size() > 0;
             if (clearCookiesAvailability) {
                 try {
@@ -1547,7 +1547,7 @@ public class Action {
             	//node.pass(name +" is Selected",MediaEntityBuilder.createScreenCaptureFromBase64String(takeScreenShotAsBase64()).build());
                 //}
 
-        }
+        }    
     
     public boolean checkboxStatus(WebElement el,String Testname, ExtentTest test) {
     	ExtentTest node = test.createNode("Checkbox status Verification" + Testname);

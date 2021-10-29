@@ -3,6 +3,9 @@ package KeywordManager;
 
 import ic_PageObjects.IC_ReturnToConfirmOrderStatus;
 import spm_PageObjects.SPM_LaunchPortal;
+import spm_MagentoPageObjects.SPM_Magento_RangeValidation;
+import spm_PageObjects.SPM_LaunchPortal;
+import spm_PageObjects.SPM_ProductSearch;
 import evs_MagentoPageObjects.*;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
 import ic_PageObjects.*;
@@ -215,7 +218,12 @@ public class JDGKeyManager {
         EVS_validateRegistrationForm evs_ValidateRegForm = new EVS_validateRegistrationForm(driver,dataTable2);
         EVS_BundleArticleCreation evs_bundleCreation = new EVS_BundleArticleCreation(driver,dataTable2);
         EVS_BundleArticleFrontEnd evs_bundleFrontEnd = new EVS_BundleArticleFrontEnd(driver, dataTable2);
+        
+        //Sleepmasters classes below
         SPM_LaunchPortal spm_launchPortal = new SPM_LaunchPortal(driver, dataTable2);
+        SPM_ProductSearch spm_productSearch = new SPM_ProductSearch(driver, dataTable2);
+        SPM_Magento_RangeValidation spm_magentoRange = new SPM_Magento_RangeValidation(driver, dataTable2);
+        
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
             rowNumber = findRowToRun(dataMap2.get(moduleToRun + "++"), occCount.get(moduleToRun), testcaseID);
@@ -871,6 +879,26 @@ public class JDGKeyManager {
             	
             case "SPM_LaunchPortal":
             	spm_launchPortal.launchPortal(test1);
+            	break;
+
+            // Sleep masters keywords below
+            case "SPM_LaunchPortal":
+            	spm_launchPortal.launchPortal(test1);
+            	break;
+            case "SPM_ProductSearch":
+            	spm_productSearch.rangeSearch(test1);
+            	break;
+            case "SPM_RangeValidation":
+            	spm_productSearch.rangeValidation(test1);
+            	break;
+            case "SPM_MagentoRangeValidation" :
+            	spm_magentoRange.validateRange(test1);
+            	break;
+            case "SPM_LoginMagento":
+            	  icMagento.Login_magento(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+            	break;
+            case "validateProductNotFound":
+            	spm_productSearch.validateProductNotFound(test1);
             	break;
 
         }

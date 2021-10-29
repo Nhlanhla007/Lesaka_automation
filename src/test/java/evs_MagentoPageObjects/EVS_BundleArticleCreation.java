@@ -180,7 +180,7 @@ public class EVS_BundleArticleCreation {
 	
 	public void NavigateToBundle(ExtentTest test) throws Exception {
 		action.click(bun_catalog, "Click To Catalog", test);
-		action.click(bun_product, "Click To Products", test);
+		action.javaScriptClick(bun_product, "Click To Products", test);
 		action.click(bun_dropDown, "Click The Dropdown", test);
 		action.click(bun_bundleProduct, "Select Bundle Product", test);
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
