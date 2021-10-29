@@ -648,6 +648,9 @@ public class SPM_ProductSearch {
     	String beddingLength = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "Length", 0);
     	
     	action.CompareResult("The Product Name Is Visible", prodName.trim(), bed_prodName.getText().trim(), test);
+    	
+    	action.waitForElementClickable(bed_bedSet, "Bed Icon", 10);
+
     		
     switch(beddingWidth){
     	case "92":
