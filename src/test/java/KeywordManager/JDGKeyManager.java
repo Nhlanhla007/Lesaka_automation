@@ -875,11 +875,6 @@ public class JDGKeyManager {
             case"evs_removeAddress":
             	evs_NewAccountCreation.removeAddressEVS(test1);
             	break;
-            // Sleep masters keywords below
-            	
-            case "SPM_LaunchPortal":
-            	spm_launchPortal.launchPortal(test1);
-            	break;
 
             // Sleep masters keywords below
             case "SPM_LaunchPortal":
