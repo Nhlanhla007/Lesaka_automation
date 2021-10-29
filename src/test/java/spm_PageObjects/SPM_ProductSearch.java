@@ -168,6 +168,9 @@ public class SPM_ProductSearch {
     
     @FindBy(xpath = "//div[@class='product-info-price']//span[@class='price']")
     WebElement bed_price ;
+    
+    @FindBy(xpath = "//*[contains(text(),\"We're sorry, no results found\")]")
+    WebElement productNotFoundMessage;
 
     public void clickNext(ExtentTest test) throws Exception {
         action.mouseover(clickNext, "scroll to element");
@@ -819,9 +822,42 @@ public class SPM_ProductSearch {
     	WebElement prod = ic_FindProduct(test, prodName);
     	action.click(prod, "Product detail page", test);
     	action.waitForPageLoaded(10);
+    	action.ajaxWait(20, test);
     }
     
-    
+    public WebElement validateProductNotFound(ExtentTest test) throws Exception {
+    	String searchProduct = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "specificProduct", 0);
+    	String searchTY = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "typeSearch", 0);
+    	loadProductListingPage(searchTY, searchProduct, test);
+        boolean status = true;
+        while (status) {
+            List<WebElement> allProducts = products;
+            if(allProducts.size()>1) {
+            	   status = false;            	   
+                   action.CompareResult("Product Not Found", "true", "true", test);
+                   break;
+                   //action.CompareResult("Product Not Found or Out of Stock", "We're sorry, no results found", productNotFoundMessage.getText(), test);	
+            }
+            for (WebElement el : allProducts) {
+                if (el.getText().trim().toLowerCase().equalsIgnoreCase(searchProduct.trim())) {
+                    status = false;
+                    action.mouseover(el, "On Product");
+                    return el;
+                }
+            }
+            WebElement nextButton = returnNext();
+            if (nextButton != null) {
+                clickNext(test);
+                action.explicitWait(5000);
+            } else {
+                status = false;
+                //action.CompareResult("Product Not Found or Out of Stock", "true", "true", test);
+                action.CompareResult("Product Not Found or Out of Stock", "We're sorry, no results found", productNotFoundMessage.getText(), test);
+                //throw new Exception("Product Not Found or Out of Stock ");
+            }
+        }
+        return null;
+    }
     
 
 }

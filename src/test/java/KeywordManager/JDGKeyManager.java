@@ -891,7 +891,9 @@ public class JDGKeyManager {
             case "SPM_LoginMagento":
             	  icMagento.Login_magento(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
             	break;
-            	
+            case "validateProductNotFound":
+            	spm_productSearch.validateProductNotFound(test1);
+            	break;
 
         }
     }

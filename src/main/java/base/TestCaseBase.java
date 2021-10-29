@@ -157,7 +157,7 @@ public class TestCaseBase {
 		options.setPageLoadStrategy(PageLoadStrategy.NORMAL);*/
 
 		options.addArguments("--disable-features=VizDisplayCompositor");
-		options.setHeadless(false);
+		options.setHeadless(true);
 		options.addArguments("window-size=1382,744");
 
 		options.merge(capabilities);
