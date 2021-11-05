@@ -2,6 +2,7 @@ package KeywordManager;
 
 
 import ic_PageObjects.IC_ReturnToConfirmOrderStatus;
+import spm_PageObjects.SPM_ArticleRangeValidation;
 import spm_PageObjects.SPM_LaunchPortal;
 import spm_MagentoPageObjects.SPM_Magento_RangeValidation;
 import spm_PageObjects.SPM_LaunchPortal;
@@ -218,6 +219,7 @@ public class JDGKeyManager {
         EVS_validateRegistrationForm evs_ValidateRegForm = new EVS_validateRegistrationForm(driver,dataTable2);
         EVS_BundleArticleCreation evs_bundleCreation = new EVS_BundleArticleCreation(driver,dataTable2);
         EVS_BundleArticleFrontEnd evs_bundleFrontEnd = new EVS_BundleArticleFrontEnd(driver, dataTable2);
+        SPM_ArticleRangeValidation articleValidation = new SPM_ArticleRangeValidation(driver, dataTable2);
         
         //Sleepmasters classes below
         SPM_LaunchPortal spm_launchPortal = new SPM_LaunchPortal(driver, dataTable2);
@@ -884,16 +886,19 @@ public class JDGKeyManager {
             	spm_productSearch.rangeSearch(test1);
             	break;
             case "SPM_RangeValidation":
-            	spm_productSearch.rangeValidation(test1);
+            	//spm_productSearch.rangeValidation(test1);
             	break;
             case "SPM_MagentoRangeValidation" :
-            	spm_magentoRange.validateRange(test1);
+            	//spm_magentoRange.validateRange(test1);
             	break;
             case "SPM_LoginMagento":
             	  icMagento.Login_magento(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
             	break;
             case "validateProductNotFound":
             	spm_productSearch.validateProductNotFound(test1);
+            	break;
+            case "SPM_ArticleRanges":
+            	articleValidation.rangeValidation(test1);
             	break;
 
         }

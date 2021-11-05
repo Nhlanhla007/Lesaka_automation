@@ -20,7 +20,7 @@ public class SPM_Magento_RangeValidation {
 	Action action;
 	DataTable2 dataTable2;
 	MagentoOrderStatusPage validateRows;
-	int ajaxTimeOutInSeconds = ic_Magento_Login.ajaxTimeOutInSeconds;
+	//int timeOutInSeconds = ic_Magento_Login.timeOutInSeconds;
 	
 	@FindBy(name = "product[sku]")
 	WebElement productSKU;
@@ -66,16 +66,16 @@ public class SPM_Magento_RangeValidation {
 		validateRows = new MagentoOrderStatusPage(driver, dataTable2);
 	}
 
-	public void validateRange(ExtentTest test) throws Exception {					
+	public void validateRange(ExtentTest test,String exp_articleSKU,String exp_articleName) throws Exception {					
 		String frontEndWidth = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Width", 0);
 		String frontEndLength = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "FrontEnd_Length", 0);
-		String exp_articleName = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "ProductName", 0);
-		String exp_articleSKU = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "specificProduct", 0);
+		//String exp_articleName = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "ProductName", 0);
+		//String exp_articleSKU = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "specificProduct", 0);
 		String bedType = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "Bedding_Type", 0);
 		//String price = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "Price", 0);
 		navigateToProductSearch(test);
 		searchForOrder(exp_articleSKU, test);
-		validateRows.viewOrderDetails(test);
+		validateRows.viewRangeArticleOrderDetails(test);
     	//validate the name
 		action.CompareResult("Article Name", exp_articleName.trim(), action.getAttribute(productName, "value").trim(), test);
     	//validate the length		
@@ -99,17 +99,19 @@ public class SPM_Magento_RangeValidation {
 	}
 	
 	 public void searchForOrder(String idToSearch, ExtentTest test) throws Exception {
-	        action.waitForPageLoaded(ajaxTimeOutInSeconds);
-	        action.ajaxWait(ajaxTimeOutInSeconds, test);
+		 	String timeOut = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "TimeOutInSeconds", 0);
+		 	Integer timeOutInSeconds = Integer.parseInt(timeOut);
+	        action.waitForPageLoaded(timeOutInSeconds);
+	        action.ajaxWait(timeOutInSeconds, test);
 	        if (action.waitUntilElementIsDisplayed(clearFilters, 10)) {
 	            action.javaScriptClick(clearFilters, "Cleared Filters", test);
-	            action.ajaxWait(ajaxTimeOutInSeconds, test);
+	            action.ajaxWait(timeOutInSeconds, test);
 	        }
 	        action.javaScriptClick(magentoFilterTab, "Filter tab", test);
 	        action.writeText(magentoIdSearchField, idToSearch, "searchId", test);
 	        action.explicitWait(3000);
 	        action.click(magentoApplyFilterTab, "Apply to filters", test);
-	        action.ajaxWait(ajaxTimeOutInSeconds, test);
+	        action.ajaxWait(timeOutInSeconds, test);
 	        action.explicitWait(5000);	        
 	    }
 	

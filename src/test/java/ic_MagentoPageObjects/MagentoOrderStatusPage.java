@@ -133,6 +133,32 @@ public class MagentoOrderStatusPage {
             //action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
         }
     }
+    
+    public void viewRangeArticleOrderDetails(ExtentTest test) throws Exception {
+    	String timeOut = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "TimeOutInSeconds", 0);
+	 	Integer timeOutInSeconds = Integer.parseInt(timeOut);
+        boolean ajaxLoadCompleted = action.ajaxWait(timeOutInSeconds, test);
+        if (magentoTableRecords.size() >= 1) {
+            if (!ajaxLoadCompleted) {
+                driver.navigate().refresh();
+                action.waitForPageLoaded(ajaxTimeOutInSeconds);
+                action.ajaxWait(ajaxTimeOutInSeconds, test);
+                ExtentTest node = test.createNode("Reloading the Search Page");
+                node.info("Page Reload Completed", MediaEntityBuilder.createScreenCaptureFromBase64String(action.takeScreenShotAsBase64()).build());
+                action.javaScriptClick(viewOrderDetails, "Filtered order", test);
+            } else {
+                action.javaScriptClick(viewOrderDetails, "Filtered order", test);
+            }
+            action.waitForPageLoaded(timeOutInSeconds);
+            action.ajaxWait(20, test);
+            //action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
+        } else {
+            //action.checkIfPageIsLoadedByURL("sales/order/view/order_id/", "View Details Page", test);
+        }
+    }
+
+    
+    
 	
     public void orderStatusCheck(String orderStatus, ExtentTest test) throws Exception {
         action.explicitWait(10000);

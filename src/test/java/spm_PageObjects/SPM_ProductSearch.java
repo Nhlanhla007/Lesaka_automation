@@ -22,6 +22,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 
 import Logger.Log;
 import utils.Action;
@@ -593,7 +594,7 @@ public class SPM_ProductSearch {
                                             addToCartFromProdDetailsPage(prod, waitTimeInSeconds, quantityExecu, test);
                                             break;
                                         case "Validate_Range":
-                                        	rangeValidation(test);
+                                        	rangeValidation(test,"");
                                             break;
                                     }
                                 }
@@ -639,15 +640,15 @@ public class SPM_ProductSearch {
         return "NA";
     }
     
-    public void rangeValidation(ExtentTest test) throws IOException {
-    	String prodName = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "ProductName", 0);
+    public void rangeValidation(ExtentTest test,String productName) throws IOException {
+    	//String prodName = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "ProductName", 0);
     	String lengthType = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "Length_Type", 0);
     	String beddingType = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "Bedding_Type", 0);
     	String beddingWidth = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "Width", 0);
     	String beddingBreadth = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "breadthFront", 0);
     	String beddingLength = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "Length", 0);
     	
-    	action.CompareResult("The Product Name Is Visible", prodName.trim(), bed_prodName.getText().trim(), test);
+    	action.CompareResult("The Product Name Is Visible", productName.trim(), bed_prodName.getText().trim(), test);
     	
     	action.waitForElementClickable(bed_bedSet, "Bed Icon", 10);
 
@@ -828,39 +829,42 @@ public class SPM_ProductSearch {
     	action.ajaxWait(20, test);
     }
     
-    public WebElement validateProductNotFound(ExtentTest test) throws Exception {
-    	String searchProduct = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "specificProduct", 0);
+    public void rangeSearchNew(ExtentTest test,String productName,String prodSKU) throws IOException, Exception {
     	String searchTY = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "typeSearch", 0);
-    	loadProductListingPage(searchTY, searchProduct, test);
-        boolean status = true;
-        while (status) {
-            List<WebElement> allProducts = products;
-            if(allProducts.size()>1) {
-            	   status = false;            	   
-                   action.CompareResult("Product Not Found", "true", "true", test);
-                   break;
-                   //action.CompareResult("Product Not Found or Out of Stock", "We're sorry, no results found", productNotFoundMessage.getText(), test);	
-            }
-            for (WebElement el : allProducts) {
-                if (el.getText().trim().toLowerCase().equalsIgnoreCase(searchProduct.trim())) {
-                    status = false;
-                    action.mouseover(el, "On Product");
-                    return el;
-                }
-            }
-            WebElement nextButton = returnNext();
-            if (nextButton != null) {
-                clickNext(test);
-                action.explicitWait(5000);
-            } else {
-                status = false;
-                //action.CompareResult("Product Not Found or Out of Stock", "true", "true", test);
-                action.CompareResult("Product Not Found or Out of Stock", "We're sorry, no results found", productNotFoundMessage.getText(), test);
-                //throw new Exception("Product Not Found or Out of Stock ");
-            }
-        }
-        return null;
+    	//String rangeSKU = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "specificProduct", 0);
+    	//String prodName = dataTable2.getValueOnOtherModule("SPM_ArticleRanges", "ProductName", 0);
+    	loadProductListingPage(searchTY, prodSKU, test);
+    	WebElement prod = ic_FindProduct(test, productName);
+    	action.click(prod, "Product detail page", test);
+    	action.waitForPageLoaded(10);
+    	action.ajaxWait(20, test);
     }
     
+    public void validateProductNotFound(ExtentTest test) throws Exception {
+    //	String searchProduct = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "specificProduct", 0);
+    	String searchTY = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "typeSearch", 0);
+    	String sku = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "specificProduct", 0);
+    	List<String> allSKU =  filterProducts(sku);
+    	ExtentTest ab = null;
+    	action.navigateToURL("https://staging-sleepmasters-m23.vaimo.net/");
+    	for(int i = 0; i<allSKU.size() ; i++) {
+    		try {
+    		ab = test.createNode("Article " + allSKU.get(i));
+    		loadProductListingPage(searchTY, allSKU.get(i), ab);
+            List<WebElement> allProducts = products;
+            if(allProducts.size()>1) {
+                   action.CompareResult("Product Not Found", "true", "true", ab);
+            }else if(allProducts.size()==1) {
+            	throw new Exception("Product has been found");
+            }else {
+            	action.CompareResult("Product Not Found or Out of Stock", "We're sorry, no results found",productNotFoundMessage.getText(), ab);
+            }
+    		}catch(Exception e) {
+    			//Print error in report and continue;
+    			ab.createNode("Exception").fail(e.getMessage(),MediaEntityBuilder.createScreenCaptureFromBase64String(action.takeScreenShotAsBase64()).build());
+    			continue;
+    		}
+	}
+}
 
 }
