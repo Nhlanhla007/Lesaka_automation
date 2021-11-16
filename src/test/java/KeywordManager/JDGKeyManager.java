@@ -868,6 +868,18 @@ public class JDGKeyManager {
             case "evs_BundlePDL":
             	evs_bundleFrontEnd.navToProdDetailPage(test1);
             	break;
+            case "evs_BundleOutOfStock":
+            	evs_bundleFrontEnd.OutOfStockBundleProduct(test1);
+            	break;
+            case "evs_BundleProductStatus":
+            	evs_bundleCreation.validateProductStatus(test1);
+            	break;	
+            case "evs_ValidateBundleItemsPresent":
+            	evs_bundleFrontEnd.validateBundleItems(test1);
+            	break;
+            case "evs_BundleDeletion":
+            	evs_bundleCreation.bundleDeletion(test1);
+            	break;
             case "evs_searchBundleArticle":
             	evs_bundleFrontEnd.searchBundleProduct(test1);
             	break;
@@ -876,6 +888,24 @@ public class JDGKeyManager {
             	break;
             case"evs_removeAddress":
             	evs_NewAccountCreation.removeAddressEVS(test1);
+            	break;
+            case "evs_searchBundleProduct":
+            	evs_bundleFrontEnd.searchForBundleArticleUsingSKU(test1);
+            	break;
+            case "evs_bundleProduct_magento_search":
+            	evs_bundleCreation.searchForArticleUsingSKU(test1);
+            	break;
+            case "evs_IncreaseProductQuantity":
+            	evs_bundleCreation.increaseQuantity(test1);
+            	break;
+            case "evs_findPriceForIncreaseQuantityItem":
+            	evs_bundleCreation.findPriceIncreasedProd(test1);
+            	break;
+            case "validateUpdatedPrices":
+            	evs_bundleFrontEnd.searchForBundleArticleSKUValidateUpdates(test1);
+            	break;
+            case "decreaseQuantityOfBundleItem":
+            	evs_bundleCreation.decreaseQtyOfBundleItemInMagento(test1);
             	break;
 
             // Sleep masters keywords below

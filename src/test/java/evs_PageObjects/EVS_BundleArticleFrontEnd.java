@@ -1,5 +1,7 @@
 package evs_PageObjects;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -39,6 +41,17 @@ public class EVS_BundleArticleFrontEnd {
     @FindBy(xpath = "//link[@rel='canonical']")
     WebElement fro_BundleURLkey;
     
+    @FindBy(xpath = "//span[normalize-space()='Out of stock']")
+    WebElement productOfStockErrorMessage;
+    
+    @FindBy(xpath = "//span[normalize-space()='In stock']")
+    WebElement productOfStockMessage;
+
+    @FindBy(xpath = "//*[@class=\"product-item-save-badge\"]//*[@class=\"price\"]")
+    WebElement savePrice;
+    
+    @FindBy(xpath = "//*[@data-price-type = \"finalPrice\"]/span")
+    WebElement productFinalPrice;
     
 	
     public void navToProdDetailPage(ExtentTest test) throws Exception {
@@ -76,6 +89,29 @@ public class EVS_BundleArticleFrontEnd {
 		
     }
     
+    public void validateBundleItems(ExtentTest test) throws Exception{
+    	if (action.elementExistWelcome(productOfStockMessage, 20, "Product In Stock Message Appears ", test)) {
+    		//action.CompareResult("Product Out Of Stock", productPrice, productPrice, test);
+            action.CompareResult("The Product Bundle", "In stock", driver.findElement(By.xpath("//span[normalize-space()='In stock']")).getText(), test);
+        } else {
+            throw new Exception("Product In Stock message Is Not Displayed");
+        }
+    	
+    	//click the dropdown
+    	//validate the two items are present
+    	
+    }
+   
+    public void OutOfStockBundleProduct(ExtentTest test) throws Exception {
+    	if (action.elementExistWelcome(productOfStockErrorMessage, 20, "Out Of Stock Pop Up", test)) {
+    		//action.CompareResult("Product Out Of Stock", productPrice, productPrice, test);
+            action.CompareResult("Product Out Of Stock", "Out of stock", driver.findElement(By.xpath("//span[normalize-space()='Out of stock']")).getText(), test);
+        } else {
+            throw new Exception("Out Of Stock Pop Up Is Not Displayed");
+        }
+    }
+    
+   
     public void searchBundleProduct(ExtentTest test) throws Exception {
     	String bundleName = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Bundle_Article_Name", 0).trim();
     	String akeneoID = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Akeneo_ID", 0);
@@ -95,6 +131,38 @@ public class EVS_BundleArticleFrontEnd {
     	}else {
     		throw new Exception("Product could not be found");
     	}
+    
+    }
+    
+    public void searchForBundleArticleUsingSKU(ExtentTest test) throws Exception {
+    	String searchType = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "SearchType", 0);
+    	String productSKU = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "ProductSKU", 0);
+    	search.searchForProductUsingSKU(searchType, productSKU, test);
+    	if(action.waitUntilElementIsDisplayed(savePrice, 20)) {
+    	dataTable2.setValueOnOtherModule("evs_BundleIncreaseQty", "Initial_Save_Price", savePrice.getText().replace("R", "").replace(",", ""), 0);
+    	}else {
+    		dataTable2.setValueOnOtherModule("evs_BundleIncreaseQty", "Initial_Save_Price", "0.00", 0);
+    	}
+    	dataTable2.setValueOnOtherModule("evs_BundleIncreaseQty", "Initial_Product_Price", productFinalPrice.getText().replace("R", "").replace(",", ""), 0);
+    	action.explicitWait(5000);
+    }        
+    
+    public void searchForBundleArticleSKUValidateUpdates(ExtentTest test) throws Exception {
+    	String searchType = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "SearchType", 0);
+    	String productSKU = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "ProductSKU", 0);
+    	search.searchForProductUsingSKU(searchType, productSKU, test);
+    	
+    	//Compare the necessary
+    	//Compare the SAVE
+    	if(action.waitUntilElementIsDisplayed(savePrice, 20)) {
+    	String newSavePrice=savePrice.getText().replace("R", "").replace(",", "");    	
+    	String calculatedSavePrice = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "Change_Save_Price", 0);
+    	action.CompareResult("Updated SAVE price", calculatedSavePrice, newSavePrice, test);
+    	}
+    	//Compare Orginal Pricing
+    	String newTotalPrice = productFinalPrice.getText().replace("R", "").replace(",", "");
+    	String calculatedTotal = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "Change_Price", 0);
+    	action.CompareResult("Updated New TOTAL", calculatedTotal, newTotalPrice, test);
     }
     
 }

@@ -598,5 +598,22 @@ public class EVS_ProductSearch {
         }
         return "NA";
     }
+    
+    void searchForProductUsingSKU(String searchType,String productToSearch,ExtentTest test) throws Exception{
+    	loadProductListingPage(searchType, productToSearch, test);
+    	action.waitForPageLoaded(10);
+    	action.ajaxWait(20, test);
+        //action.explicitWait(5000);
+        boolean productExistence = driver.findElements(By.xpath("//*[@class=\"message info empty\"]")).size()>0;
+        boolean isProductAvail = driver.findElements(By.xpath("//*[@class=\"product-item-link\"]")).size()>0;
+        if(!productExistence & isProductAvail) {
+        	action.mouseover(products.get(0), "Product");
+        	action.javaScriptClick(products.get(0), "Navigate to Product Description Page", test);
+        	action.waitForPageLoaded(20);
+        	action.ajaxWait(20, test);
+        }else {
+            throw new Exception("Product Does Not Exist");
+        }
+    }
 
 }

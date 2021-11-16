@@ -130,6 +130,8 @@ public class EVS_BundleArticleCreation {
     @FindBy(xpath="(//*[contains(text(),'Everyshop')]")
     private WebElement bun_cateEveryshop;
     
+    @FindBy(xpath = "//*[contains(text(),'Bundle Items')]//parent::strong")
+    private WebElement bundleTabItem;
     
     //Add product To Bundle and Add SAP data detail locators
     @FindBy(xpath = "//*[@class=\"admin__collapsible-title\"]//span[contains(text(),'Bundle Items')]")
@@ -174,19 +176,116 @@ public class EVS_BundleArticleCreation {
     @FindBy(name ="use_default[rough_stock_indicator]")
     WebElement roughStockIndicatorCheckBox;
     
+    @FindBy(xpath = "//span[normalize-space()='Apply Filters']")
+    WebElement bun_applyFilter;
+    
+    @FindBy(xpath = "//label[@class='data-grid-checkbox-cell-inner']//input[@class='admin__control-checkbox']")
+    WebElement bun_checkBox;
+    
+    @FindBy(xpath = "(//div[@class='action-select-wrap'])[1]")
+    WebElement bun_ActionDropDown;
+    
+    @FindBy(xpath = "(//span[@class='action-menu-item'][normalize-space()='Delete'])[1]")
+    WebElement bun_ActionDelete;
+    
+    @FindBy(xpath = "//aside[contains(@class,'_show')]//div[contains(@class,'modal-inner-wrap')]")
+    WebElement bun_DeleteItems;
+    
+    @FindBy(xpath = "//button[contains(@class,'action-primary action-accept')]")
+    WebElement bun_modalOK;
+   
+    @FindBy(xpath = "//div[@data-ui-id='messages-message-success']")
+    WebElement bun_messageSuccess;
+    
+    @FindBy(xpath = "//table[@data-role='grid']/tbody/tr[1]/td[12]/div")
+    WebElement bun_statusProduct;
+    
+    @FindBy(xpath = "//table[@data-role='grid']/tbody/tr[1]/td[4]/div")
+    WebElement bun_proName;
+    
+    @FindBy(className = "data-row")
+    public List<WebElement> magentoTableRecords;
+
+    @FindBy(xpath = "//*[@class=\"data-row\"]")
+    WebElement productsReturned;
+    
+    @FindBy(name = "product[price]")
+    WebElement productPrice;
+    
+    @FindBy(xpath = "//*[contains(text(),'Advanced Pricing')]/parent::button")
+    WebElement advancedPricing;
+    
+    @FindBy(name = "product[special_price]")
+    WebElement specialProductPrice;
+    
+    @FindBy(xpath = "//*[contains(text(),'Advanced Pricing')]//parent::header//*[contains(text(),'Done')]")
+    private WebElement advancedInventoryDone;
+    
 	public void test() {}
 	
 	public static int totalBundlePrice; 
 	
 	public void NavigateToBundle(ExtentTest test) throws Exception {
-		action.click(bun_catalog, "Click To Catalog", test);
-		action.javaScriptClick(bun_product, "Click To Products", test);
+		navigateToProductsPage(test);
 		action.click(bun_dropDown, "Click The Dropdown", test);
 		action.click(bun_bundleProduct, "Select Bundle Product", test);
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
     }
 	
+	 void filterProducts(String skuToSearch,ExtentTest test) throws Exception {
+			if(action.waitUntilElementIsDisplayed(clearAll, 8000)) {
+				action.javaScriptClick(clearAll, "Clear All Filter", test);
+				action.ajaxWait(ajaxTimeOutInSeconds, test);
+				action.explicitWait(5000);
+			}		 
+			action.click(filter, "Filter", test);
+			action.writeText(skuField, skuToSearch , "SKU value", test);
+			action.click(applyFilter, "Apply Filters", test);
+			
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
+			action.explicitWait(5000);
+		}
+	 
+	 void navigateToProductsPage(ExtentTest test) throws Exception {
+			action.click(bun_catalog, "Click To Catalog", test);
+			action.javaScriptClick(bun_product, "Click To Products", test);
+			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
+		}
+
+	 public void validateProductStatus(ExtentTest test) throws Exception{
+		 String disabledSKU = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Product_SKU(S)", 0);
+		 String[] firstdisabledSKU = disabledSKU.split("#",2);
+		 navigateToProductsPage(test);
+		 for(String proSKU :firstdisabledSKU) {
+		 filterProducts(proSKU, test);
+		 if(magentoTableRecords.size() >= 1) {
+			 action.waitForPageLoaded(ajaxTimeOutInSeconds);
+             action.ajaxWait(ajaxTimeOutInSeconds, test);
+             if(bun_proName.getText().equalsIgnoreCase("Seagate 2.5-inch 2TB USB 3.0 Harddrive STBX2000401")) {
+             action.CompareResult("The Status",bun_statusProduct.getText() , "Disabled", test);
+		 }else {
+			 action.CompareResult("The Status",bun_statusProduct.getText() , "Enabled", test);
+		  }
+		 }
+		 }
+		}
+	 
+	 public void bundleDeletion(ExtentTest test) throws Exception {
+			String akeneoID = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Akeneo_ID", 0);
+			navigateToProductsPage(test);
+			filterProducts(akeneoID, test);
+			action.click(bun_checkBox, "select check box", test);
+		    action.click(bun_ActionDropDown, "Drop down", test);
+		    action.javaScriptClick(bun_ActionDelete, "Select Delete", test);
+		    
+		    if(action.isDisplayed(bun_DeleteItems)) {
+		    	action.javaScriptClick(bun_modalOK, "Click OK", test);
+		    	action.CompareResult("The record has been deleted", bun_messageSuccess.getText(), "A total of 1 record(s) have been deleted.", test);
+		       }
+		    }
+	 
 	public void SetBasicBundleProductDetails_1(ExtentTest test) throws Exception {
 		String attriSet = dataTable2.getValueOnOtherModule("evs_BundleCreation","Attribut_Set" ,0);
 		String bundleName = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Bundle_Article_Name", 0);
@@ -281,6 +380,8 @@ public class EVS_BundleArticleCreation {
 		AdvanceInventoryBundle(test);
 		categoryName(test);
 		action.click(bun_Save, "Click Save", test);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
 		String successMessa = "You saved the product.";
 		action.CompareResult("Saved successfully", successMessa, bun_successMessage.getText(), test);
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
@@ -328,7 +429,7 @@ public class EVS_BundleArticleCreation {
 		action.click(bun_searchEngine, "Scroll to Search engine", test);
 		action.scrollElemetnToCenterOfView(bun_productURL, "Scroll to Product Key URL", test);
 		String urlKeyName = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Bundle_Article_Name", 0);
-		String URL_Key =urlKeyName.toLowerCase().replace(" ", "-").replace("+-", "");
+		String URL_Key =urlKeyName.toLowerCase().replace(" ", "-").replace("+-", "").replace(".", "-");
 		dataTable2.setValueOnOtherModule("evs_BundleCreation", "Product_URL", URL_Key, 0);
 	}
 
@@ -406,8 +507,7 @@ public class EVS_BundleArticleCreation {
 		action.writeText(skuField, productSKU , "SKU value", test);
 		action.click(applyFilter, "Apply Filters", test);
 		
-		action.ajaxWait(ajaxTimeOutInSeconds, test);
-		action.explicitWait(5000);
+		filterProducts(productSKU, test);
 		
 		if(action.waitUntilElementIsDisplayed(addProductCheckbox, 10000)) {
 			action.selectCheckBox(addProductCheckbox, "Add Product To Bundle Checkbox", test);
@@ -432,10 +532,12 @@ public class EVS_BundleArticleCreation {
 		
 	}
 	
+	
 	public void sapData(ExtentTest test) throws Exception{
 		String siteSpecifcStatus = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Site_Article_Status", 0);
 		String roughStockIndicatorValue = dataTable2.getValueOnOtherModule("evs_BundleCreation", "RSI_Value", 0);
-		
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.scrollElemetnToCenterOfView(sapDataMenuItem, "SAP Menu Item", test);		
 		action.click(sapDataMenuItem, "SAP DATA", test);
 		action.scrollElemetnToCenterOfView(siteSpecificAtricleStatus, "Site Specific Article Status", test);
@@ -467,4 +569,150 @@ public class EVS_BundleArticleCreation {
 		action.elementExistWelcome(bun_successMessage, ajaxTimeOutInSeconds, "Save pop up success", test);
 	}
 	
+	void navigateToProductsPage(ExtentTest test) throws Exception {
+		action.click(bun_catalog, "Click To Catalog", test);
+		action.javaScriptClick(bun_product, "Click To Products", test);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+	}
+	
+	void filterProducts(String skuToSearch,ExtentTest test) throws Exception {
+		if(action.waitUntilElementIsDisplayed(clearAll, 8000)) {
+			action.javaScriptClick(clearAll, "Clear All Filter", test);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
+			action.explicitWait(5000);
+		}		 
+		action.click(filter, "Filter", test);
+		action.writeText(skuField, skuToSearch , "SKU value", test);
+		action.click(applyFilter, "Apply Filters", test);
+		
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.explicitWait(5000);
+	}
+	
+	public void searchForArticleUsingSKU(ExtentTest test) throws Exception {
+		String searchSKU = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "ProductSKU", 0);
+		navigateToProductsPage(test);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		//action.explicitWait(10000);
+		filterProducts(searchSKU, test);
+		boolean isProductsRetruned = driver.findElements(By.xpath("//*[@class=\"data-row\"]")).size()>0;
+		if(isProductsRetruned) {
+			action.click(productsReturned, "Navigate to Product Details", test);
+			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
+		}else {
+			throw new Exception("No Records Returned");
+		}
+	}
+	
+	public void increaseQuantity(ExtentTest test) throws Exception {
+		String bundleProductSKU = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "BundleItemSKU", 0);
+		String newQuantity = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "Quantity", 0);
+		action.scrollElemetnToCenterOfView(bundleTabItem, "Bundle Items", test);
+		boolean bundleSKUExistence = driver.findElements(By.xpath("//*[contains(text(),'"+bundleProductSKU+"')]")).size() > 0;
+		if(bundleSKUExistence) {
+		WebElement theArticleToIncrease = driver.findElement(By.xpath("//*[contains(text(),'"+bundleProductSKU+"')]"));
+		WebElement defaultQuantity = theArticleToIncrease.findElement(By.xpath(".//parent::*//parent::*//parent::*//parent::*/following-sibling::td//*[contains(text(),'Default Quantity')]/parent::*//parent::*/following-sibling::div/input"));
+		int quantityDiff = Integer.parseInt(newQuantity) - Integer.parseInt(action.getAttribute(defaultQuantity, "value"));
+		defaultQuantity.clear();
+		action.writeText(defaultQuantity, newQuantity, "New Quantity value of: " +newQuantity, test);
+		dataTable2.setValueOnOtherModule("evs_BundleIncreaseQty", "Quantity", String.valueOf(quantityDiff), 0);
+		action.click(bun_Save, "Save", test);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);		
+		action.elementExistWelcome(bun_successMessage, ajaxTimeOutInSeconds, "Save pop up success", test);
+		}
+	}
+	
+	public void findPriceIncreasedProd(ExtentTest test) throws Exception{
+		String bundleProductSKU = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "BundleItemSKU", 0);
+		String totalPrice = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "Initial_Product_Price", 0);
+		String totalSavePrice = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "Initial_Save_Price", 0);		
+		String newQty = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "Quantity", 0);
+		String priceSaveIncrease;
+		//String priceIncrease;
+		
+		navigateToProductsPage(test);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		filterProducts(bundleProductSKU, test);
+		boolean isProductsRetruned = driver.findElements(By.xpath("//*[@class=\"data-row\"]")).size()>0;
+		if(isProductsRetruned) {
+			action.click(productsReturned, "Navigate to Product Details", test);
+			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);			
+		}else {
+			throw new Exception("No Records Returned");
+		}
+		action.scrollElemetnToCenterOfView(productPrice, "Product Price", test);
+		String originalPrice = action.getAttribute(productPrice, "value").replace(",", "");
+		action.click(advancedPricing, "Advanced Pricing", test);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.explicitWait(2000);
+		String specialPrice = action.getAttribute(specialProductPrice, "value").replace(",", "");
+		int increasedQty = Integer.parseInt(newQty);
+		double initialTotalPrice = Double.parseDouble(totalPrice);
+		if(!specialPrice.isEmpty() & specialPrice != "") {
+			//Do calculations on the difference between the original and the special price, mulitply the difference by the quantity
+			double increasedSaveValue = Double.parseDouble(originalPrice) - Double.parseDouble(specialPrice);
+			increasedSaveValue *= increasedQty;
+			//System.out.println(increasedSaveValue);
+			priceSaveIncrease = String.valueOf(increasedSaveValue+Double.parseDouble(totalSavePrice));//priceSaveIncrease = String.valueOf(increasedSaveValue);
+			//System.out.println(priceSaveIncrease);
+			dataTable2.setValueOnOtherModule("evs_BundleIncreaseQty", "Change_Save_Price", priceSaveIncrease, 0);
+			
+			//Do calculations the special price, mulitply the special price by the quantity
+			double specialP = increasedQty * Double.parseDouble(specialPrice);
+			specialP = specialP + initialTotalPrice;
+			//System.out.println(specialP);
+			dataTable2.setValueOnOtherModule("evs_BundleIncreaseQty", "Change_Price", String.valueOf(specialP), 0);
+			action.click(advancedInventoryDone, "Done", test);
+		}else {
+			//Means the SAVE should remain the same but the price only should increase
+			double originalP = increasedQty * Double.parseDouble(originalPrice);
+			originalP = originalP + initialTotalPrice;
+			//System.out.println(originalP);
+			dataTable2.setValueOnOtherModule("evs_BundleIncreaseQty", "Change_Price", String.valueOf(originalP), 0);
+			action.click(advancedInventoryDone, "Done", test);
+		}
+		
+	}
+	
+	public void decreaseQtyOfBundleItemInMagento(ExtentTest test) throws Exception {
+		action.navigateToURL("https://staging-everyshop.vaimo.net/BBy5QaJe4RwAK6Jm/admin/index/index/key/f3d7f946b60b4ac6741ef3637edb2f3dcdda0e51644a63856a555213d082efab/");
+		String bundleProductSKU = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "BundleItemSKU", 0);
+		String searchSKU = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "ProductSKU", 0);
+		navigateToProductsPage(test);
+		action.waitForPageLoaded(ajaxTimeOutInSeconds);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		action.ajaxWait(ajaxTimeOutInSeconds, test);
+		filterProducts(searchSKU, test);
+		boolean isProductsRetruned = driver.findElements(By.xpath("//*[@class=\"data-row\"]")).size()>0;
+		if(isProductsRetruned) {
+			action.click(productsReturned, "Navigate to Product Details", test);
+			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
+			}else {
+				throw new Exception("No records returned");
+			}	
+		action.scrollElemetnToCenterOfView(bundleTabItem, "Bundle Items", test);
+		boolean bundleSKUExistence = driver.findElements(By.xpath("//*[contains(text(),'"+bundleProductSKU+"')]")).size() > 0;
+		if(bundleSKUExistence) {
+			WebElement theArticleToIncrease = driver.findElement(By.xpath("//*[contains(text(),'"+bundleProductSKU+"')]"));
+			WebElement defaultQuantity = theArticleToIncrease.findElement(By.xpath(".//parent::*//parent::*//parent::*//parent::*/following-sibling::td//*[contains(text(),'Default Quantity')]/parent::*//parent::*/following-sibling::div/input"));
+			action.clear(defaultQuantity, "Default Quantity");
+			action.writeText(defaultQuantity, "1", "Change Default Quantity", test);
+			action.click(bun_Save, "Save", test);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
+			action.waitForPageLoaded(ajaxTimeOutInSeconds);
+			action.ajaxWait(ajaxTimeOutInSeconds, test);
+			action.elementExistWelcome(bun_successMessage, ajaxTimeOutInSeconds, "Save pop up success", test);
+		}
+	}
 }
