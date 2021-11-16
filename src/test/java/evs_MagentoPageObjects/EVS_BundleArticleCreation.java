@@ -232,27 +232,6 @@ public class EVS_BundleArticleCreation {
 		action.waitForPageLoaded(ajaxTimeOutInSeconds);
 		action.ajaxWait(ajaxTimeOutInSeconds, test);
     }
-	
-	 void filterProducts(String skuToSearch,ExtentTest test) throws Exception {
-			if(action.waitUntilElementIsDisplayed(clearAll, 8000)) {
-				action.javaScriptClick(clearAll, "Clear All Filter", test);
-				action.ajaxWait(ajaxTimeOutInSeconds, test);
-				action.explicitWait(5000);
-			}		 
-			action.click(filter, "Filter", test);
-			action.writeText(skuField, skuToSearch , "SKU value", test);
-			action.click(applyFilter, "Apply Filters", test);
-			
-			action.ajaxWait(ajaxTimeOutInSeconds, test);
-			action.explicitWait(5000);
-		}
-	 
-	 void navigateToProductsPage(ExtentTest test) throws Exception {
-			action.click(bun_catalog, "Click To Catalog", test);
-			action.javaScriptClick(bun_product, "Click To Products", test);
-			action.waitForPageLoaded(ajaxTimeOutInSeconds);
-			action.ajaxWait(ajaxTimeOutInSeconds, test);
-		}
 
 	 public void validateProductStatus(ExtentTest test) throws Exception{
 		 String disabledSKU = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Product_SKU(S)", 0);
