@@ -4,9 +4,12 @@ package KeywordManager;
 import ic_PageObjects.IC_ReturnToConfirmOrderStatus;
 import spm_PageObjects.SPM_ArticleRangeValidation;
 import spm_PageObjects.SPM_LaunchPortal;
+import spm_MagentoPageObjects.SPM_Magento_Enquries;
+import spm_MagentoPageObjects.SPM_Magento_LayByValidation;
 import spm_MagentoPageObjects.SPM_Magento_RangeValidation;
 import spm_PageObjects.SPM_LaunchPortal;
 import spm_PageObjects.SPM_ProductSearch;
+import spm_PageObjects.SPM_layBy;
 import evs_MagentoPageObjects.*;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
 import ic_PageObjects.*;
@@ -225,7 +228,10 @@ public class JDGKeyManager {
         SPM_LaunchPortal spm_launchPortal = new SPM_LaunchPortal(driver, dataTable2);
         SPM_ProductSearch spm_productSearch = new SPM_ProductSearch(driver, dataTable2);
         SPM_Magento_RangeValidation spm_magentoRange = new SPM_Magento_RangeValidation(driver, dataTable2);
-        
+        SPM_layBy spm_layby = new SPM_layBy(driver, dataTable2);
+        SPM_Magento_LayByValidation spm_laybyMagento = new SPM_Magento_LayByValidation(driver, dataTable2);
+        SPM_Magento_Enquries spm_Enquries =new SPM_Magento_Enquries(driver, dataTable2);
+        		
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
             rowNumber = findRowToRun(dataMap2.get(moduleToRun + "++"), occCount.get(moduleToRun), testcaseID);
@@ -913,7 +919,7 @@ public class JDGKeyManager {
             	spm_launchPortal.launchPortal(test1);
             	break;
             case "SPM_ProductSearch":
-            	spm_productSearch.rangeSearch(test1);
+            	spm_productSearch.spm_SelectProductAndAddToCart(test1);
             	break;
             case "SPM_RangeValidation":
             	//spm_productSearch.rangeValidation(test1);
@@ -929,6 +935,36 @@ public class JDGKeyManager {
             	break;
             case "SPM_ArticleRanges":
             	articleValidation.rangeValidation(test1);
+            	break;
+            case "SPM_LayBy_PersonalDetails":
+            	spm_layby.personalDetails(test1);
+            	break;
+            case "SPM_LayBy_ResidentialAddressDetails":
+            	spm_layby.residentialAddressDetails(test1);
+            	break;
+            case "SPM_LayBy_ContactDetails":
+            	spm_layby.contactLayByDetails(test1);
+            	break;
+            case "SPM_LayBy_DeliveryAndEGT":
+            	spm_layby.deliveryAndEGT(test1);
+            	break;
+            case "SPM_LayBy_MarketQuestions":
+            	spm_layby.marketQuestions(test1);
+            	break;
+            case "SPM_LayBy_MagentoValidation":
+            	spm_laybyMagento.validateLayBy(test1);
+            	break;
+            case "SPM_LayBy_DeleteRecored":
+            	spm_laybyMagento.deleteLayByRecord(test1);
+            	break;
+            case "SPM_Equiries":
+            	spm_layby.enterEquiryDetails(test1);
+            	break;
+            case "SPM_ValidateEquiries":
+            	spm_Enquries.userEquiryDetails(test1);
+            	break;
+            case "SPM_NavigateToEnquiries":
+            	spm_Enquries.navigateToEnquiries(test1);
             	break;
 
         }

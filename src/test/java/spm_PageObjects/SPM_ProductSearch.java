@@ -172,6 +172,12 @@ public class SPM_ProductSearch {
     
     @FindBy(xpath = "//*[contains(text(),\"We're sorry, no results found\")]")
     WebElement productNotFoundMessage;
+    
+    @FindBy(xpath = "//button[@class='action apply-for-layby']")
+	WebElement by_applyForLaybay;
+    
+    @FindBy(xpath = "//*[contains(text(),'Enquire')]/parent::button")
+    WebElement enquireNow;
 
     public void clickNext(ExtentTest test) throws Exception {
         action.mouseover(clickNext, "scroll to element");
@@ -337,6 +343,9 @@ public class SPM_ProductSearch {
                // cartValidation.iCcartVerification2(productsInCart, test);
                 break;
             case "Validate_Out_Of_Stock":
+                break;
+            case "Apply_For_Laybay":
+            	
                 break;
 
         }
@@ -596,6 +605,14 @@ public class SPM_ProductSearch {
                                         case "Validate_Range":
                                         	rangeValidation(test,"");
                                             break;
+                                        case "Apply_For_Laybay":
+                                        	navToApplyCred( prod, quantityExecu,test);
+                                            break;
+                                        case "Enquire":
+                                        	//Enquire method
+                                        	productEnquire(prod,test);
+                                        	break;
+
                                     }
                                 }
                                 if (set <= 0) {
@@ -606,9 +623,9 @@ public class SPM_ProductSearch {
                         }
                     }
                     if (!((TypeOfOperation.equalsIgnoreCase("Add_To_Wishlist") | TypeOfOperation.equalsIgnoreCase("Add_To_Compare")))) {
-                        String skuCode = getSKUCode(cartAdditionMethod, prod, test);
+                       // String skuCode = getSKUCode(cartAdditionMethod, prod, test);
 
-                        productPrice_Quantity_SKU.add(skuCode);
+                       // productPrice_Quantity_SKU.add(skuCode);
                         String productPrice = productFinalPrice.getText();
                         productPrice_Quantity_SKU.add(productPrice);
                     }
@@ -817,6 +834,17 @@ public class SPM_ProductSearch {
 
     		}	
     	}
+    public void navToApplyCred( WebElement productLink, int quanity,ExtentTest test) throws Exception {
+    	if (quanity == 1) {
+            // WebElement prodC = productLink.findElement(By.xpath(".//parent::strong/parent::*/parent::*/a[1]"));
+             action.javaScriptClick(productLink, "Navigate to product Details page", test);
+             action.waitForPageLoaded(40);
+         }
+    	action.scrollElemetnToCenterOfView(by_applyForLaybay, "Scroll to Apply for Lay-By", test);
+    	action.click(by_applyForLaybay, "Click Apply For Credit", test);
+//    	action.waitForPageLoaded(timeOutInSeconds);
+//        action.ajaxWait(timeOutInSeconds, test);
+    }
     	
     public void rangeSearch(ExtentTest test) throws IOException, Exception {
     	String searchTY = dataTable2.getValueOnOtherModule("SPM_ProductSearch", "typeSearch", 0);
@@ -866,5 +894,20 @@ public class SPM_ProductSearch {
     		}
 	}
 }
+    void productEnquire(WebElement productLink,ExtentTest test) throws Exception {
+		///WebElement prodC = productLink.findElement(By.xpath(".//parent::strong/parent::/parent::/a[1]"));
+		action.javaScriptClick(productLink, "Navigate to product Details page", test);
+		action.waitForPageLoaded(40);
+		
+		//Click enquire
+		if(action.waitUntilElementIsDisplayed(enquireNow, 20)) {
+			action.scrollElemetnToCenterOfView(enquireNow, "Enquire Now", test);
+			action.click(enquireNow, "Enquire Now", test);
+			action.waitForPageLoaded(20);
+			action.ajaxWait(20, test);
+			action.ajaxWait(20, test);
+		};
+	}
+
 
 }
