@@ -50,7 +50,8 @@ public class EVS_BundleArticleFrontEnd {
     @FindBy(xpath = "//*[@class=\"product-item-save-badge\"]//*[@class=\"price\"]")
     WebElement savePrice;
     
-    @FindBy(xpath = "//*[@data-price-type = \"finalPrice\"]/span")
+    //@FindBy(xpath = "//*[@data-price-type = \"finalPrice\"]/span")
+    @FindBy(xpath = "//*[@class = \"price-container price-final_price tax weee\"]/span/span")
     WebElement productFinalPrice;
     
 	
@@ -162,7 +163,7 @@ public class EVS_BundleArticleFrontEnd {
     	//Compare Orginal Pricing
     	String newTotalPrice = productFinalPrice.getText().replace("R", "").replace(",", "");
     	String calculatedTotal = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "Change_Price", 0);
-    	action.CompareResult("Updated New TOTAL", calculatedTotal, newTotalPrice, test);
+    	action.CompareResult("Updated New TOTAL", calculatedTotal, String.valueOf(Double.parseDouble(newTotalPrice)), test);
     }
     
 }

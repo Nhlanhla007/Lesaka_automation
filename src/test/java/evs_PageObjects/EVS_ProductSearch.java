@@ -93,7 +93,8 @@ public class EVS_ProductSearch {
     @FindBy(xpath = "//span[@class='sku-code']")
     WebElement skuCode;
 
-    @FindBy(xpath = "//*[@data-price-type = \"finalPrice\"]/span")
+    //@FindBy(xpath = "//*[@data-price-type = \"finalPrice\"]/span")
+    @FindBy(xpath = "//*[@class = \"price-container price-final_price tax weee\"]/span/span")
     WebElement productFinalPrice;
 
     List<WebElement> listElements;
