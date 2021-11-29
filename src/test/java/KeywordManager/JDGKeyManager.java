@@ -231,7 +231,6 @@ public class JDGKeyManager {
         EVS_validateRegistrationForm evs_ValidateRegForm = new EVS_validateRegistrationForm(driver,dataTable2);
         EVS_BundleArticleCreation evs_bundleCreation = new EVS_BundleArticleCreation(driver,dataTable2);
         EVS_BundleArticleFrontEnd evs_bundleFrontEnd = new EVS_BundleArticleFrontEnd(driver, dataTable2);
-        SPM_ArticleRangeValidation articleValidation = new SPM_ArticleRangeValidation(driver, dataTable2);
         
         //Sleepmasters
         SPM_ArticleRangeValidation articleValidation = new SPM_ArticleRangeValidation(driver, dataTable2);
@@ -240,7 +239,6 @@ public class JDGKeyManager {
         SPM_LaunchPortal spm_launchPortal = new SPM_LaunchPortal(driver, dataTable2);
         SPM_ProductSearch spm_productSearch = new SPM_ProductSearch(driver, dataTable2);
         SPM_Magento_RangeValidation spm_magentoRange = new SPM_Magento_RangeValidation(driver, dataTable2);
-        SPM_layBy spm_layby = new SPM_layBy(driver, dataTable2);
         SPM_Magento_LayByValidation spm_laybyMagento = new SPM_Magento_LayByValidation(driver, dataTable2);
         SPM_Magento_Enquries spm_Enquries =new SPM_Magento_Enquries(driver, dataTable2);
         SPM_PayUPayment spm_Payment = new SPM_PayUPayment(driver, dataTable2);
@@ -249,7 +247,6 @@ public class JDGKeyManager {
         SPM_MagentoOrderSAPnumber spm_GenerateSAPNumber = new SPM_MagentoOrderSAPnumber(driver, dataTable2);
         SPM_SAPorderRelated spm_OrderRelated = new SPM_SAPorderRelated(driver, dataMap2, dataTable2);
         SPM_layBy spm_layby = new SPM_layBy(driver, dataTable2);
-        SPM_Magento_LayByValidation spm_laybyMagento = new SPM_Magento_LayByValidation(driver, dataTable2);
         SPM_NewAccountCreation spm_accountCreat = new SPM_NewAccountCreation(driver, dataTable2);
         SPM_MagentoRetrieveCustomerDetailsPage spm_RetrieveCustomer = new SPM_MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
         SPM_Magento_UserInfoVerification spm_UserInfoVerification = new SPM_Magento_UserInfoVerification(driver, dataTable2);
@@ -1011,27 +1008,6 @@ public class JDGKeyManager {
             	break;
             case "SPM_SAP_OrderRelated":
             	spm_OrderRelated.SAP_OrderDetailVadidation(test1);
-            	break;
-            case "SPM_LayBy_PersonalDetails":
-            	spm_layby.personalDetails(test1);
-            	break;
-            case "SPM_LayBy_ResidentialAddressDetails":
-            	spm_layby.residentialAddressDetails(test1);
-            	break;
-            case "SPM_LayBy_ContactDetails":
-            	spm_layby.contactLayByDetails(test1);
-            	break;
-            case "SPM_LayBy_DeliveryAndEGT":
-            	spm_layby.deliveryAndEGT(test1);
-            	break;
-            case "SPM_LayBy_MarketQuestions":
-            	spm_layby.marketQuestions(test1);
-            	break;
-            case "SPM_LayBy_MagentoValidation":
-            	spm_laybyMagento.validateLayBy(test1);
-            	break;
-            case "SPM_LayBy_DeleteRecored":
-            	spm_laybyMagento.deleteLayByRecord(test1);
             	break;
             case "SPM_AccountCreation":
             	spm_accountCreat.accountCreation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
