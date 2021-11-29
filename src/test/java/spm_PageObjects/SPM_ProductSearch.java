@@ -33,7 +33,7 @@ public class SPM_ProductSearch {
 
     WebDriver driver;
     Action action;
-    //EVS_Cart cartValidation;
+    SPM_Cart cartValidation;
     DataTable2 dataTable2;
     //EVS_WishList WishList;
     //EVS_CompareProducts compareProducts;
@@ -44,7 +44,7 @@ public class SPM_ProductSearch {
         this.driver = driver;
         PageFactory.initElements(driver, this);
         action = new Action(driver);
-        //cartValidation = new EVS_Cart(driver, dataTable2);
+        cartValidation = new SPM_Cart(driver, dataTable2);
         this.dataTable2 = dataTable2;
         //WishList = new EVS_WishList(driver, dataTable2);
        // compareProducts = new EVS_CompareProducts(driver, dataTable2);
@@ -172,7 +172,7 @@ public class SPM_ProductSearch {
     
     @FindBy(xpath = "//*[contains(text(),\"We're sorry, no results found\")]")
     WebElement productNotFoundMessage;
-    
+
     @FindBy(xpath = "//button[@class='action apply-for-layby']")
 	WebElement by_applyForLaybay;
     
@@ -340,7 +340,7 @@ public class SPM_ProductSearch {
                 }
                 break;
             case "Add_To_Cart":
-               // cartValidation.iCcartVerification2(productsInCart, test);
+                cartValidation.iCcartVerification2(productsInCart, test);
                 break;
             case "Validate_Out_Of_Stock":
                 break;
@@ -449,42 +449,43 @@ public class SPM_ProductSearch {
     void addToCartFromProdDetailsPage(WebElement productLink, String waitTimeInSeconds, int quanity, ExtentTest test)
             throws Exception {
         if (quanity == 1) {
-            WebElement prodC = productLink.findElement(By.xpath(".//parent::strong/parent::*/parent::*/a[1]"));
-            action.javaScriptClick(prodC, "Navigate to product Details page", test);
+           // WebElement prodC = productLink.findElement(By.xpath(".//parent::strong/parent::*/parent::*/a[1]"));
+            action.javaScriptClick(productLink, "Navigate to product Details page", test);
             action.waitForPageLoaded(40);
         }
         driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
         boolean isPresent = driver.findElements(By.id("product-addtocart-button")).size() > 0;
-        boolean availXpath1 = driver.findElements(By.xpath("//*[@title='Availability']/span")).size() > 0;
-        boolean availXpath2 = driver.findElements(By.xpath("//*[@title='Availability:']/span")).size() > 0;
-        String availabilityStatus = "";
-        if (availXpath1) {
-            availabilityStatus = action.getText(verifyAvailability1, "Availability Of Product", test);
-        } else if (availXpath2) {
-            availabilityStatus = action.getText(verifyAvailability, "Availability Of Product", test);
-        }
-        if (isPresent & availabilityStatus.equalsIgnoreCase("In stock")) {
-            action.scrollElemetnToCenterOfView(productDetailsPageAddToCartButton, "productDetailsPageAddToCartButton",test);
-            productDetailsPageAddToCartButton.click();
+        //boolean availXpath1 = driver.findElements(By.xpath("//*[@title='Availability']/span")).size() > 0;
+       // boolean availXpath2 = driver.findElements(By.xpath("//*[@title='Availability:']/span")).size() > 0;
+       // String availabilityStatus = "";
+      //  if (availXpath1) {
+            //availabilityStatus = action.getText(verifyAvailability1, "Availability Of Product", test);
+        //} else if (availXpath2) {
+           // availabilityStatus = action.getText(verifyAvailability, "Availability Of Product", test);
+       // }
+        //if (isPresent & availabilityStatus.equalsIgnoreCase("In stock")) {
+       //     action.scrollElemetnToCenterOfView(productDetailsPageAddToCartButton, "productDetailsPageAddToCartButton",test);
+          //  productDetailsPageAddToCartButton.click();
           //  cartValidation.cartButtonValidation(productDetailsPageAddToCartButton, Integer.parseInt(waitTimeInSeconds),test);
-        } else {
-            if (action.waitUntilElementIsDisplayed(notifyWhenProductIsAvailable, 15000)) {
-                action.CompareResult("\"Notify Me When Available Is Present\"", "True", "True", test);
-            }
+       // } else {
+            //if (action.waitUntilElementIsDisplayed(notifyWhenProductIsAvailable, 15000)) {
+             //   action.CompareResult("\"Notify Me When Available Is Present\"", "True", "True", test);
+           // }
             action.scrollElemetnToCenterOfView(productDetailsPageAddToCartButton, "productDetailsPageAddToCartButton", test);
+            action.explicitWait(2000);
             productDetailsPageAddToCartButton.click();
             action.waitForJStoLoad(60);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("window.scrollTo(0,0)");
+            //JavascriptExecutor js = (JavascriptExecutor) driver;
+           // js.executeScript("window.scrollTo(0,0)");
 
-            if (action.elementExistWelcome(productOfStockErrorMessage, 20, "Out Of Stock Pop Up", test)) {
-                action.CompareResult("Product Out Of Stock", "This product is out of stock.", driver.findElement(By.xpath("//div[contains(text(),'This product is out of stock.')]")).getText(), test);
-            } else {
-                throw new Exception("Out Of Stock Pop Up Is Not Displayed");
-            }
+           // if (action.elementExistWelcome(productOfStockErrorMessage, 20, "Out Of Stock Pop Up", test)) {
+             //   action.CompareResult("Product Out Of Stock", "This product is out of stock.", driver.findElement(By.xpath("//div[contains(text(),'This product is out of stock.')]")).getText(), test);
+            //} else {
+            //    throw new Exception("Out Of Stock Pop Up Is Not Displayed");
+            //}
         }
 
-    }
+   // }
 
     void addToWishlistFromProdDetailsPage(WebElement productLink, String waitTimeInSeconds, int quanity,
                                           ExtentTest test) throws Exception {
@@ -623,9 +624,10 @@ public class SPM_ProductSearch {
                         }
                     }
                     if (!((TypeOfOperation.equalsIgnoreCase("Add_To_Wishlist") | TypeOfOperation.equalsIgnoreCase("Add_To_Compare")))) {
-                       // String skuCode = getSKUCode(cartAdditionMethod, prod, test);
-
-                       // productPrice_Quantity_SKU.add(skuCode);
+                        // String skuCode = getSKUCode(cartAdditionMethod, prod, test);
+                        //String skuCode = getSKUCode(cartAdditionMethod, prod, test);
+                        // productPrice_Quantity_SKU.add(skuCode);
+                        //productPrice_Quantity_SKU.add(skuCode);
                         String productPrice = productFinalPrice.getText();
                         productPrice_Quantity_SKU.add(productPrice);
                     }
