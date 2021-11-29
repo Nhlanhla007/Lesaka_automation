@@ -127,7 +127,7 @@ public class SPM_layBy {
 	WebElement by_marketSubmit;
 	@FindBy(xpath = "//h1[normalize-space()='Thank you for submitting your lay-by application.']")
 	WebElement by_successfull;
-	
+
 	//Enquries
 	@FindBy(xpath = "//*[contains(text(),'Talk to a Consultant')]")
 	WebElement consultantPopUp;
@@ -150,6 +150,7 @@ public class SPM_layBy {
 	@FindBy(xpath = "//*[contains(text(),'Send Message')]/parent::button")
 	WebElement sendMessage;
 
+
 	public void personalDetails(ExtentTest test) throws Exception {
 		String firstName = dataTable2.getValueOnOtherModule("SPM_LayByDetails", "First_Name", 0);
 		String lastName = dataTable2.getValueOnOtherModule("SPM_LayByDetails", "Last_Name", 0);
@@ -161,6 +162,8 @@ public class SPM_layBy {
 		String permitNum = dataTable2.getValueOnOtherModule("SPM_LayByDetails", "Temporary Resident Permit No.", 0);
 		String permitNumExpiryDate = dataTable2.getValueOnOtherModule("SPM_LayByDetails", "Temporary Resident Permit Expiry Date", 0);
 		
+		action.click(by_applyForLaybay, "Click Apply For Layby", test);
+
 		if(action.isElementPresent(by_laybyModal)) {
 			action.writeText(by_firstName, firstName, "First name", test);
 			action.writeText(by_lastName, lastName, "Last name", test);
@@ -335,6 +338,5 @@ public class SPM_layBy {
 		action.explicitWait(6000);
 		
 	}
-
 
 }

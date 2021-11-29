@@ -3,12 +3,21 @@ package KeywordManager;
 
 import ic_PageObjects.IC_ReturnToConfirmOrderStatus;
 import spm_PageObjects.SPM_ArticleRangeValidation;
+import spm_PageObjects.SPM_Delivery;
 import spm_PageObjects.SPM_LaunchPortal;
 import spm_MagentoPageObjects.SPM_Magento_Enquries;
+import spm_PageObjects.SPM_PayUPayment;
+import spm_PageObjects.SPM_PaymentOption;
+import spm_MagentoPageObjects.SPM_MagentoOrderSAPnumber;
+import spm_MagentoPageObjects.SPM_MagentoOrderStatusPage;
+import spm_PageObjects.SPM_NewAccountCreation;
+import spm_MagentoPageObjects.SPM_MagentoRetrieveCustomerDetailsPage;
 import spm_MagentoPageObjects.SPM_Magento_LayByValidation;
 import spm_MagentoPageObjects.SPM_Magento_RangeValidation;
+import spm_MagentoPageObjects.SPM_Magento_UserInfoVerification;
 import spm_PageObjects.SPM_LaunchPortal;
 import spm_PageObjects.SPM_ProductSearch;
+import spm_PageObjects.SPM_RetriveOrderID;
 import spm_PageObjects.SPM_layBy;
 import evs_MagentoPageObjects.*;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
@@ -224,14 +233,27 @@ public class JDGKeyManager {
         EVS_BundleArticleFrontEnd evs_bundleFrontEnd = new EVS_BundleArticleFrontEnd(driver, dataTable2);
         SPM_ArticleRangeValidation articleValidation = new SPM_ArticleRangeValidation(driver, dataTable2);
         
-        //Sleepmasters classes below
+        //Sleepmasters
+        SPM_ArticleRangeValidation articleValidation = new SPM_ArticleRangeValidation(driver, dataTable2);
+        SPM_Delivery sleepMastersDelivery = new SPM_Delivery(driver, dataTable2);
+        SPM_PaymentOption sleepMastersCheckOut = new SPM_PaymentOption(driver, dataTable2);
         SPM_LaunchPortal spm_launchPortal = new SPM_LaunchPortal(driver, dataTable2);
         SPM_ProductSearch spm_productSearch = new SPM_ProductSearch(driver, dataTable2);
         SPM_Magento_RangeValidation spm_magentoRange = new SPM_Magento_RangeValidation(driver, dataTable2);
         SPM_layBy spm_layby = new SPM_layBy(driver, dataTable2);
         SPM_Magento_LayByValidation spm_laybyMagento = new SPM_Magento_LayByValidation(driver, dataTable2);
         SPM_Magento_Enquries spm_Enquries =new SPM_Magento_Enquries(driver, dataTable2);
-        		
+        SPM_PayUPayment spm_Payment = new SPM_PayUPayment(driver, dataTable2);
+        SPM_RetriveOrderID spm_RetireveOrderID = new SPM_RetriveOrderID(driver, dataTable2);
+        SPM_MagentoOrderStatusPage spm_OrderStatusSearch = new SPM_MagentoOrderStatusPage(driver, dataTable2);
+        SPM_MagentoOrderSAPnumber spm_GenerateSAPNumber = new SPM_MagentoOrderSAPnumber(driver, dataTable2);
+        SPM_SAPorderRelated spm_OrderRelated = new SPM_SAPorderRelated(driver, dataMap2, dataTable2);
+        SPM_layBy spm_layby = new SPM_layBy(driver, dataTable2);
+        SPM_Magento_LayByValidation spm_laybyMagento = new SPM_Magento_LayByValidation(driver, dataTable2);
+        SPM_NewAccountCreation spm_accountCreat = new SPM_NewAccountCreation(driver, dataTable2);
+        SPM_MagentoRetrieveCustomerDetailsPage spm_RetrieveCustomer = new SPM_MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
+        SPM_Magento_UserInfoVerification spm_UserInfoVerification = new SPM_Magento_UserInfoVerification(driver, dataTable2);
+        
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
             rowNumber = findRowToRun(dataMap2.get(moduleToRun + "++"), occCount.get(moduleToRun), testcaseID);
@@ -918,6 +940,9 @@ public class JDGKeyManager {
             case "SPM_LaunchPortal":
             	spm_launchPortal.launchPortal(test1);
             	break;
+            //case "SPM_ProductSearch":
+            //	spm_productSearch.rangeSearch(test1);
+            //	break;
             case "SPM_ProductSearch":
             	spm_productSearch.spm_SelectProductAndAddToCart(test1);
             	break;
@@ -966,7 +991,71 @@ public class JDGKeyManager {
             case "SPM_NavigateToEnquiries":
             	spm_Enquries.navigateToEnquiries(test1);
             	break;
-
+            case "SPM_DeliveryPopulation":
+            	sleepMastersDelivery.deliveryPopulation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+            	break;
+            case "SPM_CheckoutpaymentOption":
+            	sleepMastersCheckOut.CheckoutpaymentOption(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+            	break;
+            case "SPM_PayUPagePayment":
+            	spm_Payment.PayUPagePayment(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+            	break;
+            case "SPM_RetriveOrderID":
+            	spm_RetireveOrderID.RetriveOrderID(test1);
+            	break;
+            case "SPM_OrderStatusSearch":
+            	spm_OrderStatusSearch.navigateToOrderPage(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+            	break;
+            case "SPM_GenerateOrderSAPnumber":
+            	spm_GenerateSAPNumber.GenerateOrderSAPnumber(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+            	break;
+            case "SPM_SAP_OrderRelated":
+            	spm_OrderRelated.SAP_OrderDetailVadidation(test1);
+            	break;
+            case "SPM_LayBy_PersonalDetails":
+            	spm_layby.personalDetails(test1);
+            	break;
+            case "SPM_LayBy_ResidentialAddressDetails":
+            	spm_layby.residentialAddressDetails(test1);
+            	break;
+            case "SPM_LayBy_ContactDetails":
+            	spm_layby.contactLayByDetails(test1);
+            	break;
+            case "SPM_LayBy_DeliveryAndEGT":
+            	spm_layby.deliveryAndEGT(test1);
+            	break;
+            case "SPM_LayBy_MarketQuestions":
+            	spm_layby.marketQuestions(test1);
+            	break;
+            case "SPM_LayBy_MagentoValidation":
+            	spm_laybyMagento.validateLayBy(test1);
+            	break;
+            case "SPM_LayBy_DeleteRecored":
+            	spm_laybyMagento.deleteLayByRecord(test1);
+            	break;
+            case "SPM_AccountCreation":
+            	spm_accountCreat.accountCreation(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "SPM_RetrieveCustomerDetails":
+            	spm_RetrieveCustomer.retrieveCustomerDetails(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+                break;
+            case "SPM_Magento_UserInfoVerify":
+                rowNumber = findRowToRun(dataMap2.get("SPM_AccountCreation++"), 0, testcaseID);
+                spm_UserInfoVerification.Validate_UserInfobackend(dataMap2.get("SPM_AccountCreation" + "++"), test1, rowNumber);
+                break;
+			 case "SPM_SapCustomer": 
+				ArrayList<HashMap<String, ArrayList<String>>>
+			 	sheetsspm = new ArrayList<HashMap<String, ArrayList<String>>>();
+			 	sheetsspm.add(dataMap2.get("SPM_AccountCreation++"));
+			 	sheetsspm.add(dataMap2.get("SPM_SapCustomer++"));
+			 	sheetsspm.add(dataMap2.get("ICUpdateUser++"));
+                sheetsspm.add(dataMap2.get("CreateaccountBackend++"));
+                sheetsspm.add(dataMap2.get("adminUserUpdate++"));
+			 	customerDB.sapDbTests(dataMap2.get(moduleToRun + "++"), sheetsspm, test1, testcaseID, rowNumber);
+			 	break;
+            case "SPM_DeleteCustomer":
+            	spm_accountCreat.deleteCustomer(test1);
+            	break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){
