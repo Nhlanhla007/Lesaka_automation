@@ -242,7 +242,7 @@ public class EVS_BundleArticleCreation {
 		 if(magentoTableRecords.size() >= 1) {
 			 action.waitForPageLoaded(ajaxTimeOutInSeconds);
              action.ajaxWait(ajaxTimeOutInSeconds, test);
-             if(bun_proName.getText().equalsIgnoreCase("Seagate 2.5-inch 2TB USB 3.0 Harddrive STBX2000401")) {
+             if(bun_proName.getText().equalsIgnoreCase("Pilot Acroball 4 Pen Pink Barrel")) {
              action.CompareResult("The Status",bun_statusProduct.getText() , "Disabled", test);
 		 }else {
 			 action.CompareResult("The Status",bun_statusProduct.getText() , "Enabled", test);

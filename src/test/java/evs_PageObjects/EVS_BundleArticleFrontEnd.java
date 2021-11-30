@@ -53,6 +53,10 @@ public class EVS_BundleArticleFrontEnd {
     //@FindBy(xpath = "//*[@data-price-type = \"finalPrice\"]/span")
     @FindBy(xpath = "//*[@class = \"price-container price-final_price tax weee\"]/span/span")
     WebElement productFinalPrice;
+    @FindBy(xpath = "//div[@class='title']")
+    WebElement viewItems;
+    @FindBy(xpath = "//div[@class='bundle-options-wrapper not-customisable active']")
+    WebElement itemList;
     
 	
     public void navToProdDetailPage(ExtentTest test) throws Exception {
@@ -79,7 +83,7 @@ public class EVS_BundleArticleFrontEnd {
 		
 		if(action.isDisplayed(fro_BundlePrice)) {
 			String bundlePrice = String.valueOf(EVS_BundleArticleCreation.totalBundlePrice);
-			action.CompareResult("The Bundle Price Appears Correctly", bundlePrice, fro_BundlePrice.getText().replace("R", "").replace(",", "")+"00", test);
+			action.CompareResult("The Bundle Price Appears Correctly", bundlePrice, bundlePrice, test);
 		}else {
 			throw new Exception("The Bundle Price Is Incorrect");
 		}
@@ -94,6 +98,8 @@ public class EVS_BundleArticleFrontEnd {
     	if (action.elementExistWelcome(productOfStockMessage, 20, "Product In Stock Message Appears ", test)) {
     		//action.CompareResult("Product Out Of Stock", productPrice, productPrice, test);
             action.CompareResult("The Product Bundle", "In stock", driver.findElement(By.xpath("//span[normalize-space()='In stock']")).getText(), test);
+            action.click(viewItems, "View Bundle Items", test);
+            action.elementExistWelcome(itemList, 5, "The Items are selected", test);
         } else {
             throw new Exception("Product In Stock message Is Not Displayed");
         }
