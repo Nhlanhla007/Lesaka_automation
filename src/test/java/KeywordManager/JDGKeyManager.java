@@ -12,12 +12,14 @@ import spm_MagentoPageObjects.SPM_MagentoOrderSAPnumber;
 import spm_MagentoPageObjects.SPM_MagentoOrderStatusPage;
 import spm_PageObjects.SPM_NewAccountCreation;
 import spm_MagentoPageObjects.SPM_MagentoRetrieveCustomerDetailsPage;
+import spm_MagentoPageObjects.SPM_Magento_CreditApplicationVerification;
 import spm_MagentoPageObjects.SPM_Magento_LayByValidation;
 import spm_MagentoPageObjects.SPM_Magento_RangeValidation;
 import spm_MagentoPageObjects.SPM_Magento_UserInfoVerification;
 import spm_PageObjects.SPM_LaunchPortal;
 import spm_PageObjects.SPM_ProductSearch;
 import spm_PageObjects.SPM_RetriveOrderID;
+import spm_PageObjects.SPM_creditApplication;
 import spm_PageObjects.SPM_layBy;
 import evs_MagentoPageObjects.*;
 import evs_MagentoPageObjects.EVS_MagentoOrderStatusPage;
@@ -250,6 +252,8 @@ public class JDGKeyManager {
         SPM_NewAccountCreation spm_accountCreat = new SPM_NewAccountCreation(driver, dataTable2);
         SPM_MagentoRetrieveCustomerDetailsPage spm_RetrieveCustomer = new SPM_MagentoRetrieveCustomerDetailsPage(driver, dataTable2);
         SPM_Magento_UserInfoVerification spm_UserInfoVerification = new SPM_Magento_UserInfoVerification(driver, dataTable2);
+        SPM_creditApplication spm_creditApp = new SPM_creditApplication(driver, dataTable2);
+        SPM_Magento_CreditApplicationVerification spm_creditAppMagento = new SPM_Magento_CreditApplicationVerification(driver, dataTable2);
         
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -1032,6 +1036,34 @@ public class JDGKeyManager {
             case "SPM_DeleteCustomer":
             	spm_accountCreat.deleteCustomer(test1);
             	break;
+            case "SPM_CreditApp_PersonalDetails":
+            	spm_creditApp.personalDetails(test1);
+            	break;
+            case "SPM_CreditApp_SpouseDetails":
+            	spm_creditApp.spouseDetails(test1);
+            	break;
+            case "SPM_CreditApp_Credit":
+            	spm_creditApp.creditReview(test1);
+            	break;
+            case "SPM_CreditApp_EmploymentDetails":
+            	spm_creditApp.EmploymentDetails(test1);
+            	break;
+            case "SPM_CreditApp_AddressDetails":
+            	spm_creditApp.CreditAddDetails(test1);
+            	break;
+            case "SPM_CreditApp_ContactDetails":
+            	spm_creditApp.CreditContactDetails(test1);
+            	break;
+            case "SPM_Navigate_ApplyCred":
+            	spm_creditApp.navToApplyCred(test1);
+            	break;
+            case "SPM_CreditApp_Magento":
+            	spm_creditAppMagento.VerifyCreditAppSelection(test1);
+            	break;
+            case "SPM_CreditApp_Delete":
+            	spm_creditAppMagento.deteleCredApp(test1);
+            	break;
+            
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){

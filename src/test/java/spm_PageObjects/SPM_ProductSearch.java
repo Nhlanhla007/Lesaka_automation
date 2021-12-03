@@ -176,6 +176,9 @@ public class SPM_ProductSearch {
     @FindBy(xpath = "//button[@class='action apply-for-layby']")
 	WebElement by_applyForLaybay;
     
+    @FindBy(xpath = "//button[@class='action apply-for-credit']")
+	WebElement by_applyForCred;
+    
     @FindBy(xpath = "//*[contains(text(),'Enquire')]/parent::button")
     WebElement enquireNow;
 
@@ -607,6 +610,9 @@ public class SPM_ProductSearch {
                                         	rangeValidation(test,"");
                                             break;
                                         case "Apply_For_Laybay":
+                                        	navToApplyLayBy( prod, quantityExecu,test);
+                                            break;
+                                        case "Apply_For_Credit":
                                         	navToApplyCred( prod, quantityExecu,test);
                                             break;
                                         case "Enquire":
@@ -836,14 +842,26 @@ public class SPM_ProductSearch {
 
     		}	
     	}
-    public void navToApplyCred( WebElement productLink, int quanity,ExtentTest test) throws Exception {
+    public void navToApplyLayBy( WebElement productLink, int quanity,ExtentTest test) throws Exception {
     	if (quanity == 1) {
             // WebElement prodC = productLink.findElement(By.xpath(".//parent::strong/parent::*/parent::*/a[1]"));
              action.javaScriptClick(productLink, "Navigate to product Details page", test);
              action.waitForPageLoaded(40);
          }
     	action.scrollElemetnToCenterOfView(by_applyForLaybay, "Scroll to Apply for Lay-By", test);
-    	action.click(by_applyForLaybay, "Click Apply For Credit", test);
+    	action.click(by_applyForLaybay, "Click Apply For LayBy", test);
+//    	action.waitForPageLoaded(timeOutInSeconds);
+//        action.ajaxWait(timeOutInSeconds, test);
+    }
+    
+    public void navToApplyCred( WebElement productLink, int quanity,ExtentTest test) throws Exception {
+    	if (quanity == 1) {
+            // WebElement prodC = productLink.findElement(By.xpath(".//parent::strong/parent::*/parent::*/a[1]"));
+             action.javaScriptClick(productLink, "Navigate to product Details page", test);
+             action.waitForPageLoaded(40);
+         }
+    	action.scrollElemetnToCenterOfView(by_applyForCred, "Scroll to Apply for Credit", test);
+    	action.click(by_applyForCred, "Click Apply For Credit", test);
 //    	action.waitForPageLoaded(timeOutInSeconds);
 //        action.ajaxWait(timeOutInSeconds, test);
     }
