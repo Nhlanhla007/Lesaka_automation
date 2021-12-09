@@ -67,6 +67,12 @@ public class SPM_MagentoRetrieveCustomerDetailsPage {
 	@FindBy(xpath = "//tbody/tr[2]/td[17]/a")
 	WebElement viewCustomerDetails;
 
+	@FindBy(xpath = "//span[contains(text(),'Account Information')]")
+	WebElement Account_Info_link;
+
+	@FindBy(xpath = "//input[@name='customer[partner_number]']")
+	WebElement customerBPnnumber;
+	
 	public void navigateToCustomer(ExtentTest test) throws Exception {
 		if (action.waitUntilElementIsDisplayed(customerTab, 10)) {
 			action.click(customerTab, "Customer Tab", test);
@@ -197,5 +203,26 @@ public class SPM_MagentoRetrieveCustomerDetailsPage {
 	 * "//*[@class=\"spinner\"]")), "style", "display: none;", 4000)) { return
 	 * status = true; } return status; }
 	 */
+
+	public String ActualBPnumber;
+
+	public String getPartnerNumber(ExtentTest test) throws Exception {
+		action.click(Account_Info_link, "Account Information", test);
+		action.scrollElemetnToCenterOfView(customerBPnnumber, "Scroll to partner number", test);
+		ActualBPnumber = action.getAttribute(customerBPnnumber, "value");
+		action.waitExplicit(10);
+		boolean FlagGenerateBPnumber = false;
+		if (ActualBPnumber != null) {
+			FlagGenerateBPnumber = true;
+			action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),
+					String.valueOf(FlagGenerateBPnumber) + "-BP no : " + ActualBPnumber.toString(), test);
+			return ActualBPnumber = action.getAttribute(customerBPnnumber, "value");
+		} else {
+			action.CompareResult("Verify the BP number of user in Magento :", String.valueOf(true),
+					String.valueOf(FlagGenerateBPnumber) + "-BP no : " + ActualBPnumber.toString(), test);
+			return null;
+		}
+
+	}
 	
 }

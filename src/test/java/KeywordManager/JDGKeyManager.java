@@ -2,10 +2,13 @@ package KeywordManager;
 
 
 import ic_PageObjects.IC_ReturnToConfirmOrderStatus;
+import spm_PageObjects.SPM_AddressUpdates;
 import spm_PageObjects.SPM_ArticleRangeValidation;
 import spm_PageObjects.SPM_Delivery;
 import spm_PageObjects.SPM_LaunchPortal;
+import spm_PageObjects.SPM_Login;
 import spm_MagentoPageObjects.SPM_Magento_Enquries;
+import spm_MagentoPageObjects.SPM_Magento_LaunchPortal;
 import spm_PageObjects.SPM_PayUPayment;
 import spm_PageObjects.SPM_PaymentOption;
 import spm_MagentoPageObjects.SPM_MagentoOrderSAPnumber;
@@ -254,6 +257,11 @@ public class JDGKeyManager {
         SPM_Magento_UserInfoVerification spm_UserInfoVerification = new SPM_Magento_UserInfoVerification(driver, dataTable2);
         SPM_creditApplication spm_creditApp = new SPM_creditApplication(driver, dataTable2);
         SPM_Magento_CreditApplicationVerification spm_creditAppMagento = new SPM_Magento_CreditApplicationVerification(driver, dataTable2);
+        SPM_Login spm_login = new SPM_Login(driver, dataTable2);
+        SPM_AddressUpdates spm_addressUpdates = new SPM_AddressUpdates(driver, dataTable2);
+        SPM_SAPCustomerRelated spm_customerRelated = new SPM_SAPCustomerRelated(driver, dataMap2, dataTable2);
+        SPM_Magento_LaunchPortal spm_launchMagento = new SPM_Magento_LaunchPortal(driver, dataTable2);
+        SPM_admin_UserUpdate spm_adminUserUpdate = new SPM_admin_UserUpdate(driver, dataTable2);
         
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -1028,11 +1036,16 @@ public class JDGKeyManager {
 			 	sheetsspm = new ArrayList<HashMap<String, ArrayList<String>>>();
 			 	sheetsspm.add(dataMap2.get("SPM_AccountCreation++"));
 			 	sheetsspm.add(dataMap2.get("SPM_SapCustomer++"));
-			 	sheetsspm.add(dataMap2.get("ICUpdateUser++"));
+			 	sheetsspm.add(dataMap2.get("SPM_UpdateUser++"));
                 sheetsspm.add(dataMap2.get("CreateaccountBackend++"));
-                sheetsspm.add(dataMap2.get("adminUserUpdate++"));
-			 	customerDB.sapDbTests(dataMap2.get(moduleToRun + "++"), sheetsspm, test1, testcaseID, rowNumber);
+                sheetsspm.add(dataMap2.get("SPM_adminUserUpdate++"));
+                spm_customerRelated.sapDbTests(dataMap2.get(moduleToRun + "++"), sheetsspm, test1, testcaseID, rowNumber);
 			 	break;
+			 case "SPM_adminUserUpdate":
+	                ArrayList<HashMap<String, ArrayList<String>>> adminSheet1 = new ArrayList<HashMap<String, ArrayList<String>>>();
+	                adminSheet1.add(dataMap2.get(moduleToRun + "++"));
+	                spm_adminUserUpdate.editCustomerDetails(adminSheet1, test1, testcaseID);
+	                break;
             case "SPM_DeleteCustomer":
             	spm_accountCreat.deleteCustomer(test1);
             	break;
@@ -1063,7 +1076,33 @@ public class JDGKeyManager {
             case "SPM_CreditApp_Delete":
             	spm_creditAppMagento.deteleCredApp(test1);
             	break;
-            
+            case "SPM_login":
+            	spm_login.Login_ic(test1);
+               break;
+            case "SPM_addNewAddress":
+            	spm_addressUpdates.addNewAddressToExistingUser(test1);
+            	break;
+            case "SPM_magentoSearchForCustomer":
+            	spm_addressUpdates.navigateToCustomer(test1);
+            	break;
+			case "SPM_magentoValidateNewAddress":
+				spm_addressUpdates.validateAddedAddressInMagento(test1);
+				break;
+			case "SPM_deleteAddress":
+				spm_addressUpdates.deleteAddressMagento(test1);
+				break;
+            case "SPM_addNewSecondaryAdress":
+            	spm_addressUpdates.addNewSecondaryAddressToExistingUser(test1);
+            	break;
+            case"SPM_removeAddress":
+            	spm_addressUpdates.removeAddress(test1);
+            	break;
+            case "SPM_launch_Magento":
+            	spm_launchMagento.launchPortal(test1);
+            	break;
+            case "SPM_validateAddressIsRemoved":
+            	spm_addressUpdates.validateAddressIsNotPresent(test1);
+            	break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){

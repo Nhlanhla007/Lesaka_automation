@@ -21,11 +21,11 @@ import ic_PageObjects.ICDelivery;
 import spm_MagentoPageObjects.SPM_MagentoAccountInformation;
 import spm_MagentoPageObjects.SPM_MagentoRetrieveCustomerDetailsPage;
 import Logger.Log;
-import evs_MagentoPageObjects.EVS_MagentoAccountInformation;
-import evs_MagentoPageObjects.EVS_MagentoRetrieveCustomerDetailsPage;
-import ic_MagentoPageObjects.MagentoAccountInformation;
-import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
-import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
+//import evs_MagentoPageObjects.EVS_MagentoAccountInformation;
+//import evs_MagentoPageObjects.EVS_MagentoRetrieveCustomerDetailsPage;
+//import ic_MagentoPageObjects.MagentoAccountInformation;
+//import ic_MagentoPageObjects.MagentoRetrieveCustomerDetailsPage;
+//import ic_MagentoPageObjects.ic_MagentoOrderSAPnumber;
 import utils.Action;
 import utils.Base64Decoding;
 import utils.DataTable2;
@@ -41,6 +41,7 @@ public class SPM_SAPCustomerRelated {
 	hana hn;
 	SPM_MagentoRetrieveCustomerDetailsPage magentoRetrieve;
 	SPM_MagentoAccountInformation magentoVerification;
+	//EVS_MagentoAccountInformation magentoRetrieve;
 	static Map<String, String> dataStore;
 	DataTable2 dataTable2;
 	Base64Decoding decodePassword;
@@ -55,6 +56,7 @@ public class SPM_SAPCustomerRelated {
 		this.dataTable2 = dataTable2;
 		magentoRetrieve = new SPM_MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
 		magentoVerification = new SPM_MagentoAccountInformation(driver,dataTable2);
+		//magentoRetrieve = new EVS_MagentoAccountInformation(driver,dataTable2);
 		decodePassword = new Base64Decoding();
 	}
 
@@ -124,12 +126,12 @@ public class SPM_SAPCustomerRelated {
 	
 	String bpPartnerBumber;
 	public void sapDbTests(HashMap<String, ArrayList<String>> input,ArrayList<HashMap<String, ArrayList<String>>> mySheets,ExtentTest test,int testcaseID,int rowNumber) throws Exception {
-		int sheetRow1= findRowToRun(mySheets.get(0), 0, testcaseID); //accountCreation
-		int sheetRow2= findRowToRun(mySheets.get(1), 0, testcaseID); //evs_DeliveryPopulation
+		int sheetRow1 = 0; //Account Creation
+		int sheetRow2 = 0; //Delivery Population
 		//int sheetRow3= findRowToRun(mySheets.get(2), 0, testcaseID); //typeOf sap validation //uses input.get("Value").get(rowNumber)
-		int sheetRow4= findRowToRun(mySheets.get(2), 0, testcaseID); //updatesheet
-		int createCustomerBackEndSheet = findRowToRun(mySheets.get(3), 0, testcaseID); //magentoCreate back end sheet
-		int customerUpdateBackEndSheet = findRowToRun(mySheets.get(4), 0, testcaseID); //magentoCreate back end sheet
+		int sheetRow4 = 0; //Update User
+		int createCustomerBackEndSheet = 0; //magentoCreate back end sheet
+		int customerUpdateBackEndSheet = 0; //magentoCreate back end sheet
 //		HashMap<String,ArrayList<String>> loginSheet =dataMap2.get("evs_login++");
 //		int evs_loginRow = findRowToRun(loginSheet, 0, testcaseID);
 		
@@ -164,6 +166,7 @@ public class SPM_SAPCustomerRelated {
 		String currentCustomerMagentoBillingEmail = null;
 		
 		if(typeOfSAPValidation.equalsIgnoreCase("Customer Update")) {
+			sheetRow4 = findRowToRun(mySheets.get(2), 0, testcaseID); //updatesheet
 			updateEmailFlag = mySheets.get(2).get("email").get(sheetRow4);
 			updateEmail = mySheets.get(2).get("email_output").get(sheetRow4);
 			
@@ -171,19 +174,22 @@ public class SPM_SAPCustomerRelated {
 				navigateToCustomerBpNumber(updateEmail, website, test);
 			}else {
 				//email that logged into ic with
-				String Username = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "username");
+				String Username = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("SPM_login", "loginDetails", 0), "username");
 				navigateToCustomerBpNumber(Username, website, test); //Change
 			}
-			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoRetrieve.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Creation Magento Admin")) {
+			createCustomerBackEndSheet = findRowToRun(mySheets.get(3), 0, testcaseID); //magentoCreate back end sheet
 			customerMagentoEmail =mySheets.get(3).get("Email").get(createCustomerBackEndSheet);
 			navigateToCustomerBpNumber(customerMagentoEmail, website, test);
-			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoRetrieve.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Creation")) {
+			sheetRow1 =  findRowToRun(mySheets.get(0), 0, testcaseID); //accountCreation
 			email = mySheets.get(0).get("emailAddress").get(sheetRow1);
 			navigateToCustomerBpNumber(email, website, test);
-			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoRetrieve.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Update Magento Admin")) {
+			customerUpdateBackEndSheet = findRowToRun(mySheets.get(4), 0, testcaseID);
 			updatedMagentoBillingEmailFlag = mySheets.get(4).get("email").get(customerUpdateBackEndSheet);
 			if(updatedMagentoBillingEmailFlag.equalsIgnoreCase("yes")) {
 				updatedMagentoBillingEmail = mySheets.get(4).get("adminEmail_output").get(customerUpdateBackEndSheet);
@@ -192,12 +198,12 @@ public class SPM_SAPCustomerRelated {
 				currentCustomerMagentoBillingEmail = mySheets.get(4).get("emailAddress_input").get(customerUpdateBackEndSheet);
 				navigateToCustomerBpNumber(currentCustomerMagentoBillingEmail, "Main Website", test);
 			}
-			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoRetrieve.getPartnerNumber(test);
 				
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Registered customer from sales order")) {
 			String registeredUserEmail = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS",dataTable2.getValueOnOtherModule("evs_Login", "loginDetails", 0), "username");
 			navigateToCustomerBpNumber(registeredUserEmail, website, test);
-			bpPartnerBumber=magentoVerification.getPartnerNumber(test);
+			bpPartnerBumber=magentoRetrieve.getPartnerNumber(test);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			bpPartnerBumber = " ";
 		}
@@ -272,23 +278,23 @@ public class SPM_SAPCustomerRelated {
 				if(updateBillingFlag.equalsIgnoreCase("yes")) {
 					String updateBillingStreetFlag = mySheets.get(2).get("billing_streetAddress").get(sheetRow4).trim();
 					if(updateBillingStreetFlag.equalsIgnoreCase("yes")) {
-						String updatedBilling  = mySheets.get(2).get("billing_streetAddress_output").get(sheetRow4).trim();
+						String updatedBilling  = dataTable2.getValueOnOtherModule("SPM_DeliveryPopulation", "streetName", 0).trim();//mySheets.get(2).get("billing_streetAddress_output").get(sheetRow4).trim();
 						action.CompareResult("SAP Updated Billing Address", updatedBilling, SAPStreetAddress, test);
 					}
-					String updatedBuildingDetails = mySheets.get(2).get("billing_buildingDetails_output").get(sheetRow4).trim();
-					if(updatedBuildingDetails != null & SAPbuildingDetails != null) {
-						action.CompareResult("SAP Building Details", updatedBuildingDetails, SAPbuildingDetails, test);
-					}
-					String billingProvince = mySheets.get(2).get("billing_provinceName_output").get(sheetRow4).trim();
+					//String updatedBuildingDetails =  dataTable2.getValueOnOtherModule("SPM_DeliveryPopulation", "streetName", 0).trim();//mySheets.get(2).get("billing_buildingDetails_output").get(sheetRow4).trim();
+					//if(updatedBuildingDetails != null & SAPbuildingDetails != null) {
+					//	action.CompareResult("SAP Building Details", updatedBuildingDetails, SAPbuildingDetails, test);
+					//}
+					String billingProvince =  dataTable2.getValueOnOtherModule("SPM_DeliveryPopulation", "province", 0).trim();//mySheets.get(2).get("billing_provinceName_output").get(sheetRow4).trim();
 					action.CompareResult("SAP Updated Province", billingProvince, SAPProvince, test);
 
-					String billingCity = mySheets.get(2).get("billing_city_output").get(sheetRow4).trim();
+					String billingCity =  dataTable2.getValueOnOtherModule("SPM_DeliveryPopulation", "city", 0).trim();//mySheets.get(2).get("billing_city_output").get(sheetRow4).trim();
 					action.CompareResult("SAP Updated City", billingCity, SAPcity, test);
 
-					String billingSuburb = mySheets.get(2).get("billing_suburb_output").get(sheetRow4).trim();
+					String billingSuburb =  dataTable2.getValueOnOtherModule("SPM_DeliveryPopulation", "Suburb", 0).trim();//mySheets.get(2).get("billing_suburb_output").get(sheetRow4).trim();
 					action.CompareResult("SAP Updated Billing Suburb", billingSuburb, SAPsuburb, test);
 
-					String billingPostalCode = mySheets.get(2).get("billing_postalCode_output").get(sheetRow4).trim();
+					String billingPostalCode =  dataTable2.getValueOnOtherModule("SPM_DeliveryPopulation", "postalCode", 0).trim();//mySheets.get(2).get("billing_postalCode_output").get(sheetRow4).trim();
 					action.CompareResult("SAP Updated postal code", billingPostalCode, SAPpostCode, test);
 
 				}
@@ -392,6 +398,7 @@ public class SPM_SAPCustomerRelated {
 				break;
 			case "Guest Customer Creation":
 				//DEVLIVERY POPULATION IS WHERE IT GETS DATA FROM:
+				sheetRow2 = findRowToRun(mySheets.get(1), 0, testcaseID); //evs_DeliveryPopulation
 				String newFirstName = mySheets.get(1).get("firstName").get(sheetRow2).trim();
 				String newLastName = mySheets.get(1).get("lastname").get(sheetRow2).trim();
 				String newTelephone = mySheets.get(1).get("telephone").get(sheetRow2);
@@ -494,7 +501,7 @@ public class SPM_SAPCustomerRelated {
 		 */
 		ExtentTest test=test1;
 		hn =new hana(TypeOfDB,Server,Port,Username,Password,test);
-		String typeValidation = dataTable2.getValueOnOtherModule("evs_SapCustomer", "typeOfSapValidation", 0);
+		String typeValidation = dataTable2.getValueOnOtherModule("SPM_SapCustomer", "typeOfSapValidation", 0);
 		String newBpNumber = "";
 		if(typeValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			String sapOrderNumeber = dataTable2.getValueOnOtherModule("GenerateOrderSAPnumber", "OrderSAPnumber", 0);
