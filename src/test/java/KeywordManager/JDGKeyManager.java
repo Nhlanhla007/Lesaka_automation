@@ -19,6 +19,7 @@ import spm_MagentoPageObjects.SPM_Magento_CreditApplicationVerification;
 import spm_MagentoPageObjects.SPM_Magento_LayByValidation;
 import spm_MagentoPageObjects.SPM_Magento_RangeValidation;
 import spm_MagentoPageObjects.SPM_Magento_UserInfoVerification;
+import spm_MagentoPageObjects.SPM_admin_UserUpdate;
 import spm_PageObjects.SPM_LaunchPortal;
 import spm_PageObjects.SPM_ProductSearch;
 import spm_PageObjects.SPM_RetriveOrderID;
