@@ -18,6 +18,8 @@ import org.openqa.selenium.support.PageFactory;
 import com.aventstack.extentreports.ExtentTest;
 
 import ic_PageObjects.ICDelivery;
+import spm_MagentoPageObjects.SPM_MagentoAccountInformation;
+import spm_MagentoPageObjects.SPM_MagentoRetrieveCustomerDetailsPage;
 import Logger.Log;
 import evs_MagentoPageObjects.EVS_MagentoAccountInformation;
 import evs_MagentoPageObjects.EVS_MagentoRetrieveCustomerDetailsPage;
@@ -37,8 +39,8 @@ public class SPM_SAPCustomerRelated {
 	LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 =null;
 	String bp = SAPorderRelated.BPnumber; //BP Number -->Customer BP number, if line 99 is null set this.
 	hana hn;
-	EVS_MagentoRetrieveCustomerDetailsPage magentoRetrieve;
-	EVS_MagentoAccountInformation magentoVerification;
+	SPM_MagentoRetrieveCustomerDetailsPage magentoRetrieve;
+	SPM_MagentoAccountInformation magentoVerification;
 	static Map<String, String> dataStore;
 	DataTable2 dataTable2;
 	Base64Decoding decodePassword;
@@ -51,8 +53,8 @@ public class SPM_SAPCustomerRelated {
 		dataStore = new LinkedHashMap<>();
 		this.dataMap2=dataMap2;
 		this.dataTable2 = dataTable2;
-		magentoRetrieve = new EVS_MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
-		magentoVerification = new EVS_MagentoAccountInformation(driver,dataTable2);
+		magentoRetrieve = new SPM_MagentoRetrieveCustomerDetailsPage(driver,dataTable2);
+		magentoVerification = new SPM_MagentoAccountInformation(driver,dataTable2);
 		decodePassword = new Base64Decoding();
 	}
 
@@ -148,7 +150,7 @@ public class SPM_SAPCustomerRelated {
 		//System.out.println(mySheets.get(2).get("firstName_output").get(sheetRow4));
 		//email = mySheets.get(0).get("emailAddress").get(sheetRow1);
 //		email="fake856088001957589@automationjdg.co.za";
-		website = "Everyshop";//mySheets.get(0).get("WebSite").get(sheetRow1);
+		website = "Sleepmasters";//mySheets.get(0).get("WebSite").get(sheetRow1);
 //		website="";
 		//If the update flag is checked it takes the latest updated email, 
 		//if not checked it takes the original email
@@ -213,7 +215,7 @@ public class SPM_SAPCustomerRelated {
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			taxVatNumberFlag = "yes";
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Update Magento Admin")) {
-			taxVatNumberFlag = dataTable2.getValueOnOtherModule("evs_adminUserUpdate", "taxVat", 0);
+			taxVatNumberFlag = dataTable2.getValueOnOtherModule("SMP_adminUserUpdate", "taxVat", 0);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Registered customer from sales order")) {
 			taxVatNumberFlag = "yes";
 		}
