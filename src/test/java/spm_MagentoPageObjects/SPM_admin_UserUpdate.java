@@ -249,7 +249,7 @@ public class SPM_admin_UserUpdate {
 				action.writeText(admin_email,emailTextUpdated ,"Email", test);
 				adminSheets.get(0).get("adminEmail_output").set(sheetRow1, emailTextUpdated);
 				action.click(admin_SaveCustomerBtn, "Save", test);
-				dataTable2.setValueOnOtherModule("SMP_adminUserUpdate", "emailAddress_input", emailTextUpdated, 0);
+				adminSheets.get(0).get("emailAddress_input").set(sheetRow1, emailTextUpdated);
 				
 				action.waitForPageLoaded(ajaxTimeOutInSeconds);
 				action.ajaxWait(ajaxTimeOutInSeconds, test);

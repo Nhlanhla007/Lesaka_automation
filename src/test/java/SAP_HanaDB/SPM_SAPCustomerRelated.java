@@ -221,7 +221,7 @@ public class SPM_SAPCustomerRelated {
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Guest Customer Creation")) {
 			taxVatNumberFlag = "yes";
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Customer Update Magento Admin")) {
-			taxVatNumberFlag = dataTable2.getValueOnOtherModule("SMP_adminUserUpdate", "taxVat", 0);
+			taxVatNumberFlag = dataTable2.getValueOnOtherModule("SPM_adminUserUpdate", "taxVat", 0);
 		}else if(typeOfSAPValidation.equalsIgnoreCase("Registered customer from sales order")) {
 			taxVatNumberFlag = "yes";
 		}
