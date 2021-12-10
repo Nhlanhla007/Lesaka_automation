@@ -58,6 +58,9 @@ public class EVS_BundleArticleFrontEnd {
     @FindBy(xpath = "//div[@class='bundle-options-wrapper not-customisable active']")
     WebElement itemList;
     
+    
+    @FindBy(xpath = "//*[contains(text(),'Customize Item: ')]")
+    WebElement bundleItemDetailsdropDown;
 	
     public void navToProdDetailPage(ExtentTest test) throws Exception {
     	String proKeyURL = dataTable2.getValueOnOtherModule("evs_BundleCreation", "Product_URL", 0);
@@ -161,7 +164,7 @@ public class EVS_BundleArticleFrontEnd {
     	
     	//Compare the necessary
     	//Compare the SAVE
-    	if(action.waitUntilElementIsDisplayed(savePrice, 20)) {
+    	if(action.waitUntilElementIsDisplayed(savePrice, 5)) {
     	String newSavePrice=savePrice.getText().replace("R", "").replace(",", "");    	
     	String calculatedSavePrice = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "Change_Save_Price", 0);
     	action.CompareResult("Updated SAVE price", calculatedSavePrice, newSavePrice, test);
@@ -170,6 +173,36 @@ public class EVS_BundleArticleFrontEnd {
     	String newTotalPrice = productFinalPrice.getText().replace("R", "").replace(",", "");
     	String calculatedTotal = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "Change_Price", 0);
     	action.CompareResult("Updated New TOTAL", calculatedTotal, String.valueOf(Double.parseDouble(newTotalPrice)), test);
+    }
+    
+    public void setRequired(ExtentTest test) throws Exception {
+    	String initialPrice = productFinalPrice.getText().replace("R", "").replace(",", "");
+    	action.CompareResult("Initial Price Is "+ productFinalPrice.getText(), "", "", test);
+    	
+    	//Click drop down
+    	String bundleItemValue = dataTable2.getValueOnOtherModule("evs_BundleIncreaseQty", "BundleItemSKU", 0);
+    	action.click(bundleItemDetailsdropDown, "Bundle Items Drop Down", test);
+    	
+    	//Click the checkbox on the product
+    	WebElement bundleItem = driver.findElement(By.xpath("//span[contains(text(),'"+bundleItemValue+"')]/parent::label"));
+    	WebElement bundleItemCheckBox = bundleItem.findElement(By.xpath("./following-sibling::div//label"));
+    	action.scrollElemetnToCenterOfView(bundleItemCheckBox, "Bundle Item Checkbox", test);
+    	action.click(bundleItemCheckBox, "Required Check Box", test);
+    	
+    	String afterSelectionPrice = productFinalPrice.getText().replace("R", "").replace(",", "");
+    	//Validate the change in the price
+    	if(Integer.parseInt(afterSelectionPrice) < Integer.parseInt(initialPrice)) {
+    		String decreaseValue = bundleItem.findElement(By.xpath("./following-sibling::div//*[@class='price']")).getText().replace("R", "").replace(",", "") ;
+    		action.CompareResult("Price of Required Item Is R" + decreaseValue, "", "", test);
+    		int expectedFinalPrice = Integer.parseInt(initialPrice) - Integer.parseInt(decreaseValue);
+    		action.scrollElemetnToCenterOfView(productFinalPrice, "Product Final Price", test);
+    		action.CompareResult("Final Price Is Decrease To R" + expectedFinalPrice, afterSelectionPrice, String.valueOf(expectedFinalPrice), test);
+    		
+    	}else {
+    		action.CompareResult("Price Update ", "true", "false", test);
+    		throw new Exception("Bundle Item Price Never Decreased");
+    	}
+    	
     }
     
 }

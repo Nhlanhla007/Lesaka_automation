@@ -945,6 +945,9 @@ public class JDGKeyManager {
             case "decreaseQuantityOfBundleItem":
             	evs_bundleCreation.decreaseQtyOfBundleItemInMagento(test1);
             	break;
+            case "change_required_bundle_item_status":
+            	evs_bundleFrontEnd.setRequired(test1);
+            	break;
 
             // Sleep masters keywords below
             case "SPM_LaunchPortal":
