@@ -64,7 +64,8 @@ public class ic_GiftCardPurchase {
     @FindBy(xpath = "//*[@class=\"action showcart\"]")
     private WebElement ic_Cart;
 
-    @FindBy(xpath = "//*[@id=\"maincontent\"]/div/div[1]/div[2]/div[2]/ol/li[1]/div/div[2]/div[3]/div/div[1]/form/button/span")
+    //@FindBy(xpath = "//*[@id=\"maincontent\"]/div/div[1]/div[2]/div[2]/ol/li[1]/div/div[2]/div[3]/div/div[1]/form/button/span")
+    @FindBy(xpath = "//a[@class='product-item-link'][normalize-space()='Gift Card']")
     private WebElement ic_MoreInfo;
 
     @FindBy(xpath = "//*[@id=\"top-cart-btn-checkout\"]/span")

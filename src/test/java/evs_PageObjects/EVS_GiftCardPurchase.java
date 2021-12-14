@@ -58,7 +58,8 @@ public class EVS_GiftCardPurchase {
 	@FindBy(xpath="//*[@class=\"action showcart\"]")
     private WebElement evs_Cart;
 	
-	@FindBy(xpath="//*[@id=\"maincontent\"]/div[2]/div[1]/div[6]/div[2]/ol/li/div/div[2]/div[5]/div[2]/div[1]/form/button/span")
+	//@FindBy(xpath="//*[@id=\"maincontent\"]/div[2]/div[1]/div[6]/div[2]/ol/li/div/div[2]/div[5]/div[2]/div[1]/form/button/span")
+	@FindBy(xpath="//span[normalize-space()='View Item']")
     private WebElement evs_viewItem;
 	
 	@FindBy(xpath="//*[@id=\"maincontent\"]/div[2]/div[1]/div[6]/div[2]/ol/li/div/div[2]")
