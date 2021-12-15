@@ -53,8 +53,8 @@ public class SPM_PaymentOption {
     @FindBy(xpath = "//span[contains(text(),'EFT Pro (Processed by PayU)')]")
     WebElement EFT_Pro;
 
-    @FindBy(xpath = "//span[contains(text(),'Bank Transfer Payment')]")
-    WebElement Bank_Transfer;
+    @FindBy(xpath = "//span[contains(text(),'Cash Deposit')]")
+    WebElement Cash_Deposit;
 
     @FindBy(xpath = "//span[contains(text(),'Discovery Miles')]")
     WebElement Discovery_Miles;
@@ -142,7 +142,7 @@ public class SPM_PaymentOption {
         PaymentMap.put("Visa Checkout", Visa_Checkout);
         PaymentMap.put("Masterpass", Masterpass);
         PaymentMap.put("EFT Pro", EFT_Pro);
-        PaymentMap.put("Bank Transfer", Bank_Transfer);
+        PaymentMap.put("Cash Deposit", Cash_Deposit);
         PaymentMap.put("Discovery Miles", Discovery_Miles);
         PaymentMap.put("Credit Card", Credit_Card);
         PaymentMap.put("PayFlex", PayFlex);
@@ -162,7 +162,7 @@ public class SPM_PaymentOption {
     public void CheckoutpaymentOption(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
 
             timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("SPM_CheckoutpaymentOption", "TimeOutInSecond", 0));
-            action.explicitWait(20000);
+            action.explicitWait(12000);
             /*action.waitForJStoLoad(timeOutInSeconds);
             action.ajaxWait(timeOutInSeconds, test);*/
             if (action.waitUntilElementIsDisplayed(Btn_PlaceOrder,timeOutInSeconds)) {

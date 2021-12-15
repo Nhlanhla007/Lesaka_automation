@@ -11,12 +11,14 @@ import spm_MagentoPageObjects.SPM_Magento_Enquries;
 import spm_MagentoPageObjects.SPM_Magento_LaunchPortal;
 import spm_PageObjects.SPM_PayUPayment;
 import spm_PageObjects.SPM_PaymentOption;
+import spm_MagentoPageObjects.SPM_MagentoCancelUpaidEFT;
 import spm_MagentoPageObjects.SPM_MagentoOrderSAPnumber;
 import spm_MagentoPageObjects.SPM_MagentoOrderStatusPage;
 import spm_PageObjects.SPM_NewAccountCreation;
 import spm_MagentoPageObjects.SPM_MagentoRetrieveCustomerDetailsPage;
 import spm_MagentoPageObjects.SPM_Magento_CreditApplicationVerification;
 import spm_MagentoPageObjects.SPM_Magento_LayByValidation;
+import spm_MagentoPageObjects.SPM_Magento_Login;
 import spm_MagentoPageObjects.SPM_Magento_RangeValidation;
 import spm_MagentoPageObjects.SPM_Magento_UserInfoVerification;
 import spm_MagentoPageObjects.SPM_admin_UserUpdate;
@@ -263,6 +265,8 @@ public class JDGKeyManager {
         SPM_SAPCustomerRelated spm_customerRelated = new SPM_SAPCustomerRelated(driver, dataMap2, dataTable2);
         SPM_Magento_LaunchPortal spm_launchMagento = new SPM_Magento_LaunchPortal(driver, dataTable2);
         SPM_admin_UserUpdate spm_adminUserUpdate = new SPM_admin_UserUpdate(driver, dataTable2);
+        SPM_Magento_Login spm_loginMagento = new SPM_Magento_Login(driver, dataTable2);
+        SPM_MagentoCancelUpaidEFT spm_cancelOrder = new SPM_MagentoCancelUpaidEFT(driver, dataTable2);
         
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
@@ -966,7 +970,7 @@ public class JDGKeyManager {
             	//spm_magentoRange.validateRange(test1);
             	break;
             case "SPM_LoginMagento":
-            	  icMagento.Login_magento(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+            	spm_loginMagento.SPM_LoginMagento(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
             	break;
             case "validateProductNotFound":
             	spm_productSearch.validateProductNotFound(test1);
@@ -1106,6 +1110,9 @@ public class JDGKeyManager {
             	break;
             case "SPM_validateAddressIsRemoved":
             	spm_addressUpdates.validateAddressIsNotPresent(test1);
+            	break;
+            case "SPM_CancelOrder":
+            	spm_cancelOrder.IC_cancelUpaidEFT(test1);
             	break;
         }
     }
