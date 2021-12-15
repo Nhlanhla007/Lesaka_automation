@@ -155,7 +155,7 @@ public class JDGKeyManager {
         IC_MyOrders ic_MyOrder = new IC_MyOrders(driver, dataTable2);
         IC_magento_LaunchPortal icMagentoLaunchPortal=new IC_magento_LaunchPortal(driver,dataTable2);
         
-        //New functionality for backlog in IC
+		/* New functionality for backlog in IC */
         ic_ClickAndCollect ClickAndCollect = new ic_ClickAndCollect(driver, dataTable2);
 		IC_RetivedLoggedUserBillingAddress LoggedUserBillingAddress =new IC_RetivedLoggedUserBillingAddress(driver, dataTable2);
 		srs_Login SRSLogin =new srs_Login(driver, dataTable2);
