@@ -11,6 +11,7 @@ import spm_MagentoPageObjects.SPM_Magento_Enquries;
 import spm_MagentoPageObjects.SPM_Magento_LaunchPortal;
 import spm_PageObjects.SPM_PayUPayment;
 import spm_PageObjects.SPM_PaymentOption;
+import spm_MagentoPageObjects.SPM_CashDepositInvoicing;
 import spm_MagentoPageObjects.SPM_MagentoCancelUpaidEFT;
 import spm_MagentoPageObjects.SPM_MagentoOrderSAPnumber;
 import spm_MagentoPageObjects.SPM_MagentoOrderStatusPage;
@@ -267,7 +268,7 @@ public class JDGKeyManager {
         SPM_admin_UserUpdate spm_adminUserUpdate = new SPM_admin_UserUpdate(driver, dataTable2);
         SPM_Magento_Login spm_loginMagento = new SPM_Magento_Login(driver, dataTable2);
         SPM_MagentoCancelUpaidEFT spm_cancelOrder = new SPM_MagentoCancelUpaidEFT(driver, dataTable2);
-        
+        SPM_CashDepositInvoicing spm_cashDepsitInvoice = new SPM_CashDepositInvoicing(driver, dataTable2);
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
             rowNumber = findRowToRun(dataMap2.get(moduleToRun + "++"), occCount.get(moduleToRun), testcaseID);
@@ -1114,6 +1115,9 @@ public class JDGKeyManager {
             case "SPM_CancelOrder":
             	spm_cancelOrder.IC_cancelUpaidEFT(test1);
             	break;
+            case "SPM_cashDepositInvoicing":
+            	spm_cashDepsitInvoice.InvoiceCashDeposit(test1);
+            break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){
