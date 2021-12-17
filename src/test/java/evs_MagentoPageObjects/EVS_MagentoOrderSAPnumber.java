@@ -53,6 +53,8 @@ public class EVS_MagentoOrderSAPnumber {
     @FindBy(xpath = "//span[contains(text(),'Items Ordered')]")
     private WebElement itemsOrdered;
 
+    @FindBy(xpath = "//*[contains(text(),'Submit Comment')]")
+    private WebElement submitComment;
 
     Timer t = new Timer();
     public static String OrderSAPnumber;
@@ -137,7 +139,8 @@ public class EVS_MagentoOrderSAPnumber {
         } else {
             JavascriptExecutor exe = (JavascriptExecutor) driver;
             exe.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-            exe.executeScript("window.scrollBy(0,-500)");
+            action.scrollElementIntoView(submitComment);
+            //exe.executeScript("window.scrollBy(0,-500)");
             action.CompareResult("SAP order Number generated :" + OrderSAPnumber, String.valueOf(true), String.valueOf(flagres), test);
             throw new Exception("SAP Order Number Is Not Generated");
         }
