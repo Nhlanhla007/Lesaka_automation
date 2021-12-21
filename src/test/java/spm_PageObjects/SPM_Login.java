@@ -55,7 +55,7 @@ public class SPM_Login {
 
     public static String Username;
 
-    public List<String> Login_ic(ExtentTest test) throws IOException, InterruptedException {
+    public List<String> Login_ic(ExtentTest test) throws Exception {
 
         String url = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("loginDetails"), "url");
         String Username = dataTable2.getRowUsingReferenceAndKey("URL", "SUTURLS", dataTable2.getValueOnCurrentModule("loginDetails"), "username");
@@ -75,16 +75,19 @@ public class SPM_Login {
         action.writeText(spm_Username, Username, "Username field", test);
         action.writeText(spm_Password, Password, "Password field", test);
         action.clickEle(spm_SigninBtn, "click Sleepmasters Sign In Button", test);
-        action.waitForJStoLoad(120);
-        String expectedTitle = "Incredible Connection My Account";
+//        action.waitForJStoLoad(120);
+        action.waitForPageLoaded(20);
+        action.ajaxWait(20, test);
+        String expectedTitle = "SleepMasters Home";
 
         action.explicitWait(5000);
-        System.out.println(driver.getTitle() + " ADD VALIDATION HERE SITE WAS DOWN 09/12/2021");
-       // if (driver.getTitle().equalsIgnoreCase(expectedTitle)) {
+        if (driver.getTitle().contains(expectedTitle)) {
+        	System.out.println(driver.getTitle());
             action.CompareResult("User successful Login ", "True", "True", test);
-       // } else {
-        //    action.CompareResult("User successful Login", "True", "False", test);
-       // }
+        } else {
+            action.CompareResult("User successful Login", "True", "False", test);
+            throw new Exception("Login was Unsuccessful");
+        }
 
         //action.clickEle(ic_logo, "IC Home Logo", test);
             //action.explicitWait(16000);

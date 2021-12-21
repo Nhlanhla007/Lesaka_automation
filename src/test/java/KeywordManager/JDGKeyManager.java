@@ -1118,6 +1118,9 @@ public class JDGKeyManager {
             case "SPM_cashDepositInvoicing":
             	spm_cashDepsitInvoice.InvoiceCashDeposit(test1);
             break;
+            case "SPM_cancelOrderCreditMemo":
+            	 cancelCreditMemo.cancelOrderCreditMemo(test1);
+            	break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){
