@@ -4,14 +4,14 @@ pipeline {
        stage('Build Code') {
            steps {
                sh """
-               echo "Building Artifact"
+               echo "Branch1"
                """
            }
        }
-      stage('Deploy Code') {
+      stage('Build Code') {
           steps {
                sh """
-               echo "Deploying Code"
+               echo "Branch2"
                """
           }
       }
