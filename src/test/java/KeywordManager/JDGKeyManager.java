@@ -241,7 +241,7 @@ public class JDGKeyManager {
         EVS_BundleArticleCreation evs_bundleCreation = new EVS_BundleArticleCreation(driver,dataTable2);
         EVS_BundleArticleFrontEnd evs_bundleFrontEnd = new EVS_BundleArticleFrontEnd(driver, dataTable2);
         
-        //Sleepmasters
+        //Sleepmasters objt
         SPM_ArticleRangeValidation articleValidation = new SPM_ArticleRangeValidation(driver, dataTable2);
         SPM_Delivery sleepMastersDelivery = new SPM_Delivery(driver, dataTable2);
         SPM_PaymentOption sleepMastersCheckOut = new SPM_PaymentOption(driver, dataTable2);
