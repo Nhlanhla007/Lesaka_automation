@@ -185,6 +185,8 @@ public class ic_NewAccountCreation {
 			}else if(identityType.equalsIgnoreCase("Passport")){
 				action.click(User_Passportbtn, "Identity type: Passport", test);
 				action.writeText(User_Passport, identityNumber, "IDOrPassport number", test);
+			}else if(identityType.equalsIgnoreCase("No_Passport")) {
+				action.click(User_Passportbtn, "Identity type: Passport", test);
 			}
 
 			if (saIDvalidateIncorrectID.equalsIgnoreCase("yes")) {
@@ -219,6 +221,7 @@ public class ic_NewAccountCreation {
 				action.elementExistWelcome(enterMatchingPassword, 4, "Check password", test);
 			}else {
 				action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
+				action.scrollElemetnToCenterOfView(CreateAccountBtn, "Submit Create Account", test);
 				action.click(CreateAccountBtn, "Create account", test);
 			}
 			

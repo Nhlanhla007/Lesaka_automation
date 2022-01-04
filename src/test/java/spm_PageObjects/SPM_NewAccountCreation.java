@@ -233,9 +233,9 @@ public class SPM_NewAccountCreation {
 				System.out.println("Inside passport");
 				action.click(User_Passportbtn, "Identity type: Passport", test);
 				action.writeText(User_Passport, identityNumber, "IDOrPassport number", test);
-				
+			}else if(identityType.equalsIgnoreCase("No_Passport")){
+				action.click(User_Passportbtn, "Identity type: Passport", test);
 			}
-			
 			try{
 				if (!(identityNumber.isEmpty())) {
 					dataTable2.setValueOnOtherModule("tvLicenseValidation", "IDOrPassport", identityNumber, 0);
