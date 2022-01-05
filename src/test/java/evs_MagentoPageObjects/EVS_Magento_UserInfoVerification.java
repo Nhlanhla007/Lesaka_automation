@@ -390,6 +390,7 @@ public class EVS_Magento_UserInfoVerification {
 		//action.clickEle(Account_Information, "Account_Information", test);
 		//basic verification--------------------------------------------------------------------------------------
 		//String ActFirstname = FetchDataFromCustInfo_MagentoBackend(Cust_Firstname, "Customer_Firstname", 11, 2, test);
+		int BP_timeOutInSeconds = Integer.valueOf(dataTable2.getValueOnCurrentModule("BPNo_TimeOutInSeconds"));
 		String actualFirstName = action.getAttribute(Cust_Firstname, "value");
 		action.CompareResult("First name in Magento backend : ", ExpFirstname, actualFirstName, test);
 		
@@ -401,7 +402,7 @@ public class EVS_Magento_UserInfoVerification {
 		String actualEmail = action.getAttribute(Cust_Email, "value");
 		action.CompareResult("Email in Magento backend : ", ExpEmail, actualEmail, test);
 
-		String ActualBPnumber =FetchDataFromCustInfo_MagentoBackend(customerBPnnumber,"Customer BP Number",TimetoLoadpage,40,test);
+		String ActualBPnumber =FetchDataFromCustInfo_MagentoBackend(customerBPnnumber,"Customer BP Number",TimetoLoadpage,BP_timeOutInSeconds,test);
 		action.scrollElementIntoView(customerBPnnumber);
 		System.out.println("ActualBPnumber:"+ActualBPnumber);
 		//hana han = new hana();

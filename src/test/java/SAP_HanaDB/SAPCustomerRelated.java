@@ -313,11 +313,11 @@ public class SAPCustomerRelated {
 				}
 
 				if (passportOrIdFlag.equalsIgnoreCase("ID")) {
-					passportOrId = mySheets.get(0).get("IDOrPassport").get(sheetRow1);
+					passportOrId = mySheets.get(0).get("identityNumber/passport").get(sheetRow1);
 					action.scrollElemetnToCenterOfView(identityField, "Identity field", test);
 					action.CompareResult("SAP SA ID", passportOrId, SAID, test);
 				} else if (passportOrIdFlag.equalsIgnoreCase("Passport")) {
-					passportOrId = mySheets.get(0).get("IDOrPassport").get(sheetRow1);
+					passportOrId = mySheets.get(0).get("identityNumber/passport").get(sheetRow1);
 					action.scrollElemetnToCenterOfView(identityField, "Identity Number field", test);
 					action.CompareResult("SAP Passport", passportOrId, passport, test);
 				}else if(passportOrIdFlag.equalsIgnoreCase("No_Passport") | passportOrIdFlag.equalsIgnoreCase("No_ID")) {
