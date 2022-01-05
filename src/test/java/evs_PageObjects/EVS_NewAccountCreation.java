@@ -130,6 +130,9 @@ public class EVS_NewAccountCreation {
     @FindBy(id = "cellphone_number")
     WebElement telephoneNumber;
     
+    @FindBy(xpath = "//div[@id='cellphone_number-error']")
+	WebElement telephoneErrorM;
+    
   // Sourav TA19 customer info after click on Customer info 
 	
 	  @FindBy(xpath = "//span[contains(text(),'Account Information')]")
@@ -201,7 +204,8 @@ public class EVS_NewAccountCreation {
 		String saIDvalidateIncorrectID = dataTable2.getValueOnCurrentModule("validateIncorrectID");//input.get("validateIncorrectID").get(rowNumber);
 		String saIDvalidateIDWithLessDigits = dataTable2.getValueOnCurrentModule("validateIDWithLessDigits");//input.get("validateIDWithLessDigits").get(rowNumber);
 		String saIDvalidateIDWithMoreDigits = dataTable2.getValueOnCurrentModule("validateIDWithMoreDigits");//input.get("validateIDWithMoreDigits").get(rowNumber);
-		String existingAccountValidation =dataTable2.getValueOnCurrentModule("validateExistingAccount");//input.get("validateExistingAccount").get(rowNumber);		
+		String existingAccountValidation =dataTable2.getValueOnCurrentModule("validateExistingAccount");//input.get("validateExistingAccount").get(rowNumber);
+		String cellPhoneNumberValidate = dataTable2.getValueOnCurrentModule("validateCellPhoneNumber");
 
 //		try {
 			evs_NavigateToCreateAccount(test);
@@ -266,8 +270,10 @@ public class EVS_NewAccountCreation {
 
 			}
 
-			
-			
+			if (cellPhoneNumberValidate.equalsIgnoreCase("yes")) {
+				  telephoneNumber.clear();				  
+				  }
+
 			if(passwordValidation.equalsIgnoreCase("yes")) {
 				confirmPassword = ic_VerifyPasswordcanDiffer(confirmPassword);
 				action.writeText(User_ConfirmPassword, confirmPassword, "Confirm password", test);
@@ -286,9 +292,15 @@ public class EVS_NewAccountCreation {
 			
 			if(!(saIDvalidateIncorrectID.equalsIgnoreCase("yes") | saIDvalidateIDWithLessDigits.equalsIgnoreCase("yes") | 
 					saIDvalidateIDWithMoreDigits.equalsIgnoreCase("yes")  | 
-					passwordValidation.equalsIgnoreCase("yes") | existingAccountValidation.equalsIgnoreCase("yes"))) {
+					passwordValidation.equalsIgnoreCase("yes") | existingAccountValidation.equalsIgnoreCase("yes")|cellPhoneNumberValidate.equalsIgnoreCase("yes"))) {
 				Verify_Acount_Information(test, firstName, lastName, emailAddress, identityNumber,identityType,selectNewsLetter);//,taxVatNumbe,tavVatNumberFlagStatus
 			}
+			
+			if (action.elementExistWelcome(telephoneErrorM, 4, "Check CellPhone mandatory field", test)) {
+				  telephoneNumber.clear();
+				  action.scrollElemetnToCenterOfView(telephoneErrorM, "To Check For Error Message", test);
+				  action.CompareResult("The Cellphone Number Is A Required Field", "This is a required field.", telephoneErrorM.getText(), test);
+		}
 			/*
 			 * if(verifyMagentoDetails.equalsIgnoreCase("Yes")) {
 			 * Magento_VerifyCustomerDetails(test
