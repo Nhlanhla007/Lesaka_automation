@@ -246,12 +246,11 @@ public class ic_NewAccountCreation {
 					passwordValidation.equalsIgnoreCase("yes") | existingAccountValidation.equalsIgnoreCase("yes")|cellPhoneNumberValidate.equalsIgnoreCase("yes"))) {
 				Verify_Acount_Information(test, firstName, lastName, emailAddress, identityNumber,taxVatNumbe,tavVatNumberFlagStatus,identityType,selectNewsLetter);
 			}
-			
-			if (action.elementExistWelcome(telephoneErrorM, 4, "Check CellPhone mandatory field", test)) {
-				  telephoneNumber.clear();
+			if (cellPhoneNumberValidate.equalsIgnoreCase("yes")) {
+				action.elementExistWelcome(telephoneErrorM, 4, "Check CellPhone mandatory field", test);
 				  action.scrollElemetnToCenterOfView(telephoneErrorM, "To Check For Error Message", test);
 				  action.CompareResult("The Cellphone Number Is A Required Field", "This is a required field.", telephoneErrorM.getText(), test);
-		}
+			}
 			/*
 			 * if(verifyMagentoDetails.equalsIgnoreCase("Yes")) {
 			 * Magento_VerifyCustomerDetails(test
