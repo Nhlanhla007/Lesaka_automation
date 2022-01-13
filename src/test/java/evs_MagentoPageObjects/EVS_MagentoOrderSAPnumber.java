@@ -56,6 +56,15 @@ public class EVS_MagentoOrderSAPnumber {
     @FindBy(xpath = "//*[contains(text(),'Submit Comment')]")
     private WebElement submitComment;
 
+    @FindBy(xpath = "//*[contains(text(),'Re-Validate')]/parent::button")
+    private WebElement reValidate;
+    
+    @FindBy(xpath = "//*[contains(text(),'Use with discretion')]")
+    private WebElement reValidatePopUp;
+    
+    @FindBy(xpath = "//*[@class='action-primary action-accept']")
+    private WebElement confirmReValidate;
+    
     Timer t = new Timer();
     public static String OrderSAPnumber;
 
@@ -72,6 +81,7 @@ public class EVS_MagentoOrderSAPnumber {
         action.explicitWait(10000);
 
         String orderStatus = dataTable2.getValueOnOtherModule("evs_OrderStatusSearch", "orderStatus", 0);
+        String re_validate =  dataTable2.getValueOnCurrentModule("re_validate");
         action.CompareResult("Sales Order Status", orderStatus, magentoOrderStatus.getText(), test);
         action.scrollElemetnToCenterOfView(itemsOrdered, "Items Ordered", test);
         action.explicitWait(2000);
@@ -92,9 +102,15 @@ public class EVS_MagentoOrderSAPnumber {
                 action.CompareResult("OpenGate Activation: " + OpenGateActivationMessage, String.valueOf(true), String.valueOf(openGateFlag), test);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
+        if(magentoOrderStatus.getText().contains("Pending SABC Validation") && re_validate.equalsIgnoreCase("yes")) {
+        	action.click(reValidate, "Re Validate", test);
+        	action.elementExistWelcome(reValidatePopUp, 20, "Re Validate pop up", test);
+        	action.explicitWait(2000);
+        	action.click(confirmReValidate, "Ok", test);
+        }
 
         while (elapsedTime <= TimeOutinSecond && flagres == false) {
             action.refresh();

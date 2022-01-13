@@ -1,6 +1,9 @@
 package ic_PageObjects;
 
 import com.aventstack.extentreports.ExtentTest;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +13,7 @@ import utils.DataTable2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -122,6 +126,9 @@ public class ICDelivery {
     // @FindBy(xpath = "//div[6]/aside[2]/div[2]/footer/button[1]")
     @FindBy(xpath = "//*[@class=\"modal-footer\"]/button[1]")
     WebElement popUpSave;
+    
+    @FindBy(xpath = "//*[@class=\"pac-item\"]")
+    List<WebElement> googleAddressOptions;
 
     public static String Streetname;
     public static String Cityname;
@@ -182,29 +189,39 @@ public class ICDelivery {
 
             }
             if (action.waitUntilElementIsDisplayed(ic_AddressType, timeOutInSeconds)) {
-//        	action.explicitWait(5000);
-            	action.validateIfInputFieldIsEmpty(streetName,"Street name", test);
-                action.writeText(streetName, dataSheets.getValueOnCurrentModule("streetName"), "streetName", test);
-                
-                action.validateIfInputFieldIsEmpty(telephoneNumber,"Telephone", test);
-                action.writeText(telephoneNumber, dataSheets.getValueOnCurrentModule("telephone"), "telephone", test);
-                
-                action.validateIfInputFieldIsEmpty(city,"City", test);
-                action.writeText(city, dataSheets.getValueOnCurrentModule("city"), "city", test);
-                
-                action.validateIfInputFieldIsEmpty(Suburb,"Suburb", test);
-                action.writeText(Suburb, dataSheets.getValueOnCurrentModule("Suburb"), "Suburb", test);
-                
-                action.validateIfInputFieldIsEmpty(postalCode,"Postal Code", test);
-                action.writeText(postalCode, dataSheets.getValueOnCurrentModule("postalCode"), "postalCode", test);
-                
-                action.validateIfInputFieldIsEmpty(vatNumber,"Vat Number", test);
-                action.writeText(vatNumber, dataSheets.getValueOnCurrentModule("vatNumber"), "vatNumber", test);
-                
-                action.dropDownselectbyvisibletext(province, dataSheets.getValueOnCurrentModule("province"), "province", test);
-                action.ajaxWait(timeOutInSeconds, test);
-//        action.explicitWait(10000);
+                    action.explicitWait(4000);
+                    String searchStreetName = dataSheets.getValueOnCurrentModule("streetName").trim();
+                    String searchSuburb = dataSheets.getValueOnCurrentModule("Suburb").trim();
+                    String searchCity = dataSheets.getValueOnCurrentModule("city").trim();
+                    action.writeText(streetName, searchStreetName + " " + searchSuburb + " " + searchCity, "Enter Google Address", test);
+                    searchStreetName = searchStreetName.substring(searchStreetName.indexOf(" ")).trim();
+                    action.explicitWait(3000);
+                    boolean flag = true;
+                    for (WebElement option : googleAddressOptions) {
+                        try {
+                            String streetName = option.findElement(By.xpath(".//*[contains(text(),'" + searchStreetName + "')]")).getText();
+                            boolean suburbInformation = option.findElements(By.xpath(".//*[contains(text(),'" + searchSuburb + "')]")).size() > 0;// option.findElement(By.xpath(".//span[3]")).getText();
+                            boolean cityInformation = option.findElements(By.xpath(".//*[contains(text(),'" + searchCity + "')]")).size() > 0;
+                            boolean suburbCityInformationStatus = suburbInformation & cityInformation;
+                            if (suburbCityInformationStatus) {
+                                action.CompareResult("Google Option Match Found", "true", "true", test);
+                                action.click(option, "Google address option selected", test);
+                                action.ajaxWait(timeOutInSeconds, test);
+                                action.explicitWait(8000);
+                                flag = false;
+                            }
+                        } catch (Exception e) {
+                        }
+                    }
+
+                    if (flag) {
+                        throw new Exception("Google Address Has Not Been Found");
+                    }
+                    
+                    action.writeText(telephoneNumber, dataSheets.getValueOnCurrentModule("telephone"), "telephone", test);
+                    action.writeText(vatNumber, dataSheets.getValueOnCurrentModule("vatNumber"), "vatNumber", test);
             }
+            	
         } else if (addressType.equalsIgnoreCase("Existing") & addressTypeICFont.equalsIgnoreCase("Select a saved address or add a new address:")) {
             customerAddressDetails.navigateBackToCustomerDetails(userType, addressTypeICFont, test);
             registeredUserDetails = customerAddressDetails.getExistingAddressInformation(userType, addressTypeICFont, test);
@@ -251,21 +268,41 @@ public class ICDelivery {
             action.explicitWait(4000);
             action.javaScriptClick(newAddressButton, "New Address", test);
         }
-        //action.writeText(popUpFirstName, dataSheets.getValueOnCurrentModule(""), "New First name", test);
-        action.writeText(popUpStreetName, dataSheets.getValueOnCurrentModule("streetName"), "New Address Street name", test);
-//    	action.explicitWait(4000);
-        popUpCity.clear();
-        action.writeText(popUpCity, dataSheets.getValueOnCurrentModule("city"), "New Address City", test);
+        
+        String searchStreetName = dataSheets.getValueOnCurrentModule("streetName").trim();
+        String searchSuburb = dataSheets.getValueOnCurrentModule("Suburb").trim();
+        String searchCity = dataSheets.getValueOnCurrentModule("city").trim();
+        
+        action.explicitWait(4000);
+        action.writeText(popUpStreetName, searchStreetName + " " + searchSuburb + " " + searchCity, "New Address Street name", test);
+        searchStreetName = searchStreetName.substring(searchStreetName.indexOf(" ")).trim();
+//        action.ajaxWait(30, test);
+        action.ajaxWait(timeOutInSeconds, test);
+        action.explicitWait(4000);
+        boolean flag = true;
+        for (WebElement option : googleAddressOptions) {
+            try {
+                String googlestreetName = option.findElement(By.xpath(".//*[contains(text(),'" + searchStreetName + "')]")).getText();
+                boolean suburbInformation = option.findElements(By.xpath(".//*[contains(text(),'" + searchSuburb + "')]")).size() > 0;// option.findElement(By.xpath(".//span[3]")).getText();
+                boolean cityInformation = option.findElements(By.xpath(".//*[contains(text(),'" + searchCity + "')]")).size() > 0;
+                boolean suburbCityInformationStatus = suburbInformation & cityInformation;
+                if (suburbCityInformationStatus) {
+                    action.click(option, "Google address option selected", test);
+//                    action.ajaxWait(30, test);
+                    action.ajaxWait(timeOutInSeconds, test);
+                    action.explicitWait(5000);
+                    flag = false;
+                }
+            } catch (NoSuchElementException e) {
+            }
+        }
+
+        if (flag) {
+            throw new Exception("Google Address Has Not Been Found");
+        }
+        
         action.writeText(popUpPhone, dataSheets.getValueOnCurrentModule("telephone"), "New Address Telephone", test);
-        popUpsuburb.clear();
-        action.writeText(popUpsuburb, dataSheets.getValueOnCurrentModule("Suburb"), "New Address Suburb", test);
-        popUpPostalCode.clear();
-        action.writeText(popUpPostalCode, dataSheets.getValueOnCurrentModule("postalCode"), "New Address postal code", test);
         action.writeText(popUpVatNumber, dataSheets.getValueOnCurrentModule("vatNumber"), "New Address Vat number", test);
-        //popUpProvince.clear();
-        action.selectFromDropDownUsingVisibleText(popUpProvince, dataSheets.getValueOnCurrentModule("province"), "New Address Province");
-//    	action.explicitWait(4000);
-        //popUpSave.click();
         action.click(popUpSave, "Save", test);
         action.ajaxWait(timeOutInSeconds, test);
     }
@@ -295,13 +332,37 @@ public class ICDelivery {
         action.writeText(firstName, firstNameGift, "First name", test);
         action.writeText(lastname, lastnameGift, "Last name", test);
         action.writeText(email, emailGift, "Email", test);
-        action.writeText(streetNameGift, streetNameG, "Street name", test);
         action.writeText(telephoneGift, telephone, "Telephone", test);
-        action.writeText(provinceGift, province, "Province", test);
-        action.writeText(cityGift, cityName, "City", test);
-        action.writeText(SuburbGift, suburb, "Suburb", test);
-        action.writeText(postalCodeGift, postalCode, "Postal Code", test);
-        action.explicitWait(2000);
+        
+        ICDelivery.Streetname = dataSheets.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
+        ICDelivery.Cityname = dataSheets.getValueOnOtherModule("deliveryPopulation", "city", 0);
+        ICDelivery.Postalcode = dataSheets.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
+        
+      action.writeText(streetName, streetNameG + " " + suburb + " " + cityName, "Enter Google Address", test);
+      streetNameG = streetNameG.substring(streetNameG.indexOf(" ")).trim();
+      action.explicitWait(4000);
+      boolean flag = true;
+      for (WebElement option : googleAddressOptions) {
+          try {
+              String streetName = option.findElement(By.xpath(".//*[contains(text(),'" + streetNameG + "')]")).getText();
+              boolean suburbInformation = option.findElements(By.xpath(".//*[contains(text(),'" + suburb + "')]")).size() > 0;// option.findElement(By.xpath(".//span[3]")).getText();
+              boolean cityInformation = option.findElements(By.xpath(".//*[contains(text(),'" + cityName + "')]")).size() > 0;
+              boolean suburbCityInformationStatus = suburbInformation & cityInformation;
+              if (suburbCityInformationStatus) {
+                  action.CompareResult("Google Option Match Found", "true", "true", test);
+                  action.click(option, "Google address option selected", test);
+                  action.ajaxWait(timeOutInSeconds, test);
+                  action.explicitWait(4000);
+                  flag = false;
+              }
+          } catch (Exception e) {
+          }
+      }
+      if (flag) {
+          throw new Exception("Google Address Has Not Been Found");
+      }
+      
+      
         action.click(placeOrder, "Place Order", test);
         action.ajaxWait(timeOutInSeconds, test);
 

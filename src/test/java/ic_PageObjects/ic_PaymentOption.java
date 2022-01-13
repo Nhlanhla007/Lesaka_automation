@@ -11,6 +11,7 @@ import utils.DataTable2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ic_PaymentOption {
@@ -106,6 +107,8 @@ public class ic_PaymentOption {
     @FindBy(xpath = "//span[contains(text(),'Uploading proof of ID, please wait...')]")
     WebElement uploadingMsg;
 
+    @FindBy(xpath = "//*[@class=\"pac-item\"]")
+    List<WebElement> googleAddressOptions;
 
     public WebElement ic_SelectPaymentMethod(String Paytype) {
         Map<String, WebElement> PaymentMap = new HashMap<String, WebElement>();
@@ -172,9 +175,9 @@ public class ic_PaymentOption {
             String lastnameGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "lastname", 0);
             String emailGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "email", 0);
             String streetNameG = dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
-            String provinceGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "province", 0);
+            //String provinceGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "province", 0);
             String cityGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "city", 0);
-            String postalcodeGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
+            //String postalcodeGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
             String phonenumberGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "telephone", 0);
             String suburdGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "Suburb", 0);
             String vatnumberGift = dataTable2.getValueOnOtherModule("deliveryPopulation", "vatNumber", 0);
@@ -186,18 +189,34 @@ public class ic_PaymentOption {
             action.writeText(emaiL, emailGift, "Email", test);
             action.writeText(firstnamE, firstNameGift, "First name", test);
             action.writeText(lastname, lastnameGift, "Last name", test);
-            action.writeText(streetnamE, streetNameG, "Street name", test);
-            action.writeText(province, provinceGift, "Province", test);
-            action.clear(city, "");
-            action.writeText(city, cityGift, "City", test);
-            action.clear(postalCode, "");
-            action.writeText(postalCode, postalcodeGift, "Postal code", test);
             action.writeText(telephone, phonenumberGift, "Phone number", test);
-            action.clear(Suburb, "");
-            action.writeText(Suburb, suburdGift, "Suburb", test);
             action.writeText(vatNumber, vatnumberGift, "Vat number", test);
-            action.explicitWait(15000);
+            action.writeText(streetnamE, streetNameG + " " + suburdGift + " " + cityGift, "Enter Google Address", test);
+            streetNameG = streetNameG.substring(streetNameG.indexOf(" ")).trim();
+            action.explicitWait(4000);
+            boolean flag = true;
+            for (WebElement option : googleAddressOptions) {
+                try {
+                    String streetName = option.findElement(By.xpath(".//*[contains(text(),'" + streetNameG + "')]")).getText();
+                    boolean suburbInformation = option.findElements(By.xpath(".//*[contains(text(),'" + suburdGift + "')]")).size() > 0;// option.findElement(By.xpath(".//span[3]")).getText();
+                    boolean cityInformation = option.findElements(By.xpath(".//*[contains(text(),'" + cityGift + "')]")).size() > 0;
+                    boolean suburbCityInformationStatus = suburbInformation & cityInformation;
+                    if (suburbCityInformationStatus) {
+                        action.CompareResult("Google Option Match Found", "true", "true", test);
+                        action.click(option, "Google address option selected", test);
+                        action.ajaxWait(timeOutInSeconds, test);
+                        action.explicitWait(6000);
+                        flag = false;
+                    }
+                } catch (Exception e) {
+                }
 
+            }
+
+            if (flag) {
+                throw new Exception("Google Address Has Not Been Found");
+            }
+            
             ICDelivery.Streetname = dataTable2.getValueOnOtherModule("deliveryPopulation", "streetName", 0);
             ICDelivery.Cityname = dataTable2.getValueOnOtherModule("deliveryPopulation", "city", 0);
             ICDelivery.Postalcode = dataTable2.getValueOnOtherModule("deliveryPopulation", "postalCode", 0);
