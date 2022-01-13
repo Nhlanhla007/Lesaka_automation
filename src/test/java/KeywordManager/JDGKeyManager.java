@@ -1015,8 +1015,14 @@ public class JDGKeyManager {
             case "SPM_CheckoutpaymentOption":
             	sleepMastersCheckOut.CheckoutpaymentOption(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
             	break;
+            case "SPM_CheckoutPayGatetOption":
+            	sleepMastersCheckOut.CheckoutPayGate(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+            	break;
             case "SPM_PayUPagePayment":
             	spm_Payment.PayUPagePayment(dataMap2.get(moduleToRun + "++"), test1, rowNumber);
+            	break;
+            case "SPM_PayGatePagePayment":
+            	spm_Payment.PayGatePayment(test1);
             	break;
             case "SPM_RetriveOrderID":
             	spm_RetireveOrderID.RetriveOrderID(test1);

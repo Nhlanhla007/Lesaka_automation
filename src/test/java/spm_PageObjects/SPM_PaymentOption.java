@@ -40,7 +40,16 @@ public class SPM_PaymentOption {
 
     @FindBy(xpath = "//span[contains(text(),'PayGate')]")
     WebElement PayGate;
-
+    
+    @FindBy(xpath = "//span[@class='payment-type-label']//span[contains(text(),'Card')]")
+    WebElement PayGate_card;
+    
+    @FindBy(xpath = "//span[@class='payment-type-label']//span[contains(text(),'Zapper')]")
+    WebElement PayGate_Zapper;
+    
+    @FindBy(xpath = "//span[@class='payment-type-label']//span[contains(text(),'SnapScan')]")
+    WebElement PayGate_Snapscan;
+    
     @FindBy(xpath = "//span[contains(text(),'RCS (via PayU)')]")
     WebElement RCS;
 
@@ -284,6 +293,55 @@ public class SPM_PaymentOption {
             }
         } catch (Exception e) {
             throw new Exception("Unable to upload the Document: " + e.getMessage());
+        }
+    }
+    
+    public WebElement spm_SelectGatePayment(String GatePaytype) {
+        Map<String, WebElement> PaymentMap = new HashMap<String, WebElement>();
+        PaymentMap.put("Card", PayGate_card);
+        PaymentMap.put("Zapper", PayGate_Zapper);
+        PaymentMap.put("SnapScan", PayGate_Snapscan);
+        WebElement actionele = null;
+        Flag:
+        for (Map.Entry m : PaymentMap.entrySet()) {
+            if (m.getKey().toString().trim().toUpperCase().equalsIgnoreCase(GatePaytype)) {
+                actionele = (WebElement) m.getValue();
+                break Flag;
+            }
+
+        }
+
+        return actionele;
+    }
+    public void CheckoutPayGate(HashMap<String, ArrayList<String>> input, ExtentTest test, int rowNumber) throws Exception {
+
+        timeOutInSeconds = Integer.parseInt(dataTable2.getValueOnOtherModule("SPM_CheckoutpaymentOption", "TimeOutInSecond", 0));
+        action.explicitWait(12000);
+        /*action.waitForJStoLoad(timeOutInSeconds);
+        action.ajaxWait(timeOutInSeconds, test);*/
+        if (action.waitUntilElementIsDisplayed(Btn_PlaceOrder,timeOutInSeconds)) {
+            String paytype = dataTable2.getValueOnOtherModule("SPM_CheckoutpaymentOption", "Paytype_Option", 0);
+            String GatePaytype = dataTable2.getValueOnOtherModule("SPM_CheckoutpaymentOption", "PayGate_Dropdown", 0);
+            WebElement paymentsType = evs_SelectPaymentMethod(paytype);
+            WebElement GatepaymentsType = spm_SelectGatePayment(GatePaytype);
+            action.scrollToElement(paymentsType, "Payment type");
+            action.explicitWait(2000);
+            action.click(paymentsType, "Select Payment option as " + paytype, test);
+            action.ajaxWait(timeOutInSeconds, test);
+            action.click(GatepaymentsType, "Select PayGate option as " + GatePaytype, test);
+            action.ajaxWait(timeOutInSeconds, test);
+            action.scrollToElement(Btn_PlaceOrder, "Place Order Button");
+            action.explicitWait(2000);
+            action.clickEle(Btn_PlaceOrder, "Place order Button ", test);
+//            action.ajaxWait(10, test);
+            action.ajaxWait(timeOutInSeconds, test);
+//            action.ajaxWait(10, test);
+            action.ajaxWait(timeOutInSeconds, test);
+//            action.waitForPageLoaded(40);
+            action.waitForPageLoaded(timeOutInSeconds);
+
+        } else {
+            throw new Exception("Unable to navigate to Checkout Payment");
         }
     }
 
