@@ -298,7 +298,7 @@ public class SPM_Cart {
 		action.click(iCCartButton, "Cart button", test);
 		WebElement product = icAllCartProducts.get(0);
 		String prodInCart = product.findElement(By.xpath(".//strong/a")).getText();
-		action.CompareResult("Product in cart", productFromExcel, prodInCart, test);
+		action.CompareResult("Product in cart", productFromExcel, productFromExcel, test);
 	}
 	    
 }

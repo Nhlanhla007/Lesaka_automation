@@ -59,7 +59,7 @@ public class SPM_PaymentOption {
     @FindBy(xpath = "//span[contains(text(),'Masterpass')]")
     WebElement Masterpass;
 
-    @FindBy(xpath = "//span[contains(text(),'EFT Pro (Processed by PayU)')]")
+    @FindBy(xpath = "//span[normalize-space()='EFT Pro (Processed By PayU)']")
     WebElement EFT_Pro;
 
     @FindBy(xpath = "//span[contains(text(),'Cash Deposit')]")

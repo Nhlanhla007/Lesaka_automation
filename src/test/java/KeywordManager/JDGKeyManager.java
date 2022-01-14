@@ -4,6 +4,7 @@ package KeywordManager;
 import ic_PageObjects.IC_ReturnToConfirmOrderStatus;
 import spm_PageObjects.SPM_AddressUpdates;
 import spm_PageObjects.SPM_ArticleRangeValidation;
+import spm_PageObjects.SPM_Cart;
 import spm_PageObjects.SPM_Delivery;
 import spm_PageObjects.SPM_LaunchPortal;
 import spm_PageObjects.SPM_Login;
@@ -25,6 +26,7 @@ import spm_MagentoPageObjects.SPM_Magento_UserInfoVerification;
 import spm_MagentoPageObjects.SPM_admin_UserUpdate;
 import spm_PageObjects.SPM_LaunchPortal;
 import spm_PageObjects.SPM_ProductSearch;
+import spm_PageObjects.SPM_RefreshLogoHomepage;
 import spm_PageObjects.SPM_RetriveOrderID;
 import spm_PageObjects.SPM_creditApplication;
 import spm_PageObjects.SPM_layBy;
@@ -269,6 +271,9 @@ public class JDGKeyManager {
         SPM_Magento_Login spm_loginMagento = new SPM_Magento_Login(driver, dataTable2);
         SPM_MagentoCancelUpaidEFT spm_cancelOrder = new SPM_MagentoCancelUpaidEFT(driver, dataTable2);
         SPM_CashDepositInvoicing spm_cashDepsitInvoice = new SPM_CashDepositInvoicing(driver, dataTable2);
+        SPM_RefreshLogoHomepage spmLogo = new SPM_RefreshLogoHomepage(driver, dataTable2);
+        SPM_Cart spm_cart = new SPM_Cart(driver, dataTable2) ;
+        
         int rowNumber = -1;
         if (dataMap2.containsKey(moduleToRun + "++")) {
             rowNumber = findRowToRun(dataMap2.get(moduleToRun + "++"), occCount.get(moduleToRun), testcaseID);
@@ -1024,6 +1029,12 @@ public class JDGKeyManager {
             case "SPM_PayGatePagePayment":
             	spm_Payment.PayGatePayment(test1);
             	break;
+            case "SPM_PayFlexPayment":
+            	spm_Payment.PayFlexPayment(test1);
+            	break;
+            case "SPM_EFT_ProPayment":
+            	spm_Payment.EFT_ProPayment(test1);
+            	break;
             case "SPM_RetriveOrderID":
             	spm_RetireveOrderID.RetriveOrderID(test1);
             	break;
@@ -1123,10 +1134,19 @@ public class JDGKeyManager {
             	break;
             case "SPM_cashDepositInvoicing":
             	spm_cashDepsitInvoice.InvoiceCashDeposit(test1);
-            break;
+            	break;
             case "SPM_cancelOrderCreditMemo":
             	 cancelCreditMemo.cancelOrderCreditMemo(test1);
             	break;
+            case "SPM_LogoHomepage":
+                spmLogo.homepageLogo(test1);
+                break;
+            case "SPM_logout":
+            	spm_login.logout(test1, dataMap2.get("SPM_login++"), rowNumber);
+                break;
+            case "SPM_VerifyCart":
+            	spm_cart.verifyCart(test1);
+                break;
         }
     }
     public int findRowToRun (HashMap < String, ArrayList < String >> input,int occCount, int testcaseID){

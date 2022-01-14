@@ -78,6 +78,9 @@ public class SPM_PayUPayment {
     @FindBy(xpath = "//button[@id='nextBtn']")
     WebElement nextBtn_payGate;
     
+    @FindBy(xpath = "//iframe[@id='myCustomIframe']")
+    WebElement payFlex_pay;
+    
     @FindBy(xpath = "//input[@id='zapperName']")
     WebElement zapperName_payGate;
     
@@ -86,6 +89,18 @@ public class SPM_PayUPayment {
     
     @FindBy(xpath = "//strong[normalize-space()='Processing, please wait.']")
     WebElement scanCode_payGate;
+    
+    //eft
+    @FindBy(xpath = "//div[@data-target='#panel-payu']")
+    WebElement payPanel_eft;
+    @FindBy(xpath = "//div[@class='toggle-group']//div[1][text()='Ozow']")
+    WebElement ozow_eft;
+    @FindBy(xpath = "//button[normalize-space()='Continue']")
+    WebElement continue_eft;
+    @FindBy(xpath = "//section[@class='card response-center']")
+    WebElement OzowResponse_eft;
+    @FindBy(xpath = "//button[normalize-space()='Test successful response']")
+    WebElement OzowTestSucc_eft;
     
 
     public static String Orderid;
@@ -122,8 +137,33 @@ public class SPM_PayUPayment {
         }
     }
     
+    public void EFT_ProPayment(ExtentTest test) throws Exception{
+    	action.waitForJStoLoad(timeOutInSeconds);
+    	if(action.waitUntilElementIsDisplayed(payPanel_eft,timeOutInSeconds)) {
+    		action.clickEle(ozow_eft, " Ozow EFT option in PayU", test);
+    		action.waitForJStoLoad(timeOutInSeconds);
+    		action.CompareResult("Ozow Terms", "Continue", continue_eft.getText(), test);
+    		action.clickEle(continue_eft, " Click Continue", test);
+    		action.waitForJStoLoad(timeOutInSeconds);
+    		if(action.waitUntilElementIsDisplayed(OzowResponse_eft,timeOutInSeconds)) {
+    			action.clickEle(OzowTestSucc_eft, " Ozow EFT option in PayU", test);
+    			action.waitForJStoLoad(90);
+    			action.CompareResult("order success message", "Thank you, we have successfully received your order", successMsg.getText(), test);
+    		}else {
+    			throw new Exception("Unable to navigate to final order page. ");
+    		}
+    	}
+    	else {
+			throw new Exception("Unable to Navigate to PayU page that contains EFT ");
+		}
+    }
+    
     public void PayFlexPayment(ExtentTest test) throws Exception{
-    	action.clickEle(PayU_Card, " Card option in PayU", test);
+    	action.waitForJStoLoad(timeOutInSeconds);
+    	if(action.waitUntilElementIsDisplayed(payFlex_pay,timeOutInSeconds)) {
+    	action.CompareResult("PayFlex Payment", "true", "true", test);
+    	action.waitForJStoLoad(timeOutInSeconds);
+    	}
     }
     
     public void PayGatePayment(ExtentTest test) throws Exception{
