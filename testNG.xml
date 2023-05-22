@@ -2,13 +2,13 @@
 <!DOCTYPE suite
   SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="JDGTest">
-   <test name="IC">
+   <test name="Sleepmasters">
       <parameter name="moduleName" value="MAIN"/>
-      <parameter name="CurSuite" value="IC"/>
+      <parameter name="CurSuite" value="Sleepmasters"/>
       <classes>
          <class name="tests.testTestClass">
             <methods>
-               <include name="Updating_customer_last_name_on_Magento_IC"/>
+               <include name="Sales_Order_Using_EFT_Pro_Payment_Methods_Sleepmasters"/>
             </methods>
          </class>
       </classes>
