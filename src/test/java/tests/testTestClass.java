@@ -1,6 +1,6 @@
 package tests;
 
-import KeywordManager.JDGKeyManager;
+import KeywordManager.KMCKeyManager;
 import base.TestCaseBase;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
@@ -36,7 +36,7 @@ public class testTestClass<moduleName> {
     public String currentKeyWord;
     HashMap<String, Integer> occCount=null;
     int testcaseID;
-    JDGKeyManager km=null;
+    KMCKeyManager km=null;
     ExtentReportGenerator reportJD=null;
     Logger logger = Log.getLogData(this.getClass().getSimpleName());
     protected LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>> dataMap2 = new LinkedHashMap<String, LinkedHashMap<String, ArrayList<String>>>();
@@ -51,7 +51,7 @@ public class testTestClass<moduleName> {
         dataMap2=dataTable2.getExcelData();
         currentSuite=CurSuite;
         reportJD=new ExtentReportGenerator(currentSuite);
-        km=new JDGKeyManager(driver,dataTable2,dataMap2);
+        km=new KMCKeyManager(driver,dataTable2,dataMap2);
     }
 
     @BeforeMethod
@@ -130,7 +130,7 @@ public class testTestClass<moduleName> {
                             }
                             dataTable2.setOccurenceCount(occCount.get(currentKeyWord));
                             km.runKeyWord(actionToRun, testcaseID, occCount, test1);
-                            JDTests sample = new JDTests();
+                            KMCTests sample = new KMCTests();
                             sample.writeToExcel(sample.createFile());
                             reportJD.endReport();
 

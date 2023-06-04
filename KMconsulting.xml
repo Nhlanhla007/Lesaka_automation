@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="KMCTestSuite" parallel="tests">
+	<parameter name="browserType" value="chrome" />
+	<!-- <listeners>
+		<listener class-name="listner.TestNGListener" />
+	</listeners -->
+	<test name="KMCTests" preserve-order="true">
+		<parameter name="browserType" value="chrome"/>
+		
+		<classes>
+			<class name="tests.KMCTests"/>
+		</classes>
+	</test>
+</suite>

@@ -80,7 +80,7 @@ public class Run {
                 classes.appendChild(className);
                 Element methods = document.createElement("methods");
                 Attr classNameAttr = document.createAttribute("name");
-//        classNameAttr.setValue("tests.JDGTest_TestNG");
+//        classNameAttr.setValue("tests.KMCTest_TestNG");
                 classNameAttr.setValue("tests.testTestClass");
                 className.setAttributeNode(classNameAttr);
                 className.appendChild(methods);

@@ -47,7 +47,7 @@ public class Run {
         classes.appendChild(className);
         Element methods = document.createElement("methods");
         Attr classNameAttr = document.createAttribute("name");
-        classNameAttr.setValue("tests.JDGTest_TestNG");
+        classNameAttr.setValue("tests.KMCTest_TestNG");
         className.setAttributeNode(classNameAttr);
         className.appendChild(methods);
         for(int i=0;i<numberOfRows;i++){
